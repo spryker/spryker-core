@@ -281,7 +281,7 @@ class SprykerUseStatementFixer extends AbstractFixer
         $newStatements = $this->newStatements;
         $existingStatements = $this->existingStatements;
 
-        if  (empty($newStatements)) {
+        if (empty($newStatements)) {
             return;
         }
 

@@ -6,23 +6,18 @@
 
 namespace Functional\SprykerFeature\Zed\Sales\Business;
 
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Codeception\TestCase\Test;
-use Functional\SprykerFeature\Zed\Sales\Business\Dependency\CountryFacade;
-use Functional\SprykerFeature\Zed\Sales\Business\Dependency\OmsFacade;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use SprykerFeature\Zed\Oms\OmsConfig;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
@@ -55,21 +50,36 @@ class SalesFacadeTest extends Test
         parent::setUp();
         $locator = Locator::getInstance();
 
-        $countryFacade = new CountryFacade(new Factory('Country'), $locator);
-        $countryFacade->setOwnQueryContainer(new CountryQueryContainer(new PersistenceFactory('Country'), $locator));
+        $countryFacadeMock = $this->getMock('SprykerFeature\Zed\Sales\Dependency\Facade\SalesToCountryInterface', ['getIdCountryByIso2Code']);
+        $countryFacadeMock->method('getIdCountryByIso2Code')
+            ->will($this->returnValue(1));
 
-        $omsFacade = new OmsFacade(new Factory('Oms'), $locator);
-        $omsFacade->setOwnQueryContainer(new OmsQueryContainer(new PersistenceFactory('Oms'), $locator));
+        $omsOrderProcessEntity = $this->getProcessEntity();
 
-        $sequenceNumberFacade = new SequenceNumberFacade(new Factory('SequenceNumber'), $locator);
+        $omsFacadeMock = $this->getMock('SprykerFeature\Zed\Sales\Dependency\Facade\SalesToOmsInterface', ['selectProcess', 'getInitialStateEntity', 'getProcessEntity']);
+        $omsFacadeMock->method('selectProcess')
+            ->will($this->returnValue('CheckoutTest01'));
+
+        $initialStateEntity = SpyOmsOrderItemStateQuery::create()
+            ->filterByName(OmsConfig::INITIAL_STATUS)
+            ->findOneOrCreate();
+        $initialStateEntity->save();
+
+        $omsFacadeMock->method('getInitialStateEntity')
+            ->will($this->returnValue($initialStateEntity));
+
+        $omsFacadeMock->method('getProcessEntity')
+            ->will($this->returnValue($omsOrderProcessEntity));
+
+        $sequenceNumberFacade = new SequenceNumberFacade();
 
         $container = new Container();
-        $container[SalesDependencyProvider::FACADE_COUNTRY] = $countryFacade;
-        $container[SalesDependencyProvider::FACADE_OMS] = $omsFacade;
+        $container[SalesDependencyProvider::FACADE_COUNTRY] = $countryFacadeMock;
+        $container[SalesDependencyProvider::FACADE_OMS] = $omsFacadeMock;
         $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = $sequenceNumberFacade;
 
-        $this->salesFacade = new SalesFacade(new Factory('Sales'), $locator);
-        $this->salesFacade->setOwnQueryContainer(new SalesQueryContainer(new PersistenceFactory('sales'), $locator));
+        $this->salesFacade = new SalesFacade();
+        $this->salesFacade->setOwnQueryContainer(new SalesQueryContainer());
         $this->salesFacade->setExternalDependencies($container);
     }
 
@@ -201,6 +211,7 @@ class SalesFacadeTest extends Test
             ->filterByName(OmsConfig::INITIAL_STATUS)
             ->findOneOrCreate();
         $initialState->save();
+
         $this->assertNotNull($initialState->getIdOmsOrderItemState());
 
         $taxSetTransfer = new TaxSetTransfer();
@@ -318,9 +329,7 @@ class SalesFacadeTest extends Test
     {
         $orderTransfer = $this->getValidBaseOrderTransfer();
 
-        $process = new SpyOmsOrderProcess();
-        $process->setName('CheckoutTest01');
-        $process->save();
+        $processEntity = $this->getProcessEntity();
 
         $orderTransfer->setProcess('CheckoutTest01');
 
@@ -338,7 +347,7 @@ class SalesFacadeTest extends Test
         $item1Entity = SpySalesOrderItemQuery::create()
             ->findOneByName('item-test-1');
 
-        $this->assertSame($process->getIdOmsOrderProcess(), $item1Entity->getFkOmsOrderProcess());
+        $this->assertSame($processEntity->getIdOmsOrderProcess(), $item1Entity->getFkOmsOrderProcess());
     }
 
     /**
@@ -349,6 +358,19 @@ class SalesFacadeTest extends Test
         $orderTransfer = $this->getValidBaseOrderTransfer();
         $orderTransfer = $this->salesFacade->saveOrder($orderTransfer);
         $this->assertNotNull($orderTransfer->getOrderReference());
+    }
+
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return SpyOmsOrderProcess
+     */
+    protected function getProcessEntity()
+    {
+        $omsOrderProcessEntity = (new SpyOmsOrderProcessQuery())->filterByName('CheckoutTest01')->findOneOrCreate();
+        $omsOrderProcessEntity->save();
+
+        return $omsOrderProcessEntity;
     }
 
 }

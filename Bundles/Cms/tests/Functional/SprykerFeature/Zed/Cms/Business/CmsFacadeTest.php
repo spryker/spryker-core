@@ -6,15 +6,12 @@
 
 namespace Functional\SprykerFeature\Zed\Cms\Business;
 
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
@@ -70,17 +67,19 @@ class CmsFacadeTest extends Test
     protected function setUp()
     {
         parent::setUp();
-        $this->locator = Locator::getInstance();
+
         $container = new Container();
         $container = (new CmsDependencyProvider())
             ->provideBusinessLayerDependencies($container);
-        $this->cmsFacade = new CmsFacade(new Factory('Cms'), $this->locator);
-        $this->cmsFacade->setExternalDependencies($container);
-        $this->urlFacade = new UrlFacade(new Factory('Url'), $this->locator);
 
-        $this->localeFacade = new LocaleFacade(new Factory('Locale'), $this->locator);
-        $this->cmsQueryContainer = new CmsQueryContainer(new PersistenceFactory('Cms'), $this->locator);
-        $this->glossaryQueryContainer = new GlossaryQueryContainer(new PersistenceFactory('Glossary'), $this->locator);
+        $this->cmsFacade = new CmsFacade();
+        $this->cmsFacade->setExternalDependencies($container);
+
+        $this->urlFacade = new UrlFacade();
+
+        $this->localeFacade = new LocaleFacade();
+        $this->cmsQueryContainer = new CmsQueryContainer();
+        $this->glossaryQueryContainer = new GlossaryQueryContainer();
 
         $this->buildGlossaryFacade();
     }
@@ -328,8 +327,7 @@ class CmsFacadeTest extends Test
      */
     protected function buildGlossaryFacade()
     {
-        $this->glossaryFacade = new GlossaryFacade(new Factory('Glossary'), $this->locator);
-
+        $this->glossaryFacade = new GlossaryFacade();
         $container = new Container();
 
         $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
@@ -337,7 +335,6 @@ class CmsFacadeTest extends Test
         };
 
         $this->glossaryFacade->setExternalDependencies($container);
-
         $this->glossaryFacade->setOwnQueryContainer($this->glossaryQueryContainer);
     }
 

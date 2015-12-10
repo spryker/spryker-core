@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Country\Business\CountryFacade;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
 use Orm\Zed\Country\Persistence\SpyCountry;
-use SprykerEngine\Zed\Kernel\Persistence\Factory;
 
 /**
  * @group Country
@@ -45,9 +44,9 @@ class CountryFacadeTest extends AbstractFunctionalTest
     protected function setUp()
     {
         parent::setUp();
-        $this->locator = Locator::getInstance();
-        $this->countryFacade = $this->getFacade();
-        $this->countryQueryContainer = new CountryQueryContainer(new Factory('Country'), $this->locator);
+
+        $this->countryFacade = new CountryFacade();
+        $this->countryQueryContainer = new CountryQueryContainer();
     }
 
     /**

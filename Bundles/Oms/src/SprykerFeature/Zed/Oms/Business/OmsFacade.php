@@ -312,8 +312,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function selectProcess(OrderTransfer $transferOrder)
     {
-        return $this->getDependencyContainer()
-            ->getConfig()
+        return $this->getDependencyContainer()->createProcessSelector()
             ->selectProcess($transferOrder);
     }
 

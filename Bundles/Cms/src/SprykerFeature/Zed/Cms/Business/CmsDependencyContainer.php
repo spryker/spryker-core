@@ -10,7 +10,6 @@ use SprykerFeature\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use SprykerFeature\Zed\Cms\Business\Block\BlockManager;
 use SprykerFeature\Zed\Cms\Business\Template\TemplateManager;
 use SprykerFeature\Zed\Cms\Business\Page\PageManager;
-use Generated\Zed\Ide\FactoryAutoCompletion\CmsBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Cms\Business\Block\BlockManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface;
@@ -23,9 +22,6 @@ use sprykerfeature\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Symfony\Component\Finder\Finder;
 
-/**
- * @method CmsBusiness getFactory()
- */
 class CmsDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

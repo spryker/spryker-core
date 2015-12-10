@@ -10,7 +10,6 @@ use SprykerFeature\Zed\Distributor\Business\Writer\ItemTypeWriter;
 use SprykerFeature\Zed\Distributor\Business\Marker\LastDistributionMarker;
 use SprykerFeature\Zed\Distributor\Business\Distributor\ItemDistributor;
 use SprykerFeature\Zed\Distributor\Business\Writer\ItemWriter;
-use Generated\Zed\Ide\FactoryAutoCompletion\DistributorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Distributor\Business\Builder\QueueNameBuilderInterface;
 use SprykerFeature\Zed\Distributor\Business\Distributor\ItemDistributorInterface;
@@ -32,7 +31,6 @@ use SprykerFeature\Zed\Distributor\DistributorDependencyProvider;
 
 /**
  * @method DistributorConfig getConfig()
- * @method DistributorBusiness getFactory()
  * @method DistributorQueryContainerInterface getQueryContainer()
  */
 class DistributorDependencyContainer extends AbstractBusinessDependencyContainer

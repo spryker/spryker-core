@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Discount\Business;
 use SprykerFeature\Zed\Discount\Business\Model\VoucherCode;
 use SprykerFeature\Zed\Discount\Business\Model\VoucherPoolCategory;
 use SprykerFeature\Zed\Discount\Business\Model\CartRule;
-use Generated\Zed\Ide\FactoryAutoCompletion\DiscountBusiness;
 use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
@@ -46,7 +45,6 @@ use SprykerFeature\Zed\Discount\Business\Model\DecisionRuleEngine;
 use SprykerEngine\Shared\Kernel\Store;
 
 /**
- * @method DiscountBusiness getFactory()
  * @method DiscountConfig getConfig()
  * @method DiscountQueryContainer getQueryContainer()
  */
@@ -92,8 +90,6 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCartRule()
     {
-        $store = $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
-
         return new CartRule(
             $this->getQueryContainer(),
             $this->getStoreConfig(),

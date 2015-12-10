@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Wishlist\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\WishlistBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Wishlist\Business\Model\Customer;
 use SprykerFeature\Zed\Wishlist\Business\Operator\AbstractOperator;
@@ -23,7 +22,6 @@ use SprykerFeature\Zed\Wishlist\Business\Operator\Decrease;
 use SprykerFeature\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
- * @method WishlistBusiness getFactory()
  * @method WishlistQueryContainer getQueryContainer()
  */
 class WishlistDependencyContainer extends AbstractBusinessDependencyContainer

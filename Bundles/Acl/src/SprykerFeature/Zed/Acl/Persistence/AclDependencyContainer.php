@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Acl\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\AclPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
@@ -17,9 +16,6 @@ use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
-/**
- * @method AclPersistence getFactory()
- */
 class AclDependencyContainer extends AbstractPersistenceDependencyContainer
 {
 

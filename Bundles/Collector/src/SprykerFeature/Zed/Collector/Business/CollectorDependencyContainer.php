@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Collector\Business\Model\FailedResult;
 use SprykerFeature\Zed\Collector\Business\Exporter\ExportMarker;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\RedisWriter;
 use SprykerFeature\Zed\Collector\Business\Exporter\KeyValueCollector;
-use Generated\Zed\Ide\FactoryAutoCompletion\CollectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
@@ -38,7 +37,6 @@ use SprykerFeature\Zed\Collector\CollectorDependencyProvider;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 
 /**
- * @method CollectorBusiness getFactory()
  * @method CollectorConfig getConfig()
  */
 class CollectorDependencyContainer extends AbstractBusinessDependencyContainer

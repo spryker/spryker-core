@@ -7,7 +7,6 @@ namespace Functional\SprykerFeature\Zed\Glossary\Communication\Grid;
 
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
@@ -70,7 +69,7 @@ class TranslationGridTest extends Test
      */
     private function getLocaleFacade()
     {
-        return new LocaleFacade(new Factory('Locale'), $this->getLocator());
+        return new LocaleFacade();
     }
 
     /**

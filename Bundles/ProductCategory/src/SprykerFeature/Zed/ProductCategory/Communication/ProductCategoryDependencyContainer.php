@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\ProductCategory\Communication;
 
 use SprykerFeature\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryCommunication;
 use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
@@ -26,7 +25,6 @@ use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 
 /**
- * @method ProductCategoryCommunication getFactory()
  * @method ProductCategoryQueryContainer getQueryContainer()
  */
 class ProductCategoryDependencyContainer extends AbstractCommunicationDependencyContainer

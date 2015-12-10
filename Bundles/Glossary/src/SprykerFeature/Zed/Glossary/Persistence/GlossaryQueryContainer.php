@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Glossary\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -19,9 +18,6 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 
-/**
- * @method GlossaryPersistence getFactory()
- */
 class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQueryContainerInterface
 {
 

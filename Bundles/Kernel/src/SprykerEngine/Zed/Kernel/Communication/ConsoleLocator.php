@@ -51,10 +51,6 @@ class ConsoleLocator extends AbstractLocator
         $factory = $this->getFactory($bundle);
         $resolvedConsole = $factory->create('Console' . $className);
 
-        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
-            $resolvedConsole->setDependencyContainer($factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator));
-        }
-
         $bundleName = lcfirst($bundle);
 
         $bundleConfigLocator = new BundleDependencyProviderLocator(); // @todo Make singleton because of performance

@@ -9,8 +9,6 @@ namespace Functional\SprykerFeature\Zed\Tax;
 use Codeception\TestCase\Test;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Tax\Business\TaxFacade;
 use Generated\Zed\Ide\AutoCompletion;
 
@@ -47,8 +45,7 @@ class ReaderTest extends Test
     {
         parent::setUp();
 
-        $this->locator = Locator::getInstance();
-        $this->taxFacade = new TaxFacade(new Factory('Tax'), $this->locator);
+        $this->taxFacade = new TaxFacade();
     }
 
     /**

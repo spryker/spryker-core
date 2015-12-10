@@ -8,15 +8,11 @@ namespace SprykerFeature\Client\Customer\Service;
 
 use SprykerFeature\Client\Customer\Service\Session\CustomerSession;
 use SprykerFeature\Client\Customer\Service\Zed\CustomerStub;
-use Generated\Client\Ide\FactoryAutoCompletion\CustomerService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Customer\CustomerDependencyProvider;
 use SprykerFeature\Client\Customer\Service\Session\CustomerSessionInterface;
 use SprykerFeature\Client\Customer\Service\Zed\CustomerStubInterface;
 
-/**
- * @method CustomerService getFactory()
- */
 class CustomerDependencyContainer extends AbstractServiceDependencyContainer
 {
 

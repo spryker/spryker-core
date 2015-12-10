@@ -9,7 +9,6 @@ namespace Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Pl
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 class FooPlugin extends AbstractPlugin

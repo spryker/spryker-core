@@ -6,16 +6,14 @@
 
 namespace SprykerEngine\Zed\Kernel\Business;
 
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractFacade implements FacadeInterface
 {
-
-    const DEPENDENCY_CONTAINER = 'DependencyContainer';
 
     /**
      * @var DependencyContainerInterface
@@ -23,29 +21,65 @@ abstract class AbstractFacade implements FacadeInterface
     private $dependencyContainer;
 
     /**
-     * TODO Locator will be removed
-     *
-     * @param FactoryInterface $factory
-     * @param Locator $locator
+     * @var AbstractQueryContainer
      */
-    public function __construct(FactoryInterface $factory, Locator $locator)
+    private $queryContainer;
+
+    /**
+     * @var Container
+     */
+    private $container;
+
+    /**
+     * @param AbstractBusinessDependencyContainer $businessDependencyContainer
+     *
+     * @return self
+     */
+    public function setDependencyContainer(AbstractBusinessDependencyContainer $businessDependencyContainer)
     {
-        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
-            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
-        }
+        $this->dependencyContainer = $businessDependencyContainer;
+
+        return $this;
+    }
+
+    /**
+     * @param AbstractQueryContainer $queryContainer
+     *
+     * @return self
+     */
+    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
+    {
+        $this->queryContainer = $queryContainer;
+
+        return $this;
+    }
+
+    /**
+     * @return AbstractQueryContainer
+     */
+    protected function getQueryContainer()
+    {
+        return $this->queryContainer;
     }
 
     /**
      * @param Container $container
      *
-     * @return void
+     * @return self
      */
     public function setExternalDependencies(Container $container)
     {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setContainer($container);
-        }
+        $this->container = $container;
+
+        return $this;
+    }
+
+    /**
+     * @return Container
+     */
+    protected function getContainer()
+    {
+        return $this->container;
     }
 
     /**
@@ -53,22 +87,37 @@ abstract class AbstractFacade implements FacadeInterface
      */
     protected function getDependencyContainer()
     {
+        if ($this->dependencyContainer === null) {
+            $this->dependencyContainer = $this->resolveDependencyContainer();
+        }
+
+        if ($this->getQueryContainer() !== null) {
+            $this->dependencyContainer->setQueryContainer($this->getQueryContainer());
+        }
+
+        if ($this->getContainer() !== null) {
+            $this->dependencyContainer->setContainer($this->getContainer());
+        }
+
         return $this->dependencyContainer;
     }
 
     /**
-     * TODO move to constructor
+     * @throws DependencyContainerNotFoundException
      *
-     * @param AbstractQueryContainer $queryContainer
-     *
-     * @return void
+     * @return AbstractBusinessDependencyContainer
      */
-    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
+    private function resolveDependencyContainer()
     {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setQueryContainer($queryContainer);
-        }
+        return $this->getDependencyContainerResolver()->resolve($this);
+    }
+
+    /**
+     * @return DependencyContainerResolver
+     */
+    protected function getDependencyContainerResolver()
+    {
+        return new DependencyContainerResolver();
     }
 
 }

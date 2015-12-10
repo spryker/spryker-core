@@ -21,10 +21,8 @@ use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItem
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Calculation\CalculationConfig;
-use Generated\Zed\Ide\FactoryAutoCompletion\CalculationBusiness;
 
 /**
- * @method CalculationBusiness getFactory()
  * @method CalculationConfig getConfig()
  */
 class CalculationDependencyContainer extends AbstractBusinessDependencyContainer

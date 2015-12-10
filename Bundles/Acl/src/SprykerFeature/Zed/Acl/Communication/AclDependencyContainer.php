@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Acl\Communication;
 
 use SprykerFeature\Zed\Acl\Communication\Table\GroupTable;
-use Generated\Zed\Ide\FactoryAutoCompletion\AclCommunication;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
@@ -23,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method AclCommunication getFactory()
  * @method AclQueryContainer getQueryContainer()
  * @method AclConfig getConfig()
  */

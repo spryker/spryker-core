@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerEngine\Zed\Kernel\AbstractUnitTest;
+use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
@@ -47,6 +48,7 @@ class ExpenseTest extends AbstractUnitTest
         $order->getCalculableObject()->addItem($item);
 
         $calculator = new ExpensePriceToPayCalculatorPlugin();
+        $calculator->setFacade(new CalculationFacade());
         $calculator->recalculate($order);
 
         foreach ($order->getCalculableObject()->getItems() as $item) {
@@ -75,6 +77,7 @@ class ExpenseTest extends AbstractUnitTest
         $order->getCalculableObject()->addItem($item);
 
         $calculator = new ExpensePriceToPayCalculatorPlugin();
+        $calculator->setFacade(new CalculationFacade());
         $calculator->recalculate($order);
 
         foreach ($order->getCalculableObject()->getItems() as $item) {
@@ -105,6 +108,7 @@ class ExpenseTest extends AbstractUnitTest
         $order->getCalculableObject()->addItem($item);
 
         $calculator = new ExpensePriceToPayCalculatorPlugin();
+        $calculator->setFacade(new CalculationFacade());
         $calculator->recalculate($order);
 
         foreach ($order->getCalculableObject()->getItems() as $item) {

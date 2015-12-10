@@ -5,12 +5,9 @@
 
 namespace Functional\SprykerFeature\Zed\Glossary\Business;
 
-use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery;
@@ -23,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group GlossaryFacade
  * @group Business
  */
-class GlossaryFacadeTest extends Test
+class GlossaryFacadeTest extends AbstractFunctionalTest
 {
 
     const GLOSSARY_KEY = 'glossary_key';
@@ -66,15 +63,7 @@ class GlossaryFacadeTest extends Test
      */
     private function getLocaleFacade()
     {
-        return new LocaleFacade(new Factory('Locale'), $this->getLocator());
-    }
-
-    /**
-     * @return AutoCompletion|Locator
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
+        return new LocaleFacade();
     }
 
     /**
@@ -82,7 +71,7 @@ class GlossaryFacadeTest extends Test
      */
     private function getGlossaryFacade()
     {
-        return $this->getLocator()->glossary()->facade();
+        return $this->getFacade();
     }
 
     /**

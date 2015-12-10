@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Distributor\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\DistributorPersistence;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -13,9 +12,6 @@ use Orm\Zed\Distributor\Persistence\SpyDistributorItemTypeQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use Orm\Zed\Distributor\Persistence\SpyDistributorReceiverQuery;
 
-/**
- * @method DistributorPersistence getFactory()
- */
 class DistributorQueryContainer extends AbstractQueryContainer implements
     DistributorQueryContainerInterface
 {

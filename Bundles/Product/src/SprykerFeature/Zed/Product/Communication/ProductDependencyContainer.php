@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Product\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\ProductCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
@@ -22,7 +21,6 @@ use SprykerFeature\Zed\Url\Business\UrlFacade;
 /**
  * @method ProductQueryContainer getQueryContainer()
  * @method ProductConfig getConfig()
- * @method ProductCommunication getFactory()
  */
 class ProductDependencyContainer extends AbstractCommunicationDependencyContainer
 {

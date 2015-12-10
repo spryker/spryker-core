@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Stock\Business;
 use SprykerFeature\Zed\Stock\Business\Model\Writer;
 use SprykerFeature\Zed\Stock\Business\Model\Reader;
 use SprykerFeature\Zed\Stock\Business\Model\Calculator;
-use Generated\Zed\Ide\FactoryAutoCompletion\StockBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Stock\Dependency\Facade\StockToProductInterface;
 use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
@@ -20,7 +19,6 @@ use SprykerFeature\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use SprykerFeature\Zed\Stock\StockConfig;
 
 /**
- * @method StockBusiness getFactory()
  * @method StockConfig getConfig()
  */
 class StockDependencyContainer extends AbstractBusinessDependencyContainer

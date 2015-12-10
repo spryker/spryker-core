@@ -124,6 +124,9 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
+     * @TODO Refactor this code to make conditions throw specific exceptions, catch \Exception should not be used here
+     * @see https://github.com/spryker/spryker/issues/967
+     *
      * @param CheckoutRequestTransfer $checkoutRequest
      * @param CheckoutResponseTransfer $checkoutResponse
      *

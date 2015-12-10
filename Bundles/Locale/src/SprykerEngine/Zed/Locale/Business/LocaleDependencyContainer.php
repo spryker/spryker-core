@@ -6,7 +6,6 @@
 
 namespace SprykerEngine\Zed\Locale\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\LocaleBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Locale\Business\Internal\Install\LocaleInstaller;
@@ -15,7 +14,6 @@ use SprykerEngine\Zed\Locale\LocaleConfig;
 use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 /**
- * @method LocaleBusiness getFactory()
  * @method LocaleConfig getConfig()
  */
 class LocaleDependencyContainer extends AbstractBusinessDependencyContainer
@@ -38,7 +36,7 @@ class LocaleDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createTransferGenerator()
     {
-        return $this->getFactory()->createTransferGenerator();
+        return new TransferGenerator();
     }
 
     /**

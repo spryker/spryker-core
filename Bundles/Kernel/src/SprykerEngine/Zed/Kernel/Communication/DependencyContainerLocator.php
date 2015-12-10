@@ -16,11 +16,6 @@ class DependencyContainerLocator extends AbstractLocator
     const DEPENDENCY_CONTAINER_SUFFIX = 'DependencyContainer';
 
     /**
-     * @var string
-     */
-    protected $factoryClassNamePattern = '\\{{namespace}}\\Zed\\{{bundle}}\\Communication\\Factory';
-
-    /**
      * @param string $bundle
      * @param LocatorLocatorInterface $locator
      * @param string|null $className

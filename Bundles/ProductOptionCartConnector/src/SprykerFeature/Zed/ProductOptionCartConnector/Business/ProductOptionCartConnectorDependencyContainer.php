@@ -6,7 +6,6 @@
 namespace SprykerFeature\Zed\ProductOptionCartConnector\Business;
 
 use SprykerFeature\Zed\ProductOptionCartConnector\Business\Manager\ProductOptionManager;
-use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionCartConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 use SprykerFeature\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyProvider;
@@ -15,7 +14,6 @@ use SprykerFeature\Zed\ProductOptionCartConnector\ProductOptionCartConnectorConf
 
 /**
  * @method ProductOptionCartConnectorDependencyContainer getDependencyContainer()
- * @method ProductOptionCartConnectorBusiness getFactory()
  * @method ProductOptionCartConnectorConfig getConfig()
  */
 class ProductOptionCartConnectorDependencyContainer extends AbstractBusinessDependencyContainer

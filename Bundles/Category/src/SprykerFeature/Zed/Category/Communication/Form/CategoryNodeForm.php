@@ -7,12 +7,9 @@
 namespace SprykerFeature\Zed\Category\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints;
 
 class CategoryNodeForm extends AbstractForm
@@ -42,14 +39,9 @@ class CategoryNodeForm extends AbstractForm
     }
 
     /**
-     * @var FactoryInterface|CategoryCommunication
-     */
-    protected $factory;
-
-    /**
      * @var LocaleTransfer
      */
-    protected $locale;
+    protected $localeTransfer;
 
     /**
      * @var CategoryQueryContainer
@@ -57,20 +49,11 @@ class CategoryNodeForm extends AbstractForm
     protected $queryContainer;
 
     /**
-     * @param Request $request
-     * @param FactoryInterface $factory
-     * @param LocaleTransfer $locale
-     * @param CategoryQueryContainer $queryContainer
+     * @param LocaleTransfer $localeTransfer
      */
-    public function __construct(
-        Request $request,
-        FactoryInterface $factory,
-        LocaleTransfer $locale,
-        CategoryQueryContainer $queryContainer = null
-    ) {
-        parent::__construct($request, $queryContainer);
-        $this->factory = $factory;
-        $this->locale = $locale;
+    public function __construct(LocaleTransfer $localeTransfer)
+    {
+        $this->localeTransfer = $localeTransfer;
     }
 
     /**
@@ -81,6 +64,7 @@ class CategoryNodeForm extends AbstractForm
         $nodeEntity = $this->queryContainer
             ->queryNodeById($this->getCategoryIdNode())
             ->findOne();
+
         if ($nodeEntity !== null) {
             return $nodeEntity->toArray();
         }
@@ -141,7 +125,7 @@ class CategoryNodeForm extends AbstractForm
     protected function getCategories()
     {
         $categories = $this->queryContainer
-            ->queryCategory($this->locale->getIdLocale())
+            ->queryCategory($this->localeTransfer->getIdLocale())
             ->setFormatter(new PropelArraySetFormatter())
             ->find();
 
@@ -166,7 +150,7 @@ class CategoryNodeForm extends AbstractForm
     protected function getParentCategories()
     {
         $categoryNodes = $this->queryContainer
-            ->queryCategoryNode($this->locale->getIdLocale())
+            ->queryCategoryNode($this->localeTransfer->getIdLocale())
             ->setFormatter(new PropelArraySetFormatter())
             ->find();
 

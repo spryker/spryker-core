@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Payone\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\PayoneCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Payone\PayoneConfig;
@@ -16,7 +15,6 @@ use SprykerFeature\Zed\Refund\Business\RefundFacade;
 
 /**
  * @method PayoneConfig getConfig()
- * @method PayoneCommunication getFactory()
  * @method PayoneQueryContainerInterface getQueryContainer()
  */
 class PayoneDependencyContainer extends AbstractCommunicationDependencyContainer

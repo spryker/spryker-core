@@ -5,7 +5,6 @@ namespace Functional\SprykerFeature\Zed\GlossaryDistributor\Business;
 use Functional\SprykerFeature\Zed\GlossaryDistributor\Mock\MockQueueFacade;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\Criteria;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
@@ -17,7 +16,6 @@ use Orm\Zed\Distributor\Persistence\SpyDistributorItemQuery;
 use Orm\Zed\Distributor\Persistence\SpyDistributorItemType;
 use Orm\Zed\Distributor\Persistence\SpyDistributorItemTypeQuery;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerFeature\Zed\Distributor\DistributorDependencyProvider;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainer;
 use Orm\Zed\Distributor\Persistence\SpyDistributorReceiver;
@@ -204,7 +202,7 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
      */
     private function getMockDistributorFacade()
     {
-        $distributorFacade = new DistributorFacade(new Factory('Distributor'), $this->getLocator());
+        $distributorFacade = new DistributorFacade();
         $container = new Container();
         $container[DistributorDependencyProvider::FACADE_QUEUE] = function () {
             return $this->queueFacade;
@@ -219,7 +217,7 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
         };
         $distributorFacade->setExternalDependencies($container);
 
-        $queryContainer = new DistributorQueryContainer(new PersistenceFactory('Distributor'), $this->getLocator());
+        $queryContainer = new DistributorQueryContainer();
         $distributorFacade->setOwnQueryContainer($queryContainer);
 
         return $distributorFacade;

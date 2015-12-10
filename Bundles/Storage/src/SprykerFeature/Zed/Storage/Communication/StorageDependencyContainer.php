@@ -6,16 +6,12 @@
 
 namespace SprykerFeature\Zed\Storage\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\StorageCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Zed\Collector\Business\CollectorFacade;
 use SprykerFeature\Zed\Storage\Communication\Table\StorageTable;
 use SprykerFeature\Zed\Storage\StorageDependencyProvider;
 
-/**
- * @method StorageCommunication getFactory()
- */
 class StorageDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 

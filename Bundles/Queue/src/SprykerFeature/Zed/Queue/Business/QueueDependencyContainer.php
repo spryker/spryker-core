@@ -5,7 +5,6 @@ namespace SprykerFeature\Zed\Queue\Business;
 use SprykerFeature\Zed\Queue\Business\Provider\TaskProvider;
 use SprykerFeature\Zed\Queue\Business\Worker\TaskWorker;
 use SprykerFeature\Zed\Queue\Business\Model\QueueConnection;
-use Generated\Zed\Ide\FactoryAutoCompletion\QueueBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
 use SprykerFeature\Zed\Queue\Business\Provider\TaskProviderInterface;
@@ -16,7 +15,6 @@ use SprykerFeature\Zed\Queue\QueueConfig;
 use SprykerFeature\Zed\Queue\QueueDependencyProvider;
 
 /**
- * @method QueueBusiness getFactory()
  * @method QueueConfig getConfig()
  */
 class QueueDependencyContainer extends AbstractBusinessDependencyContainer

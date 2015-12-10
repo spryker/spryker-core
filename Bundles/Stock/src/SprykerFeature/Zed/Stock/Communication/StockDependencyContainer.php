@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Stock\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\StockCommunication;
 use SprykerFeature\Zed\Stock\Business\StockFacade;
 use SprykerFeature\Zed\Stock\Communication\Form\StockForm;
 use SprykerFeature\Zed\Stock\Communication\Form\StockProductForm;
@@ -16,9 +15,6 @@ use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @method StockCommunication getFactory()
- */
 class StockDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 

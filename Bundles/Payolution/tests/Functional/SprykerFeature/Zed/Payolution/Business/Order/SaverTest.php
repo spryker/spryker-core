@@ -10,9 +10,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
@@ -21,7 +18,6 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use SprykerFeature\Zed\Payolution\Business\Order\Saver;
 use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
-use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
@@ -91,11 +87,7 @@ class SaverTest extends Test
      */
     private function getPayolutionBusinessDependencyContainer()
     {
-        $factory = new Factory('Payolution');
-        $locator = Locator::getInstance();
-        $baseConfig = Config::getInstance();
-        $config = new PayolutionConfig($baseConfig, $locator);
-        $dependencyContainer = new PayolutionDependencyContainer($factory, $locator, $config);
+        $dependencyContainer = new PayolutionDependencyContainer();
 
         return $dependencyContainer;
     }

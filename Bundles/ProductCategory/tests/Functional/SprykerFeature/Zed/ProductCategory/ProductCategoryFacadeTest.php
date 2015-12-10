@@ -15,8 +15,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
@@ -75,7 +73,7 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $this->localeFacade = $this->locator->locale()->facade();
         $this->productFacade = $this->locator->product()->facade();
         $this->categoryFacade = $this->locator->category()->facade();
-        $this->productCategoryFacade = new ProductCategoryFacade(new Factory('ProductCategory'), $this->locator);
+        $this->productCategoryFacade = new ProductCategoryFacade();
 
         $container = new Container();
         $dependencyProvider = new ProductCategoryDependencyProvider();

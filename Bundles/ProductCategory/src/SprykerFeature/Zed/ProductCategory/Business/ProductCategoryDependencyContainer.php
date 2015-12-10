@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
@@ -17,9 +16,6 @@ use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchI
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
-/**
- * @method ProductCategoryBusiness getFactory()
- */
 class ProductCategoryDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

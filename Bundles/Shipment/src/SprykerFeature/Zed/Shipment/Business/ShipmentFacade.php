@@ -10,11 +10,9 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ShipmentBusiness getFactory()
  * @method ShipmentDependencyContainer getDependencyContainer()
  */
 class ShipmentFacade extends AbstractFacade

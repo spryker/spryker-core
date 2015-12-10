@@ -11,7 +11,6 @@ use SprykerFeature\Zed\Newsletter\Business\Subscription\DoubleOptInHandler;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SingleOptInHandler;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberManager;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriptionManager;
-use Generated\Zed\Ide\FactoryAutoCompletion\NewsletterBusiness;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface;
@@ -24,7 +23,6 @@ use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 
 /**
- * @method NewsletterBusiness getFactory()
  * @method NewsletterConfig getConfig()
  * @method NewsletterQueryContainer getQueryContainer()
  */

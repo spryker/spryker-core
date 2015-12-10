@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication\Controller;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
 use Propel\Runtime\Map\TableMap;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
@@ -17,7 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method GlossaryCommunication getFactory()
  * @method GlossaryDependencyContainer getDependencyContainer()
  * @method GlossaryFacade getFacade()
  * @method GlossaryQueryContainer getQueryContainer()

@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Glossary\Business;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Glossary\Business\Key\KeyManager;
 use SprykerFeature\Zed\Glossary\Business\Translation\TranslationManager;
-use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Glossary\Business\Key\KeyManagerInterface;
 use SprykerFeature\Zed\Glossary\Business\Translation\TranslationManagerInterface;
@@ -19,7 +18,6 @@ use SprykerFeature\Zed\Glossary\GlossaryConfig;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
- * @method GlossaryBusiness getFactory()
  * @method GlossaryConfig getConfig()
  * @method GlossaryQueryContainerInterface getQueryContainer()
  */

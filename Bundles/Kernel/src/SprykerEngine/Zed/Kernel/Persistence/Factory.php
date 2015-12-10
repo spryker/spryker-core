@@ -7,9 +7,11 @@
 namespace SprykerEngine\Zed\Kernel\Persistence;
 
 use SprykerEngine\Shared\Kernel\AbstractFactory;
-use SprykerEngine\Zed\Kernel\BundleConfigLocator;
 use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
+/**
+ * @deprecated Use "new" for instance creation, do not use Factory anymore. This will be removed soon
+ */
 class Factory extends AbstractFactory
 {
 
@@ -41,13 +43,6 @@ class Factory extends AbstractFactory
     public function create($class)
     {
         $arguments = func_get_args();
-
-        if (in_array($class, $this->baseClasses)) {
-            $bundleConfigLocator = new BundleConfigLocator();
-            $bundleConfig = $bundleConfigLocator->locate($this->getBundle(), $arguments[2]);
-            $class = $this->getBundle() . $class;
-            $arguments[] = $bundleConfig;
-        }
 
         array_shift($arguments);
 

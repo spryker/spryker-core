@@ -10,7 +10,6 @@ use SprykerFeature\Zed\Category\Business\Generator\UrlPathGenerator;
 use SprykerFeature\Zed\Category\Business\Tree\ClosureTableWriter;
 use SprykerFeature\Zed\Category\Business\Tree\NodeWriter;
 use SprykerFeature\Zed\Category\Business\Model\CategoryWriter;
-use Generated\Zed\Ide\FactoryAutoCompletion\CategoryBusiness;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManager;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Business\Model\CategoryWriterInterface;
@@ -28,7 +27,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
- * @method CategoryBusiness getFactory()
  * @method CategoryQueryContainer getQueryContainer()
  */
 class CategoryDependencyContainer extends AbstractBusinessDependencyContainer

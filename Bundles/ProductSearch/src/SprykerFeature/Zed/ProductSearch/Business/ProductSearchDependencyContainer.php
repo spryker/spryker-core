@@ -12,7 +12,6 @@ use SprykerFeature\Zed\ProductSearch\Business\Locator\OperationLocator;
 use SprykerFeature\Zed\ProductSearch\Business\Operation\DefaultOperation;
 use SprykerFeature\Zed\ProductSearch\Business\Processor\ProductSearchProcessor;
 use SprykerFeature\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
-use Generated\Zed\Ide\FactoryAutoCompletion\ProductSearchBusiness;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
@@ -31,7 +30,6 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerFeature\Zed\ProductSearch\ProductSearchConfig;
 
 /**
- * @method ProductSearchBusiness getFactory()
  * @method ProductSearchConfig getConfig()
  */
 class ProductSearchDependencyContainer extends AbstractBusinessDependencyContainer

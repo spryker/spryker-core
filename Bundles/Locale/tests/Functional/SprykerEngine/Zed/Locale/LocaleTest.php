@@ -6,10 +6,7 @@
 
 namespace Functional\SprykerEngine\Zed\Locale;
 
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use Codeception\TestCase\Test;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainer;
 use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;
@@ -18,7 +15,7 @@ class LocaleTest extends Test
 {
 
     /**
-     * @var \SprykerEngine\Zed\Locale\Business\LocaleFacade
+     * @var LocaleFacade
      */
     protected $localeFacade;
 
@@ -33,9 +30,9 @@ class LocaleTest extends Test
     protected function setUp()
     {
         parent::setUp();
-        $locator = Locator::getInstance();
-        $this->localeFacade = new LocaleFacade(new Factory('Locale'), $locator);
-        $this->localeQueryContainer = new LocaleQueryContainer(new PersistenceFactory('Locale'), $locator);
+
+        $this->localeFacade = new LocaleFacade();
+        $this->localeQueryContainer = new LocaleQueryContainer();
     }
 
     /**

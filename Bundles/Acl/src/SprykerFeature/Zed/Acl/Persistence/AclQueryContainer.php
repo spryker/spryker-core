@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Acl\Persistence;
 
 use Generated\Shared\Transfer\RolesTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\AclPersistence;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -29,7 +28,6 @@ use Orm\Zed\User\Persistence\SpyUserQuery;
 
 /**
  * @method AclDependencyContainer getDependencyContainer()
- * @method AclPersistence getFactory()
  */
 class AclQueryContainer extends AbstractQueryContainer
 {

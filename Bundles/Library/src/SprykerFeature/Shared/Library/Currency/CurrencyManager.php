@@ -5,6 +5,7 @@
  */
 
 namespace SprykerFeature\Shared\Library\Currency;
+
 use SprykerEngine\Shared\Kernel\Store;
 
 /**

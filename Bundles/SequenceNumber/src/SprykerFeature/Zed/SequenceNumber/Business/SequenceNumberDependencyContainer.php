@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\SequenceNumber\Business;
 use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumber;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\SequenceNumberBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
 use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumberInterface;
@@ -19,7 +18,6 @@ use Propel\Runtime\Propel;
 
 /**
  * @method SequenceNumberConfig getConfig()
- * @method SequenceNumberBusiness getFactory()
  * @method SequenceNumberQueryContainerInterface getQueryContainer()
  */
 class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContainer

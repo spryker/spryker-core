@@ -4,14 +4,10 @@ namespace SprykerFeature\Zed\GlossaryQueue\Business;
 
 use SprykerFeature\Zed\GlossaryQueue\Business\Model\QueueTranslationManager;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryQueueBusiness;
 use SprykerFeature\Zed\GlossaryQueue\Business\Model\QueueTranslationManagerInterface;
 use SprykerFeature\Zed\GlossaryQueue\Dependency\Facade\GlossaryQueueToGlossaryInterface;
 use SprykerFeature\Zed\GlossaryQueue\GlossaryQueueDependencyProvider;
 
-/**
- * @method GlossaryQueueBusiness getFactory()
- */
 class GlossaryQueueDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

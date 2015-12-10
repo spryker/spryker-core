@@ -6,10 +6,7 @@
 
 namespace Functional\SprykerEngine\Zed\Transfer\Business\Model;
 
-use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Transfer\Business\TransferFacade;
 use SprykerEngine\Zed\Transfer\TransferConfig;
 use Symfony\Component\Finder\Finder;
@@ -29,17 +26,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
      */
     private function getFacade()
     {
-        $factory = new Factory('Transfer');
-
-        return new TransferFacade($factory, $this->getLocator());
-    }
-
-    /**
-     * @return Locator
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
+        return new TransferFacade();
     }
 
     /**
@@ -80,7 +67,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfig()
     {
-        return new TransferConfig(Config::getInstance(), $this->getLocator());
+        return new TransferConfig();
     }
 
 }

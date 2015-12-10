@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\SearchPage\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\SearchPageBusiness;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\SearchPage\Business\Installer\DocumentAttributeInstaller;
@@ -22,9 +21,6 @@ use SprykerFeature\Zed\SearchPage\Business\Writer\PageElementWriter;
 use SprykerFeature\Zed\SearchPage\Dependency\Facade\SearchPageToTouchInterface;
 use SprykerFeature\Zed\SearchPage\Persistence\SearchPageQueryContainer;
 
-/**
- * @method SearchPageBusiness getFactory()
- */
 class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

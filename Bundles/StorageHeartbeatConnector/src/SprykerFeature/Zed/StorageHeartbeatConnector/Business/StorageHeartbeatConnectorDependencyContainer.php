@@ -7,16 +7,12 @@
 namespace SprykerFeature\Zed\StorageHeartbeatConnector\Business;
 
 use SprykerFeature\Zed\StorageHeartbeatConnector\Business\Assistant\StorageHealthIndicator;
-use Generated\Zed\Ide\FactoryAutoCompletion\StorageHeartbeatConnectorBusiness;
 use Predis\Client;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 
-/**
- * @method StorageHeartbeatConnectorBusiness getFactory()
- */
 class StorageHeartbeatConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

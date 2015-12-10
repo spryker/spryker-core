@@ -21,8 +21,6 @@ use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use Generated\Zed\Ide\FactoryAutoCompletion\PayoneBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use SprykerFeature\Zed\Payone\Business\Key\HashGenerator;
@@ -38,7 +36,6 @@ use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInte
 use SprykerFeature\Zed\Payone\Business\ApiLog\ApiLogFinder;
 
 /**
- * @method Factory|PayoneBusiness getFactory()
  * @method PayoneConfig getConfig()
  */
 class PayoneDependencyContainer extends AbstractBusinessDependencyContainer

@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesForm;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use SprykerFeature\Zed\Discount\DiscountConfig;
@@ -31,7 +30,6 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**
  * @method DiscountQueryContainer getQueryContainer()
- * @method DiscountCommunication getFactory()
  * @method DiscountConfig getConfig()
  */
 class DiscountDependencyContainer extends AbstractCommunicationDependencyContainer
@@ -45,10 +43,10 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function createVoucherForm($allowMultiple=false)
     {
         $voucherForm = new VoucherForm(
-                $this->getQueryContainer(),
-                $this->getConfig(),
-                $allowMultiple
-            );
+            $this->getQueryContainer(),
+            $this->getConfig(),
+            $allowMultiple
+        );
 
         return $this->createForm($voucherForm);
     }
@@ -114,9 +112,9 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCartRuleForm()
     {
         $cartRuleForm = new CartRuleForm(
-                $this->getConfig(),
-                $this->getDiscountFacade()
-            );
+            $this->getConfig(),
+            $this->getDiscountFacade()
+        );
 
         return $this->createForm($cartRuleForm);
     }

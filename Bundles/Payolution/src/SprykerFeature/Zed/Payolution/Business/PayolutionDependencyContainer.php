@@ -24,10 +24,8 @@ use SprykerFeature\Zed\Payolution\Business\Log\TransactionStatusLogInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionBusiness;
 
 /**
- * @method PayolutionBusiness getFactory()
  * @method PayolutionQueryContainerInterface getQueryContainer()
  * @method PayolutionConfig getConfig()
  */

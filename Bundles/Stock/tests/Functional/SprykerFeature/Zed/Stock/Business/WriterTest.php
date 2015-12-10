@@ -6,9 +6,7 @@
 
 namespace Functional\SprykerFeature\Zed\Stock;
 
-use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
 use Codeception\TestCase\Test;
-use SprykerEngine\Zed\Kernel\Locator;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -17,7 +15,6 @@ use SprykerFeature\Zed\Stock\Business\StockFacade;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
-use SprykerEngine\Zed\Kernel\Persistence\Factory;
 
 /**
  * @group StockTest
@@ -41,9 +38,8 @@ class WriterTest extends Test
     {
         parent::setUp();
 
-        $locator = Locator::getInstance();
-        $this->stockFacade = new StockFacade(new BusinessFactory('Stock'), $locator);
-        $this->stockQueryContainer = new StockQueryContainer(new Factory('Stock'), $locator);
+        $this->stockFacade = new StockFacade();
+        $this->stockQueryContainer = new StockQueryContainer();
     }
 
     /**

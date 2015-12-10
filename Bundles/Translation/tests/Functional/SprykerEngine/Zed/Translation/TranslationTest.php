@@ -7,8 +7,6 @@
 namespace Functional\SprykerEngine\Zed\Translation;
 
 use Codeception\TestCase\Test;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Translation\Business\TranslationFacade;
 
 class TranslationTest extends Test
@@ -23,12 +21,7 @@ class TranslationTest extends Test
     {
         parent::setUp();
 
-        $locator = Locator::getInstance();
-
-        $this->translationFacade = new TranslationFacade(
-            new Factory('Translation'),
-            $locator
-        );
+        $this->translationFacade = new TranslationFacade();
     }
 
     /**

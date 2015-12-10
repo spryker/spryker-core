@@ -9,11 +9,8 @@ namespace SprykerEngine\Zed\Kernel;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEngine\Zed\Kernel\Communication\Factory as CommunicationFactory;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 
 trait InternalClassBuilderForTests
 {
@@ -34,11 +31,7 @@ trait InternalClassBuilderForTests
             $bundle = $this->getBundleFromTestClassName();
         }
 
-        $factory = new BusinessFactory($bundle);
-
-        $facadeClassName = '\\' . $namespace . '\\Zed\\' . $bundle . '\\Business\\' . $bundle . 'Facade';
-        /** @var AbstractFacade $facade */
-        $facade = new $facadeClassName($factory, Locator::getInstance());
+        $facade = $this->getFacadeByClassName($namespace, $bundle);
 
         $queryContainer = $this->getQueryContainer($namespace, $bundle);
         if ($queryContainer) {
@@ -62,19 +55,13 @@ trait InternalClassBuilderForTests
         $bundle = $this->getBundleFromTestClassName();
         $layer = $this->getLayerFromTestClassName();
 
-        $className = '\\' . $namespace . '\\Zed\\' . $bundle . '\\' . $layer . '\\' . $bundle . 'DependencyContainer';
+        $dependencyContainer = $this->getDependencyContainerByClassName($namespace, $bundle, $layer);
 
-        $factory = new CommunicationFactory($bundle);
-
-        if ($bundleConfig === null) {
-            $bundleConfigLocator = new BundleConfigLocator();
-            $bundleConfig = $bundleConfigLocator->locate($bundle, $this->getLocator());
+        if ($bundleConfig !== null) {
+            $dependencyContainer->setConfig($bundleConfig);
         }
 
-        /** @var AbstractDependencyContainer $class */
-        $class = new $className($factory, $this->getLocator(), $bundleConfig);
-
-        return $class;
+        return $dependencyContainer;
     }
 
     /**
@@ -143,10 +130,9 @@ trait InternalClassBuilderForTests
         if (!class_exists($queryContainerClassName)) {
             return false;
         }
-        $factory = new PersistenceFactory($bundle);
         /** @var AbstractQueryContainer $queryContainer */
-        $queryContainer = new $queryContainerClassName($factory, $this->getLocator());
-        $queryContainer->setContainer($this->getContainer($namespace, $bundle));
+        $queryContainer = new $queryContainerClassName();
+        $queryContainer->setExternalDependencies($this->getContainer($namespace, $bundle));
 
         return $queryContainer;
     }
@@ -158,7 +144,6 @@ trait InternalClassBuilderForTests
      */
     public function getPluginByClassName($pluginClassName)
     {
-        /** @var AbstractPlugin $plugin */
         $plugin = new $pluginClassName();
 
         return $plugin;
@@ -170,6 +155,35 @@ trait InternalClassBuilderForTests
     private function getNamespaceFromTestClassName()
     {
         return $this->getClassNamePart(get_class($this), 1);
+    }
+
+    /**
+     * @param string $namespace
+     * @param string $bundle
+     *
+     * @return AbstractFacade
+     */
+    protected function getFacadeByClassName($namespace, $bundle)
+    {
+        $facadeClassName = '\\' . $namespace . '\\Zed\\' . $bundle . '\\Business\\' . $bundle . 'Facade';
+        $facade = new $facadeClassName();
+
+        return $facade;
+    }
+
+    /**
+     * @param string $namespace
+     * @param string $bundle
+     * @param string $layer
+     *
+     * @return AbstractDependencyContainer
+     */
+    protected function getDependencyContainerByClassName($namespace, $bundle, $layer)
+    {
+        $className = '\\' . $namespace . '\\Zed\\' . $bundle . '\\' . $layer . '\\' . $bundle . 'DependencyContainer';
+        $class = new $className();
+
+        return $class;
     }
 
     /**

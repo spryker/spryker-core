@@ -12,8 +12,7 @@ use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
  * @method GlossaryQueueDependencyContainer getDependencyContainer()
  * @method GlossaryQueueFacade getFacade()
  */
-class GlossaryTaskWorkerPlugin extends AbstractPlugin implements
-    TaskPluginInterface
+class GlossaryTaskWorkerPlugin extends AbstractPlugin implements TaskPluginInterface
 {
 
     const GLOSSARY_TRANSLATION = 'glossary_translation';

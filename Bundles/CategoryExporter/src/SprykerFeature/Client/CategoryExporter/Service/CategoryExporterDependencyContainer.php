@@ -8,16 +8,12 @@ namespace SprykerFeature\Client\CategoryExporter\Service;
 
 use SprykerFeature\Client\CategoryExporter\Service\KeyBuilder\CategoryResourceKeyBuilder;
 use SprykerFeature\Client\CategoryExporter\Service\KeyBuilder\NavigationKeyBuilder as KeyBuilderNavigationKeyBuilder;
-use Generated\Client\Ide\FactoryAutoCompletion\CategoryExporter;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\CategoryExporter\Service\Builder\CategoryTreeBuilder;
 use SprykerFeature\Client\CategoryExporter\Service\Model\Navigation;
 use SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder;
 use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
-/**
- * @method CategoryExporter getFactory()
- */
 class CategoryExporterDependencyContainer extends AbstractServiceDependencyContainer
 {
 
