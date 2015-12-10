@@ -52,11 +52,12 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
+     * @deprecated Pass the facade via DI.
+     *
      * @return DiscountFacade
      */
     public function getDiscountFacade()
     {
-        // @todo this shoud be replace by $this->getFacade() which currently doesn't exists
         return $this->getLocator()->discount()->facade();
     }
 
