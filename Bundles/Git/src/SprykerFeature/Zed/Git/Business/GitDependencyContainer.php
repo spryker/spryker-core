@@ -7,6 +7,8 @@
 namespace SprykerFeature\Zed\Git\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Git\GitConfig;
+use SprykerFeature\Zed\Git\GitDependencyProvider;
 use Symfony\Component\Console\Command\Command;
 
 /**
@@ -20,7 +22,7 @@ class GitDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getConsoleCommands()
     {
-        return $this->getConfig()->getConsoleCommands();
+        return $this->getProvidedDependency(GitDependencyProvider::COMMANDS);
     }
 
 }

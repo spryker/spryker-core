@@ -134,7 +134,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function getDecisionRulePluginNames()
     {
-        return $this->getDependencyContainer()->getConfig()->getDecisionPluginNames();
+        return $this->getDependencyContainer()->getConfig()->getDecisionRulePluginNames();
     }
 
     /**

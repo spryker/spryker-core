@@ -52,11 +52,12 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
+     * @deprecated Pass the facade via DI.
+     *
      * @return DiscountFacade
      */
     public function getDiscountFacade()
     {
-        // @todo this shoud be replace by $this->getFacade() which currently doesn't exists
         return $this->getLocator()->discount()->facade();
     }
 
@@ -107,13 +108,15 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
+     * @param DiscountFacade $discountFacade
+     *
      * @return FormTypeInterface
      */
-    public function createCartRuleForm()
+    public function createCartRuleForm(DiscountFacade $discountFacade)
     {
         $cartRuleForm = new CartRuleForm(
             $this->getConfig(),
-            $this->getDiscountFacade()
+            $discountFacade
         );
 
         return $this->createForm($cartRuleForm);

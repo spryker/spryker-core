@@ -7,11 +7,11 @@
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\Calculator;
 
 use Generated\Shared\Transfer\DiscountTransfer;
+use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
-use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 
 /**
- * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountFacade getFacade()
  */
 class Percentage extends AbstractCalculator
 {
@@ -24,8 +24,7 @@ class Percentage extends AbstractCalculator
      */
     public function calculate(array $discountableObjects, $number)
     {
-        return $this->getDependencyContainer()
-            ->getDiscountFacade()
+        return $this->getFacade()
             ->calculatePercentage($discountableObjects, $number);
     }
 

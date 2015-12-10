@@ -5,6 +5,7 @@
 
 namespace SprykerEngine\Zed\Propel\Business;
 
+use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjuster;
 use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemover;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaMerger;
@@ -21,6 +22,7 @@ use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaInterface;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaMergerInterface;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaWriterInterface;
 use SprykerEngine\Zed\Propel\PropelConfig;
+use SprykerEngine\Zed\Propel\PropelDependencyProvider;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -104,6 +106,14 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
         return new PostgresqlCompatibilityAdjuster(
             $this->createSchemaFinder()
         );
+    }
+
+    /**
+     * @return Container[]
+     */
+    public function getConsoleCommands()
+    {
+        return $this->getProvidedDependency(PropelDependencyProvider::COMMANDS);
     }
 
 }

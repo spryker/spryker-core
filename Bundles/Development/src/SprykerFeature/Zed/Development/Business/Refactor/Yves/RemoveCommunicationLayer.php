@@ -172,7 +172,8 @@ class RemoveCommunicationLayer extends AbstractRefactor
      *
      * @return bool
      */
-    protected function recursiveRemoveDirectory($dir) {
+    protected function recursiveRemoveDirectory($dir)
+    {
         $files = array_diff(scandir($dir), ['.', '..']);
 
         foreach ($files as $file) {

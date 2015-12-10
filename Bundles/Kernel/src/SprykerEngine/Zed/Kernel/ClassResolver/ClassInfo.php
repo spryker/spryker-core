@@ -27,7 +27,7 @@ class ClassInfo
     private $callerClassParts;
 
     /**
-     * @param object|string  $callerClass
+     * @param object|string $callerClass
      *
      * @return self
      */

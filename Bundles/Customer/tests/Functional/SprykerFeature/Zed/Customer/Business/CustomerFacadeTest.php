@@ -21,6 +21,7 @@ use SprykerFeature\Zed\Customer\Business\CustomerFacade;
  */
 class CustomerFacadeTest extends AbstractFunctionalTest
 {
+
     const TESTER_EMAIL = 'tester@spryker.com';
     const TESTER_PASSWORD = 'tester';
     const TESTER_NAME = 'Tester';
@@ -345,4 +346,5 @@ class CustomerFacadeTest extends AbstractFunctionalTest
         $deletedAddress = $this->customerFacade->deleteAddress($addressTransfer);
         $this->assertNotNull($deletedAddress);
     }
+
 }

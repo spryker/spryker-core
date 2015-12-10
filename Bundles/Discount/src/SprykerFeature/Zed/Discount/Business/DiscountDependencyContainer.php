@@ -77,7 +77,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
         return new Discount(
             $container,
             $this->getQueryContainer(),
-            $this->createDecisionRule(),
+            $this->createDecisionRuleEngine(),
             $this->getConfig(),
             $this->createCalculator(),
             $this->createDistributor(),
@@ -217,7 +217,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return DecisionRuleEngine
      */
-    protected function createDecisionRule()
+    protected function createDecisionRuleEngine()
     {
         return new DecisionRuleEngine();
     }

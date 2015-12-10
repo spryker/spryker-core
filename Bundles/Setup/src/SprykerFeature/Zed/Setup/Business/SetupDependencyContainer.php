@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Setup\Business\Model\Cronjobs;
 use SprykerFeature\Zed\Setup\Business\Model\DirectoryRemoverInterface;
 use SprykerFeature\Zed\Setup\SetupConfig;
 use SprykerFeature\Zed\Setup\SetupDependencyProvider;
+use Symfony\Component\Console\Command\Command;
 
 /**
  * @method SetupConfig getConfig()
@@ -58,6 +59,14 @@ class SetupDependencyContainer extends AbstractBusinessDependencyContainer
     public function createTransferObjectRepeater()
     {
         return $this->getProvidedDependency(SetupDependencyProvider::PLUGIN_TRANSFER_OBJECT_REPEATER);
+    }
+
+    /**
+     * @return Command[]
+     */
+    public function getConsoleCommands()
+    {
+        return $this->getProvidedDependency(SetupDependencyProvider::COMMANDS);
     }
 
 }

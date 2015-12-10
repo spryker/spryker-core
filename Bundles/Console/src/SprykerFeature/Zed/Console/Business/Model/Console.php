@@ -11,6 +11,8 @@ use Silex\Application;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use SprykerEngine\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
+use SprykerEngine\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Zed\Kernel\Container;
@@ -146,7 +148,25 @@ class Console extends SymfonyCommand
      */
     protected function getFacade()
     {
-        return $this->facade;
+        return $this->resolveFacade();
+    }
+
+    /**
+     * @throws FacadeNotFoundException
+     *
+     * @return AbstractFacade
+     */
+    protected function resolveFacade()
+    {
+        return $this->getFacadeResolver()->resolve($this);
+    }
+
+    /**
+     * @return FacadeResolver
+     */
+    protected function getFacadeResolver()
+    {
+        return new FacadeResolver();
     }
 
     /**
