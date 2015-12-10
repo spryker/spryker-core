@@ -212,6 +212,8 @@ abstract class AbstractCollectorPlugin
         $progressBar->start();
 
         foreach ($batchCollection as $batch) {
+            $progressBar->advance(0); //show progress bar right away
+
             $touchUpdaterSet = new TouchUpdaterSet(self::COLLECTOR_TOUCH_ID);
             $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
             $collectedDataCount = count($collectedData);
