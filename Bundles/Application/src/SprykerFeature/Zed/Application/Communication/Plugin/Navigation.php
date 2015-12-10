@@ -10,8 +10,6 @@ use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * Class Navigation
- *
  * @method ApplicationFacade getFacade()
  */
 class Navigation extends AbstractPlugin
