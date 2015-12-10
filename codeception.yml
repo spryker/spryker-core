@@ -40,8 +40,6 @@ include:
  - Bundles/Product
  - Bundles/ProductCartConnector
  - Bundles/ProductCategory
- - Bundles/ProductExporter
- - Bundles/ProductImage
  - Bundles/ProductOption
  - Bundles/ProductOptionCartConnector
  - Bundles/ProductOptionCheckoutConnector

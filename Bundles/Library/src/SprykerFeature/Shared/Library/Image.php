@@ -7,7 +7,7 @@
 namespace SprykerFeature\Shared\Library;
 
 use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\ProductImage\ProductImageConfig;
+use SprykerFeature\Shared\Product\ProductConfig;
 use SprykerFeature\Shared\Application\ApplicationConfig;
 
 class Image
@@ -75,7 +75,7 @@ class Image
             [
                 $urlDomain,
                 Store::getInstance()->getStoreName(),
-                Config::get(ProductImageConfig::PRODUCT_IMAGE_IMAGE_URL_PREFIX), $urlKey,
+                Config::get(ProductConfig::PRODUCT_IMAGE_IMAGE_URL_PREFIX), $urlKey,
             ]
 
         );
