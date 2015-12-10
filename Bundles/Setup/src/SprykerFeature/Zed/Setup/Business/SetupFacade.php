@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Setup\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -58,6 +59,14 @@ class SetupFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createTransferObjectRepeater()
             ->getRepeatData($request->query->get('mvc', null));
+    }
+
+    /**
+     * @return Command[]
+     */
+    public function getConsoleCommands()
+    {
+        return $this->getDependencyContainer()->getConsoleCommands();
     }
 
 }

@@ -6,6 +6,7 @@
 namespace SprykerEngine\Zed\Propel\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Zed\Kernel\Container;
 
 /**
  * @method PropelDependencyContainer getDependencyContainer()
@@ -43,6 +44,14 @@ class PropelFacade extends AbstractFacade
     public function adjustPostgresqlFunctions()
     {
         $this->getDependencyContainer()->createPostgresqlCompatibilityAdjuster()->addMissingFunctions();
+    }
+
+    /**
+     * @return Container[]
+     */
+    public function getConsoleCommands()
+    {
+        return $this->getDependencyContainer()->getConsoleCommands();
     }
 
 }
