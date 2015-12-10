@@ -15,7 +15,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const STORE_CONFIG = 'store config';
-    const FACADE_FLASH_MESSENGER = 'flash messenger facade';
+    const FACADE_MESSENGER = 'messenger facade';
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**
@@ -29,8 +29,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             return Store::getInstance();
         };
 
-        $container[self::FACADE_FLASH_MESSENGER] = function (Container $container) {
-            return $container->getLocator()->flashMessenger()->facade();
+        $container[self::FACADE_MESSENGER] = function (Container $container) {
+            return $container->getLocator()->Messenger()->facade();
         };
 
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {

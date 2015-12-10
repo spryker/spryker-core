@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\FlashMessenger\Business\Model;
+namespace SprykerEngine\Zed\Messenger\Business\Model;
 
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 

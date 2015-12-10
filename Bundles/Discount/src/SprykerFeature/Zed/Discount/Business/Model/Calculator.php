@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
+use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -34,20 +34,20 @@ class Calculator implements CalculatorInterface
     protected $collectorResolver;
 
     /**
-     * @var FlashMessengerFacade
+     * @var MessengerFacade
      */
-    protected $flashMessengerFacade;
+    protected $messengerFacade;
 
     /**
      * @param CollectorResolver $collectorResolver
-     * @param FlashMessengerFacade $flashMessengerFacade
+     * @param MessengerFacade $messengerFacade
      */
     public function __construct(
         CollectorResolver $collectorResolver,
-        FlashMessengerFacade  $flashMessengerFacade
+        MessengerFacade  $messengerFacade
     ) {
         $this->collectorResolver = $collectorResolver;
-        $this->flashMessengerFacade = $flashMessengerFacade;
+        $this->messengerFacade = $messengerFacade;
     }
 
     /**
@@ -148,7 +148,7 @@ class Calculator implements CalculatorInterface
         $messageTransfer->setValue(self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY);
         $messageTransfer->setParameters(['display_name' => $discountDisplayName]);
 
-        $this->flashMessengerFacade->addSuccessMessage($messageTransfer);
+        $this->messengerFacade->addSuccessMessage($messageTransfer);
     }
 
     /**

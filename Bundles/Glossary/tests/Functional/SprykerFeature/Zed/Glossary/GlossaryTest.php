@@ -364,8 +364,8 @@ class GlossaryTest extends AbstractFunctionalTest
             return $this->localeFacade;
         };
 
-        $container[GlossaryDependencyProvider::FLASH_MESSAGES] = function (Container $container) {
-            return $container->getLocator()->flashMessenger()->facade();
+        $container[GlossaryDependencyProvider::MESSAGES] = function (Container $container) {
+            return $container->getLocator()->Messenger()->facade();
         };
 
         $touchContainer = new Container();

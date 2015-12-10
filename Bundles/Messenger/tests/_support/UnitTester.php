@@ -1,5 +1,5 @@
 <?php
-namespace FlashMessenger;
+namespace Messenger;
 
 /**
  * Inherited Methods

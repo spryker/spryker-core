@@ -322,8 +322,8 @@ class VoucherEngineTest extends Test
         $settings = new DiscountConfig(Config::getInstance(), $locator);
         $collectorResolver = new CollectorResolver($settings);
 
-        $flashMessengerFacade = $locator->flashMessenger()->facade();
-        $calculator = new Calculator($collectorResolver, $flashMessengerFacade);
+        $messengerFacade = $locator->Messenger()->facade();
+        $calculator = new Calculator($collectorResolver, $messengerFacade);
 
         return $calculator;
     }

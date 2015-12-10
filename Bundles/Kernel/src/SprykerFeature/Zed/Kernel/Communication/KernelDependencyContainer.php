@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Kernel\Communication;
 
-use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
+use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Kernel\KernelDependencyProvider;
 
@@ -14,11 +14,11 @@ class KernelDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
-     * @return FlashMessengerFacade
+     * @return MessengerFacade
      */
-    public function createFlashMessengerFacade()
+    public function createMessengerFacade()
     {
-        return $this->getProvidedDependency(KernelDependencyProvider::FACADE_FLASH_MESSENGER);
+        return $this->getProvidedDependency(KernelDependencyProvider::FACADE_MESSENGER);
     }
 
 }

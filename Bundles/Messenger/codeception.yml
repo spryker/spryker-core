@@ -1,4 +1,4 @@
-namespace: FlashMessenger
+namespace: Messenger
 
 actor: Tester
 

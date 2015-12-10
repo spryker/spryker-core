@@ -12,7 +12,7 @@ use SprykerEngine\Zed\Kernel\Container;
 class KernelDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_FLASH_MESSENGER = 'flash messenger facade';
+    const FACADE_MESSENGER = 'messenger facade';
 
     /**
      * @param Container $container
@@ -23,8 +23,8 @@ class KernelDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container[self::FACADE_FLASH_MESSENGER] = function (Container $container) {
-            return $container->getLocator()->flashMessenger()->facade();
+        $container[self::FACADE_MESSENGER] = function (Container $container) {
+            return $container->getLocator()->Messenger()->facade();
         };
 
         return $container;

@@ -18,7 +18,7 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGIN_VALIDATOR = 'validator plugin';
 
-    const FLASH_MESSAGES = 'flash_messages';
+    const MESSAGES = 'messages';
 
     /**
      * @param Container $container
@@ -53,8 +53,8 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->locale()->facade();
         };
 
-        $container[self::FLASH_MESSAGES] = function (Container $container) {
-            return $container->getLocator()->flashMessenger()->facade();
+        $container[self::MESSAGES] = function (Container $container) {
+            return $container->getLocator()->Messenger()->facade();
         };
 
         return $container;
