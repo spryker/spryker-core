@@ -10,7 +10,6 @@ use SprykerEngine\Shared\Kernel\ClassMapFactory;
 use SprykerEngine\Shared\Kernel\Communication\BundleControllerActionInterface;
 use SprykerEngine\Shared\Kernel\Communication\ControllerLocatorInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Yves\Kernel\Factory;
 
 class ControllerLocator implements ControllerLocatorInterface
 {

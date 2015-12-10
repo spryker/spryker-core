@@ -30,7 +30,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetFacadeShouldReturnInstanceIfSet()
+    public function testGetFacade()
     {
         $console = $this->getConsole();
         $console->setFacade($this->getFacadeMock());

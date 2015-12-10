@@ -8,7 +8,8 @@ namespace SprykerFeature\Zed\Development\Business\CodeTest;
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-class CodeTester {
+class CodeTester
+{
 
     const OPTION_VERBOSE = 'verbose';
 

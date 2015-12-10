@@ -21,6 +21,7 @@ use Symfony\Component\Console\Command\Command;
 
 class PropelDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const COMMANDS = 'commands';
 
     /**

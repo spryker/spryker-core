@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
-use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 
 /**
  * @method DiscountFacade getFacade()

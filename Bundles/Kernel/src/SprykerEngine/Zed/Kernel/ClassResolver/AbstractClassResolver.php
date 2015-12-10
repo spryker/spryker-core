@@ -40,7 +40,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @param object|string  $callerClass
+     * @param object|string $callerClass
      *
      * @return AbstractClassResolver
      */

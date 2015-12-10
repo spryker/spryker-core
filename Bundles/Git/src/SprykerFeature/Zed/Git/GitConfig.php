@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Git;
 
-use Symfony\Component\Console\Command\Command;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class GitConfig extends AbstractBundleConfig

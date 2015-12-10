@@ -10,7 +10,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Generated\Shared\Transfer\TranslationTransfer;

@@ -9,7 +9,6 @@ namespace SprykerEngine\Yves\Kernel;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
 use SprykerEngine\Yves\Kernel\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Yves\Kernel\Locator;
 
 abstract class AbstractPlugin
 {
