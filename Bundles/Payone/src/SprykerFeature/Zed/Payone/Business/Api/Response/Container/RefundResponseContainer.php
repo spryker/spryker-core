@@ -13,6 +13,7 @@ class RefundResponseContainer extends AbstractResponseContainer
      * @var int
      */
     protected $txid;
+
     /**
      * @var string
      */

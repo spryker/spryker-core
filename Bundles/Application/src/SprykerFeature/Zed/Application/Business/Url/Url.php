@@ -24,12 +24,19 @@ class Url
     const FRAGMENT = 'fragment';
 
     protected $scheme;
+
     protected $host;
+
     protected $port;
+
     protected $username;
+
     protected $password;
+
     protected $path = '';
+
     protected $query = [];
+
     protected $fragment;
 
     /**
@@ -294,7 +301,7 @@ class Url
     /**
      * @param $key
      * @param $value
-     * 
+     *
      * @return self
      */
     public function addQuery($key, $value)

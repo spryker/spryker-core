@@ -18,7 +18,7 @@ class ItemGrouperCheckoutConnectorDependencyContainer extends AbstractBusinessDe
      */
     public function createItemGrouperFacade()
     {
-        return $this->getProvidedDependency(ItemGrouperCheckoutConnectorDependencyProvider::ITEM_GROUPER_FACADE);
+        return $this->getProvidedDependency(ItemGrouperCheckoutConnectorDependencyProvider::FACADE_ITEM_GROUPER);
     }
 
 }

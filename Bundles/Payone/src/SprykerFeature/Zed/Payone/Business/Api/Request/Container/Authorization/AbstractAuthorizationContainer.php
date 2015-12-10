@@ -20,34 +20,40 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
      * @var int
      */
     protected $aid;
+
     /**
      * @var string
      */
     protected $clearingtype;
+
     /**
      * Merchant reference number for the payment process. (Permitted symbols: 0-9, a-z, A-Z, .,-,_,/)
      *
      * @var string
      */
     protected $reference;
+
     /**
      * Total amount (in smallest currency unit! e.g. cent)
      *
      * @var int
      */
     protected $amount;
+
     /**
      * Currency (ISO-4217)
      *
      * @var string
      */
     protected $currency;
+
     /**
      * Individual parameter
      *
      * @var string
      */
     protected $param;
+
     /**
      * dynamic text for debit and creditcard payments
      *
@@ -59,18 +65,22 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
      */
     protected $personalData;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer
      */
     protected $shippingData;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer
      */
     protected $paymentMethod;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer
      */
     protected $_3dsecure;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */

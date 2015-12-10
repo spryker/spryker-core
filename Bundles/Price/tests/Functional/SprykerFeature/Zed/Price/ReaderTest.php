@@ -29,10 +29,12 @@ class ReaderTest extends Test
     const DUMMY_SKU_CONCRETE_PRODUCT = 'CONCRETE';
     const DUMMY_PRICE_1 = 99;
     const DUMMY_PRICE_2 = 100;
+
     /**
      * @var PriceFacade
      */
     private $priceFacade;
+
     /**
      * @var AutoCompletion
      */

@@ -15,26 +15,32 @@ class ShippingContainer extends AbstractContainer
      * @var string
      */
     protected $shipping_firstname;
+
     /**
      * @var string
      */
     protected $shipping_lastname;
+
     /**
      * @var string
      */
     protected $shipping_company;
+
     /**
      * @var string
      */
     protected $shipping_street;
+
     /**
      * @var string
      */
     protected $shipping_zip;
+
     /**
      * @var string
      */
     protected $shipping_city;
+
     /**
      * ISO-3166-2 Subdivisions
      * only necessary for country US, CA, CN, JP, MX, BR, AR, ID, TH, IN
@@ -42,6 +48,7 @@ class ShippingContainer extends AbstractContainer
      * @var string
      */
     protected $shipping_state;
+
     /**
      * Country (ISO-3166)
      *

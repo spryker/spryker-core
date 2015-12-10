@@ -16,6 +16,7 @@ class HashGenerator implements HashGeneratorInterface
      * @var HashInterface
      */
     protected $hashProvider;
+
     /**
      * @var array
      */

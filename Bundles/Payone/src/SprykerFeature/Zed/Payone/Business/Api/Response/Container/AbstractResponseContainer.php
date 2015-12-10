@@ -13,18 +13,22 @@ abstract class AbstractResponseContainer
      * @var string
      */
     protected $status;
+
     /**
      * @var string
      */
     protected $rawResponse;
+
     /**
      * @var string
      */
     protected $errorcode;
+
     /**
      * @var string
      */
     protected $errormessage;
+
     /**
      * @var string
      */

@@ -17,78 +17,95 @@ class PersonalContainer extends AbstractContainer
      * @var string
      */
     protected $customerid;
+
     /**
      * PAYONE debtor ID
      *
      * @var int
      */
     protected $userid;
+
     /**
      * @var string
      */
     protected $salutation;
+
     /**
      * @var string
      */
     protected $title;
+
     /**
      * @var string
      */
     protected $firstname;
+
     /**
      * @var string
      */
     protected $lastname;
+
     /**
      * @var string
      */
     protected $company;
+
     /**
      * @var string
      */
     protected $street;
+
     /**
      * @var string
      */
     protected $addressaddition;
+
     /**
      * @var string
      */
     protected $zip;
+
     /**
      * @var string
      */
     protected $city;
+
     /**
      * Country (ISO-3166)
      *
      * @var string
      */
     protected $country;
+
     /**
      * @var string
      */
     protected $state;
+
     /**
      * @var string
      */
     protected $email;
+
     /**
      * @var string
      */
     protected $telephonenumber;
+
     /**
      * Date of birth (YYYYMMDD)
      *
      * @var int
      */
     protected $birthday;
+
     /**
      * Language indicator (ISO639)
      *
      * @var string
      */
     protected $language;
+
     /**
      * @var string
      */

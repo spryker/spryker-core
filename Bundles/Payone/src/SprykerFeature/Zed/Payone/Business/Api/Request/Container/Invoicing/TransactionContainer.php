@@ -15,22 +15,27 @@ class TransactionContainer extends AbstractContainer
      * @var string
      */
     protected $invoiceid;
+
     /**
      * @var string
      */
     protected $invoice_deliverymode;
+
     /**
      * @var string
      */
     protected $invoice_deliverydate;
+
     /**
      * @var string
      */
     protected $invoice_deliveryenddate;
+
     /**
      * @var string
      */
     protected $invoiceappendix;
+
     /**
      * @var ItemContainer[]
      */

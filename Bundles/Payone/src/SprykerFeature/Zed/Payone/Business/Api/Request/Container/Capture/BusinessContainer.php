@@ -17,18 +17,21 @@ class BusinessContainer extends AbstractContainer
      * @var string
      */
     protected $document_date;
+
     /**
      * (YYYYMMDD)
      *
      * @var string
      */
     protected $booking_date;
+
     /**
      * (Unixtimestamp)
      *
      * @var string
      */
     protected $due_time;
+
     /**
      * ENUM
      *

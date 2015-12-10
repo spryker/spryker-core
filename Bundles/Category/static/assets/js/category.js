@@ -29,7 +29,6 @@ $(document).ready(function() {
         }
     });
 
-
     var updateOutput = function(e) {
         var list = e.length ? e : $(e.target);
         window.serializedList = window.JSON.stringify(list.nestable('serialize'));

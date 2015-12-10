@@ -153,7 +153,6 @@ var addKeySearchEvent = function(formId) {
         keyType.val(1);
     }
 
-
     keyType.on('change', function() {
         if (this.value == 0) {
             keyInput.attr('disabled','disabled');
@@ -179,7 +178,6 @@ function showBlockAutoComplete(elementId, type) {
 
     itemList = $('#foundItemList');
     itemContainer = $('#foundItemListContainer');
-
 
     var elementInput = $(elementId);
 
@@ -259,12 +257,10 @@ var addAutoCompleteSearchEvent = function(elementId) {
         }
     });
 
-
     if (elementType.val() == 'static') {
         $('#form_selectValue').attr('disabled','disabled');
         $('#form_value').val(0);
     }
-
 
     elementType.on('change', function() {
         if (this.value == 'static') {
@@ -327,4 +323,3 @@ $(document).on('click', function(e) {
         itemContainer.hide();
     }
 });
-

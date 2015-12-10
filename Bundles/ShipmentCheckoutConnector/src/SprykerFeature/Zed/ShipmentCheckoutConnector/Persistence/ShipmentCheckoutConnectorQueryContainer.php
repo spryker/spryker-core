@@ -36,8 +36,8 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
- * @return SalesQueryContainerInterface
- */
+     * @return SalesQueryContainerInterface
+     */
     protected function getSalesQueryContainer()
     {
         return $this->getProvidedDependency(ShipmentCheckoutConnectorDependencyProvider::QUERY_CONTAINER_SALES);

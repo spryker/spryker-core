@@ -59,6 +59,4 @@ function SprykerAjax() {
         self.ajaxSubmit(options, 'changeStatusMarkInGrid');
     };
 
-
-
 }

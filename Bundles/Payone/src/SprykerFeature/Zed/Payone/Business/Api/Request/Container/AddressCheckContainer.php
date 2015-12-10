@@ -20,54 +20,67 @@ class AddressCheckContainer extends AbstractRequestContainer
      * @var int
      */
     protected $aid;
+
     /**
      * @var string
      */
     protected $addresschecktype;
+
     /**
      * @var string
      */
     protected $firstname;
+
     /**
      * @var string
      */
     protected $lastname;
+
     /**
      * @var string
      */
     protected $company;
+
     /**
      * @var string
      */
     protected $street;
+
     /**
      * @var string
      */
     protected $streetname;
+
     /**
      * @var string
      */
     protected $streetnumber;
+
     /**
      * @var string
      */
     protected $zip;
+
     /**
      * @var string
      */
     protected $city;
+
     /**
      * @var string
      */
     protected $state;
+
     /**
      * @var string
      */
     protected $country;
+
     /**
      * @var string
      */
     protected $telephonenumber;
+
     /**
      * @var string
      */

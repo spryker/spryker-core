@@ -13,26 +13,32 @@ class ThreeDSecureCheckResponseContainer extends AbstractResponseContainer
      * @var string
      */
     protected $acsurl;
+
     /**
      * @var string
      */
     protected $termurl;
+
     /**
      * @var string
      */
     protected $pareq;
+
     /**
      * @var string
      */
     protected $xid;
+
     /**
      * @var string
      */
     protected $md;
+
     /**
      * @var string
      */
     protected $pseudocardpan;
+
     /**
      * @var string
      */

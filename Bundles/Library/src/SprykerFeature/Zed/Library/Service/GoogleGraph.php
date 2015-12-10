@@ -17,25 +17,45 @@ class GoogleGraph
     const URI = 'https://chart.googleapis.com/chart';
 
     protected $chf;
+
     protected $chtt;
+
     protected $cht;
+
     protected $chof;
+
     protected $chl;
+
     protected $chd;
+
     protected $chs;
+
     protected $chld;
+
     protected $chdl;
+
     protected $chdlp;
+
     protected $chdls;
+
     protected $chco;
+
     protected $chxl;
+
     protected $chxr;
+
     protected $chxt;
+
     protected $chds;
+
     protected $chls;
+
     protected $chg;
+
     protected $chm;
+
     protected $chxp;
+
     protected $chbh;
 
     public function request($sendHeader = true, $contentType = 'gif')

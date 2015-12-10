@@ -15,14 +15,17 @@ class BusinessContainer extends AbstractContainer
      * @var string
      */
     protected $settleaccount;
+
     /**
      * @var string
      */
     protected $transactiontype;
+
     /**
      * @var string
      */
     protected $booking_date;
+
     /**
      * @var string
      */

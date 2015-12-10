@@ -19,14 +19,17 @@ abstract class AbstractHttpAdapter implements AdapterInterface
      * @var int
      */
     protected $timeout = self::DEFAULT_TIMEOUT;
+
     /**
      * @var string
      */
     protected $url;
+
     /**
      * @var array
      */
     protected $params = [];
+
     /**
      * @var string
      */

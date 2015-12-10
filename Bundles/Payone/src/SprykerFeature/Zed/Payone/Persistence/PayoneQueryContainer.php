@@ -109,7 +109,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
      * @param int $paymentId
-     * 
+     *
      * @return SpyPaymentPayoneQuery
      */
     public function getPaymentById($paymentId)

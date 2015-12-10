@@ -13,26 +13,32 @@ class DirectDebitContainer extends AbstractPaymentMethodContainer
      * @var string
      */
     protected $bankcountry;
+
     /**
      * @var string
      */
     protected $bankaccount;
+
     /**
      * @var string
      */
     protected $bankcode;
+
     /**
      * @var string
      */
     protected $iban;
+
     /**
      * @var string
      */
     protected $bic;
+
     /**
      * @var string
      */
     protected $bankaccountholder;
+
     /**
      * @var string
      */

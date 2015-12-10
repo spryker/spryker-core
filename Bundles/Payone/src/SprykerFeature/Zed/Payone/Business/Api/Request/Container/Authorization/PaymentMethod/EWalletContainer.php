@@ -15,6 +15,7 @@ class EWalletContainer extends AbstractPaymentMethodContainer
      * @var string
      */
     protected $wallettype;
+
     /**
      * @var RedirectContainer
      */

@@ -22,6 +22,7 @@ class TransactionStatusResponse
      * @var string
      */
     protected $status;
+
     /**
      * @var string
      */

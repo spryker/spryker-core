@@ -13,26 +13,32 @@ class BankAccountCheckResponseContainer extends AbstractResponseContainer
      * @var string
      */
     protected $bankcountry;
+
     /**
      * @var string
      */
     protected $bankcode;
+
     /**
      * @var string
      */
     protected $bankaccount;
+
     /**
      * @var string
      */
     protected $bankbranchcode;
+
     /**
      * @var string
      */
     protected $bankcheckdigit;
+
     /**
      * @var string
      */
     protected $iban;
+
     /**
      * @var string
      */

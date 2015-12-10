@@ -276,7 +276,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param $idCategory
      * @param $idParentNode
-     * 
+     *
      * @return SpyCategoryNode
      */
     public function getNodeByIdCategoryAndParentNode($idCategory, $idParentNode)

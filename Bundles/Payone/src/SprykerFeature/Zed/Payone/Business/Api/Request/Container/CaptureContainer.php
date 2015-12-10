@@ -22,14 +22,17 @@ class CaptureContainer extends AbstractRequestContainer
      * @var string
      */
     protected $txid;
+
     /**
      * @var int
      */
     protected $sequencenumber;
+
     /**
      * @var int
      */
     protected $amount;
+
     /**
      * @var string
      */
@@ -39,6 +42,7 @@ class CaptureContainer extends AbstractRequestContainer
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer
      */
     protected $business;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */

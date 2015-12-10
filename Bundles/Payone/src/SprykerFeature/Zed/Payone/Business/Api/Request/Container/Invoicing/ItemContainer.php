@@ -15,34 +15,41 @@ class ItemContainer extends AbstractContainer
      * @var string
      */
     protected $id;
+
     /**
      * @var int
      */
     protected $pr;
+
     /**
      * @var int
      */
     protected $no;
+
     /**
      * @var string
      */
     protected $de;
+
     /**
      * Artikeltyp (Enum)
      *
      * @var string
      */
     protected $it;
+
     /**
      * @var int
      */
     protected $va;
+
     /**
      * DeliveryDate (YYYYMMDD)
      *
      * @var string
      */
     protected $sd;
+
     /**
      * Lieferzeitraums-Ende (YYYYMMDD)
      *

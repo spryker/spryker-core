@@ -75,7 +75,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @param string $itemType
      * @param LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
-     * 
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return SpyTouchQuery

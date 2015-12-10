@@ -13,26 +13,32 @@ class AddressCheckResponseContainer extends AbstractResponseContainer
      * @var int
      */
     protected $secstatus;
+
     /**
      * @var string
      */
     protected $personstatus;
+
     /**
      * @var string
      */
     protected $street;
+
     /**
      * @var string
      */
     protected $streetname;
+
     /**
      * @var string
      */
     protected $streetnumber;
+
     /**
      * @var string
      */
     protected $zip;
+
     /**
      * @var string
      */

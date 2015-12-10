@@ -15,10 +15,12 @@ class RedirectContainer extends AbstractContainer
      * @var string
      */
     protected $successurl;
+
     /**
      * @var string
      */
     protected $errorurl;
+
     /**
      * @var string
      */

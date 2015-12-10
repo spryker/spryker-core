@@ -270,6 +270,7 @@ trait WishlistSpyTrait
 {
 
     protected $delete = true;
+
     protected $save = true;
 
     /**

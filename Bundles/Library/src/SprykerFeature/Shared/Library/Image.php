@@ -38,6 +38,7 @@ class Image
     const SIZE_XS = 'xs';
 
     protected static $imageBaseUrl;
+
     protected static $config;
 
     /**

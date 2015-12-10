@@ -13,6 +13,7 @@ class DebitResponseContainer extends AbstractResponseContainer
      * @var int
      */
     protected $txid;
+
     /**
      * @var string
      */
