@@ -249,14 +249,14 @@ abstract class AbstractController
     }
 
     /**
-     * @param AbstractForm $type
+     * @param AbstractForm $form
      * @param array $options
      *
      * @return FormInterface
      */
-    protected function buildForm(AbstractForm $type, array $options = [])
+    protected function buildForm(AbstractForm $form, array $options = [])
     {
-        return $this->getApplication()->buildForm($type, $type->populateFormFields(), $options);
+        return $this->getApplication()->buildForm($form, $options);
     }
 
     /**

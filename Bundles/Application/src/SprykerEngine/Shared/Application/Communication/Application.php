@@ -9,6 +9,7 @@ namespace SprykerEngine\Shared\Application\Communication;
 use Silex\Application\TranslationTrait;
 use Silex\Application\TwigTrait;
 use Silex\Application\UrlGeneratorTrait;
+use SprykerEngine\Shared\Gui\Form\AbstractForm;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -53,17 +54,16 @@ class Application extends \Silex\Application
     }
 
     /**
-     * @param string|FormTypeInterface $type The type of the form
-     * @param mixed $data The initial data
+     * @param AbstractForm $form
      * @param array $options The options
      *
      * @throws InvalidOptionsException if any given option is not applicable to the given type
      *
      * @return FormInterface The form named after the type
      */
-    public function buildForm($type = 'form', $data = null, array $options = [])
+    public function buildForm(AbstractForm $form, array $options = [])
     {
-        return $this['form.factory']->create($type, $data, $options);
+        return $this['form.factory']->create($form, $form->populateFormFields(), $options);
     }
 
     /**
