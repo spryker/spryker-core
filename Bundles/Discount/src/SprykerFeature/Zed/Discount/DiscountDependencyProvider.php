@@ -30,7 +30,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_MESSENGER] = function (Container $container) {
-            return $container->getLocator()->Messenger()->facade();
+            return $container->getLocator()->messenger()->facade();
         };
 
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {

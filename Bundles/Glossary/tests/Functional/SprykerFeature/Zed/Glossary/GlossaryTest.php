@@ -365,7 +365,7 @@ class GlossaryTest extends AbstractFunctionalTest
         };
 
         $container[GlossaryDependencyProvider::MESSAGES] = function (Container $container) {
-            return $container->getLocator()->Messenger()->facade();
+            return $container->getLocator()->messenger()->facade();
         };
 
         $touchContainer = new Container();

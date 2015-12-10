@@ -8,7 +8,7 @@ namespace SprykerEngine\Zed\Kernel\ClassResolver;
 
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 
 abstract class AbstractClassResolver
 {
@@ -155,7 +155,7 @@ abstract class AbstractClassResolver
      */
     private function getProjectNamespaces()
     {
-        return Config::getInstance()->get(SystemConfig::PROJECT_NAMESPACES);
+        return Config::getInstance()->get(ApplicationConfig::PROJECT_NAMESPACES);
     }
 
     /**
@@ -165,7 +165,7 @@ abstract class AbstractClassResolver
      */
     private function getCoreNamespaces()
     {
-        return Config::getInstance()->get(SystemConfig::CORE_NAMESPACES);
+        return Config::getInstance()->get(ApplicationConfig::CORE_NAMESPACES);
     }
 
 }

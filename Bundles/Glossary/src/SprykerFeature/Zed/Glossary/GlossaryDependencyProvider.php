@@ -54,7 +54,7 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::MESSAGES] = function (Container $container) {
-            return $container->getLocator()->Messenger()->facade();
+            return $container->getLocator()->messenger()->facade();
         };
 
         return $container;

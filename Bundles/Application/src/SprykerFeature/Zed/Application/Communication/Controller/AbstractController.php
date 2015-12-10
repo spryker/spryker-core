@@ -53,7 +53,7 @@ abstract class AbstractController
     private $container;
 
     /**
-     * @var FlashMessengerFacade
+     * @var MessengerFacade
      */
     private $messengerFacade;
 
@@ -63,7 +63,7 @@ abstract class AbstractController
     public function __construct(Application $application)
     {
         $this->application = $application;
-        $this->flashMessengerFacade = Locator::getInstance()->flashMessenger()->facade();
+        $this->messengerFacade = Locator::getInstance()->messenger()->facade();
     }
 
     /**

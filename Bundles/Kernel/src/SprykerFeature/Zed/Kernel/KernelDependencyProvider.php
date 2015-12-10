@@ -24,7 +24,7 @@ class KernelDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container[self::FACADE_MESSENGER] = function (Container $container) {
-            return $container->getLocator()->Messenger()->facade();
+            return $container->getLocator()->messenger()->facade();
         };
 
         return $container;
