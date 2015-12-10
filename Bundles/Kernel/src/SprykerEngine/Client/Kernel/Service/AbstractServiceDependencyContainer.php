@@ -75,13 +75,8 @@ abstract class AbstractServiceDependencyContainer implements DependencyContainer
      */
     public function getProvidedDependency($key)
     {
-        if ($this->container === null) {
-            throw new \ErrorException('Container does not exist in ' . get_class($this));
-        }
-
-        if ($this->container->offsetExists($key) === false) {
-            throw new \ErrorException('Key ' . $key . ' does not exist in container: ' . get_class($this));
-        }
+        $this->validateContainerExists();
+        $this->validateKeyExists($key);
 
         return $this->container[$key];
     }
@@ -116,6 +111,30 @@ abstract class AbstractServiceDependencyContainer implements DependencyContainer
     protected function createSearchClient()
     {
         return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_SEARCH);
+    }
+
+    /**
+     * @throws \ErrorException
+     * @return void
+     */
+    protected function validateContainerExists()
+    {
+        if ($this->container === null) {
+            throw new \ErrorException('Container does not exist in ' . get_class($this));
+        }
+    }
+
+    /**
+     * @param $key
+     *
+     * @throws \ErrorException
+     * @return void
+     */
+    protected function validateKeyExists($key)
+    {
+        if ($this->container->offsetExists($key) === false) {
+            throw new \ErrorException('Key ' . $key . ' does not exist in container: ' . get_class($this));
+        }
     }
 
 }

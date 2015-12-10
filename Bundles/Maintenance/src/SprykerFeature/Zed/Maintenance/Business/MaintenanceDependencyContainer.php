@@ -9,15 +9,12 @@ namespace SprykerFeature\Zed\Maintenance\Business;
 use SprykerFeature\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
-
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\BundleParser;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\Graph;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\Manager;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder as ComposerInstalledPackageFinder;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
