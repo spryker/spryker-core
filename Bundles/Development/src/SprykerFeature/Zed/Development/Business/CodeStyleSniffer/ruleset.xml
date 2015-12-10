@@ -8,6 +8,7 @@
     <exclude-pattern>*/tests/_helper/*</exclude-pattern>
     <exclude-pattern>*/Fixtures/*</exclude-pattern>
 
+    <rule ref="/data/shop/development/current/vendor/spryker/spryker/Bundles/Development/src/SprykerFeature/Zed/Development/Business/CodeStyleSniffer/Sniff"/>
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 
     <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
