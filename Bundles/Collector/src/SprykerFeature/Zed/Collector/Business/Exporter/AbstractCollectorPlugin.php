@@ -207,7 +207,7 @@ abstract class AbstractCollectorPlugin
         $progressBar = new ProgressBar($output, $batchCollection->count());
         $progressBar->setFormat('verbose');
         $progressBar->setMessage($this->collectResourceType(), 'collectorType');
-        $progressBar->setFormat(" * %collectorType% \t\t[%bar%] %current%/%max%  \t\t%elapsed:6s%, %memory:6s%");
+        $progressBar->setFormat(" <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>[%bar%]</fg=yellow> <fg=white>%current%/%max% %elapsed:6s%, %memory:6s%</fg=white>\x0D");
 
         $progressBar->start();
 

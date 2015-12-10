@@ -11,6 +11,9 @@ use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
+use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
+use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Collector
@@ -47,26 +50,24 @@ class Collector
         $types = array_keys($this->exporter->getCollectorPlugins());
         $availableTypes = $this->queryContainer->queryExportTypes()->find();
 
-        //$progress = new ProgressBar($output, count($availableTypes));
-        //$progress->start();
-
         if (isset($output)) {
+            $output->writeln('');
             $output->writeln(
-                sprintf('<fg=yellow>%d/%d collector(s) executed:</fg=yellow>',
+                sprintf('<fg=yellow>%d out of %d collector types available:</fg=yellow>',
                     count($types),
                     count($availableTypes)
                 )
             );
+            $output->writeln('');
         }
 
         foreach ($availableTypes as $type) {
-            //$progress->advance();
             if (!in_array($type, $types)) {
-                /*                if (isset($output)) {
-                    $output->writeln('');
+                if (isset($output)) {
                     $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green><fg=yellow> ');
                     $output->write('<fg=white>N/A </fg=white>');
-                }*/
+                    $output->writeln('');
+                }
                 continue;
             }
 
@@ -81,8 +82,6 @@ class Collector
                 $results[$type] = $result;
             }
         }
-
-        //$progress->finish();
 
         return $results;
     }
