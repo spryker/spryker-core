@@ -15,29 +15,35 @@ use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
 use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\RedisWriter;
 use Spryker\Zed\Collector\Business\Exporter\KeyValueCollector;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Collector;
 use Spryker\Zed\Collector\Business\Exporter\Reader\KeyValue\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader;
 use Spryker\Zed\Collector\Business\Exporter\SearchCollector;
+use Spryker\Zed\Collector\Business\Exporter\ExporterInterface;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
+use Spryker\Zed\Collector\Business\Exporter\MarkerInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Internal\InstallElasticsearch;
+use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Collector\Business\Model\FailedResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
- * @method \Spryker\Zed\Collector\CollectorConfig getConfig()
+ * @method CollectorConfig getConfig()
  */
 class CollectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Collector
+     * @return Collector
      */
     public function createYvesKeyValueExporter()
     {
@@ -48,7 +54,19 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainer
+     * @deprecated Use getTouchQueryContainer() instead
+     *
+     * @return TouchQueryContainer
+     */
+    protected function createTouchQueryContainer()
+    {
+        trigger_error('Deprecated, use getTouchQueryContainer() instead.', E_USER_DEPRECATED);
+
+        return $this->getTouchQueryContainer();
+    }
+
+    /**
+     * @return TouchQueryContainer
      */
     protected function getTouchQueryContainer()
     {
@@ -56,7 +74,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\ExporterInterface
+     * @return ExporterInterface
      */
     protected function createKeyValueExporter()
     {
@@ -77,7 +95,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
+     * @return WriterInterface
      */
     protected function createKeyValueWriter()
     {
@@ -87,7 +105,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\MarkerInterface
+     * @return MarkerInterface
      */
     public function createKeyValueMarker()
     {
@@ -99,7 +117,19 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\KeyValue\RedisReader
+     * @return UpdaterInterface
+     */
+    public function createKeyValueExportUpdaterMarker()
+    {
+        return new ExportUpdater(
+            $this->createKeyValueWriter(),
+            $this->createRedisReader(),
+            $this->createKvMarkerKeyBuilder()
+        );
+    }
+
+    /**
+     * @return RedisReader
      */
     protected function createRedisReader()
     {
@@ -109,7 +139,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder
+     * @return KvMarkerKeyBuilder
      */
     protected function createKvMarkerKeyBuilder()
     {
@@ -117,7 +147,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Model\FailedResultInterface
+     * @return FailedResultInterface
      */
     protected function createFailedResultModel()
     {
@@ -125,7 +155,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
+     * @return BatchResultInterface
      */
     protected function createBatchResultModel()
     {
@@ -133,7 +163,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
+     * @return TouchUpdaterInterface
      */
     protected function createExporterWriterSearchTouchUpdater()
     {
@@ -141,7 +171,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
+     * @return TouchUpdaterInterface
      */
     protected function createExporterWriterKeyValueTouchUpdater()
     {
@@ -149,7 +179,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Collector
+     * @return Collector
      */
     public function createYvesSearchExporter()
     {
@@ -166,13 +196,13 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Collector
+     * @return Collector
      */
     public function createYvesSearchUpdateExporter()
     {
         return new Collector(
             $this->getTouchQueryContainer(),
-            $this->createElasticsearchExporter(
+            $this->createElasticSearchExporter(
                 $this->createSearchUpdateWriter(),
                 $this->getConfig()
             )
@@ -180,12 +210,12 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $searchWriter
-     * @param \Spryker\Zed\Collector\CollectorConfig $config
+     * @param WriterInterface $searchWriter
+     * @param CollectorConfig $config
      *
-     * @return \Spryker\Zed\Collector\Business\Exporter\SearchCollector
+     * @return SearchExporter
      */
-    protected function createElasticsearchExporter(WriterInterface $searchWriter, CollectorConfig $config)
+    protected function createElasticSearchExporter(WriterInterface $searchWriter, CollectorConfig $config)
     {
         $searchExporter = new SearchExporter(
             $this->getTouchQueryContainer(),
@@ -204,11 +234,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter
+     * @return ElasticSearchWriter
      */
     protected function createSearchWriter()
     {
-        $elasticSearchWriter = new ElasticsearchWriter(
+        $elasticSearchWriter = new ElasticSearchWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType()
@@ -218,13 +248,13 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
+     * @return WriterInterface
      */
     protected function createSearchUpdateWriter()
     {
         $settings = $this->getConfig();
 
-        $elasticsearchUpdateWriter = new ElasticsearchUpdateWriter(
+        $elasticsearchUpdateWriter = new ElasticSearchUpdateWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $settings->getSearchIndexName(),
             $settings->getSearchDocumentType()
@@ -234,7 +264,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\MarkerInterface
+     * @return MarkerInterface
      */
     public function createSearchMarker()
     {
@@ -246,11 +276,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter
+     * @return ElasticSearchMarkerWriter
      */
     protected function createSearchMarkerWriter()
     {
-        $elasticSearchWriter = new ElasticsearchMarkerWriter(
+        $elasticSearchWriter = new ElasticSearchMarkerWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType()
@@ -260,11 +290,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader
+     * @return ElasticSearchMarkerReader
      */
     protected function createSearchMarkerReader()
     {
-        return new ElasticsearchMarkerReader(
+        return new ElasticSearchMarkerReader(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType()
@@ -272,7 +302,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder
+     * @return SearchMarkerKeyBuilder
      */
     protected function createSearchMarkerKeyBuilder()
     {
@@ -280,13 +310,13 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param MessengerInterface $messenger
      *
-     * @return \Spryker\Zed\Collector\Business\Internal\InstallElasticsearch
+     * @return InstallElasticSearch
      */
     public function createInstaller(MessengerInterface $messenger)
     {
-        $installer = new InstallElasticsearch(
+        $installer = new InstallElasticSearch(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName()
         );
