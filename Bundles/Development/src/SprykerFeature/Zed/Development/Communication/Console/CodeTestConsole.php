@@ -15,15 +15,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method DevelopmentFacade getFacade()
  */
-class CodeStyleSnifferConsole extends Console
+class CodeTestConsole extends Console
 {
 
-    const COMMAND_NAME = 'code:sniff';
+    const COMMAND_NAME = 'code:test';
 
     const OPTION_BUNDLE = 'bundle';
-    const OPTION_DRY_RUN = 'dry-run';
-    const OPTION_FIX = 'fix';
+
     const OPTION_BUNDLE_ALL = 'all';
+
+    const OPTION_INITIALIZE = 'initialize';
+
+    const OPTION_GROUP = 'group';
 
     /**
      * @return void
@@ -35,11 +38,11 @@ class CodeStyleSnifferConsole extends Console
         $this
             ->setName(self::COMMAND_NAME)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Sniff and fix code style for project or core.');
+            ->setDescription('Run codecept tests for project or core.');
 
-        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to fix code style for (or "all").');
-        $this->addOption(self::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only.');
-        $this->addOption(self::OPTION_FIX, 'f', InputOption::VALUE_NONE, 'Automatically fix errors that can be fixed.');
+        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run tests for (or "all").');
+        $this->addOption(self::OPTION_GROUP, 'g', InputOption::VALUE_OPTIONAL, 'Groups of tests to be executed (multiple values allowed, comma separated).');
+        $this->addOption(self::OPTION_INITIALIZE, 'i', InputOption::VALUE_NONE, 'Initialize test suite by (re)generating required test classes.');
     }
 
     /**
@@ -54,16 +57,18 @@ class CodeStyleSnifferConsole extends Console
     {
         $bundle = $this->input->getOption(self::OPTION_BUNDLE);
 
-        $message = 'Check code style in project level';
+        $message = 'Run codecept tests for project level';
         if ($bundle) {
-            $message = 'Check code style in all bundles';
-            if ($bundle !== self::OPTION_BUNDLE_ALL) {
-                $message = 'Check code style in ' . $bundle . ' bundle';
-            }
+            $message = 'Run codecept tests for ' . $bundle . ' bundle';
         }
         $this->info($message);
 
-        $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions());
+        $initialize = $this->input->getOption(self::OPTION_INITIALIZE);
+        if (!$initialize) {
+            $this->warning('Make sure you ran `codecept build` already.');
+        }
+
+        $this->getFacade()->runTest($bundle, $this->input->getOptions());
     }
 
 }
