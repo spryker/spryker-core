@@ -11,13 +11,13 @@ use Orm\Zed\Touch\Persistence\Base\SpyTouchStorageQuery;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchStorage;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Zed\Collector\Business\Exporter\AbstractPropelCollectorPlugin;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use SprykerFeature\Zed\Collector\CollectorConfig;
 
 class TouchUpdater implements TouchUpdaterInterface
 {
 
-    const COLLECTOR_KEY_ID = AbstractPropelCollectorPlugin::COLLECTOR_STORAGE_KEY_ID;
+    const COLLECTOR_KEY_ID = CollectorConfig::COLLECTOR_STORAGE_KEY_ID;
 
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
@@ -45,7 +45,7 @@ class TouchUpdater implements TouchUpdaterInterface
             } else {
                 $entity = new SpyTouchStorage();
                 $entity->setKey($key);
-                $entity->setFkTouch($touchData[self::COLLECTOR_TOUCH_ID]);
+                $entity->setFkTouch($touchData[CollectorConfig::COLLECTOR_TOUCH_ID]);
                 $entity->setFkLocale($idLocale);
                 $entity->save();
             }
@@ -87,7 +87,7 @@ class TouchUpdater implements TouchUpdaterInterface
             return null;
         }
 
-        return (isset($data[self::COLLECTOR_KEY_ID])) ? $data[self::COLLECTOR_KEY_ID] : null;
+        return (isset($data[static::COLLECTOR_KEY_ID])) ? $data[static::COLLECTOR_KEY_ID] : null;
     }
 
 }

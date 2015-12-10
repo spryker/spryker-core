@@ -4,13 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter;
+namespace SprykerFeature\Zed\Collector\Business\Plugin;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use SprykerFeature\Zed\Collector\Business\Exporter\Exception\DependencyException;
+use SprykerFeature\Zed\Collector\CollectorConfig;
 use SprykerFeature\Zed\Collector\Persistence\Exporter\AbstractPdoCollectorQuery;
+use SprykerFeature\Zed\Collector\Persistence\PdoBatchIterator;
 use SprykerFeature\Zed\Distributor\Business\Distributor\BatchIteratorInterface;
 
 abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
@@ -83,10 +85,10 @@ abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
     protected function ensureCollectorColumnsAreSelected()
     {
         $sql = sprintf($this->criteriaBuilder->getSqlTemplate(),
-            static::COLLECTOR_TOUCH_ID,
-            static::COLLECTOR_RESOURCE_ID,
-            static::COLLECTOR_STORAGE_KEY_ID,
-            static::COLLECTOR_SEARCH_KEY_ID
+            CollectorConfig::COLLECTOR_TOUCH_ID,
+            CollectorConfig::COLLECTOR_RESOURCE_ID,
+            CollectorConfig::COLLECTOR_STORAGE_KEY_ID,
+            CollectorConfig::COLLECTOR_SEARCH_KEY_ID
         );
 
         $this->criteriaBuilder->sql($sql);

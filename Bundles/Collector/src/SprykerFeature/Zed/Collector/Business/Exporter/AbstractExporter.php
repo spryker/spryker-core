@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 use SprykerFeature\Zed\Collector\Business\Model\FailedResultInterface;
+use SprykerFeature\Zed\Collector\CollectorConfig;
 use SprykerFeature\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -123,8 +124,8 @@ abstract class AbstractExporter implements ExporterInterface
         $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $locale);
 
         $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $locale, $lastRunDatetime);
-        $baseQuery->withColumn(SpyTouchTableMap::COL_ID_TOUCH, AbstractPdoCollectorPlugin::COLLECTOR_TOUCH_ID);
-        $baseQuery->withColumn(SpyTouchTableMap::COL_ITEM_ID, AbstractPdoCollectorPlugin::COLLECTOR_RESOURCE_ID);
+        $baseQuery->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID);
+        $baseQuery->withColumn(SpyTouchTableMap::COL_ITEM_ID, CollectorConfig::COLLECTOR_RESOURCE_ID);
         $baseQuery->setFormatter($this->getFormatter());
 
         $collectorPlugin = $this->collectorPlugins[$type];

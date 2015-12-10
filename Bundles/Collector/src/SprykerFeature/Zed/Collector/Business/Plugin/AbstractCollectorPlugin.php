@@ -4,7 +4,7 @@ ds<?php
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter;
+namespace SprykerFeature\Zed\Collector\Business\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
@@ -16,6 +16,7 @@ use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterS
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
+use SprykerFeature\Zed\Collector\CollectorConfig;
 use SprykerFeature\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery;
 use SprykerFeature\Zed\Distributor\Business\Distributor\BatchIteratorInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -25,11 +26,6 @@ abstract class AbstractCollectorPlugin
 {
 
     use KeyBuilderTrait;
-
-    const COLLECTOR_TOUCH_ID = 'collector_touch_id';
-    const COLLECTOR_RESOURCE_ID = 'collector_resource_id';
-    const COLLECTOR_STORAGE_KEY_ID = 'collector_storage_key_id';
-    const COLLECTOR_SEARCH_KEY_ID = 'collector_search_key_id';
 
     /**
      * @var int
@@ -121,7 +117,7 @@ abstract class AbstractCollectorPlugin
         $setToExport = [];
 
         foreach ($collectedSet as $index => $collectedItemData) {
-            $touchKey = $this->generateKey($collectedItemData[static::COLLECTOR_RESOURCE_ID], $locale->getLocaleName());
+            $touchKey = $this->generateKey($collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID], $locale->getLocaleName());
             $setToExport[$touchKey] = $this->processCollectedItem($touchKey, $collectedItemData, $touchUpdaterSet);
         }
 
@@ -137,9 +133,9 @@ abstract class AbstractCollectorPlugin
      */
     protected function processCollectedItem($touchKey, array $collectItemData, TouchUpdaterSet $touchUpdaterSet)
     {
-        $touchUpdaterSet->add($touchKey, $collectItemData[static::COLLECTOR_TOUCH_ID], [
-            static::COLLECTOR_STORAGE_KEY_ID => $this->getCollectorStorageKeyId($collectItemData),
-            static::COLLECTOR_SEARCH_KEY_ID => $this->getCollectorSearchKeyId($collectItemData),
+        $touchUpdaterSet->add($touchKey, $collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID], [
+            CollectorConfig::COLLECTOR_STORAGE_KEY_ID => $this->getCollectorStorageKeyId($collectItemData),
+            CollectorConfig::COLLECTOR_SEARCH_KEY_ID => $this->getCollectorSearchKeyId($collectItemData),
         ]);
 
         return $this->collectItem($touchKey, $collectItemData);
@@ -152,11 +148,11 @@ abstract class AbstractCollectorPlugin
      */
     protected function getCollectorStorageKeyId(array $collectItemData)
     {
-        if (!isset($collectItemData[static::COLLECTOR_STORAGE_KEY_ID])) {
+        if (!isset($collectItemData[CollectorConfig::COLLECTOR_STORAGE_KEY_ID])) {
             return null;
         }
 
-        return $collectItemData[static::COLLECTOR_STORAGE_KEY_ID];
+        return $collectItemData[CollectorConfig::COLLECTOR_STORAGE_KEY_ID];
     }
 
     /**
@@ -166,11 +162,11 @@ abstract class AbstractCollectorPlugin
      */
     protected function getCollectorSearchKeyId(array $collectItemData)
     {
-        if (!isset($collectItemData[static::COLLECTOR_SEARCH_KEY_ID])) {
+        if (!isset($collectItemData[CollectorConfig::COLLECTOR_SEARCH_KEY_ID])) {
             return null;
         }
 
-        return $collectItemData[static::COLLECTOR_SEARCH_KEY_ID];
+        return $collectItemData[CollectorConfig::COLLECTOR_SEARCH_KEY_ID];
     }
 
     /**
@@ -214,7 +210,7 @@ abstract class AbstractCollectorPlugin
         foreach ($batchCollection as $batch) {
             $progressBar->advance(0); //show progress bar right away
 
-            $touchUpdaterSet = new TouchUpdaterSet(self::COLLECTOR_TOUCH_ID);
+            $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
             $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
             $collectedDataCount = count($collectedData);
 

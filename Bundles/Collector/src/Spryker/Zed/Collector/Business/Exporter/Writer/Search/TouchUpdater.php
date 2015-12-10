@@ -12,12 +12,10 @@ use Orm\Zed\Touch\Persistence\SpyTouchSearchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Zed\Collector\Business\Exporter\AbstractPropelCollectorPlugin;
+use Spryker\Zed\Collector\CollectorConfig;
 
 class TouchUpdater implements TouchUpdaterInterface
 {
-
-    const COLLECTOR_KEY_ID = AbstractPropelCollectorPlugin::COLLECTOR_SEARCH_KEY_ID;
 
     /**
      * @param TouchUpdaterSet $touchUpdaterSet
@@ -30,7 +28,7 @@ class TouchUpdater implements TouchUpdaterInterface
     {
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
             $query = SpyTouchSearchQuery::create();
-            $query->filterByFkTouch($touchData[self::COLLECTOR_TOUCH_ID]);
+            $query->filterByFkTouch($touchData[CollectorConfig::COLLECTOR_TOUCH_ID]);
             $query->filterByFkLocale($idLocale);
             $entity = $query->findOneOrCreate();
             $entity->setKey($key);

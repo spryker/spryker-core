@@ -10,13 +10,13 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Base\SpyTouchStorage;
 use Orm\Zed\Touch\Persistence\SpyTouchSearch;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Zed\Collector\Business\Exporter\AbstractPropelCollectorPlugin;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
+use SprykerFeature\Zed\Collector\CollectorConfig;
 
 interface TouchUpdaterInterface
 {
 
-    const COLLECTOR_TOUCH_ID = AbstractPropelCollectorPlugin::COLLECTOR_TOUCH_ID;
+    const COLLECTOR_TOUCH_ID = CollectorConfig::COLLECTOR_TOUCH_ID;
 
     /**
      * @param TouchUpdaterSet $touchUpdaterSet

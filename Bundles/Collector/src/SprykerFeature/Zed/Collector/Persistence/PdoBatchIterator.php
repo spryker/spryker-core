@@ -4,14 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter;
+namespace SprykerFeature\Zed\Collector\Persistence;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use SprykerFeature\Zed\Collector\Business\Model\CountableIteratorInterface;
-use SprykerFeature\Zed\Distributor\Business\Distributor\BatchIteratorInterface;
 
-class PdoBatchIterator implements CountableIteratorInterface, BatchIteratorInterface
+class PdoBatchIterator implements CountableIteratorInterface
 {
 
     /**

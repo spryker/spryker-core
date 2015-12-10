@@ -4,15 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter;
+namespace SprykerFeature\Zed\Collector\Business\Collector\Search;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use SprykerFeature\Zed\Collector\Business\Plugin\AbstractPropelCollectorPlugin;
+use SprykerFeature\Zed\Collector\CollectorConfig;
 
-abstract class AbstractSearchPropelCollectorPlugin extends AbstractPropelCollectorPlugin
+abstract class AbstractSearchPropelCollector extends AbstractPropelCollectorPlugin
 {
 
     /**
@@ -29,7 +31,7 @@ abstract class AbstractSearchPropelCollectorPlugin extends AbstractPropelCollect
             Criteria::LEFT_JOIN
         );
 
-        $touchQuery->withColumn(SpyTouchSearchTableMap::COL_ID_TOUCH_SEARCH, AbstractPdoCollectorPlugin::COLLECTOR_SEARCH_KEY_ID);
+        $touchQuery->withColumn(SpyTouchSearchTableMap::COL_ID_TOUCH_SEARCH, CollectorConfig::COLLECTOR_SEARCH_KEY_ID);
 
         parent::prepareCollectorScope($touchQuery, $locale);
     }
