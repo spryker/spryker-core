@@ -56,7 +56,7 @@ class RemoveCommunicationLayer extends AbstractRefactor
 
             $this->moveFileFromCommunicationNamespace($filesystem, $file);
         }
-        $this->cleanupEmptyCommunicationFolders($filesystem);
+        $this->cleanupEmptyCommunicationFolders();
     }
 
     /**
@@ -64,7 +64,7 @@ class RemoveCommunicationLayer extends AbstractRefactor
      *
      * @return string
      */
-    protected function removeCommunicationNamespace(&$content)
+    protected function removeCommunicationNamespace($content)
     {
         return preg_replace('/(.*\\\\Yves\\\\.*)\\\\Communication\b/', '$1', $content);
     }
@@ -74,7 +74,7 @@ class RemoveCommunicationLayer extends AbstractRefactor
      *
      * @return string
      */
-    protected function fixDependencyContainer(&$content)
+    protected function fixDependencyContainer($content)
     {
         return preg_replace('/AbstractCommunicationDependencyContainer/', 'AbstractDependencyContainer', $content);
     }
@@ -84,7 +84,7 @@ class RemoveCommunicationLayer extends AbstractRefactor
      *
      * @return string
      */
-    protected function fixYvesBootstrap(&$content)
+    protected function fixYvesBootstrap($content)
     {
         return preg_replace(
             '/SprykerEngine\\\\Yves\\\\Application\\\\YvesBootstrap/',
@@ -98,7 +98,7 @@ class RemoveCommunicationLayer extends AbstractRefactor
      *
      * @return string
      */
-    protected function fixAbstractRouter(&$content)
+    protected function fixAbstractRouter($content)
     {
         return preg_replace(
             '/SprykerEngine\\\\Yves\\\\Application\\\\Business\\\Routing\\\\AbstractRouter/',
@@ -112,7 +112,7 @@ class RemoveCommunicationLayer extends AbstractRefactor
      *
      * @return string
      */
-    protected function fixRoutingHelper(&$content)
+    protected function fixRoutingHelper($content)
     {
         return preg_replace(
             '/SprykerEngine\\\\Yves\\\\Application\\\\Business\\\Routing\\\\Helper/',
@@ -138,11 +138,9 @@ class RemoveCommunicationLayer extends AbstractRefactor
     }
 
     /**
-     * @param Filesystem $filesystem
-     *
      * @return void
      */
-    protected function cleanupEmptyCommunicationFolders(Filesystem $filesystem)
+    protected function cleanupEmptyCommunicationFolders()
     {
         $finder = new Finder();
         $finder->directories()->in($this->directories);
@@ -150,9 +148,8 @@ class RemoveCommunicationLayer extends AbstractRefactor
         $finder->name('Communication');
 
         $removable = [];
-        /** @var SplFileInfo $communicationFolder */
         foreach ($finder as $communicationFolder) {
-            $removable[] = $communicationFolder->getRealPath();
+            $removable[] = $this->getRealPath($communicationFolder);
         }
 
         foreach ($removable as $remove) {
@@ -161,11 +158,21 @@ class RemoveCommunicationLayer extends AbstractRefactor
     }
 
     /**
+     * @param SplFileInfo $communicationFolder
+     *
+     * @return string
+     */
+    protected function getRealPath(SplFileInfo $communicationFolder)
+    {
+        return $communicationFolder->getRealPath();
+    }
+
+    /**
      * @param string $dir
      *
      * @return bool
      */
-    public function recursiveRemoveDirectory($dir) {
+    protected function recursiveRemoveDirectory($dir) {
         $files = array_diff(scandir($dir), ['.', '..']);
 
         foreach ($files as $file) {

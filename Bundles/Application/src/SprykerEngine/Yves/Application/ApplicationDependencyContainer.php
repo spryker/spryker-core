@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Yves\Application;
 
+use SprykerEngine\Yves\Application\Plugin\ServiceProvider\ExceptionService\DefaultExceptionHandler;
 use SprykerEngine\Yves\Application\Plugin\ServiceProvider\ExceptionService\ExceptionHandlerDispatcher;
 use SprykerEngine\Yves\Application\Plugin\ServiceProvider\ExceptionService\ExceptionHandlerInterface;
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
@@ -19,9 +20,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
      */
     public function createExceptionHandlerDispatcher()
     {
-        return $this->getFactory()->createPluginServiceProviderExceptionServiceExceptionHandlerDispatcher(
-            $this->createExceptionHandlers()
-        );
+        return new ExceptionHandlerDispatcher($this->createExceptionHandlers());
     }
 
     /**
@@ -30,8 +29,7 @@ class ApplicationDependencyContainer extends AbstractDependencyContainer
     public function createExceptionHandlers()
     {
         return [
-            Response::HTTP_NOT_FOUND => $this->getFactory()
-                ->createPluginServiceProviderExceptionServiceDefaultExceptionHandler(),
+            Response::HTTP_NOT_FOUND => new DefaultExceptionHandler(),
         ];
     }
 

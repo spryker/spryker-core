@@ -3,21 +3,19 @@
 namespace SprykerEngine\Yves\Messenger;
 
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use SprykerEngine\Yves\Messenger\Business\Model\Messenger;
 use SprykerEngine\Yves\Messenger\Plugin\TwigMessengerExtension;
 
 class MessengerDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
-     * @return \SprykerEngine\Yves\Messenger\Plugin\TwigMessengerExtension
+     * @return TwigMessengerExtension
      */
     public function createTwigMessengerExtension()
     {
-        $twigMessengerExtension = $this->getFactory()->createPluginTwigMessengerExtension();
-
-        $twigMessengerExtension->setMessenger(
-            $this->getFactory()->createBusinessModelMessenger()
-        );
+        $twigMessengerExtension = new TwigMessengerExtension();
+        $twigMessengerExtension->setMessenger(new Messenger());
 
         return $twigMessengerExtension;
     }

@@ -26,11 +26,6 @@ class PluginLocator extends AbstractLocator
     /**
      * @var string
      */
-    protected $layer = null;
-
-    /**
-     * @var string
-     */
     protected $suffix = 'Factory';
 
     /**
