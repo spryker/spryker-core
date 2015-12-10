@@ -12,6 +12,7 @@ use Silex\Application\UrlGeneratorTrait;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\Routing\RouterInterface;
 
 class Application extends \Silex\Application
@@ -38,6 +39,8 @@ class Application extends \Silex\Application
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      *
      * @return FormInterface The form named after the type
+     *
+     * @deprecated Use buildForm() instead.
      */
     public function createForm($type = 'form', $data = null, array $options = [])
     {
@@ -47,6 +50,20 @@ class Application extends \Silex\Application
         $form->handleRequest($request);
 
         return $form;
+    }
+
+    /**
+     * @param string|FormTypeInterface $type The type of the form
+     * @param mixed $data The initial data
+     * @param array $options The options
+     *
+     * @throws InvalidOptionsException if any given option is not applicable to the given type
+     *
+     * @return FormInterface The form named after the type
+     */
+    public function buildForm($type = 'form', $data = null, array $options = [])
+    {
+        return $this['form.factory']->create($type, $data, $options);
     }
 
     /**

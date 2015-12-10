@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Gui\Communication\Form;
+namespace SprykerEngine\Shared\Gui\Form;
 
 use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
 use Generated\Zed\Ide\AutoCompletion;
@@ -47,12 +47,12 @@ abstract class AbstractForm implements FormTypeInterface
     abstract public function buildForm(FormBuilderInterface $builder, array $options);
 
     /**
-     * @return TransferInterface
+     * @return TransferInterface|array
      */
     abstract public function populateFormFields();
 
     /**
-     * @return TransferInterface
+     * @return TransferInterface|null
      */
     abstract protected function getDataClass();
 
@@ -106,21 +106,10 @@ abstract class AbstractForm implements FormTypeInterface
     protected function getRequest()
     {
         if ($this->request === null) {
-            $this->request = (new Pimple())
-                ->getApplication()['request'];
+            $this->request = (new Pimple())->getApplication()['request'];
         }
 
         return $this->request;
-    }
-
-    /**
-     * Locator can be used here, but no form type class should use it. Keep it PRIVATE
-     *
-     * @return AutoCompletion
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
     }
 
     /**

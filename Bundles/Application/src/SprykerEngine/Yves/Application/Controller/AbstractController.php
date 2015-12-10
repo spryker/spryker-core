@@ -8,6 +8,7 @@ namespace SprykerEngine\Yves\Application\Controller;
 
 use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
+use SprykerEngine\Shared\Gui\Form\AbstractForm;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Yves\Application\Application;
@@ -240,11 +241,22 @@ abstract class AbstractController
      *
      * @return FormInterface
      *
-     * @deprecated will be removed when we have our ComFactory
+     * @deprecated Use buildForm() instead.
      */
     protected function createForm($type = 'form', $data = null, array $options = [])
     {
         return $this->getApplication()->createForm($type, $data, $options);
+    }
+
+    /**
+     * @param AbstractForm $type
+     * @param array $options
+     *
+     * @return FormInterface
+     */
+    protected function buildForm(AbstractForm $type, array $options = [])
+    {
+        return $this->getApplication()->buildForm($type, $type->populateFormFields(), $options);
     }
 
     /**

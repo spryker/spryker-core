@@ -4,10 +4,10 @@ namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use SprykerEngine\Shared\Gui\Form\AbstractForm;
 use SprykerFeature\Zed\Customer\CustomerConfig;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use SprykerEngine\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
