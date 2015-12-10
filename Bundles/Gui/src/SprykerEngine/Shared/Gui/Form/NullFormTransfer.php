@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerEngine\Zed\Gui\Communication\Form;
+namespace SprykerEngine\Shared\Gui\Form;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 

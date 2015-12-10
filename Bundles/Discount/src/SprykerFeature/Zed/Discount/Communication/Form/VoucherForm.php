@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerEngine\Zed\Gui\Communication\Form\AbstractForm;
+use SprykerEngine\Shared\Gui\Form\AbstractForm;
 use SprykerFeature\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\DiscountConfig;

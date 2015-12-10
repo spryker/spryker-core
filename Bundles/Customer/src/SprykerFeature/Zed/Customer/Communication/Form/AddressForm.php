@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use SprykerEngine\Shared\Gui\Form\AbstractForm;
 use SprykerFeature\Zed\Customer\CustomerConfig;
-use SprykerEngine\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Country\Business\CountryFacade;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;

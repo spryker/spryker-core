@@ -9,9 +9,11 @@ namespace SprykerEngine\Shared\Application\Communication;
 use Silex\Application\TranslationTrait;
 use Silex\Application\TwigTrait;
 use Silex\Application\UrlGeneratorTrait;
+use SprykerEngine\Shared\Gui\Form\AbstractForm;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\Routing\RouterInterface;
 
 class Application extends \Silex\Application
@@ -38,6 +40,8 @@ class Application extends \Silex\Application
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      *
      * @return FormInterface The form named after the type
+     *
+     * @deprecated Use buildForm() instead.
      */
     public function createForm($type = 'form', $data = null, array $options = [])
     {
@@ -47,6 +51,19 @@ class Application extends \Silex\Application
         $form->handleRequest($request);
 
         return $form;
+    }
+
+    /**
+     * @param AbstractForm $form
+     * @param array $options The options
+     *
+     * @throws InvalidOptionsException if any given option is not applicable to the given type
+     *
+     * @return FormInterface The form named after the type
+     */
+    public function buildForm(AbstractForm $form, array $options = [])
+    {
+        return $this['form.factory']->create($form, $form->populateFormFields(), $options);
     }
 
     /**
