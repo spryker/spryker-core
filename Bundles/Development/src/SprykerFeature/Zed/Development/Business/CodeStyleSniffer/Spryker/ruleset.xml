@@ -24,8 +24,9 @@
     <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
     <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
     <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
+    <!-- Disabled for now
     <rule ref="Generic.CodeAnalysis.UselessOverridingMethod"/>
-
+    -->
     <rule ref="Squiz.Commenting.DocCommentAlignment"/>
 
     <rule ref="PEAR.ControlStructures.ControlSignature"/>
@@ -59,12 +60,10 @@
     <rule ref="Squiz.Scope.MethodScope"/>
     <rule ref="Squiz.Scope.StaticThisUsage"/>
 
-
     <rule ref="Squiz.WhiteSpace.CastSpacing"/>
     <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
     <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
     <rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
     <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
-
 </ruleset>

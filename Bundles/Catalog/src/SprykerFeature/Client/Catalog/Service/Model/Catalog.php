@@ -124,10 +124,8 @@ class Catalog implements CatalogInterface
         switch ($product[self::INDEXKEY_VARIETY]) {
             case self::PRODUCT_VARIETY_CONFIG :
                 return $this->getSubProductsBySkuIndex($product, self::INDEXKEY_PRODUCT_CONFIG_SKUS);
-                break;
             case self::PRODUCT_VARIETY_BUNDLE :
                 return $this->getSubProductsBySkuIndex($product, self::INDEXKEY_PRODUCT_BUNDLE_SKUS);
-                break;
         }
 
         return $subProducts;

@@ -55,7 +55,8 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     protected function expandCartItem(ItemTransfer $cartItem)
     {
         $result = [];
-        for ($i = 1; $i <= $cartItem->getQuantity(); $i++) {
+        $quantity = $cartItem->getQuantity();
+        for ($i = 1; $i <= $quantity; ++$i) {
             $result[] = $this->createItemTransfer($cartItem);
         }
 

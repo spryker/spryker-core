@@ -56,7 +56,7 @@ class RedisRead extends Redis implements ReadInterface
     }
 
     /**
-     * @param null|string $section
+     * @param string|null $section
      *
      * @return array
      */
@@ -66,7 +66,7 @@ class RedisRead extends Redis implements ReadInterface
     }
 
     /**
-     * @param null|string $prefix
+     * @param string|null $prefix
      *
      * @return array
      */
@@ -76,7 +76,7 @@ class RedisRead extends Redis implements ReadInterface
     }
 
     /**
-     * @param null|string $prefix
+     * @param string|null $prefix
      *
      * @return int
      */
@@ -86,7 +86,7 @@ class RedisRead extends Redis implements ReadInterface
     }
 
     /**
-     * @param null|string $prefix
+     * @param string|null $prefix
      *
      * @return string
      */

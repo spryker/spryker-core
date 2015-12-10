@@ -29,7 +29,7 @@ class TaskProvider implements TaskProviderInterface
      *
      * @throws NoTaskConfiguredForGivenQueueException
      *
-     * @return null|TaskPluginInterface
+     * @return TaskPluginInterface|null
      */
     public function getTaskByQueueName($queueName)
     {

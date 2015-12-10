@@ -16,7 +16,7 @@ class Config
     const CONFIG_FILE_SUFFIX = '.php';
 
     /**
-     * @var null|\ArrayObject
+     * @var \ArrayObject|null
      */
     protected static $config = null;
 

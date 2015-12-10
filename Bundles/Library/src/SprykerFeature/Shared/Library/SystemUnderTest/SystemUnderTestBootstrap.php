@@ -71,11 +71,11 @@ class SystemUnderTestBootstrap
         error_reporting(E_ALL | E_STRICT);
         ini_set('display_errors', 1);
 
-        defined('APPLICATION') or define('APPLICATION', strtoupper($application));
-        defined('APPLICATION_ENV') or define('APPLICATION_ENV', self::TEST_ENVIRONMENT);
+        defined('APPLICATION') || define('APPLICATION', strtoupper($application));
+        defined('APPLICATION_ENV') || define('APPLICATION_ENV', self::TEST_ENVIRONMENT);
 
         $path = realpath(__DIR__ . '/../../../../../../../../../..');
-        defined('APPLICATION_ROOT_DIR') or define('APPLICATION_ROOT_DIR', $path);
+        defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $path);
 
         TestEnvironment::forceSystemUnderTest();
         Environment::initialize($application);

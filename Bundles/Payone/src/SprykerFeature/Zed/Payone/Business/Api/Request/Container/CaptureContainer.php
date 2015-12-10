@@ -149,7 +149,7 @@ class CaptureContainer extends AbstractRequestContainer
     }
 
     /**
-     * @return null|Invoicing\TransactionContainer
+     * @return Invoicing\TransactionContainer|null
      */
     public function getInvoicing()
     {

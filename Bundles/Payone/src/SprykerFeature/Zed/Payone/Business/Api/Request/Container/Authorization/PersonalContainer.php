@@ -137,7 +137,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getAddressAddition()
     {
@@ -173,7 +173,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCity()
     {
@@ -191,7 +191,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCompany()
     {
@@ -245,7 +245,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getEmail()
     {
@@ -263,7 +263,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFirstName()
     {
@@ -281,7 +281,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getIp()
     {
@@ -317,7 +317,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLastName()
     {
@@ -335,7 +335,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getSalutation()
     {
@@ -353,7 +353,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getState()
     {
@@ -371,7 +371,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getStreet()
     {
@@ -389,7 +389,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getTelephoneNumber()
     {

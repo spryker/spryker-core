@@ -1,12 +1,13 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Shared\Library;
 
 use SprykerEngine\Shared\Kernel\Store;
 
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
 class Context
 {
 
@@ -14,22 +15,30 @@ class Context
     const CONTEXT_YVES = 'yves';
     const CONTEXT_ZED = 'zed';
 
-    /** @var null|array */
+    /**
+     * @var array|null
+     */
     protected static $contexts = null;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected static $instances = [];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected static $defaultContext = self::CONTEXT_SHARED;
 
-    /** @var null|string */
+    /**
+     * @var string|null
+     */
     protected $_contextName = null;
 
     /**
      * Creates Context object based on given context name.
      *
-     * @param string|Context $context
+     * @param string|Context|null $context
      *
      * @throws \Exception
      *

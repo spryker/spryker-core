@@ -176,7 +176,7 @@ class Propel implements StorageInterface
      * @param ItemTransfer $wishlistItemTransfer
      * @param int $idWishlist
      *
-     * @return null|SpyWishlistItem
+     * @return SpyWishlistItem|null
      */
     protected function getWishlistItemEntity(ItemTransfer $wishlistItemTransfer, $idWishlist)
     {

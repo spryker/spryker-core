@@ -284,7 +284,7 @@ class GraphViz
         if (readfile($outputfile) === false) {
             $return = false;
         }
-        @unlink($outputfile);
+        unlink($outputfile);
 
         return $return;
     }
@@ -330,7 +330,9 @@ class GraphViz
      *
      * @param string $format Format of the output image. This may be one
      *   of the formats supported by GraphViz.
-     * @param string $command "dot" or "neato"
+     * @param string|null $command "dot" or "neato"
+     *
+     * @throws \ErrorException
      *
      * @return string The image (data) created by GraphViz, FALSE or PEAR_Error
      *   on error
@@ -352,7 +354,7 @@ class GraphViz
             return $rendered;
         }
 
-        @unlink($file);
+        unlink($file);
 
         $fp = fopen($outputfile, 'rb');
 
@@ -361,13 +363,11 @@ class GraphViz
                 return false;
             }
             throw new \ErrorException('Could not read rendered file');
-
-            return $error;
         }
 
         $data = fread($fp, filesize($outputfile));
         fclose($fp);
-        @unlink($outputfile);
+        unlink($outputfile);
 
         return $data;
     }
@@ -379,21 +379,19 @@ class GraphViz
      * @param string $outputfile The absolute path of the file to save to.
      * @param string $format Format of the output image. This may be one
      *   of the formats supported by GraphViz.
-     * @param string $command "dot" or "neato"
+     * @param string|null $command "dot" or "neato"
      *
-     * @return bool TRUE if the file was saved, FALSE or PEAR_Error
-     *   otherwise.
+     * @throws \ErrorException
+     *
+     * @return bool TRUE if the file was saved, FALSE or PEAR_Error otherwise.
      */
-    public function renderDotFile($dotfile, $outputfile, $format = 'svg',
-                           $command = null)
+    public function renderDotFile($dotfile, $outputfile, $format = 'svg', $command = null)
     {
         if (!file_exists($dotfile)) {
             if ($this->_returnFalseOnError) {
                 return false;
             }
             throw new \ErrorException('Could not find dot file');
-
-            return $error;
         }
 
         $oldmtime = file_exists($outputfile) ? filemtime($outputfile) : 0;
@@ -526,7 +524,7 @@ class GraphViz
     public function addEdge($edge, $attributes = [], $ports = [])
     {
         if (!is_array($edge)) {
-            return;
+            return 0;
         }
 
         $from = key($edge);
@@ -661,13 +659,13 @@ class GraphViz
     public function _escape($input, $html = false)
     {
         switch (strtolower($input)) {
-        case 'node':
-        case 'edge':
-        case 'graph':
-        case 'digraph':
-        case 'subgraph':
-        case 'strict':
-            return '"' . $input . '"';
+            case 'node':
+            case 'edge':
+            case 'graph':
+            case 'digraph':
+            case 'subgraph':
+            case 'strict':
+                return '"' . $input . '"';
         }
 
         if (is_bool($input)) {
@@ -773,10 +771,10 @@ class GraphViz
             $file = System::mktemp('graph_');
         }
 
-        $fp = @fopen($file, 'wb');
+        $fp = fopen($file, 'wb');
         if ($fp) {
-            @fwrite($fp, $serializedGraph);
-            @fclose($fp);
+            fwrite($fp, $serializedGraph);
+            fclose($fp);
 
             return $file;
         }

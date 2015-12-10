@@ -14,6 +14,8 @@ use SprykerFeature\Zed\ProductSearch\Business\Operation\OperationInterface;
 class OperationLocator implements OperationLocatorInterface
 {
 
+    const COPY_TO_FIELD = 'CopyToField';
+
     protected $registeredOperations = [];
 
     /**
@@ -29,15 +31,15 @@ class OperationLocator implements OperationLocatorInterface
     /**
      * @param string $name
      *
-     * @return null|OperationInterface
+     * @return OperationInterface|null
      */
-    public function findOperationByName($name = 'CopyToField')
+    public function findOperationByName($name = self::COPY_TO_FIELD)
     {
         if (array_key_exists($name, $this->registeredOperations)) {
             return $this->registeredOperations[$name];
         }
 
-        return;
+        return null;
     }
 
 }

@@ -167,7 +167,7 @@ class Response extends AbstractObject implements
     }
 
     /**
-     * @return TransferInterface
+     * @return TransferInterface|null
      */
     public function getTransfer()
     {
@@ -178,7 +178,7 @@ class Response extends AbstractObject implements
             return (new TransferLocator())->$getMethodName($this->values['transfer']);
         }
 
-        return;
+        return null;
     }
 
     /**

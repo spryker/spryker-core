@@ -69,7 +69,7 @@ class FacetConfig
             return $attributeConfig[self::KEY_SORT_FIELD_NAME];
         }
 
-        return;
+        return null;
     }
 
     /**

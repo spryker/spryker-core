@@ -22,7 +22,7 @@ abstract class AbstractClientLocator extends AbstractLocator
     /**
      * @param string $bundle
      * @param LocatorLocatorInterface $locator
-     * @param null|string $className
+     * @param string|null $className
      *
      * @throws LocatorException
      *
@@ -33,7 +33,7 @@ abstract class AbstractClientLocator extends AbstractLocator
         $factory = $this->getFactory($bundle);
 
         $key = self::PREFIX . ucfirst($className) . self::SUFFIX;
-        if (!array_key_exists($key, $this->cachedClients)) {
+        if (!isset($this->cachedClients[$key])) {
             $this->cachedClients[$key] = $factory->create($key, $factory, $locator);
         }
 

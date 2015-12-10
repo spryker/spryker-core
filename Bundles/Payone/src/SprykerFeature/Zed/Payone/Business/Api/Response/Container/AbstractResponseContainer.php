@@ -200,7 +200,7 @@ abstract class AbstractResponseContainer
     /**
      * @param string $name
      *
-     * @return null|mixed
+     * @return mixed|null
      */
     protected function get($name)
     {
@@ -208,7 +208,7 @@ abstract class AbstractResponseContainer
             return $this->$name;
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -225,7 +225,7 @@ abstract class AbstractResponseContainer
             return true;
         }
 
-        return;
+        return null;
     }
 
     /**

@@ -38,7 +38,7 @@ class SessionHandlerCouchbase implements \SessionHandlerInterface
     protected $password;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $bucketName = null;
 
@@ -65,8 +65,8 @@ class SessionHandlerCouchbase implements \SessionHandlerInterface
     /**
      * @param ApiInterface $newRelicApi
      * @param array $hosts
-     * @param null|string $user
-     * @param null|string $password
+     * @param string|null $user
+     * @param string|null $password
      * @param string $bucketName
      * @param bool $persistent
      * @param int $lifetime
@@ -116,7 +116,7 @@ class SessionHandlerCouchbase implements \SessionHandlerInterface
     /**
      * @param string $sessionId
      *
-     * @return null|string
+     * @return string|null
      */
     public function read($sessionId)
     {

@@ -72,7 +72,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
 
     /**
      * @param string $key
-     * @param null|string $prefix
+     * @param string|null $prefix
      *
      * @return int
      */

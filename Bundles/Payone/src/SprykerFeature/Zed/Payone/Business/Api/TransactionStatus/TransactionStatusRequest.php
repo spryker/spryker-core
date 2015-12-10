@@ -15,50 +15,58 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
      * @var string Payment portal key as MD5 value
      */
     protected $key;
+
     /**
      * @var string
      */
     protected $txaction;
+
     /**
      * @var string
      */
     protected $mode;
+
     /**
      * @var int Payment portal ID
      */
     protected $portalid;
+
     /**
      * @var int Account ID (subaccount ID)
      */
     protected $aid;
+
     /**     *
      * @var string
      */
     protected $clearingtype;
+
     /**
      * unix timestamp
      *
      * @var int
      */
     protected $txtime;
+
     /**
      * @var string ISO-4217
      */
     protected $currency;
+
     /**
      * @var int
      */
     protected $userid;
+
     /**
      * @var int
      */
     protected $customerid;
+
     /**
      * @var string
      */
     protected $param;
-
-    // Parameter bei einer Statusmeldung eines Zahlungsvorgangs
 
     /**
      * @var int
@@ -95,8 +103,6 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
      */
     protected $failedcause;
 
-    // Zusätzliche Parameter Contract bei Statusmeldung eines Zahlungsvorgangs
-
     /**
      * @var int
      */
@@ -106,31 +112,31 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
      */
     protected $accessid;
 
-    // Zusätzliche Parameter Collect (txaction=reminder) bei Statusmeldung eines Zahlungsvorgangs
-
     /**
      * @var string
      */
     protected $reminderlevel;
 
-    // Parameter Invoicing (txaction=invoice)
-
     /**
      * @var string
      */
     protected $invoiceid;
+
     /**
      * @var string
      */
     protected $invoice_grossamount;
+
     /**
      * @var string
      */
     protected $invoice_date;
+
     /**
      * @var string
      */
     protected $invoice_deliverydate;
+
     /**
      * @var string
      */
@@ -140,60 +146,75 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
      * @var string
      */
     protected $clearing_bankaccountholder;
+
     /**
      * @var string
      */
     protected $clearing_bankcountry;
+
     /**
      * @var string
      */
     protected $clearing_bankaccount;
+
     /**
      * @var string
      */
     protected $clearing_bankcode;
+
     /**
      * @var string
      */
     protected $clearing_bankiban;
+
     /**
      * @var string
      */
     protected $clearing_bankbic;
+
     /**
      * @var string
      */
     protected $clearing_bankcity;
+
     /**
      * @var string
      */
     protected $clearing_bankname;
+
     /**
      * @var string
      */
     protected $iban;
+
     /**
      * @var string
      */
     protected $bic;
+
     /**
      * @var string
      */
     protected $mandate_identification;
+
     /**
      * @var string
      */
     protected $clearing_date;
+
     /**
      * @var string
      */
     protected $clearing_amount;
+
     /**
      * @var string
      */
     protected $creditor_identifier;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $clearing_legalnote;
 
     /**
@@ -203,10 +224,14 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
      */
     protected $clearing_duedate;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $clearing_reference;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $clearing_instructionnote;
 
     /**

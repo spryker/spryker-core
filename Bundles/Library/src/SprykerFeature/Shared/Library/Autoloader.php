@@ -40,7 +40,7 @@ class Autoloader
     /**
      * @param string $rootDirectory
      * @param string $vendorDirectory
-     * @param null|string $application
+     * @param string|null $application
      * @param bool $disableApplicationCheck
      */
     private function __construct($rootDirectory, $vendorDirectory, $application = null, $disableApplicationCheck = false)

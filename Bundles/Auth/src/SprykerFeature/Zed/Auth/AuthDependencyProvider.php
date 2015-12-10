@@ -51,11 +51,11 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param Container $container
      *
-     * @return AuthPasswordResetSenderInterface;
+     * @return AuthPasswordResetSenderInterface|null;
      */
     protected function getPasswordResetNotificationSender(Container $container)
     {
-        return;
+        return null;
     }
 
 }

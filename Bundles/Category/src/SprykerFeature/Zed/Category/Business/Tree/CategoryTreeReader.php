@@ -39,6 +39,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param CategoryQueryContainer $queryContainer
+     * @param CategoryTreeFormatter $treeFormatter
      */
     public function __construct(CategoryQueryContainer $queryContainer, CategoryTreeFormatter $treeFormatter)
     {
@@ -356,20 +357,20 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         $nodes = $this->getAllNodesByIdCategory($idCategory);
         $categoryNodes = $nodes->getData();
         if ($categoryNodes) {
-            return $this->getTreeNodesRecursively($categoryNodes[0], $localeTransfer, true);
+            return $this->getTreeNodesRecursively($localeTransfer, $categoryNodes[0], true);
         }
 
-        return $this->getTreeNodesRecursively(null, $localeTransfer, true);
+        return $this->getTreeNodesRecursively($localeTransfer, null, true);
     }
 
     /**
-     * @param SpyCategoryNode $node
      * @param LocaleTransfer $localeTransfer
+     * @param SpyCategoryNode|null $node
      * @param bool $isRoot
      *
      * @return array
      */
-    protected function getTreeNodesRecursively(SpyCategoryNode $node = null, LocaleTransfer $localeTransfer, $isRoot = false)
+    protected function getTreeNodesRecursively(LocaleTransfer $localeTransfer, SpyCategoryNode $node = null, $isRoot = false)
     {
         $tree = [];
         if ($node === null) {
@@ -400,7 +401,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
                 self::IS_CLICKABLE => $child->getCategory()->getIsClickable(),
             ];
             if ($child->countDescendants() > 0) {
-                $tree = array_merge($tree, $this->getTreeNodesRecursively($child, $localeTransfer));
+                $tree = array_merge($tree, $this->getTreeNodesRecursively($localeTransfer, $child));
             }
         }
 
