@@ -111,7 +111,7 @@ class CustomerStub implements CustomerStubInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
-     * 
+     *
      * @return Response
      */
     public function delete(CustomerTransfer $customerTransfer)
@@ -181,7 +181,7 @@ class CustomerStub implements CustomerStubInterface
 
     /**
      * @param AddressTransfer $AddressTransfer
-     * 
+     *
      * @return AddressTransfer
      */
     public function deleteAddress(AddressTransfer $AddressTransfer)

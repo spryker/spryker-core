@@ -116,7 +116,7 @@ class CodeStyleSniffer
     {
         $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
 
-        $config = ' --standard=' . __DIR__ . '/ruleset.xml';
+        $config = ' --standard=' . __DIR__ . '/Spryker/ruleset.xml';
         if ($options[self::OPTION_VERBOSE]) {
             $config .= ' -v';
         }

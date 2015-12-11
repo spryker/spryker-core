@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <ruleset name="Spryker">
-    <description>Spryker Coding Standard</description>
+    <description>
+        Spryker Systems Coding Standard.
+
+        All sniffs in ./Sniffs will be auto loaded
+
+        Documentation:
+        https://github.com/squizlabs/PHP_CodeSniffer/wiki
+    </description>
 
     <exclude-pattern>\.git</exclude-pattern>
     <exclude-pattern>*/Generated/*</exclude-pattern>
@@ -8,7 +15,6 @@
     <exclude-pattern>*/tests/_helper/*</exclude-pattern>
     <exclude-pattern>*/Fixtures/*</exclude-pattern>
 
-    <rule ref="/data/shop/development/current/vendor/spryker/spryker/Bundles/Development/src/SprykerFeature/Zed/Development/Business/CodeStyleSniffer/Sniff"/>
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 
     <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
@@ -30,19 +36,13 @@
     <rule ref="Generic.Files.LineEndings"/>
 
     <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
-    <!-- Disabled for now
-    <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
-    -->
+
     <rule ref="Squiz.Functions.FunctionDeclaration"/>
     <rule ref="PEAR.Functions.ValidDefaultValue"/>
 
     <rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
     <rule ref="PSR2.Namespaces.UseDeclaration"/>
 
-    <!--
-    Disabled and replaced with local copy. See http://pear.php.net/bugs/bug.php?id=19957
-    <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
-    -->
     <rule ref="PEAR.NamingConventions.ValidClassName"/>
 
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
@@ -67,5 +67,4 @@
     <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
 
-    <!-- All rules in ./Sniffs are included automatically -->
 </ruleset>
