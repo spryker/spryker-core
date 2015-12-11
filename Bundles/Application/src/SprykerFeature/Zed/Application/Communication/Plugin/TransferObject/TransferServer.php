@@ -68,7 +68,6 @@ class TransferServer
      * @param Repeater $repeater
      *
      * @return self
-     * @static
      */
     public static function getInstance(Repeater $repeater = null)
     {

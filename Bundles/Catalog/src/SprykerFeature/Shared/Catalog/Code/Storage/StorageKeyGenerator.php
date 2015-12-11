@@ -17,7 +17,6 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      * @param int $id
      *
      * @return string
-     * @static
      */
     public static function getProductKey($id)
     {
@@ -30,7 +29,6 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      * @param string $sku
      *
      * @return string
-     * @static
      */
     public static function getProductSkuKey($sku)
     {
@@ -41,7 +39,6 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
 
     /**
      * @return string
-     * @static
      */
     public static function getProductOptionKey()
     {
@@ -54,7 +51,6 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      * @param string $url
      *
      * @return string
-     * @static
      */
     public static function getProductUrlKey($url)
     {
@@ -67,7 +63,6 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      * @param string $brandName
      *
      * @return string
-     * @static
      */
     public static function getBrandKey($brandName)
     {
@@ -78,7 +73,6 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
 
     /**
      * @return string
-     * @static
      */
     public static function getBrandListKey()
     {

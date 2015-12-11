@@ -19,13 +19,11 @@ class CurrencyManager
 
     /**
      * @var CurrencyInterface
-     * @static
      */
     private static $currency;
 
     /**
      * @var
-     * @static
      */
     private static $instance;
 
@@ -35,7 +33,6 @@ class CurrencyManager
 
     /**
      * @return self
-     * @static
      */
     public static function getInstance()
     {
@@ -48,7 +45,6 @@ class CurrencyManager
 
     /**
      * @param CurrencyInterface $currency
-     * @static
      *
      * @return void
      */
@@ -59,7 +55,6 @@ class CurrencyManager
 
     /**
      * @param string $isoCode
-     * @static
      *
      * @return void
      */
@@ -70,7 +65,6 @@ class CurrencyManager
 
     /**
      * @return CurrencyInterface
-     * @static
      */
     public static function getDefaultCurrency()
     {
@@ -85,7 +79,6 @@ class CurrencyManager
      * @param string $currencyIsoCode
      *
      * @return CurrencyInterface
-     * @static
      */
     protected static function loadCurrencyClass($currencyIsoCode)
     {
@@ -123,7 +116,6 @@ class CurrencyManager
      * -((0.1+0.7)*10), ('34.200' + 0) * 100)
      * Specify expected decimalPlacesInUse to avoid false rounding
      *
-     * @static
      *
      * @param $value
      * @param int $decimalPlacesInUse

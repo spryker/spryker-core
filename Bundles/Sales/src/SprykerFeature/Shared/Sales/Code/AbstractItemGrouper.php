@@ -59,7 +59,6 @@ abstract class AbstractItemGrouper
      * @param string $key
      *
      * @return OrderItemCollection
-     * @static
      */
     protected function groupItemsByKey(OrderItemCollection $items, $key)
     {

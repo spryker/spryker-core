@@ -15,7 +15,6 @@ abstract class StorageKeyGenerator
      * @param string $key
      *
      * @return string
-     * @static
      */
     protected static function escapeKey($key)
     {
@@ -28,7 +27,6 @@ abstract class StorageKeyGenerator
      * @param string $key
      *
      * @return string
-     * @static
      */
     protected static function prependStoreName($key)
     {

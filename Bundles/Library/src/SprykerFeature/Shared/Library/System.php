@@ -16,7 +16,6 @@ class System
 
     /**
      * @return string
-     * @static
      */
     public static function getHostname()
     {

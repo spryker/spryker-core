@@ -22,8 +22,6 @@ class Setup
     /**
      * Checks if the given directories are there and writeable
      *
-     * @static
-     *
      * @param array $directories
      *
      * @return void
