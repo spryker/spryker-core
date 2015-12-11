@@ -6,9 +6,9 @@
 
 namespace SprykerEngine\Yves\Application;
 
-use SprykerEngine\Yves\Application\Plugin\ServiceProvider\ExceptionService\DefaultExceptionHandler;
-use SprykerEngine\Yves\Application\Plugin\ServiceProvider\ExceptionService\ExceptionHandlerDispatcher;
-use SprykerEngine\Yves\Application\Plugin\ServiceProvider\ExceptionService\ExceptionHandlerInterface;
+use SprykerEngine\Yves\Application\Plugin\Provider\ExceptionService\DefaultExceptionHandler;
+use SprykerEngine\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerDispatcher;
+use SprykerEngine\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface;
 use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
 use Symfony\Component\HttpFoundation\Response;
 
