@@ -49,7 +49,9 @@
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
 
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
+    <!-- Disabled for now.
     <rule ref="Squiz.PHP.DisallowSizeFunctionsInLoops"/>
+    -->
     <rule ref="Squiz.PHP.Eval"/>
     <rule ref="Generic.PHP.ForbiddenFunctions"/>
     <rule ref="Squiz.PHP.NonExecutableCode"/>

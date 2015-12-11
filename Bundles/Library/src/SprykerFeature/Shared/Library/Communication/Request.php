@@ -51,7 +51,7 @@ class Request extends AbstractObject implements
     /**
      * @param string $name
      *
-     * @return TransferInterface
+     * @return TransferInterface|null
      */
     public function getMetaTransfer($name)
     {
@@ -65,7 +65,7 @@ class Request extends AbstractObject implements
             return $transfer;
         }
 
-        return;
+        return null;
     }
 
     /**

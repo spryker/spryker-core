@@ -75,7 +75,6 @@ class GatewayController extends AbstractGatewayController
     {
         $result = $this->getFacade()
             ->deleteCustomer($customerTransfer);
-
         $this->setSuccess($result);
     }
 
@@ -252,6 +251,8 @@ class GatewayController extends AbstractGatewayController
         } catch (AddressNotFoundException $e) {
             $this->setSuccess(false);
         }
+
+        return null;
     }
 
     /**

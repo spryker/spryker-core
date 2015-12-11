@@ -712,7 +712,7 @@ class GraphViz
      */
     public function load($file)
     {
-        $serializedGraph = implode('', @file($file));
+        $serializedGraph = implode('', file($file));
         if ($serializedGraph === '') {
             return;
         }

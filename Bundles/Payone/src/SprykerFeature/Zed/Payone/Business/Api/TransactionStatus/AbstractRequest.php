@@ -87,7 +87,7 @@ class AbstractRequest
     /**
      * @param string $name
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function get($name)
     {
@@ -95,7 +95,7 @@ class AbstractRequest
             return $this->$name;
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -112,7 +112,7 @@ class AbstractRequest
             return true;
         }
 
-        return;
+        return null;
     }
 
 }

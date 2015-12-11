@@ -36,7 +36,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
      */
     protected $aid;
 
-    /**     *
+    /**
      * @var string
      */
     protected $clearingtype;
@@ -107,6 +107,7 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
      * @var int
      */
     protected $productid;
+
     /**
      * @var int
      */

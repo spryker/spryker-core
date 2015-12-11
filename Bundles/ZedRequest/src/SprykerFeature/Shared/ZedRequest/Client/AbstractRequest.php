@@ -56,7 +56,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     /**
      * @param string $name
      *
-     * @return TransferInterface
+     * @return TransferInterface|null
      */
     public function getMetaTransfer($name)
     {
@@ -69,7 +69,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
             return $transfer;
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -149,7 +149,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     }
 
     /**
-     * @return TransferInterface
+     * @return TransferInterface|null
      */
     public function getTransfer()
     {
