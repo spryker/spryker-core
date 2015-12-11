@@ -53,7 +53,7 @@ class Collector
         if (isset($output)) {
             $output->writeln('');
             $output->writeln(
-                sprintf('<fg=yellow>%d out of %d collector types available:</fg=yellow>',
+                sprintf('<fg=yellow>%d out of %d collectors available:</fg=yellow>',
                     count($types),
                     count($availableTypes)
                 )
@@ -64,8 +64,8 @@ class Collector
         foreach ($availableTypes as $type) {
             if (!in_array($type, $types)) {
                 if (isset($output)) {
-                    $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green><fg=yellow> ');
-                    $output->write('<fg=white>N/A </fg=white>');
+                    $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green> ');
+                    $output->write('<fg=white>N/A</fg=white>');
                     $output->writeln('');
                 }
                 continue;

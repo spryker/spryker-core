@@ -112,16 +112,28 @@ abstract class AbstractCollectorPlugin
      *
      * @return array
      */
-    protected function collectData($collectedSet, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet)
+    protected function collectData(array $collectedSet, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet)
     {
         $setToExport = [];
 
         foreach ($collectedSet as $index => $collectedItemData) {
-            $touchKey = $this->generateKey($collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID], $locale->getLocaleName());
+            $touchKey = $this->collectKey($collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID], $locale->getLocaleName(), $collectedItemData);
             $setToExport[$touchKey] = $this->processCollectedItem($touchKey, $collectedItemData, $touchUpdaterSet);
         }
 
         return $setToExport;
+    }
+
+    /**
+     * @param $data
+     * @param $localeName
+     * @param array $collectedItemData
+     *
+     * @return string
+     */
+    protected function collectKey($data, $localeName, array $collectedItemData)
+    {
+        return $this->generateKey($data, $localeName);
     }
 
     /**
@@ -200,15 +212,14 @@ abstract class AbstractCollectorPlugin
         $this->prepareCollectorScope($baseQuery, $locale);
 
         $batchCollection = $this->generateBatchIterator();
-        $progressBar = new ProgressBar($output, $batchCollection->count());
-        $progressBar->setFormat('verbose');
-        $progressBar->setMessage($this->collectResourceType(), 'collectorType');
-        $progressBar->setFormat(" <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>[%bar%]</fg=yellow> <fg=white>%current%/%max% %elapsed:6s%, %memory:6s%</fg=white>\x0D");
-
+        $this->displayProgressWhileCountingBatchCollectionSize($output);
+        $progressBar = $this->generateProgressBar($output, $batchCollection->count());
         $progressBar->start();
+        $progressBar->advance(0);
 
         foreach ($batchCollection as $batch) {
-            $progressBar->advance(0); //show progress bar right away
+            $batchSize = count($batch);
+            $progressBar->advance($batchSize);
 
             $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
             $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
@@ -219,10 +230,8 @@ abstract class AbstractCollectorPlugin
 
             $batchResult->increaseProcessedCount($collectedDataCount);
             $batchResult->setTotalCount(
-                $batchResult->getTotalCount() + $collectedDataCount
+                $batchResult->getTotalCount() + $batchSize
             );
-
-            $progressBar->advance($collectedDataCount);
         }
 
         $progressBar->finish();
@@ -364,6 +373,61 @@ abstract class AbstractCollectorPlugin
     public function getBundleName()
     {
         return 'resource';
+    }
+
+    protected function setupProgressBar()
+    {
+        ProgressBar::setFormatDefinition('normal', ' <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>%percent%% (%current%/%max%) %elapsed:6s%</fg=yellow>');
+        ProgressBar::setFormatDefinition('normal_nomax', ' <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>(%max%)</fg=yellow>');
+
+        ProgressBar::setFormatDefinition('verbose', " <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>[%bar%] %percent%% (%current%/%max%) %elapsed:6s% %memory:6s%</fg=yellow>\x0D");
+        ProgressBar::setFormatDefinition('verbose_nomax', ' <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>(%max%)</fg=yellow>');
+
+        ProgressBar::setFormatDefinition('very_verbose', " <fg=yellow>*</fg=yellow> <fg=green>%collectorType:-20s%</fg=green> %bar% <fg=yellow>%percent%% (%current%/%max%) %memory% (%elapsed%/%remaining%)</fg=yellow>\x0D");
+        ProgressBar::setFormatDefinition('very_verbose_nomax', ' <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>(%max%)</fg=yellow>');
+
+        ProgressBar::setFormatDefinition('debug', " <fg=yellow>*</fg=yellow> <fg=green>%collectorType:-20s%</fg=green> %bar% <fg=yellow>%percent:20s%% [%current%/%max%] Memory: %memory%, Elapsed: %elapsed%, Remaining: %remaining%</fg=yellow>\x0D");
+        ProgressBar::setFormatDefinition('debug_nomax', ' <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>(%max%)</fg=yellow>');
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param int $count
+     *
+     * @return ProgressBar
+     */
+    protected function generateProgressBar(OutputInterface $output, $count)
+    {
+        $this->setupProgressBar();
+
+        $progressBar = new ProgressBar($output, $count);
+        $progressBar->setMessage($this->collectResourceType(), 'collectorType');
+        $progressBar->setBarWidth(20);
+
+        if ($output->getVerbosity() > OutputInterface::VERBOSITY_VERBOSE) {
+            $progressBar->setBarCharacter($done = "\033[32m●\033[0m");
+            $progressBar->setEmptyBarCharacter($empty = "\033[31m●\033[0m");
+            $progressBar->setProgressCharacter($progress = "\033[32m►\033[0m");
+            $progressBar->setBarWidth(50);
+        }
+
+        return $progressBar;
+    }
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return void
+     */
+    protected function displayProgressWhileCountingBatchCollectionSize(OutputInterface $output)
+    {
+        //display progress while counting in real progress bar
+        $progressBar = new ProgressBar($output, 1);
+        $progressBar->setMessage($this->collectResourceType(), 'collectorType');
+        $progressBar->setFormat(" * %collectorType%\x0D ");
+        $progressBar->start();
+        $progressBar->advance();
+        $progressBar->finish();
     }
 
 }
