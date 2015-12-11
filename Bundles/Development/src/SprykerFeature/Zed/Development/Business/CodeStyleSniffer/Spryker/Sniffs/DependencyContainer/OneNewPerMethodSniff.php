@@ -92,9 +92,12 @@ class OneNewPerMethodSniff implements \PHP_CodeSniffer_Sniff
         $closePointer = $phpCsFile->findNext(T_CLOSE_CURLY_BRACKET, $openPointer);
 
         $firstNewPosition = $phpCsFile->findNext(T_NEW, $openPointer, $closePointer);
-        $secondNewPosition = $phpCsFile->findNext(T_NEW, $firstNewPosition + 1, $closePointer);
+        if ($firstNewPosition === false) {
+            return false;
+        }
 
-        return ($firstNewPosition > 0 && $secondNewPosition > 0);
+        $secondNewPosition = $phpCsFile->findNext(T_NEW, $firstNewPosition + 1, $closePointer);
+        return ($secondNewPosition !== false);
     }
 
     /**
