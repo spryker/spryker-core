@@ -8,7 +8,7 @@ namespace SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer;
 
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\ClassResolver\ClassInfo;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 class QueryContainerNotFoundException extends \Exception
 {
@@ -38,7 +38,7 @@ class QueryContainerNotFoundException extends \Exception
 
         $message .= sprintf(
             'E.g. %1$s\\Zed\\%2$s\\Persistence\\%2$sQueryContainer',
-            Config::getInstance()->get(ApplicationConfig::PROJECT_NAMESPACE),
+            Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );
 

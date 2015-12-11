@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Category\Business\Tree;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Shared\Category\CategoryConfig;
+use SprykerFeature\Shared\Category\CategoryConstants;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
@@ -208,7 +208,7 @@ class CategoryTreeWriter
      */
     protected function touchCategoryActive($idCategoryNode)
     {
-        $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+        $this->touchFacade->touchActive(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
 
     /**
@@ -218,7 +218,7 @@ class CategoryTreeWriter
      */
     protected function touchCategoryDeleted($idCategoryNode)
     {
-        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+        $this->touchFacade->touchDeleted(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
 
     /**
@@ -226,11 +226,11 @@ class CategoryTreeWriter
      */
     protected function touchNavigationActive()
     {
-        $navigationItems = $this->touchFacade->getItemsByType(CategoryConfig::RESOURCE_TYPE_NAVIGATION);
+        $navigationItems = $this->touchFacade->getItemsByType(CategoryConstants::RESOURCE_TYPE_NAVIGATION);
 
         $itemIds = array_keys($navigationItems);
 
-        $this->touchFacade->bulkTouchActive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, $itemIds);
+        $this->touchFacade->bulkTouchActive(CategoryConstants::RESOURCE_TYPE_NAVIGATION, $itemIds);
     }
 
     /**

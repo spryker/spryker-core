@@ -6,7 +6,7 @@
 namespace SprykerEngine\Zed\Kernel\ClassResolver;
 
 use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 class ClassInfo
 {
@@ -97,8 +97,8 @@ class ClassInfo
     private function removeTestNamespace(array $callerClassParts)
     {
         $config = Config::getInstance();
-        $projectNamespaces = $config->get(ApplicationConfig::PROJECT_NAMESPACES);
-        $coreNamespaces = $config->get(ApplicationConfig::CORE_NAMESPACES);
+        $projectNamespaces = $config->get(ApplicationConstants::PROJECT_NAMESPACES);
+        $coreNamespaces = $config->get(ApplicationConstants::CORE_NAMESPACES);
 
         $namespaces = array_merge($projectNamespaces, $coreNamespaces);
 

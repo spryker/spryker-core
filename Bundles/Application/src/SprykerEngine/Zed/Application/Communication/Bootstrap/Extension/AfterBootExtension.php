@@ -9,7 +9,7 @@ namespace SprykerEngine\Zed\Application\Communication\Bootstrap\Extension;
 use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\AfterBootExtensionInterface;
 use SprykerEngine\Shared\Application\Communication\Application;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 class AfterBootExtension implements AfterBootExtensionInterface
 {
@@ -21,7 +21,7 @@ class AfterBootExtension implements AfterBootExtensionInterface
      */
     public function afterBoot(Application $app)
     {
-        $app['monolog.level'] = Config::get(ApplicationConfig::LOG_LEVEL);
+        $app['monolog.level'] = Config::get(ApplicationConstants::LOG_LEVEL);
     }
 
 }

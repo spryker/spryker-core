@@ -8,7 +8,7 @@ namespace SprykerFeature\Shared\Storage\Provider;
 
 use SprykerEngine\Shared\Kernel\AbstractClientProvider;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 abstract class AbstractKvProvider extends AbstractClientProvider
 {
@@ -26,7 +26,7 @@ abstract class AbstractKvProvider extends AbstractClientProvider
      */
     protected function createClient()
     {
-        $kvName = Config::get(ApplicationConfig::STORAGE_KV_SOURCE);
+        $kvName = Config::get(ApplicationConstants::STORAGE_KV_SOURCE);
         $kvConfig = $this->getConfigByKvName($kvName);
         $methodName = $this->createMethodName($kvName);
 
@@ -56,9 +56,9 @@ abstract class AbstractKvProvider extends AbstractClientProvider
         switch ($kvName) {
             case self::KV_ADAPTER_REDIS:
                 return [
-                    'protocol' => Config::get(ApplicationConfig::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-                    'port' => Config::get(ApplicationConfig::YVES_STORAGE_SESSION_REDIS_PORT),
-                    'host' => Config::get(ApplicationConfig::YVES_STORAGE_SESSION_REDIS_HOST),
+                    'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
+                    'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
+                    'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
                 ];
         }
         throw new \ErrorException('Missing implementation for adapter ' . $kvName);

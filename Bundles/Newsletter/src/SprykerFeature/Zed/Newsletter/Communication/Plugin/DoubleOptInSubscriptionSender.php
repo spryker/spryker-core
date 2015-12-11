@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Mail\MailConfig;
+use SprykerFeature\Shared\Mail\MailConstants;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface;
 use SprykerFeature\Zed\Newsletter\Communication\NewsletterDependencyContainer;
 use SprykerFeature\Zed\Newsletter\NewsletterConfig;
@@ -125,7 +125,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
      */
     protected function getMergeLanguage()
     {
-        return MailConfig::MERGE_LANGUAGE_HANDLEBARS;
+        return MailConstants::MERGE_LANGUAGE_HANDLEBARS;
     }
 
     /**

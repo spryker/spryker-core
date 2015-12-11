@@ -7,7 +7,7 @@
 namespace SprykerEngine\Shared\Kernel;
 
 use SprykerEngine\Shared\Kernel\Locale\LocaleNotFoundException;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\NewRelic\Api;
 
@@ -292,7 +292,7 @@ class Store
      */
     public function getTimezone()
     {
-        return Config::get(ApplicationConfig::PROJECT_TIMEZONE);
+        return Config::get(ApplicationConstants::PROJECT_TIMEZONE);
     }
 
     /**
@@ -334,7 +334,7 @@ class Store
      */
     public function getStorePrefix()
     {
-        $prefix = Config::get(ApplicationConfig::STORE_PREFIX, '');
+        $prefix = Config::get(ApplicationConstants::STORE_PREFIX, '');
         $prefix .= $this->getStoreName();
 
         return $prefix;

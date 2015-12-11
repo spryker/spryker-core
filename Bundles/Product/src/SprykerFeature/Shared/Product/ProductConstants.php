@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Product;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface ProductConfig extends ConfigInterface
+interface ProductConstants
 {
 
     const RESOURCE_TYPE_PRODUCT = 'product';

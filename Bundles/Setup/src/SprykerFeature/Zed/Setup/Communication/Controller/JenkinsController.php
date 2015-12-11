@@ -10,7 +10,7 @@ use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\DataDirectory;
 use SprykerFeature\Shared\Library\Environment;
 use SprykerFeature\Shared\Library\Log;
-use SprykerFeature\Shared\Setup\SetupConfig;
+use SprykerFeature\Shared\Setup\SetupConstants;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
 /**
@@ -50,7 +50,7 @@ class JenkinsController extends AbstractController
      */
     private function callJenkins($url, $body = '')
     {
-        $post_url = Config::get(SetupConfig::JENKINS_BASE_URL) . '/' . $url;//createItem?name=" . $v['name'];
+        $post_url = Config::get(SetupConstants::JENKINS_BASE_URL) . '/' . $url;//createItem?name=" . $v['name'];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $post_url);
         curl_setopt($ch, CURLOPT_POST, 1);

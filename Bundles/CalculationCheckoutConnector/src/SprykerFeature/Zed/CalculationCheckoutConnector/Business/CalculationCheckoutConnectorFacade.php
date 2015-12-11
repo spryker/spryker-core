@@ -6,7 +6,7 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Shared\Checkout\CheckoutConfig;
+use SprykerFeature\Shared\Checkout\CheckoutConstants;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Checkout\Business\Calculation\CalculableContainer;
 
@@ -34,7 +34,7 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade
         if ($totalsBefore !== $totalsAfter) {
             $error = new CheckoutErrorTransfer();
             $error
-                ->setErrorCode(CheckoutConfig::ERROR_CODE_CART_AMOUNT_DIFFERENT)
+                ->setErrorCode(CheckoutConstants::ERROR_CODE_CART_AMOUNT_DIFFERENT)
                 ->setMessage('Cart values are not the same.');
 
             $response->addError($error);

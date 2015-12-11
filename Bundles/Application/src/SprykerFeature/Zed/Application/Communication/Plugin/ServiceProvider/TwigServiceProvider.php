@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 use Silex\ServiceProviderInterface;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Zed\Application\Business\Model\Twig\RouteResolver;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
@@ -41,7 +41,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $this->provideFormTypeTemplates();
 
         $app['twig.loader.zed'] = $app->share(function () {
-            $namespace = Config::get(ApplicationConfig::PROJECT_NAMESPACE);
+            $namespace = Config::get(ApplicationConstants::PROJECT_NAMESPACE);
 
             $storeName = Store::getInstance()->getStoreName();
 
@@ -65,7 +65,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             );
         });
 
-        $app['twig.options'] = Config::get(ApplicationConfig::ZED_TWIG_OPTIONS);
+        $app['twig.options'] = Config::get(ApplicationConstants::ZED_TWIG_OPTIONS);
 
         $app['twig.global.variables'] = $app->share(function () {
             return [];

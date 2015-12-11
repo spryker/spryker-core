@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Shared\Checkout\CheckoutConfig;
+use SprykerFeature\Shared\Checkout\CheckoutConstants;
 use SprykerFeature\Zed\AvailabilityCheckoutConnector\Communication\Plugin\ProductsAvailablePreConditionPlugin;
 use SprykerFeature\Zed\CartCheckoutConnector\Communication\Plugin\OrderCartHydrationPlugin;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
@@ -157,7 +157,7 @@ class CheckoutFacadeTest extends Test
 
         $this->assertFalse($result->getIsSuccess());
         $this->assertEquals(1, count($result->getErrors()));
-        $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
+        $this->assertEquals(CheckoutConstants::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
     }
 
     /**
@@ -222,7 +222,7 @@ class CheckoutFacadeTest extends Test
 
         $this->assertFalse($result->getIsSuccess());
         $this->assertEquals(1, count($result->getErrors()));
-        $this->assertEquals(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
+        $this->assertEquals(CheckoutConstants::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
     }
 
     /**

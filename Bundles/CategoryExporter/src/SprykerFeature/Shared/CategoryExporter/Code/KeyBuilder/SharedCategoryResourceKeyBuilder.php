@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder;
 
-use SprykerFeature\Shared\Category\CategoryConfig;
+use SprykerFeature\Shared\Category\CategoryConstants;
 use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 
 abstract class SharedCategoryResourceKeyBuilder extends SharedResourceKeyBuilder
@@ -17,7 +17,7 @@ abstract class SharedCategoryResourceKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
+        return CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE;
     }
 
 }

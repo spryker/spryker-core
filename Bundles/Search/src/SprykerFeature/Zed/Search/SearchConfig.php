@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Search;
 
 use SprykerFeature\Zed\ProductSearch\Communication\Plugin\Installer;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 class SearchConfig extends AbstractBundleConfig
@@ -29,7 +29,7 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getElasticaDocumentType()
     {
-        return $this->get(ApplicationConfig::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+        return $this->get(ApplicationConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
     }
 
 }

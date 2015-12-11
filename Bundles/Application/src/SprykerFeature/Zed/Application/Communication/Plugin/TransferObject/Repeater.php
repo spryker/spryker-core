@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Application\Communication\Plugin\TransferObject;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\Log;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
@@ -48,7 +48,7 @@ class Repeater extends AbstractPlugin
             return;
         }
 
-        if (Config::get(ApplicationConfig::SET_REPEAT_DATA, false) === false) {
+        if (Config::get(ApplicationConstants::SET_REPEAT_DATA, false) === false) {
             return;
         }
 

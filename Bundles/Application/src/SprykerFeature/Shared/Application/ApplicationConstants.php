@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Application;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface ApplicationConfig extends ConfigInterface
+interface ApplicationConstants
 {
 
     const ALLOW_INTEGRATION_CHECKS = 'ALLOW_INTEGRATION_CHECKS';

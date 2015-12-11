@@ -10,7 +10,7 @@ use SprykerFeature\Client\Storage\Service\Redis\Service;
 use Predis\Client;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 class StorageDependencyContainer extends AbstractServiceDependencyContainer
 {
@@ -38,9 +38,9 @@ class StorageDependencyContainer extends AbstractServiceDependencyContainer
     private function getConfig()
     {
         return [
-            'protocol' => Config::get(ApplicationConfig::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-            'port' => Config::get(ApplicationConfig::YVES_STORAGE_SESSION_REDIS_PORT),
-            'host' => Config::get(ApplicationConfig::YVES_STORAGE_SESSION_REDIS_HOST),
+            'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
+            'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
+            'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
         ];
     }
 

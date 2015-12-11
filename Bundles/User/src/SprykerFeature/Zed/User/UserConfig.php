@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\User;
 
-use SprykerFeature\Shared\User\UserConfig as UserSharedConfig;
+use SprykerFeature\Shared\User\UserConstants;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class UserConfig extends AbstractBundleConfig
@@ -49,7 +49,7 @@ class UserConfig extends AbstractBundleConfig
      */
     private function getUserFromGlobalConfig()
     {
-        $users = $this->get(UserSharedConfig::USER_SYSTEM_USERS);
+        $users = $this->get(UserConstants::USER_SYSTEM_USERS);
 
         return $users;
     }

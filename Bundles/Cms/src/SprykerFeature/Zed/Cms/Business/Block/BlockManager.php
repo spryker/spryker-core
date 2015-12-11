@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Cms\Business\Block;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Shared\Cms\CmsConfig;
+use SprykerFeature\Shared\Cms\CmsConstants;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -101,9 +101,9 @@ class BlockManager implements BlockManagerInterface
         foreach ($assignedBlocks as $idBlock => $blockTransfer) {
             //unique keys is on name, type and value therefore the name has to be changed
             $blockTransfer->setName(
-                $blockTransfer->getName() . '_' . CmsConfig::RESOURCE_TYPE_CATEGORY_NODE . '_deleted_' . $blockTransfer->getIdCmsBlock()
+                $blockTransfer->getName() . '_' . CmsConstants::RESOURCE_TYPE_CATEGORY_NODE . '_deleted_' . $blockTransfer->getIdCmsBlock()
             );
-            $blockTransfer->setType(CmsConfig::RESOURCE_TYPE_STATIC);
+            $blockTransfer->setType(CmsConstants::RESOURCE_TYPE_STATIC);
             $blockTransfer->setValue(0);
             $this->saveBlockAndTouch($blockTransfer);
         }
@@ -131,7 +131,7 @@ class BlockManager implements BlockManagerInterface
      */
     public function touchBlockActive(CmsBlockTransfer $cmsBlockTransfer)
     {
-        $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock());
+        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock());
     }
 
     /**
@@ -141,7 +141,7 @@ class BlockManager implements BlockManagerInterface
      */
     public function touchBlockActiveWithKeyChange(CmsBlockTransfer $cmsBlockTransfer)
     {
-        $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock(), true);
+        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock(), true);
     }
 
     /**
@@ -151,7 +151,7 @@ class BlockManager implements BlockManagerInterface
      */
     public function touchBlockDelete(CmsBlockTransfer $cmsBlockTransfer)
     {
-        $this->touchFacade->touchDeleted(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock());
+        $this->touchFacade->touchDeleted(CmsConstants::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock());
     }
 
     /**

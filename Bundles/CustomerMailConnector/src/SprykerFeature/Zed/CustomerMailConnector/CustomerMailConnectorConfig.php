@@ -7,8 +7,8 @@
 namespace SprykerFeature\Zed\CustomerMailConnector;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Customer\CustomerConfig;
-use SprykerFeature\Shared\Mail\MailConfig;
+use SprykerFeature\Shared\Customer\CustomerConstants;
+use SprykerFeature\Shared\Mail\MailConstants;
 
 class CustomerMailConnectorConfig extends AbstractBundleConfig
 {
@@ -18,7 +18,7 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
      */
     public function getFromEmailName()
     {
-        return $this->get(CustomerConfig::SHOP_MAIL_FROM_EMAIL_NAME);
+        return $this->get(CustomerConstants::SHOP_MAIL_FROM_EMAIL_NAME);
     }
 
     /**
@@ -26,7 +26,7 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
      */
     public function getFromEmailAddress()
     {
-        return $this->get(CustomerConfig::SHOP_MAIL_FROM_EMAIL_ADDRESS);
+        return $this->get(CustomerConstants::SHOP_MAIL_FROM_EMAIL_ADDRESS);
     }
 
     /**
@@ -34,7 +34,7 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
      */
     public function getRegistrationToken()
     {
-        return $this->get(CustomerConfig::SHOP_MAIL_REGISTRATION_TOKEN);
+        return $this->get(CustomerConstants::SHOP_MAIL_REGISTRATION_TOKEN);
     }
 
     /**
@@ -42,7 +42,7 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
      */
     public function getRegistrationSubject()
     {
-        return $this->get(CustomerConfig::SHOP_MAIL_REGISTRATION_SUBJECT);
+        return $this->get(CustomerConstants::SHOP_MAIL_REGISTRATION_SUBJECT);
     }
 
     /**
@@ -50,7 +50,7 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
      */
     public function getPasswordRestoreToken()
     {
-        return $this->get(CustomerConfig::SHOP_MAIL_PASSWORD_RESTORE_TOKEN);
+        return $this->get(CustomerConstants::SHOP_MAIL_PASSWORD_RESTORE_TOKEN);
     }
 
     /**
@@ -58,7 +58,7 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
      */
     public function getPasswordRestoreSubject()
     {
-        return $this->get(CustomerConfig::SHOP_MAIL_PASSWORD_RESTORE_SUBJECT);
+        return $this->get(CustomerConstants::SHOP_MAIL_PASSWORD_RESTORE_SUBJECT);
     }
 
     /**
@@ -66,7 +66,7 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
      */
     public function getPasswordRestoredConfirmationToken()
     {
-        return $this->get(CustomerConfig::SHOP_MAIL_PASSWORD_RESTORED_CONFIRMATION_TOKEN);
+        return $this->get(CustomerConstants::SHOP_MAIL_PASSWORD_RESTORED_CONFIRMATION_TOKEN);
     }
 
     /**
@@ -74,7 +74,7 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
      */
     public function getPasswordRestoredConfirmationSubject()
     {
-        return $this->get(CustomerConfig::SHOP_MAIL_PASSWORD_RESTORED_CONFIRMATION_SUBJECT);
+        return $this->get(CustomerConstants::SHOP_MAIL_PASSWORD_RESTORED_CONFIRMATION_SUBJECT);
     }
 
     /**
@@ -82,7 +82,7 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
      */
     public function getMergeLanguage()
     {
-        return MailConfig::MERGE_LANGUAGE_HANDLEBARS;
+        return MailConstants::MERGE_LANGUAGE_HANDLEBARS;
     }
 
 }

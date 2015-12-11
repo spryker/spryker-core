@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
-use SprykerFeature\Shared\Payone\PayoneConfigConstants;
+use SprykerFeature\Shared\Payone\PayoneConstants;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use SprykerFeature\Zed\Payone\Business\PayoneFacade;
@@ -100,7 +100,7 @@ class TransactionController extends AbstractController
             ->find();
         $this->getDependencyContainer()->createOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
 
-        if ($dataArray['txaction'] === PayoneConfigConstants::PAYONE_TXACTION_APPOINTED) {
+        if ($dataArray['txaction'] === PayoneConstants::PAYONE_TXACTION_APPOINTED) {
             $this->getDependencyContainer()->createOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
         }
     }

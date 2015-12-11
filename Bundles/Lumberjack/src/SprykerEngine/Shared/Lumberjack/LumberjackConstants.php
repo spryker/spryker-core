@@ -6,9 +6,7 @@
 
 namespace SprykerEngine\Shared\Lumberjack;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface LumberjackConfig extends ConfigInterface
+interface LumberjackConstants
 {
 
     const WRITERS = 'LUMBERJACK_WRITERS';

@@ -21,7 +21,7 @@ use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
 use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
 use SprykerEngine\Shared\Lumberjack\Model\Event;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\ZedRequest\Client\Exception\RequestException;
 use SprykerFeature\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
@@ -360,12 +360,12 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function forwardDebugSession(EntityEnclosingRequest $request)
     {
-        if (Config::get(ApplicationConfig::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
-            if (isset($_COOKIE[Config::get(ApplicationConfig::TRANSFER_DEBUG_SESSION_NAME)])) {
+        if (Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
+            if (isset($_COOKIE[Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME)])) {
                 $cookie = new Cookie();
-                $cookie->setName(trim(Config::get(ApplicationConfig::TRANSFER_DEBUG_SESSION_NAME)));
-                $cookie->setValue($_COOKIE[Config::get(ApplicationConfig::TRANSFER_DEBUG_SESSION_NAME)]);
-                $cookie->setDomain(Config::get(ApplicationConfig::HOST_ZED_API));
+                $cookie->setName(trim(Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME)));
+                $cookie->setValue($_COOKIE[Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME)]);
+                $cookie->setDomain(Config::get(ApplicationConstants::HOST_ZED_API));
                 $cookieArray = new ArrayCookieJar(true);
                 $cookieArray->add($cookie);
 

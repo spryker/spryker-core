@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Payone;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface PayoneConfigConstants extends ConfigInterface
+interface PayoneConstants
 {
 
     const PAYONE = 'PAYONE';

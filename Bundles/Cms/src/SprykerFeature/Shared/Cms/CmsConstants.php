@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Cms;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface CmsConfig extends ConfigInterface
+interface CmsConstants
 {
 
     const RESOURCE_TYPE_PAGE = 'page';

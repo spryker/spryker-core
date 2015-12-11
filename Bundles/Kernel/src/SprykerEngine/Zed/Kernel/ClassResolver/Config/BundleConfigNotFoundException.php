@@ -8,7 +8,7 @@ namespace SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer;
 
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\ClassResolver\ClassInfo;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 class BundleConfigNotFoundException extends \Exception
 {
@@ -38,7 +38,7 @@ class BundleConfigNotFoundException extends \Exception
 
         $message .= sprintf(
             'E.g. %s\\Zed\\%2$s\\%2$sConfig',
-            Config::getInstance()->get(ApplicationConfig::PROJECT_NAMESPACE),
+            Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );
 

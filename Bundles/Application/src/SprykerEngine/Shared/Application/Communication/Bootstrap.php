@@ -12,7 +12,7 @@ use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\GlobalTem
 use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\RouterExtensionInterface;
 use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface;
 use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerFeature\Shared\Library\Config;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -66,7 +66,7 @@ class Bootstrap
      */
     public function boot()
     {
-        $this->application['debug'] = Config::get(ApplicationConfig::ENABLE_APPLICATION_DEBUG, false);
+        $this->application['debug'] = Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
 
         $this->optimizeApp($this->application);
 
@@ -342,14 +342,14 @@ class Bootstrap
      */
     private function addProtocolCheck(Application $application)
     {
-        if (!Config::get(ApplicationConfig::YVES_SSL_ENABLED) || !Config::get(ApplicationConfig::YVES_COMPLETE_SSL_ENABLED)) {
+        if (!Config::get(ApplicationConstants::YVES_SSL_ENABLED) || !Config::get(ApplicationConstants::YVES_COMPLETE_SSL_ENABLED)) {
             return;
         }
 
         $application->before(
             function (Request $request) {
                 if (!$request->isSecure()
-                    && !in_array($request->getPathInfo(), Config::get(ApplicationConfig::YVES_SSL_EXCLUDED))
+                    && !in_array($request->getPathInfo(), Config::get(ApplicationConstants::YVES_SSL_EXCLUDED))
                 ) {
                     $fakeRequest = clone $request;
                     $fakeRequest->server->set('HTTPS', true);

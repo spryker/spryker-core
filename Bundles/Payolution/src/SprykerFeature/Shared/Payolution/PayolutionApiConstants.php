@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Payolution;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface PayolutionApiConstants extends ConfigInterface
+interface PayolutionApiConstants
 {
 
     const BRAND_INVOICE = 'PAYOLUTION_INVOICE';

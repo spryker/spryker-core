@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Client\Cms\Service\KeyBuilder;
 
-use SprykerFeature\Shared\Cms\CmsConfig;
+use SprykerFeature\Shared\Cms\CmsConstants;
 use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 
 class CmsBlockKeyBuilder extends SharedResourceKeyBuilder
@@ -17,7 +17,7 @@ class CmsBlockKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return CmsConfig::RESOURCE_TYPE_BLOCK;
+        return CmsConstants::RESOURCE_TYPE_BLOCK;
     }
 
 }

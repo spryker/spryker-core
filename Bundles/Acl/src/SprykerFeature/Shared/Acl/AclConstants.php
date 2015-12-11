@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Acl;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface AclConfig extends ConfigInterface
+interface AclConstants
 {
 
     const ACL_DEFAULT_RULES = 'ACL_DEFAULT_RULES';

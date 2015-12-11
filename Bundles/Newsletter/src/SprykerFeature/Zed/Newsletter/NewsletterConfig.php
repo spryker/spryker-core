@@ -7,8 +7,8 @@
 namespace SprykerFeature\Zed\Newsletter;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Newsletter\NewsletterConfig as SharedNewsletterConfig;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Newsletter\NewsletterConstants;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 class NewsletterConfig extends AbstractBundleConfig
 {
@@ -28,7 +28,7 @@ class NewsletterConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->get(ApplicationConfig::HOST_YVES);
+        return $this->get(ApplicationConstants::HOST_YVES);
     }
 
     /**
@@ -52,7 +52,7 @@ class NewsletterConfig extends AbstractBundleConfig
      */
     public function getDoubleOptInConfirmationTemplateName()
     {
-        return $this->get(SharedNewsletterConfig::SHOP_MAIL_DOUBLE_OPT_IN_CONFIRMATION_TEMPLATE_NAME);
+        return $this->get(NewsletterConstants::SHOP_MAIL_DOUBLE_OPT_IN_CONFIRMATION_TEMPLATE_NAME);
     }
 
     /**
@@ -60,7 +60,7 @@ class NewsletterConfig extends AbstractBundleConfig
      */
     public function getPasswordRestoreSubject()
     {
-        return $this->get(SharedNewsletterConfig::SHOP_MAIL_DOUBLE_OPT_IN_CONFIRMATION_SUBJECT);
+        return $this->get(NewsletterConstants::SHOP_MAIL_DOUBLE_OPT_IN_CONFIRMATION_SUBJECT);
     }
 
 }

@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Payolution;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface PayolutionConfigConstants extends ConfigInterface
+interface PayolutionConstants
 {
 
     const TRANSACTION_GATEWAY_URL = 'PAYOLUTION_TRANSACTION=GATEWAY_URL';
