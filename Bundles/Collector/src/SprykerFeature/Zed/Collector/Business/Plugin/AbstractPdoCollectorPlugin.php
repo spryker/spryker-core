@@ -10,10 +10,10 @@ use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use SprykerFeature\Zed\Collector\Business\Exporter\Exception\DependencyException;
+use SprykerFeature\Zed\Collector\Business\Model\CountableIteratorInterface;
 use SprykerFeature\Zed\Collector\CollectorConfig;
 use SprykerFeature\Zed\Collector\Persistence\Exporter\AbstractPdoCollectorQuery;
 use SprykerFeature\Zed\Collector\Persistence\PdoBatchIterator;
-use SprykerFeature\Zed\Distributor\Business\Distributor\BatchIteratorInterface;
 
 abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
 {
@@ -52,7 +52,7 @@ abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
     }
 
     /**
-     * @return BatchIteratorInterface
+     * @return CountableIteratorInterface
      */
     protected function generateBatchIterator()
     {
