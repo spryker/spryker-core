@@ -22,8 +22,6 @@ class DataDirectory
     /**
      * This directory is local host only and not store specific
      *
-     * @static
-     *
      * @param string $relativePath relative path in data directory
      *
      * @return mixed
@@ -40,8 +38,6 @@ class DataDirectory
     /**
      * This directory is local host only but store specific
      *
-     * @static
-     *
      * @param string $relativePath relative path in data directory
      *
      * @return mixed
@@ -56,8 +52,6 @@ class DataDirectory
 
     /**
      * This directory is shared between hosts (NFS) but not store specific
-     *
-     * @static
      *
      * @param string $relativePath relative path in data directory
      *
@@ -78,8 +72,6 @@ class DataDirectory
 
     /**
      * This directory is shared between hosts (NFS) and is store specific
-     *
-     * @static
      *
      * @param string $relativePath relative path in data directory
      *

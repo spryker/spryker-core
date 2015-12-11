@@ -57,8 +57,6 @@ class Log
      * - without any overhead
      * - if file already exists, it will be truncated first
      *
-     * @static
-     *
      * @param $expression
      * @param string $fileName
      *
@@ -74,12 +72,9 @@ class Log
     /**
      * Retrieves Content from Flashfile
      *
-     * @static
-     *
      * @param string $fileName
      *
      * @return string
-     * @static
      */
     public static function getFlashInFile($fileName)
     {

@@ -17,7 +17,6 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      * @param string $categoryId
      *
      * @return string
-     * @static
      */
     public static function getCategoryKey($categoryId)
     {
@@ -28,7 +27,6 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
 
     /**
      * @return string
-     * @static
      */
     public static function getCategoryTreeKey()
     {
@@ -41,7 +39,6 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      * @param string $url
      *
      * @return string
-     * @static
      */
     public static function getCategoryUrlKey($url)
     {
