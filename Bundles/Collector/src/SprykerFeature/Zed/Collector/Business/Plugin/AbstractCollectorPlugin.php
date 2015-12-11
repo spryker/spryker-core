@@ -213,7 +213,10 @@ abstract class AbstractCollectorPlugin
 
         $batchCollection = $this->generateBatchIterator();
         $this->displayProgressWhileCountingBatchCollectionSize($output);
-        $progressBar = $this->generateProgressBar($output, $batchCollection->count());
+        $totalCount = $batchCollection->count();
+        $batchResult->setTotalCount($totalCount);
+
+        $progressBar = $this->generateProgressBar($output, $totalCount);
         $progressBar->start();
         $progressBar->advance(0);
 
@@ -229,9 +232,6 @@ abstract class AbstractCollectorPlugin
             $dataWriter->write($collectedData, $this->collectResourceType());
 
             $batchResult->increaseProcessedCount($collectedDataCount);
-            $batchResult->setTotalCount(
-                $batchResult->getTotalCount() + $batchSize
-            );
         }
 
         $progressBar->finish();

@@ -67,6 +67,8 @@ abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
      */
     protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
     {
+        $this->locale = $locale;
+
         $touchParameters = $this->getTouchQueryParameters($touchQuery);
         $this->criteriaBuilder
             ->setExtraParameterCollection($touchParameters);
