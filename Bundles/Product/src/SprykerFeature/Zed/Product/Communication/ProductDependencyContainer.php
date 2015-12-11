@@ -39,9 +39,7 @@ class ProductDependencyContainer extends AbstractCommunicationDependencyContaine
     public function createProductTable()
     {
         $productQuery = $this->getQueryContainer()->queryAbstractProducts();
-
-        $locale = $this->createLocaleFacade()->getCurrentLocale();
-        $localeTransfer = (new LocaleTransfer())->fromArray($locale->toArray());
+        $localeTransfer = $this->createLocaleTransfer();
 
         return new ProductTable(
             $productQuery,
@@ -81,6 +79,19 @@ class ProductDependencyContainer extends AbstractCommunicationDependencyContaine
     public function createProductCategoryQueryContainer()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::QUERY_CONTAINER_PRODUCT_CATEGORY);
+    }
+
+    /**
+     * @return LocaleTransfer
+     */
+    protected function createLocaleTransfer()
+    {
+        $locale = $this->createLocaleFacade()->getCurrentLocale();
+
+        $localeTransfer = new LocaleTransfer();
+        $localeTransfer->fromArray($locale->toArray());
+
+        return $localeTransfer;
     }
 
 }

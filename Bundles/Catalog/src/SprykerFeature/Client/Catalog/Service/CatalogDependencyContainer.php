@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Client\Catalog\Service;
 
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Client\Catalog\Service\KeyBuilder\ProductResourceKeyBuilder;
 use SprykerFeature\Client\Catalog\Service\Model\Extractor\RangeExtractor;
 use SprykerFeature\Client\Catalog\Service\Model\Extractor\FacetExtractor;
@@ -40,7 +41,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
         return new ModelCatalog(
             $this->getProductKeyBuilder(),
             $this->createStorage(),
-            \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale()
+            Store::getInstance()->getCurrentLocale()
         );
     }
 
@@ -114,9 +115,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
     protected function createFacetFilterHandler(FacetConfig $facetConfig)
     {
         return new FacetFilterHandler(
-            new NestedFilterBuilder(
-                new FilterBuilder()
-            ),
+            $this->createNestedFilterBuilder(),
             $facetConfig
         );
     }
@@ -159,6 +158,24 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
     protected function getProductKeyBuilder()
     {
         return new ProductResourceKeyBuilder();
+    }
+
+    /**
+     * @return NestedFilterBuilder
+     */
+    protected function createNestedFilterBuilder()
+    {
+        return new NestedFilterBuilder(
+            $this->createFilterBuilder()
+        );
+    }
+
+    /**
+     * @return FilterBuilder
+     */
+    protected function createFilterBuilder()
+    {
+        return new FilterBuilder();
     }
 
 }

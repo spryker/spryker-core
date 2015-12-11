@@ -17,7 +17,7 @@ use SprykerFeature\Zed\Maintenance\Business\Dependency\Manager;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder as ComposerInstalledPackageFinder;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder as NodeInstalledPackageFinder;
+use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
 use SprykerFeature\Zed\Maintenance\Business\Model\PropelBaseFolderFinder;
 use SprykerFeature\Zed\Maintenance\Business\Model\PropelMigrationCleanerInterface;
 use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
@@ -34,7 +34,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createPackageCollector()
     {
-        $collection = new InstalledPackagesTransfer();
+        $collection = $this->createInstalledPackageTransfer();
         $finder = [];
         $finder[] = $this->createComposerInstalledPackageFinder($collection);
         $finder[] = $this->createNodePackageManagerInstalledPackageFinder(
@@ -46,12 +46,8 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getConfig()->getPathToSpryker()
         );
 
-        $collector = new InstalledPackageCollector(
-            $collection,
-            $finder
-        );
-
-        $collector = new InstalledPackageCollectorFilter($collector);
+        $collector = $this->createInstalledPackageCollector($collection, $finder);
+        $collector = $this->createFilteredInstalledPackageCollector($collector);
 
         return $collector;
     }
@@ -71,12 +67,13 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
 
     /**
      * @param InstalledPackagesTransfer $collection
+     * @param string $path
      *
-     * @return NodeInstalledPackageFinder
+     * @return InstalledPackageFinder
      */
     private function createNodePackageManagerInstalledPackageFinder(InstalledPackagesTransfer $collection, $path)
     {
-        return new NodeInstalledPackageFinder(
+        return new InstalledPackageFinder(
             $collection,
             $this->createNpmListProcess(),
             $path
@@ -151,6 +148,44 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     public function createPropelBaseFolderFinder()
     {
         return new PropelBaseFolderFinder($this->getConfig()->getPathToSpryker());
+    }
+
+    /**
+     * @return InstalledPackagesTransfer
+     */
+    protected function createInstalledPackageTransfer()
+    {
+        $collection = new InstalledPackagesTransfer();
+
+        return $collection;
+    }
+
+    /**
+     * @param $collection
+     * @param $finder
+     *
+     * @return InstalledPackageCollector
+     */
+    protected function createInstalledPackageCollector($collection, $finder)
+    {
+        $collector = new InstalledPackageCollector(
+            $collection,
+            $finder
+        );
+
+        return $collector;
+    }
+
+    /**
+     * @param $collector
+     *
+     * @return InstalledPackageCollectorFilter
+     */
+    protected function createFilteredInstalledPackageCollector($collector)
+    {
+        $collector = new InstalledPackageCollectorFilter($collector);
+
+        return $collector;
     }
 
 }

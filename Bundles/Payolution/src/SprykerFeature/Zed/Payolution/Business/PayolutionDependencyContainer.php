@@ -45,10 +45,10 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
         );
 
         $paymentTransactionHandler->registerMethodMapper(
-            new Invoice($this->getConfig())
+            $this->createInvoice()
         );
         $paymentTransactionHandler->registerMethodMapper(
-            new Installment($this->getConfig())
+            $this->createInstallment()
         );
 
         return $paymentTransactionHandler;
@@ -66,7 +66,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
         );
 
         $paymentCalculationHandler->registerMethodMapper(
-            new Installment($this->getConfig())
+            $this->createInstallment()
         );
 
         return $paymentCalculationHandler;
@@ -105,6 +105,22 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     public function createTransactionStatusLog()
     {
         return new TransactionStatusLog($this->getQueryContainer());
+    }
+
+    /**
+     * @return Invoice
+     */
+    protected function createInvoice()
+    {
+        return new Invoice($this->getConfig());
+    }
+
+    /**
+     * @return Installment
+     */
+    protected function createInstallment()
+    {
+        return new Installment($this->getConfig());
     }
 
 }

@@ -25,11 +25,21 @@ class PropelDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createLogger()
     {
         $defaultLogger = new Logger(self::LOGGER_NAME);
-        $defaultLogger->pushHandler(new StreamHandler(
-            $this->getConfig()->getLogPath()
-        ));
+        $defaultLogger->pushHandler(
+            $this->createStreamHandler()
+        );
 
         return [$defaultLogger];
+    }
+
+    /**
+     * @return StreamHandler
+     */
+    protected function createStreamHandler()
+    {
+        return new StreamHandler(
+            $this->getConfig()->getLogPath()
+        );
     }
 
 }

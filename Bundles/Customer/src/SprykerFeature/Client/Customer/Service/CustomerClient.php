@@ -21,7 +21,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
-     * 
+     *
      * @return bool
      */
     public function hasCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer)
@@ -54,7 +54,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
-     * 
+     *
      * @return CustomerResponseTransfer
      */
     public function registerCustomer(CustomerTransfer $customerTransfer)
@@ -66,7 +66,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
-     * 
+     *
      * @return CustomerTransfer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
@@ -78,7 +78,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
-     * 
+     *
      * @return CustomerResponseTransfer
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
@@ -90,7 +90,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
-     * 
+     *
      * @return CustomerResponseTransfer
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
@@ -102,7 +102,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
-     * 
+     *
      * @return CustomerTransfer
      */
     public function setCustomer(CustomerTransfer $customerTransfer)
@@ -128,7 +128,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
-     * 
+     *
      * @return CustomerTransfer
      */
     public function getCustomerByEmail(CustomerTransfer $customerTransfer)
@@ -142,7 +142,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
-     * 
+     *
      * @return CustomerResponseTransfer
      */
     public function updateCustomer(CustomerTransfer $customerTransfer)
@@ -166,7 +166,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
-     * 
+     *
      * @return Response
      */
     public function deleteCustomer(CustomerTransfer $customerTransfer)
@@ -178,7 +178,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
-     * 
+     *
      * @return CustomerTransfer
      */
     public function login(CustomerTransfer $customerTransfer)
@@ -228,7 +228,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param AddressTransfer $addressTransfer
-     * 
+     *
      * @return AddressTransfer
      */
     public function getAddress(AddressTransfer $addressTransfer)
@@ -240,7 +240,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param AddressTransfer $addressTransfer
-     * 
+     *
      * @return AddressTransfer
      */
     public function updateAddress(AddressTransfer $addressTransfer)
@@ -312,7 +312,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param AddressTransfer $addressTransfer
-     * 
+     *
      * @return AddressTransfer
      */
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer)

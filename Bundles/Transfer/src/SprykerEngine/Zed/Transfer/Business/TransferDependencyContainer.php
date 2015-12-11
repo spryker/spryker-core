@@ -56,8 +56,8 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return new TransferDefinitionBuilder(
             $this->createLoader(),
-            new TransferDefinitionMerger(),
-            new ClassDefinition()
+            $this->createTransferDefinitionMerger(),
+            $this->createClassDefinition()
         );
     }
 
@@ -67,7 +67,7 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
     private function createLoader()
     {
         return new TransferDefinitionLoader(
-            new DefinitionNormalizer(),
+            $this->createDefinitionNormalizer(),
             $this->getConfig()->getSourceDirectories()
         );
     }
@@ -80,6 +80,30 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
         return new TransferCleaner(
             $this->getConfig()->getGeneratedTargetDirectory()
         );
+    }
+
+    /**
+     * @return TransferDefinitionMerger
+     */
+    protected function createTransferDefinitionMerger()
+    {
+        return new TransferDefinitionMerger();
+    }
+
+    /**
+     * @return ClassDefinition
+     */
+    protected function createClassDefinition()
+    {
+        return new ClassDefinition();
+    }
+
+    /**
+     * @return DefinitionNormalizer
+     */
+    protected function createDefinitionNormalizer()
+    {
+        return new DefinitionNormalizer();
     }
 
 }
