@@ -10,11 +10,20 @@
     </description>
 
     <exclude-pattern>\.git</exclude-pattern>
-    <exclude-pattern>*/Generated/*</exclude-pattern>
+    <exclude-pattern>*/src/Generated/*</exclude-pattern>
+    <exclude-pattern>*/src/Orm/*</exclude-pattern>
     <exclude-pattern>*/tests/_support/*</exclude-pattern>
-    <exclude-pattern>*/tests/_helper/*</exclude-pattern>
+    <exclude-pattern>*/tests/_helpers/*</exclude-pattern>
     <exclude-pattern>*/tests/_output/*</exclude-pattern>
     <exclude-pattern>*/Fixtures/*</exclude-pattern>
+    <exclude-pattern>*/Propel/DE/Migration/*</exclude-pattern>
+    <exclude-pattern>*/data/DE/cache/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*.xml</exclude-pattern>
+    <exclude-pattern>*.css</exclude-pattern>
+    <exclude-pattern>*.js</exclude-pattern>
+    <exclude-pattern>*.yml</exclude-pattern>
+    <exclude-pattern>*.txt</exclude-pattern>
 
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 
