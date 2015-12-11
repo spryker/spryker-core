@@ -12,7 +12,7 @@ use SprykerEngine\Zed\Kernel\Container;
 class ItemGrouperCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const ITEM_GROUPER_FACADE = 'item_grouper_facade';
+    const FACADE_ITEM_GROUPER = 'item_grouper_facade';
 
     /**
      * @param Container $container
@@ -21,7 +21,7 @@ class ItemGrouperCheckoutConnectorDependencyProvider extends AbstractBundleDepen
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::ITEM_GROUPER_FACADE] = function (Container $container) {
+        $container[self::FACADE_ITEM_GROUPER] = function (Container $container) {
             return $container->getLocator()->itemGrouper()->facade();
         };
 

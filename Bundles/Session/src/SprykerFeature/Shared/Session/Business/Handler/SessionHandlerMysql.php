@@ -60,8 +60,8 @@ class SessionHandlerMysql implements \SessionHandlerInterface
     /**
      * @param ApiInterface $newRelicApi
      * @param array $hosts
-     * @param null|string $user
-     * @param null|string $password
+     * @param string|null $user
+     * @param string|null $password
      * @param int $lifetime
      */
     public function __construct(ApiInterface $newRelicApi, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
@@ -110,7 +110,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
     /**
      * @param string $sessionId
      *
-     * @return null|string
+     * @return string|null
      */
     public function read($sessionId)
     {

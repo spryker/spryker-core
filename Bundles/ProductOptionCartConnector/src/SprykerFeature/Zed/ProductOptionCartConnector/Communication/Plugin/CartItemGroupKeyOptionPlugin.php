@@ -11,8 +11,8 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
 
 /**
-* @method ProductOptionCartConnectorFacade getFacade()
-*/
+ * @method ProductOptionCartConnectorFacade getFacade()
+ */
 class CartItemGroupKeyOptionPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
 

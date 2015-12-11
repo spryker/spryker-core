@@ -24,7 +24,9 @@ class TaxChangeTouchPluginTest extends Test
 {
 
     private $taxRateIds = [];
+
     private $taxSetId = null;
+
     private $abstractProductIds = [];
 
     /**

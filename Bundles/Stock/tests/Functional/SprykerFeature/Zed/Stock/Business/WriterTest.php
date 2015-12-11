@@ -26,6 +26,7 @@ class WriterTest extends Test
      * @var StockFacade
      */
     private $stockFacade;
+
     /**
      * @var StockQueryContainer
      */

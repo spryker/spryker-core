@@ -61,7 +61,7 @@ class CodeStyleSniffer
             throw new \ErrorException($message);
         }
 
-        $this->runFixerCommand($path, $options);
+        $this->runSnifferCommand($path, $options);
     }
 
     /**
@@ -112,7 +112,7 @@ class CodeStyleSniffer
      *
      * @return void
      */
-    protected function runFixerCommand($path, array $options)
+    protected function runSnifferCommand($path, array $options)
     {
         $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
 

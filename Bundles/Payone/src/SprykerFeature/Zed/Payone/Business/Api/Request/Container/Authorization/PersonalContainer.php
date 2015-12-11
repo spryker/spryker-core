@@ -17,78 +17,95 @@ class PersonalContainer extends AbstractContainer
      * @var string
      */
     protected $customerid;
+
     /**
      * PAYONE debtor ID
      *
      * @var int
      */
     protected $userid;
+
     /**
      * @var string
      */
     protected $salutation;
+
     /**
      * @var string
      */
     protected $title;
+
     /**
      * @var string
      */
     protected $firstname;
+
     /**
      * @var string
      */
     protected $lastname;
+
     /**
      * @var string
      */
     protected $company;
+
     /**
      * @var string
      */
     protected $street;
+
     /**
      * @var string
      */
     protected $addressaddition;
+
     /**
      * @var string
      */
     protected $zip;
+
     /**
      * @var string
      */
     protected $city;
+
     /**
      * Country (ISO-3166)
      *
      * @var string
      */
     protected $country;
+
     /**
      * @var string
      */
     protected $state;
+
     /**
      * @var string
      */
     protected $email;
+
     /**
      * @var string
      */
     protected $telephonenumber;
+
     /**
      * Date of birth (YYYYMMDD)
      *
      * @var int
      */
     protected $birthday;
+
     /**
      * Language indicator (ISO639)
      *
      * @var string
      */
     protected $language;
+
     /**
      * @var string
      */
@@ -120,7 +137,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getAddressAddition()
     {
@@ -156,7 +173,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCity()
     {
@@ -174,7 +191,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCompany()
     {
@@ -228,7 +245,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getEmail()
     {
@@ -246,7 +263,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFirstName()
     {
@@ -264,7 +281,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getIp()
     {
@@ -300,7 +317,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLastName()
     {
@@ -318,7 +335,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getSalutation()
     {
@@ -336,7 +353,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getState()
     {
@@ -354,7 +371,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getStreet()
     {
@@ -372,7 +389,7 @@ class PersonalContainer extends AbstractContainer
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getTelephoneNumber()
     {

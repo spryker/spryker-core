@@ -20,30 +20,37 @@ class BankAccountCheckContainer extends AbstractRequestContainer
      * @var int
      */
     protected $aid;
+
     /**
      * @var string
      */
     protected $checktype;
+
     /**
      * @var string
      */
     protected $bankaccount;
+
     /**
      * @var string
      */
     protected $bankcode;
+
     /**
      * @var string
      */
     protected $bankcountry;
+
     /**
      * @var string
      */
     protected $language;
+
     /**
      * @var string
      */
     protected $iban;
+
     /**
      * @var string
      */

@@ -220,7 +220,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @param null|string $section
+     * @param string|null $section
      *
      * @return array
      */

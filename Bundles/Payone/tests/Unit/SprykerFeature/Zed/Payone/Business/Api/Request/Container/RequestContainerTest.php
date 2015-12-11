@@ -40,21 +40,37 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
 {
 
     protected $amount = 9900;
+
     protected $encoding = 'UTF-8';
+
     protected $currency = 'EUR';
+
     protected $sequenceNumber = 2;
+
     protected $mode = 'test';
+
     protected $txId = '123456789';
+
     protected $portalId = '12345';
+
     protected $mid = '123';
+
     protected $aid = '1234';
+
     protected $integratorName = 'integrator-name';
+
     protected $integratorVersion = '1.0';
+
     protected $solutionName = 'solution-name';
+
     protected $solutionVersion = '2.0';
+
     protected $key = '123456789-test-key';
+
     protected $reference = 'DE000000001';
+
     protected $clearingType = 'pre';
+
     protected $narrativeText = 'some-text';
 
     /**

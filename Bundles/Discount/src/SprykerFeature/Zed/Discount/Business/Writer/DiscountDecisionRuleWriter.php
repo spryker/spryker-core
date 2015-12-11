@@ -49,7 +49,7 @@ class DiscountDecisionRuleWriter extends AbstractWriter
     /**
      * @param DecisionRuleTransfer $decisionRuleTransfer
      *
-     * @return null|SpyDiscountDecisionRule
+     * @return SpyDiscountDecisionRule|null
      */
     public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
     {

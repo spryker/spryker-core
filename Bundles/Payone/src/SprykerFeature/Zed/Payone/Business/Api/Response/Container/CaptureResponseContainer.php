@@ -13,96 +13,119 @@ class CaptureResponseContainer extends AbstractResponseContainer
      * @var int
      */
     protected $txid;
+
     /**
      * @var string
      */
     protected $settleaccount;
+
     /**
      * @var string
      */
     protected $clearing_bankaccountholder;
+
     /**
      * @var string
      */
     protected $clearing_bankcountry;
+
     /**
      * @var string
      */
     protected $clearing_bankaccount;
+
     /**
      * @var string
      */
     protected $clearing_bankcode;
+
     /**
      * @var string
      */
     protected $clearing_bankiban;
+
     /**
      * @var string
      */
     protected $clearing_bankbic;
+
     /**
      * @var string
      */
     protected $clearing_bankcity;
+
     /**
      * @var string
      */
     protected $clearing_bankname;
+
     /**
      * @var string
      */
     protected $clearing_legalnote;
+
     /**
      * (YYYYMMDD)
      *
      * @var string
      */
     protected $clearing_duedate;
+
     /**
      * @var string
      */
     protected $clearing_reference;
+
     /**
      * @var string
      */
     protected $clearing_instructionnote;
+
     /**
      * @var string
      */
     protected $mandate_identification;
+
     /**
      * @var string
      */
     protected $creditor_identifier;
+
     /**
      * @var string
      */
     protected $creditor_name;
+
     /**
      * @var string
      */
     protected $creditor_street;
+
     /**
      * @var string
      */
     protected $creditor_zip;
+
     /**
      * @var string
      */
     protected $creditor_city;
+
     /**
      * @var string
      */
     protected $creditor_country;
+
     /**
      * @var string
      */
     protected $creditor_email;
+
     /**
      * @var string
      */
     protected $clearing_date;
+
     /**
      * @var string
      */

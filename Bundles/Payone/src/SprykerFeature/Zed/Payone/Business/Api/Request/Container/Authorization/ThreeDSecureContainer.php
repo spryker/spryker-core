@@ -15,14 +15,17 @@ class ThreeDSecureContainer extends AbstractContainer
      * @var string
      */
     protected $xid;
+
     /**
      * @var string
      */
     protected $cavv;
+
     /**
      * @var string
      */
     protected $eci;
+
     /**
      * @varb RedirectContainer
      */

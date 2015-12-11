@@ -16,6 +16,7 @@ class Sellable implements SellableInterface
      * @var OmsFacade
      */
     protected $omsFacade;
+
     /**
      * @var StockFacade
      */

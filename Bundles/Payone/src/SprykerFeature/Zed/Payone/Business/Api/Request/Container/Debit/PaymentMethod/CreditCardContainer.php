@@ -13,26 +13,32 @@ class CreditCardContainer extends AbstractPaymentMethodContainer
      * @var string
      */
     protected $cardpan;
+
     /**
      * @var string
      */
     protected $cardtype;
+
     /**
      * @var int
      */
     protected $cardexpiredate;
+
     /**
      * @var int
      */
     protected $cardcvc2;
+
     /**
      * @var int
      */
     protected $cardissuenumber;
+
     /**
      * @var string
      */
     protected $cardholder;
+
     /**
      * @var string
      */

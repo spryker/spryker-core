@@ -39,8 +39,7 @@ class Result extends BaseResult
         echo __CLASS__ . ' ' . __FILE__ . ':' . __LINE__ . '';
         echo '</pre><hr />' . PHP_EOL;
         exit();
-
-        return $this;
+        //return $this;
     }
 
 }

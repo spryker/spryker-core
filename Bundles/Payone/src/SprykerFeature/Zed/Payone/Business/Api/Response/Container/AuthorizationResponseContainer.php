@@ -13,86 +13,107 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
      * @var int
      */
     protected $txid;
+
     /**
      * @var int
      */
     protected $userid;
+
     /**
      * @var string
      */
     protected $protect_result_avs;
+
     /**
      * @var string
      */
     protected $clearing_bankaccountholder;
+
     /**
      * @var string
      */
     protected $clearing_bankcountry;
+
     /**
      * @var string
      */
     protected $clearing_bankaccount;
+
     /**
      * @var string
      */
     protected $clearing_bankcode;
+
     /**
      * @var string
      */
     protected $clearing_bankiban;
+
     /**
      * @var string
      */
     protected $clearing_bankbic;
+
     /**
      * @var string
      */
     protected $clearing_bankcity;
+
     /**
      * @var string
      */
     protected $clearing_bankname;
+
     /**
      * @var string
      */
     protected $redirecturl;
+
     /**
      * @var string
      */
     protected $mandate_identification;
+
     /**
      * @var string
      */
     protected $creditor_identifier;
+
     /**
      * @var string
      */
     protected $creditor_name;
+
     /**
      * @var string
      */
     protected $creditor_street;
+
     /**
      * @var string
      */
     protected $creditor_zip;
+
     /**
      * @var string
      */
     protected $creditor_city;
+
     /**
      * @var string
      */
     protected $creditor_country;
+
     /**
      * @var string
      */
     protected $creditor_email;
+
     /**
      * @var string
      */
     protected $clearing_date;
+
     /**
      * @var string
      */

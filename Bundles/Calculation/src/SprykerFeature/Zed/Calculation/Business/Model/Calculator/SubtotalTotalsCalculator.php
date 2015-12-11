@@ -48,7 +48,8 @@ class SubtotalTotalsCalculator implements
         }
 
         foreach ($calculableItems as $item) {
-            for ($i = 0; $i < $item->getQuantity(); $i++) {
+            $quantity = $item->getQuantity();
+            for ($i = 0; $i < $quantity; $i++) {
                 $subtotal += $item->getGrossPrice();
                 $subtotal += $this->sumOptions($item->getProductOptions());
                 $subtotal += $this->sumExpenses($item->getExpenses());

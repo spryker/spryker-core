@@ -40,7 +40,7 @@ class InstallerDependencyContainer extends AbstractBusinessDependencyContainer
     public function getGlossaryInstaller()
     {
         return new GlossaryInstaller(
-            $this->getProvidedDependency(InstallerDependencyProvider::GLOSSARY_FACADE),
+            $this->getProvidedDependency(InstallerDependencyProvider::FACADE_GLOSSARY),
             $this->getConfig()->getGlossaryFilePaths()
         );
     }

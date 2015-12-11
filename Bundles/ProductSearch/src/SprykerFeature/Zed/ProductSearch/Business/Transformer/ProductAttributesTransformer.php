@@ -21,10 +21,12 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
      * @var OperationLocatorInterface
      */
     private $operationLocator;
+
     /**
      * @var OperationInterface
      */
     private $defaultOperation;
+
     /**
      * @var ProductSearchQueryContainerInterface
      */

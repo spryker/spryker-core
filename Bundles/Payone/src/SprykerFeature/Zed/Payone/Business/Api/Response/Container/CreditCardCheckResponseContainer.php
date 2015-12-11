@@ -13,6 +13,7 @@ class CreditCardCheckResponseContainer extends AbstractResponseContainer
      * @var string
      */
     protected $pseudocardpan;
+
     /**
      * @var string
      */

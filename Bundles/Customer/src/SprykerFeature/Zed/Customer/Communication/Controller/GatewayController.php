@@ -75,7 +75,6 @@ class GatewayController extends AbstractGatewayController
     {
         $result = $this->getFacade()
             ->deleteCustomer($customerTransfer);
-
         $this->setSuccess($result);
     }
 
@@ -163,16 +162,17 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return AddressesTransfer
+     * @return AddressesTransfer|null
      */
     public function addressesAction(CustomerTransfer $customerTransfer)
     {
         $addressesTransfer = $this->getFacade()
             ->getAddresses($customerTransfer);
+
         if ($addressesTransfer === null) {
             $this->setSuccess(false);
 
-            return;
+            return null;
         }
 
         return $addressesTransfer;
@@ -241,7 +241,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return AddressTransfer|null
      */
     public function deleteAddressAction(AddressTransfer $addressTransfer)
     {
@@ -252,6 +252,8 @@ class GatewayController extends AbstractGatewayController
         } catch (AddressNotFoundException $e) {
             $this->setSuccess(false);
         }
+
+        return null;
     }
 
     /**

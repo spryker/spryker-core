@@ -23,22 +23,27 @@ class DebitContainer extends AbstractRequestContainer
      * @var string
      */
     protected $txid;
+
     /**
      * @var int
      */
     protected $sequencenumber;
+
     /**
      * @var int
      */
     protected $amount;
+
     /**
      * @var string
      */
     protected $currency;
+
     /**
      * @var string
      */
     protected $clearingtype;
+
     /**
      * @var string
      */
@@ -48,10 +53,12 @@ class DebitContainer extends AbstractRequestContainer
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer
      */
     protected $business;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\AbstractPaymentMethodContainer
      */
     protected $paymentMethod;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */

@@ -17,6 +17,7 @@ class FinancingContainer extends AbstractPaymentMethodContainer
      * @var string
      */
     protected $financingtype;
+
     /**
      * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */

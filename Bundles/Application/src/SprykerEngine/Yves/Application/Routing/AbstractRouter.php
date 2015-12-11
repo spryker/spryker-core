@@ -92,7 +92,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
             ];
         }
 
-        return;
+        return null;
     }
 
     /**

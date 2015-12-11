@@ -20,42 +20,52 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
      * @var int
      */
     protected $aid;
+
     /**
      * @var int
      */
     protected $amount;
+
     /**
      * @var string
      */
     protected $currency;
+
     /**
      * @var string
      */
     protected $clearingtype;
+
     /**
      * @var string
      */
     protected $exiturl;
+
     /**
      * @var string
      */
     protected $cardpan;
+
     /**
      * @var string
      */
     protected $cardtype;
+
     /**
      * @var string
      */
     protected $cardexpiredate;
+
     /**
      * @var int
      */
     protected $cardcvc2;
+
     /**
      * @var string
      */
     protected $storecarddata;
+
     /**
      * @var string
      */

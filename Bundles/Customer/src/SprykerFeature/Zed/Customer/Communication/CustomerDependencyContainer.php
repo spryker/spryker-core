@@ -69,7 +69,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createAddressForm()
     {
         $customerAddressForm = new AddressForm(
-                $this->getProvidedDependency(CustomerDependencyProvider::COUNTRY_FACADE),
+                $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY),
                 $this->getQueryContainer()
             );
 

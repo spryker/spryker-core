@@ -13,50 +13,62 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
      * @var int
      */
     protected $secstatus;
+
     /**
      * @var string
      */
     protected $score;
+
     /**
      * @var int
      */
     protected $scorevalue;
+
     /**
      * @var string
      */
     protected $secscore;
+
     /**
      * @var string
      */
     protected $divergence;
+
     /**
      * @var string
      */
     protected $personstatus;
+
     /**
      * @var string
      */
     protected $firstname;
+
     /**
      * @var string
      */
     protected $lastname;
+
     /**
      * @var string
      */
     protected $street;
+
     /**
      * @var string
      */
     protected $streetname;
+
     /**
      * @var string
      */
     protected $streetnumber;
+
     /**
      * @var string
      */
     protected $zip;
+
     /**
      * @var string
      */

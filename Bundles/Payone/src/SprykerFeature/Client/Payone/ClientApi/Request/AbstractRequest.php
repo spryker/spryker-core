@@ -13,54 +13,67 @@ abstract class AbstractRequest extends AbstractContainer
      * @var int
      */
     protected $mid;
+
     /**
      * @var int
      */
     protected $aid;
+
     /**
      * @var int
      */
     protected $portalid;
+
     /**
      * @var string
      */
     protected $key;
+
     /**
      * @var string
      */
     protected $mode;
+
     /**
      * @var string
      */
     protected $request;
+
     /**
      * @var string
      */
     protected $responsetype;
+
     /**
      * @var string
      */
     protected $encoding;
+
     /**
      * @var string
      */
     protected $solution_name;
+
     /**
      * @var string
      */
     protected $solution_version;
+
     /**
      * @var string
      */
     protected $integrator_name;
+
     /**
      * @var string
      */
     protected $integrator_version;
+
     /**
      * @var string
      */
     protected $language;
+
     /**
      * @var string
      */

@@ -54,7 +54,9 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
      */
     public function testFilterChainAcceptsAndRunsCallable($string)
     {
-        $filter = function ($string) { return strtolower($string); };
+        $filter = function ($string) {
+            return strtolower($string);
+        };
         $filterChain = new FilterChain();
         $filterChain->addFilter($filter);
         $this->assertEquals($filter($string), $filterChain->filter($string));
@@ -67,7 +69,9 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
      */
     public function testFilterChainAcceptsAndRunsCallableAndFilterInterface($string)
     {
-        $filter = function ($string) { return strtolower($string); };
+        $filter = function ($string) {
+            return strtolower($string);
+        };
         $filter2 = new CamelCaseToSeparatorFilter('-');
 
         $filterChain = new FilterChain();

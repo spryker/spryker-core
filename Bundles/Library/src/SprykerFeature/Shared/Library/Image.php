@@ -38,6 +38,7 @@ class Image
     const SIZE_XS = 'xs';
 
     protected static $imageBaseUrl;
+
     protected static $config;
 
     /**
@@ -55,15 +56,16 @@ class Image
             switch ($applicationName) {
                 case 'ZED':
                     return self::getSchema() . Config::get(ApplicationConfig::HOST_ZED_GUI) . self::PLACEHOLDER_PRODUCT_ZED;
-                    break;
 
                 case 'YVES':
                     return self::getSchema() . Config::get(ApplicationConfig::HOST_YVES) . self::PLACEHOLDER_PRODUCT_YVES;
-                    break;
+
+                default:
+                    throw new \ErrorException('Invalid Application name');
             }
-        } else {
-            $urlKey = $filename;
         }
+
+        $urlKey = $filename;
 
         /* ONLY FOR CLOUD HOSTING SETUP USED */
         if (Cloud::isCloudStorageCdnEnabled()) {

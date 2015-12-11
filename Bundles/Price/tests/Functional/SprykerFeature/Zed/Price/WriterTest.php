@@ -34,6 +34,7 @@ class WriterTest extends Test
      * @var PriceFacade
      */
     private $priceFacade;
+
     /**
      * @var AutoCompletion
      */

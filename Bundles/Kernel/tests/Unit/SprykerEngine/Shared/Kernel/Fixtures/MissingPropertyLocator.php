@@ -15,7 +15,7 @@ class MissingPropertyLocator extends AbstractLocator
     /**
      * @param $bundle
      * @param LocatorLocatorInterface $locator
-     * @param null|string $className
+     * @param string|null $className
      *
      * @return object
      */

@@ -79,7 +79,7 @@ class SessionHandlerRedis implements \SessionHandlerInterface
     /**
      * @param string $sessionId
      *
-     * @return null|string
+     * @return string|null
      */
     public function read($sessionId)
     {

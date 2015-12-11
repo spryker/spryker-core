@@ -72,7 +72,7 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
 
     /**
      * @param string $key
-     * @param null|string $prefix
+     * @param string|null $prefix
      *
      * @return int
      */

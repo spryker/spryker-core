@@ -51,7 +51,7 @@ class Request extends AbstractObject implements
     /**
      * @param string $name
      *
-     * @return TransferInterface
+     * @return TransferInterface|null
      */
     public function getMetaTransfer($name)
     {
@@ -65,7 +65,7 @@ class Request extends AbstractObject implements
             return $transfer;
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -145,7 +145,7 @@ class Request extends AbstractObject implements
     }
 
     /**
-     * @return TransferInterface
+     * @return TransferInterface|null
      */
     public function getTransfer()
     {
@@ -156,7 +156,7 @@ class Request extends AbstractObject implements
             return $this->locator->$getMethodName($this->values['transfer']);
         }
 
-        return;
+        return null;
     }
 
     /**

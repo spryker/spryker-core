@@ -38,6 +38,7 @@ class CalculatorTest extends AbstractFunctionalTest
     const ITEM_DISCOUNT_AMOUNT = 1000;
     const ORDER_SHIPPING_COSTS = 2000;
     const EXPENSE_NAME_SHIPPING_COSTS = 'Shipping Costs';
+
     /**
      * @var LocatorLocatorInterface|AutoCompletion
      */

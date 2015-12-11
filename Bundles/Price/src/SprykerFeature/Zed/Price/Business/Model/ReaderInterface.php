@@ -63,7 +63,7 @@ interface ReaderInterface
      */
     public function getAbstractProductIdBySku($sku);
 
-     /**
+    /**
      * @param string $sku
      *
      * @throws MissingProductException

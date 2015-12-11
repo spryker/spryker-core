@@ -42,7 +42,7 @@ class TestAutoloader
     /**
      * @param string $rootDirectory
      * @param string $vendorDirectory
-     * @param null $application
+     * @param string|null $application
      * @param bool $disableApplicationCheck
      */
     private function __construct($rootDirectory, $vendorDirectory, $application = null, $disableApplicationCheck = false)
@@ -57,7 +57,7 @@ class TestAutoloader
     /**
      * @param string $rootDirectory
      * @param string $vendorDirectory
-     * @param null $application
+     * @param string|null $application
      * @param bool $disableApplicationCheck
      *
      * @return void

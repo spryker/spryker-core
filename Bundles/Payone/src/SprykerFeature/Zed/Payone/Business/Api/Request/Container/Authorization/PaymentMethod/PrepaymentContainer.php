@@ -13,30 +13,37 @@ class PrepaymentContainer extends AbstractPaymentMethodContainer
      * @var string
      */
     protected $clearing_bankaccountholder;
+
     /**
      * @var string
      */
     protected $clearing_bankcountry;
+
     /**
      * @var string
      */
     protected $clearing_bankaccount;
+
     /**
      * @var string
      */
     protected $clearing_bankcode;
+
     /**
      * @var string
      */
     protected $clearing_bankiban;
+
     /**
      * @var string
      */
     protected $clearing_bankbic;
+
     /**
      * @var string
      */
     protected $clearing_bankcity;
+
     /**
      * @var
      */

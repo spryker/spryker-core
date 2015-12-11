@@ -68,12 +68,12 @@ class QueryBuilder extends PropelQueryBuilder
         $selectColumns = [];
         foreach ($table->getColumns() as $column) {
             if (!$column->isLazyLoad()) {
-                $selectColumns [] = $this->quoteIdentifier($column->getName());
+                $selectColumns[] = $this->quoteIdentifier($column->getName());
             }
         }
         $conditions = [];
         foreach ($table->getPrimaryKey() as $index => $column) {
-            $conditions [] = sprintf('%s = :p%d', $this->quoteIdentifier($column->getName()), $index);
+            $conditions[] = sprintf('%s = :p%d', $this->quoteIdentifier($column->getName()), $index);
         }
         $query = sprintf(
             'SELECT %s FROM %s WHERE %s',
@@ -84,10 +84,10 @@ class QueryBuilder extends PropelQueryBuilder
         $pks = [];
         if ($table->hasCompositePrimaryKey()) {
             foreach ($table->getPrimaryKey() as $index => $column) {
-                $pks [] = "\$key[$index]";
+                $pks[] = "\$key[$index]";
             }
         } else {
-            $pks [] = '$key';
+            $pks[] = '$key';
         }
 
         $pkHashFromRow = $this->getTableMapBuilder()->getInstancePoolKeySnippet($pks);

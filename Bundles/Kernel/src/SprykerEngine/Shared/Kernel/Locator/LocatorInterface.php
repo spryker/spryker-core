@@ -14,7 +14,7 @@ interface LocatorInterface
     /**
      * @param string $bundle
      * @param LocatorLocatorInterface $locator
-     * @param null|string $className
+     * @param string|null $className
      *
      * @return object
      */

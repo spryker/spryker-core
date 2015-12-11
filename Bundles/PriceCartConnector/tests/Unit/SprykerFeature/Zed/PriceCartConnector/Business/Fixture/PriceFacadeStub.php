@@ -14,6 +14,7 @@ class PriceFacadeStub extends PriceFacade
 {
 
     private $prices = [];
+
     private $validities = [];
 
     public function __construct(FactoryInterface $factory = null, Locator $locator = null)

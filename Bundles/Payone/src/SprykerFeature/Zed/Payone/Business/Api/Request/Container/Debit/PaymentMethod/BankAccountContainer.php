@@ -13,34 +13,42 @@ class BankAccountContainer extends AbstractPaymentMethodContainer
      * @var string
      */
     protected $bankcountry;
+
     /**
      * @var string
      */
     protected $bankaccount;
+
     /**
      * @var int
      */
     protected $bankcode;
+
     /**
      * @var int
      */
     protected $bankbranchcode;
+
     /**
      * @var int
      */
     protected $bankcheckdigit;
+
     /**
      * @var string
      */
     protected $bankaccountholder;
+
     /**
      * @var string
      */
     protected $iban;
+
     /**
      * @var string
      */
     protected $bic;
+
     /**
      * @var string
      */

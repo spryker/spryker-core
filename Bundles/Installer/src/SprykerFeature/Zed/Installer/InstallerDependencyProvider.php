@@ -12,7 +12,7 @@ use SprykerEngine\Zed\Kernel\Container;
 class InstallerDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const GLOSSARY_FACADE = 'facade_glossary';
+    const FACADE_GLOSSARY = 'facade_glossary';
 
     /**
      * @param Container $container
@@ -23,7 +23,7 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container[self::GLOSSARY_FACADE] = function (Container $container) {
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
             return $container->getLocator()->glossary()->facade();
         };
 

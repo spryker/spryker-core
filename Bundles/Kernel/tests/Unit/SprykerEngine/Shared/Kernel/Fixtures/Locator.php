@@ -30,7 +30,7 @@ class Locator extends AbstractLocator
     /**
      * @param string $bundle
      * @param LocatorLocatorInterface $locator
-     * @param null|string $className
+     * @param string|null $className
      *
      * @return object
      */

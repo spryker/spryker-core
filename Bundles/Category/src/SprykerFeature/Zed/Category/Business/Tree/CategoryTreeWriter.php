@@ -132,7 +132,7 @@ class CategoryTreeWriter
     {
         $this->connection->beginTransaction();
 
-        //order of execution matters, these must be called before node is deleted
+        // Order of execution matters, these must be called before node is deleted
         $this->removeNodeUrl($idNode, $locale);
         $this->touchCategoryDeleted($idNode);
 

@@ -629,7 +629,7 @@ abstract class AbstractTable
      *
      * @return string
      */
-    private function generateButton($url, $title, array $defaultOptions, array $customOptions = null)
+    protected function generateButton($url, $title, array $defaultOptions, array $customOptions = [])
     {
         $buttonOptions = $this->generateButtonOptions($defaultOptions, $customOptions);
 
@@ -656,21 +656,22 @@ abstract class AbstractTable
 
     /**
      * @param array $defaultOptions
+     * @param array $options
      *
      * @return string
      */
-    private function getButtonClass(array $defaultOptions, array $options = null)
+    protected function getButtonClass(array $defaultOptions, array $options = [])
     {
         $class = '';
 
-        if (array_key_exists(self::BUTTON_CLASS, $defaultOptions)) {
+        if (isset($defaultOptions[self::BUTTON_CLASS])) {
             $class .= ' ' . $defaultOptions[self::BUTTON_CLASS];
         }
-        if ($options !== null && array_key_exists(self::BUTTON_CLASS, $options)) {
+        if (isset($options[self::BUTTON_CLASS])) {
             $class .= ' ' . $options[self::BUTTON_CLASS];
         }
 
-        if (empty($class) === true) {
+        if (empty($class)) {
             return self::BUTTON_DEFAULT_CLASS;
         }
 
@@ -682,11 +683,11 @@ abstract class AbstractTable
      *
      * @return string
      */
-    private function getButtonParameters(array $buttonOptions)
+    protected function getButtonParameters(array $buttonOptions)
     {
         $parameters = '';
         foreach ($buttonOptions as $argument => $value) {
-            if (in_array($argument, [self::BUTTON_CLASS, self::BUTTON_HREF, self::BUTTON_ICON]) === true) {
+            if (in_array($argument, [self::BUTTON_CLASS, self::BUTTON_HREF, self::BUTTON_ICON])) {
                 continue;
             }
             $parameters .= sprintf(' %s="%s"', $argument, $value);
@@ -701,10 +702,10 @@ abstract class AbstractTable
      *
      * @return array
      */
-    private function generateButtonOptions(array $defaultOptions, array $options = null)
+    protected function generateButtonOptions(array $defaultOptions, array $options = [])
     {
         $buttonOptions = $defaultOptions;
-        if (is_array($options) === true) {
+        if (is_array($options)) {
             $buttonOptions = array_merge($defaultOptions, $options);
         }
 
@@ -745,8 +746,6 @@ abstract class AbstractTable
             $searchColumns[$column->getData()],
             $value)
         );
-
-        return;
     }
 
 }

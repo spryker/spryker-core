@@ -227,7 +227,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @return TransferInterface
+     * @return TransferInterface|null
      */
     public function getTransfer()
     {
@@ -241,7 +241,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
             return $transfer;
         }
 
-        return;
+        return null;
     }
 
     /**

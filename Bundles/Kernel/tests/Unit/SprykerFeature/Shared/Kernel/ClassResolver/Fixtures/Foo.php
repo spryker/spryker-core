@@ -6,12 +6,12 @@ class Foo
 {
 
     /**
-     * @var null|mixed
+     * @var mixed|null
      */
     private $data;
 
     /**
-     * @param null|mixed $data
+     * @param mixed|null $data
      */
     public function __construct($data = null)
     {
