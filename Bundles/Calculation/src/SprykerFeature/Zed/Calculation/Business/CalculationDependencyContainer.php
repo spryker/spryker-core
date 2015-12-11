@@ -33,7 +33,9 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getStackExecutor()
     {
-        return new StackExecutor();
+        $stackExecutor = new StackExecutor();
+
+        return $stackExecutor;
     }
 
     /**
@@ -41,7 +43,9 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getExpensePriceToPayCalculator()
     {
-        return new ExpensePriceToPayCalculator();
+        $expensePriceToPayCalculator = new ExpensePriceToPayCalculator();
+
+        return $expensePriceToPayCalculator;
     }
 
     /**
@@ -49,7 +53,9 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getExpenseTotalsCalculator()
     {
-        return new ExpenseTotalsCalculator();
+        $expenseTotalsCalculator = new ExpenseTotalsCalculator();
+
+        return $expenseTotalsCalculator;
     }
 
     /**
@@ -73,7 +79,9 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getItemPriceToPayCalculator()
     {
-        return new ItemPriceToPayCalculator();
+        $itemPriceToPayCalculator = new ItemPriceToPayCalculator();
+
+        return $itemPriceToPayCalculator;
     }
 
     /**
@@ -81,7 +89,9 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getOptionPriceToPayCalculator()
     {
-        return new ProductOptionPriceToPayCalculator();
+        $productOptionPriceToPayCalculator = new ProductOptionPriceToPayCalculator();
+
+        return $productOptionPriceToPayCalculator;
     }
 
     /**
@@ -89,7 +99,9 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getRemoveAllExpensesCalculator()
     {
-        return new RemoveAllExpensesCalculator();
+        $removeAllExpensesCalculator = new RemoveAllExpensesCalculator();
+
+        return $removeAllExpensesCalculator;
     }
 
     /**
@@ -97,7 +109,9 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getRemoveTotalsCalculator()
     {
-        return new RemoveTotalsCalculator();
+        $removeTotalsCalculator = new RemoveTotalsCalculator();
+
+        return $removeTotalsCalculator;
     }
 
     /**
@@ -105,7 +119,9 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getSubtotalTotalsCalculator()
     {
-        return new SubtotalTotalsCalculator();
+        $subtotalTotalsCalculator = new SubtotalTotalsCalculator();
+
+        return $subtotalTotalsCalculator;
     }
 
     /**
@@ -113,7 +129,9 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getItemTotalCalculator()
     {
-        return new ItemTotalPriceCalculator();
+        $itemTotalPriceCalculator = new ItemTotalPriceCalculator();
+
+        return $itemTotalPriceCalculator;
     }
 
     /**
@@ -121,7 +139,9 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getSubtotalWithoutItemExpensesTotalsCalculator()
     {
-        return new SubtotalWithoutItemExpensesTotalsCalculator();
+        $subtotalWithoutItemExpensesTotalsCalculator = new SubtotalWithoutItemExpensesTotalsCalculator();
+
+        return $subtotalWithoutItemExpensesTotalsCalculator;
     }
 
     /**
@@ -159,7 +179,9 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createPriceCalculationHelper()
     {
-        return new PriceCalculationHelper();
+        $priceCalculationHelper = new PriceCalculationHelper();
+
+        return $priceCalculationHelper;
     }
 
 }

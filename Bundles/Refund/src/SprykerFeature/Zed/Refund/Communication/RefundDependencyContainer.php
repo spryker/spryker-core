@@ -75,7 +75,9 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     protected function createDateFormatter()
     {
-        return new DateFormatter(Context::getInstance());
+        $dateFormatter = new DateFormatter(Context::getInstance());
+
+        return $dateFormatter;
     }
 
 }

@@ -85,7 +85,9 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSplitValidator()
     {
-        return new Validator();
+        $validator = new Validator();
+
+        return $validator;
     }
 
     /**
@@ -114,7 +116,9 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCalculator()
     {
-        return new Calculator();
+        $calculator = new Calculator();
+
+        return $calculator;
     }
 
 }

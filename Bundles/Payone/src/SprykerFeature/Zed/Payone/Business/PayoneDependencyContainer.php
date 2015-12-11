@@ -72,7 +72,9 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderManager()
     {
-        return new OrderManager($this->getConfig());
+        $orderManager = new OrderManager($this->getConfig());
+
+        return $orderManager;
     }
 
     /**
@@ -133,7 +135,9 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createKeyHashProvider()
     {
-        return new HashProvider();
+        $hashProvider = new HashProvider();
+
+        return $hashProvider;
     }
 
     /**
@@ -151,7 +155,9 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createModeDetector()
     {
-        return new ModeDetector($this->getConfig());
+        $modeDetector = new ModeDetector($this->getConfig());
+
+        return $modeDetector;
     }
 
     /**
@@ -199,7 +205,9 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createHashProvider()
     {
-        return new HashProvider();
+        $hashProvider = new HashProvider();
+
+        return $hashProvider;
     }
 
     /**
@@ -209,7 +217,9 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCreditCardPseudo($storeConfig)
     {
-        return new CreditCardPseudo($storeConfig);
+        $creditCardPseudo = new CreditCardPseudo($storeConfig);
+
+        return $creditCardPseudo;
     }
 
     /**
@@ -219,7 +229,9 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createInvoice($storeConfig)
     {
-        return new Invoice($storeConfig);
+        $invoice = new Invoice($storeConfig);
+
+        return $invoice;
     }
 
     /**
@@ -229,7 +241,9 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createOnlineBankTransfer($storeConfig)
     {
-        return new OnlineBankTransfer($storeConfig);
+        $onlineBankTransfer = new OnlineBankTransfer($storeConfig);
+
+        return $onlineBankTransfer;
     }
 
     /**
@@ -239,7 +253,9 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createEWallet($storeConfig)
     {
-        return new EWallet($storeConfig);
+        $EWallet = new EWallet($storeConfig);
+
+        return $EWallet;
     }
 
     /**
@@ -249,7 +265,9 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createPrepayment($storeConfig)
     {
-        return new Prepayment($storeConfig);
+        $prepayment = new Prepayment($storeConfig);
+
+        return $prepayment;
     }
 
 }

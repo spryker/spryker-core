@@ -85,7 +85,9 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSchemaMerger()
     {
-        return new PropelSchemaMerger();
+        $propelSchemaMerger = new PropelSchemaMerger();
+
+        return $propelSchemaMerger;
     }
 
     /**
@@ -121,7 +123,9 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createFilesystem()
     {
-        return new Filesystem();
+        $filesystem = new Filesystem();
+
+        return $filesystem;
     }
 
 }

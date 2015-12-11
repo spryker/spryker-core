@@ -24,12 +24,6 @@ class OneNewPerMethodSniffTest extends \PHPUnit_Framework_TestCase
         $sniffer = $this->getSniffer();
 
         $phpCsFixer = new \PHP_CodeSniffer();
-        $phpCsFile = new \PHP_CodeSniffer_File(
-            $this->getInValidTestFile(),
-            [$sniffer],
-            ['Spryker'],
-            $phpCsFixer
-        );
     }
 
     /**
