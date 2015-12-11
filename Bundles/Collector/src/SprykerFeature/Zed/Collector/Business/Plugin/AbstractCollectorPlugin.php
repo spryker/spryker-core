@@ -16,9 +16,9 @@ use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterS
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
+use SprykerFeature\Zed\Collector\Business\Model\CountableIteratorInterface;
 use SprykerFeature\Zed\Collector\CollectorConfig;
 use SprykerFeature\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery;
-use SprykerFeature\Zed\Distributor\Business\Distributor\BatchIteratorInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -61,7 +61,7 @@ abstract class AbstractCollectorPlugin
     abstract protected function collectResourceType();
 
     /**
-     * @return BatchIteratorInterface
+     * @return CountableIteratorInterface
      */
     abstract protected function generateBatchIterator();
 
