@@ -59,7 +59,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createComposerInstalledPackageFinder(InstalledPackagesTransfer $collection)
     {
-        return new InstalledPackageFinder(
+        return new ComposerInstalledPackageFinder(
             $collection,
             $this->getConfig()->getPathToComposerLock()
         );
