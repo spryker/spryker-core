@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Customer;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface CustomerConfig extends ConfigInterface
+interface CustomerConstants
 {
 
     const CUSTOMER_ANONYMOUS_PATTERN = 'CUSTOMER_ANONYMOUS_PATTERN';

@@ -10,7 +10,7 @@ use Elastica\Client;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface as KeyValueReadInterface;
 use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface as KeyValueReadWriteInterface;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 /**
  * Class StorageInstanceBuilder
@@ -46,9 +46,9 @@ class StorageInstanceBuilder
 
         if (array_key_exists($adapterName, self::$searchInstances) === false) {
             self::$searchInstances[$adapterName] = new Client([
-                'protocol' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__TRANSPORT),
-                'port' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__PORT),
-                'host' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__HOST),
+                'protocol' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT),
+                'port' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__PORT),
+                'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
             ]);
         }
 
@@ -89,7 +89,7 @@ class StorageInstanceBuilder
      */
     private static function getStorageInstance($type, $debug = false)
     {
-        $kvAdapter = Config::get(ApplicationConfig::STORAGE_KV_SOURCE);
+        $kvAdapter = Config::get(ApplicationConstants::STORAGE_KV_SOURCE);
 
         $storageAdapter = self::createStorageAdapterName($type, $kvAdapter);
 
@@ -115,15 +115,15 @@ class StorageInstanceBuilder
         switch ($kvAdapter) {
             case self::KV_ADAPTER_REDIS:
                 return [
-                    'protocol' => Config::get(ApplicationConfig::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-                    'port' => Config::get(ApplicationConfig::YVES_STORAGE_SESSION_REDIS_PORT),
-                    'host' => Config::get(ApplicationConfig::YVES_STORAGE_SESSION_REDIS_HOST),
+                    'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
+                    'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
+                    'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
                 ];
             case self::SEARCH_ELASTICA_ADAPTER:
                 return [
-                    'protocol' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__TRANSPORT),
-                    'port' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__PORT),
-                    'host' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__HOST),
+                    'protocol' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT),
+                    'port' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__PORT),
+                    'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
                 ];
         }
         throw new \ErrorException('Missing implementation for adapter ' . $kvAdapter);

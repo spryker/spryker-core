@@ -8,10 +8,10 @@ namespace SprykerFeature\Zed\Payone;
 
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use SprykerFeature\Shared\Payone\PayoneConfigConstants;
+use SprykerFeature\Shared\Payone\PayoneConstants;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
@@ -23,9 +23,9 @@ class PayoneConfig extends AbstractBundleConfig
      */
     public function getMode()
     {
-        $settings = $this->get(PayoneConfigConstants::PAYONE);
+        $settings = $this->get(PayoneConstants::PAYONE);
 
-        return $settings[PayoneConfigConstants::PAYONE_MODE];
+        return $settings[PayoneConstants::PAYONE_MODE];
     }
 
     /**
@@ -33,9 +33,9 @@ class PayoneConfig extends AbstractBundleConfig
      */
     public function getEmptySequenceNumber()
     {
-        $settings = $this->get(PayoneConfigConstants::PAYONE);
+        $settings = $this->get(PayoneConstants::PAYONE);
 
-        return $settings[PayoneConfigConstants::PAYONE_EMPTY_SEQUENCE_NUMBER];
+        return $settings[PayoneConstants::PAYONE_EMPTY_SEQUENCE_NUMBER];
     }
 
     /**
@@ -43,22 +43,22 @@ class PayoneConfig extends AbstractBundleConfig
      */
     public function getRequestStandardParameter()
     {
-        $settings = $this->get(PayoneConfigConstants::PAYONE);
+        $settings = $this->get(PayoneConstants::PAYONE);
         $standardParameter = new PayoneStandardParameterTransfer();
 
-        $standardParameter->setEncoding($settings[PayoneConfigConstants::PAYONE_CREDENTIALS_ENCODING]);
-        $standardParameter->setMid($settings[PayoneConfigConstants::PAYONE_CREDENTIALS_MID]);
-        $standardParameter->setAid($settings[PayoneConfigConstants::PAYONE_CREDENTIALS_AID]);
-        $standardParameter->setPortalId($settings[PayoneConfigConstants::PAYONE_CREDENTIALS_PORTAL_ID]);
-        $standardParameter->setKey($settings[PayoneConfigConstants::PAYONE_CREDENTIALS_KEY]);
-        $standardParameter->setPaymentGatewayUrl($settings[PayoneConfigConstants::PAYONE_PAYMENT_GATEWAY_URL]);
+        $standardParameter->setEncoding($settings[PayoneConstants::PAYONE_CREDENTIALS_ENCODING]);
+        $standardParameter->setMid($settings[PayoneConstants::PAYONE_CREDENTIALS_MID]);
+        $standardParameter->setAid($settings[PayoneConstants::PAYONE_CREDENTIALS_AID]);
+        $standardParameter->setPortalId($settings[PayoneConstants::PAYONE_CREDENTIALS_PORTAL_ID]);
+        $standardParameter->setKey($settings[PayoneConstants::PAYONE_CREDENTIALS_KEY]);
+        $standardParameter->setPaymentGatewayUrl($settings[PayoneConstants::PAYONE_PAYMENT_GATEWAY_URL]);
 
         $standardParameter->setCurrency(Store::getInstance()->getCurrencyIsoCode());
         $standardParameter->setLanguage(Store::getInstance()->getCurrentLanguage());
 
-        $standardParameter->setRedirectSuccessUrl($this->getYvesBaseUrl() . $settings[PayoneConfigConstants::PAYONE_REDIRECT_SUCCESS_URL]);
-        $standardParameter->setRedirectBackUrl($this->getYvesBaseUrl() . $settings[PayoneConfigConstants::PAYONE_REDIRECT_BACK_URL]);
-        $standardParameter->setRedirectErrorUrl($this->getYvesBaseUrl() . $settings[PayoneConfigConstants::PAYONE_REDIRECT_ERROR_URL]);
+        $standardParameter->setRedirectSuccessUrl($this->getYvesBaseUrl() . $settings[PayoneConstants::PAYONE_REDIRECT_SUCCESS_URL]);
+        $standardParameter->setRedirectBackUrl($this->getYvesBaseUrl() . $settings[PayoneConstants::PAYONE_REDIRECT_BACK_URL]);
+        $standardParameter->setRedirectErrorUrl($this->getYvesBaseUrl() . $settings[PayoneConstants::PAYONE_REDIRECT_ERROR_URL]);
 
         return $standardParameter;
     }
@@ -91,7 +91,7 @@ class PayoneConfig extends AbstractBundleConfig
      */
     protected function getYvesBaseUrl()
     {
-        return $this->get(ApplicationConfig::HOST_YVES);
+        return $this->get(ApplicationConstants::HOST_YVES);
     }
 
 }

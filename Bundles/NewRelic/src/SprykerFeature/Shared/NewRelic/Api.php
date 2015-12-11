@@ -321,7 +321,7 @@ class Api implements ApiInterface
     protected function createRecordDeploymentRequest(array $params)
     {
         $headers = [
-            'x-api-key' => Config::get(NewRelicConfig::NEWRELIC_API_KEY),
+            'x-api-key' => Config::get(NewRelicConstants::NEWRELIC_API_KEY),
         ];
 
         $data['deployment'] = [];

@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Auth;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface AuthConfig extends ConfigInterface
+interface AuthConstants
 {
 
     const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';

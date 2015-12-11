@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use SprykerFeature\Shared\Cms\CmsConfig;
+use SprykerFeature\Shared\Cms\CmsConstants;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
@@ -53,7 +53,7 @@ class GlossaryController extends AbstractController
     {
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
         $idForm = $request->get(self::ID_FORM);
-        $type = CmsConfig::RESOURCE_TYPE_PAGE;
+        $type = CmsConstants::RESOURCE_TYPE_PAGE;
 
         $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
         $cmsPage = $this->findCmsPageById($idPage);
@@ -62,7 +62,7 @@ class GlossaryController extends AbstractController
         if ($block === null) {
             $title = $cmsPage->getUrl();
         } else {
-            $type = CmsConfig::RESOURCE_TYPE_BLOCK;
+            $type = CmsConstants::RESOURCE_TYPE_BLOCK;
             $title = $block->getName();
         }
 

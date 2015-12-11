@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Customer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\SequenceNumber\SequenceNumberConstants;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerEngine\Shared\Kernel\Store;
 
 class CustomerConfig extends AbstractBundleConfig
@@ -24,7 +24,7 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->get(ApplicationConfig::HOST_YVES);
+        return $this->get(ApplicationConstants::HOST_YVES);
     }
 
     /**

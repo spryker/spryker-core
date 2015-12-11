@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Checkout\CheckoutConfig;
+use SprykerFeature\Shared\Checkout\CheckoutConstants;
 use SprykerFeature\Zed\AvailabilityCheckoutConnector\Communication\AvailabilityCheckoutConnectorDependencyContainer;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
@@ -46,7 +46,7 @@ class ProductsAvailablePreConditionPlugin extends AbstractPlugin implements Chec
             if (!$this->isProductSellable($sku, $quantity)) {
                 $error = new CheckoutErrorTransfer();
                 $error
-                    ->setErrorCode(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE)
+                    ->setErrorCode(CheckoutConstants::ERROR_CODE_PRODUCT_UNAVAILABLE)
                     ->setMessage('product.unavailable');
 
                 $checkoutResponse

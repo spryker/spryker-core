@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Propel;
-use SprykerFeature\Shared\Checkout\CheckoutConfig;
+use SprykerFeature\Shared\Checkout\CheckoutConstants;
 use SprykerFeature\Shared\Library\Error\ErrorHandler;
 use SprykerFeature\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
@@ -265,7 +265,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
         $error
             ->setMessage($exception->getMessage())
-            ->setErrorCode(CheckoutConfig::ERROR_CODE_UNKNOWN_ERROR)
+            ->setErrorCode(CheckoutConstants::ERROR_CODE_UNKNOWN_ERROR)
             ->setType(get_class($exception))
             ->setTrace($exception->getTraceAsString());
 

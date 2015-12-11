@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Application;
 
 use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Application\ApplicationConfig as SharedApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 class ApplicationConfig extends AbstractBundleConfig
 {
@@ -78,7 +78,7 @@ class ApplicationConfig extends AbstractBundleConfig
      */
     public function isNavigationCacheEnabled()
     {
-        return $this->get(SharedApplicationConfig::NAVIGATION_CACHE_ENABLED);
+        return $this->get(ApplicationConstants::NAVIGATION_CACHE_ENABLED);
     }
 
 }

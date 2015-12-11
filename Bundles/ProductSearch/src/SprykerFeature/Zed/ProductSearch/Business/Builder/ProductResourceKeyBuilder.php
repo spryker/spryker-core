@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\ProductSearch\Business\Builder;
 
 use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
-use SprykerFeature\Shared\Product\ProductConfig;
+use SprykerFeature\Shared\Product\ProductConstants;
 
 class ProductResourceKeyBuilder extends SharedResourceKeyBuilder
 {
@@ -17,7 +17,7 @@ class ProductResourceKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return ProductConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT;
+        return ProductConstants::RESOURCE_TYPE_ABSTRACT_PRODUCT;
     }
 
 }

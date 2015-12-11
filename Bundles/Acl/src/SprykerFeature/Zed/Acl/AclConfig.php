@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Acl;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Acl\AclConfig as AclSharedConfig;
+use SprykerFeature\Shared\Acl\AclConstants;
 use SprykerFeature\Shared\Library\Config;
 
 class AclConfig extends AbstractBundleConfig
@@ -39,7 +39,7 @@ class AclConfig extends AbstractBundleConfig
      */
     public function getRules()
     {
-        $default = Config::get(AclSharedConfig::ACL_DEFAULT_RULES);
+        $default = Config::get(AclConstants::ACL_DEFAULT_RULES);
 
         return array_merge($default, $this->rules);
     }
@@ -67,7 +67,7 @@ class AclConfig extends AbstractBundleConfig
      */
     public function getCredentials()
     {
-        return Config::get(AclSharedConfig::ACL_DEFAULT_CREDENTIALS);
+        return Config::get(AclConstants::ACL_DEFAULT_CREDENTIALS);
     }
 
     /**
@@ -136,8 +136,8 @@ class AclConfig extends AbstractBundleConfig
      */
     public function getUserRuleWhitelist()
     {
-        if (Config::hasValue(AclSharedConfig::ACL_USER_RULE_WHITELIST)) {
-            return Config::get(AclSharedConfig::ACL_USER_RULE_WHITELIST);
+        if (Config::hasValue(AclConstants::ACL_USER_RULE_WHITELIST)) {
+            return Config::get(AclConstants::ACL_USER_RULE_WHITELIST);
         }
 
         return [];

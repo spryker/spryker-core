@@ -14,7 +14,7 @@ use Silex\ServiceProviderInterface;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Propel\Communication\PropelDependencyContainer;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 /**
  * @method PropelDependencyContainer getDependencyContainer()
@@ -45,13 +45,13 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $manager->setName('zed');
 
         $serviceContainer = $this->getServiceContainer();
-        $serviceContainer->setAdapterClass('zed', Config::get(ApplicationConfig::ZED_DB_ENGINE));
+        $serviceContainer->setAdapterClass('zed', Config::get(ApplicationConstants::ZED_DB_ENGINE));
         $serviceContainer->setConnectionManager('zed', $manager);
         $serviceContainer->setDefaultDatasource('zed');
 
         $this->addLogger($serviceContainer);
 
-        if (Config::get(ApplicationConfig::PROPEL_DEBUG) && $this->hasConnection()) {
+        if (Config::get(ApplicationConstants::PROPEL_DEBUG) && $this->hasConnection()) {
             $connection = Propel::getConnection();
             $connection->useDebug(true);
         }
@@ -91,10 +91,10 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     private function getConfig()
     {
-        $propelConfig = Config::get(ApplicationConfig::PROPEL)['database']['connections']['default'];
-        $propelConfig['user'] = Config::get(ApplicationConfig::ZED_DB_USERNAME);
-        $propelConfig['password'] = Config::get(ApplicationConfig::ZED_DB_PASSWORD);
-        $propelConfig['dsn'] = Config::get(ApplicationConfig::PROPEL)['database']['connections']['default']['dsn'];
+        $propelConfig = Config::get(ApplicationConstants::PROPEL)['database']['connections']['default'];
+        $propelConfig['user'] = Config::get(ApplicationConstants::ZED_DB_USERNAME);
+        $propelConfig['password'] = Config::get(ApplicationConstants::ZED_DB_PASSWORD);
+        $propelConfig['dsn'] = Config::get(ApplicationConstants::PROPEL)['database']['connections']['default']['dsn'];
 
         return $propelConfig;
     }

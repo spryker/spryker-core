@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Product;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\Library\DataDirectory;
-use SprykerFeature\Shared\Product\ProductConfig as SharedProductConfig;
+use SprykerFeature\Shared\Product\ProductConstants;
 
 class ProductConfig extends AbstractBundleConfig
 {
@@ -26,7 +26,7 @@ class ProductConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->get(SharedProductConfig::RESOURCE_TYPE_HOST_YVES);
+        return $this->get(ProductConstants::RESOURCE_TYPE_HOST_YVES);
     }
 
 }

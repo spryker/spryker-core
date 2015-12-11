@@ -11,8 +11,8 @@ use Silex\ServiceProviderInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Client\Session\Service\SessionClientInterface;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Session\SessionConfig;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Session\SessionConstants;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerFeature\Zed\Session\Business\Model\SessionFactory;
 
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -40,11 +40,11 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     public function register(Application $app)
     {
-        $app['session.test'] = Config::get(SessionConfig::SESSION_IS_TEST, false);
+        $app['session.test'] = Config::get(SessionConstants::SESSION_IS_TEST, false);
 
         $app['session.storage.options'] = [
-            'cookie_lifetime' => Config::get(ApplicationConfig::ZED_STORAGE_SESSION_TIME_TO_LIVE),
-            'name' => Config::get(ApplicationConfig::ZED_STORAGE_SESSION_COOKIE_NAME),
+            'cookie_lifetime' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_TIME_TO_LIVE),
+            'name' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_COOKIE_NAME),
         ];
 
         $this->client->setContainer($app['session']);
@@ -61,29 +61,29 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             return;
         }
 
-        $saveHandler = Config::get(ApplicationConfig::ZED_SESSION_SAVE_HANDLER);
+        $saveHandler = Config::get(ApplicationConstants::ZED_SESSION_SAVE_HANDLER);
         $savePath = $this->getSavePath($saveHandler);
 
         $sessionHelper = new SessionFactory();
 
         switch ($saveHandler) {
-            case SessionConfig::SESSION_HANDLER_COUCHBASE:
+            case SessionConstants::SESSION_HANDLER_COUCHBASE:
                 $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
 
                 $sessionHelper->registerCouchbaseSessionHandler($savePath);
                 break;
 
-            case SessionConfig::SESSION_HANDLER_MYSQL:
+            case SessionConstants::SESSION_HANDLER_MYSQL:
                 $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
                 $sessionHelper->registerMysqlSessionHandler($savePath);
                 break;
 
-            case SessionConfig::SESSION_HANDLER_REDIS:
+            case SessionConstants::SESSION_HANDLER_REDIS:
                 $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
                 $sessionHelper->registerRedisSessionHandler($savePath);
                 break;
 
-            case SessionConfig::SESSION_HANDLER_FILE:
+            case SessionConstants::SESSION_HANDLER_FILE:
                 $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
                 $sessionHelper->registerFileSessionHandler($savePath);
                 break;
@@ -111,14 +111,14 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     {
         $path = null;
 
-        if (SessionConfig::SESSION_HANDLER_REDIS === $saveHandler) {
-            $path = Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_PROTOCOL)
-                . '://' . Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_HOST)
-                . ':' . Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_PORT);
+        if (SessionConstants::SESSION_HANDLER_REDIS === $saveHandler) {
+            $path = Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL)
+                . '://' . Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST)
+                . ':' . Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT);
         }
 
-        if (SessionConfig::SESSION_HANDLER_FILE === $saveHandler) {
-            $path = Config::get(ApplicationConfig::ZED_STORAGE_SESSION_FILE_PATH);
+        if (SessionConstants::SESSION_HANDLER_FILE === $saveHandler) {
+            $path = Config::get(ApplicationConstants::ZED_STORAGE_SESSION_FILE_PATH);
         }
 
         return $path;

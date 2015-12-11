@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Session;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface SessionConfig extends ConfigInterface
+interface SessionConstants
 {
 
     const SESSION_HANDLER_COUCHBASE = 'couchbase';

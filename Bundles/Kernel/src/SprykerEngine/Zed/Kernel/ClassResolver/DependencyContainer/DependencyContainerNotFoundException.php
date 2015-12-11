@@ -8,7 +8,7 @@ namespace SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer;
 
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\ClassResolver\ClassInfo;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 class DependencyContainerNotFoundException extends \Exception
 {
@@ -39,7 +39,7 @@ class DependencyContainerNotFoundException extends \Exception
 
         $message .= sprintf(
             'E.g. %s\\Zed\\%2$s\\%s\\%2$sDependencyContainer',
-            Config::getInstance()->get(ApplicationConfig::PROJECT_NAMESPACE),
+            Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle(),
             $callerClassInfo->getLayer()
         );

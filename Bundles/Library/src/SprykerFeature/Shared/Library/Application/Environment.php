@@ -8,7 +8,7 @@ namespace SprykerFeature\Shared\Library\Application;
 
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerFeature\Shared\Library\Autoloader;
 use SprykerFeature\Shared\Library\Error\ErrorHandler;
 use SprykerFeature\Shared\Library\TestAutoloader;
@@ -83,13 +83,13 @@ class Environment
         Autoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
         TestAutoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
 
-        $coreNamespaces = Config::get(ApplicationConfig::CORE_NAMESPACES);
+        $coreNamespaces = Config::get(ApplicationConstants::CORE_NAMESPACES);
 
         foreach ($coreNamespaces as $namespace) {
             Autoloader::allowNamespace($namespace);
         }
 
-        ini_set('display_errors', Config::get(ApplicationConfig::DISPLAY_ERRORS, false));
+        ini_set('display_errors', Config::get(ApplicationConstants::DISPLAY_ERRORS, false));
 
         $store = Store::getInstance();
         $locale = current($store->getLocales());

@@ -2,9 +2,7 @@
 
 namespace SprykerFeature\Shared\Checkout;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-class CheckoutConfig implements ConfigInterface
+class CheckoutConstants
 {
 
     const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;

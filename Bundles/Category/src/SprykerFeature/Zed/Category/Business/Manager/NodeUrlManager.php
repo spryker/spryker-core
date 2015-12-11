@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Category\Business\Manager;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use SprykerFeature\Shared\Category\CategoryConfig;
+use SprykerFeature\Shared\Category\CategoryConstants;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
@@ -60,7 +60,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $categoryUrl = $this->generateUrlFromPathTokens($path);
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        $urlTransfer = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
+        $urlTransfer = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
         $this->updateTransferUrl($urlTransfer, $categoryUrl, $idNode, $localeTransfer->getIdLocale());
         $this->urlFacade->saveUrlAndTouch($urlTransfer);
     }
@@ -123,7 +123,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
      */
     protected function updateTransferUrl(UrlTransfer $urlTransfer, $url, $idResource=null, $idLocale=null)
     {
-        $urlTransfer->setResourceType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
+        $urlTransfer->setResourceType(CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE);
 
         if ($idResource !== null) {
             $urlTransfer->setResourceId($idResource);

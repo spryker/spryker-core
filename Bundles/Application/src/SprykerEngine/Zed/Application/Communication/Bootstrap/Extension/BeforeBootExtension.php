@@ -10,7 +10,7 @@ use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\BeforeBoo
 use SprykerEngine\Shared\Application\Communication\Application;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerFeature\Shared\Library\DataDirectory;
 
 class BeforeBootExtension implements BeforeBootExtensionInterface
@@ -25,7 +25,7 @@ class BeforeBootExtension implements BeforeBootExtensionInterface
     {
         $app['locale'] = Store::getInstance()->getCurrentLocale();
 
-        if (Config::get(ApplicationConfig::ENABLE_WEB_PROFILER, false)) {
+        if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {
             $app['profiler.cache_dir'] = DataDirectory::getLocalStoreSpecificPath('cache/profiler');
         }
     }

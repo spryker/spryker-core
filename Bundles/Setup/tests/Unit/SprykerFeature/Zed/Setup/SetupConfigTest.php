@@ -15,7 +15,7 @@ use SprykerFeature\Zed\Setup\SetupConfig;
  * @group Zed
  * @group Setup
  * @group Business
- * @group SetupConfig
+ * @group SetupConstants
  */
 class SetupConfigTest extends \PHPUnit_Framework_TestCase
 {

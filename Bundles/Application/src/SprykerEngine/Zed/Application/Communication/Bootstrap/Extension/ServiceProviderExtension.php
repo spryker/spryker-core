@@ -30,7 +30,7 @@ use Silex\Provider\WebProfilerServiceProvider;
 use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface;
 use SprykerEngine\Shared\Application\Communication\Application;
 use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
 
 class ServiceProviderExtension extends LocatorAwareExtension implements ServiceProviderExtensionInterface
@@ -65,7 +65,7 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
             new HttpFragmentServiceProvider(),
         ];
 
-        if (Config::get(ApplicationConfig::ENABLE_WEB_PROFILER, false)) {
+        if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {
             $providers[] = new WebProfilerServiceProvider();
         }
 

@@ -17,7 +17,7 @@ use SprykerFeature\Zed\Heartbeat\Business\Assistant\SearchHealthIndicator;
 use SprykerFeature\Zed\Heartbeat\Business\Assistant\SessionHealthIndicator;
 use SprykerFeature\Zed\Heartbeat\Business\Assistant\StorageHealthIndicator;
 use SprykerFeature\Zed\Heartbeat\HeartbeatConfig;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 /**
  * @method HeartbeatConfig getConfig()
@@ -61,9 +61,9 @@ class HeartbeatDependencyContainer extends AbstractBusinessDependencyContainer
     protected function createElasticaClient()
     {
         $client = new ElasticaClient([
-            'protocol' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__TRANSPORT),
-            'port' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__PORT),
-            'host' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__HOST),
+            'protocol' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT),
+            'port' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__PORT),
+            'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
         ]);
 
         return $client;
@@ -95,9 +95,9 @@ class HeartbeatDependencyContainer extends AbstractBusinessDependencyContainer
     protected function createPredisClient()
     {
         $config = [
-            'protocol' => Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
-            'port' => Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_PORT),
-            'host' => Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_HOST),
+            'protocol' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
+            'port' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_PORT),
+            'host' => Config::get(ApplicationConstants::ZED_STORAGE_SESSION_REDIS_HOST),
         ];
         $client = new PredisClient($config);
 

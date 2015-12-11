@@ -9,7 +9,7 @@ namespace SprykerFeature\Shared\Search\Provider;
 use Elastica\Index;
 use Elastica\Client;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 use SprykerEngine\Shared\Kernel\AbstractClientProvider;
 
 /**
@@ -28,10 +28,10 @@ abstract class AbstractIndexClientProvider extends AbstractClientProvider
     protected function createClient()
     {
         return (new Client([
-            'protocol' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__TRANSPORT),
-            'port' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__PORT),
-            'host' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__HOST),
-        ]))->getIndex(Config::get(ApplicationConfig::ELASTICA_PARAMETER__INDEX_NAME));
+            'protocol' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT),
+            'port' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__PORT),
+            'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
+        ]))->getIndex(Config::get(ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME));
     }
 
 }

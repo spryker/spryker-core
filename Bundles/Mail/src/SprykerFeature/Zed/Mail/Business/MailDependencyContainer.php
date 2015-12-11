@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Mail\Business;
 
 use SprykerFeature\Shared\Library\Config;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Shared\Mail\MailConfig;
+use SprykerFeature\Shared\Mail\MailConstants;
 
 class MailDependencyContainer extends AbstractBusinessDependencyContainer
 {
@@ -49,7 +49,7 @@ class MailDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function getAPIKey()
     {
-        return Config::get(MailConfig::MAIL_PROVIDER_MANDRILL)['api-key'];
+        return Config::get(MailConstants::MAIL_PROVIDER_MANDRILL)['api-key'];
     }
 
 }

@@ -7,7 +7,7 @@
 namespace SprykerEngine\Shared\Lumberjack\Model;
 
 use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\Lumberjack\LumberjackConfig;
+use SprykerEngine\Shared\Lumberjack\LumberjackConstants;
 use SprykerEngine\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
 use SprykerEngine\Shared\Lumberjack\Model\Writer\WriterInterface;
 
@@ -35,8 +35,8 @@ abstract class AbstractEventJournal implements EventJournalInterface
      */
     protected function addConfiguredCollectors()
     {
-        $collectors = Config::get(LumberjackConfig::COLLECTORS);
-        $collectorOptions = Config::get(LumberjackConfig::COLLECTOR_OPTIONS);
+        $collectors = Config::get(LumberjackConstants::COLLECTORS);
+        $collectorOptions = Config::get(LumberjackConstants::COLLECTOR_OPTIONS);
         foreach ($collectors[APPLICATION] as $collector) {
             $collectorConfig = isset($collectorOptions[$collector]) ? $collectorOptions[$collector] : [];
             $this->addOrReplaceDataCollector(new $collector($collectorConfig));
@@ -48,8 +48,8 @@ abstract class AbstractEventJournal implements EventJournalInterface
      */
     protected function addConfiguredWriters()
     {
-        $writers = Config::get(LumberjackConfig::WRITERS);
-        $writerOptions = Config::get(LumberjackConfig::WRITER_OPTIONS);
+        $writers = Config::get(LumberjackConstants::WRITERS);
+        $writerOptions = Config::get(LumberjackConstants::WRITER_OPTIONS);
         foreach ($writers[APPLICATION] as $writer) {
             $writerConfig = isset($writerOptions[$writer]) ? $writerOptions[$writer] : [];
             $this->addOrReplaceEventWriter(new $writer($writerConfig));

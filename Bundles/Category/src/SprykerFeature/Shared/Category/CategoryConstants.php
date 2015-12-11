@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Category;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface CategoryConfig extends ConfigInterface
+interface CategoryConstants
 {
 
     const RESOURCE_TYPE_CATEGORY_NODE = 'categorynode';

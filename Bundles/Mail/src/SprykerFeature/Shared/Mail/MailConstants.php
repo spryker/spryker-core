@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Shared\Mail;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-
-interface MailConfig extends ConfigInterface
+interface MailConstants
 {
 
     const MAILCATCHER_GUI = 'MAILCATCHER_GUI';

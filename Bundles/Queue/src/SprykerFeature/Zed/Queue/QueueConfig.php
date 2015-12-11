@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Queue;
 
 use Generated\Shared\Transfer\AmqpParameterTransfer;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 class QueueConfig extends AbstractBundleConfig
 {
@@ -16,11 +16,11 @@ class QueueConfig extends AbstractBundleConfig
     {
         $amqpParameter = new AmqpParameterTransfer();
 
-        $amqpParameter->setHost($this->get(ApplicationConfig::ZED_RABBITMQ_HOST));
-        $amqpParameter->setVhost($this->get(ApplicationConfig::ZED_RABBITMQ_VHOST));
-        $amqpParameter->setUser($this->get(ApplicationConfig::ZED_RABBITMQ_USERNAME));
-        $amqpParameter->setPassword($this->get(ApplicationConfig::ZED_RABBITMQ_PASSWORD));
-        $amqpParameter->setPort($this->get(ApplicationConfig::ZED_RABBITMQ_PORT));
+        $amqpParameter->setHost($this->get(ApplicationConstants::ZED_RABBITMQ_HOST));
+        $amqpParameter->setVhost($this->get(ApplicationConstants::ZED_RABBITMQ_VHOST));
+        $amqpParameter->setUser($this->get(ApplicationConstants::ZED_RABBITMQ_USERNAME));
+        $amqpParameter->setPassword($this->get(ApplicationConstants::ZED_RABBITMQ_PASSWORD));
+        $amqpParameter->setPort($this->get(ApplicationConstants::ZED_RABBITMQ_PORT));
 
         return $amqpParameter;
     }

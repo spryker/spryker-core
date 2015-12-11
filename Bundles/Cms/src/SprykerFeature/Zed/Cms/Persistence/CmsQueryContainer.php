@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Cms\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Shared\Cms\CmsConfig;
+use SprykerFeature\Shared\Cms\CmsConstants;
 use Orm\Zed\Category\Persistence\Base\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
@@ -453,7 +453,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryBlockByIdCategoryNode($idCategoryNode)
     {
         return $this->queryBlocks()
-            ->filterByType(CmsConfig::RESOURCE_TYPE_CATEGORY_NODE)
+            ->filterByType(CmsConstants::RESOURCE_TYPE_CATEGORY_NODE)
             ->filterByValue($idCategoryNode);
     }
 
