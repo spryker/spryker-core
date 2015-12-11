@@ -19,8 +19,6 @@ class CheckoutDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCheckoutWorkflow()
     {
-        $foo = new Date();
-        $bar = new DateTime();
         return new CheckoutWorkflow(
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRE_HYDRATOR),
