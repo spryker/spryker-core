@@ -30,7 +30,8 @@ class OneNewPerMethodSniff implements \PHP_CodeSniffer_Sniff
         if ($this->isDependencyContainer($phpCsFile) && $this->hasMoreThenOneNewInMethod($phpCsFile, $stackPointer)) {
             $classMethod = $this->getClassMethod($phpCsFile, $stackPointer);
             $phpCsFile->addError(
-                $classMethod . ' contains more then one new. Fix this by extract a method.', $stackPointer
+                $classMethod . ' contains more then one new. Fix this by extract a method.',
+                $stackPointer
             );
         }
     }
