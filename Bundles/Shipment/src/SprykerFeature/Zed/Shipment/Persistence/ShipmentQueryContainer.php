@@ -26,7 +26,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
      */
     public function queryActiveCarriers()
     {
-        return $this->queryCarriers()->findByIsActive(true);
+        return $this->queryCarriers()->filterByIsActive(true);
     }
 
     /**
