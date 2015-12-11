@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Application\Plugin\ServiceProvider;
+namespace SprykerEngine\Yves\Application\Plugin\Provider;
 
 use SprykerEngine\Yves\Application\ApplicationDependencyContainer;
 use SprykerEngine\Yves\Kernel\AbstractPlugin;
