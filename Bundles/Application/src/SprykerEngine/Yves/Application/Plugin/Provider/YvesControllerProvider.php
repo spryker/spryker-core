@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Application\Plugin;
+namespace SprykerEngine\Yves\Application\Plugin\Provider;
 
 use SprykerFeature\Shared\Application\Communication\ControllerServiceBuilder;
 use SprykerEngine\Yves\Kernel\BundleControllerAction;
