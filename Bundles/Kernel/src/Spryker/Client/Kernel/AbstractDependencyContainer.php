@@ -14,44 +14,16 @@ abstract class AbstractDependencyContainer implements DependencyContainerInterfa
 {
 
     /**
-     * @var Factory
-     */
-    private $factory;
-
-    /**
-     * @var AutoCompletion|LocatorLocatorInterface
-     */
-    private $locator;
-
-    /**
      * @var Container
      */
     private $container;
-
-    /**
-     * @param Factory $factory
-     * @param LocatorLocatorInterface $locator
-     */
-    public function __construct(Factory $factory, LocatorLocatorInterface $locator)
-    {
-        $this->factory = $factory;
-        $this->locator = $locator;
-    }
-
-    /**
-     * @return Factory
-     */
-    protected function getFactory()
-    {
-        return $this->factory;
-    }
 
     /**
      * @return AutoCompletion|LocatorLocatorInterface
      */
     protected function getLocator()
     {
-        return $this->locator;
+        return Locator::getInstance();
     }
 
     /**
@@ -113,6 +85,7 @@ abstract class AbstractDependencyContainer implements DependencyContainerInterfa
 
     /**
      * @throws \ErrorException
+     *
      * @return void
      */
     protected function validateContainerExists()
@@ -126,6 +99,7 @@ abstract class AbstractDependencyContainer implements DependencyContainerInterfa
      * @param $key
      *
      * @throws \ErrorException
+     *
      * @return void
      */
     protected function validateKeyExists($key)

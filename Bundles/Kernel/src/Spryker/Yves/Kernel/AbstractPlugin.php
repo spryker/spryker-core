@@ -7,15 +7,14 @@
 namespace Spryker\Yves\Kernel;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\Kernel\Locator\LocatorInterface;
+use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
+use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
+use Spryker\Yves\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
 use Spryker\Yves\Kernel\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
 
 abstract class AbstractPlugin
 {
-
-    const DEPENDENCY_CONTAINER = 'DependencyContainer';
-
-    const CLASS_PART_BUNDLE = 2;
 
     /**
      * @var DependencyContainerInterface
@@ -33,12 +32,28 @@ abstract class AbstractPlugin
     protected function getDependencyContainer()
     {
         if ($this->dependencyContainer === null) {
-            $factory = new Factory($this->getBundleName());
-
-            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $this->getLocator());
+            $this->dependencyContainer = $this->resolveDependencyContainer();
         }
 
         return $this->dependencyContainer;
+    }
+
+    /**
+     * @throws DependencyContainerNotFoundException
+     *
+     * @return AbstractDependencyContainer
+     */
+    private function resolveDependencyContainer()
+    {
+        return $this->getDependencyContainerResolver()->resolve($this);
+    }
+
+    /**
+     * @return DependencyContainerResolver
+     */
+    protected function getDependencyContainerResolver()
+    {
+        return new DependencyContainerResolver();
     }
 
     /**
@@ -47,31 +62,28 @@ abstract class AbstractPlugin
     protected function getClient()
     {
         if ($this->client === null) {
-            $bundleName = lcfirst($this->getBundleName());
-            $this->client = $this->getLocator()->$bundleName()->client();
+            $this->client = $this->resolveClient();
         }
 
         return $this->client;
     }
 
     /**
-     * @return string
+     * @throws ClientNotFoundException
+     *
+     * @return AbstractClient
      */
-    protected function getBundleName()
+    private function resolveClient()
     {
-        $className = get_class($this);
-        $classParts = explode('\\', $className);
-        $bundle = $classParts[self::CLASS_PART_BUNDLE];
-
-        return $bundle;
+        return $this->getClientResolver()->resolve($this);
     }
 
     /**
-     * @return LocatorInterface
+     * @return ClientResolver
      */
-    private function getLocator()
+    protected function getClientResolver()
     {
-        return Locator::getInstance();
+        return new ClientResolver();
     }
 
 }

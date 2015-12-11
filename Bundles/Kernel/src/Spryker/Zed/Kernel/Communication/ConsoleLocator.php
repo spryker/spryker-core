@@ -9,8 +9,6 @@ namespace Spryker\Zed\Kernel\Communication;
 use Spryker\Shared\Kernel\AbstractLocator;
 use Spryker\Shared\Kernel\Locator\LocatorException;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Zed\Kernel\BundleDependencyProviderLocator;
-use Spryker\Zed\Kernel\Container;
 
 class ConsoleLocator extends AbstractLocator
 {
@@ -52,13 +50,6 @@ class ConsoleLocator extends AbstractLocator
         $resolvedConsole = $factory->create('Console' . $className);
 
         $bundleName = lcfirst($bundle);
-
-        $bundleConfigLocator = new BundleDependencyProviderLocator(); // @todo Make singleton because of performance
-        $bundleBuilder = $bundleConfigLocator->locate($bundle, $locator);
-
-        $container = new Container();
-        $bundleBuilder->provideCommunicationLayerDependencies($container);
-        $resolvedConsole->setExternalDependencies($container);
 
         // @todo make lazy
         if ($locator->$bundleName()->hasFacade()) {

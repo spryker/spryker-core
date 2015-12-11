@@ -9,11 +9,13 @@ namespace Spryker\Yves\Application\Controller;
 use Generated\Yves\Ide\AutoCompletion;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Gui\Form\AbstractForm;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Shared\Messenger\Business\Model\MessengerInterface;
 use Spryker\Yves\Application\Application;
-use Spryker\Yves\Kernel\Factory;
-use Spryker\Zed\Kernel\AbstractDependencyContainer;
+use Spryker\Yves\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
+use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
+use Spryker\Yves\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
+use Spryker\Yves\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use Spryker\Yves\Kernel\Locator;
 use Spryker\Yves\Library\Session\TransferSession;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,18 +30,6 @@ abstract class AbstractController
     const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
     const FLASH_MESSAGES_ERROR= 'flash.messages.error';
     const FLASH_MESSAGES_INFO = 'flash.messages.info';
-
-    const DEPENDENCY_CONTAINER = 'DependencyContainer';
-
-    /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
-     * @var Factory
-     */
-    protected $factory;
 
     /**
      * @var Application
@@ -63,27 +53,11 @@ abstract class AbstractController
 
     /**
      * @param Application $app
-     * @param Factory $factory
-     * @param LocatorLocatorInterface $locator
      */
-    public function __construct(Application $app, Factory $factory, LocatorLocatorInterface $locator)
+    public function __construct(Application $app)
     {
         $this->app = $app;
-        $this->locator = $locator;
-        $this->factory = $factory;
         $this->flashBag = $app['request']->getSession()->getFlashBag();
-
-        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
-            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
-        }
-    }
-
-    /**
-     * @return Factory
-     */
-    public function getFactory()
-    {
-        return $this->factory;
     }
 
     /**
@@ -355,7 +329,7 @@ abstract class AbstractController
      */
     protected function getLocator()
     {
-        return $this->locator;
+        return Locator::getInstance();
     }
 
     /**
@@ -364,12 +338,28 @@ abstract class AbstractController
     protected function getClient()
     {
         if ($this->client === null) {
-            $bundleName = lcfirst($this->factory->getBundle());
-
-            $this->client = $this->locator->$bundleName()->client();
+            $this->client = $this->resolveClient();
         }
 
         return $this->client;
+    }
+
+    /**
+     * @throws ClientNotFoundException
+     *
+     * @return AbstractClient
+     */
+    private function resolveClient()
+    {
+        return $this->getClientResolver()->resolve($this);
+    }
+
+    /**
+     * @return ClientResolver
+     */
+    protected function getClientResolver()
+    {
+        return new ClientResolver();
     }
 
     /**
@@ -377,31 +367,29 @@ abstract class AbstractController
      */
     protected function getDependencyContainer()
     {
+        if ($this->dependencyContainer === null) {
+            $this->dependencyContainer = $this->resolveDependencyContainer();
+        }
+
         return $this->dependencyContainer;
     }
 
     /**
-     * @return MessengerInterface
+     * @throws DependencyContainerNotFoundException
+     *
+     * @return AbstractDependencyContainer
      */
-    private function getMessenger()
+    private function resolveDependencyContainer()
     {
-        return;
-        //return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
+        return $this->getDependencyContainerResolver()->resolve($this);
     }
 
     /**
-     * @throws \LogicException
-     *
-     * @return \Twig_Environment
+     * @return DependencyContainerResolver
      */
-    private function getTwig()
+    protected function getDependencyContainerResolver()
     {
-        $twig = $this->getApplication()['twig'];
-        if ($twig === null) {
-            throw new \LogicException('Twig environment not set up.');
-        }
-
-        return $twig;
+        return new DependencyContainerResolver();
     }
 
 }

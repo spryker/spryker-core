@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 class DependencyContainerResolver extends AbstractClassResolver
 {
 
-    const CLASS_NAME_PATTERN = '\\%1$s\\%2$s\\%3$s%5$s\\%4$s\\%3$sDependencyContainer';
+    const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%4$s\\%3$s\\%2$sDependencyContainer';
 
     /**
      * @param object|string $callerClass
@@ -39,7 +39,6 @@ class DependencyContainerResolver extends AbstractClassResolver
         return sprintf(
             self::CLASS_NAME_PATTERN,
             self::KEY_NAMESPACE,
-            self::KEY_APPLICATION,
             self::KEY_BUNDLE,
             self::KEY_LAYER,
             self::KEY_STORE

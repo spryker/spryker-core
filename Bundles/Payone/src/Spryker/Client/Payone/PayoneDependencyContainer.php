@@ -8,7 +8,11 @@ namespace Spryker\Client\Payone;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Payone\ClientApi\Call\CreditCardCheck;
+use Spryker\Client\Payone\ClientApi\HashGenerator;
 use Spryker\Client\Payone\ClientApi\HashGeneratorInterface;
+use Spryker\Client\Payone\ClientApi\HashProvider;
+use Spryker\Client\Payone\ClientApi\Mode\ModeDetector;
 use Spryker\Shared\Payone\Dependency\HashInterface;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 
@@ -22,7 +26,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
      */
     public function createCreditCardCheckCall(array $defaults)
     {
-        return $this->getFactory()->createClientApiCallCreditCardCheck(
+        return new CreditCardCheck(
             $this->createStandardParameter($defaults),
             $this->createHashGenerator(),
             $this->createModeDetector()
@@ -34,7 +38,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
      */
     protected function createHashProvider()
     {
-        return $this->getFactory()->createClientApiHashProvider();
+        return new HashProvider();
     }
 
     /**
@@ -42,7 +46,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
      */
     protected function createModeDetector()
     {
-        return $this->getFactory()->createClientApiModeModeDetector();
+        return new ModeDetector();
     }
 
     /**
@@ -50,7 +54,7 @@ class PayoneDependencyContainer extends AbstractDependencyContainer
      */
     protected function createHashGenerator()
     {
-        return $this->getFactory()->createClientApiHashGenerator(
+        return new HashGenerator(
             $this->createHashProvider()
         );
     }

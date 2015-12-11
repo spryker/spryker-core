@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Kernel\ClassResolver;
+namespace Spryker\Client\Kernel\ClassResolver;
 
 use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver as SharedAbstractClassResolver;
 
@@ -12,9 +12,7 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
 {
 
     const KEY_NAMESPACE = '%namespace%';
-    const KEY_APPLICATION = '%application%';
     const KEY_BUNDLE = '%bundle%';
-    const KEY_LAYER = '%layer%';
     const KEY_STORE = '%store%';
 
     /**
@@ -54,7 +52,6 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
             self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
-            self::KEY_LAYER => $this->getClassInfo()->getLayer(),
             self::KEY_STORE => $store,
         ];
 

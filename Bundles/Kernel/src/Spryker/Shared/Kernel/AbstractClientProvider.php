@@ -12,11 +12,6 @@ abstract class AbstractClientProvider
 {
 
     /**
-     * @var FactoryInterface
-     */
-    protected $factory;
-
-    /**
      * @var LocatorLocatorInterface
      */
     protected $locator;
@@ -41,12 +36,10 @@ abstract class AbstractClientProvider
     }
 
     /**
-     * @param FactoryInterface $factory
      * @param LocatorLocatorInterface $locator
      */
-    public function __construct(FactoryInterface $factory, LocatorLocatorInterface $locator)
+    public function __construct(LocatorLocatorInterface $locator)
     {
-        $this->factory = $factory;
         $this->locator = $locator;
     }
 

@@ -6,8 +6,10 @@
 
 namespace Spryker\Shared\ZedRequest\Provider;
 
-use Spryker\Shared\Library\Config;
+use Spryker\Client\ZedRequest\Client\HttpClient;
+use Spryker\Client\ZedRequest\Client\ZedClient;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
 use Spryker\Shared\ZedRequest\Client\AbstractZedClient;
 
@@ -26,15 +28,14 @@ abstract class AbstractZedClientProvider extends AbstractClientProvider
      */
     protected function createClient()
     {
-        $httpClient = $this->factory->createClientHttpClient(
-            $this->factory,
+        $httpClient = new HttpClient(
             $this->locator,
             'http://' . Config::get(ApplicationConstants::HOST_ZED_API),
             Config::get(ApplicationConstants::TRANSFER_USERNAME),
             Config::get(ApplicationConstants::TRANSFER_PASSWORD)
         );
 
-        return $this->factory->createClientZedClient($httpClient);
+        return new ZedClient($httpClient);
     }
 
 }

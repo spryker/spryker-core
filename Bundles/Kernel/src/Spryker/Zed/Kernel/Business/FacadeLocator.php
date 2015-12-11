@@ -10,8 +10,6 @@ use Spryker\Shared\Kernel\AbstractLocator;
 use Spryker\Shared\Kernel\ClassResolver\ClassNotFoundException;
 use Spryker\Shared\Kernel\Locator\LocatorException;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Zed\Kernel\BundleDependencyProviderLocator;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Shared\Library\Log;
 
 class FacadeLocator extends AbstractLocator
@@ -55,14 +53,6 @@ class FacadeLocator extends AbstractLocator
         $facade = $factory->create($bundle . self::FACADE_SUFFIX);
 
         try {
-            $bundleProviderLocator = new BundleDependencyProviderLocator(); // TODO Make singleton because of performance
-            $bundleBuilder = $bundleProviderLocator->locate($bundle, $locator);
-
-            $container = new Container();
-            $bundleBuilder->provideBusinessLayerDependencies($container);
-            $facade->setExternalDependencies($container);
-
-            // TODO make lazy
             if ($locator->$bundle()->hasQueryContainer()) {
                 $facade->setOwnQueryContainer($locator->$bundle()->queryContainer());
             }

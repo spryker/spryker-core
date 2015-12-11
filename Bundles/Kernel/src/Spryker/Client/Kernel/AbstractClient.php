@@ -6,8 +6,8 @@
 
 namespace Spryker\Client\Kernel;
 
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Shared\Kernel\Factory\FactoryInterface;
+use Spryker\Client\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
+use Spryker\Client\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
 use Spryker\Client\Kernel\DependencyContainer\DependencyContainerInterface;
 use Spryker\Client\ZedRequest\Stub\BaseStub;
 use Spryker\Shared\ZedRequest\Client\Message;
@@ -15,35 +15,26 @@ use Spryker\Shared\ZedRequest\Client\Message;
 abstract class AbstractClient
 {
 
-    const DEPENDENCY_CONTAINER = 'DependencyContainer';
-
     /**
      * @var DependencyContainerInterface
      */
     private $dependencyContainer;
 
     /**
-     * @param FactoryInterface $factory
-     * @param LocatorLocatorInterface $locator
+     * @var Container
      */
-    public function __construct(FactoryInterface $factory, LocatorLocatorInterface $locator)
-    {
-        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
-            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
-        }
-    }
+    private $container;
 
     /**
      * @param Container $container
      *
-     * @return void
+     * @return self
      */
     public function setExternalDependencies(Container $container)
     {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setContainer($container);
-        }
+        $this->container = $container;
+
+        return $this;
     }
 
     /**
@@ -51,7 +42,33 @@ abstract class AbstractClient
      */
     protected function getDependencyContainer()
     {
+        if ($this->dependencyContainer === null) {
+            $this->dependencyContainer = $this->resolveDependencyContainer();
+
+            if ($this->container !== null) {
+                $this->dependencyContainer->setContainer($this->container);
+            }
+        }
+
         return $this->dependencyContainer;
+    }
+
+    /**
+     * @throws DependencyContainerNotFoundException
+     *
+     * @return DependencyContainerInterface
+     */
+    private function resolveDependencyContainer()
+    {
+        return $this->getDependencyContainerResolver()->resolve($this);
+    }
+
+    /**
+     * @return DependencyContainerResolver
+     */
+    protected function getDependencyContainerResolver()
+    {
+        return new DependencyContainerResolver();
     }
 
     /**

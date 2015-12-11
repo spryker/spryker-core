@@ -6,6 +6,7 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
+use Spryker\Zed\ZedRequest\Business\Client\Response as ClientResponse;
 use Generated\Client\Ide\AutoCompletion;
 use Guzzle\Http\Client;
 use Guzzle\Http\Exception\RequestException as GuzzleRequestException;
@@ -73,26 +74,18 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected $locator;
 
     /**
-     * @var FactoryInterface
-     */
-    protected $factory;
-
-    /**
      * @var AuthClientInterface
      */
     protected $authClient;
 
     /**
-     * @param FactoryInterface $factory
      * @param AuthClientInterface $authClient
      * @param string $baseUrl
      */
     public function __construct(
-        FactoryInterface $factory,
         AuthClientInterface $authClient,
         $baseUrl
     ) {
-        $this->factory = $factory;
         $this->authClient = $authClient;
         $this->baseUrl = $baseUrl;
     }
@@ -286,7 +279,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         if (empty($data) || !is_array($data)) {
             throw new InvalidZedResponseException('no valid JSON', $response);
         }
-        $responseTransfer = $this->factory->createClientResponse();
+        $responseTransfer = new ClientResponse();
         $responseTransfer->fromArray($data);
 
         return $responseTransfer;
@@ -379,9 +372,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     private function getClientRequest()
     {
-        $request = $this->factory->createClientRequest();
-
-        return $request;
+        return new Request();
     }
 
 }

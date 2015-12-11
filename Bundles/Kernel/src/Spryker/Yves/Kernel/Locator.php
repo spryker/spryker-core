@@ -22,7 +22,6 @@ class Locator extends AbstractLocatorLocator
         $bundleProxy = new BundleProxy($this);
         $bundleProxy
             ->addLocator(new PluginLocator())
-            ->addLocator(new TransferLocator())
             ->addLocator(new ClientLocator());
 
         return $bundleProxy;

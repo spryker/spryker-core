@@ -84,7 +84,7 @@ abstract class AbstractDependencyContainer
      *
      * @return AbstractBundleDependencyProvider
      */
-    protected function resolveDependencyProvider()
+    private function resolveDependencyProvider()
     {
         return $this->getDependencyProviderResolver()->resolve($this);
     }

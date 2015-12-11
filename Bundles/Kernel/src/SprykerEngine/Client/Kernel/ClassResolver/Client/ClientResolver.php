@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Kernel\ClassResolver\DependencyProvider;
+namespace Spryker\Client\Kernel\ClassResolver\Client;
 
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
+use Spryker\Client\Kernel\Service\AbstractClient;
+use Spryker\Client\Kernel\ClassResolver\AbstractClassResolver;
 
-class DependencyProviderResolver extends AbstractClassResolver
+class ClientResolver extends AbstractClassResolver
 {
 
-    const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%4$s\\%2$sDependencyProvider';
+    const CLASS_NAME_PATTERN = '\\%1$s\\Client\\%2$s%3$s\\Service\\%2$sClient';
 
     /**
      * @param object|string $callerClass
      *
-     * @throws DependencyProviderNotFoundException
+     * @throws ClientNotFoundException
      *
-     * @return AbstractBundleDependencyProvider
+     * @return AbstractClient
      */
     public function resolve($callerClass)
     {
@@ -28,7 +28,7 @@ class DependencyProviderResolver extends AbstractClassResolver
             return $this->getResolvedClassInstance();
         }
 
-        throw new DependencyProviderNotFoundException($this->getClassInfo());
+        throw new ClientNotFoundException($this->getClassInfo());
     }
 
     /**
@@ -40,7 +40,6 @@ class DependencyProviderResolver extends AbstractClassResolver
             self::CLASS_NAME_PATTERN,
             self::KEY_NAMESPACE,
             self::KEY_BUNDLE,
-            self::KEY_LAYER,
             self::KEY_STORE
         );
     }

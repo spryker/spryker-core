@@ -19,18 +19,16 @@ class HttpClient extends AbstractHttpClient
     protected $rawToken;
 
     /**
-     * @param FactoryInterface $factory
      * @param AuthClientInterface $authClient
      * @param string $baseUrl
      * @param string $rawToken
      */
     public function __construct(
-        FactoryInterface $factory,
         AuthClientInterface $authClient,
         $baseUrl,
         $rawToken
     ) {
-        parent::__construct($factory, $authClient, $baseUrl);
+        parent::__construct($authClient, $baseUrl);
         $this->rawToken = $rawToken;
     }
 
