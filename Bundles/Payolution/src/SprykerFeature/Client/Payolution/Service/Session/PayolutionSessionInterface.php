@@ -19,8 +19,18 @@ interface PayolutionSessionInterface
     public function setInstallmentPayments(PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer);
 
     /**
+     * @return bool
+     */
+    public function hasInstallmentPayments();
+
+    /**
      * @return PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPayments();
+
+    /**
+     * @return mixed
+     */
+    public function removeInstallmentPayments();
 
 }

@@ -27,8 +27,18 @@ interface PayolutionClientInterface
     public function storeInstallmentPaymentsInSession(PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer);
 
     /**
+     * @return bool
+     */
+    public function hasInstallmentPaymentsInSession();
+
+    /**
      * @return PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPaymentsFromSession();
+
+    /**
+     * @return mixed
+     */
+    public function removeInstallmentPaymentsFromSession();
 
 }

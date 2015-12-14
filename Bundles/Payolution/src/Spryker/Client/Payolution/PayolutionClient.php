@@ -50,11 +50,27 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
+     * @return bool
+     */
+    public function hasInstallmentPaymentsInSession()
+    {
+        return $this->getSession()->hasInstallmentPayments();
+    }
+
+    /**
      * @return PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPaymentsFromSession()
     {
         return $this->getSession()->getInstallmentPayments();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function removeInstallmentPaymentsFromSession()
+    {
+        return $this->getSession()->removeInstallmentPayments();
     }
 
 }

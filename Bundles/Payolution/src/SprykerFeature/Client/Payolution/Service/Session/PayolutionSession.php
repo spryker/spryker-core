@@ -40,17 +40,35 @@ class PayolutionSession implements PayolutionSessionInterface
     }
 
     /**
+     * @return bool
+     */
+    public function hasInstallmentPayments()
+    {
+        return $this->session->has(self::PAYOLUTION_SESSION_IDENTIFIER);
+    }
+
+    /**
      * @return PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPayments()
     {
         $payolutionCalculationResponseTransfer = new PayolutionCalculationResponseTransfer();
 
-        if ($this->session->has(self::PAYOLUTION_SESSION_IDENTIFIER)) {
+        if ($this->hasInstallmentPayments()) {
             return $this->session->get(self::PAYOLUTION_SESSION_IDENTIFIER, $payolutionCalculationResponseTransfer);
         }
 
         return $payolutionCalculationResponseTransfer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function removeInstallmentPayments()
+    {
+        if ($this->session->has(self::PAYOLUTION_SESSION_IDENTIFIER)) {
+            return $this->session->remove(self::PAYOLUTION_SESSION_IDENTIFIER);
+        }
     }
 
 }

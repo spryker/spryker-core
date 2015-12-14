@@ -34,7 +34,7 @@ class CheckoutStub implements CheckoutStubInterface
      */
     public function requestCheckout(CheckoutRequestTransfer $transferCheckout)
     {
-        return $this->zedStub->call('/checkout/gateway/request-checkout', $transferCheckout, null, true);
+        return $this->zedStub->call('/checkout/gateway/request-checkout', $transferCheckout);
     }
 
 }
