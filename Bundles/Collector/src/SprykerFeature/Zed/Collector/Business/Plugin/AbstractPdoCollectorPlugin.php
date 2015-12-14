@@ -71,7 +71,7 @@ abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
 
         $touchParameters = $this->getTouchQueryParameters($touchQuery);
         $this->criteriaBuilder
-            ->setExtraParameterCollection($touchParameters);
+            ->setParameterCollection($touchParameters);
 
         $this->queryBuilder
             ->setCriteriaBuilder($this->criteriaBuilder)
