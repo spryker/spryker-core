@@ -1,0 +1,44 @@
+@mixin svg-common() {
+  background: url(../images/sprite.svg) no-repeat;
+}
+
+.svg-commerce {
+  @include svg-common();
+  background-position: 100% 0;
+}
+
+.svg-commerce-size {
+  width: 142px;
+  height: 11px;
+}
+
+.svg-mail {
+  @include svg-common();
+  background-position: 56.74740484429066% 7.746478873239437%;
+}
+
+.svg-mail-size {
+  width: 17px;
+  height: 14px;
+}
+
+.svg-padlock {
+  @include svg-common();
+  background-position: 56.3573883161512% 17.985611510791365%;
+}
+
+.svg-padlock-size {
+  width: 15px;
+  height: 17px;
+}
+
+.svg-spryker {
+  @include svg-common();
+  background-position: 0 0;
+}
+
+.svg-spryker-size {
+  width: 164px;
+  height: 156px;
+}
+
