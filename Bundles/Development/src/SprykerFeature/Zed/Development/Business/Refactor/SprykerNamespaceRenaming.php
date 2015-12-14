@@ -59,7 +59,7 @@ class SprykerNamespaceRenaming extends AbstractRefactor
      */
     protected function renameNamespaces($content)
     {
-        return preg_replace('/\b(SprykerFeature|SprykerEngine)\b/', 'Spryker', $content);
+        return preg_replace('/\b(Spryker' . 'Feature|Spryker' . 'Engine)\b/', 'Spryker', $content);
     }
 
     /**
@@ -70,8 +70,8 @@ class SprykerNamespaceRenaming extends AbstractRefactor
      */
     protected function moveFileToSprykerNamespace(Filesystem $filesystem, SplFileInfo $phpFile)
     {
-        if (preg_match('/\b(SprykerFeature|SprykerEngine)\b/', $phpFile->getRealPath(), $matches)) {
-            $targetFile = preg_replace('/\b(SprykerFeature|SprykerEngine)\b/', 'Spryker', $phpFile->getRealPath());
+        if (preg_match('/\b(Spryker' . 'Feature|Spryker' . 'Engine)\b/', $phpFile->getRealPath(), $matches)) {
+            $targetFile = preg_replace('/\b(Spryker' . 'Feature|Spryker' . 'Engine)\b/', 'Spryker', $phpFile->getRealPath());
 
             if ($filesystem->exists($targetFile)) {
                 echo sprintf('File already exists, please resolve manually: %s' . PHP_EOL, $phpFile->getRealPath());
@@ -92,8 +92,8 @@ class SprykerNamespaceRenaming extends AbstractRefactor
         $finder->directories()->in($this->directories);
 
         $finder
-            ->name('SprykerFeature')
-            ->name('SprykerEngine');
+            ->name('Spryker' . 'Feature')
+            ->name('Spryker' . 'Engine');
 
         $removable = [];
         foreach ($finder as $communicationFolder) {
@@ -126,7 +126,9 @@ class SprykerNamespaceRenaming extends AbstractRefactor
 
         foreach ($files as $file) {
             if (is_dir($dir . '/' . $file)) {
-                $this->recursiveRemoveDirectory($dir . '/' . $file);
+                if (!$this->recursiveRemoveDirectory($dir . '/' . $file)) {
+                    return false;
+                }
             } else {
                 echo sprintf('Directory is not empty for removal: %s' . PHP_EOL, $dir);
                 return false;
