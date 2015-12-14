@@ -134,7 +134,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testReduceWithMoreThenExists()
+    public function testReduceWithMoreThanExists()
     {
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
         $newItem = $this->createItem($itemId, $reduceQuantity = 3);
@@ -224,7 +224,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $cartTransfer = new CartTransfer();
 
         $inMemoryProvider = new InMemoryProvider();
-        $inMemoryProvider->addCouponCode($cartTransfer, $changeTransfer);
+        $cartTransfer = $inMemoryProvider->addCouponCode($cartTransfer, $changeTransfer);
 
         $this->assertSame(self::COUPON_CODE_1, $cartTransfer->getCouponCodes()[0]);
     }
@@ -242,7 +242,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $cartTransfer->addCouponCode(self::COUPON_CODE_2);
 
         $inMemoryProvider = new InMemoryProvider();
-        $inMemoryProvider->removeCouponCode($cartTransfer, $changeTransfer);
+        $cartTransfer = $inMemoryProvider->removeCouponCode($cartTransfer, $changeTransfer);
 
         $this->assertSame(self::COUPON_CODE_2, $cartTransfer->getCouponCodes()[0]);
     }
@@ -256,7 +256,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $cartTransfer->addCouponCode(self::COUPON_CODE_1);
 
         $inMemoryProvider = new InMemoryProvider();
-        $inMemoryProvider->clearCouponCodes($cartTransfer);
+        $cartTransfer = $inMemoryProvider->clearCouponCodes($cartTransfer);
 
         $this->assertSame([], $cartTransfer->getCouponCodes());
     }

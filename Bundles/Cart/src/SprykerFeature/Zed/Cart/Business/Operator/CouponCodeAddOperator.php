@@ -21,7 +21,7 @@ class CouponCodeAddOperator extends AbstractOperator
      */
     protected function changeCart(CartTransfer $cart, ChangeTransfer $change)
     {
-        $this->storageProvider->addCouponCode($cart, $change);
+        $cart = $this->storageProvider->addCouponCode($cart, $change);
 
         return $this->getGroupedCartItems($cart);
     }

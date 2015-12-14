@@ -160,6 +160,8 @@ class InMemoryProvider implements StorageProviderInterface
     public function addCouponCode(CartTransfer $cart, ChangeTransfer $change)
     {
         $cart->addCouponCode($change->getCouponCode());
+
+        return $cart;
     }
 
     /**
@@ -178,6 +180,8 @@ class InMemoryProvider implements StorageProviderInterface
         }
 
         $cart->setCouponCodes($couponCodes);
+
+        return $cart;
     }
 
     /**
@@ -188,6 +192,8 @@ class InMemoryProvider implements StorageProviderInterface
     public function clearCouponCodes(CartTransfer $cart)
     {
         $cart->setCouponCodes([]);
+
+        return $cart;
     }
 
 }
