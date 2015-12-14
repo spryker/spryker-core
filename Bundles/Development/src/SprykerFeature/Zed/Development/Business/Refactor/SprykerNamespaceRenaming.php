@@ -45,11 +45,9 @@ class SprykerNamespaceRenaming extends AbstractRefactor
             if ($replacedContent !== $content) {
                 $filesystem->dumpFile($file->getPathname(), $replacedContent);
             }
-
-            $this->moveFileToSprykerNamespace($filesystem, $file);
         }
 
-        $this->cleanupEmptyFolders();
+        $this->moveFilesToSprykerNamespace();
     }
 
     /**
@@ -63,30 +61,9 @@ class SprykerNamespaceRenaming extends AbstractRefactor
     }
 
     /**
-     * @param Filesystem $filesystem
-     * @param SplFileInfo $phpFile
-     *
      * @return void
      */
-    protected function moveFileToSprykerNamespace(Filesystem $filesystem, SplFileInfo $phpFile)
-    {
-        if (preg_match('/\b(Spryker' . 'Feature|Spryker' . 'Engine)\b/', $phpFile->getRealPath(), $matches)) {
-            $targetFile = preg_replace('/\b(Spryker' . 'Feature|Spryker' . 'Engine)\b/', 'Spryker', $phpFile->getRealPath());
-
-            if ($filesystem->exists($targetFile)) {
-                echo sprintf('File already exists, please resolve manually: %s' . PHP_EOL, $phpFile->getRealPath());
-                return;
-            }
-
-            $filesystem->copy($phpFile->getRealPath(), $targetFile);
-            $filesystem->remove($phpFile->getRealPath());
-        }
-    }
-
-    /**
-     * @return void
-     */
-    protected function cleanupEmptyFolders()
+    protected function moveFilesToSprykerNamespace()
     {
         $finder = new Finder();
         $finder->directories()->in($this->directories);
@@ -95,13 +72,14 @@ class SprykerNamespaceRenaming extends AbstractRefactor
             ->name('Spryker' . 'Feature')
             ->name('Spryker' . 'Engine');
 
-        $removable = [];
+        $movable = [];
         foreach ($finder as $communicationFolder) {
-            $removable[] = $this->getRealPath($communicationFolder);
+            $movable[] = $this->getRealPath($communicationFolder);
         }
 
-        foreach ($removable as $remove) {
-            $this->recursiveRemoveDirectory($remove);
+        foreach ($movable as $folder) {
+            $target = $this->renameNamespaces($folder);
+            system(sprintf('git mv %s %s', $folder, $target));
         }
     }
 
@@ -113,29 +91,6 @@ class SprykerNamespaceRenaming extends AbstractRefactor
     protected function getRealPath(SplFileInfo $communicationFolder)
     {
         return $communicationFolder->getRealPath();
-    }
-
-    /**
-     * @param string $dir
-     *
-     * @return bool
-     */
-    protected function recursiveRemoveDirectory($dir)
-    {
-        $files = array_diff(scandir($dir), ['.', '..']);
-
-        foreach ($files as $file) {
-            if (is_dir($dir . '/' . $file)) {
-                if (!$this->recursiveRemoveDirectory($dir . '/' . $file)) {
-                    return false;
-                }
-            } else {
-                echo sprintf('Directory is not empty for removal: %s' . PHP_EOL, $dir);
-                return false;
-            }
-        }
-
-        return rmdir($dir);
     }
 
 }
