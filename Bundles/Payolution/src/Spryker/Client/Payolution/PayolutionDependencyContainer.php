@@ -18,6 +18,14 @@ class PayolutionDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
+     * @return PayolutionSession
+     */
+    public function createPayolutionSession()
+    {
+        return new PayolutionSession($this->createSessionClient());
+    }
+
+    /**
      * @return PayolutionStubInterface
      */
     public function createPayolutionStub()

@@ -162,7 +162,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         return $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
-            $uniqueId);
+            null);
     }
 
     /**

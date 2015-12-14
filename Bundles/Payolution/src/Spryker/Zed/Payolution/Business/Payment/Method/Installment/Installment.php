@@ -72,7 +72,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                     ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_IDENTIFICATION_ELEMENT,
                     [
                         ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_TRANSACTIONID_ELEMENT,
-                        ApiConstants::CALCULATION_XML_ELEMENT_VALUE => uniqid('tran_'),
+                        ApiConstants::CALCULATION_XML_ELEMENT_VALUE => null,
                     ],
                 ],
                 [
@@ -208,7 +208,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::IDENTIFICATION_SHOPPERID => $paymentEntity->getSpySalesOrder()->getFkCustomer(),
                 ApiConstants::CRITERION_PRE_CHECK_ID => $paymentEntity->getPreCheckId(),
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
-//                ApiConstants::CRITERION_CALCULATION_ID => $paymentEntity->getInstallmentCalculationId(),
+                ApiConstants::CRITERION_CALCULATION_ID => $paymentEntity->getInstallmentCalculationId(),
                 ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->convertCentsToDecimal($paymentEntity->getInstallmentAmount()),
                 ApiConstants::CRITERION_DURATION => $paymentEntity->getInstallmentDuration(),
                 ApiConstants::CRITERION_ACCOUNT_HOLDER => $paymentEntity->getBankAccountHolder(),

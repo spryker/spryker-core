@@ -29,4 +29,32 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
             ->calculateInstallmentPayments($checkoutRequestTransfer);
     }
 
+    /**
+     * @return PayolutionSession
+     */
+    protected function getSession()
+    {
+        return $this->getDependencyContainer()->createPayolutionSession();
+    }
+
+    /**
+     * @param PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
+     *
+     * @return PayolutionCalculationResponseTransfer
+     */
+    public function storeInstallmentPaymentsInSession(PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer)
+    {
+        $this->getSession()->setInstallmentPayments($payolutionCalculationResponseTransfer);
+
+        return $payolutionCalculationResponseTransfer;
+    }
+
+    /**
+     * @return PayolutionCalculationResponseTransfer
+     */
+    public function getInstallmentPaymentsFromSession()
+    {
+        return $this->getSession()->getInstallmentPayments();
+    }
+
 }

@@ -160,14 +160,6 @@ class PayolutionConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getAnalysisCriteriaPropertyName()
-    {
-        return $this->get(PayolutionConfigConstants::ANALYSIS_CRITERIA);
-    }
-
-    /**
-     * @return string
-     */
     public function getPayolutionBccEmail()
     {
         return $this->get(PayolutionConfigConstants::PAYOLUTION_BCC_EMAIL);
@@ -210,7 +202,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getWebshopUrl()
     {
-        return $this->get(PayolutionApiConstants::WEBSHOP_URL);
+        return $this->get(PayolutionConfigConstants::WEBSHOP_URL);
     }
 
 }

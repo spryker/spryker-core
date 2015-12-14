@@ -146,7 +146,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
 
         $requestData = $this
             ->getMethodMapper($paymentEntity->getAccountBrand())
-            ->buildRefundRequest($paymentEntity, $statusLogEntity->getIdentificationReferenceid());
+            ->buildRefundRequest($paymentEntity, $statusLogEntity->getIdentificationUniqueid());
 
         return $this->sendLoggedRequest($requestData, $paymentEntity);
     }

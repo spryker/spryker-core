@@ -19,4 +19,16 @@ interface PayolutionClientInterface
      */
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer);
 
+    /**
+     * @param PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
+     *
+     * @return PayolutionCalculationResponseTransfer
+     */
+    public function storeInstallmentPaymentsInSession(PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer);
+
+    /**
+     * @return PayolutionCalculationResponseTransfer
+     */
+    public function getInstallmentPaymentsFromSession();
+
 }
