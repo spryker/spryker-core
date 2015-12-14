@@ -7,7 +7,7 @@
 namespace SprykerEngine\Yves\Application\Controller;
 
 use Generated\Yves\Ide\AutoCompletion;
-use SprykerEngine\Client\Kernel\Service\AbstractClient;
+use SprykerEngine\Client\Kernel\AbstractClient;
 use SprykerEngine\Shared\Gui\Form\AbstractForm;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;

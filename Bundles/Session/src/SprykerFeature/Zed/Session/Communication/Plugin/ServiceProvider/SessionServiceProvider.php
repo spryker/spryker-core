@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Session\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Client\Session\Service\SessionClientInterface;
+use SprykerFeature\Client\Session\SessionClientInterface;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Session\SessionConstants;
 use SprykerFeature\Shared\Application\ApplicationConstants;

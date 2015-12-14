@@ -13,7 +13,7 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
-use SprykerEngine\Client\Lumberjack\Service\EventJournalClient;
+use SprykerEngine\Client\Lumberjack\EventJournalClient;
 use SprykerEngine\Shared\Lumberjack\Model\Event;
 use SprykerFeature\Shared\Library\Communication\ObjectInterface;
 use SprykerFeature\Shared\Library\Config;

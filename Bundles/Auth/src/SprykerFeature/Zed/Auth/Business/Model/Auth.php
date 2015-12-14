@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Auth\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Client\Session\Service\SessionClientInterface;
+use SprykerFeature\Client\Session\SessionClientInterface;
 use SprykerFeature\Zed\Auth\AuthConfig;
 use SprykerFeature\Zed\Auth\Business\AuthDependencyContainer;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;

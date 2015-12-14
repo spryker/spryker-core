@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Search\Communication;
 
 use SprykerFeature\Zed\Search\Communication\Table\SearchTable;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Client\Search\Service\SearchClient;
+use SprykerFeature\Client\Search\SearchClient;
 use SprykerFeature\Zed\Collector\Business\CollectorFacade;
 use SprykerFeature\Zed\Search\SearchConfig;
 use SprykerFeature\Zed\Search\SearchDependencyProvider;

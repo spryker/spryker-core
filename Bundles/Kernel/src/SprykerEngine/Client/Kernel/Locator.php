@@ -6,7 +6,6 @@
 
 namespace SprykerEngine\Client\Kernel;
 
-use SprykerEngine\Client\Kernel\Service\ClientLocator;
 use SprykerEngine\Shared\Kernel\BundleProxy;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 
