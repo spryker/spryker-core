@@ -14,5 +14,3 @@ require('../styles/main.scss');
 var test = require('./test');
 
 test.run();
-
-

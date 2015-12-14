@@ -8,9 +8,10 @@
     <title>{% block head_title %}{{ title | trans }}{% endblock %}</title>
 
     {% block head_css %}
-        <link href="/bundles/css/style.external.min.css" rel="stylesheet">
-        <link href="/bundles/css/style.internal.min.css" rel="stylesheet">
-        <link href="/bundles/css/style.custom.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/styles/spryker-zed-gui-commons.css">
+        {#<link href="/bundles/css/style.external.min.css" rel="stylesheet">#}
+        {#<link href="/bundles/css/style.internal.min.css" rel="stylesheet">#}
+        {#<link href="/bundles/css/style.custom.min.css" rel="stylesheet">#}
     {% endblock %}
 
 </head>
@@ -118,12 +119,13 @@
 </div>
 
 {% block footer_js %}
-    <script src="/bundles/js/resources.external.min.js"></script>
-    <script src="/bundles/js/resources.internal.min.js"></script>
-    <script src="/bundles/js/resources.custom.min.js"></script>
-    <script src="/bundles/js/templates.external.min.js"></script>
-    <script src="/bundles/js/templates.internal.min.js"></script>
-    <script src="/bundles/js/templates.custom.min.js"></script>
+    <script src="/scripts/spryker-zed-gui-commons.js"></script>
+    {#<script src="/bundles/js/resources.external.min.js"></script>#}
+    {#<script src="/bundles/js/resources.internal.min.js"></script>#}
+    {#<script src="/bundles/js/resources.custom.min.js"></script>#}
+    {#<script src="/bundles/js/templates.external.min.js"></script>#}
+    {#<script src="/bundles/js/templates.internal.min.js"></script>#}
+    {#<script src="/bundles/js/templates.custom.min.js"></script>#}
 {% endblock %}
 
 </body>
