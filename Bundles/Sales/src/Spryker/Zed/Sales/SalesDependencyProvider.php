@@ -8,6 +8,8 @@ namespace Spryker\Zed\Sales;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 
 class SalesDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -15,7 +17,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_COUNTRY = 'FACADE_COUNTRY';
     const FACADE_OMS = 'FACADE_OMS';
     const FACADE_REFUND = 'FACADE_REFUND';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
+    const FACADE_LOCALE = 'LOCALE_FACADE';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
 
     const PLUGINS_PAYMENT_LOGS = 'PLUGINS_PAYMENT_LOGS';
@@ -32,11 +34,11 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_COUNTRY] = function (Container $container) {
-            return $container->getLocator()->country()->facade();
+            return new SalesToCountryBridge($container->getLocator()->country()->facade());
         };
 
         $container[self::FACADE_OMS] = function (Container $container) {
-            return $container->getLocator()->oms()->facade();
+            return new SalesToOmsBridge($container->getLocator()->oms()->facade());
         };
 
         $container[self::FACADE_REFUND] = function (Container $container) {
@@ -58,7 +60,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_OMS] = function (Container $container) {
-            return $container->getLocator()->oms()->facade();
+            return new SalesToOmsBridge($container->getLocator()->oms()->facade());
         };
 
         $container[self::FACADE_LOCALE] = function (Container $container) {

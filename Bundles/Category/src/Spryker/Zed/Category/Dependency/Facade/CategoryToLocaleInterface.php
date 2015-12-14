@@ -16,4 +16,15 @@ interface CategoryToLocaleInterface
      */
     public function getCurrentLocale();
 
+    /**
+     * @param string $localeName
+     *
+     * @return LocaleTransfer
+     */
+    public function getLocale($localeName);
+
+    /**
+     * @return array
+     */
+    public function getAvailableLocales();
 }

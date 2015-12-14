@@ -6,11 +6,12 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface;
+use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
 
 class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -46,11 +47,11 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return CalculationFacade
+     * @return DiscountCalculationToCalculationInterface
      */
     public function getCalculationFacade()
     {
-        return $this->getLocator()->calculation()->facade();
+        return $this->getProvidedDependency(DiscountCalculationConnectorDependencyProvider::FACADE_CALCULATOR);
     }
 
 }

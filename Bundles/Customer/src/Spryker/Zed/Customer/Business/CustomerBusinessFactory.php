@@ -75,9 +75,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCountryFacade()
     {
-        return $this->getLocator()
-            ->country()
-            ->facade();
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY);
     }
 
     /**
@@ -85,9 +83,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     protected function createLocaleFacade()
     {
-        return $this->getLocator()
-            ->locale()
-            ->facade();
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_LOCALE);
     }
 
     /**

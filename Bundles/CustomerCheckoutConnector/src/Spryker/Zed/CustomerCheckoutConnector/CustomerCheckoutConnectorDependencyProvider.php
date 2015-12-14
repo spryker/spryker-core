@@ -8,6 +8,7 @@ namespace Spryker\Zed\CustomerCheckoutConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerBridge;
 
 class CustomerCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,7 +23,7 @@ class CustomerCheckoutConnectorDependencyProvider extends AbstractBundleDependen
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::FACADE_CUSTOMER] = function (Container $container) {
-            return $container->getLocator()->customer()->facade();
+            return new CustomerCheckoutConnectorToCustomerBridge($container->getLocator()->customer()->facade());
         };
 
         return $container;

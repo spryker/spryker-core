@@ -18,7 +18,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
-use Spryker\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
@@ -56,7 +56,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $touchFacade;
 
     /**
-     * @var CmsToCategoryInterface
+     * @var ProductCategoryToCmsInterface
      */
     protected $cmsFacade;
 
@@ -76,7 +76,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param ProductCategoryToProductInterface $productFacade
      * @param ProductCategoryToCategoryInterface $categoryFacade
      * @param ProductCategoryToTouchInterface $touchFacade
-     * @param CmsToCategoryInterface $cmsFacade
+     * @param ProductCategoryToCmsInterface $cmsFacade
      * @param LocatorLocatorInterface $locator
      * @param ConnectionInterface $connection
      */
@@ -86,7 +86,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         ProductCategoryToProductInterface $productFacade,
         ProductCategoryToCategoryInterface $categoryFacade,
         ProductCategoryToTouchInterface $touchFacade,
-        CmsToCategoryInterface $cmsFacade,
+        ProductCategoryToCmsInterface $cmsFacade,
         LocatorLocatorInterface $locator,
         ConnectionInterface $connection
     ) {

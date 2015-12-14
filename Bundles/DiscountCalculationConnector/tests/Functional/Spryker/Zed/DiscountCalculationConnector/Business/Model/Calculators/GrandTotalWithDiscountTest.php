@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
 use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationBridge;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -199,7 +200,7 @@ class GrandTotalWithDiscountTest extends Test
     protected function getCalculator()
     {
         return new GrandTotalWithDiscountsTotalsCalculator(
-            $this->locator->calculation()->facade(),
+            new DiscountCalculationToCalculationBridge($this->locator->calculation()->facade()),
             new DiscountTotalsCalculator($this->locator)
         );
     }

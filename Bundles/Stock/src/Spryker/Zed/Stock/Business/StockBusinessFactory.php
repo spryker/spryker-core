@@ -17,6 +17,7 @@ use Spryker\Zed\Stock\Business\Model\WriterInterface;
 use Spryker\Zed\Stock\Business\Model\CalculatorInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\StockConfig;
+use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**
  * @method StockConfig getConfig()
@@ -71,7 +72,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
      */
     protected function getProductFacade()
     {
-        return $this->getLocator()->product()->facade();
+        return $this->getProvidedDependency(StockDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
@@ -79,7 +80,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
      */
     protected function getTouchFacade()
     {
-        return $this->getLocator()->touch()->facade();
+        return $this->getProvidedDependency(StockDependencyProvider::FACADE_TOUCH);
     }
 
 }

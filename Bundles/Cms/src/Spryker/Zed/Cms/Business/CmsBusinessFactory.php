@@ -18,7 +18,7 @@ use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
+use sprykerfeature\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Symfony\Component\Finder\Finder;
 
@@ -94,7 +94,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     protected function getGlossaryFacade()
     {
-        return $this->getLocator()->glossary()->facade();
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }
 
     /**
@@ -102,7 +102,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     protected function getTouchFacade()
     {
-        return $this->getLocator()->touch()->facade();
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_TOUCH);
     }
 
     /**
@@ -110,7 +110,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     protected function getUrlFacade()
     {
-        return $this->getLocator()->url()->facade();
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
     }
 
     /**

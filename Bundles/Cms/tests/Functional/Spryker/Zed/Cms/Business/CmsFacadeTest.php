@@ -23,6 +23,12 @@ use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Spryker\Zed\Url\Business\UrlFacade;
 
+/**
+ * @group Spryker
+ * @group Zed
+ * @group Business
+ * @group CmsFacadeTest
+ */
 class CmsFacadeTest extends Test
 {
 

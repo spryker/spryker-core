@@ -6,7 +6,9 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
-interface CmsToCategoryInterface
+use Generated\Shared\Transfer\CmsBlockTransfer;
+
+interface ProductCategoryToCmsInterface
 {
 
     /**
@@ -15,5 +17,12 @@ interface CmsToCategoryInterface
      * @return void
      */
     public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode);
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return CmsBlockTransfer[]
+     */
+    public function getCmsBlocksByIdCategoryNode($idCategoryNode);
 
 }

@@ -19,6 +19,7 @@ use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Spryker\Zed\Price\Business\Internal\Install;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\Price\PriceConfig;
+use Spryker\Zed\Price\PriceDependencyProvider;
 
 /**
  * @method PriceConfig getConfig()
@@ -107,7 +108,7 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     protected function getTouchFacade()
     {
         if (empty($this->touchFacade)) {
-            $this->touchFacade = $this->getLocator()->touch()->facade();
+            $this->touchFacade = $this->getProvidedDependency(PriceDependencyProvider::FACADE_TOUCH);
         }
 
         return $this->touchFacade;

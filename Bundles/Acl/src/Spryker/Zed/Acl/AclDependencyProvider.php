@@ -8,6 +8,7 @@ namespace Spryker\Zed\Acl;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Acl\Dependency\Facade\AclToUserBridge;
 
 class AclDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -61,7 +62,7 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     private function addFacadeUser(Container $container)
     {
         $container[self::FACADE_USER] = function (Container $container) {
-            return $container->getLocator()->user()->facade();
+            return new AclToUserBridge($container->getLocator()->user()->facade());
         };
 
         return $container;

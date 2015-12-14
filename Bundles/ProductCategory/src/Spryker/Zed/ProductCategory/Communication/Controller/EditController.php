@@ -179,15 +179,17 @@ class EditController extends AddController
         }
 
         if (!empty($removeProductMappingCollection)) {
-            $this->getFactory()
-                ->createProductCategoryFacade()
-                ->removeProductCategoryMappings($categoryTransfer->getIdCategory(), $removeProductMappingCollection);
+            $this->getFacade()->removeProductCategoryMappings(
+                $categoryTransfer->getIdCategory(),
+                $removeProductMappingCollection
+            );
         }
 
         if (!empty($addProductsMappingCollection)) {
-            $this->getFactory()
-                ->createProductCategoryFacade()
-                ->createProductCategoryMappings($categoryTransfer->getIdCategory(), $addProductsMappingCollection);
+            $this->getFacade()->createProductCategoryMappings(
+                $categoryTransfer->getIdCategory(),
+                $addProductsMappingCollection
+            );
         }
     }
 
@@ -199,22 +201,19 @@ class EditController extends AddController
      */
     protected function updateProductOrder(CategoryTransfer $categoryTransfer, array $productOrder)
     {
-        $this->getFactory()
-            ->createProductCategoryFacade()
+        $this->getFacade()
             ->updateProductMappingsOrder($categoryTransfer->getIdCategory(), $productOrder);
     }
 
     /**
      * @param CategoryTransfer $categoryTransfer
-     * @param $productPreconfig
+     * @param $productPreConfig
      *
      * @return void
      */
-    protected function updateProductCategoryPreconfig(CategoryTransfer $categoryTransfer, array $productPreconfig)
+    protected function updateProductCategoryPreconfig(CategoryTransfer $categoryTransfer, array $productPreConfig)
     {
-        $this->getFactory()
-            ->createProductCategoryFacade()
-            ->updateProductCategoryPreConfig($categoryTransfer->getIdCategory(), $productPreconfig);
+        $this->getFacade()->updateProductCategoryPreConfig($categoryTransfer->getIdCategory(), $productPreConfig);
     }
 
     /**
@@ -361,8 +360,7 @@ class EditController extends AddController
      */
     protected function getProductDataForView(SpyCategory $category, SpyCategoryNode $node, LocaleTransfer $locale)
     {
-        $productCategoryList = $this->getFactory()
-            ->createProductCategoryQueryContainer()
+        $productCategoryList = $this->getQueryContainer()
             ->queryProductsByCategoryId($node->getFkCategory(), $locale)
             ->find();
 

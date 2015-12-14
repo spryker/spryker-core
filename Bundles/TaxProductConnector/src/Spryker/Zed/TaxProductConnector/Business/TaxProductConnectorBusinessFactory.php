@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface;
 use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
+use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**
  * @method TaxProductConnectorConfig getConfig()
@@ -43,7 +44,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function getProductFacade()
     {
-        return $this->getLocator()->product()->facade();
+        return $this->getProvidedDependency(TaxProductConnectorDependencyProvider::FACADE_PRODUCT);
     }
 
 }

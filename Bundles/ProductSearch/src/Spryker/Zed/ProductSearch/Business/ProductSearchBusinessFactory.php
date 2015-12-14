@@ -137,7 +137,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
      */
     protected function createLocaleFacade()
     {
-        return $this->getLocator()->locale()->facade();
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_LOCALE);
     }
 
     /**
@@ -145,7 +145,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
      */
     protected function createTouchFacade()
     {
-        return $this->getLocator()->touch()->facade();
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_TOUCH);
     }
 
     /**

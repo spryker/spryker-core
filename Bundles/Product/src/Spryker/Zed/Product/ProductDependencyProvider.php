@@ -8,6 +8,9 @@ namespace Spryker\Zed\Product;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 
 class ProductDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -28,15 +31,15 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::FACADE_LOCALE] = function (Container $container) {
-            return $container->getLocator()->locale()->facade();
+            return new ProductToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         $container[self::FACADE_URL] = function (Container $container) {
-            return $container->getLocator()->url()->facade();
+            return new ProductToUrlBridge($container->getLocator()->url()->facade());
         };
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
-            return $container->getLocator()->touch()->facade();
+            return new ProductToTouchBridge($container->getLocator()->touch()->facade());
         };
 
         return $container;
@@ -50,7 +53,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_LOCALE] = function (Container $container) {
-            return $container->getLocator()->locale()->facade();
+            return new ProductToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         $container[self::FACADE_PRODUCT_CATEGORY] = function (Container $container) {
@@ -62,7 +65,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_URL] = function (Container $container) {
-            return $container->getLocator()->url()->facade();
+            return new ProductToUrlBridge($container->getLocator()->url()->facade());
         };
 
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {

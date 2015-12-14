@@ -8,7 +8,7 @@ namespace Spryker\Zed\ProductCategory\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
@@ -26,7 +26,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductCategoryManager(
             $this->createCategoryQueryContainer(),
-            $this->createProductCategoryQueryContainer(),
+            $this->getQueryContainer(),
             $this->createProductFacade(),
             $this->createCategoryFacade(),
             $this->createTouchFacade(),
@@ -41,15 +41,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCategoryQueryContainer()
     {
-        return $this->getLocator()->category()->queryContainer();
-    }
-
-    /**
-     * @return ProductCategoryQueryContainerInterface
-     */
-    protected function createProductCategoryQueryContainer()
-    {
-        return $this->getLocator()->productCategory()->queryContainer();
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::CATEGORY_QUERY_CONTAINER);
     }
 
     /**
@@ -57,7 +49,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createLocaleFacade()
     {
-        return $this->getLocator()->locale()->facade();
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_LOCALE);
     }
 
     /**
@@ -65,7 +57,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductFacade()
     {
-        return $this->getLocator()->product()->facade();
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
@@ -73,7 +65,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCategoryFacade()
     {
-        return $this->getLocator()->category()->facade();
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CATEGORY);
     }
 
     /**
@@ -87,7 +79,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * TODO: https://spryker.atlassian.net/browse/CD-540
      *
-     * @return CmsToCategoryInterface
+     * @return ProductCategoryToCmsInterface
      */
     protected function createCmsFacade()
     {

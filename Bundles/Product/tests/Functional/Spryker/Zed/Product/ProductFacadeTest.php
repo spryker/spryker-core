@@ -22,6 +22,12 @@ use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Zed\Url\Business\UrlFacade;
 
+/**
+ * @group Spryker
+ * @group Zed
+ * @group Business
+ * @group ProductFacadeTest
+ */
 class ProductFacadeTest extends Test
 {
 

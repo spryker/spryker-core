@@ -38,7 +38,7 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
     const LOCALE_CODE = 'xx_XX';
     const PROPEL_CONNECTION = 'propel connection';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
+    const FACADE_LOCALE = 'LOCALE_FACADE';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**

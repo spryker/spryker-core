@@ -23,6 +23,7 @@ use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
 use Spryker\Zed\CustomerCheckoutConnector\Communication\Plugin\CustomerPreConditionCheckerPlugin;
 use Spryker\Zed\CustomerCheckoutConnector\Communication\Plugin\OrderCustomerHydrationPlugin;
 use Spryker\Zed\CustomerCheckoutConnector\Communication\Plugin\OrderCustomerSavePlugin;
@@ -89,7 +90,7 @@ class CheckoutFacadeTest extends Test
         };
 
         $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
-            return $container->getLocator()->oms()->facade();
+            return new CheckoutToOmsBridge($container->getLocator()->oms()->facade());
         };
         $container[CheckoutDependencyProvider::FACADE_CALCULATION] = function (Container $container) {
             return $container->getLocator()->calculation()->facade();

@@ -22,6 +22,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
 use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationBridge;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -135,7 +136,7 @@ class GrandTotalTest extends Test
     protected function getGrandTotalWithDiscountCalculator()
     {
         return new GrandTotalWithDiscountsTotalsCalculator(
-            $this->locator->calculation()->facade(),
+            new DiscountCalculationToCalculationBridge($this->locator->calculation()->facade()),
             new DiscountTotalsCalculator()
         );
     }

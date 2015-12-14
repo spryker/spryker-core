@@ -16,6 +16,8 @@ interface DiscountCalculationToCalculationInterface
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
+     *
+     * @return void
      */
     public function recalculateGrandTotalTotals(
         TotalsTransfer $totalsTransfer,

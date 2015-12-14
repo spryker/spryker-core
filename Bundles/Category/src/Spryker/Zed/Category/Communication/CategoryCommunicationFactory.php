@@ -107,24 +107,4 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
         return new CategoryNodeForm($locale);
     }
 
-    /**
-     * @throws \ErrorException
-     *
-     * @return CategoryFacade
-     */
-    public function createCategoryFacade()
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_CATEGORY);
-    }
-
-    /**
-     * @throws \ErrorException
-     *
-     * @return CategoryQueryContainer
-     */
-    public function createCategoryQueryContainer()
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::QUERY_CONTAINER_CATEGORY);
-    }
-
 }

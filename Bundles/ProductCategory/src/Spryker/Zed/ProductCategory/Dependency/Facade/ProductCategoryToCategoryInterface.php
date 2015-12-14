@@ -85,4 +85,26 @@ interface ProductCategoryToCategoryInterface
      */
     public function deleteCategory($idCategory);
 
+    /**
+     * @param CategoryTransfer $category
+     * @param LocaleTransfer $locale
+     *
+     * @return void
+     */
+    public function updateCategory(CategoryTransfer $category, LocaleTransfer $locale);
+
+    /**
+     * @param int $idCategory
+     *
+     * @return NodeTransfer[]
+     */
+    public function getNotMainNodesByIdCategory($idCategory);
+
+    /**
+     * @param array $pathTokens
+     *
+     * @return string
+     */
+    public function generatePath(array $pathTokens);
+
 }
