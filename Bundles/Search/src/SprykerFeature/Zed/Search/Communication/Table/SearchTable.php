@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Search\Communication\Table;
 
 use Elastica\Exception\ResponseException;
-use SprykerFeature\Client\Search\Service\SearchClient;
+use SprykerFeature\Client\Search\SearchClient;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 

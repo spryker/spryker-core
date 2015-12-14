@@ -15,7 +15,7 @@ use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerFeature\Client\Auth\Service\AuthClientInterface;
+use SprykerFeature\Client\Auth\AuthClientInterface;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;

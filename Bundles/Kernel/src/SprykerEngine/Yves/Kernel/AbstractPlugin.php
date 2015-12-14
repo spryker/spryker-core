@@ -6,7 +6,7 @@
 
 namespace SprykerEngine\Yves\Kernel;
 
-use SprykerEngine\Client\Kernel\Service\AbstractClient;
+use SprykerEngine\Client\Kernel\AbstractClient;
 use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
 use SprykerEngine\Yves\Kernel\DependencyContainer\DependencyContainerInterface;
 

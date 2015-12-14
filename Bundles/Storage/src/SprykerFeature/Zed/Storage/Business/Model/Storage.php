@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Storage\Business\Model;
 
-use SprykerFeature\Client\Storage\Service\StorageClient;
+use SprykerFeature\Client\Storage\StorageClient;
 
 class Storage
 {

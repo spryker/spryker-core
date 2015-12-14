@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Storage\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Client\Storage\Service\StorageClient;
+use SprykerFeature\Client\Storage\StorageClient;
 use SprykerFeature\Zed\Storage\Business\Model\Storage;
 use SprykerFeature\Zed\Storage\StorageDependencyProvider;
 
