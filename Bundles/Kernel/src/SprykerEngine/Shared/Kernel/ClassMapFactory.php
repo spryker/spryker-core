@@ -15,7 +15,7 @@ class ClassMapFactory
     const CLASS_MAP_FILE_NAME = '.class_map';
 
     /**
-     * @var ClassMapFactory
+     * @var self
      */
     protected static $instance;
 
@@ -30,7 +30,7 @@ class ClassMapFactory
     private $instanceBuilder;
 
     /**
-     * @return ClassMapFactory
+     * @return self
      */
     public static function getInstance()
     {

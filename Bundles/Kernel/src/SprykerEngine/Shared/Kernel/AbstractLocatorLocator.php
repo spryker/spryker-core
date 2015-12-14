@@ -24,14 +24,14 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
     protected $locator;
 
     /**
-     * @var AbstractLocatorLocator
+     * @var self
      */
     private static $instance;
 
     /**
      * @param array $locator
      *
-     * @return AbstractLocatorLocator|static
+     * @return self|static
      */
     public static function getInstance(array $locator = null)
     {

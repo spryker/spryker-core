@@ -27,7 +27,7 @@ class SalesConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getInvoiceIncrementDevider()
+    public function getInvoiceIncrementDivider()
     {
         return '-';
     }

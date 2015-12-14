@@ -23,7 +23,7 @@ class CurrencyManager
     private static $currency;
 
     /**
-     * @var
+     * @var self
      */
     private static $instance;
 

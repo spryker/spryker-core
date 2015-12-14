@@ -23,14 +23,14 @@ class Locator implements LocatorLocatorInterface
     protected $locator;
 
     /**
-     * @var Locator
+     * @var self
      */
     private static $instance;
 
     /**
      * @param array $locator
      *
-     * @return Locator
+     * @return self
      */
     public static function getInstance(array $locator = null)
     {
