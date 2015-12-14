@@ -8,8 +8,8 @@ namespace Spryker\Yves\Application\Plugin\Provider;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use Spryker\Shared\Library\Log;
-use Spryker\Shared\Library\Monolog\LumberjackHandler;
+use SprykerFeature\Shared\Library\Log;
+use SprykerFeature\Shared\Library\Monolog\EventJournalHandler;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
@@ -52,7 +52,7 @@ class MonologServiceProvider implements ServiceProviderInterface
         };
 
         $app['monolog.handler'] = function () use ($app) {
-            return new LumberjackHandler($app['monolog.level']);
+            return new EventJournalHandler($app['monolog.level']);
         };
 
         $app['monolog.level'] = function () {

@@ -8,18 +8,22 @@ namespace Spryker\Yves\Application\Plugin\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Lumberjack\Model\Event;
-use Spryker\Shared\Lumberjack\Model\EventJournalInterface;
-use Spryker\Shared\NewRelic\ApiInterface;
-use Spryker\Shared\Library\System;
+use SprykerEngine\Shared\Config;
+use SprykerEngine\Shared\EventJournal\Model\Event;
+use SprykerFeature\Client\EventJournal\Service\EventJournalClientInterface;
+use SprykerFeature\Shared\NewRelic\ApiInterface;
+use SprykerFeature\Shared\Library\System;
+use SprykerFeature\Shared\Yves\YvesConfig;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class YvesLoggingServiceProvider implements ServiceProviderInterface
 {
 
     /**
-     * @var EventJournalInterface
+     * @var EventJournalClientInterface
      */
     protected $eventJournal;
 
@@ -29,10 +33,10 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
     protected $newRelicApi;
 
     /**
-     * @param EventJournalInterface $eventJournal
+     * @param EventJournalClientInterface $eventJournal
      * @param ApiInterface $newRelicApi
      */
-    public function __construct(EventJournalInterface $eventJournal, ApiInterface $newRelicApi)
+    public function __construct(EventJournalClientInterface $eventJournal, ApiInterface $newRelicApi)
     {
         $this->eventJournal = $eventJournal;
         $this->newRelicApi = $newRelicApi;
@@ -59,10 +63,15 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
      * and should be used for "dynamic" configuration (whenever
      * a service must be requested).
      *
+     * @param Application $app
+     *
      * @return void
      */
     public function boot(Application $app)
     {
+        $app['dispatcher']->addListener(KernelEvents::CONTROLLER, [$this, 'onKernelController'], -255);
+        $this->setDeviceIdCookie($app);
+        $this->setVisitIdCookie($app);
     }
 
     /**
@@ -86,15 +95,12 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
     protected function logRequest(Request $request)
     {
         $route = $request->attributes->get('_route', 'unknown');
-
         // do not log the loadbalancer-heartbeat
         if (strpos($route, 'system/heartbeat') !== false) {
             return;
         }
 
-        $event = new Event();
-        $event->addField(Event::FIELD_NAME, 'request');
-        $this->eventJournal->saveEvent($event);
+        $this->logEvent($request);
     }
 
     /**
@@ -117,4 +123,69 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
         }
     }
 
+    /**
+     * @param Request $request
+     */
+    protected function logEvent(Request $request)
+    {
+        $event = new Event();
+        $event->setField(Event::FIELD_NAME, 'request');
+        print_r( $request->attributes->get('_route'));
+        if (is_string($request->attributes->get('_controller'))) {
+            $event->setStaticField('controller', $request->attributes->get('_controller'));
+        }
+        if (is_string($request->attributes->get('_route'))) {
+            $event->setStaticField('route', $request->attributes->get('_route'));
+        }
+        $this->eventJournal->saveEvent($event);
+    }
+
+    /**
+     * @param Application $app
+     *
+     * @return void
+     */
+    private function setDeviceIdCookie(Application $app)
+    {
+        $this->setTrackingCookie(
+            $app,
+            Config::get(YvesConfig::YVES_COOKIE_DEVICE_ID_NAME),
+            Config::get(YvesConfig::YVES_COOKIE_DEVICE_ID_VALID_FOR)
+        );
+    }
+
+    /**
+     * @param Application $app
+     *
+     * @return void
+     */
+    private function setVisitIdCookie(Application $app)
+    {
+        $this->setTrackingCookie(
+            $app,
+            Config::get(YvesConfig::YVES_COOKIE_VISITOR_ID_NAME),
+            Config::get(YvesConfig::YVES_COOKIE_VISITOR_ID_VALID_FOR)
+        );
+    }
+
+    /**
+     * @param Application $app
+     * @param $cookieName
+     * @param $validFor
+     *
+     * @return void
+     */
+    private function setTrackingCookie(Application $app, $cookieName, $validFor) {
+        if (empty($_COOKIE[$cookieName])) {
+            $_COOKIE[$cookieName] = sha1(uniqid('', true));
+        }
+        $dt = new \DateTime();
+        $app['cookies'][] = new Cookie(
+            $cookieName,
+            $_COOKIE[$cookieName],
+            $dt->modify($validFor),
+            '/',
+            Config::get(YvesConfig::YVES_COOKIE_DOMAIN)
+        );
+    }
 }

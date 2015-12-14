@@ -13,15 +13,15 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
-use Spryker\Client\Lumberjack\EventJournalClient;
-use Spryker\Shared\Lumberjack\Model\Event;
-use Spryker\Shared\Library\Communication\ObjectInterface;
-use Spryker\Shared\Library\Config;
-use Spryker\Shared\Library\System;
-use Spryker\Shared\Library\Communication\Request;
-use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use Spryker\Shared\Application\ApplicationConstants;
+use SprykerFeature\Client\EventJournal\Service\EventJournal;
+use SprykerEngine\Shared\EventJournal\Model\Event;
+use SprykerFeature\Shared\Library\Communication\ObjectInterface;
+use SprykerFeature\Shared\Library\Config;
+use SprykerFeature\Shared\Library\System;
+use SprykerFeature\Shared\Library\Communication\Request;
+use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
+use SprykerFeature\Shared\Application\ApplicationConstants;
 
 class ZedClient
 {
@@ -158,7 +158,7 @@ class ZedClient
         /*
          * @todo CD-417
          */
-        $eventJournal = new EventJournalClient();
+        $eventJournal = new EventJournal();
         $event = new Event();
         $eventJournal->applyCollectors($event);
         $requestId = $event->getFields()['request_id'];
@@ -286,17 +286,17 @@ class ZedClient
         $event = new Event();
         $responseTransfer = $transfer->getTransfer();
         if ($responseTransfer instanceof TransferInterface) {
-            $event->addField('transfer_data', $responseTransfer->toArray());
-            $event->addField('transfer_class', get_class($responseTransfer));
+            $event->setField('transfer_data', $responseTransfer->toArray());
+            $event->setField('transfer_class', get_class($responseTransfer));
         } else {
-            $event->addField('transfer_data', null);
-            $event->addField('transfer_class', null);
+            $event->setField('transfer_data', null);
+            $event->setField('transfer_class', null);
         }
-        $event->addField('raw_body', $rawBody);
+        $event->setField('raw_body', $rawBody);
 
-        $event->addField('name', 'transfer');
-        $event->addField('path_info', $pathInfo);
-        $event->addField('sub_type', $subType);
+        $event->setField('name', 'transfer');
+        $event->setField('path_info', $pathInfo);
+        $event->setField('sub_type', $subType);
         $lumberjack->saveEvent($event);
     }
 
