@@ -7,28 +7,30 @@
 namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
+use Spryker\Zed\Kernel\Business\ModelResult;
+use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
 class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisionRulePluginInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
-    public function check(
-        DiscountTransfer $discountTransfer,
-        CalculableInterface $container
-    ) {
+    public function check(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)
+    {
         $decisionRuleEntity = $this->getContext()[self::KEY_ENTITY];
 
-        return $this->getFacade()->isMinimumCartSubtotalReached($container, $decisionRuleEntity);
+        return $this->getFactory()
+            ->getDiscountFacade()
+            ->isMinimumCartSubtotalReached($quoteTransfer, $decisionRuleEntity);
     }
 
     /**

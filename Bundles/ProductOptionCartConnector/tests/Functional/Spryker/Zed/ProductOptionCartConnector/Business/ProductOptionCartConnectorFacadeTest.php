@@ -7,7 +7,7 @@ namespace Functional\Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Codeception\TestCase\Test;
 use Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
@@ -56,7 +56,7 @@ class ProductOptionCartConnectorFacadeTest extends Test
         $itemTransfer = (new ItemTransfer())
             ->addProductOption($productOptionTransfer);
 
-        $changeTransfer = (new ChangeTransfer())
+        $changeTransfer = (new CartChangeTransfer())
             ->addItem($itemTransfer);
 
         $this->facade->expandProductOptions($changeTransfer);

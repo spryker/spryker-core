@@ -8,7 +8,7 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreCheckAdapterMock;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
@@ -77,7 +77,7 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
             ->setGrandTotalWithDiscounts(10000)
             ->setSubtotal(10000);
 
-        $cartTransfer = new CartTransfer();
+        $cartTransfer = new QuoteTransfer();
         $cartTransfer
             ->addItem($itemTransfer)
             ->setTotals($totalsTransfer);

@@ -6,54 +6,46 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
+use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
 
-/**
- * @method \Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorConfig getConfig()
- */
 class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
      * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator
      */
-    public function createDiscountTotalsCalculator()
+    public function getDiscountTotalsCalculator()
     {
         return new DiscountTotalsCalculator();
     }
 
     /**
-     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator
      */
-    public function createGrandTotalWithDiscountsTotalsCalculator()
+    public function getGrandTotalWithDiscountsCalculator()
     {
-        $calculationFacade = $this->getCalculationFacade();
-        $discountTotalsCalculator = $this->createDiscountTotalsCalculator();
-
-        return new GrandTotalWithDiscountsTotalsCalculator(
-            $calculationFacade,
-            $discountTotalsCalculator
-        );
+        return $this->getFactory()->createModelCalculatorGrandTotalWithDiscountsCalculator();
     }
 
     /**
      * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator
      */
-    public function createRemoveAllCalculatedDiscountsCalculator()
+    public function getRemoveAllCalculatedDiscountsCalculator()
     {
         return new RemoveAllCalculatedDiscountsCalculator();
     }
 
     /**
-     * @return \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface
+     * @return \Spryker\Zed\Calculation\Business\CalculationFacade
      */
     public function getCalculationFacade()
     {
-        return $this->getProvidedDependency(DiscountCalculationConnectorDependencyProvider::FACADE_CALCULATOR);
+        return $this->getLocator()->calculation()->facade();
     }
 
 }

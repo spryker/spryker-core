@@ -6,66 +6,39 @@
 
 namespace Spryker\Client\Cart\Zed;
 
-use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Spryker\Shared\Transfer\TransferInterface;
 
 interface CartStubInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
+     * @param CartChangeTransfer|TransferInterface $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return QuoteTransfer
      */
-    public function addItem(ChangeTransfer $changeTransfer);
+    public function addItem(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
+     * @param CartChangeTransfer|TransferInterface $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return QuoteTransfer
      */
-    public function removeItem(ChangeTransfer $changeTransfer);
+    public function removeItem(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
+     * @param CartChangeTransfer|TransferInterface $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return QuoteTransfer
      */
-    public function increaseItemQuantity(ChangeTransfer $changeTransfer);
+    public function increaseItemQuantity(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
+     * @param CartChangeTransfer|TransferInterface $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return QuoteTransfer
      */
-    public function decreaseItemQuantity(ChangeTransfer $changeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function addCoupon(ChangeTransfer $changeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function removeCoupon(ChangeTransfer $changeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function clearCoupons(ChangeTransfer $changeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CartTransfer|\Spryker\Shared\Transfer\TransferInterface $cartTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function recalculate(CartTransfer $cartTransfer);
+    public function decreaseItemQuantity(CartChangeTransfer $cartChangeTransfer);
 
 }

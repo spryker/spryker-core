@@ -8,11 +8,6 @@
         <property name="idProductAbstract" type="int" />
         <property name="abstractSku" type="string" />
         <property name="name" type="string" />
-        <property name="taxSet" type="TaxSet" />
+        <property name="taxRate" type="float" />
     </transfer>
-
-    <transfer name="Change">
-        <property name="items" type="Item[]" singular="item" />
-    </transfer>
-
 </transfers>

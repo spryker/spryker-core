@@ -89,14 +89,12 @@
         <property name="name" type="string" />
         <property name="sku" type="string" />
         <property name="groupKey" type="string"/>
-        <property name="grossPrice" type="int" />
-        <property name="priceToPay" type="int" />
-        <property name="taxSet" type="TaxSet" />
-        <property name="quantity" type="int" />
-        <property name="discounts" type="Discount[]" singular="discount" />
-        <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="unitGrossPrice" type="int" />
-        <property name="unitPriceToPay" type="int" />
+        <property name="sumGrossPrice" type="int" />
+        <property name="taxRate" type="float" />
+        <property name="quantity" type="int" />
+        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="variety" type="string" />
         <property name="status" type="OrderItemState[]" />
     </transfer>
@@ -119,10 +117,10 @@
         <property name="idOptionValueUsage" type="int" />
         <property name="labelOptionType" type="string" />
         <property name="labelOptionValue" type="string" />
-        <property name="taxSet" type="TaxSet" />
-        <property name="discounts" type="Discount[]" singular="discount" />
-        <property name="grossPrice" type="int" />
-        <property name="priceToPay" type="int" />
+        <property name="taxRate" type="float" />
+        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
     </transfer>
 
     <transfer name="OrderItemState">
@@ -155,13 +153,6 @@
         <property name="pseudoCcNumber" type="string" />
         <property name="paymentData" type="string" />
         <property name="paymentDataClassName" type="string" />
-    </transfer>
-
-    <transfer name="DiscountTotalItem">
-        <property name="name" type="string" />
-        <property name="discountType" type="string" />
-        <property name="amount" type="int" />
-        <property name="codes" type="array" singular="code" />
     </transfer>
 
     <transfer name="RegularRedirectPaymentCancellation">

@@ -7,17 +7,18 @@
 namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CollectorInterface
 {
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
-     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
+     * @param QuoteTransfer $quoteTransfer
+     * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return OrderTransfer[]
      */
-    public function collect(CalculableInterface $container, DiscountCollectorTransfer $discountCollectorTransfer);
+    public function collect(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer);
 
 }

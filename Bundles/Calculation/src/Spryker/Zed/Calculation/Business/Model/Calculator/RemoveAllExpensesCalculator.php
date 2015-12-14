@@ -6,23 +6,19 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
-class RemoveAllExpensesCalculator implements
-    CalculatorPluginInterface
+class RemoveAllExpensesCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculate(CalculableInterface $calculableContainer)
+    public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
-            $item->setExpenses(new \ArrayObject());
-        }
+        $quoteTransfer->setExpenses(new \ArrayObject());
     }
 
 }

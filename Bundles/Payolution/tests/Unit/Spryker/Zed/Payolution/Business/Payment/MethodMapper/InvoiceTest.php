@@ -7,7 +7,7 @@ namespace Unit\Spryker\Zed\Payolution\Business\Payment\MethodMapper;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -45,7 +45,7 @@ class InvoiceTest extends Test
             ->setGrandTotalWithDiscounts(10000)
             ->setSubtotal(10000);
 
-        $cartTransfer = new CartTransfer();
+        $cartTransfer = new QuoteTransfer();
         $cartTransfer->setTotals($totalsTransfer);
 
         $addressTransfer = new AddressTransfer();

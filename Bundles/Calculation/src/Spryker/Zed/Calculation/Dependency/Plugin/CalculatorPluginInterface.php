@@ -6,14 +6,14 @@
 
 namespace Spryker\Zed\Calculation\Dependency\Plugin;
 
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CalculatorPluginInterface
 {
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param QuoteTransfer $quoteTransfer
      */
-    public function recalculate(CalculableInterface $calculableContainer);
+    public function recalculate(QuoteTransfer $quoteTransfer);
 
 }

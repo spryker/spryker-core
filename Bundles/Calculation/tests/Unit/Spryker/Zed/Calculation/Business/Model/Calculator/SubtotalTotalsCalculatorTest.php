@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
+
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
+use SprykerEngine\Zed\Kernel\Locator;
+
+/**
+ * @group SubtotalTest
+ * @group Calculation
+ */
+class SubtotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
+{
+
+    const ITEM_GROSS_PRICE = 10000;
+    const ITEM_OPTION_GROSS_PRICE = 1000;
+
+    /**
+     * @return void
+     */
+    public function testSubtotalShouldBeMoreThanZeroForAnOrderWithOneItem()
+    {
+        $quoteTransfer = $this->getQuoteTransferWithFixtureData();
+
+        $item = $this->getItemWithFixtureData();
+        $item->setQuantity(1);
+        $item->setUnitGrossPrice(self::ITEM_GROSS_PRICE);
+        $item->setSumGrossPriceWithProductOptions(self::ITEM_GROSS_PRICE + self::ITEM_OPTION_GROSS_PRICE);
+        $quoteTransfer->addItem($item);
+
+        $calculator = new SubtotalTotalsCalculator(Locator::getInstance());
+        $calculator->recalculate($quoteTransfer);
+        $this->assertEquals(self::ITEM_GROSS_PRICE + self::ITEM_OPTION_GROSS_PRICE , $quoteTransfer->getTotals()->getSubtotal());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSubtotalShouldReturnTwiceTheItemGrossPriceForAnOrderWithTwoItems()
+    {
+        $quoteTransfer = $this->getQuoteTransferWithFixtureData();
+
+        $item = $this->getItemWithFixtureData();
+
+        $item->setUnitGrossPrice(self::ITEM_GROSS_PRICE);
+        $item->setQuantity(1);
+        $item->setSumGrossPriceWithProductOptions(self::ITEM_GROSS_PRICE + self::ITEM_OPTION_GROSS_PRICE);
+        $quoteTransfer->addItem($item);
+        $quoteTransfer->addItem(clone $item);
+
+
+        $calculator = new SubtotalTotalsCalculator(Locator::getInstance());
+        $calculator->recalculate($quoteTransfer);
+        $this->assertEquals(
+            2 * (self::ITEM_GROSS_PRICE + self::ITEM_OPTION_GROSS_PRICE),
+            $quoteTransfer->getTotals()->getSubtotal()
+        );
+    }
+
+    /**
+     * @return QuoteTransfer
+     */
+    protected function getQuoteTransferWithFixtureData()
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setTotals(new TotalsTransfer());
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return ItemTransfer
+     */
+    protected function getItemWithFixtureData()
+    {
+        $item = new ItemTransfer();
+
+        return $item;
+    }
+
+    /**
+     * @return AbstractLocatorLocator|AutoCompletion
+     */
+    protected function getLocator()
+    {
+        return Locator::getInstance();
+    }
+
+}

@@ -5,7 +5,7 @@
 
 namespace Spryker\Zed\ProductOptionCartConnector\Business\Manager;
 
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface;
 
@@ -13,12 +13,12 @@ class ProductOptionManager implements ProductOptionManagerInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
+     * @var ProductOptionCartConnectorToProductOptionInterface
      */
     private $productOptionFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
+     * @param ProductOptionCartConnectorToProductOptionInterface
      */
     public function __construct(ProductOptionCartConnectorToProductOptionInterface $productOptionFacade)
     {
@@ -26,11 +26,11 @@ class ProductOptionManager implements ProductOptionManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
+     * @param CartChangeTransfer $change
      *
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @return CartChangeTransfer
      */
-    public function expandProductOptions(ChangeTransfer $change)
+    public function expandProductOptions(CartChangeTransfer $change)
     {
         foreach ($change->getItems() as $cartItem) {
             $this->expandProductOptionTransfers($cartItem);
@@ -40,7 +40,7 @@ class ProductOptionManager implements ProductOptionManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
+     * @param ItemTransfer $cartItem
      *
      * @return void
      */

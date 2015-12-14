@@ -9,7 +9,7 @@ namespace Functional\Spryker\Zed\Checkout\Business;
 use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\Checkout\Dependency\MockOmsOrderHydrator;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
@@ -281,7 +281,7 @@ class CheckoutFacadeTest extends Test
             ->setName('Product2')
             ->setTaxSet(new TaxSetTransfer());
 
-        $cart = new CartTransfer();
+        $cart = new QuoteTransfer();
         $cart->addItem($item1);
         $cart->addItem($item2);
 

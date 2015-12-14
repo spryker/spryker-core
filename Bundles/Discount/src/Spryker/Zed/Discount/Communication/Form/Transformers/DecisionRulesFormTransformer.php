@@ -6,10 +6,14 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\Transformers;
 
+use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
 use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\DataTransformerInterface;
 use Zend\Filter\Word\CamelCaseToUnderscore;
+use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
+use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
 class DecisionRulesFormTransformer implements DataTransformerInterface
 {
@@ -37,17 +41,38 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
     protected $camelCaseToUnderscoreFilter;
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfig $config
-     * @param \Zend\Filter\Word\CamelCaseToUnderscore $camelCaseToUnderscoreFilter
+     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
-    public function __construct(DiscountConfig $config, CamelCaseToUnderscore $camelCaseToUnderscoreFilter)
-    {
-        $this->config = $config;
+    private $calculatorPlugins;
+    /**
+     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
+     */
+    private $collectorPlugins;
+    /**
+     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     */
+    private $decisionRulePlugins;
+
+    /**
+     * @param \Zend\Filter\Word\CamelCaseToUnderscore $camelCaseToUnderscoreFilter
+     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $collectorPlugins
+     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
+     */
+    public function __construct(
+        CamelCaseToUnderscore $camelCaseToUnderscoreFilter,
+        array $calculatorPlugins,
+        array $collectorPlugins,
+        array $decisionRulePlugins
+    ) {
         $this->camelCaseToUnderscoreFilter = $camelCaseToUnderscoreFilter;
+        $this->calculatorPlugins = $calculatorPlugins;
+        $this->collectorPlugins = $collectorPlugins;
+        $this->decisionRulePlugins = $decisionRulePlugins;
     }
 
     /**
-     * @param \Spryker\Shared\Transfer\TransferInterface $formArray
+     * @param array $formArray
      *
      * @return array
      */
@@ -118,9 +143,8 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
         }
 
         $conversionMethod = $this->decideTransformRule($showInForm);
-        $calculatorPlugins = $this->config->getAvailableCalculatorPlugins();
 
-        $formArray[self::AMOUNT] = $this->getAmount($formArray, $calculatorPlugins, $conversionMethod);
+        $formArray[self::AMOUNT] = $this->getAmount($formArray, $this->calculatorPlugins, $conversionMethod);
 
         return $formArray;
     }
@@ -152,7 +176,6 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
      */
     protected function filterDecisionRules(array $fromArray, $showInForm = false)
     {
-        $decisionRulesPlugins = $this->config->getAvailableDecisionRulePlugins();
         $conversionMethod = $this->decideTransformRule($showInForm);
 
         $decisionRulePluginKey = self::DECISION_RULE_PLUGIN_FORM;
@@ -167,7 +190,7 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
             if (!array_key_exists($decisionRulePluginKey, $decisionRule)) {
                 continue;
             }
-            $plugin = $decisionRulesPlugins[$decisionRule[$decisionRulePluginKey]];
+            $plugin = $this->decisionRulePlugins[$decisionRule[$decisionRulePluginKey]];
             $decisionRule[self::VALUE] = $plugin->$conversionMethod($decisionRule[$valueKey]);
         }
 
@@ -182,14 +205,14 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
      */
     protected function filterCollectorPlugins(array $formArray, $showInForm = false)
     {
-        $collectorPlugins = $this->config->getAvailableCollectorPlugins();
         $conversionMethod = $this->decideTransformRule($showInForm);
 
         foreach ($formArray[self::COLLECTOR_PLUGINS] as &$collectorPlugin) {
-            if (!array_key_exists(self::COLLECTOR_PLUGIN, $collectorPlugin) || !array_key_exists($collectorPlugin[self::COLLECTOR_PLUGIN], $collectorPlugins)) {
+            if (!array_key_exists(self::COLLECTOR_PLUGIN, $collectorPlugin) ||
+                !array_key_exists($collectorPlugin[self::COLLECTOR_PLUGIN], $this->collectorPlugins)) {
                 continue;
             }
-            $plugin = $collectorPlugins[$collectorPlugin[self::COLLECTOR_PLUGIN]];
+            $plugin =  $this->collectorPlugins[$collectorPlugin[self::COLLECTOR_PLUGIN]];
             $collectorPlugin[self::VALUE] = $plugin->$conversionMethod($collectorPlugin[self::VALUE]);
         }
 

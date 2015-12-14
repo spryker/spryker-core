@@ -69,9 +69,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals($items[0]->getGrossPrice(), current($items[0]->getDiscounts())->getAmount());
-        $this->assertEquals($items[1]->getGrossPrice(), current($items[1]->getDiscounts())->getAmount());
-        $this->assertEquals($items[2]->getGrossPrice(), current($items[2]->getDiscounts())->getAmount());
+        $this->assertEquals($items[0]->getUnitGrossPrice(), current($items[0]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals($items[1]->getUnitGrossPrice(), current($items[1]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals($items[2]->getUnitGrossPrice(), current($items[2]->getCalculatedDiscounts())->getUnitGrossAmount());
     }
 
     /**
@@ -92,9 +92,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[0]->getDiscounts())->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[1]->getDiscounts())->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[2]->getDiscounts())->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[0]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[1]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[2]->getCalculatedDiscounts())->getUnitGrossAmount());
     }
 
     /**
@@ -115,9 +115,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[0]->getDiscounts())->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_13334, current($items[1]->getDiscounts())->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[2]->getDiscounts())->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[0]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_13334, current($items[1]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[2]->getCalculatedDiscounts())->getUnitGrossAmount());
     }
 
     /**
@@ -138,9 +138,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals(self::DISCOUNT_AMOUNT_100, current($items[0]->getDiscounts())->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_200, current($items[1]->getDiscounts())->getAmount());
-        $this->assertEquals(self::DISCOUNT_AMOUNT_400, current($items[2]->getDiscounts())->getAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_100, current($items[0]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_200, current($items[1]->getCalculatedDiscounts())->getUnitGrossAmount());
+        $this->assertEquals(self::DISCOUNT_AMOUNT_400, current($items[2]->getCalculatedDiscounts())->getUnitGrossAmount());
     }
 
     /**
@@ -161,9 +161,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals(0, $items[0]->getDiscounts()->count());
-        $this->assertEquals(0, $items[1]->getDiscounts()->count());
-        $this->assertEquals(0, $items[2]->getDiscounts()->count());
+        $this->assertEquals(0, $items[0]->getCalculatedDiscounts()->count());
+        $this->assertEquals(0, $items[1]->getCalculatedDiscounts()->count());
+        $this->assertEquals(0, $items[2]->getCalculatedDiscounts()->count());
     }
 
     /**
@@ -184,9 +184,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-        $this->assertEquals(0, $items[0]->getDiscounts()->count());
-        $this->assertEquals(0, $items[1]->getDiscounts()->count());
-        $this->assertEquals(0, $items[2]->getDiscounts()->count());
+        $this->assertEquals(0, $items[0]->getCalculatedDiscounts()->count());
+        $this->assertEquals(0, $items[1]->getCalculatedDiscounts()->count());
+        $this->assertEquals(0, $items[2]->getCalculatedDiscounts()->count());
     }
 
     /**
@@ -200,7 +200,7 @@ class DistributorTest extends Test
 
         foreach ($grossPrices as $grossPrice) {
             $item = new ItemTransfer();
-            $item->setGrossPrice($grossPrice);
+            $item->setUnitGrossPrice($grossPrice);
             $items[] = $item;
         }
 

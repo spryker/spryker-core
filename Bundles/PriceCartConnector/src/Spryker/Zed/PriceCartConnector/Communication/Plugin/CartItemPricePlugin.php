@@ -6,25 +6,36 @@
 
 namespace Spryker\Zed\PriceCartConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface;
+use Spryker\Zed\PriceCartConnector\Communication\PriceCartConnectorCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\PriceCartConnector\Communication\PriceCartConnectorCommunicationFactory getFactory()
- * @method \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacade getFacade()
+ * @method PriceCartConnectorCommunicationFactory getFactory()
  */
 class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
-     *
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @var PriceManagerInterface
      */
-    public function expandItems(ChangeTransfer $change)
+    private $priceManager;
+
+    public function __construct()
     {
-        return $this->getFacade()->addGrossPriceToItems($change);
+        $this->priceManager = $this->getFactory()->createFacade();
+    }
+
+    /**
+     * @param CartChangeTransfer $change
+     *
+     * @return CartChangeTransfer
+     */
+    public function expandItems(CartChangeTransfer $change)
+    {
+        return $this->priceManager->addGrossPriceToItems($change);
     }
 
 }

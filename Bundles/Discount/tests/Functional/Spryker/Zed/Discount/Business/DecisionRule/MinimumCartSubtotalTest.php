@@ -7,11 +7,13 @@
 namespace Functional\Spryker\Zed\Discount\Business\DecisionRule;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Zed\Ide\AutoCompletion;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
-use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\Kernel\Locator;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
-use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group DiscountDecisionRuleMinimumCartSubtotalTest
@@ -30,15 +32,11 @@ class MinimumCartSubtotalTest extends Test
      */
     public function testShouldReturnTrueForAnOrderWithAHighEnoughSubtotal()
     {
-        $order = new CalculableContainer(new OrderTransfer());
-        $totals = new TotalsTransfer();
-        $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_1000);
-        $order->getCalculableObject()->setTotals($totals);
-
+        $quoteTransfer = $this->createQuoteTransferWithSubtotal(self::CART_SUBTOTAL_1000);
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
         $decisionRule = $this->createMinimumCartSubtotal();
-        $result = $decisionRule->isMinimumCartSubtotalReached($order, $decisionRuleEntity);
+        $result = $decisionRule->isMinimumCartSubtotalReached($quoteTransfer, $decisionRuleEntity);
 
         $this->assertTrue($result->isSuccess());
     }
@@ -48,15 +46,11 @@ class MinimumCartSubtotalTest extends Test
      */
     public function testShouldReturnFalseForAnOrderWithATooLowSubtotal()
     {
-        $order = new CalculableContainer(new OrderTransfer());
-        $totals = new TotalsTransfer();
-        $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_400);
-        $order->getCalculableObject()->setTotals($totals);
-
+        $quoteTransfer = $this->createQuoteTransferWithSubtotal(self::CART_SUBTOTAL_400);
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
         $decisionRule = $this->createMinimumCartSubtotal();
-        $result = $decisionRule->isMinimumCartSubtotalReached($order, $decisionRuleEntity);
+        $result = $decisionRule->isMinimumCartSubtotalReached($quoteTransfer, $decisionRuleEntity);
 
         $this->assertFalse($result->isSuccess());
     }
@@ -66,23 +60,33 @@ class MinimumCartSubtotalTest extends Test
      */
     public function testShouldReturnTrueForAnOrderWithAExactlyMatchingSubtotal()
     {
-        $order = new CalculableContainer(new OrderTransfer());
-        $totals = new TotalsTransfer();
-        $totals->setSubtotalWithoutItemExpenses(self::CART_SUBTOTAL_500);
-        $order->getCalculableObject()->setTotals($totals);
+        $quoteTransfer = $this->createQuoteTransferWithSubtotal(self::CART_SUBTOTAL_500);
 
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
         $decisionRule = $this->createMinimumCartSubtotal();
-        $result = $decisionRule->isMinimumCartSubtotalReached($order, $decisionRuleEntity);
+        $result = $decisionRule->isMinimumCartSubtotalReached($quoteTransfer, $decisionRuleEntity);
 
         $this->assertTrue($result->isSuccess());
     }
 
     /**
+     * @return QuoteTransfer
+     */
+    protected function createQuoteTransferWithSubtotal($subtotal)
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $totals = new TotalsTransfer();
+        $totals->setSubtotal($subtotal);
+        $quoteTransfer->setTotals($totals);
+
+        return $quoteTransfer;
+    }
+
+    /**
      * @param int $value
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
+     * @return SpyDiscountDecisionRule
      */
     protected function getDecisionRuleEntity($value)
     {
@@ -93,7 +97,15 @@ class MinimumCartSubtotalTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal
+     * @return AbstractLocatorLocator|AutoCompletion
+     */
+    protected function getLocator()
+    {
+        return Locator::getInstance();
+    }
+
+    /**
+     * @return MinimumCartSubtotal
      */
     protected function createMinimumCartSubtotal()
     {

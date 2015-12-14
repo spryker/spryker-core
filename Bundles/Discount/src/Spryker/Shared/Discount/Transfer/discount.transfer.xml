@@ -20,7 +20,7 @@
         <property name="description" type="string" />
         <property name="amount" type="int" />
         <property name="type" type="string" />
-        <property name="usedCodes" type="array" singular="usedCode" />
+        <property name="voucherCode" type="string"/>
         <property name="calculatorPlugin" type="string" />
         <property name="isPrivileged" type="string" />
         <property name="isActive" type="string" />
@@ -28,6 +28,15 @@
         <property name="validTo" type="string" />
         <property name="collectorLogicalOperator" type="string" />
         <property name="discountCollectors" type="DiscountCollector[]" />
+    </transfer>
+
+    <transfer name="calculatedDiscount">
+        <property name="displayName" type="string" />
+        <property name="description" type="string" />
+        <property name="voucherCode" type="string"/>
+        <property name="unitGrossAmount" type="int" />
+        <property name="sumGrossAmount" type="int" />
+        <property name="quantity" type="int" />
     </transfer>
 
     <transfer name="DecisionRule">
@@ -119,6 +128,18 @@
         <property name="value" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="billingAddresses" type="Address[]" singular="billingAddress"/>
+        <property name="shippingAddresses" type="Address[]" singular="shippingAddress"/>
+        <property name="paymentMethod" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
     </transfer>
 
 </transfers>

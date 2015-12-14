@@ -6,18 +6,20 @@
 namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class Aggregate implements CollectorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Collector\CollectorInterface[]
+     * @var CollectorInterface[]
      */
     protected $collectors = [];
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Collector\CollectorInterface[] $collectors
+     * @param CollectorInterface[] $collectors
      */
     public function __construct(array $collectors)
     {
@@ -25,15 +27,15 @@ class Aggregate implements CollectorInterface
     }
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return OrderTransfer[]
      */
-    public function collect(CalculableInterface $container, DiscountCollectorTransfer $discountCollectorTransfer)
+    public function collect(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer)
     {
         $collected = [];
         foreach ($this->collectors as $collector) {
-            $collected = array_merge($collected, $collector->collect($container, $discountCollectorTransfer));
+            $collected = array_merge($collected, $collector->collect($quoteTransfer, $discountCollectorTransfer));
         }
 
         return $collected;

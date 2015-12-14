@@ -3,42 +3,30 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="Cart">
-        <property name="items" type="Item[]" singular="item" />
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals" />
-        <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="couponCodes" type="array" singular="couponCode" />
+        <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
-    <transfer name="Change">
+    <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item" />
-        <property name="couponCode" type="string" />
-        <property name="cart" type="Cart" />
-        <property name="order" type="Order" />
-        <property name="userId" type="string" />
-        <property name="cartHash" type="string" />
-        <property name="deleteReason" type="string" />
-        <property name="isMerged" type="string" />
+        <property name="quote" type="Quote" />
     </transfer>
 
     <transfer name="Item">
         <property name="id" type="int" />
         <property name="sku" type="string" />
-        <property name="uniqueIdentifier" type="string" />
         <property name="groupKey" type="string"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="quantity" type="int" />
-        <property name="grossPrice" type="int" />
-        <property name="priceToPay" type="int" />
-        <property name="totalPrice" type="int" />
-        <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="discounts" type="Discount[]"  singular="discount" />
-    </transfer>
-
-    <transfer name="StepStorage">
-        <property name="userId" type="string" />
-        <property name="stepName" type="string" />
-        <property name="isSuccess" type="string" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
+        <property name="unitGrossPriceWithProductOptions" type="int" />
+        <property name="sumGrossPriceWithProductOptions" type="int" />
+        <property name="unitGrossPriceWithProductOptionAndDiscountAmounts" type="int" />
+        <property name="sumGrossPriceWithProductOptionAndDiscountAmounts" type="int" />
+        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
     </transfer>
 
 </transfers>

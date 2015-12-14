@@ -2,38 +2,45 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Zed\Discount\DiscountConfig;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
-abstract class AbstractRuleForm extends AbstractType
+abstract class AbstractRuleForm extends AbstractForm
 {
 
     const DECISION_RULES_PREFIX = 'PLUGIN_DECISION_RULE_';
     const DECISION_COLLECTOR_PREFIX = 'PLUGIN_COLLECTOR_';
 
     /**
-     * @var array
+     * @var DiscountCalculatorPluginInterface[]
      */
     protected $availableCalculatorPlugins;
 
     /**
-     * @var array
+     * @var DiscountCollectorPluginInterface[]
      */
     protected $availableCollectorPlugins;
 
     /**
-     * @var array
+     * @var DiscountDecisionRulePluginInterface[]
      */
     protected $availableDecisionRulePlugins;
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
+     * @param DiscountCalculatorPluginInterface[] $availableCalculatorPlugins
+     * @param DiscountCollectorPluginInterface[] $availableCollectorPlugins
+     * @param DiscountDecisionRulePluginInterface[] $availableDecisionRulePlugins
      */
-    public function __construct(DiscountConfig $discountConfig)
-    {
-        $this->availableCalculatorPlugins = $discountConfig->getAvailableCalculatorPlugins();
-        $this->availableCollectorPlugins = $discountConfig->getAvailableCollectorPlugins();
-        $this->availableDecisionRulePlugins = $discountConfig->getAvailableDecisionRulePlugins();
+    public function __construct(
+        array $availableCalculatorPlugins,
+        array $availableCollectorPlugins,
+        array $availableDecisionRulePlugins
+    ) {
+        $this->availableCalculatorPlugins = $availableCalculatorPlugins;
+        $this->availableCollectorPlugins = $availableCollectorPlugins;
+        $this->availableDecisionRulePlugins = $availableDecisionRulePlugins;
     }
 
     /**
@@ -74,21 +81,6 @@ abstract class AbstractRuleForm extends AbstractType
     {
         $plugins = [];
         $availablePlugins = array_keys($this->availableCollectorPlugins);
-
-        foreach ($availablePlugins as $plugin) {
-            $plugins[$plugin] = $this->filterChoicesLabels($plugin);
-        }
-
-        return $plugins;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getAvailableDecisionRulePlugins()
-    {
-        $plugins = [];
-        $availablePlugins = array_keys($this->availableDecisionRulePlugins);
 
         foreach ($availablePlugins as $plugin) {
             $plugins[$plugin] = $this->filterChoicesLabels($plugin);

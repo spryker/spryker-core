@@ -6,13 +6,18 @@
 
 namespace Spryker\Zed\Tax\Business;
 
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
+use Spryker\Zed\Tax\Business\Model\TaxCalculation;
+use Spryker\Zed\Tax\TaxConfig;
+use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
 use Spryker\Zed\Tax\Business\Model\TaxWriter;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 
 /**
- * @method \Spryker\Zed\Tax\TaxConfig getConfig()
- * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
+ * @method TaxConfig getConfig()
+ * @method TaxQueryContainer getQueryContainer()
  */
 class TaxBusinessFactory extends AbstractBusinessFactory
 {
@@ -39,11 +44,26 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[]
+     * @return TaxChangePluginInterface[]
      */
     public function getTaxChangePlugins()
     {
         return [];
     }
 
+    /**
+     * @return TaxCalculation
+     */
+    public function createTaxCalculator()
+    {
+        return $this->getFactory()->createModelTaxCalculation($this->createPriceCalculationHelper());
+    }
+
+    /**
+     * @return PriceCalculationHelperInterface
+     */
+    protected function createPriceCalculationHelper()
+    {
+        return $this->getFactory()->createModelPriceCalculationHelper();
+    }
 }

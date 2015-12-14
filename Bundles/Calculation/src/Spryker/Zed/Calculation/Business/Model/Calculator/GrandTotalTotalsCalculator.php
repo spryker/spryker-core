@@ -6,101 +6,55 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
-class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
+class GrandTotalTotalsCalculator implements CalculatorInterface
 {
-
     /**
-     * @var \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface
-     */
-    protected $subtotalTotalsCalculator;
-
-    /**
-     * @var \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculatorInterface
-     */
-    protected $expenseTotalsCalculator;
-
-    /**
-     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface $subtotalTotalsCalculatorInterface
-     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculatorInterface $expenseTotalsCalculator
-     */
-    public function __construct(
-        SubtotalTotalsCalculatorInterface $subtotalTotalsCalculatorInterface,
-        ExpenseTotalsCalculatorInterface $expenseTotalsCalculator
-    ) {
-        $this->subtotalTotalsCalculator = $subtotalTotalsCalculatorInterface;
-        $this->expenseTotalsCalculator = $expenseTotalsCalculator;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateTotals(
-        TotalsTransfer $totalsTransfer,
-        CalculableInterface $calculableContainer,
-        $calculableItems
-    ) {
-        $grandTotalWithoutDiscounts = $this->calculateGrandTotal(
-            $totalsTransfer,
-            $calculableContainer,
-            $calculableItems
-        );
-        $totalsTransfer->setGrandTotal($grandTotalWithoutDiscounts);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
-     *
-     * @return int
-     */
-    protected function calculateGrandTotal(
-        TotalsTransfer $totalsTransfer,
-        CalculableInterface $calculableContainer,
-        $calculableItems
-    ) {
-        $grandTotalWithoutDiscounts = $this->getSubtotal($totalsTransfer, $calculableItems);
-        $grandTotalWithoutDiscounts += $this->getOrderExpenseTotal($totalsTransfer, $calculableContainer);
-
-        return $grandTotalWithoutDiscounts;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
-     *
-     * @return int
-     */
-    protected function getSubtotal(TotalsTransfer $totalsTransfer, $calculableItems)
+    public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        if ($totalsTransfer->getSubtotal()) {
-            return $totalsTransfer->getSubtotal();
-        } else {
-            return $this->subtotalTotalsCalculator->calculateSubtotal($calculableItems);
-        }
+        $quoteTransfer->requireTotals();
+
+        $grandTotal = $this->getCalculatedGrandTotal($quoteTransfer);
+        $quoteTransfer->getTotals()->setGrandTotal($grandTotal);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
      */
-    protected function getOrderExpenseTotal(TotalsTransfer $totalsTransfer, CalculableInterface $calculableContainer)
+    protected function getCalculatedGrandTotal(QuoteTransfer $quoteTransfer)
     {
-        if ($totalsTransfer->getExpenses()->getTotalOrderAmount() !== null) {
-            return $totalsTransfer->getExpenses()->getTotalOrderAmount();
-        } else {
-            return $this->expenseTotalsCalculator->calculateExpenseTotal($calculableContainer);
-        }
+        $quoteTransfer->getTotals()->requireSubtotal();
+
+        $subTotal = $quoteTransfer->getTotals()->getSubtotal();
+        $expensesTotal = $this->getExpensesTotal($quoteTransfer);
+
+        $grandTotal = $subTotal + $expensesTotal;
+
+        return $grandTotal;
     }
 
+
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getExpensesTotal(QuoteTransfer $quoteTransfer)
+    {
+        $expensesTotalTransfer = $quoteTransfer->getTotals()->getExpenses();
+        $expensesTotal = 0;
+        if ($expensesTotalTransfer !== null) {
+            $expensesTotal = $expensesTotalTransfer->getTotalAmount();
+        }
+
+        return $expensesTotal;
+    }
 }

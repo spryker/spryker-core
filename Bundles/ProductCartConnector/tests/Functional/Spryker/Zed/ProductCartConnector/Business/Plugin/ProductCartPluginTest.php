@@ -8,7 +8,7 @@ namespace Functional\Spryker\Zed\ProductCartConnector\Business\Plugin;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
 use Spryker\Zed\Locale\Business\LocaleFacade;
@@ -89,7 +89,7 @@ class ProductCartPluginTest extends Test
             ->setSku(self::SKU_PRODUCT_CONCRETE)
             ->save();
 
-        $changeTransfer = new ChangeTransfer();
+        $changeTransfer = new CartChangeTransfer();
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku(self::SKU_PRODUCT_CONCRETE);
         $changeTransfer->addItem($itemTransfer);

@@ -42,8 +42,8 @@
     <transfer name="Item">
         <property name="idSalesOrderItem" type="int" />
         <property name="sku" type="string" />
-        <property name="grossPrice" type="int" />
-        <property name="priceToPay" type="int" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
         <property name="quantity" type="int" />
     </transfer>
 
@@ -71,19 +71,24 @@
         <property name="cart" type="Cart" />
     </transfer>
 
-    <transfer name="Cart">
-        <property name="items" type="Item[]" singular="item" />
-        <property name="totals" type="Totals" />
-        <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="couponCodes" type="array" singular="couponCode" />
-    </transfer>
-
     <transfer name="ProductOption">
         <property name="idSalesOrderItemOption" type="int" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
     </transfer>
 
     <transfer name="Expense">
         <property name="idSalesExpense" type="int" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals" />
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="billingAddresses" type="Address[]" singular="billingAddress" />
+        <property name="shippingAddresses" type="Address[]" singular="shippingAddress" />
+        <property name="paymentMethod" type="string" />
+        <property name="customer" type="Customer" />
     </transfer>
 
 </transfers>

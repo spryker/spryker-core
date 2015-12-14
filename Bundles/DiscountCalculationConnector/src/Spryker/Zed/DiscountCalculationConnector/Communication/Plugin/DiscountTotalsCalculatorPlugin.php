@@ -6,31 +6,25 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 /**
- * @method \Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorCommunicationFactory getFactory()
- * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade getFacade()
+ * @method DiscountCalculationConnectorCommunicationFactory getFactory()
  */
-class DiscountTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculatorPluginInterface
+class DiscountTotalsCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateTotals(
-        TotalsTransfer $totalsTransfer,
-        CalculableInterface $calculableContainer,
-        $calculableItems
-    ) {
-        $this->getFacade()->recalculateDiscountTotals($totalsTransfer, $calculableContainer, $calculableItems);
+    public function recalculate(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->getDiscountCalculationFacade()->calculateDiscountTotals($quoteTransfer);
     }
 
 }

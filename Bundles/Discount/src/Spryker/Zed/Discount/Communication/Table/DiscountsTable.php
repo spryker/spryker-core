@@ -2,11 +2,12 @@
 
 namespace Spryker\Zed\Discount\Communication\Table;
 
-use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -21,7 +22,6 @@ class DiscountsTable extends AbstractTable
     const DECISION_RULE_PLUGIN = 'DecisionRulePlugin';
 
     const PARAM_ID_DISCOUNT = 'id-discount';
-    const URL_DISCOUNT_CART_RULE_EDIT = '/discount/cart-rule/edit';
 
     /**
      * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
@@ -84,7 +84,7 @@ class DiscountsTable extends AbstractTable
                 SpyDiscountTableMap::COL_IS_ACTIVE => $item->getIsActive(),
                 self::COL_PERIOD => $item->getValidFrom(self::DATE_FORMAT) . ' - ' . $item->getValidTo(self::DATE_FORMAT),
                 self::COL_DECISION_RULES => implode(', ', $chosenDecisionRules),
-                self::COL_OPTIONS => implode(' ', $this->getRowOptions($item)),
+                self::COL_OPTIONS => $this->getRowOptions($item),
             ];
         }
 
@@ -111,7 +111,7 @@ class DiscountsTable extends AbstractTable
      */
     protected function getDiscountAmountType(SpyDiscount $discount)
     {
-        if ($discount->getCalculatorPlugin() === DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE) {
+        if ($discount->getCalculatorPlugin() === DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE) {
             return 'percentage';
         }
 
@@ -121,19 +121,13 @@ class DiscountsTable extends AbstractTable
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $item
      *
-     * @return array
+     * @return string
      */
     protected function getRowOptions(SpyDiscount $item)
     {
-        $options = [];
-        $options[] = $this->generateEditButton(
-            Url::generate(self::URL_DISCOUNT_CART_RULE_EDIT, [
-                self::PARAM_ID_DISCOUNT => $item->getIdDiscount(),
-            ]),
-            'Edit'
-        );
+        $url = Url::generate('/discount/cart-rule/edit', [self::PARAM_ID_DISCOUNT => $item->getIdDiscount()]);
 
-        return $options;
+        return '<a class="btn btn-xs btn-info" href="' . $url->buildEscaped() . '">Edit</a>';
     }
 
 }

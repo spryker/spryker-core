@@ -6,21 +6,60 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\DiscountTotalsTransfer;
+use Generated\Shared\Transfer\ExpenseTotalsTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
-class RemoveTotalsCalculator implements CalculatorPluginInterface
+class RemoveTotalsCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculate(CalculableInterface $calculableContainer)
+    public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $calculableContainer->getCalculableObject()->setTotals(new TotalsTransfer());
+        $totalsTransfer = $this->createTotalsTransfer();
+        $totalsTransfer->setTaxTotal($this->createTaxTotalsTransfer());
+        $totalsTransfer->setDiscount($this->createDiscountTotalsTransfer());
+        $totalsTransfer->setExpenses($this->createExpenseTotalsTransfer());
+
+        $quoteTransfer->setTotals($totalsTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
+    protected function createTotalsTransfer()
+    {
+        return new TotalsTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\TaxTotalTransfer
+     */
+    protected function createTaxTotalsTransfer()
+    {
+        return new TaxTotalTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DiscountTotalsTransfer
+     */
+    protected function createDiscountTotalsTransfer()
+    {
+        return new DiscountTotalsTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ExpenseTotalsTransfer
+     */
+    protected function createExpenseTotalsTransfer()
+    {
+        return new ExpenseTotalsTransfer();
     }
 
 }

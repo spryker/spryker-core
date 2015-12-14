@@ -6,23 +6,14 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DiscountCalculationToCalculationInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
-     *
-     * @return void
+     * @param QuoteTransfer $quoteTransfer
      */
-    public function recalculateGrandTotalTotals(
-        TotalsTransfer $totalsTransfer,
-        CalculableInterface $calculableContainer,
-        $calculableItems
-    );
+    public function calculateGrandTotalTotals(QuoteTransfer $quoteTransfer);
 
 }

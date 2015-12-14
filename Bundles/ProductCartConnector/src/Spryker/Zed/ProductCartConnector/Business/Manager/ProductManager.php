@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductCartConnector\Business\Manager;
 
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
@@ -27,24 +27,22 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
      *
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(ChangeTransfer $change)
+    public function expandItems(CartChangeTransfer $change)
     {
         foreach ($change->getItems() as $cartItem) {
-            $productConcreteTransfer = $this->productFacade->getProductConcrete($cartItem->getSku());
+            $productConcreteTransfer = $this->productFacade->getConcreteProduct($cartItem->getSku());
 
-            $cartItem->setId($productConcreteTransfer->getIdProductConcrete())
+            $cartItem->setId($productConcreteTransfer->getIdConcreteProduct())
                 ->setIdProductAbstract($productConcreteTransfer->getIdProductAbstract())
-                ->setAbstractSku($productConcreteTransfer->getProductAbstractSku())
+                ->setAbstractSku($productConcreteTransfer->getAbstractProductSku())
                 ->setName($productConcreteTransfer->getName());
 
-            $taxSetTransfer = $productConcreteTransfer->getTaxSet();
-
-            if ($taxSetTransfer !== null) {
-                $cartItem->setTaxSet($taxSetTransfer);
+            if ($productConcreteTransfer->getTaxRate() !== null) {
+                $cartItem->setTaxRate($productConcreteTransfer->getTaxRate());
             }
         }
 

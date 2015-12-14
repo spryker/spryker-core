@@ -6,10 +6,13 @@
 
 namespace Spryker\Client\Cart;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Cart\Session\QuoteSessionInterface;
+use Spryker\Client\Cart\Zed\CartStubInterface;
+use Spryker\Client\Cart\Exception\CartItemNotFoundException;
 
 /**
  * @method \Spryker\Client\Cart\CartFactory getFactory()
@@ -18,33 +21,19 @@ class CartClient extends AbstractClient implements CartClientInterface
 {
 
     /**
-     * @return \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getCart()
+    public function getQuote()
     {
-        return $this->getSession()->getCart();
+        return $this->getSession()->getQuote();
     }
 
     /**
-     * @return \Spryker\Client\Cart\Session\CartSessionInterface
-     */
-    protected function getSession()
-    {
-        return $this->getFactory()->createSession();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return void
      */
     public function clearCart()
     {
-        $cartTransfer = new CartTransfer();
-
-        $this->getSession()
-            ->setItemCount(0)
-            ->setCart($cartTransfer);
-
-        return $cartTransfer;
+        $this->getSession()->clearQuote();
     }
 
     /**
@@ -56,61 +45,63 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function storeQuoteToSession(QuoteTransfer $quoteTransfer)
+    {
+        $this->getSession()->setQuote($quoteTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addItem(ItemTransfer $itemTransfer)
     {
-        $changeTransfer = $this->prepareCartChange($itemTransfer);
-        $cartTransfer = $this->getZedStub()->addItem($changeTransfer);
+        $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
+        $quoteTransfer = $this->getZedStub()->addItem($cartChangeTransfer);
 
-        return $this->handleCartResponse($cartTransfer);
-    }
+        $this->storeQuoteToSession($quoteTransfer);
 
-    /**
-     * @return \Spryker\Client\Cart\Zed\CartStubInterface
-     */
-    protected function getZedStub()
-    {
-        return $this->getFactory()->createZedStub();
+        return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItem(ItemTransfer $itemTransfer)
     {
-        $itemTransfer = $this->mergeCartItems(
-            $itemTransfer,
-            $this->findItem($itemTransfer)
-        );
+        $itemTransfer = $this->mergeCartItems($itemTransfer, $this->findItem($itemTransfer));
+        $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
+        $quoteTransfer = $this->getZedStub()->removeItem($cartChangeTransfer);
 
-        $changeTransfer = $this->prepareCartChange($itemTransfer);
-        $cartTransfer = $this->getZedStub()->removeItem($changeTransfer);
+        $this->storeQuoteToSession($quoteTransfer);
 
-        return $this->handleCartResponse($cartTransfer);
+        return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemToFind
-     *
      * @return \Generated\Shared\Transfer\ItemTransfer
+     *
+     * @throws \Spryker\Client\Cart\Exception\CartItemNotFoundException
      */
     protected function findItem(ItemTransfer $itemToFind)
     {
-        $cartTransfer = $this->getCart();
+        $quoteTransfer = $this->getQuote();
 
-        foreach ($cartTransfer->getItems() as $itemTransfer) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getSku() === $itemToFind->getSku()) {
-                $matchingItemTransfer = clone $itemTransfer;  //@todo is clone still needed?
-                return $matchingItemTransfer;
+                return $itemTransfer;
             }
         }
 
-        throw new \InvalidArgumentException(
+        throw new CartItemNotFoundException(
             sprintf('No item with sku "%s" found in cart.', $itemToFind->getSku())
         );
     }
@@ -119,7 +110,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function changeItemQuantity(ItemTransfer $itemTransfer, $quantity = 1)
     {
@@ -127,11 +118,11 @@ class CartClient extends AbstractClient implements CartClientInterface
             return $this->removeItem($itemTransfer);
         }
 
-        $itemTransfer = $this->findItem($itemTransfer);
+        $itemTransfer = clone $this->findItem($itemTransfer);
         $delta = abs($itemTransfer->getQuantity() - $quantity);
 
         if ($delta === 0) {
-            return $this->getCart();
+            return $this->getSession()->getQuote();
         }
 
         if ($itemTransfer->getQuantity() > $quantity) {
@@ -145,137 +136,77 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function decreaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1)
     {
-        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity($itemTransfer, $quantity);
+        $cartChangeTransfer = $this->createChangeTransferWithAdjustedQuantity($itemTransfer, $quantity);
+        $quoteTransfer = $this->getZedStub()->decreaseItemQuantity($cartChangeTransfer);
 
-        $cartTransfer = $this->getZedStub()->decreaseItemQuantity($changeTransfer);
+        $this->storeQuoteToSession($quoteTransfer);
 
-        return $this->handleCartResponse($cartTransfer);
+        return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function increaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1)
     {
-        $changeTransfer = $this->createChangeTransferWithAdjustedQuantity($itemTransfer, $quantity);
+        $cartChangeTransfer = $this->createChangeTransferWithAdjustedQuantity($itemTransfer, $quantity);
+        $quoteTransfer = $this->getZedStub()->increaseItemQuantity($cartChangeTransfer);
 
-        $cartTransfer = $this->getZedStub()->increaseItemQuantity($changeTransfer);
+        $this->storeQuoteToSession($quoteTransfer);
 
-        return $this->handleCartResponse($cartTransfer);
+        return $quoteTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function recalculate()
+    protected function createCartChangeTransfer()
     {
-        $cartTransfer = $this->getCart();
-        $cartTransfer = $this->getZedStub()->recalculate($cartTransfer);
+        $quoteTransfer = $this->getSession()->getQuote();
+        $items = $quoteTransfer->getItems();
 
-        return $this->handleCartResponse($cartTransfer);
-    }
+        if (count($items) === 0) {
+            $quoteTransfer->setItems(new \ArrayObject());
+        }
 
-    /**
-     * @return \Generated\Shared\Transfer\ChangeTransfer
-     */
-    protected function createCartChange()
-    {
-        $cartTransfer = $this->getCart();
-        $changeTransfer = new ChangeTransfer();
-        $changeTransfer->setCart($cartTransfer);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
-        return $changeTransfer;
+        return $cartChangeTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function prepareCartChange(ItemTransfer $itemTransfer)
+    protected function prepareCartChangeTransfer(ItemTransfer $itemTransfer)
     {
-        $changeTransfer = $this->createCartChange();
-        $changeTransfer->addItem($itemTransfer);
+        $cartChangeTransfer = $this->createCartChangeTransfer();
+        $cartChangeTransfer->addItem($itemTransfer);
 
-        return $changeTransfer;
-    }
-
-    /**
-     * @param string $coupon
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function addCoupon($coupon)
-    {
-        $changeTransfer = $this->createCartChange();
-        $changeTransfer->setCouponCode($coupon);
-
-        $cartTransfer = $this->getZedStub()->addCoupon($changeTransfer);
-
-        return $this->handleCartResponse($cartTransfer);
-    }
-
-    /**
-     * @param string $coupon
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function removeCoupon($coupon)
-    {
-        $changeTransfer = $this->createCartChange();
-        $changeTransfer->setCouponCode($coupon);
-
-        $cartTransfer = $this->getZedStub()->removeCoupon($changeTransfer);
-
-        return $this->handleCartResponse($cartTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function clearCoupons()
-    {
-        $changeTransfer = $this->createCartChange();
-        $cartTransfer = $this->getZedStub()->clearCoupons($changeTransfer);
-
-        return $this->handleCartResponse($cartTransfer);
+        return $cartChangeTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     protected function createChangeTransferWithAdjustedQuantity(ItemTransfer $itemTransfer, $quantity)
     {
-        $itemTransfer = $this->mergeCartItems(
-            $itemTransfer,
-            $this->findItem($itemTransfer)
-        );
-
+        $itemTransfer = $this->mergeCartItems($itemTransfer, $this->findItem($itemTransfer));
         $itemTransfer->setQuantity($quantity);
 
-        return $this->prepareCartChange($itemTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartTransfer $cartTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    protected function handleCartResponse(CartTransfer $cartTransfer)
-    {
-        $this->getSession()->setCart($cartTransfer);
-
-        return $cartTransfer;
+        return $this->prepareCartChangeTransfer($itemTransfer);
     }
 
     /**
@@ -289,6 +220,22 @@ class CartClient extends AbstractClient implements CartClientInterface
         $newItemTransfer->fromArray($oldItemByIdentifier->toArray(), true);
 
         return $newItemTransfer;
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Zed\CartStubInterface
+     */
+    protected function getZedStub()
+    {
+        return $this->getFactory()->createZedStub();
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Session\QuoteSessionInterface
+     */
+    protected function getSession()
+    {
+        return $this->getFactory()->createSession();
     }
 
 }

@@ -6,91 +6,52 @@
 
 namespace Spryker\Client\Cart\Zed;
 
-use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Client\ZedRequest\Stub\BaseStub;
 
 class CartStub extends BaseStub implements CartStubInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItem(ChangeTransfer $changeTransfer)
+    public function addItem(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->zedStub->call('/cart/gateway/add-item', $changeTransfer);
+        return $this->zedStub->call('/cart/gateway/add-item', $cartChangeTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItem(ChangeTransfer $changeTransfer)
+    public function removeItem(CartChangeTransfer $changeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/remove-item', $changeTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity(ChangeTransfer $changeTransfer)
+    public function increaseItemQuantity(CartChangeTransfer $changeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/increase-item-quantity', $changeTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity(ChangeTransfer $changeTransfer)
+    public function decreaseItemQuantity(CartChangeTransfer $changeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/decrease-item-quantity', $changeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function addCoupon(ChangeTransfer $changeTransfer)
-    {
-        return $this->zedStub->call('/cart/gateway/add-coupon-code', $changeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function removeCoupon(ChangeTransfer $changeTransfer)
-    {
-        return $this->zedStub->call('/cart/gateway/remove-coupon-code', $changeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function clearCoupons(ChangeTransfer $changeTransfer)
-    {
-        return $this->zedStub->call('/cart/gateway/clear-coupon-code', $changeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartTransfer|\Spryker\Shared\Transfer\TransferInterface $cartTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function recalculate(CartTransfer $cartTransfer)
-    {
-        return $this->zedStub->call('/cart/gateway/recalculate', $cartTransfer);
     }
 
 }

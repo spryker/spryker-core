@@ -8,14 +8,19 @@ namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Generated\Shared\Transfer\MessageTransfer;
 
 class Discount
 {
@@ -24,79 +29,84 @@ class Discount
     const KEY_ERRORS = 'errors';
 
     /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
+     * @var DiscountQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Model\DecisionRuleEngine
+     * @var DecisionRuleEngine
      */
     protected $decisionRule;
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\Model\CalculableInterface
+     * @var QuoteTransfer
      */
-    protected $discountContainer;
+    protected $quoteTransfer;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
+     * @var DiscountCollectorPluginInterface[]
      */
     protected $collectorPlugins;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     * @var DiscountCalculatorPluginInterface[]
      */
     protected $calculatorPlugins;
 
     /**
-     * @var \Spryker\Zed\Discount\DiscountConfig
+     * @var DiscountConfig
      */
     protected $discountSettings;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Model\CalculatorInterface
+     * @var CalculatorInterface
      */
     protected $calculator;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Distributor\DistributorInterface
+     * @var DistributorInterface
      */
     protected $distributor;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
+     * @var MessengerFacade
      */
     protected $messengerFacade;
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountContainer
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
-     * @param \Spryker\Zed\Discount\Business\Model\DecisionRuleInterface $decisionRule
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountSettings
-     * @param \Spryker\Zed\Discount\Business\Model\CalculatorInterface $calculator
-     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
+     * @var DiscountDecisionRulePluginInterface[]
+     */
+    protected $decisionRulePlugins;
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param DiscountQueryContainer $queryContainer
+     * @param DecisionRuleInterface $decisionRule
+     * @param CalculatorInterface $calculator
+     * @param DistributorInterface $distributor
+     * @param MessengerFacade $messengerFacade
+     * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      */
     public function __construct(
-        CalculableInterface $discountContainer,
+        QuoteTransfer $quoteTransfer,
         DiscountQueryContainer $queryContainer,
         DecisionRuleInterface $decisionRule,
-        DiscountConfig $discountSettings,
         CalculatorInterface $calculator,
         DistributorInterface $distributor,
-        DiscountToMessengerInterface $messengerFacade
+        MessengerFacade $messengerFacade,
+        array $decisionRulePlugins
     ) {
         $this->queryContainer = $queryContainer;
         $this->decisionRule = $decisionRule;
-        $this->discountContainer = $discountContainer;
-        $this->discountSettings = $discountSettings;
+        $this->quoteTransfer = $quoteTransfer;
         $this->calculator = $calculator;
         $this->distributor = $distributor;
+        $this->decisionRulePlugins = $decisionRulePlugins;
         $this->messengerFacade = $messengerFacade;
     }
 
     /**
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
+     * @return array
      */
     public function calculate()
     {
@@ -104,20 +114,40 @@ class Discount
         $discountsToBeCalculated = $result[self::KEY_DISCOUNTS];
         $this->setValidationMessages($result[self::KEY_ERRORS]);
 
-        $this->calculator->calculate(
+        $calculatedDiscounts = $this->calculator->calculate(
             $discountsToBeCalculated,
-            $this->discountContainer,
-            $this->discountSettings,
+            $this->quoteTransfer,
             $this->distributor
         );
+
+        $this->addDiscountsToQuote($this->quoteTransfer, $calculatedDiscounts);
 
         return $result;
     }
 
     /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param DiscountTransfer[] $discounts
+     */
+    protected function addDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts)
+    {
+        $quoteTransfer->setVoucherDiscounts(new \ArrayObject());
+        $quoteTransfer->setCartRuleDiscounts(new \ArrayObject());
+
+        foreach ($discounts as $discount) {
+            $discountTransferCopy = $discount[Calculator::KEY_DISCOUNT_TRANSFER];
+            if (!empty($discountTransferCopy->getVoucherCode())) {
+                $quoteTransfer->addVoucherDiscount($discountTransferCopy);
+            } else {
+                $quoteTransfer->addCartRuleDiscount($discountTransferCopy);
+            }
+        }
+    }
+
+    /**
      * @param array|string[] $couponCodes
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
+     * @return SpyDiscount[]
      */
     public function retrieveActiveCartAndVoucherDiscounts(array $couponCodes = [])
     {
@@ -129,7 +159,7 @@ class Discount
      */
     protected function retrieveDiscountsToBeCalculated()
     {
-        $discounts = $this->retrieveActiveCartAndVoucherDiscounts($this->getCouponCodes());
+        $discounts = $this->retrieveActiveCartAndVoucherDiscounts($this->getVoucherCodes());
 
         $discountsToBeCalculated = [];
         $decisionRuleValidationErrors = [];
@@ -138,7 +168,7 @@ class Discount
             $discountTransfer = $this->hydrateDiscountTransfer($discountEntity);
             $decisionRulePlugins = $this->getDecisionRulePlugins($discountEntity->getPrimaryKey());
 
-            $result = $this->decisionRule->evaluate($discountTransfer, $this->discountContainer, $decisionRulePlugins);
+            $result = $this->decisionRule->evaluate($discountTransfer, $this->quoteTransfer, $decisionRulePlugins);
 
             if ($result->isSuccess()) {
                 $discountsToBeCalculated[] = $discountTransfer;
@@ -156,16 +186,14 @@ class Discount
     /**
      * @param int $idDiscount
      *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     * @return DiscountDecisionRulePluginInterface[]
      */
     protected function getDecisionRulePlugins($idDiscount)
     {
         $plugins = [];
         $decisionRules = $this->retrieveDecisionRules($idDiscount);
         foreach ($decisionRules as $decisionRuleEntity) {
-            $decisionRulePlugin = $this->discountSettings->getDecisionRulePluginByName(
-                $decisionRuleEntity->getDecisionRulePlugin()
-            );
+            $decisionRulePlugin = $this->decisionRulePlugins[$decisionRuleEntity->getDecisionRulePlugin()];
 
             $decisionRulePlugin->setContext(
                 [
@@ -182,7 +210,7 @@ class Discount
     /**
      * @param int $idDiscount
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule[]
+     * @return SpyDiscountDecisionRule[]
      */
     protected function retrieveDecisionRules($idDiscount)
     {
@@ -192,23 +220,28 @@ class Discount
     }
 
     /**
-     * @return array
+     * @return array|string[]
      */
-    protected function getCouponCodes()
+    protected function getVoucherCodes()
     {
-        $couponCodes = $this->discountContainer->getCalculableObject()->getCouponCodes();
+        $voucherDiscounts = $this->quoteTransfer->getVoucherDiscounts();
 
-        if (count($couponCodes) === 0) {
+        if (count($voucherDiscounts) === 0) {
             return [];
         }
 
-        return $couponCodes;
+        $voucherCodes = [];
+        foreach ($voucherDiscounts as $voucherDiscount) {
+            $voucherCodes[] = $voucherDiscount->getVoucherCode();
+        }
+
+        return $voucherCodes;
     }
 
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     * @param SpyDiscount $discountEntity
      *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
+     * @return DiscountTransfer
      */
     protected function hydrateDiscountTransfer(SpyDiscount $discountEntity)
     {
@@ -216,7 +249,7 @@ class Discount
         $discountTransfer->fromArray($discountEntity->toArray(), true);
 
         if ($discountEntity->getUsedVoucherCode() !== null) {
-            $discountTransfer->addUsedCode($discountEntity->getUsedVoucherCode());
+            $discountTransfer->setVoucherCode($discountEntity->getUsedVoucherCode());
         }
 
         foreach ($discountEntity->getDiscountCollectors() as $discountCollectorEntity) {

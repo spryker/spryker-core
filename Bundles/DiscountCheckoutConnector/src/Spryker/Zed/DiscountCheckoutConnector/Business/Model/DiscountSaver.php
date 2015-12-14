@@ -128,7 +128,7 @@ class DiscountSaver implements DiscountSaverInterface
     {
         $this->persistSalesDiscount($salesDiscountEntity);
 
-        if ($this->hasUsedCodes($discountTransfer)) {
+        if ($this->haveVoucherCode($discountTransfer)) {
             $this->saveUsedCodes($discountTransfer, $salesDiscountEntity);
         }
     }
@@ -158,11 +158,11 @@ class DiscountSaver implements DiscountSaverInterface
      *
      * @return bool
      */
-    private function hasUsedCodes(DiscountTransfer $discountTransfer)
+    private function haveVoucherCode(DiscountTransfer $discountTransfer)
     {
-        $usedCodes = $discountTransfer->getUsedCodes();
+        $voucherCode = $discountTransfer->getVoucherCode();
 
-        return (count($usedCodes) > 0);
+        return (!empty($voucherCode));
     }
 
     /**
@@ -173,22 +173,21 @@ class DiscountSaver implements DiscountSaverInterface
      */
     protected function saveUsedCodes(DiscountTransfer $discountTransfer, SpySalesDiscount $salesDiscountEntity)
     {
-        foreach ($discountTransfer->getUsedCodes() as $code) {
-            $discountVoucherEntity = $this->getDiscountVoucherEntityByCode($code);
-            if ($discountVoucherEntity) {
-                $salesDiscountCodeEntity = $this->getSalesDiscountCodeEntity();
-                $salesDiscountCodeEntity->fromArray($discountVoucherEntity->toArray());
-                $salesDiscountCodeEntity->setCodepoolName(
-                    $discountVoucherEntity->getVoucherPool()->getName()
-                );
-                $salesDiscountCodeEntity->setDiscount($salesDiscountEntity);
+        $voucherCode = $discountTransfer->getVoucherCode();
+        $discountVoucherEntity = $this->getDiscountVoucherEntityByCode($voucherCode);
+        if ($discountVoucherEntity) {
+            $salesDiscountCodeEntity = $this->getSalesDiscountCodeEntity();
+            $salesDiscountCodeEntity->fromArray($discountVoucherEntity->toArray());
+            $salesDiscountCodeEntity->setCodepoolName(
+                $discountVoucherEntity->getVoucherPool()->getName()
+            );
+            $salesDiscountCodeEntity->setDiscount($salesDiscountEntity);
 
-                if (!isset($this->voucherCodesUsed[$code])) {
-                    $this->voucherCodesUsed[$code] = $code;
-                }
-
-                $this->persistSalesDiscountCode($salesDiscountCodeEntity);
+            if (!isset($this->voucherCodesUsed[$voucherCode])) {
+                $this->voucherCodesUsed[$voucherCode] = $voucherCode;
             }
+
+            $this->persistSalesDiscountCode($salesDiscountCodeEntity);
         }
     }
 

@@ -5,7 +5,7 @@
 
 namespace Unit\Spryker\Zed\ProductOptionCheckoutConnector\Business;
 
-use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -78,7 +78,7 @@ class ProductOptionOrderHydratorTest extends \PHPUnit_Framework_TestCase
         $cartItem->setSku(self::CONCRETE_SKU);
         $cartItem->addProductOption($productOption);
 
-        $cart = new CartTransfer();
+        $cart = new QuoteTransfer();
         $cart->addItem($cartItem);
 
         $request = new CheckoutRequestTransfer();

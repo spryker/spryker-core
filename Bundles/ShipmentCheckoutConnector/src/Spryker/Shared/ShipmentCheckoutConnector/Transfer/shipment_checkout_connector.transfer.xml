@@ -16,11 +16,11 @@
 
     <transfer name="Expense">
         <property name="type" type="string" />
-        <property name="grossPrice" type="int" />
-        <property name="priceToPay" type="int" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
         <property name="taxSet" type="TaxSet" />
         <property name="name" type="string" />
-        <property name="discounts" type="Discount[]" singular="discountItem" />
+        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
     </transfer>
 
 </transfers>

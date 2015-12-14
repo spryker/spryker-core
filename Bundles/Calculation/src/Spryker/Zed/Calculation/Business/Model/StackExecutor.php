@@ -6,67 +6,36 @@
 
 namespace Spryker\Zed\Calculation\Business\Model;
 
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\DiscountTotalsTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Shared\Transfer\OrderItemsTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
-use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class StackExecutor
 {
+    /**
+     * @var array
+     */
+    protected $calculatorStack;
 
     /**
-     * @param array $calculatorStack
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
-     * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
+     * @param \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $calculatorStack
      */
-    public function recalculate(array $calculatorStack, CalculableInterface $calculableContainer)
+    public function __construct(array $calculatorStack)
     {
-        foreach ($calculatorStack as $calculator) {
-            if ($calculator instanceof CalculatorPluginInterface) {
-                $calculator->recalculate($calculableContainer);
-            }
-            if ($calculator instanceof TotalsCalculatorPluginInterface) {
-                $calculator->recalculateTotals(
-                    $calculableContainer->getCalculableObject()->getTotals(),
-                    $calculableContainer,
-                    $calculableContainer->getCalculableObject()->getItems()
-                );
-            }
-        }
-
-        return $calculableContainer;
+        $this->calculatorStack = $calculatorStack;
     }
 
     /**
-     * @param array $calculatorStack
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject $calculableItems
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\TotalsTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateTotals(
-        array $calculatorStack,
-        //OrderTransfer $calculableContainer,
-        CalculableInterface $calculableContainer,
-        \ArrayObject $calculableItems = null
-    ) {
-        $totalsTransfer = new TotalsTransfer();
-        $totalsTransfer->setDiscount(new DiscountTotalsTransfer());
-
-        $calculableItems = $calculableItems ? $calculableItems : $calculableContainer->getCalculableObject()->getItems();
-        if ($calculableItems instanceof OrderItemsTransfer) {
-            $calculableItems = $calculableItems->getOrderItems();
-        }
-        foreach ($calculatorStack as $calculator) {
-            if ($calculator instanceof TotalsCalculatorPluginInterface) {
-                $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
-            }
+    public function recalculate(QuoteTransfer $quoteTransfer)
+    {
+        foreach ($this->calculatorStack as $calculator) {
+            $calculator->recalculate($quoteTransfer);
         }
 
-        return $totalsTransfer;
+        return $quoteTransfer;
     }
-
 }

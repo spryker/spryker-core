@@ -7,7 +7,7 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
@@ -123,7 +123,7 @@ class PayolutionFacadeGatewayTest extends Test
         $totals = new TotalsTransfer();
         $totals->setGrandTotal(10000);
 
-        $cartTransfer = new CartTransfer();
+        $cartTransfer = new QuoteTransfer();
         $cartTransfer->setTotals($totals);
 
         $addressTransfer = (new AddressTransfer())

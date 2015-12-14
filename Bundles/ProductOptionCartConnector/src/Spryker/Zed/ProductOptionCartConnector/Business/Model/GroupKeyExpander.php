@@ -5,7 +5,7 @@
 
 namespace Spryker\Zed\ProductOptionCartConnector\Business\Model;
 
-use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
@@ -13,11 +13,11 @@ class GroupKeyExpander
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $change
+     * @param CartChangeTransfer $change
      *
-     * @return \Generated\Shared\Transfer\ChangeTransfer
+     * @return CartChangeTransfer
      */
-    public function expand(ChangeTransfer $change)
+    public function expand(CartChangeTransfer $change)
     {
         foreach ($change->getItems() as $item) {
             $item->setGroupKey($this->buildGroupKey($item));
@@ -27,7 +27,7 @@ class GroupKeyExpander
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
+     * @param ItemTransfer $cartItem
      *
      * @return string
      */

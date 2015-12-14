@@ -7,29 +7,33 @@ namespace Spryker\Zed\Discount\Communication\Plugin\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
+use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method DiscountCommunicationFactory getFactory()
  */
 class Item extends AbstractDiscountPlugin implements DiscountCollectorPluginInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discount
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
-     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
+     * @param DiscountTransfer $discount
+     * @param QuoteTransfer $quoteTransfer
+     * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return \Spryker\Zed\Discount\Business\Model\DiscountableInterface[]
+     * @return DiscountableInterface[]
      */
     public function collect(
         DiscountTransfer $discount,
-        CalculableInterface $container,
+        QuoteTransfer $quoteTransfer,
         DiscountCollectorTransfer $discountCollectorTransfer
     ) {
-        return $this->getFacade()->getDiscountableItems($container, $discountCollectorTransfer);
+        return $this->getFactory()
+            ->getDiscountFacade()
+            ->getDiscountableItems($quoteTransfer, $discountCollectorTransfer);
     }
 
 }

@@ -6,8 +6,8 @@
 namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Discount\DiscountConfigInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 
 class CollectorResolver
 {
@@ -16,34 +16,32 @@ class CollectorResolver
     const OPERATOR_AND = 'AND';
 
     /**
-     * @var \Spryker\Zed\Discount\DiscountConfigInterface
+     * @var DiscountCollectorPluginInterface[]
      */
-    protected $discountConfig;
+    protected $collectorPlugins;
 
     /**
-     * @param \Spryker\Zed\Discount\DiscountConfigInterface $discountConfig
+     * @param DiscountCollectorPluginInterface[] $collectorPlugins
      */
-    public function __construct(DiscountConfigInterface $discountConfig)
+    public function __construct(array $collectorPlugins)
     {
-        $this->discountConfig = $discountConfig;
+        $this->collectorPlugins = $collectorPlugins;
     }
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param QuoteTransfer $quoteTransfer
+     * @param DiscountTransfer $discountTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountTransfer[]
+     * @return DiscountTransfer[]
      */
-    public function collectItems(CalculableInterface $container, DiscountTransfer $discountTransfer)
+    public function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
         $collectedItems = [];
 
         foreach ($discountTransfer->getDiscountCollectors() as $discountCollectorTransfer) {
-            $collectorPlugin = $this->discountConfig->getCollectorPluginByName(
-                $discountCollectorTransfer->getCollectorPlugin()
-            );
+            $collectorPlugin = $this->collectorPlugins[$discountCollectorTransfer->getCollectorPlugin()];
 
-            $itemsToCombine = $collectorPlugin->collect($discountTransfer, $container, $discountCollectorTransfer);
+            $itemsToCombine = $collectorPlugin->collect($discountTransfer, $quoteTransfer, $discountCollectorTransfer);
 
             if (!$this->isCombinable($itemsToCombine, $discountTransfer)) {
                 return [];
@@ -56,9 +54,9 @@ class CollectorResolver
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountableObjects
+     * @param DiscountTransfer[] $discountableObjects
      *
-     * @return \Generated\Shared\Transfer\DiscountTransfer[]
+     * @return DiscountTransfer[]
      */
     protected function getUniqueDiscountableObjects(array $discountableObjects)
     {
@@ -71,10 +69,10 @@ class CollectorResolver
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $collectedItems
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $itemsToCombine
+     * @param DiscountTransfer[] $collectedItems
+     * @param DiscountTransfer[] $itemsToCombine
      *
-     * @return \Generated\Shared\Transfer\DiscountTransfer[]
+     * @return DiscountTransfer[]
      */
     protected function combineWithAnd(array $collectedItems, array $itemsToCombine)
     {
@@ -90,10 +88,10 @@ class CollectorResolver
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $collectedItems
-     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $itemsToCombine
+     * @param DiscountableInterface[] $collectedItems
+     * @param DiscountableInterface[] $itemsToCombine
      *
-     * @return \Spryker\Zed\Discount\Business\Model\DiscountableInterface[]
+     * @return DiscountableInterface[]
      */
     protected function combineWithOr($collectedItems, $itemsToCombine)
     {
@@ -103,11 +101,11 @@ class CollectorResolver
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $collectedItems
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $itemsToCombine
+     * @param DiscountTransfer $discountTransfer
+     * @param DiscountTransfer[] $collectedItems
+     * @param DiscountTransfer[] $itemsToCombine
      *
-     * @return \Generated\Shared\Transfer\DiscountTransfer[]
+     * @return DiscountTransfer[]
      */
     protected function combine(DiscountTransfer $discountTransfer, array $collectedItems, array $itemsToCombine)
     {
@@ -123,8 +121,8 @@ class CollectorResolver
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $itemsToCombine
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param DiscountTransfer[] $itemsToCombine
+     * @param DiscountTransfer $discountTransfer
      *
      * @return bool
      */
