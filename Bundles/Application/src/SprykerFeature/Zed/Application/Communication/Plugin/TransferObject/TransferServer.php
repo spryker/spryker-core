@@ -20,7 +20,7 @@ class TransferServer
 {
 
     /**
-     * @var TransferServer
+     * @var self
      */
     protected static $instance;
 

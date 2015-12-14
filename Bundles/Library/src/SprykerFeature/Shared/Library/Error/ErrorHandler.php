@@ -13,7 +13,7 @@ class ErrorHandler
 {
 
     /**
-     * @var ErrorHandler
+     * @var self
      */
     protected static $instance;
 
@@ -31,7 +31,7 @@ class ErrorHandler
     }
 
     /**
-     * @return ErrorHandler
+     * @return self
      */
     public static function initialize()
     {

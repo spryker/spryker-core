@@ -18,7 +18,7 @@ class Autoloader
     ];
 
     /**
-     * @var Autoloader
+     * @var self
      */
     private static $instance;
 
@@ -69,7 +69,7 @@ class Autoloader
     }
 
     /**
-     * @return Autoloader
+     * @return self
      */
     public static function unregister()
     {

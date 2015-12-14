@@ -29,7 +29,7 @@ class SystemUnderTestBootstrap
     const TEST_ENVIRONMENT = 'test';
 
     /**
-     * @var SystemUnderTestBootstrap
+     * @var self
      */
     protected static $instance;
 
@@ -44,7 +44,7 @@ class SystemUnderTestBootstrap
     ];
 
     /**s
-     * @return SystemUnderTestBootstrap
+     * @return self
      */
     public static function getInstance()
     {
