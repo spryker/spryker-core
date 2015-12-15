@@ -1,25 +1,29 @@
 'use strict';
 
+require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
+
+var discount = require('./discount.helpers');
+
 $(function(){
 
     $('#add-collector-container').click(function(e){
         e.preventDefault();
-        loadCollectorPluginForm($(this), 'cart_rule');
+        discount.loadCollectorPluginForm($(this), 'cart_rule');
     });
 
     $('#add-collector-pool-container').click(function(e){
         e.preventDefault();
-        loadCollectorPluginForm($(this), 'voucher_codes');
+        discount.loadCollectorPluginForm($(this), 'voucher_codes');
     });
 
     $('#add-rules-container').click(function(e){
         e.preventDefault();
-        loadCartRulesForm($(this), 'cart_rule');
+        discount.loadCartRulesForm($(this), 'cart_rule');
     });
 
     $('#add-rules-pool-container').click(function(e){
         e.preventDefault();
-        loadCartRulesForm($(this), 'voucher_codes');
+        discount.loadCartRulesForm($(this), 'voucher_codes');
     });
 
     $('.table-data-codes').DataTable({

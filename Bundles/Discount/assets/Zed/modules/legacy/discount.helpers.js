@@ -1,14 +1,4 @@
-function loadCartRulesForm(element, mainFormName) {
-    element.children('i').removeClass('hidden');
-    var sprykerAjax = new SprykerAjax();
-    sprykerAjax.loadDecisionRulesOptions(element, mainFormName);
-}
-
-function loadCollectorPluginForm(element, mainFormName) {
-    element.children('i').removeClass('hidden');
-    var sprykerAjax = new SprykerAjax();
-    sprykerAjax.loadCollectorPlugins(element, mainFormName);
-}
+'use strict';
 
 SprykerAjax.prototype.loadDecisionRulesOptions = function(element, mainFormName){
     var elementsCount = $('#rules-container > .col-md-6').length;
@@ -40,4 +30,17 @@ SprykerAjax.prototype.loadCollectorPlugins = function(element, mainFormName){
             element.children('i').addClass('hidden');
         }
     );
+};
+
+module.exports = {
+    loadCartRulesForm: function(element, mainFormName){
+        element.children('i').removeClass('hidden');
+        var sprykerAjax = new SprykerAjax();
+        sprykerAjax.loadDecisionRulesOptions(element, mainFormName);
+    },
+    loadCollectorPluginForm: function(element, mainFormName){
+        element.children('i').removeClass('hidden');
+        var sprykerAjax = new SprykerAjax();
+        sprykerAjax.loadCollectorPlugins(element, mainFormName);
+    }
 };
