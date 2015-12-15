@@ -7,7 +7,7 @@
 namespace SprykerEngine\Shared\EventJournal\Model;
 
 use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\EventJournal\EventJournalConfig;
+use SprykerEngine\Shared\EventJournal\EventJournalConstants;
 use SprykerEngine\Shared\EventJournal\Model\Collector\DataCollectorInterface;
 use SprykerEngine\Shared\EventJournal\Model\Filter\FilterInterface;
 use SprykerEngine\Shared\EventJournal\Model\Writer\WriterInterface;
@@ -42,8 +42,8 @@ abstract class AbstractEventJournal implements EventJournalInterface
      */
     protected function addConfiguredCollectors()
     {
-        $collectors = Config::get(EventJournalConfig::COLLECTORS, []);
-        $collectorOptions = Config::get(EventJournalConfig::COLLECTOR_OPTIONS, []);
+        $collectors = Config::get(EventJournalConstants::COLLECTORS, []);
+        $collectorOptions = Config::get(EventJournalConstants::COLLECTOR_OPTIONS, []);
         foreach ($collectors[APPLICATION] as $collector) {
             $collectorConfig = isset($collectorOptions[$collector]) ? $collectorOptions[$collector] : [];
             $this->setDataCollector(new $collector($collectorConfig));
@@ -55,8 +55,8 @@ abstract class AbstractEventJournal implements EventJournalInterface
      */
     protected function addConfiguredWriters()
     {
-        $writers = Config::get(EventJournalConfig::WRITERS, []);
-        $writerOptions = Config::get(EventJournalConfig::WRITER_OPTIONS, []);
+        $writers = Config::get(EventJournalConstants::WRITERS, []);
+        $writerOptions = Config::get(EventJournalConstants::WRITER_OPTIONS, []);
         foreach ($writers[APPLICATION] as $writer) {
             $writerConfig = isset($writerOptions[$writer]) ? $writerOptions[$writer] : [];
             $this->setEventWriter(new $writer($writerConfig));
@@ -68,8 +68,8 @@ abstract class AbstractEventJournal implements EventJournalInterface
      */
     protected function addConfiguredFilters()
     {
-        $filters = Config::get(EventJournalConfig::FILTERS, []);
-        $filterOptions = Config::get(EventJournalConfig::FILTER_OPTIONS, []);
+        $filters = Config::get(EventJournalConstants::FILTERS, []);
+        $filterOptions = Config::get(EventJournalConstants::FILTER_OPTIONS, []);
         foreach ($filters[APPLICATION] as $filter) {
             $filterConfig = isset($filterOptions[$filter]) ? $filterOptions[$filter] : [];
             $this->setFilter(new $filter($filterConfig));

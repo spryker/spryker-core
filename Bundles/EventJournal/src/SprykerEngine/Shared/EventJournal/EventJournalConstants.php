@@ -6,9 +6,8 @@
 
 namespace SprykerEngine\Shared\EventJournal;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
 
-interface EventJournalConfig extends ConfigInterface
+interface EventJournalConstants
 {
 
     const WRITERS = 'EVENT_JOURNAL_WRITERS';

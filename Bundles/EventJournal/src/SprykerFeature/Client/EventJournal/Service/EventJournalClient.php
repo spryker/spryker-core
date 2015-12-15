@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Client\EventJournal\Service;
 
-use SprykerEngine\Client\Kernel\Service\AbstractClient;
+use SprykerEngine\Client\Kernel\AbstractClient;
 use SprykerEngine\Shared\EventJournal\Model\EventInterface;
 
 /**

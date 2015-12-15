@@ -6,10 +6,12 @@
 
 namespace Spryker\Yves\Application\Plugin\Provider;
 
+use Pyz\Yves\Application\ApplicationDependencyContainer;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\EventJournal\Model\Event;
+use SprykerEngine\Yves\Kernel\AbstractPlugin;
 use SprykerFeature\Client\EventJournal\Service\EventJournalClientInterface;
 use SprykerFeature\Shared\NewRelic\ApiInterface;
 use SprykerFeature\Shared\Library\System;
@@ -19,7 +21,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class YvesLoggingServiceProvider implements ServiceProviderInterface
+/**
+ * @method ApplicationDependencyContainer getDependencyContainer()
+ */
+class YvesLoggingServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
@@ -130,7 +135,6 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
     {
         $event = new Event();
         $event->setField(Event::FIELD_NAME, 'request');
-        print_r( $request->attributes->get('_route'));
         if (is_string($request->attributes->get('_controller'))) {
             $event->setStaticField('controller', $request->attributes->get('_controller'));
         }
