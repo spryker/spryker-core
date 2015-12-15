@@ -12,13 +12,10 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class BundleParser
 {
-
-    const SPRYKER_ENGINE = 'Spryker';
-
     /**
      * @var array
      */
-    protected $coreBundleNamespaces = ['Spryker', self::SPRYKER_ENGINE];
+    protected $coreBundleNamespaces = ['Spryker'];
 
     /**
      * @var MaintenanceConfig
@@ -142,13 +139,7 @@ class BundleParser
      */
     public function isEngine($bundleName)
     {
-        $directories = $this->findBundleNamespaceDirectoriesForBundle($bundleName);
-        foreach ($directories as $directory) {
-            if ($directory->getFilename() === self::SPRYKER_ENGINE) {
-                return true;
-            }
-        }
-
+        // TODO: need to get this information somewhere else of the namespace
         return false;
     }
 
