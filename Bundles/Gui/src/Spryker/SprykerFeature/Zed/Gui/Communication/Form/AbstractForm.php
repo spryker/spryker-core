@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use UserSprykerFeature/Zed/Gui/Communication/AbstractFormType instead
+ * @deprecated Use \Spryker\Shared\Gui\Form\AbstractForm instead
  */
 abstract class AbstractForm
 {

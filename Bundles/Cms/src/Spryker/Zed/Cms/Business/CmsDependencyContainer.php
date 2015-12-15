@@ -18,7 +18,7 @@ use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use sprykerfeature\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Symfony\Component\Finder\Finder;
 
