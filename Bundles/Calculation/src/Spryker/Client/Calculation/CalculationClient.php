@@ -9,17 +9,19 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method CalculationDependencyContainer getDependencyContainer()
+ * @method \Spryker\Client\Calculation\Service\CalculationDependencyContainer getDependencyContainer()
  */
 class CalculationClient extends AbstractClient
 {
+
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         return $this->getDependencyContainer()->createZedStub()->recalculate($quoteTransfer);
     }
+
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Config;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
-use Spryker\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
@@ -306,7 +304,6 @@ class VoucherEngineTest extends Test
 
         return $quoteTransfer;
     }
-
 
     /**
      * @return \Spryker\Zed\Discount\Business\Model\Calculator

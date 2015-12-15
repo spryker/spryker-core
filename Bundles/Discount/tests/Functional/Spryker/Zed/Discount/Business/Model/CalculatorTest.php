@@ -16,8 +16,6 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
-use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
-use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 

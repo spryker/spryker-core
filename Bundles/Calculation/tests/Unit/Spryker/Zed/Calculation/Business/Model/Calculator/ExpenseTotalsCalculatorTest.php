@@ -12,6 +12,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
 
 class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -23,19 +24,20 @@ class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
             [
                 'unitPrice' => 100,
                 'quantity' => 2,
-                'sumGrossPrice' => 200
+                'sumGrossPrice' => 200,
             ],
             [
                 'unitPrice' => 100,
                 'quantity' => 2,
-                'sumGrossPrice' => 200
+                'sumGrossPrice' => 200,
             ],
         ];
 
         $quoteTransfer = $this->createQuoteTransferWithFixtureData($fixtures);
         $expenseTotalsCalculator->recalculate($quoteTransfer);
-        $expectedTotalExpenseAmount = array_reduce($fixtures, function($carry, $item) {
+        $expectedTotalExpenseAmount = array_reduce($fixtures, function ($carry, $item) {
             $carry += $item['sumGrossPrice'];
+
             return $carry;
         });
 
@@ -81,7 +83,7 @@ class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array $expenses
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithFixtureData(array $expenses)
     {
@@ -102,7 +104,7 @@ class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ExpenseTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator
      */
     protected function createExpenseTotalsCalculator()
     {
@@ -110,7 +112,7 @@ class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer()
     {
@@ -118,7 +120,7 @@ class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     protected function createTaxTotalTransfer()
     {
@@ -126,10 +128,11 @@ class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function createExpenseTransfer()
     {
         return new ExpenseTransfer();
     }
+
 }

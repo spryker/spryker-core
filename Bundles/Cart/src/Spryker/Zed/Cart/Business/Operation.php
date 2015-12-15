@@ -16,6 +16,7 @@ use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
 class Operation
 {
+
     const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
     const INCREASE_ITEMS_SUCCESS = 'cart.increase.items.success';
     const REMOVE_ITEMS_SUCCESS = 'cart.remove.items.success';
@@ -165,4 +166,5 @@ class Operation
 
         return $quoteTransfer;
     }
+
 }

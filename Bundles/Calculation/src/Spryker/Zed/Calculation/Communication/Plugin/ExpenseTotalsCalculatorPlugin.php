@@ -28,4 +28,5 @@ class ExpenseTotalsCalculatorPlugin extends AbstractPlugin implements Calculator
     {
         $this->getFacade()->calculateExpenseTotals($quoteTransfer);
     }
+
 }

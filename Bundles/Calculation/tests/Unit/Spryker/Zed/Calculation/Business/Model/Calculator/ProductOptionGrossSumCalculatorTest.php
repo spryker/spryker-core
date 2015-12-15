@@ -24,8 +24,8 @@ class ProductOptionGrossSumCalculatorTest extends \PHPUnit_Framework_TestCase
         $productOptionFixtures = [
             [
                 'unitGrossPrice' => 100,
-                'quantity' => 2
-            ]
+                'quantity' => 2,
+            ],
         ];
 
         $quoteTransfer = $this->createQuoteTransferWithFixtureData($productOptionFixtures);
@@ -34,18 +34,19 @@ class ProductOptionGrossSumCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $productOptionSumGross = $quoteTransfer->getItems()[0]->getProductOptions()[0]->getSumGrossPrice();
 
-        $expectedProductOptionSum = array_reduce($productOptionFixtures, function($carry, $item) {
+        $expectedProductOptionSum = array_reduce($productOptionFixtures, function ($carry, $item) {
             $carry += $item['unitGrossPrice'] * $item['quantity'];
+
             return $carry;
         });
 
         $this->assertEquals($expectedProductOptionSum, $productOptionSumGross);
     }
-    
+
     /**
      * @param array $productOptions
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithFixtureData(array $productOptions = [])
     {
@@ -63,8 +64,9 @@ class ProductOptionGrossSumCalculatorTest extends \PHPUnit_Framework_TestCase
 
         return $quoteTransfer;
     }
+
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer()
     {
@@ -72,7 +74,7 @@ class ProductOptionGrossSumCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ItemGrossAmountsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator
      */
     protected function createItemGrossAmountsCalculator()
     {
@@ -80,7 +82,7 @@ class ProductOptionGrossSumCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createItemTransfer()
     {
@@ -88,7 +90,7 @@ class ProductOptionGrossSumCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProductOptionTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     protected function createProductOptionTransfer()
     {
@@ -96,10 +98,11 @@ class ProductOptionGrossSumCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProductOptionGrossSumCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalculator
      */
     protected function createProductOptionGrossSumCalculator()
     {
         return new ProductOptionGrossSumCalculator();
     }
+
 }

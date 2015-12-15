@@ -87,9 +87,10 @@ class CartClient extends AbstractClient implements CartClientInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemToFind
-     * @return \Generated\Shared\Transfer\ItemTransfer
      *
      * @throws \Spryker\Client\Cart\Exception\CartItemNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function findItem(ItemTransfer $itemToFind)
     {

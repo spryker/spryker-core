@@ -12,6 +12,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator
 
 class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
+
     const SUB_TOTAL = 100;
     const EXPENSES_TOTAL = 20;
 
@@ -25,7 +26,6 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
         $grandTotalTotalsCalculator->recalculate($quoteTransfer);
 
         $this->assertEquals(self::SUB_TOTAL + self::EXPENSES_TOTAL, $quoteTransfer->getTotals()->getGrandTotal());
-
     }
 
     /**
@@ -105,4 +105,5 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     {
         return new ExpenseTotalsTransfer();
     }
+
 }

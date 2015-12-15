@@ -12,7 +12,7 @@ class ExpenseGrossSumAmountCalculator implements CalculatorInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -23,4 +23,5 @@ class ExpenseGrossSumAmountCalculator implements CalculatorInterface
             $expenseTransfer->setSumGrossPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
         }
     }
+
 }

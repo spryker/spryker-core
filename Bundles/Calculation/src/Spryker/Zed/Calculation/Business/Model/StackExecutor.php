@@ -11,13 +11,13 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class StackExecutor
 {
+
     /**
      * @var array
      */
     protected $calculatorStack;
 
     /**
-     *
      * @param \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $calculatorStack
      */
     public function __construct(array $calculatorStack)
@@ -38,4 +38,5 @@ class StackExecutor
 
         return $quoteTransfer;
     }
+
 }

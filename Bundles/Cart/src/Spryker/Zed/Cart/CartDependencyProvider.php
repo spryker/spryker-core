@@ -14,6 +14,7 @@ use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 class CartDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_CALCULATION = 'calculation facade';
     const FACADE_ITEM_GROUPER = 'item grouper facade';
     const FACADE_MESSENGER = 'messenger facade';

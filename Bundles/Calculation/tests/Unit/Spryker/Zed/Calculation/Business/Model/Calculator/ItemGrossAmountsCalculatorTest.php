@@ -47,8 +47,9 @@ class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
         $itemGrossAmountsCalculator->recalculate($quoteTransfer);
         $calculatedItemSumAndProductOptionGrossPrice = $quoteTransfer->getItems()[0]->getSumGrossPriceWithProductOptions();
 
-        $optionSum = array_reduce($productOptionFixtures, function($carry, $item) {
+        $optionSum = array_reduce($productOptionFixtures, function ($carry, $item) {
             $carry += $item['sumGrossPrice'];
+
             return $carry;
         });
 
@@ -72,8 +73,9 @@ class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
         $itemGrossAmountsCalculator->recalculate($quoteTransfer);
         $calculatedItemUnitAndProductOptionGrossPrice = $quoteTransfer->getItems()[0]->getUnitGrossPriceWithProductOptions();
 
-        $optionUnit = array_reduce($productOptionFixtures, function($carry, $item) {
+        $optionUnit = array_reduce($productOptionFixtures, function ($carry, $item) {
             $carry += $item['unitGrossPrice'];
+
             return $carry;
         });
 
@@ -171,17 +173,18 @@ class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function getProductOptionFixtures()
     {
-        return  [
+        return [
             [
                 'unitGrossPrice' => 100,
                 'sumGrossPrice' => 200,
-                'quantity' => 2
+                'quantity' => 2,
             ],
             [
                 'unitGrossPrice' => 100,
                 'sumGrossPrice' => 200,
-                'quantity' => 2
-            ]
+                'quantity' => 2,
+            ],
         ];
     }
+
 }

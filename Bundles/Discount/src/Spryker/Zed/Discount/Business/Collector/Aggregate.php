@@ -8,7 +8,6 @@ namespace Spryker\Zed\Discount\Business\Collector;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class Aggregate implements CollectorInterface
 {

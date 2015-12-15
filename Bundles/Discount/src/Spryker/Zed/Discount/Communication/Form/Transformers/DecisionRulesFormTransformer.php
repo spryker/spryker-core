@@ -6,14 +6,13 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\Transformers;
 
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
 use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\DataTransformerInterface;
 use Zend\Filter\Word\CamelCaseToUnderscore;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
 class DecisionRulesFormTransformer implements DataTransformerInterface
 {
@@ -212,7 +211,7 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
                 !array_key_exists($collectorPlugin[self::COLLECTOR_PLUGIN], $this->collectorPlugins)) {
                 continue;
             }
-            $plugin =  $this->collectorPlugins[$collectorPlugin[self::COLLECTOR_PLUGIN]];
+            $plugin = $this->collectorPlugins[$collectorPlugin[self::COLLECTOR_PLUGIN]];
             $collectorPlugin[self::VALUE] = $plugin->$conversionMethod($collectorPlugin[self::VALUE]);
         }
 

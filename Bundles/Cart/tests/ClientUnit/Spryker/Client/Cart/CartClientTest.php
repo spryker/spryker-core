@@ -307,7 +307,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             'setQuote',
             'getItemCount',
             'setItemCount',
-            'clearQuote'
+            'clearQuote',
         ]);
 
         return $sessionMock;
@@ -323,7 +323,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             'removeItem',
             'increaseItemQuantity',
             'decreaseItemQuantity',
-            'storeQuoteToSession'
+            'storeQuoteToSession',
         ]);
     }
 

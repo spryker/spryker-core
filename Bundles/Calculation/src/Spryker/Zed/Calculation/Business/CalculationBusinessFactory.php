@@ -22,13 +22,14 @@ use Spryker\Zed\Calculation\CalculationDependencyProvider;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 /**
- * @method CalculationBusiness getFactory()
- * @method CalculationConfig getConfig()
+ * @method \Generated\Zed\Ide\FactoryAutoCompletion\CalculationBusiness getFactory()
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
 class CalculationBusinessFactory extends AbstractBusinessFactory
 {
+
     /**
-     * @return StackExecutor
+     * @return \Spryker\Zed\Calculation\Business\Model\StackExecutor
      */
     public function createStackExecutor()
     {
@@ -36,7 +37,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CalculatorPluginInterface[]
+     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
      */
     protected function getProvidedCalculatorStack()
     {
@@ -44,7 +45,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ExpenseGrossSumAmountCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseGrossSumAmountCalculator
      */
     public function createExpenseGrossSumAmount()
     {
@@ -52,7 +53,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ExpenseTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator
      */
     public function createExpenseTotalsCalculator()
     {
@@ -60,7 +61,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GrandTotalTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator
      */
     public function createGrandTotalsCalculator()
     {
@@ -68,7 +69,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemGrossAmountsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator
      */
     public function createItemGrossSumCalculator()
     {
@@ -76,7 +77,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionGrossSumCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalculator
      */
     public function createOptionGrossSumCalculator()
     {
@@ -84,7 +85,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RemoveAllExpensesCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculator
      */
     public function getRemoveAllExpensesCalculator()
     {
@@ -92,7 +93,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RemoveTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator
      */
     public function createRemoveTotalsCalculator()
     {
@@ -100,7 +101,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubtotalTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator
      */
     public function createSubtotalTotalsCalculator()
     {

@@ -7,5 +7,4 @@ namespace Spryker\Client\Cart\Exception;
 
 class CartItemNotFoundException extends \Exception
 {
-
 }

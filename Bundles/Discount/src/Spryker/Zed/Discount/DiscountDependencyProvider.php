@@ -38,7 +38,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
     const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
 
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

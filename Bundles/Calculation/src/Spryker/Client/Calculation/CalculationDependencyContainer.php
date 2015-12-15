@@ -14,6 +14,7 @@ use Spryker\Client\Calculation\Zed\CalculationStub;
  */
 class CalculationDependencyContainer extends AbstractDependencyContainer
 {
+
     /**
      * @return CalculationStub
      */
@@ -21,4 +22,5 @@ class CalculationDependencyContainer extends AbstractDependencyContainer
     {
         return $this->getFactory()->createZedCalculationStub($this->createZedRequestClient());
     }
+
 }

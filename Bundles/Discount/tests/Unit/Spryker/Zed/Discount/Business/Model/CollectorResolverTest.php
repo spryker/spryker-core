@@ -143,7 +143,6 @@ class CollectorResolverTest extends Test
         $quoteTransfer->addItem($this->createItemTransfer('SKU-111'));
         $quoteTransfer->addItem($this->createItemTransfer('SKU-222'));
 
-
         return $quoteTransfer;
     }
 

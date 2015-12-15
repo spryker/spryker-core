@@ -39,7 +39,7 @@ class SubtotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $calculator = new SubtotalTotalsCalculator(Locator::getInstance());
         $calculator->recalculate($quoteTransfer);
-        $this->assertEquals(self::ITEM_GROSS_PRICE + self::ITEM_OPTION_GROSS_PRICE , $quoteTransfer->getTotals()->getSubtotal());
+        $this->assertEquals(self::ITEM_GROSS_PRICE + self::ITEM_OPTION_GROSS_PRICE, $quoteTransfer->getTotals()->getSubtotal());
     }
 
     /**
@@ -56,7 +56,6 @@ class SubtotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
         $item->setSumGrossPriceWithProductOptions(self::ITEM_GROSS_PRICE + self::ITEM_OPTION_GROSS_PRICE);
         $quoteTransfer->addItem($item);
         $quoteTransfer->addItem(clone $item);
-
 
         $calculator = new SubtotalTotalsCalculator(Locator::getInstance());
         $calculator->recalculate($quoteTransfer);

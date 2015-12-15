@@ -11,6 +11,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculato
 
 class RemoveAllExpensesCalculatorTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -27,7 +28,7 @@ class RemoveAllExpensesCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return RemoveAllExpensesCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculator
      */
     protected function createExpensesRemoveCalculator()
     {
@@ -35,7 +36,7 @@ class RemoveAllExpensesCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function createExpenseTransfer()
     {
@@ -43,10 +44,11 @@ class RemoveAllExpensesCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer()
     {
         return new QuoteTransfer();
     }
+
 }

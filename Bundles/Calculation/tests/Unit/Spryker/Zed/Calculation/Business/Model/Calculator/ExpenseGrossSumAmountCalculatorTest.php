@@ -11,6 +11,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseGrossSumAmountCalcu
 
 class ExpenseGrossSumAmountCalculatorTest extends \PHPUnit_Framework_TestCase
 {
+
     const UNIT_GROSS_PRICE = 100;
     const ITEM_QUANTITY = 2;
 
@@ -55,7 +56,7 @@ class ExpenseGrossSumAmountCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ExpenseGrossSumAmountCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseGrossSumAmountCalculator
      */
     protected function createExpenseGrossSumAmountCalculator()
     {
@@ -66,7 +67,7 @@ class ExpenseGrossSumAmountCalculatorTest extends \PHPUnit_Framework_TestCase
      * @param int $unitGrossPrice
      * @param int $itemQuantity
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithFixtureData($unitGrossPrice, $itemQuantity)
     {
@@ -82,7 +83,7 @@ class ExpenseGrossSumAmountCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer()
     {
@@ -90,12 +91,11 @@ class ExpenseGrossSumAmountCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function createExpenseTransfer()
     {
         return new ExpenseTransfer();
     }
-
 
 }

@@ -11,6 +11,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 
 class RemoveTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -96,4 +97,5 @@ class RemoveTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 
         return $totalsTransfer;
     }
+
 }

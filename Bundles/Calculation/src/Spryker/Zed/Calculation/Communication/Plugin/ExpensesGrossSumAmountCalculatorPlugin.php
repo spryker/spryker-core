@@ -18,6 +18,7 @@ use Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory;
  */
 class ExpensesGrossSumAmountCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

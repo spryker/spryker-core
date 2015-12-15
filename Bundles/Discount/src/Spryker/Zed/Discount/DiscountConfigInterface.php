@@ -8,6 +8,7 @@ namespace Spryker\Zed\Discount;
 
 interface DiscountConfigInterface
 {
+
     const KEY_VOUCHER_CODE_CONSONANTS = 'consonants';
     const KEY_VOUCHER_CODE_VOWELS = 'vowels';
     const KEY_VOUCHER_CODE_NUMBERS = 'numbers';

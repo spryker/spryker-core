@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class GrandTotalTotalsCalculator implements CalculatorInterface
 {
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -40,8 +41,6 @@ class GrandTotalTotalsCalculator implements CalculatorInterface
         return $grandTotal;
     }
 
-
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -57,4 +56,5 @@ class GrandTotalTotalsCalculator implements CalculatorInterface
 
         return $expensesTotal;
     }
+
 }

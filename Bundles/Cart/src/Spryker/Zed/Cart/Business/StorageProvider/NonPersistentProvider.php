@@ -15,9 +15,9 @@ class NonPersistentProvider implements StorageProviderInterface
 {
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function increaseItems(CartChangeTransfer $cartChangeTransfer)
     {
@@ -25,9 +25,9 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addItems(CartChangeTransfer $cartChangeTransfer)
     {
@@ -41,9 +41,9 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function decreaseItems(CartChangeTransfer $cartChangeTransfer)
     {
@@ -51,9 +51,9 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItems(CartChangeTransfer $cartChangeTransfer)
     {
@@ -74,7 +74,7 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $cartItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
      *
      * @return array
      */
@@ -91,9 +91,9 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param ItemTransfer[] $existingItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
      * @param int $index
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return void
      */
@@ -110,8 +110,8 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $existingItems
-     * @param ItemTransfer $changedItem
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $existingItems
+     * @param \Generated\Shared\Transfer\ItemTransfer $changedItem
      *
      * @return void
      */
@@ -120,13 +120,14 @@ class NonPersistentProvider implements StorageProviderInterface
         foreach ($existingItems as $key => $cartIndexItem) {
             if ($cartIndexItem->getSku() === $changedItem->getSku()) {
                 $this->decreaseExistingItem($existingItems, $key, $changedItem);
+
                 return;
             }
         }
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return bool
      */
@@ -144,4 +145,5 @@ class NonPersistentProvider implements StorageProviderInterface
 
         return true;
     }
+
 }

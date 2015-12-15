@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ExpenseTotalsCalculator implements CalculatorInterface
 {
+
     /**
      * @param QuoteTransfer $quoteTransfer
      *

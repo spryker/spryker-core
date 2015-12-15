@@ -10,8 +10,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class SubtotalTotalsCalculator implements CalculatorInterface
 {
+
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */

@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 
 class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const CALCULATOR_STACK = 'calculator stack';
 
     /**
@@ -30,6 +31,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @param Container $container
+     *
      * @return CalculatorPluginInterface[]
      */
     protected function getCalculatorStack(Container $container)
@@ -58,4 +60,5 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 
         ];
     }
+
 }

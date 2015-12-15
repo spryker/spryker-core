@@ -59,4 +59,5 @@ class ItemGrossAmountsCalculator implements CalculatorInterface
             $itemTransfer->getUnitGrossPrice() + $totalProductOptionGrossUnit
         );
     }
+
 }

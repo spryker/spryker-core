@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class StackExecutorTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return void
      */
@@ -49,6 +50,7 @@ class StackExecutorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param \SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $calculatorStack
+     *
      * @return \SprykerFeature\Zed\Calculation\Business\Model\StackExecutor
      */
     protected function createStackExecutor(array $calculatorStack)
@@ -63,4 +65,5 @@ class StackExecutorTest extends \PHPUnit_Framework_TestCase
     {
         return new QuoteTransfer();
     }
+
 }

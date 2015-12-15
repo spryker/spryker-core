@@ -19,6 +19,7 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
 
     /**
      * Executes all calculators in plugin stack.
+     *
      * @see CalculationConfig::getCalculatorStack
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

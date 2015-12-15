@@ -12,7 +12,7 @@ class ProductOptionGrossSumCalculator implements CalculatorInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -26,4 +26,5 @@ class ProductOptionGrossSumCalculator implements CalculatorInterface
             }
         }
     }
+
 }

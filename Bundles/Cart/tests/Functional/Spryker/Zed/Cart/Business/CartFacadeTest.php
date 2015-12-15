@@ -36,12 +36,12 @@ class CartFacadeTest extends AbstractFunctionalTest
     const DUMMY_2_PRICE = 100;
 
     /**
-     * @var CartFacade
+     * @var \Spryker\Zed\Cart\Business\CartFacade
      */
     private $cartFacade;
 
     /**
-     * @var PriceFacade
+     * @var \Spryker\Zed\Price\Business\PriceFacade
      */
     private $priceFacade;
 
@@ -86,17 +86,15 @@ class CartFacadeTest extends AbstractFunctionalTest
         $newItem->setQuantity(1);
         $newItem->setUnitGrossPrice(1);
 
-
         $cartChange = new CartChangeTransfer();
         $cartChange->setQuote($quoteTransfer);
         $cartChange->addItem($newItem);
-
 
         $changedCart = $this->cartFacade->addToCart($cartChange);
 
         $this->assertCount(2, $changedCart->getItems());
 
-        /** @var ItemTransfer $item */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $item */
         foreach ($quoteTransfer->getItems() as $item) {
             if ($item->getSku() === $cartItem->getSku()) {
                 $this->assertEquals($cartItem->getQuantity(), $item->getQuantity());
@@ -135,7 +133,7 @@ class CartFacadeTest extends AbstractFunctionalTest
         $cartItems = $changedCart->getItems();
         $this->assertCount(2, $cartItems);
 
-        /** @var ItemTransfer $changedItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
         $changedItem = $cartItems[1];
         $this->assertEquals(3, $changedItem->getQuantity());
 
@@ -199,7 +197,7 @@ class CartFacadeTest extends AbstractFunctionalTest
         $changedCart = $this->cartFacade->decreaseQuantity($cartChange);
         $cartItems = $changedCart->getItems();
         $this->assertCount(1, $cartItems);
-        /** @var ItemTransfer $changedItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
         $changedItem = $cartItems[0];
         $this->assertEquals(2, $changedItem->getQuantity());
     }

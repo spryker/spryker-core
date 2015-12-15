@@ -18,6 +18,7 @@ use Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory;
  */
 class SubtotalTotalsCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
+
     /**
      * @param QuoteTransfer $quoteTransfer
      *
@@ -27,4 +28,5 @@ class SubtotalTotalsCalculatorPlugin extends AbstractPlugin implements Calculato
     {
         $this->getFacade()->calculateSubtotalTotals($quoteTransfer);
     }
+
 }

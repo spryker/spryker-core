@@ -20,4 +20,5 @@ class CalculationStub extends BaseStub
     {
         return $this->zedStub->call('/calculation/gateway/recalculate', $quoteTransfer);
     }
+
 }

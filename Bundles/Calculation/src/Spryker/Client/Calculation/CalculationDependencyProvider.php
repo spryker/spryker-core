@@ -9,5 +9,4 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 
 class CalculationDependencyProvider extends AbstractDependencyProvider
 {
-
 }

@@ -12,10 +12,11 @@ use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 
 interface CalculatorInterface
 {
+
     /**
-     * @param DiscountTransfer[] $discountCollection
-     * @param QuoteTransfer $quoteTransfer
-     * @param DistributorInterface $discountDistributor
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountCollection
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $discountDistributor
      *
      * @return mixed
      */
