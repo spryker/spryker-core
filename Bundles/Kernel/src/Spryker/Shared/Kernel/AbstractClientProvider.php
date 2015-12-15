@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace Spryker\Shared\Kernel;
+
+use Spryker\Shared\Kernel\Factory\FactoryInterface;
+
+abstract class AbstractClientProvider
+{
+
+    /**
+     * @var FactoryInterface
+     */
+    protected $factory;
+
+    /**
+     * @var LocatorLocatorInterface
+     */
+    protected $locator;
+
+    /**
+     * @var mixed
+     */
+    protected $client;
+
+    /**
+     * @throws \Exception
+     *
+     * @return mixed
+     */
+    public function getInstance()
+    {
+        if ($this->client === null) {
+            $this->client = $this->createClient();
+        }
+
+        return $this->client;
+    }
+
+    /**
+     * @param FactoryInterface $factory
+     * @param LocatorLocatorInterface $locator
+     */
+    public function __construct(FactoryInterface $factory, LocatorLocatorInterface $locator)
+    {
+        $this->factory = $factory;
+        $this->locator = $locator;
+    }
+
+    /**
+     * @return mixed
+     */
+    abstract protected function createClient();
+
+}

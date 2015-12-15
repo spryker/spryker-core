@@ -1,0 +1,46 @@
+{% import 'macros.php.twig' as macro %}
+<?php
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace Generated\Shared\Transfer;
+
+use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
+{% for use in uses %}
+use {{ use }};
+{% endfor %}
+
+/**
+ * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
+ * !!! DO NOT CHANGE ANYTHING IN THIS FILE
+ */
+class {{ className }} extends AbstractTransfer
+{
+
+{% for constant in constants %}
+{{ macro.addConstant(constant) }}
+{% endfor -%}
+
+{% for property in properties %}
+{{ macro.addProperty(property) }}
+{% endfor -%}
+{{ macro.addMetadata(normalizedProperties) }}
+{{ macro.addConstructor(constructorDefinition) }}
+{% for methodName, method  in methods %}
+{% if methodName starts with 'set' %}
+{{ macro.addSet(method) }}
+{% endif %}
+{% if methodName starts with 'get' %}
+{{ macro.addGet(method) }}
+{% endif %}
+{% if methodName starts with 'add' %}
+{{ macro.addAdd(method) }}
+{% endif %}
+{% if methodName starts with 'require' %}
+{{ macro.addRequire(method) }}
+{% endif %}
+{% endfor %}
+}

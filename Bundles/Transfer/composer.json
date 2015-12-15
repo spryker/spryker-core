@@ -2,7 +2,7 @@
   "name": "spryker/transfer",
   "autoload": {
     "psr-0": {
-      "SprykerEngine": "src/",
+      "Spryker": "src/",
       "Acceptance": "tests/",
       "Function": "tests/",
       "Integration": "tests/",

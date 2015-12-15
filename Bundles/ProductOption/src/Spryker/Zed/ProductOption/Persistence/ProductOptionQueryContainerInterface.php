@@ -1,0 +1,217 @@
+<?php
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace Spryker\Zed\ProductOption\Persistence;
+
+use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionTypeUsageExclusionQuery;
+use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionValueUsageConstraintQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslationQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslationQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
+use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Tax\Persistence\Base\SpyTaxSetQuery;
+
+interface ProductOptionQueryContainerInterface
+{
+
+    /**
+     * @param string $importKeyProductOptionType
+     *
+     * @return SpyProductOptionTypeQuery
+     */
+    public function queryProductOptionTypeByImportKey($importKeyProductOptionType);
+
+    /**
+     * @param int $fkProductOptionType
+     * @param int $fkLocale
+     *
+     * @return SpyProductOptionTypeTranslationQuery
+     */
+    public function queryProductOptionTypeTranslationByFks($fkProductOptionType, $fkLocale);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return SpyProductOptionValueQuery
+     */
+    public function queryOptionValueById($idProductOptionValue);
+
+    /**
+     * @param string $importKeyProductOptionValue
+     * @param int $fkProductOptionType
+     *
+     * @return SpyProductOptionValueQuery
+     */
+    public function queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyProductOptionValue, $fkProductOptionType);
+
+    /**
+     * @param string $importKeyProductOptionValue
+     *
+     * @return SpyProductOptionValueQuery
+     */
+    public function queryProductOptionValueByImportKey($importKeyProductOptionValue);
+
+    /**
+     * @param int $fkProductOptionValue
+     * @param int $fkLocale
+     *
+     * @return SpyProductOptionValueTranslationQuery
+     */
+    public function queryProductOptionValueTranslationByFks($fkProductOptionValue, $fkLocale);
+
+    /**
+     * @param int $idProductOptionTypeUsage
+     *
+     * @return SpyProductOptionTypeUsageQuery
+     */
+    public function queryProductOptionTypeUsageById($idProductOptionTypeUsage);
+
+    /**
+     * @param int $fkProduct
+     * @param int $fkProductOptionType
+     *
+     * @return SpyProductOptionTypeUsageQuery
+     */
+    public function queryProductOptionTypeUsageByFKs($fkProduct, $fkProductOptionType);
+
+    /**
+     * @param int $idProductOptionValueUsage
+     *
+     * @return SpyProductOptionValueUsageQuery
+     */
+    public function queryProductOptionValueUsageById($idProductOptionValueUsage);
+
+    /**
+     * @param int $fkProductOptionTypeUsage
+     * @param int $fkProductOptionValue
+     *
+     * @return SpyProductOptionValueUsageQuery
+     */
+    public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionValue);
+
+    /**
+     * @param int $fkProductOptionTypeUsage
+     * @param int $fkProductOptionType
+     *
+     * @return SpyProductOptionValueUsageQuery
+     */
+    public function queryProductOptionValueUsageIdByFKs($fkProductOptionTypeUsage, $fkProductOptionType);
+
+    /**
+     * @param int $fkProductOptionTypeUsageA
+     * @param int $fkProductOptionTypeUsageB
+     *
+     * @return SpyProductOptionTypeUsageExclusionQuery
+     */
+    public function queryProductOptionTypeUsageExclusionByFks($fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB);
+
+    /**
+     * @param int $fkProductOptionValueUsageA
+     * @param int $fkProductOptionValueUsageB
+     *
+     * @return SpyProductOptionValueUsageConstraintQuery
+     */
+    public function queryProductOptionValueUsageConstraintsByFks($fkProductOptionValueUsageA, $fkProductOptionValueUsageB);
+
+    /**
+     * @param int $idProductOptionType
+     *
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAssociatedAbstractProductIdsForProductOptionType($idProductOptionType);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAssociatedAbstractProductIdsForProductOptionValue($idProductOptionValue);
+
+    /**
+     * @param int $idProductOptionTypeUsage
+     *
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage);
+
+    /**
+     * @param int $idProductOptionValueUsage
+     * @param int $idLocale
+     *
+     * @return SpyProductOptionValueUsageQuery
+     */
+    public function queryProductOptionValueUsageWithAssociatedAttributes($idProductOptionValueUsage, $idLocale);
+
+    /**
+     * @param int $idProductOptionValueUsage
+     *
+     * @return SpyTaxSetQuery
+     */
+    public function queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage);
+
+    /**
+     * @param int $idProduct
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    public function queryTypeUsagesForConcreteProduct($idProduct, $idLocale);
+
+    /**
+     * @param int $idTypeUsage
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    public function queryValueUsagesForTypeUsage($idTypeUsage, $idLocale);
+
+    /**
+     * @param int $idTypeUsage
+     *
+     * @return array
+     */
+    public function queryTypeExclusionsForTypeUsage($idTypeUsage);
+
+    /**
+     * @param int $idValueUsage
+     *
+     * @return array
+     */
+    public function queryValueConstraintsForValueUsage($idValueUsage);
+
+    /**
+     * @param int $idValueUsage
+     * @param string $operator
+     *
+     * @return array
+     */
+    public function queryValueConstraintsForValueUsageByOperator($idValueUsage, $operator);
+
+    /**
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function queryConfigPresetsForConcreteProduct($idProduct);
+
+    /**
+     * @param int $idConfigPreset
+     *
+     * @return array
+     */
+    public function queryValueUsagesForConfigPreset($idConfigPreset);
+
+    /**
+     * @param int $idTypeUsage
+     *
+     * @return string|null
+     */
+    public function queryEffectiveTaxRateForTypeUsage($idTypeUsage);
+
+}

@@ -2,7 +2,7 @@
   "name": "spryker/availability-cart-connector",
   "autoload": {
     "psr-0": {
-      "SprykerFeature": "src/",
+      "Spryker": "src/",
       "Acceptance": "tests/",
       "Functional": "tests/",
       "Integration": "tests/",

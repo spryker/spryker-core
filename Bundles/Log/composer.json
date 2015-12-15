@@ -2,7 +2,7 @@
   "name": "spryker/log",
   "autoload": {
     "psr-0": {
-      "SprykerFeature": "src/",
+      "Spryker": "src/",
       "Unit": "tests/"
     }
   },

@@ -1,0 +1,210 @@
+<?php
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace SharedUnit\Spryker\Shared\Session\Business\Handler;
+
+use Spryker\Shared\NewRelic\Api;
+use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+
+/**
+ * @group Spryker
+ * @group Shared
+ * @group Session
+ * @group Business
+ * @group SessionHandlerFile
+ */
+class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
+{
+
+    const LIFETIME = 20;
+
+    const SESSION_NAME = 'sessionName';
+
+    const SESSION_ID = 'sessionId';
+    const SESSION_ID_2 = 'anotherSessionId';
+
+    const SESSION_DATA = 'sessionData';
+
+    /**
+     * @return void
+     */
+    public function tearDown()
+    {
+        $filesystem = new Filesystem();
+        $filesystem->remove($this->getFixtureDirectory());
+    }
+
+    /**
+     * @return string
+     */
+    private function getFixtureDirectory()
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSavePath()
+    {
+        return $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Sessions';
+    }
+
+    /**
+     * @return void
+     */
+    public function testCallOpenMustCreateDirectoryIfNotExists()
+    {
+        $this->assertFalse(is_dir($this->getSavePath()));
+
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
+        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+
+        $this->assertTrue(is_dir($this->getSavePath()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCallOpenMustReturnTrue()
+    {
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
+        $result = $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCallCloseMustReturnTrue()
+    {
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
+        $result = $sessionHandlerFile->close();
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCallWriteMustReturnFalseIfNoDataPassed()
+    {
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
+        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+        $result = $sessionHandlerFile->write(self::SESSION_ID, '');
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCallWriteMustReturnTrueWhenDataCanBeWrittenToFile()
+    {
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
+        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+        $result = $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCallReadMustReturnContentOfSessionForGivenSessionId()
+    {
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
+        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+        $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
+
+        $result = $sessionHandlerFile->read(self::SESSION_ID);
+
+        $this->assertSame(self::SESSION_DATA, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCallDestroyMustReturnFalseIfNoFileExistsForSessionId()
+    {
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
+        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+
+        $result = $sessionHandlerFile->destroy(self::SESSION_ID);
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCallDestroyMustReturnTrueIfFileExistsForSessionId()
+    {
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
+        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+        $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
+
+        $result = $sessionHandlerFile->destroy(self::SESSION_ID);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCallGcMustDeleteFilesWhichAreOlderThenMaxLifetime()
+    {
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
+        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+        $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
+        $this->makeFileOlderThanItIs();
+        $sessionHandlerFile->write(self::SESSION_ID_2, self::SESSION_DATA);
+        $this->makeFileNewerThanItIs();
+
+        $finder = new Finder();
+        $finder->in($this->getSavePath());
+
+        $this->assertCount(2, $finder);
+
+        $sessionHandlerFile->gc(1);
+        $this->assertCount(1, $finder);
+
+        unlink($this->getSavePath() . '/session:' . self::SESSION_ID_2);
+        rmdir($this->getSavePath());
+    }
+
+    /**
+     * @return void
+     */
+    protected function makeFileOlderThanItIs()
+    {
+        touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID, time() - 200);
+    }
+
+    /**
+     * @return void
+     */
+    protected function makeFileNewerThanItIs()
+    {
+        touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID_2, time() + 200);
+    }
+
+    /**
+     * @return Api
+     */
+    protected function createNewRelicApiMock()
+    {
+        $mock = $this->getMockBuilder(Api::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return $mock;
+    }
+
+}

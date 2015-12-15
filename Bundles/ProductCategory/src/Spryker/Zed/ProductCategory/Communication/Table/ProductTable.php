@@ -1,0 +1,109 @@
+<?php
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace Spryker\Zed\ProductCategory\Communication\Table;
+
+use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\ProductCategory\ProductCategoryConfig;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
+use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
+
+class ProductTable extends AbstractTable
+{
+
+    const TABLE_IDENTIFIER = 'product-table';
+
+    /**
+     * @var ProductCategoryQueryContainerInterface
+     */
+    protected $productCategoryQueryContainer;
+
+    /**
+     * @var LocaleTransfer
+     */
+    protected $locale;
+
+    /**
+     * @var int
+     */
+    protected $idCategory;
+
+    /**
+     * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param LocaleTransfer $locale
+     * @param int $idCategory
+     */
+    public function __construct(ProductCategoryQueryContainerInterface $productCategoryQueryContainer, LocaleTransfer $locale, $idCategory)
+    {
+        $this->productCategoryQueryContainer = $productCategoryQueryContainer;
+        $this->locale = $locale;
+        $this->idCategory = (int) $idCategory;
+        $this->defaultUrl = sprintf('product-table?%s=%d', ProductCategoryConfig::PARAM_ID_CATEGORY, $this->idCategory);
+        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+    }
+
+    /**
+     * @param TableConfiguration $config
+     *
+     * @return TableConfiguration
+     */
+    protected function configure(TableConfiguration $config)
+    {
+        $config->setHeader([
+            SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => 'ID',
+            SpyAbstractProductTableMap::COL_SKU => 'SKU',
+            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
+            'checkbox' => 'Selected',
+        ]);
+
+        $config->setSearchable([
+            SpyAbstractProductTableMap::COL_SKU,
+            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
+        ]);
+
+        $config->setPageLength(10);
+
+        return $config;
+    }
+
+    /**
+     * @param TableConfiguration $config
+     *
+     * @return array
+     */
+    protected function prepareData(TableConfiguration $config)
+    {
+        $query = $this->productCategoryQueryContainer->queryAbstractProductsBySearchTerm(null, $this->locale, $this->idCategory);
+        $query->setModelAlias('spy_abstract_product');
+
+        $queryResults = $this->runQuery($query, $config);
+
+        $results = [];
+        foreach ($queryResults as $product) {
+            $checkbox_html = sprintf(
+                '<input id="all_products_checkbox_%d" type="checkbox" onclick="allProductsClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
+                $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
+                $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
+                $product[SpyAbstractProductTableMap::COL_SKU],
+                urlencode($product['name'])
+            );
+
+            $results[] = [
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
+                SpyAbstractProductTableMap::COL_SKU => $product[SpyAbstractProductTableMap::COL_SKU],
+                SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $product['name'],
+                'checkbox' => $checkbox_html,
+            ];
+        }
+        unset($queryResults);
+
+        return $results;
+    }
+
+}
