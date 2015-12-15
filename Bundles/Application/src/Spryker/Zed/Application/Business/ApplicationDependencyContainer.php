@@ -44,56 +44,64 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
+     * @param LoggerInterface|null $logger
+     *
      * @return AbstractApplicationCheckStep[]
      */
-    public function createCheckSteps()
+    public function createCheckSteps(LoggerInterface $logger = null)
     {
         return [
-            $this->createCheckStepDeleteDatabase(),
-            $this->createCheckStepDeleteGeneratedDirectory(),
-            $this->createCheckStepSetupInstall(),
-            $this->createCheckStepCodeCeption(),
-            $this->createCheckStepInstallDemoData(),
-            $this->createCheckStepExportKeyValue(),
-            $this->createCheckStepExportSearch(),
+            $this->createCheckStepDeleteDatabase($logger),
+            $this->createCheckStepDeleteGeneratedDirectory($logger),
+            $this->createCheckStepSetupInstall($logger),
+            $this->createCheckStepCodeCeption($logger),
+            $this->createCheckStepInstallDemoData($logger),
+            $this->createCheckStepExportKeyValue($logger),
+            $this->createCheckStepExportSearch($logger),
         ];
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface|null $logger
      *
      * @return CodeCeption
      */
     public function createCheckStepCodeCeption(LoggerInterface $logger = null)
     {
         $checkStep = new CodeCeption();
-        $checkStep->setLogger($logger);
+        if ($logger !== null) {
+            $checkStep->setLogger($logger);
+        }
 
         return $checkStep;
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface|null $logger
      *
      * @return DeleteDatabase
      */
     public function createCheckStepDeleteDatabase(LoggerInterface $logger = null)
     {
         $checkStep = new DeleteDatabase();
-        $checkStep->setLogger($logger);
+        if ($logger !== null) {
+            $checkStep->setLogger($logger);
+        }
 
         return $checkStep;
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface|null $logger
      *
      * @return DeleteGeneratedDirectory
      */
     public function createCheckStepDeleteGeneratedDirectory(LoggerInterface $logger = null)
     {
         $checkStep = new DeleteGeneratedDirectory();
-        $checkStep->setLogger($logger);
+        if ($logger !== null) {
+            $checkStep->setLogger($logger);
+        }
 
         return $checkStep;
     }
@@ -106,46 +114,54 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
     public function createCheckStepInstallDemoData(LoggerInterface $logger = null)
     {
         $checkStep = new InstallDemoData();
-        $checkStep->setLogger($logger);
+        if ($logger !== null) {
+            $checkStep->setLogger($logger);
+        }
 
         return $checkStep;
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface|null $logger
      *
      * @return SetupInstall
      */
     public function createCheckStepSetupInstall(LoggerInterface $logger = null)
     {
         $checkStep = new SetupInstall();
-        $checkStep->setLogger($logger);
+        if ($logger !== null) {
+            $checkStep->setLogger($logger);
+        }
 
         return $checkStep;
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface|null $logger
      *
      * @return ExportKeyValue
      */
     public function createCheckStepExportKeyValue(LoggerInterface $logger = null)
     {
         $checkStep = new ExportKeyValue();
-        $checkStep->setLogger($logger);
+        if ($logger !== null) {
+            $checkStep->setLogger($logger);
+        }
 
         return $checkStep;
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface|null $logger
      *
      * @return ExportSearch
      */
     public function createCheckStepExportSearch(LoggerInterface $logger = null)
     {
         $checkStep = new ExportSearch();
-        $checkStep->setLogger($logger);
+        if ($logger !== null) {
+            $checkStep->setLogger($logger);
+        }
 
         return $checkStep;
     }
