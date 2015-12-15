@@ -64,16 +64,4 @@ class FacadeLocator extends AbstractLocator
         return $facade;
     }
 
-    /**
-     * @param string $bundle
-     *
-     * @return bool
-     */
-    public function canLocate($bundle)
-    {
-        $factory = $this->getFactory($bundle);
-
-        return $factory->exists($bundle . self::FACADE_SUFFIX);
-    }
-
 }

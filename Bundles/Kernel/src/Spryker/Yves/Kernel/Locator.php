@@ -8,7 +8,6 @@ namespace Spryker\Yves\Kernel;
 
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Kernel\BundleProxy;
-use Spryker\Shared\Kernel\TransferLocator;
 use Spryker\Client\Kernel\ClientLocator;
 
 class Locator extends AbstractLocatorLocator
@@ -21,7 +20,6 @@ class Locator extends AbstractLocatorLocator
     {
         $bundleProxy = new BundleProxy($this);
         $bundleProxy
-            ->addLocator(new PluginLocator())
             ->addLocator(new ClientLocator());
 
         return $bundleProxy;

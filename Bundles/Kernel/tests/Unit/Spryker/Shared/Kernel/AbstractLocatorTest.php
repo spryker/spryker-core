@@ -24,17 +24,7 @@ class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('Spryker\Shared\Kernel\Locator\LocatorException');
 
-        $locator = new MissingPropertyLocator();
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateInstance()
-    {
-        $locator = new Locator('foo');
-
-        $this->assertInstanceOf('Spryker\Shared\Kernel\AbstractLocator', $locator);
+        new MissingPropertyLocator();
     }
 
 }

@@ -8,6 +8,8 @@ namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
+use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
@@ -94,12 +96,12 @@ abstract class AbstractController
             $this->dependencyContainer = $this->resolveDependencyContainer();
         }
 
-        if ($this->getQueryContainer() !== null) {
-            $this->dependencyContainer->setQueryContainer($this->getQueryContainer());
+        if ($this->queryContainer !== null) {
+            $this->dependencyContainer->setQueryContainer($this->queryContainer);
         }
 
-        if ($this->getContainer() !== null) {
-            $this->dependencyContainer->setContainer($this->getContainer());
+        if ($this->container !== null) {
+            $this->dependencyContainer->setContainer($this->container);
         }
 
         return $this->dependencyContainer;
@@ -160,7 +162,29 @@ abstract class AbstractController
      */
     protected function getQueryContainer()
     {
+        if ($this->queryContainer === null) {
+            $this->queryContainer = $this->resolveQueryContainer();
+        }
+
         return $this->queryContainer;
+    }
+
+    /**
+     * @throws QueryContainerNotFoundException
+     *
+     * @return AbstractQueryContainer
+     */
+    private function resolveQueryContainer()
+    {
+        return $this->getQueryContainerResolver()->resolve($this);
+    }
+
+    /**
+     * @return QueryContainerResolver
+     */
+    protected function getQueryContainerResolver()
+    {
+        return new QueryContainerResolver();
     }
 
     /**
