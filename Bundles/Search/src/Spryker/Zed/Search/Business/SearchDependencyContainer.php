@@ -8,6 +8,7 @@ namespace Spryker\Zed\Search\Business;
 
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 use Spryker\Zed\Search\Business\Model\Search;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
 use Spryker\Zed\Search\SearchConfig;
@@ -27,7 +28,7 @@ class SearchDependencyContainer extends AbstractBusinessDependencyContainer
     public function createSearchInstaller(MessengerInterface $messenger)
     {
         return new SearchInstaller(
-            $this->getConfig()->getInstaller(),
+            $this->getInstallers(),
             $messenger
         );
     }
@@ -40,6 +41,14 @@ class SearchDependencyContainer extends AbstractBusinessDependencyContainer
         return new Search(
             $this->getProvidedDependency(SearchDependencyProvider::CLIENT_SEARCH)
         );
+    }
+
+    /**
+     * @return AbstractInstallerPlugin[]
+     */
+    public function getInstallers()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::INSTALLERS);
     }
 
 }

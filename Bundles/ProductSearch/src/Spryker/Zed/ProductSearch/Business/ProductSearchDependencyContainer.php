@@ -28,6 +28,11 @@ use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\ProductSearch\ProductSearchConfig;
+use Spryker\Zed\ProductSearch\Business\Operation\AddToResult;
+use Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet;
+use Spryker\Zed\ProductSearch\Business\Operation\CopyToField;
+use Spryker\Zed\ProductSearch\Business\Operation\CopyToMultiField;
+use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
  * @method ProductSearchConfig getConfig()
@@ -65,7 +70,7 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
      */
     public function getInstaller(MessengerInterface $messenger)
     {
-        $collectorFacade = $this->getLocator()->collector()->facade();
+        $collectorFacade = $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_COLLECTOR);
 
         $installer = new InstallProductSearch(
             StorageInstanceBuilder::getElasticsearchInstance(),
@@ -91,9 +96,9 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
     protected function createOperationLocator()
     {
         $locator = new OperationLocator();
-        $config = $this->getConfig();
+        $operations = $this->getPossibleOperations();
 
-        foreach ($config->getPossibleOperations() as $operation) {
+        foreach ($operations as $operation) {
             $locator->addOperation($operation);
         }
 
@@ -157,6 +162,19 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
     protected function getStoreName()
     {
         return Store::getInstance()->getStoreName();
+    }
+
+    /**
+     * @return array|OperationInterface[]
+     */
+    public function getPossibleOperations()
+    {
+        return [
+            new AddToResult(),
+            new CopyToField(),
+            new CopyToFacet(),
+            new CopyToMultiField(),
+        ];
     }
 
 }

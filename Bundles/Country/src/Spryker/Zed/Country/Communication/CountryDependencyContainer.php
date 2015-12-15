@@ -50,7 +50,7 @@ class CountryDependencyContainer extends AbstractCommunicationDependencyContaine
      */
     protected function getUserQueryContainer()
     {
-        return $this->getProvidedDependency(CountryDependencyProvider::USER_QUERY_CONTAINER);
+        return $this->getProvidedDependency(CountryDependencyProvider::QUERY_CONTAINER_USER);
     }
 
 }

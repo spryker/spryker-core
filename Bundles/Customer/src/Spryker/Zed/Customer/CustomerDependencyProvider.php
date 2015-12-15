@@ -17,7 +17,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const PASSWORD_RESTORED_CONFIRMATION_SENDERS = 'Password RestoredConfirmation Senders';
     const SENDER_PLUGINS = 'sender plugins';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
-    const FACADE_COUNTRY = 'COUNTRY_QUERY_CONTAINER';
+    const FACADE_COUNTRY = 'FACADE_COUNTRY';
 
     /**
      * @param Container $container

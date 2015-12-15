@@ -16,9 +16,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_URL = 'facade_url';
     const FACADE_LOCALE = 'facade_locale';
     const FACADE_GLOSSARY = 'facade glossary';
-    const URL_QUERY_CONTAINER = 'url_query_container';
-    const GLOSSARY_QUERY_CONTAINER = 'glossary_query_container';
-    const CATEGORY_QUERY_CONTAINER = 'category query container';
+    const QUERY_CONTAINER_URL = 'url_query_container';
+    const QUERY_CONTAINER_GLOSSARY = 'glossary_query_container';
+    const QUERY_CONTAINER_CATEGORY = 'category query container';
 
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
@@ -66,15 +66,15 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
 
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[self::URL_QUERY_CONTAINER] = function (Container $container) {
+        $container[self::QUERY_CONTAINER_URL] = function (Container $container) {
             return $container->getLocator()->url()->queryContainer();
         };
 
-        $container[self::GLOSSARY_QUERY_CONTAINER] = function (Container $container) {
+        $container[self::QUERY_CONTAINER_GLOSSARY] = function (Container $container) {
             return $container->getLocator()->glossary()->queryContainer();
         };
 
-        $container[self::CATEGORY_QUERY_CONTAINER] = function (Container $container) {
+        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->queryContainer();
         };
     }

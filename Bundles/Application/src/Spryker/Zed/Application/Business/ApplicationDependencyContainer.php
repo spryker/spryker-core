@@ -48,7 +48,15 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCheckSteps()
     {
-        return $this->getConfig()->getCheckSteps();
+        return [
+            $this->createCheckStepDeleteDatabase(),
+            $this->createCheckStepDeleteGeneratedDirectory(),
+            $this->createCheckStepSetupInstall(),
+            $this->createCheckStepCodeCeption(),
+            $this->createCheckStepInstallDemoData(),
+            $this->createCheckStepExportKeyValue(),
+            $this->createCheckStepExportSearch(),
+        ];
     }
 
     /**

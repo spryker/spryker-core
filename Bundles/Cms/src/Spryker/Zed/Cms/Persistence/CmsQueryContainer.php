@@ -294,7 +294,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryUrlByIdWithRedirect($idUrl)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
+        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_URL)
             ->queryUrlByIdWithRedirect($idUrl);
     }
 
@@ -305,7 +305,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryRedirectById($idRedirect)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
+        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_URL)
             ->queryRedirectById($idRedirect);
     }
 
@@ -314,7 +314,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryUrlsWithRedirect()
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
+        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_URL)
             ->queryUrlsWithRedirect();
     }
 
@@ -325,7 +325,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryKey($key)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::GLOSSARY_QUERY_CONTAINER)
+        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_GLOSSARY)
             ->queryKey($key);
     }
 
@@ -354,7 +354,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryUrlById($idUrl)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
+        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_URL)
             ->queryUrlById($idUrl);
     }
 
@@ -365,7 +365,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryTranslationWithKeyByValue($value)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::GLOSSARY_QUERY_CONTAINER)
+        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_GLOSSARY)
             ->queryTranslationByValue($value)
             ->innerJoinGlossaryKey()
             ->filterByIsActive(true)
@@ -380,7 +380,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryKeyWithTranslationByKey($key)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::GLOSSARY_QUERY_CONTAINER)
+        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_GLOSSARY)
             ->queryByKey($key)
             ->rightJoinSpyGlossaryTranslation()
             ->filterByIsActive(true)
@@ -442,7 +442,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     protected function getCategoryQueryContainer()
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::CATEGORY_QUERY_CONTAINER);
+        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 
     /**
