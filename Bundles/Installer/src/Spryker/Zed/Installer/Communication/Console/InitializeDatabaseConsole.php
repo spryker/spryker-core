@@ -34,10 +34,12 @@ class InitializeDatabaseConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return null|int null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $installerPlugins = $this->getFacade()->getInstaller();
+        $installerPlugins = $this->getFacade()->getInstallers();
 
         $messenger = $this->getMessenger();
 

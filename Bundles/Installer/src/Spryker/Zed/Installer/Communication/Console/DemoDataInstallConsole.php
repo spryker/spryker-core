@@ -37,7 +37,7 @@ class DemoDataInstallConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $installerPlugins = $this->getFacade()->getDemoDataInstaller();
+        $installerPlugins = $this->getFacade()->getDemoDataInstallers();
 
         $messenger = $this->getMessenger();
 
