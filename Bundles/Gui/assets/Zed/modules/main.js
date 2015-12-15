@@ -10,7 +10,7 @@ require('../../Inspinia/img/dashbard4_2.jpg');
 require('../../Inspinia/img/full_height.jpg');
 require('../../Inspinia/img/off_canvas.jpg');
 
-require('../styles/main.scss');
+require('../sass/main.scss');
 var test = require('./test');
 
 test.run();
