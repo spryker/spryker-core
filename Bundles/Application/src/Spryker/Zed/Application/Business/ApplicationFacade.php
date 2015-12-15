@@ -17,11 +17,13 @@ class ApplicationFacade extends AbstractFacade
 {
 
     /**
+     * @param LoggerInterface $logger
+     *
      * @return AbstractApplicationCheckStep[]
      */
-    public function getCheckSteps()
+    public function getCheckSteps(LoggerInterface $logger = null)
     {
-        return $this->getDependencyContainer()->createCheckSteps();
+        return $this->getDependencyContainer()->createCheckSteps($logger);
     }
 
     /**

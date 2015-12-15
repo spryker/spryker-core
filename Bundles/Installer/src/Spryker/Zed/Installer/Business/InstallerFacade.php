@@ -8,6 +8,7 @@ namespace Spryker\Zed\Installer\Business;
 
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
 
 /**
  * @method InstallerDependencyContainer getDependencyContainer()
@@ -18,21 +19,21 @@ class InstallerFacade extends AbstractFacade
     /**
      * @return AbstractInstaller[]
      */
-    public function getInstaller()
+    public function getInstallers()
     {
-        return $this->getDependencyContainer()->getInstaller();
+        return $this->getDependencyContainer()->getInstallers();
     }
 
     /**
      * @return AbstractInstaller[]
      */
-    public function getDemoDataInstaller()
+    public function getDemoDataInstallers()
     {
-        return $this->getDependencyContainer()->getDemoDataInstaller();
+        return $this->getDependencyContainer()->getDemoDataInstallers();
     }
 
     /**
-     * @return AbstractInstaller[]
+     * @return GlossaryInstaller
      */
     public function getGlossaryInstaller()
     {

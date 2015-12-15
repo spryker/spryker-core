@@ -8,6 +8,8 @@ namespace Spryker\Zed\Refund;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
+use Symfony\Component\Intl\Exception\NotImplementedException;
 
 class RefundDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -73,6 +75,17 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+
+    /**
+     * @throws NotImplementedException
+     *
+     * @return PaymentDataPluginInterface
+     */
+    public function getPaymentDataPlugin()
+    {
+        throw new NotImplementedException('No Payment Data Plugin Provided. Please implement on project level.');
     }
 
 }

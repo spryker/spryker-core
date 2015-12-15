@@ -21,21 +21,21 @@ class InstallerDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return AbstractInstaller[]
      */
-    public function getInstaller()
+    public function getInstallers()
     {
-        return $this->getConfig()->getInstallerStack();
+        return $this->getProvidedDependency(InstallerDependencyProvider::INSTALLERS);
     }
 
     /**
      * @return AbstractInstaller[]
      */
-    public function getDemoDataInstaller()
+    public function getDemoDataInstallers()
     {
-        return $this->getConfig()->getDemoDataInstallerStack();
+        return $this->getProvidedDependency(InstallerDependencyProvider::INSTALLERS_DEMO_DATA);
     }
 
     /**
-     * @return AbstractInstaller[]
+     * @return GlossaryInstaller
      */
     public function getGlossaryInstaller()
     {

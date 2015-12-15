@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Container;
 class CountryDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const USER_QUERY_CONTAINER = 'USER_QUERY_CONTAINER';
+    const QUERY_CONTAINER_USER = 'QUERY_CONTAINER_USER';
 
     /**
      * @param Container $container
@@ -21,7 +21,7 @@ class CountryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::USER_QUERY_CONTAINER] = function (Container $container) {
+        $container[self::QUERY_CONTAINER_USER] = function (Container $container) {
             return $container->getLocator()->user()->queryContainer();
         };
 
