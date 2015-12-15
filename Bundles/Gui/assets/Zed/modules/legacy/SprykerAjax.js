@@ -1,6 +1,6 @@
 'use strict';
 
-function SprykerAjax() {
+module.exports = function SprykerAjax() {
     var self = this;
 
     /** if ajax url is null, the action will be in the same page */
@@ -58,5 +58,4 @@ function SprykerAjax() {
         };
         self.ajaxSubmit(options, 'changeStatusMarkInGrid');
     };
-
-}
+};

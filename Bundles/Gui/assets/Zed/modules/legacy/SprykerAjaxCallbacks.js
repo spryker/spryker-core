@@ -1,6 +1,6 @@
 'use strict';
 
-function SprykerAjaxCallbacks() {
+module.exports = function SprykerAjaxCallbacks() {
     var self = this;
 
     /* HTML success code */
@@ -30,5 +30,4 @@ function SprykerAjaxCallbacks() {
             self.alerter.error(ajaxResponse.message);
         }
     };
-
-}
+};

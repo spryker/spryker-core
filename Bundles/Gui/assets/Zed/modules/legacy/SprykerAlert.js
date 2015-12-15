@@ -1,6 +1,6 @@
 'use strict';
 
-function SprykerAlert() {
+module.exports = function SprykerAlert() {
     var self = this;
     self.init = function(){
         self.clean();
@@ -55,4 +55,4 @@ function SprykerAlert() {
         $('#modal-alert').modal('show');
     };
     self.init();
-}
+};

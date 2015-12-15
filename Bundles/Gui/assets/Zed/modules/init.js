@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(function() {
     /**
      * Spryker Ajax Calls Container
