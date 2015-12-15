@@ -11,6 +11,7 @@ use Spryker\Shared\Kernel\ClassResolver\ClassNotFoundException;
 use Spryker\Shared\Kernel\Locator\LocatorException;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Library\Log;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 
 class FacadeLocator extends AbstractLocator
@@ -52,16 +53,24 @@ class FacadeLocator extends AbstractLocator
         $facadeResolver = new FacadeResolver();
         $facade = $facadeResolver->resolve($bundle);
 
-        try {
-            if ($locator->$bundle()->hasQueryContainer()) {
-                $facade->setOwnQueryContainer($locator->$bundle()->queryContainer());
-            }
-        } catch (ClassNotFoundException $e) {
-            // TODO remove try-catch when all bundles have a Builder
-            Log::log(APPLICATION . ' - ' . $bundle, 'builder_missing.log');
-        }
-
         return $facade;
+    }
+
+    /**
+     * @param string $bundle
+     *
+     * @return bool
+     */
+    public function canLocate($bundle)
+    {
+        try {
+            $facadeResolver = new FacadeResolver();
+            $facadeResolver->resolve($bundle);
+
+            return true;
+        } catch (FacadeNotFoundException $exception) {
+            return false;
+        }
     }
 
 }

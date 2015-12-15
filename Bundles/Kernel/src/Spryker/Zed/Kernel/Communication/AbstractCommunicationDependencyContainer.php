@@ -22,8 +22,6 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
     /**
      * @param AbstractBundleDependencyProvider $dependencyProvider
      * @param Container $container
-     *
-     * @return Container
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,

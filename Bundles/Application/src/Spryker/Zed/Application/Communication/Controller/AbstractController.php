@@ -8,6 +8,8 @@ namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
@@ -126,23 +128,32 @@ abstract class AbstractController
     }
 
     /**
-     * @param AbstractFacade $facade
-     *
-     * @return self
-     */
-    public function setOwnFacade(AbstractFacade $facade)
-    {
-        $this->facade = $facade;
-
-        return $this;
-    }
-
-    /**
      * @return AbstractFacade
      */
     protected function getFacade()
     {
+        if ($this->facade === null) {
+            $this->facade = $this->resolveFacade();
+        }
         return $this->facade;
+    }
+
+    /**
+     * @throws FacadeNotFoundException
+     *
+     * @return AbstractFacade
+     */
+    private function resolveFacade()
+    {
+        return $this->getFacadeResolver()->resolve($this);
+    }
+
+    /**
+     * @return FacadeResolver
+     */
+    protected function getFacadeResolver()
+    {
+        return new FacadeResolver();
     }
 
     /**
@@ -150,7 +161,7 @@ abstract class AbstractController
      *
      * @return self
      */
-    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
+    public function setQueryContainer(AbstractQueryContainer $queryContainer)
     {
         $this->queryContainer = $queryContainer;
 

@@ -286,7 +286,7 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         };
         $this->productOptionQueryContainer->setExternalDependencies($container);
         $this->facade->setExternalDependencies($container);
-        $this->facade->setOwnQueryContainer($this->productOptionQueryContainer);
+        $this->facade->setQueryContainer($this->productOptionQueryContainer);
     }
 
 }

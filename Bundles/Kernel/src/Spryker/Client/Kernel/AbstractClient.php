@@ -44,10 +44,10 @@ abstract class AbstractClient
     {
         if ($this->dependencyContainer === null) {
             $this->dependencyContainer = $this->resolveDependencyContainer();
+        }
 
-            if ($this->container !== null) {
-                $this->dependencyContainer->setContainer($this->container);
-            }
+        if ($this->container !== null) {
+            $this->dependencyContainer->setContainer($this->container);
         }
 
         return $this->dependencyContainer;

@@ -36,7 +36,7 @@ trait InternalClassBuilderForTests
         $queryContainer = $this->getQueryContainer($namespace, $bundle);
         if ($queryContainer) {
             $queryContainer->setExternalDependencies($this->getContainer($namespace, $bundle));
-            $facade->setOwnQueryContainer($queryContainer);
+            $facade->setQueryContainer($queryContainer);
         }
 
         $facade->setExternalDependencies($this->getContainer($namespace, $bundle));

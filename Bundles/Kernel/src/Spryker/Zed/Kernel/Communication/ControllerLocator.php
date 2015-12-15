@@ -73,6 +73,8 @@ class ControllerLocator implements ControllerLocatorInterface
     }
 
     /**
+     * @TODO remove ClassMapFactory usage
+     *
      * @param \Pimple $application
      * @param LocatorLocatorInterface $locator
      *
@@ -84,23 +86,6 @@ class ControllerLocator implements ControllerLocatorInterface
             'Zed', $this->bundle, 'Controller' . $this->controller . 'Controller', 'Communication', [$application]
         );
 
-        // @todo REFACTOR -  move to constructor when all controllers are upgraded
-        $bundleName = lcfirst($this->bundle);
-
-        if (!method_exists($resolvedController, 'setOwnFacade')) {
-            Log::log($resolvedController, 'wrong_controller.txt');
-        }
-
-        // @todo make lazy
-        if ($locator->$bundleName()->hasFacade()) {
-            $resolvedController->setOwnFacade($locator->$bundleName()->facade());
-        }
-
-        // @todo make lazy
-        if ($locator->$bundleName()->hasQueryContainer()) {
-            $resolvedController->setOwnQueryContainer($locator->$bundleName()->queryContainer());
-        }
-
         return $resolvedController;
     }
 
@@ -110,21 +95,6 @@ class ControllerLocator implements ControllerLocatorInterface
     public function canLocate()
     {
         return ClassMapFactory::getInstance()->has('Zed', $this->bundle, 'Controller' . $this->controller . 'Controller', 'Communication');
-    }
-
-    /**
-     * @param Container $container
-     *
-     * @return Container
-     */
-    protected function addDefaultDependencies(Container $container)
-    {
-        $container[AbstractCommunicationDependencyContainer::FORM_FACTORY] = function (Container $container) {
-            return (new Pimple())
-                ->getApplication()[AbstractCommunicationDependencyContainer::FORM_FACTORY];
-        };
-
-        return $container;
     }
 
 }

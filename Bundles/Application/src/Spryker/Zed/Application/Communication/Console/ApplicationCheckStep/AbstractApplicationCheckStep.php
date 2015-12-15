@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Application\Communication\Console\ApplicationCheckStep;
 
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Container;
@@ -19,6 +21,11 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
 {
 
     use LoggerAwareTrait;
+
+    /**
+     * @var AbstractFacade
+     */
+    protected $facade;
 
     /**
      * @var ApplicationDependencyContainer
@@ -75,11 +82,13 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     /**
      * @param AbstractFacade $facade
      *
-     * @return void
+     * @return self
      */
     public function setFacade(AbstractFacade $facade)
     {
         $this->facade = $facade;
+
+        return $this;
     }
 
     /**
@@ -87,7 +96,29 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
      */
     protected function getFacade()
     {
+        if ($this->facade === null) {
+            $this->facade = $this->resolveFacade();
+        }
+
         return $this->facade;
+    }
+
+    /**
+     * @throws FacadeNotFoundException
+     *
+     * @return AbstractFacade
+     */
+    private function resolveFacade()
+    {
+        return $this->getFacadeResolver()->resolve($this);
+    }
+
+    /**
+     * @return FacadeResolver
+     */
+    protected function getFacadeResolver()
+    {
+        return new FacadeResolver();
     }
 
     abstract public function run();

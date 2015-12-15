@@ -3,7 +3,10 @@
 namespace Spryker\Client\Kernel;
 
 use Generated\Client\Ide\AutoCompletion;
+use Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
+use Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Client\Kernel\DependencyContainer\DependencyContainerInterface;
+use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Client\ZedRequest\ZedRequestClient;
@@ -29,26 +32,65 @@ abstract class AbstractDependencyContainer implements DependencyContainerInterfa
     /**
      * @param Container $container
      *
-     * @return void
+     * @return self
      */
     public function setContainer(Container $container)
     {
         $this->container = $container;
+
+        return $this;
     }
 
     /**
      * @param $key
      *
-     * @throws \ErrorException
+     * @throws ContainerKeyNotFoundException
      *
      * @return mixed
      */
     public function getProvidedDependency($key)
     {
-        $this->validateContainerExists();
-        $this->validateKeyExists($key);
+        if ($this->container === null) {
+            $dependencyProvider = $this->resolveDependencyProvider();
+            $container = new Container();
+            $this->provideExternalDependencies($dependencyProvider, $container);
+            $this->container = $container;
+        }
+
+        if ($this->container->offsetExists($key) === false) {
+            throw new ContainerKeyNotFoundException($this, $key);
+        }
 
         return $this->container[$key];
+    }
+
+    /**
+     * @throws DependencyProviderNotFoundException
+     *
+     * @return AbstractDependencyProvider
+     */
+    private function resolveDependencyProvider()
+    {
+        return $this->getDependencyProviderResolver()->resolve($this);
+    }
+
+    /**
+     * @return DependencyProviderResolver
+     */
+    protected function getDependencyProviderResolver()
+    {
+        return new DependencyProviderResolver();
+    }
+
+    /**
+     * @param AbstractDependencyProvider $dependencyProvider
+     * @param Container $container
+     *
+     * @return void
+     */
+    protected function provideExternalDependencies(AbstractDependencyProvider $dependencyProvider, Container $container)
+    {
+        $dependencyProvider->provideServiceLayerDependencies($container);
     }
 
     /**
@@ -81,32 +123,6 @@ abstract class AbstractDependencyContainer implements DependencyContainerInterfa
     protected function createSearchClient()
     {
         return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_SEARCH);
-    }
-
-    /**
-     * @throws \ErrorException
-     *
-     * @return void
-     */
-    protected function validateContainerExists()
-    {
-        if ($this->container === null) {
-            throw new \ErrorException('Container does not exist in ' . get_class($this));
-        }
-    }
-
-    /**
-     * @param $key
-     *
-     * @throws \ErrorException
-     *
-     * @return void
-     */
-    protected function validateKeyExists($key)
-    {
-        if ($this->container->offsetExists($key) === false) {
-            throw new \ErrorException('Key ' . $key . ' does not exist in container: ' . get_class($this));
-        }
     }
 
 }
