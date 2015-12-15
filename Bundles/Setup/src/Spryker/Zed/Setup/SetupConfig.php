@@ -80,7 +80,7 @@ class SetupConfig extends AbstractBundleConfig
             GeneratorConsole::COMMAND_NAME,
             InitializeDatabaseConsole::COMMAND_NAME,
             GenerateIdeAutoCompletionConsole::COMMAND_NAME,
-            RunnerConsole::COMMAND_NAME => ['--' . RunnerConsole::OPTION_TASK_BUILD_ALL],
+            //RunnerConsole::COMMAND_NAME => ['--' . RunnerConsole::OPTION_TASK_BUILD_ALL],
             BuildNavigationConsole::COMMAND_NAME,
             SearchConsole::COMMAND_NAME,
         ];
