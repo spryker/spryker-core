@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Client\Kernel\ClassResolver\DependencyContainer;
+namespace Spryker\Client\Kernel\ClassResolver\Client;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
 use Spryker\Client\Kernel\ClassResolver\ClassInfo;
-use SprykerEngine\Shared\Kernel\Exception\Backtrace;
+use Spryker\Shared\Kernel\Exception\Backtrace;
 
-class DependencyContainerNotFoundException extends \Exception
+class ClientNotFoundException extends \Exception
 {
 
     /**
@@ -31,17 +31,17 @@ class DependencyContainerNotFoundException extends \Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve %1$sDependencyContainer for your bundle "%1$s"',
+            'Can not resolve %1$sClient for your bundle "%1$s"',
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
-        $message .= 'You can fix this by adding the missing DependencyContainer to your bundle.' . PHP_EOL;
+        $message .= 'You can fix this by adding the missing Client to your bundle.' . PHP_EOL;
 
         $message .= sprintf(
-            'E.g. %s\\Client\\%2$s\\Service\\%2$sDependencyContainer',
+            'E.g. %s\\Client\\%2$s\\Service\\%2$sClient',
             Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
-        );
+        ) . PHP_EOL;
 
         $message .= new Backtrace();
 

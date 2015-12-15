@@ -9,7 +9,7 @@ namespace Spryker\Zed\Kernel\ClassResolver\Facade;
 use Spryker\Shared\Config;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Application\ApplicationConstants;
-use SprykerEngine\Shared\Kernel\Exception\Backtrace;
+use Spryker\Shared\Kernel\Exception\Backtrace;
 
 class FacadeNotFoundException extends \Exception
 {

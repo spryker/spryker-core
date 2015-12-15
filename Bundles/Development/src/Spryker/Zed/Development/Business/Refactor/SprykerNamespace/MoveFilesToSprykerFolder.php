@@ -46,10 +46,10 @@ class MoveFilesToSprykerFolder extends AbstractRefactor
         foreach ($finder as $communicationFolder) {
             $movable[] = $this->getRealPath($communicationFolder);
         }
-
         foreach ($movable as $folder) {
             $target = $this->renameNamespaces($folder);
             system(sprintf('git mv %s %s', $folder, $target));
+            echo 'Moved ' . $folder . ' to ' . $target . PHP_EOL;
         }
     }
 
