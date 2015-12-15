@@ -9,6 +9,7 @@ namespace Spryker\Zed\Kernel\ClassResolver\DependencyProvider;
 use Spryker\Shared\Config;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Application\ApplicationConstants;
+use SprykerEngine\Shared\Kernel\Exception\Backtrace;
 
 class DependencyProviderNotFoundException extends \Exception
 {
@@ -41,6 +42,8 @@ class DependencyProviderNotFoundException extends \Exception
             Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );
+
+        $message .= new Backtrace();
 
         return $message;
     }

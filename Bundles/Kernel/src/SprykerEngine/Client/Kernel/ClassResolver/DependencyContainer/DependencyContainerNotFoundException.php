@@ -6,9 +6,10 @@
 
 namespace Spryker\Client\Kernel\ClassResolver\DependencyContainer;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
 use Spryker\Client\Kernel\ClassResolver\ClassInfo;
-use Spryker\Shared\Application\ApplicationConfig;
+use SprykerEngine\Shared\Kernel\Exception\Backtrace;
 
 class DependencyContainerNotFoundException extends \Exception
 {
@@ -30,8 +31,7 @@ class DependencyContainerNotFoundException extends \Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve %2$sDependencyContainer for your bundle "%s"',
-            $callerClassInfo->getLayer(),
+            'Can not resolve %1$sDependencyContainer for your bundle "%1$s"',
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
@@ -39,9 +39,11 @@ class DependencyContainerNotFoundException extends \Exception
 
         $message .= sprintf(
             'E.g. %s\\Client\\%2$s\\Service\\%2$sDependencyContainer',
-            Config::getInstance()->get(ApplicationConfig::PROJECT_NAMESPACE),
+            Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );
+
+        $message .= new Backtrace();
 
         return $message;
     }

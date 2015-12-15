@@ -6,9 +6,10 @@
 
 namespace Spryker\Yves\Kernel\ClassResolver\DependencyContainer;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
 use Spryker\Yves\Kernel\ClassResolver\ClassInfo;
-use Spryker\Shared\Application\ApplicationConfig;
+use SprykerEngine\Shared\Kernel\Exception\Backtrace;
 
 class DependencyContainerNotFoundException extends \Exception
 {
@@ -38,9 +39,11 @@ class DependencyContainerNotFoundException extends \Exception
 
         $message .= sprintf(
             'E.g. %s\\Yves\\%2$s\\%2$sDependencyContainer',
-            Config::getInstance()->get(ApplicationConfig::PROJECT_NAMESPACE),
+            Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );
+
+        $message .= new Backtrace();
 
         return $message;
     }

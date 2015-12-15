@@ -6,9 +6,9 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Application\ApplicationConfig;
 
 abstract class AbstractClassResolver
 {
@@ -31,7 +31,7 @@ abstract class AbstractClassResolver
     /**
      * @return bool
      */
-    protected function canResolve()
+    public function canResolve()
     {
         $classNames = $this->buildClassNames();
 
@@ -102,7 +102,7 @@ abstract class AbstractClassResolver
      */
     private function getProjectNamespaces()
     {
-        return Config::getInstance()->get(ApplicationConfig::PROJECT_NAMESPACES);
+        return Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACES);
     }
 
     /**
@@ -112,7 +112,7 @@ abstract class AbstractClassResolver
      */
     private function getCoreNamespaces()
     {
-        return Config::getInstance()->get(ApplicationConfig::CORE_NAMESPACES);
+        return Config::getInstance()->get(ApplicationConstants::CORE_NAMESPACES);
     }
 
 }

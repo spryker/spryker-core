@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Kernel\Communication;
 
 use Spryker\Shared\Kernel\AbstractLocator;
-use Spryker\Shared\Kernel\Locator\LocatorException;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 class ConsoleLocator extends AbstractLocator
@@ -38,29 +37,15 @@ class ConsoleLocator extends AbstractLocator
     /**
      * @param string $bundle
      * @param LocatorLocatorInterface $locator
-     * @param string|null $className
+     * @param string $className
      *
-     * @throws LocatorException
+     * @throws \Exception
      *
-     * @return object
+     * @return void
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
-        $factory = $this->getFactory($bundle);
-        $resolvedConsole = $factory->create('Console' . $className);
-
-        $bundleName = lcfirst($bundle);
-
-        // @todo make lazy
-        if ($locator->$bundleName()->hasFacade()) {
-            $resolvedConsole->setFacade($locator->$bundleName()->facade());
-        }
-
-        if ($locator->$bundleName()->hasQueryContainer()) {
-            $resolvedConsole->setQueryContainer($locator->$bundleName()->queryContainer());
-        }
-
-        return $resolvedConsole;
+        throw new \Exception('Please use new for your console plugins');
     }
 
 }

@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\DependencyContainer\DependencyContainerInterface;
 class DependencyContainerResolver extends AbstractClassResolver
 {
 
-    const CLASS_NAME_PATTERN = '\\%1$s\\Client\\%2$s%3$s\\Service\\%2$sDependencyContainer';
+    const CLASS_NAME_PATTERN = '\\%1$s\\Client\\%2$s%3$s\\%2$sDependencyContainer';
 
     /**
      * @param object|string $callerClass

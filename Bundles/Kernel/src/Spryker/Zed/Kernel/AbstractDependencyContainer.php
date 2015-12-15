@@ -100,8 +100,6 @@ abstract class AbstractDependencyContainer
     /**
      * @param AbstractBundleDependencyProvider $dependencyProvider
      * @param Container $container
-     *
-     * @return Container
      */
     abstract protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,

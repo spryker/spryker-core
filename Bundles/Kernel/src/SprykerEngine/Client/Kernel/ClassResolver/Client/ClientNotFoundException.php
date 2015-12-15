@@ -6,9 +6,10 @@
 
 namespace Spryker\Client\Kernel\ClassResolver\Client;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
 use Spryker\Client\Kernel\ClassResolver\ClassInfo;
-use Spryker\Shared\Application\ApplicationConfig;
+use SprykerEngine\Shared\Kernel\Exception\Backtrace;
 
 class ClientNotFoundException extends \Exception
 {
@@ -38,9 +39,11 @@ class ClientNotFoundException extends \Exception
 
         $message .= sprintf(
             'E.g. %s\\Client\\%2$s\\Service\\%2$sClient',
-            Config::getInstance()->get(ApplicationConfig::PROJECT_NAMESPACE),
+            Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
-        );
+        ) . PHP_EOL;
+
+        $message .= new Backtrace();
 
         return $message;
     }

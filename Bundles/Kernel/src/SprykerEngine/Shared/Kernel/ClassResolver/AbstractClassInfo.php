@@ -37,7 +37,7 @@ abstract class AbstractClassInfo
         }
         $this->callerClassName = $callerClass;
 
-        if (strpos('\\', $callerClass) === false) {
+        if (strpos($callerClass, '\\') === false) {
             $callerClassParts = [
                 self::KEY_BUNDLE => $callerClass,
             ];

@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Silex\Application;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
@@ -122,7 +123,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException
+     * @throws DependencyContainerNotFoundException
      *
      * @return AbstractCommunicationDependencyContainer
      */

@@ -44,4 +44,28 @@ class QueryContainerResolver extends AbstractClassResolver
         );
     }
 
+
+    /**
+     * @param string $namespace
+     * @param string $store
+     *
+     * @return string
+     */
+    protected function buildClassName($namespace, $store = null)
+    {
+        $searchAndReplace = [
+            self::KEY_NAMESPACE => $namespace,
+            self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
+            self::KEY_STORE => $store,
+        ];
+
+        $className = str_replace(
+            array_keys($searchAndReplace),
+            array_values($searchAndReplace),
+            $this->getClassPattern()
+        );
+
+        return $className;
+    }
+
 }

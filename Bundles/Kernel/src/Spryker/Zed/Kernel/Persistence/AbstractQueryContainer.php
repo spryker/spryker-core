@@ -7,8 +7,12 @@
 namespace Spryker\Zed\Kernel\Persistence;
 
 use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Kernel\Persistence\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -43,17 +47,53 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     /**
      * @param string $key
      *
-     * @throws \ErrorException
+     * @throws ContainerKeyNotFoundException
      *
      * @return mixed
      */
     public function getProvidedDependency($key)
     {
+        if ($this->container === null) {
+            $dependencyProvider = $this->resolveDependencyProvider();
+            $container = new Container();
+            $this->provideExternalDependencies($dependencyProvider, $container);
+            $this->container = $container;
+        }
+
         if ($this->container->offsetExists($key) === false) {
-            throw new \ErrorException('Key ' . $key . ' does not exist in container.');
+            throw new ContainerKeyNotFoundException($this, $key);
         }
 
         return $this->container[$key];
+    }
+
+    /**
+     * @throws DependencyProviderNotFoundException
+     *
+     * @return AbstractBundleDependencyProvider
+     */
+    private function resolveDependencyProvider()
+    {
+        return $this->getDependencyProviderResolver()->resolve($this);
+    }
+
+    /**
+     * @return DependencyProviderResolver
+     */
+    protected function getDependencyProviderResolver()
+    {
+        return new DependencyProviderResolver();
+    }
+
+    /**
+     * @param AbstractBundleDependencyProvider $dependencyProvider
+     * @param Container $container
+     */
+    protected function provideExternalDependencies(
+        AbstractBundleDependencyProvider $dependencyProvider,
+        Container $container
+    ) {
+        $dependencyProvider->providePersistenceLayerDependencies($container);
     }
 
     /**

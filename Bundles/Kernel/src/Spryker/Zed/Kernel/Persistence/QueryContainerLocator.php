@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Kernel\Persistence;
 
+use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Shared\Kernel\Locator\LocatorException;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Kernel\AbstractLocator;
@@ -58,9 +58,13 @@ class QueryContainerLocator extends AbstractLocator
      */
     public function canLocate($bundle)
     {
-        $factory = $this->getFactory($bundle);
+        try {
+            $this->getQueryContainerResolver()->resolve($bundle);
 
-        return $factory->exists($bundle . 'QueryContainer');
+            return true;
+        } catch (QueryContainerNotFoundException $exception) {
+            return false;
+        }
     }
 
     /**

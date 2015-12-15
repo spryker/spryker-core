@@ -54,7 +54,6 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
             self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
-            self::KEY_LAYER => $this->getClassInfo()->getLayer(),
             self::KEY_STORE => $store,
         ];
 

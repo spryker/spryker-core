@@ -58,29 +58,12 @@ class CartFacadeTest extends AbstractFunctionalTest
         $dependencyProvider->provideCommunicationLayerDependencies($container);
         $dependencyProvider->providePersistenceLayerDependencies($container);
 
-        $cartDependencyContainer = new CartDependencyContainer();
-
-        $mockFactory = $this->getMockCartBusinessFactory();
-        $mockFactory
-            ->expects($this->any())
-            ->method('create')
-            ->with('DependencyContainer')
-            ->will($this->returnValue($cartDependencyContainer));
-
         $this->cartFacade = new CartFacade();
         $this->cartFacade->setExternalDependencies($container);
 
         $this->priceFacade = new PriceFacade();
 
         $this->setTestData();
-    }
-
-    /**
-     * @return BusinessFactory|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getMockCartBusinessFactory()
-    {
-        return $this->getMock('Spryker\Zed\Kernel\Business\Factory', ['create'], ['Cart']);
     }
 
     /**
