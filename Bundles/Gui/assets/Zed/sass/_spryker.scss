@@ -1,4 +1,9 @@
-/* Custom Spryker CSS Elements */
+/**
+ * 
+ * Spryker Inspinia-theme customization
+ * @copyright: Spryker Systems GmbH
+ *
+ */
 
 .icon-holder {
     float: left;
@@ -19,7 +24,7 @@ body.login {
         padding-top: 100px;
 
         span {
-            background: url(../img/sprite.svg);
+            background: url(../img/logo.svg);
             width: 165px;
             height: 159px;
             display: block;
@@ -56,10 +61,11 @@ body.login {
       }
   }
 }
-/* .. Login */
 
+
+// login
 @mixin svg-common() {
-  background: url(../img/sprite.svg) no-repeat;
+  background: url(../img/logo.svg) no-repeat;
 }
 
 .svg-commerce {

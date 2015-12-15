@@ -1,3 +1,10 @@
-require('./modules/legacy/discount');
+/**
+ * 
+ * Discount main entry point
+ * @copyright: Spryker Systems GmbH
+ *
+ */
 
-// alert();
+'use strict';
+
+require('./modules/main');

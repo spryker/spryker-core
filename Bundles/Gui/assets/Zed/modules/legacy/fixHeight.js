@@ -1,7 +1,12 @@
-'use strict';
 /**
- * get the  highest height value of all elements and change them to be equal
+ * 
+ * Get the  highest height value of all elements and change them to be equal
+ * @copyright: Spryker Systems GmbH
+ *
  */
+
+'use strict';
+
 (function($){
     $.fn.sprykerFixHeight = function(){
         var self = this;

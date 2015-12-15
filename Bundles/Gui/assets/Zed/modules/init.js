@@ -1,3 +1,10 @@
+/**
+ * 
+ * Spryker ZED initialization
+ * @copyright: Spryker Systems GmbH
+ *
+ */
+
 'use strict';
 
 $(document).ready(function() {
@@ -19,13 +26,13 @@ $(document).ready(function() {
     /** all elements with the same class will have the same height */
     $('.fix-height').sprykerFixHeight();
 
-    //$('.spryker-form-autocomplete').each(function (key, value) {
-    //    var obj = $(value);
-    //    obj.autocomplete({
-    //        source: obj.data('url'),
-    //        minLength: 3
-    //    });
-    //});
+    $('.spryker-form-autocomplete').each(function (key, value) {
+       var obj = $(value);
+       obj.autocomplete({
+           source: obj.data('url'),
+           minLength: 3
+       });
+    });
 
     /** trigger change status active|inactive with an ajax call when click on checkbox */
     $('.gui-table-data').on('click', '.active-checkbox', function(){

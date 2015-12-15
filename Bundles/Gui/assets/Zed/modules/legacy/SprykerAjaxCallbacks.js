@@ -1,3 +1,10 @@
+/**
+ * 
+ * Spryker ajax callbacks manager
+ * @copyright: Spryker Systems GmbH
+ *
+ */
+
 'use strict';
 
 module.exports = function SprykerAjaxCallbacks() {

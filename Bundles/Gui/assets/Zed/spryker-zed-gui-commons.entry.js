@@ -1,3 +1,10 @@
-require('./modules/main');
+/**
+ * 
+ * GUI commons entry point
+ * @copyright: Spryker Systems GmbH
+ *
+ */
 
-// alert();
+'use strict';
+
+require('./modules/main');

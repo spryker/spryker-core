@@ -1,3 +1,10 @@
+/**
+ * 
+ * Spryker alert message manager
+ * @copyright: Spryker Systems GmbH
+ *
+ */
+
 'use strict';
 
 module.exports = function SprykerAlert() {

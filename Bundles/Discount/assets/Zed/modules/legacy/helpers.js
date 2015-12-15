@@ -1,3 +1,10 @@
+/**
+ * 
+ * Discount helpers
+ * @copyright: Spryker Systems GmbH
+ *
+ */
+
 'use strict';
 
 SprykerAjax.prototype.loadDecisionRulesOptions = function(element, mainFormName){
