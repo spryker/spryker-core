@@ -167,14 +167,42 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
     /**
      * @return array|OperationInterface[]
      */
-    public function getPossibleOperations()
+    protected function getPossibleOperations()
     {
         return [
-            new AddToResult(),
-            new CopyToField(),
-            new CopyToFacet(),
-            new CopyToMultiField(),
+            $this->createAddToResult(),
+            $this->createCopyToField(),
+            $this->createCopyToFacet(),
+            $this->createCopyToMultiField(),
         ];
+    }
+
+    /**
+     * @return AddToResult
+     */
+    protected function createAddToResult() {
+        return new AddToResult();
+    }
+
+    /**
+     * @return CopyToField
+     */
+    protected function createCopyToField() {
+        return new CopyToField();
+    }
+
+    /**
+     * @return CopyToFacet
+     */
+    protected function createCopyToFacet() {
+        return new CopyToFacet();
+    }
+
+    /**
+     * @return CopyToMultiField
+     */
+    protected function createCopyToMultiField() {
+        return new CopyToMultiField();
     }
 
 }
