@@ -10,12 +10,12 @@
 *.AppleDesktop
 
 # built client resources
-/src/*/Zed/*/Static/Public
-/src/*/Zed/*/Static/Assets/sprite
+/demoshop/vendor/spryker/spryker/Bundles/EventJournal/src/Spryker/Zed/*/Static/Public
+/demoshop/vendor/spryker/spryker/Bundles/EventJournal/src/Spryker/Zed/*/Static/Assets/sprite
 
 # propel classes
-/src/*/Zed/*/Persistence/Propel/Base/*
-/src/*/Zed/*/Persistence/Propel/Map/*
+/demoshop/vendor/spryker/spryker/Bundles/EventJournal/src/Spryker/Zed/*/Persistence/Propel/Base/*
+/demoshop/vendor/spryker/spryker/Bundles/EventJournal/src/Spryker/Zed/*/Persistence/Propel/Map/*
 
 # OS
 .DS_Store
