@@ -9,13 +9,13 @@ namespace Spryker\Yves\Application\Plugin\Provider;
 use Pyz\Yves\Application\ApplicationDependencyContainer;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\EventJournal\Model\Event;
-use SprykerEngine\Yves\Kernel\AbstractPlugin;
-use SprykerFeature\Client\EventJournal\Service\EventJournalClientInterface;
-use SprykerFeature\Shared\NewRelic\ApiInterface;
-use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Shared\Yves\YvesConfig;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Shared\EventJournal\Model\Event;
+use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Client\EventJournal\EventJournalClientInterface;
+use Spryker\Shared\NewRelic\ApiInterface;
+use Spryker\Shared\Library\System;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -153,8 +153,8 @@ class YvesLoggingServiceProvider extends AbstractPlugin implements ServiceProvid
     {
         $this->setTrackingCookie(
             $app,
-            Config::get(YvesConfig::YVES_COOKIE_DEVICE_ID_NAME),
-            Config::get(YvesConfig::YVES_COOKIE_DEVICE_ID_VALID_FOR)
+            Config::get(ApplicationConstants::YVES_COOKIE_DEVICE_ID_NAME),
+            Config::get(ApplicationConstants::YVES_COOKIE_DEVICE_ID_VALID_FOR)
         );
     }
 
@@ -167,8 +167,8 @@ class YvesLoggingServiceProvider extends AbstractPlugin implements ServiceProvid
     {
         $this->setTrackingCookie(
             $app,
-            Config::get(YvesConfig::YVES_COOKIE_VISITOR_ID_NAME),
-            Config::get(YvesConfig::YVES_COOKIE_VISITOR_ID_VALID_FOR)
+            Config::get(ApplicationConstants::YVES_COOKIE_VISITOR_ID_NAME),
+            Config::get(ApplicationConstants::YVES_COOKIE_VISITOR_ID_VALID_FOR)
         );
     }
 
@@ -189,7 +189,7 @@ class YvesLoggingServiceProvider extends AbstractPlugin implements ServiceProvid
             $_COOKIE[$cookieName],
             $dt->modify($validFor),
             '/',
-            Config::get(YvesConfig::YVES_COOKIE_DOMAIN)
+            Config::get(ApplicationConstants::YVES_COOKIE_DOMAIN)
         );
     }
 }

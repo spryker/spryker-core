@@ -13,15 +13,15 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
-use SprykerFeature\Client\EventJournal\Service\EventJournal;
-use SprykerEngine\Shared\EventJournal\Model\Event;
-use SprykerFeature\Shared\Library\Communication\ObjectInterface;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Shared\Library\Communication\Request;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Client\EventJournal\EventJournal;
+use Spryker\Shared\EventJournal\Model\Event;
+use Spryker\Shared\Library\Communication\ObjectInterface;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Library\System;
+use Spryker\Shared\Library\Communication\Request;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class ZedClient
 {

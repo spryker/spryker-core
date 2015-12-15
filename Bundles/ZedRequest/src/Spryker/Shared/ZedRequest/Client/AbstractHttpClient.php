@@ -14,18 +14,18 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerFeature\Client\Auth\AuthClientInterface;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use SprykerEngine\Shared\EventJournal\Model\SharedEventJournal;
-use SprykerEngine\Shared\EventJournal\Model\Event;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Shared\ZedRequest\Client\Exception\RequestException;
-use SprykerFeature\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
-use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
+use Spryker\Shared\Kernel\Factory\FactoryInterface;
+use Spryker\Client\Auth\AuthClientInterface;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Library\System;
+use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
+use Spryker\Shared\EventJournal\Model\SharedEventJournal;
+use Spryker\Shared\EventJournal\Model\Event;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
+use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
+use Spryker\Zed\ZedRequest\Business\Client\Request;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {

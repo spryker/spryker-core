@@ -8,8 +8,8 @@ namespace Spryker\Yves\Application\Plugin\Provider;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use SprykerFeature\Shared\Library\Log;
-use SprykerFeature\Shared\Library\Monolog\EventJournalHandler;
+use Spryker\Shared\Library\Log;
+use Spryker\Shared\Library\Monolog\EventJournalHandler;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 

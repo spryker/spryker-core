@@ -6,14 +6,14 @@
 
 namespace Spryker\Shared\Library\Error;
 
-use SprykerEngine\Shared\EventJournal\Model\Event;
-use SprykerEngine\Shared\EventJournal\Model\EventInterface;
-use SprykerEngine\Shared\EventJournal\Model\EventJournalInterface;
-use SprykerEngine\Shared\EventJournal\Model\SharedEventJournal;
-use SprykerFeature\Shared\Library\Application\Version;
-use SprykerFeature\Shared\Library\Log;
-use SprykerFeature\Shared\NewRelic\Api;
-use SprykerFeature\Shared\NewRelic\ApiInterface;
+use Spryker\Shared\EventJournal\Model\Event;
+use Spryker\Shared\EventJournal\Model\EventInterface;
+use Spryker\Shared\EventJournal\Model\EventJournalInterface;
+use Spryker\Shared\EventJournal\Model\SharedEventJournal;
+use Spryker\Shared\Library\Application\Version;
+use Spryker\Shared\Library\Log;
+use Spryker\Shared\NewRelic\Api;
+use Spryker\Shared\NewRelic\ApiInterface;
 
 class ErrorLogger
 {
