@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Payolution;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Shared\Payolution\PayolutionApiConstants;
 use Spryker\Shared\Payolution\PayolutionConfigConstants;
 
 class PayolutionConfig extends AbstractBundleConfig

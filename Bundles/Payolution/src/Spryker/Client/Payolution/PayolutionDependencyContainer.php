@@ -7,6 +7,7 @@
 namespace Spryker\Client\Payolution;
 
 use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Payolution\Session\PayolutionSession;
 use Spryker\Client\Payolution\Zed\PayolutionStub;
 use Spryker\Client\Payolution\Zed\PayolutionStubInterface;
 use Generated\Client\Ide\FactoryAutoCompletion\PayolutionService;

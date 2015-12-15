@@ -26,6 +26,7 @@ class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::FACADE_MAIL] = function (Container $container) {
             return $container->getLocator()->mail()->facade();
         };
+
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
             return $container->getLocator()->glossary()->facade();
         };

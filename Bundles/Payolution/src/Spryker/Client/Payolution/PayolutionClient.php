@@ -9,6 +9,7 @@ namespace Spryker\Client\Payolution;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Payolution\Session\PayolutionSession;
 
 /**
  * @method PayolutionDependencyContainer getDependencyContainer()

@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
-use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
+use Spryker\Shared\Payolution\PayolutionApiConstants;
 
 class PayolutionQueryContainer extends AbstractQueryContainer implements PayolutionQueryContainerInterface
 {

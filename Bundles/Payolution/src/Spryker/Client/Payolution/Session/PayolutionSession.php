@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Payolution\Service\Session;
+namespace Spryker\Client\Payolution\Session;
 
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

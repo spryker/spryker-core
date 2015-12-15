@@ -6,7 +6,7 @@
 
 namespace Spryker\Shared\Payolution;
 
-interface PayolutionConstants
+interface PayolutionConfigConstants
 {
 
     const TRANSACTION_GATEWAY_URL = 'PAYOLUTION_TRANSACTION_GATEWAY_URL';
