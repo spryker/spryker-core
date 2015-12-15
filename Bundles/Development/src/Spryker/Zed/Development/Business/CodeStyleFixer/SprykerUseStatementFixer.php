@@ -22,7 +22,6 @@ class SprykerUseStatementFixer extends AbstractFixer
         'Orm',
         'Generated',
         'Spryker',
-        'Spryker',
     ];
 
     /**

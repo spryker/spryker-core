@@ -43,7 +43,6 @@ class TransferLocatorHelper
         $namespaces = [
             $projectNamespace . '\\',
             'Spryker\\',
-            'Spryker\\',
             'Shared\\',
             'Transfer\\',
         ];

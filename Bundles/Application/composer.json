@@ -3,7 +3,6 @@
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
-      "Spryker": "src/",
       "Acceptance": "tests/",
       "Functional": "tests/",
       "Integration": "tests/",

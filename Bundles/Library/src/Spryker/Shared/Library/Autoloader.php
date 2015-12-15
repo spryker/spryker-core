@@ -14,7 +14,6 @@ class Autoloader
      */
     private static $allowedNamespaces = [
         'Spryker',
-        'Spryker',
     ];
 
     /**
