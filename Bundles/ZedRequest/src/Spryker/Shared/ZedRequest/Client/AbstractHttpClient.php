@@ -6,7 +6,7 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
-use Spryker\Zed\ZedRequest\Business\Client\Response as ClientResponse;
+use Spryker\Client\ZedRequest\Client\Response as ClientResponse;
 use Generated\Client\Ide\AutoCompletion;
 use Guzzle\Http\Client;
 use Guzzle\Http\Exception\RequestException as GuzzleRequestException;
@@ -15,8 +15,8 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
-use Spryker\Shared\Kernel\Factory\FactoryInterface;
 use Spryker\Client\Auth\AuthClientInterface;
+use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Shared\Library\Config;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
@@ -26,7 +26,6 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
-use Spryker\Zed\ZedRequest\Business\Client\Request;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
