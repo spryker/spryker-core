@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOption\Business\Model;
+namespace Spryker\Zed\ProductOption\Business\Model;
 
-use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
@@ -14,12 +14,12 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusion;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraint;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPreset;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetValue;
-use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
-use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
 
 class DataImportWriter implements DataImportWriterInterface
 {

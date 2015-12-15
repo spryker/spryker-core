@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Gui\Form;
+namespace Spryker\Shared\Gui\Form;
 
-use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;

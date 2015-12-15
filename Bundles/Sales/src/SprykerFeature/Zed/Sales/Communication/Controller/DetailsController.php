@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Communication\Controller;
+namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Sales\Communication\SalesDependencyContainer;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Sales\Business\SalesFacade;
+use Spryker\Zed\Sales\Business\SalesFacade;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**

@@ -1,14 +1,14 @@
 <?php
 
-namespace SprykerFeature\Zed\Queue\Business\Worker;
+namespace Spryker\Zed\Queue\Business\Worker;
 
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
-use SprykerFeature\Zed\Queue\Business\Provider\TaskProviderInterface;
-use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
-use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskWarmUpPluginInterface;
+use Spryker\Zed\Queue\Business\Model\QueueConnectionInterface;
+use Spryker\Zed\Queue\Business\Provider\TaskProviderInterface;
+use Spryker\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
+use Spryker\Zed\Queue\Dependency\Plugin\TaskWarmUpPluginInterface;
 
 class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
 {

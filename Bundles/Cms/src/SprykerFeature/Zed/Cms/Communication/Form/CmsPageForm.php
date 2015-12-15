@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Communication\Form;
+namespace Spryker\Zed\Cms\Communication\Form;
 
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Url\Business\UrlFacade;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsPageForm extends AbstractForm

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Queue\Mock;
+namespace Unit\Spryker\Zed\Queue\Mock;
 
 use Generated\Shared\Transfer\QueueMessageTransfer;
-use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
+use Spryker\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
 
 class MockTaskPlugin implements TaskPluginInterface
 {

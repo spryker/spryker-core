@@ -1,11 +1,11 @@
 <?php
 
-namespace Unit\SprykerEngine\Client\Kernel;
+namespace Unit\Spryker\Client\Kernel;
 
-use SprykerEngine\Client\Kernel\ClientLocatorMatcher;
+use Spryker\Client\Kernel\ClientLocatorMatcher;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Client
  * @group Kernel
  * @group ClientLocatorMatcher

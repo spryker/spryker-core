@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Transfer;
+namespace Spryker\Shared\Transfer;
 
-use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 abstract class AbstractTransfer extends \ArrayObject implements TransferInterface

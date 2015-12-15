@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Refund\Business;
+namespace Spryker\Zed\Refund\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Oms\Business\OmsFacade;
-use SprykerFeature\Zed\Refund\Business\Model\Refund;
-use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainerInterface;
-use SprykerFeature\Zed\Refund\RefundDependencyProvider;
-use SprykerFeature\Zed\Sales\Business\SalesFacade;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Oms\Business\OmsFacade;
+use Spryker\Zed\Refund\Business\Model\Refund;
+use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
+use Spryker\Zed\Refund\RefundDependencyProvider;
+use Spryker\Zed\Sales\Business\SalesFacade;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 
 /**
  * @method RefundQueryContainerInterface getQueryContainer()

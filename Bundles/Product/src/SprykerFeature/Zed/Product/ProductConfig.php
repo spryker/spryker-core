@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product;
+namespace Spryker\Zed\Product;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Library\DataDirectory;
-use SprykerFeature\Shared\Product\ProductConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Library\DataDirectory;
+use Spryker\Shared\Product\ProductConstants;
 
 class ProductConfig extends AbstractBundleConfig
 {

@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Application\Plugin\Provider;
+namespace Spryker\Yves\Application\Plugin\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use SprykerEngine\Shared\Lumberjack\Model\Event;
-use SprykerEngine\Shared\Lumberjack\Model\EventJournalInterface;
-use SprykerFeature\Shared\NewRelic\ApiInterface;
-use SprykerFeature\Shared\Library\System;
+use Spryker\Shared\Lumberjack\Model\Event;
+use Spryker\Shared\Lumberjack\Model\EventJournalInterface;
+use Spryker\Shared\NewRelic\ApiInterface;
+use Spryker\Shared\Library\System;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 

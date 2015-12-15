@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Transfer\Business;
+namespace Spryker\Zed\Transfer\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 
 /**

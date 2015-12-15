@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared;
+namespace Spryker\Shared;
 
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Library\Environment;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Library\Environment;
 
 class Config
 {

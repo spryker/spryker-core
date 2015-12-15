@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion;
+namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion;
 
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConsoleMethodTagBuilder;
+use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConsoleMethodTagBuilder;
 
 /**
  * @group Kernel

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Collector;
+namespace Spryker\Client\Collector;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
-use SprykerFeature\Client\Collector\Matcher\UrlMatcherInterface;
+use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Collector\Matcher\UrlMatcherInterface;
 
 /**
  * @todo Rename all YvesExport Bundles to PageExport or just Export.

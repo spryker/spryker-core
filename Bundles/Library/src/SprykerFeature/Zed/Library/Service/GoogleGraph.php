@@ -9,7 +9,7 @@
  * @link https://developers.google.com/chart/image/docs/chart_params
  */
 
-namespace SprykerFeature\Zed\Library\Service;
+namespace Spryker\Zed\Library\Service;
 
 class GoogleGraph
 {

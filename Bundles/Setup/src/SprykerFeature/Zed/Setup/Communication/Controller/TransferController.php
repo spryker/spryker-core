@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Setup\Communication\Controller;
+namespace Spryker\Zed\Setup\Communication\Controller;
 
-use SprykerFeature\Zed\Setup\Business\SetupFacade;
+use Spryker\Zed\Setup\Business\SetupFacade;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
+use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

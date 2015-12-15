@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Business\Model;
+namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
-use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
+use Spryker\Zed\Acl\AclConfig;
+use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
+use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 interface RuleInterface
 {

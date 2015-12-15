@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\SequenceNumber;
+namespace Spryker\Zed\Payone\Business\SequenceNumber;
 
 interface SequenceNumberProviderInterface
 {

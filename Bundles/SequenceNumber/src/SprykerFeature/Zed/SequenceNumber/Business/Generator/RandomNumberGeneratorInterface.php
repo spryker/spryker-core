@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\SequenceNumber\Business\Generator;
+namespace Spryker\Zed\SequenceNumber\Business\Generator;
 
 interface RandomNumberGeneratorInterface
 {

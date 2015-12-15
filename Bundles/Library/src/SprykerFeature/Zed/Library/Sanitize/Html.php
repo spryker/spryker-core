@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Library\Sanitize;
+namespace Spryker\Zed\Library\Sanitize;
 
 /**
  * (c) Spryker Systems GmbH copyright protected.

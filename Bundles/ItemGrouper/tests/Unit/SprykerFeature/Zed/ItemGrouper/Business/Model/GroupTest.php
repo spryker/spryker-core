@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\ItemGrouper\Business\Model;
+namespace Unit\Spryker\Zed\ItemGrouper\Business\Model;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
-use SprykerFeature\Zed\ItemGrouper\Business\Model\Group;
+use Spryker\Zed\ItemGrouper\Business\Model\Group;
 
 class GroupTest extends \PHPUnit_Framework_TestCase
 {

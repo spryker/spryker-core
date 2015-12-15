@@ -4,9 +4,9 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerEngine\Shared\Lumberjack\Model\Collector;
+namespace Spryker\Shared\Lumberjack\Model\Collector;
 
-use SprykerFeature\Shared\Library\System;
+use Spryker\Shared\Library\System;
 
 class ServerDataCollector extends AbstractDataCollector
 {

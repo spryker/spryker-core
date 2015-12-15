@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\DiscountCalculationConnector\Communication\Plugin;
+namespace Spryker\Zed\DiscountCalculationConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
-use SprykerFeature\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorDependencyContainer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
+use Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method DiscountCalculationConnectorDependencyContainer getDependencyContainer()

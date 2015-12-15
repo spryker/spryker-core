@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Catalog\Code;
+namespace Spryker\Shared\Catalog\Code;
 
 interface ProductAttributeSetConstantInterface
 {

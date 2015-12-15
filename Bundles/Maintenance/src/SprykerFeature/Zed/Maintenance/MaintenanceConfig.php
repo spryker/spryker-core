@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance;
+namespace Spryker\Zed\Maintenance;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MaintenanceConfig extends AbstractBundleConfig
 {

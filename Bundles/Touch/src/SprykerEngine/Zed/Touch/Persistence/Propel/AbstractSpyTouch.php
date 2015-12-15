@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Touch\Persistence\Propel;
+namespace Spryker\Zed\Touch\Persistence\Propel;
 
 use Orm\Zed\Touch\Persistence\Base\SpyTouch as BaseSpyTouch;
 

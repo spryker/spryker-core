@@ -3,14 +3,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Communication\Table;
+namespace Spryker\Zed\Customer\Communication\Table;
 
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
-use SprykerFeature\Zed\Customer\CustomerConfig;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Customer\CustomerConfig;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AddressTable extends AbstractTable
 {

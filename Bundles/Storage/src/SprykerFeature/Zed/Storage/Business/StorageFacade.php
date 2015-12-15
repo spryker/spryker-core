@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Storage\Business;
+namespace Spryker\Zed\Storage\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method StorageDependencyContainer getDependencyContainer()

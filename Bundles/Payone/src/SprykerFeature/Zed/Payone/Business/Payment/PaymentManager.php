@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Payment;
+namespace Spryker\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
@@ -17,25 +17,25 @@ use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
-use SprykerFeature\Zed\Library\Copy;
-use SprykerFeature\Zed\Payone\Business\Api\Call\CreditCardCheck;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
-use SprykerFeature\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
-use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Key\HashGenerator;
-use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
-use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
-use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
+use Spryker\Zed\Library\Copy;
+use Spryker\Zed\Payone\Business\Api\Call\CreditCardCheck;
+use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
+use Spryker\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
+use Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
+use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
+use Spryker\Zed\Payone\Business\Key\HashGenerator;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
+use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
+use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 use Propel\Runtime\Exception\PropelException;

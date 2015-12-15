@@ -3,10 +3,10 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Zed\Payolution\Communication\Table;
+namespace Spryker\Zed\Payolution\Communication\Table;
 
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 

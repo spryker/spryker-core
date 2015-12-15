@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\User;
+namespace Functional\Spryker\Zed\User;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\UserTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Zed\User\Business\UserFacade;
+use Spryker\Zed\User\Business\UserFacade;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group User
  */
@@ -108,7 +108,7 @@ class UserTest extends Test
 
         $this->userFacade->removeUser($user->getIdUser());
 
-        $this->setExpectedException('\SprykerFeature\Zed\User\Business\Exception\UserNotFoundException');
+        $this->setExpectedException('\Spryker\Zed\User\Business\Exception\UserNotFoundException');
         $this->userFacade->getUserById($user->getIdUser());
     }
 

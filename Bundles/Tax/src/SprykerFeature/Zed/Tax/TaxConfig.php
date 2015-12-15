@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Tax;
+namespace Spryker\Zed\Tax;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 
 class TaxConfig extends AbstractBundleConfig
 {

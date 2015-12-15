@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\ZedRequest;
+namespace Spryker\Client\ZedRequest;
 
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\Auth\AuthConstants;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Shared\Auth\AuthConstants;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class ZedRequestConfig
 {

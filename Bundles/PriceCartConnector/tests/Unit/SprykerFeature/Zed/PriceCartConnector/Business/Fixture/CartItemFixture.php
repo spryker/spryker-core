@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture;
+namespace Unit\Spryker\Zed\PriceCartConnector\Business\Fixture;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Cart\Transfer\ItemInterface;
-use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Cart\Transfer\ItemInterface;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 class CartItemFixture extends AbstractTransfer implements ItemInterface
 {

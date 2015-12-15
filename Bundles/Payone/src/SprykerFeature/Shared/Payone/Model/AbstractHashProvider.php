@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Payone\Model;
+namespace Spryker\Shared\Payone\Model;
 
-use SprykerFeature\Shared\Payone\Dependency\HashInterface;
+use Spryker\Shared\Payone\Dependency\HashInterface;
 
 abstract class AbstractHashProvider implements HashInterface
 {

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Cart\Zed;
+namespace Spryker\Client\Cart\Zed;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerEngine\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Transfer\TransferInterface;
 
 interface CartStubInterface
 {

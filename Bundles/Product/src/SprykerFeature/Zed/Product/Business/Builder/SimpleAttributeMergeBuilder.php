@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Builder;
+namespace Spryker\Zed\Product\Business\Builder;
 
 class SimpleAttributeMergeBuilder
 {

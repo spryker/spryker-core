@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Communication\Plugin\Oms\Condition;
+namespace Spryker\Zed\Payolution\Communication\Plugin\Oms\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
+use Spryker\Zed\Payolution\Business\PayolutionFacade;
 
 /**
  * @method PayolutionFacade getFacade()

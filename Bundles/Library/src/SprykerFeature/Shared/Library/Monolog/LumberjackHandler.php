@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Monolog;
+namespace Spryker\Shared\Library\Monolog;
 
 use Monolog\Handler\AbstractHandler;
-use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
-use SprykerEngine\Shared\Lumberjack\Model\Event;
+use Spryker\Shared\Lumberjack\Model\SharedEventJournal;
+use Spryker\Shared\Lumberjack\Model\Event;
 
 class LumberjackHandler extends AbstractHandler
 {

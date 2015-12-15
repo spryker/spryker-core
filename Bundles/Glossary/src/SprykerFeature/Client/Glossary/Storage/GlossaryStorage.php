@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Glossary\Storage;
+namespace Spryker\Client\Glossary\Storage;
 
-use SprykerFeature\Client\Storage\StorageClientInterface;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class GlossaryStorage implements GlossaryStorageInterface
 {

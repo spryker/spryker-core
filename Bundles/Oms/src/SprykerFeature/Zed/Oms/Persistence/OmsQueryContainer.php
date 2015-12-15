@@ -4,21 +4,21 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Persistence;
+namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
-use SprykerFeature\Zed\Oms\OmsDependencyProvider;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
+use Spryker\Zed\Oms\OmsDependencyProvider;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
  */

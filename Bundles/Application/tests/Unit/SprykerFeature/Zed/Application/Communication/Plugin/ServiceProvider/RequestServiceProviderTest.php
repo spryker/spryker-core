@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
+namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
-use SprykerEngine\Zed\Kernel\AbstractUnitTest;
-use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
+use Spryker\Zed\Kernel\AbstractUnitTest;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Application
  * @group Communication
@@ -39,7 +39,7 @@ class RequestServiceProviderTest extends AbstractUnitTest
     ) {
         $application = new Application();
 
-        $requestServiceProvider = $this->getPluginByClassName('SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider');
+        $requestServiceProvider = $this->getPluginByClassName('Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider');
         $requestServiceProvider->boot($application);
 
         $request = Request::create($givenUrl);

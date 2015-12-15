@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionCheckoutConnector\Business;
+namespace Spryker\Zed\ProductOptionCheckoutConnector\Business;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method ProductOptionCheckoutConnectorDependencyContainer getDependencyContainer()

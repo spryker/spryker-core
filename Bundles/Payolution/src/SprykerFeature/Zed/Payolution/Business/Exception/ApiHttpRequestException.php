@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Exception;
+namespace Spryker\Zed\Payolution\Business\Exception;
 
 class ApiHttpRequestException extends \Exception
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace SprykerFeature\Client\Catalog;
+namespace Spryker\Client\Catalog;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
-use SprykerFeature\Client\Catalog\Model\FacetConfig;
-use SprykerFeature\Client\Catalog\Model\FacetSearch;
-use SprykerFeature\Client\Catalog\Model\FulltextSearch;
+use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Catalog\Model\FacetConfig;
+use Spryker\Client\Catalog\Model\FacetSearch;
+use Spryker\Client\Catalog\Model\FulltextSearch;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Client\Catalog\Model\Catalog;
+use Spryker\Client\Catalog\Model\Catalog;
 
 /**
  * @method CatalogDependencyContainer getDependencyContainer()

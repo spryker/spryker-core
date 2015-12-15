@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Nopayment\Persistence\Propel;
+namespace Spryker\Zed\Nopayment\Persistence\Propel;
 
 use Orm\Zed\Nopayment\Persistence\Base\SpyNopaymentPaid as BaseSpyNopaymentPaid;
 

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Kernel\Communication;
+namespace Spryker\Zed\Kernel\Communication;
 
-use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Kernel\KernelDependencyProvider;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\KernelDependencyProvider;
 
 class KernelDependencyContainer extends AbstractCommunicationDependencyContainer
 {

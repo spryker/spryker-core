@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Application;
+namespace Spryker\Yves\Application;
 
 use Elastica\Client;
-use SprykerEngine\Shared\Application\Communication\Application as SharedApplication;
-use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
-use SprykerFeature\Yves\Library\Session\TransferSession;
+use Spryker\Shared\Application\Communication\Application as SharedApplication;
+use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
+use Spryker\Yves\Library\Session\TransferSession;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class Application extends SharedApplication

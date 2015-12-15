@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Currency;
+namespace Spryker\Shared\Library\Currency;
 
-use SprykerEngine\Shared\Kernel\Store;
+use Spryker\Shared\Kernel\Store;
 
 /**
  * This class is the central math class for currency arithmetic operations
@@ -82,7 +82,7 @@ class CurrencyManager
      */
     protected static function loadCurrencyClass($currencyIsoCode)
     {
-        $class = '\SprykerFeature\\Shared\\Library\\Currency\\Config\\' . $currencyIsoCode;
+        $class = '\Spryker\\Shared\\Library\\Currency\\Config\\' . $currencyIsoCode;
 
         return new $class();
     }

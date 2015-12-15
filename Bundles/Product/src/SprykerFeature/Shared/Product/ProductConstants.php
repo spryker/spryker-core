@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Product;
+namespace Spryker\Shared\Product;
 
 interface ProductConstants
 {

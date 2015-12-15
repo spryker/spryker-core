@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Storage\Redis;
+namespace Spryker\Client\Storage\Redis;
 
 use Predis\Client;
 use Predis\ClientInterface;

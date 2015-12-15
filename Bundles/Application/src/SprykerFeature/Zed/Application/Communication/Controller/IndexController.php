@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication\Controller;
+namespace Spryker\Zed\Application\Communication\Controller;
 
 class IndexController extends AbstractController
 {

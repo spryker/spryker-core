@@ -3,18 +3,18 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Glossary\Communication\Grid;
+namespace Functional\Spryker\Zed\Glossary\Communication\Grid;
 
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Glossary
  * @group Business

@@ -2,7 +2,7 @@
 /**
  * (c) Copyright Spryker Systems GmbH 2015
  */
-namespace SprykerFeature\Shared\NewRelic;
+namespace Spryker\Shared\NewRelic;
 
 /**
  * The PHP API for New Relic

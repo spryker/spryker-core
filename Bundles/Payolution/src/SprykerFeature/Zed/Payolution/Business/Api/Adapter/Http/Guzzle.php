@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
+namespace Spryker\Zed\Payolution\Business\Api\Adapter\Http;
 
-use SprykerFeature\Zed\Payolution\Business\Exception\ApiHttpRequestException;
+use Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\Exception\RequestException;
 use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;

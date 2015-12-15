@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Tax;
+namespace Spryker\Zed\Tax;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class TaxDependencyProvider extends AbstractBundleDependencyProvider
 {

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Installer;
+namespace Spryker\Zed\Installer;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 abstract class InstallerConfig extends AbstractBundleConfig
 {
@@ -32,7 +32,7 @@ abstract class InstallerConfig extends AbstractBundleConfig
         // Find files in Core bundles
         return glob(
             APPLICATION_VENDOR_DIR
-            . '/spryker/spryker/Bundles/*/src/SprykerFeature/*/*/Ressources/glossary.yml'
+            . '/spryker/spryker/Bundles/*/src/Spryker/*/*/Ressources/glossary.yml'
         );
     }
 

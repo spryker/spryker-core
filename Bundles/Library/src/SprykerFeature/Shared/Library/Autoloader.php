@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library;
+namespace Spryker\Shared\Library;
 
 class Autoloader
 {
@@ -13,8 +13,8 @@ class Autoloader
      * @var array
      */
     private static $allowedNamespaces = [
-        'SprykerFeature',
-        'SprykerEngine',
+        'Spryker',
+        'Spryker',
     ];
 
     /**

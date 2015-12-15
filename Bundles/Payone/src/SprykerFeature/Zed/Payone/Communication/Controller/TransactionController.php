@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Communication\Controller;
+namespace Spryker\Zed\Payone\Communication\Controller;
 
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
-use SprykerFeature\Shared\Payone\PayoneConstants;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
-use SprykerFeature\Zed\Payone\Business\PayoneFacade;
-use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
+use Spryker\Shared\Payone\PayoneConstants;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
+use Spryker\Zed\Payone\Business\PayoneFacade;
+use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;

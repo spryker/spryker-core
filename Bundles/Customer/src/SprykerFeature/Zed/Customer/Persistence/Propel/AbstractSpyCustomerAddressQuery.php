@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Persistence\Propel;
+namespace Spryker\Zed\Customer\Persistence\Propel;
 
 use Orm\Zed\Customer\Persistence\Base\SpyCustomerAddressQuery as BaseSpyCustomerAddressQuery;
 

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication;
+namespace Spryker\Zed\Application\Communication;
 
-use SprykerFeature\Shared\NewRelic\Api;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Shared\NewRelic\Api;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
 class ApplicationDependencyContainer extends AbstractCommunicationDependencyContainer
 {

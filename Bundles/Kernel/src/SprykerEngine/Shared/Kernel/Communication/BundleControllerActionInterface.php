@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Kernel\Communication;
+namespace Spryker\Shared\Kernel\Communication;
 
 interface BundleControllerActionInterface
 {

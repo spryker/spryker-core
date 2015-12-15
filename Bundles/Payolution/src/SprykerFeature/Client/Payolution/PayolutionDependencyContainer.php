@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Payolution;
+namespace Spryker\Client\Payolution;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Payolution\Zed\PayolutionStub;
-use SprykerFeature\Client\Payolution\Zed\PayolutionStubInterface;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Payolution\Zed\PayolutionStub;
+use Spryker\Client\Payolution\Zed\PayolutionStubInterface;
 use Generated\Client\Ide\FactoryAutoCompletion\PayolutionService;
 
 /**

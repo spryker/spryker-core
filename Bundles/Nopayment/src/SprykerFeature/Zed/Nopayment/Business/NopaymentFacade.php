@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Nopayment\Business;
+namespace Spryker\Zed\Nopayment\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**

@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Glossary;
+namespace Spryker\Client\Glossary;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
-use SprykerFeature\Client\Glossary\Storage\GlossaryStorageInterface;
+use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Glossary\Storage\GlossaryStorageInterface;
 
 /**
  * @method GlossaryDependencyContainer getDependencyContainer()

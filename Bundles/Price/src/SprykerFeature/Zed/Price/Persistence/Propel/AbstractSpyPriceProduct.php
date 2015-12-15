@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Price\Persistence\Propel;
+namespace Spryker\Zed\Price\Persistence\Propel;
 
 use Orm\Zed\Price\Persistence\Base\SpyPriceProduct as BaseSpyPriceProduct;
 

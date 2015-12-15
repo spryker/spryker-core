@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Communication;
+namespace Spryker\Zed\Category\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Category\Business\CategoryFacade;
-use SprykerFeature\Zed\Category\CategoryDependencyProvider;
-use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
-use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
-use SprykerFeature\Zed\Category\Communication\Table\RootNodeTable;
-use SprykerFeature\Zed\Category\Communication\Table\UrlTable;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Category\Business\CategoryFacade;
+use Spryker\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Category\Communication\Form\CategoryNodeForm;
+use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
+use Spryker\Zed\Category\Communication\Table\RootNodeTable;
+use Spryker\Zed\Category\Communication\Table\UrlTable;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Generator;
+namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
+use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
@@ -44,7 +44,7 @@ class TransferDefinitionBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
 
         $transferDefinition = $result[0];
-        $this->assertInstanceOf('SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition', $transferDefinition);
+        $this->assertInstanceOf('Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition', $transferDefinition);
     }
 
 }

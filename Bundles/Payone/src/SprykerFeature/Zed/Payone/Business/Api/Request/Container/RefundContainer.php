@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
+namespace Spryker\Zed\Payone\Business\Api\Request\Container;
 
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 
 class RefundContainer extends AbstractRequestContainer
 {

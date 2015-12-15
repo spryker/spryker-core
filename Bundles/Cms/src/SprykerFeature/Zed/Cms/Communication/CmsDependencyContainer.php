@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Communication;
+namespace Spryker\Zed\Cms\Communication;
 
-use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\Cms\Business\CmsFacade;
-use SprykerFeature\Zed\Cms\CmsConfig;
-use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsGlossaryForm;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsRedirectForm;
-use SprykerFeature\Zed\Cms\Communication\Table\CmsBlockTable;
-use SprykerFeature\Zed\Cms\Communication\Table\CmsGlossaryTable;
-use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
-use SprykerFeature\Zed\Cms\Communication\Table\CmsRedirectTable;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\CmsConfig;
+use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
+use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
+use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
+use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
+use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
+use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
+use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 
 /**
  * @method CmsQueryContainer getQueryContainer()

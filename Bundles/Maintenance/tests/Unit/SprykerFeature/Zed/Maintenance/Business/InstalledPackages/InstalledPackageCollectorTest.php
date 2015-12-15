@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Maintenance\Business\InstalledPackages;
+namespace Unit\Spryker\Zed\Maintenance\Business\InstalledPackages;
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Maintenance
  * @group Business
@@ -26,7 +26,7 @@ class InstalledPackageCollectorTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new InstalledPackagesTransfer();
         $finder = [
-            $this->getMock('SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface', ['findInstalledPackages']),
+            $this->getMock('Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface', ['findInstalledPackages']),
         ];
         $collector = new InstalledPackageCollector($collection, $finder);
 

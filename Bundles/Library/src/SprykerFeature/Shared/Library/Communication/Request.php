@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Communication;
+namespace Spryker\Shared\Library\Communication;
 
-use SprykerEngine\Shared\Kernel\TransferLocatorHelper;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Shared\Kernel\TransferLocatorHelper;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\Kernel\Locator;
 
 class Request extends AbstractObject implements
     EmbeddedTransferInterface

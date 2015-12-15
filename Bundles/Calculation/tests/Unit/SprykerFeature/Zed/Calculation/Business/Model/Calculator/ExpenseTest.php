@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
+namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use SprykerEngine\Zed\Kernel\AbstractUnitTest;
-use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Zed\Kernel\AbstractUnitTest;
+use Spryker\Zed\Calculation\Business\CalculationFacade;
+use Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Calculation
  * @group Business

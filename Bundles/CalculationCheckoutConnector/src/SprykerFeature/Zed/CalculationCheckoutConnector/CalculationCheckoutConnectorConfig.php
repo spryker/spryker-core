@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CalculationCheckoutConnector;
+namespace Spryker\Zed\CalculationCheckoutConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CalculationCheckoutConnectorConfig extends AbstractBundleConfig
 {

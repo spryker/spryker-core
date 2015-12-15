@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Client\Kernel;
+namespace Spryker\Client\Kernel;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Client\Kernel\DependencyContainer\DependencyContainerInterface;
-use SprykerFeature\Client\ZedRequest\Stub\BaseStub;
-use SprykerFeature\Shared\ZedRequest\Client\Message;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Kernel\Factory\FactoryInterface;
+use Spryker\Client\Kernel\DependencyContainer\DependencyContainerInterface;
+use Spryker\Client\ZedRequest\Stub\BaseStub;
+use Spryker\Shared\ZedRequest\Client\Message;
 
 abstract class AbstractClient
 {

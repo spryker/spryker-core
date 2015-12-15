@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\NewRelic\Exception;
+namespace Spryker\Shared\NewRelic\Exception;
 
 class RecordDeploymentException extends \Exception
 {

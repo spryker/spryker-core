@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Communication\Form;
+namespace Spryker\Zed\Acl\Communication\Form;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 
 class RulesetForm extends AbstractForm
 {

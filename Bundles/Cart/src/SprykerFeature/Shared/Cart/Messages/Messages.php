@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Cart\Messages;
+namespace Spryker\Shared\Cart\Messages;
 
 class Messages
 {

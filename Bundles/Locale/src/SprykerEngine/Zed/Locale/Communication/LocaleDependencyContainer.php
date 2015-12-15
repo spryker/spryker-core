@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Locale\Communication;
+namespace Spryker\Zed\Locale\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 
 class LocaleDependencyContainer extends AbstractCommunicationDependencyContainer
 {

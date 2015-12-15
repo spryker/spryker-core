@@ -4,45 +4,45 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business;
+namespace Spryker\Zed\Discount\Business;
 
-use SprykerFeature\Zed\Discount\Business\Model\VoucherCode;
-use SprykerFeature\Zed\Discount\Business\Model\VoucherPoolCategory;
-use SprykerFeature\Zed\Discount\Business\Model\CartRule;
+use Spryker\Zed\Discount\Business\Model\VoucherCode;
+use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
+use Spryker\Zed\Discount\Business\Model\CartRule;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Discount\Business\Calculator\Fixed;
-use SprykerFeature\Zed\Discount\Business\Calculator\Percentage;
-use SprykerFeature\Zed\Discount\Business\Collector\Aggregate;
-use SprykerFeature\Zed\Discount\Business\Collector\Item;
-use SprykerFeature\Zed\Discount\Business\Collector\ItemExpense;
-use SprykerFeature\Zed\Discount\Business\Collector\Expense;
-use SprykerFeature\Zed\Discount\Business\Collector\ItemProductOption;
-use SprykerFeature\Zed\Discount\Business\Distributor\Distributor;
-use SprykerFeature\Zed\Discount\Business\Model\Calculator;
-use SprykerFeature\Zed\Discount\Business\Model\CartRuleInterface;
-use SprykerFeature\Zed\Discount\Business\Model\CollectorResolver;
-use SprykerFeature\Zed\Discount\Business\Model\VoucherCodeInterface;
-use SprykerFeature\Zed\Discount\Business\Writer\DiscountCollectorWriter;
-use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
-use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
-use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherWriter;
-use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter;
-use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Discount\Business\DecisionRule\Voucher;
-use SprykerFeature\Zed\Discount\Business\Writer\VoucherCodesWriter;
-use SprykerFeature\Zed\Discount\DiscountConfig;
-use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerFeature\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
-use SprykerFeature\Zed\Discount\Business\Model\Discount;
-use SprykerFeature\Zed\Discount\Business\Model\VoucherEngine;
-use SprykerFeature\Zed\Discount\Business\Model\CalculatorInterface;
-use SprykerFeature\Zed\Discount\Business\Collector\CollectorInterface;
-use SprykerFeature\Zed\Discount\Business\Model\DecisionRuleEngine;
-use SprykerEngine\Shared\Kernel\Store;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Discount\Business\Calculator\Fixed;
+use Spryker\Zed\Discount\Business\Calculator\Percentage;
+use Spryker\Zed\Discount\Business\Collector\Aggregate;
+use Spryker\Zed\Discount\Business\Collector\Item;
+use Spryker\Zed\Discount\Business\Collector\ItemExpense;
+use Spryker\Zed\Discount\Business\Collector\Expense;
+use Spryker\Zed\Discount\Business\Collector\ItemProductOption;
+use Spryker\Zed\Discount\Business\Distributor\Distributor;
+use Spryker\Zed\Discount\Business\Model\Calculator;
+use Spryker\Zed\Discount\Business\Model\CartRuleInterface;
+use Spryker\Zed\Discount\Business\Model\CollectorResolver;
+use Spryker\Zed\Discount\Business\Model\VoucherCodeInterface;
+use Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter;
+use Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
+use Spryker\Zed\Discount\Business\Writer\DiscountWriter;
+use Spryker\Zed\Discount\Business\Writer\DiscountVoucherWriter;
+use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter;
+use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Discount\Business\DecisionRule\Voucher;
+use Spryker\Zed\Discount\Business\Writer\VoucherCodesWriter;
+use Spryker\Zed\Discount\DiscountConfig;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
+use Spryker\Zed\Discount\Business\Model\Discount;
+use Spryker\Zed\Discount\Business\Model\VoucherEngine;
+use Spryker\Zed\Discount\Business\Model\CalculatorInterface;
+use Spryker\Zed\Discount\Business\Collector\CollectorInterface;
+use Spryker\Zed\Discount\Business\Model\DecisionRuleEngine;
+use Spryker\Shared\Kernel\Store;
 
 /**
  * @method DiscountConfig getConfig()

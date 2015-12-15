@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CartCheckoutConnector;
+namespace Spryker\Zed\CartCheckoutConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CartCheckoutConnectorConfig extends AbstractBundleConfig
 {

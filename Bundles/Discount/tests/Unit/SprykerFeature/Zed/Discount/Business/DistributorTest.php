@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Discount\Business;
+namespace Unit\Spryker\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Kernel\Locator;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Discount
  * @group Business

@@ -3,13 +3,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Propel\Business\Model;
+namespace Unit\Spryker\Zed\Propel\Business\Model;
 
-use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemover;
+use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Propel
  * @group Business

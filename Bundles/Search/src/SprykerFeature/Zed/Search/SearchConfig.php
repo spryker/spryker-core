@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Search;
+namespace Spryker\Zed\Search;
 
-use SprykerFeature\Zed\ProductSearch\Communication\Plugin\Installer;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Zed\ProductSearch\Communication\Plugin\Installer;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 class SearchConfig extends AbstractBundleConfig
 {

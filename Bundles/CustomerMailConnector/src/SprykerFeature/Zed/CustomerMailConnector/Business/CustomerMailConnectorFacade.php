@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CustomerMailConnector\Business;
+namespace Spryker\Zed\CustomerMailConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method CustomerMailConnectorDependencyContainer getDependencyContainer()

@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Persistence;
+namespace Spryker\Zed\Acl\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
-use SprykerFeature\Zed\Acl\AclDependencyProvider;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
+use Spryker\Zed\Acl\AclDependencyProvider;
 use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
 use Orm\Zed\Acl\Persistence\SpyAclRoleQuery;
 use Orm\Zed\Acl\Persistence\SpyAclRuleQuery;
 use Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery;
 use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery;
 use Orm\Zed\User\Persistence\SpyUserQuery;
-use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 class AclDependencyContainer extends AbstractPersistenceDependencyContainer
 {

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Sales;
+namespace Spryker\Client\Sales;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
-use SprykerEngine\Client\Kernel\Container;
+use Spryker\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\Container;
 
 class SalesDependencyProvider extends AbstractDependencyProvider
 {

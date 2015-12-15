@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Transfer;
+namespace Spryker\Zed\Transfer;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class TransferDependencyProvider extends AbstractBundleDependencyProvider
 {

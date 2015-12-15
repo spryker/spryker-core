@@ -3,21 +3,21 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace Functional\SprykerFeature\Zed\Payolution\Business\Order;
+namespace Functional\Spryker\Zed\Payolution\Business\Order;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
-use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
+use Spryker\Shared\Payolution\PayolutionApiConstants;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
-use SprykerFeature\Zed\Payolution\Business\Order\Saver;
-use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
+use Spryker\Zed\Payolution\Business\Order\Saver;
+use Spryker\Zed\Payolution\Business\PayolutionDependencyContainer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;

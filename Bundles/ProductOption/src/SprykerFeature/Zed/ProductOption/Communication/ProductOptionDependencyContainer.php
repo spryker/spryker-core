@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOption\Communication;
+namespace Spryker\Zed\ProductOption\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
-use SprykerFeature\Zed\ProductOption\ProductOptionDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
+use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 class ProductOptionDependencyContainer extends AbstractCommunicationDependencyContainer
 {

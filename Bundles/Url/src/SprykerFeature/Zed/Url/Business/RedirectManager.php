@@ -4,20 +4,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Business;
+namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use SprykerFeature\Zed\Url\Business\Exception\MissingRedirectException;
-use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
-use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
-use SprykerFeature\Zed\Url\Dependency\UrlToTouchInterface;
+use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
+use Spryker\Zed\Url\Business\Exception\MissingRedirectException;
+use Spryker\Zed\Url\Business\Exception\RedirectExistsException;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
+use Spryker\Zed\Url\Dependency\UrlToTouchInterface;
 use Orm\Zed\Url\Persistence\SpyRedirect;
-use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
+use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class RedirectManager implements RedirectManagerInterface
 {

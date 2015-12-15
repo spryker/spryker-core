@@ -1,12 +1,12 @@
 <?php
 
-namespace SprykerFeature\Zed\Discount\Communication\Controller;
+namespace Spryker\Zed\Discount\Communication\Controller;
 
 use Generated\Shared\Transfer\CartRuleTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

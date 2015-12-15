@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Storage\Provider;
+namespace Spryker\Shared\Storage\Provider;
 
-use SprykerFeature\Shared\Storage\Client\ReadWriteInterface;
+use Spryker\Shared\Storage\Client\ReadWriteInterface;
 
 /**
  * Class ReadWriteStorageProvider

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Application\Business\Routing;
+namespace Spryker\Shared\Application\Business\Routing;
 
 use Psr\Log\LoggerInterface;
 use Silex\RedirectableUrlMatcher;

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ItemGrouperWishlistConnector\Business;
+namespace Spryker\Zed\ItemGrouperWishlistConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 
 /**

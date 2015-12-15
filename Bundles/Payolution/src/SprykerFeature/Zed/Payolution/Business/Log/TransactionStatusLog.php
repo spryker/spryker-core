@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Log;
+namespace Spryker\Zed\Payolution\Business\Log;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
+use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 
 class TransactionStatusLog implements TransactionStatusLogInterface
 {

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Shipment\Communication\Controller;
+namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use SprykerFeature\Zed\Shipment\Business\ShipmentFacade;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
 /**
  * @method ShipmentFacade getFacade()

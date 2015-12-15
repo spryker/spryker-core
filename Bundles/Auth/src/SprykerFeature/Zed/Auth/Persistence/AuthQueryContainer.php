@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Persistence;
+namespace Spryker\Zed\Auth\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Auth\Persistence\Base\SpyResetPasswordQuery;
 use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 

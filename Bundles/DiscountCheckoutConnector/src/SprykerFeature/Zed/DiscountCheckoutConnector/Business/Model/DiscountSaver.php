@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model;
+namespace Spryker\Zed\DiscountCheckoutConnector\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountCode;
-use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 
 class DiscountSaver implements DiscountSaverInterface
 {

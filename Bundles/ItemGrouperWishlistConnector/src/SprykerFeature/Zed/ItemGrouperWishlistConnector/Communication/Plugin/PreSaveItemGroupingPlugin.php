@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ItemGrouperWishlistConnector\Communication\Plugin;
+namespace Spryker\Zed\ItemGrouperWishlistConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\ItemGrouperWishlistConnector\Business\ItemGrouperWishlistConnectorFacade;
-use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ItemGrouperWishlistConnector\Business\ItemGrouperWishlistConnectorFacade;
+use Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
 /**
  * @method ItemGrouperWishlistConnectorFacade getFacade()

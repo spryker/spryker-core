@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Collector\Code\KeyBuilder;
+namespace Spryker\Shared\Collector\Code\KeyBuilder;
 
 interface KeyBuilderInterface
 {

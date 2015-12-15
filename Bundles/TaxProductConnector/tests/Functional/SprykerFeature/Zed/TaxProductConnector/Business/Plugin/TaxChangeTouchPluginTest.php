@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\TaxProductConnector\Business\Plugin;
+namespace Functional\Spryker\Zed\TaxProductConnector\Business\Plugin;
 
 use Codeception\TestCase\Test;
-use SprykerFeature\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
+use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;

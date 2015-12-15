@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Communication\Form;
+namespace Spryker\Zed\Category\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints;
 
 class CategoryNodeForm extends AbstractForm

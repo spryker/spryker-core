@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Calculation\Business\Model;
+namespace Spryker\Zed\Calculation\Business\Model;
 
 interface CatalogFeatureInterface
 {

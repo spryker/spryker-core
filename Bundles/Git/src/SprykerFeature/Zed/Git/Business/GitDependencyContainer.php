@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Git\Business;
+namespace Spryker\Zed\Git\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Git\GitConfig;
-use SprykerFeature\Zed\Git\GitDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Git\GitConfig;
+use Spryker\Zed\Git\GitDependencyProvider;
 use Symfony\Component\Console\Command\Command;
 
 /**

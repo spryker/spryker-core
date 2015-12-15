@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Maintenance\Business\Model;
+namespace Functional\Spryker\Zed\Maintenance\Business\Model;
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
-use SprykerFeature\Zed\Maintenance\Business\MaintenanceDependencyContainer;
+use Spryker\Zed\Maintenance\Business\MaintenanceDependencyContainer;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Maintenance
  * @group Business
@@ -33,7 +33,7 @@ class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
     public function testCreatePackageCollectorShouldReturnFullConfiguredInstance()
     {
         $this->assertInstanceOf(
-            'SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface',
+            'Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface',
             $this->getDependencyContainer()->createPackageCollector()
         );
     }
@@ -44,7 +44,7 @@ class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
     public function testCreateMarkDownWriterShouldReturnFullConfiguredInstance()
     {
         $this->assertInstanceOf(
-            'SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter',
+            'Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter',
             $this->getDependencyContainer()->createMarkDownWriter(new InstalledPackagesTransfer())
         );
     }

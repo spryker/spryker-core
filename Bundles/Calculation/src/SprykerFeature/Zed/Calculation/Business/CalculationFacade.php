@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Calculation\Business;
+namespace Spryker\Zed\Calculation\Business;
 
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Calculation\CalculationConfig;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\CalculationConfig;
 
 /**
  * @method CalculationDependencyContainer getDependencyContainer()

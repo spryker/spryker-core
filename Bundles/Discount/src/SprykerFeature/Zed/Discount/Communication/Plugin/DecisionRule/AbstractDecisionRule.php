@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule;
+namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
 
-use SprykerFeature\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
+use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 
 /**
  * Class AbstractDecisionRule

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Propel\Communication;
+namespace Spryker\Zed\Propel\Communication;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerEngine\Zed\Propel\PropelConfig;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * @method PropelConfig getConfig()

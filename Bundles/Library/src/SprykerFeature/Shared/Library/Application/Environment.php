@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Application;
+namespace Spryker\Shared\Library\Application;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Shared\Library\Autoloader;
-use SprykerFeature\Shared\Library\Error\ErrorHandler;
-use SprykerFeature\Shared\Library\TestAutoloader;
+use Spryker\Shared\Config;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Library\Autoloader;
+use Spryker\Shared\Library\Error\ErrorHandler;
+use Spryker\Shared\Library\TestAutoloader;
 
 class Environment
 {
@@ -77,7 +77,7 @@ class Environment
 
         self::initializeErrorHandler();
 
-        require_once APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Library/src/SprykerFeature/Shared/Library/Autoloader.php';
+        require_once APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Library/src/Spryker/Shared/Library/Autoloader.php';
 
         Autoloader::unregister();
         Autoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);

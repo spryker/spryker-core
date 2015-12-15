@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Business\Model;
+namespace Spryker\Zed\Auth\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Client\Session\SessionClientInterface;
-use SprykerFeature\Zed\Auth\AuthConfig;
-use SprykerFeature\Zed\Auth\Business\AuthDependencyContainer;
-use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
-use SprykerFeature\Zed\Auth\Business\Exception\UserNotLoggedException;
-use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
-use SprykerFeature\Zed\User\Business\UserFacade;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Client\Session\SessionClientInterface;
+use Spryker\Zed\Auth\AuthConfig;
+use Spryker\Zed\Auth\Business\AuthDependencyContainer;
+use Spryker\Zed\Auth\Business\Client\StaticToken;
+use Spryker\Zed\Auth\Business\Exception\UserNotLoggedException;
+use Spryker\Zed\User\Business\Exception\UserNotFoundException;
+use Spryker\Zed\User\Business\UserFacade;
 use Generated\Shared\Transfer\UserTransfer;
 
 class Auth implements AuthInterface

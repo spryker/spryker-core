@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Library;
+namespace Spryker\Zed\Library;
 
-use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
 

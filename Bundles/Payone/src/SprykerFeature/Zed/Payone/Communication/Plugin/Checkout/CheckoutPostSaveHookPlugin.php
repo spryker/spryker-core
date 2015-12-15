@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Communication\Plugin\Checkout;
+namespace Spryker\Zed\Payone\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Payone\Business\PayoneFacade;
-use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Payone\Business\PayoneFacade;
+use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
 
 /**
  * @method PayoneDependencyContainer getDependencyContainer()

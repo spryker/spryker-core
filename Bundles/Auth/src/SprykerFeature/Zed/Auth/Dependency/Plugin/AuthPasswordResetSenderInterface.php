@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Dependency\Plugin;
+namespace Spryker\Zed\Auth\Dependency\Plugin;
 
 interface AuthPasswordResetSenderInterface
 {

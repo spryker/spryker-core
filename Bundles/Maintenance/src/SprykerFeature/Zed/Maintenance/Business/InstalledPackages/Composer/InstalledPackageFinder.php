@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer;
+namespace Spryker\Zed\Maintenance\Business\InstalledPackages\Composer;
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Shared\Transfer\InstalledPackageTransfer;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface;
 
 class InstalledPackageFinder implements InstalledPackageFinderInterface
 {

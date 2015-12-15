@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerEngine\Zed\Touch;
+namespace Functional\Spryker\Zed\Touch;
 
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Touch\Business\TouchDependencyContainer;
-use SprykerEngine\Zed\Touch\Business\TouchFacade;
-use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
-use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
-use SprykerEngine\Zed\Touch\TouchDependencyProvider;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Touch\Business\TouchDependencyContainer;
+use Spryker\Zed\Touch\Business\TouchFacade;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**
  * @group Zed

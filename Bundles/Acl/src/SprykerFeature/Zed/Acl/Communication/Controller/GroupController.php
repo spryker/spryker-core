@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Communication\Controller;
+namespace Spryker\Zed\Acl\Communication\Controller;
 
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
-use SprykerFeature\Zed\Acl\Business\AclFacade;
-use SprykerFeature\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
-use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
-use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Acl\Business\AclFacade;
+use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
+use Spryker\Zed\Acl\Communication\AclDependencyContainer;
+use Spryker\Zed\Acl\Communication\Form\GroupForm;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

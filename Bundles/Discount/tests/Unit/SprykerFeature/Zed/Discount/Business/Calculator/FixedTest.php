@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Discount\Business\Calculator;
+namespace Unit\Spryker\Zed\Discount\Business\Calculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use SprykerFeature\Zed\Discount\Business\Calculator\Fixed;
+use Spryker\Zed\Discount\Business\Calculator\Fixed;
 
 /**
  * Class FixedTest

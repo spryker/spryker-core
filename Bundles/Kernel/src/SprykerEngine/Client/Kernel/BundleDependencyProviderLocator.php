@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Client\Kernel;
+namespace Spryker\Client\Kernel;
 
-use SprykerEngine\Shared\Kernel\Locator\LocatorException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Kernel\AbstractLocator;
+use Spryker\Shared\Kernel\Locator\LocatorException;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Kernel\AbstractLocator;
 
 class BundleDependencyProviderLocator extends AbstractLocator
 {

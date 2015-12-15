@@ -1,13 +1,13 @@
 <?php
 
-namespace SprykerFeature\Zed\Discount\Business\Writer;
+namespace Spryker\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 
 class VoucherCodesWriter extends AbstractWriter

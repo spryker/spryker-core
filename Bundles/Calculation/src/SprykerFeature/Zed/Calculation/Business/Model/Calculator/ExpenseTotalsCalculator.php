@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
+namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\ExpenseTotalItemTransfer;
 use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 class ExpenseTotalsCalculator implements
     TotalsCalculatorPluginInterface,

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Shipment\Communication\Table;
+namespace Spryker\Zed\Shipment\Communication\Table;
 
-use SprykerFeature\Shared\Library\Currency\CurrencyManager;
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;

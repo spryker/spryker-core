@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Collector\Code\KeyBuilder;
+namespace Spryker\Shared\Collector\Code\KeyBuilder;
 
-use SprykerEngine\Shared\Kernel\Store;
+use Spryker\Shared\Kernel\Store;
 
 trait KeyBuilderTrait
 {

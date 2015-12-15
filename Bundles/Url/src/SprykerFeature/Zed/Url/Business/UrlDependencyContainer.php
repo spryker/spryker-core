@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Business;
+namespace Spryker\Zed\Url\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
-use SprykerFeature\Zed\Url\UrlDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
+use Spryker\Zed\Url\UrlDependencyProvider;
 
 /**
  * @method UrlQueryContainerInterface getQueryContainer()

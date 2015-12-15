@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\Business;
+namespace Unit\Spryker\Zed\Kernel\Business;
 
-use SprykerEngine\Zed\Kernel\Business\FacadeLocatorMatcher;
+use Spryker\Zed\Kernel\Business\FacadeLocatorMatcher;
 
 /**
  * @group Kernel

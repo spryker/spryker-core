@@ -3,9 +3,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Propel\Business\Model;
+namespace Spryker\Zed\Propel\Business\Model;
 
-use SprykerEngine\Zed\Propel\Business\Exception\SchemaMergeException;
+use Spryker\Zed\Propel\Business\Exception\SchemaMergeException;
 use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaMerger implements PropelSchemaMergerInterface

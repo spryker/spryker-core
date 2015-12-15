@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Communication\Table;
+namespace Spryker\Zed\Category\Communication\Table;
 
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 

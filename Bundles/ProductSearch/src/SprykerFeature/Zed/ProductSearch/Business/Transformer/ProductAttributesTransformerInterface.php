@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Business\Transformer;
+namespace Spryker\Zed\ProductSearch\Business\Transformer;
 
 /**
  * Interface ProductAttributesTransformerInterface

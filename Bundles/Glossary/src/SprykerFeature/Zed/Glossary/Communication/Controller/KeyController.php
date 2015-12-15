@@ -3,13 +3,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Communication\Controller;
+namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Propel\Runtime\Map\TableMap;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Glossary\Communication\GlossaryDependencyContainer;
+use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Symfony\Component\HttpFoundation\JsonResponse;

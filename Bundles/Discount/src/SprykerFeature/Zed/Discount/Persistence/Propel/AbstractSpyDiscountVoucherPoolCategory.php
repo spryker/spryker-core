@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Persistence\Propel;
+namespace Spryker\Zed\Discount\Persistence\Propel;
 
 use Orm\Zed\Discount\Persistence\Base\SpyDiscountVoucherPoolCategory as BaseSpyDiscountVoucherPoolCategory;
 

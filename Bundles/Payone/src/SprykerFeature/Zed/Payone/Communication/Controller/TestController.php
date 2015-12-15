@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Communication\Controller;
+namespace Spryker\Zed\Payone\Communication\Controller;
 
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Generated\Shared\Transfer\PersonalDataTransfer;
@@ -16,11 +16,11 @@ use Generated\Shared\Transfer\RefundTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\CreditCardTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerFeature\Zed\Payone\Business\PayoneFacade;
-use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\Business\PayoneFacade;
+use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
+use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
 
 /**
  * @method PayoneFacade getFacade()

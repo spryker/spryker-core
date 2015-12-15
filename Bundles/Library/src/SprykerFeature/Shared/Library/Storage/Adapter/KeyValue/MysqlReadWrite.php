@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
+namespace Spryker\Shared\Library\Storage\Adapter\KeyValue;
 
 class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
 {

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Checkout\Zed;
+namespace Spryker\Client\Checkout\Zed;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use SprykerFeature\Client\ZedRequest\Client\ZedClient;
-use SprykerFeature\Client\ZedRequest\ZedRequestClient;
+use Spryker\Client\ZedRequest\Client\ZedClient;
+use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CheckoutStub implements CheckoutStubInterface
 {

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Business\Model\Navigation;
+namespace Spryker\Zed\Application\Business\Model\Navigation;
 
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface;
 
 class NavigationBuilder
 {

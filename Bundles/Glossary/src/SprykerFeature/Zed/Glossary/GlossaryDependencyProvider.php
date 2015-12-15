@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary;
+namespace Spryker\Zed\Glossary;
 
-use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
 {

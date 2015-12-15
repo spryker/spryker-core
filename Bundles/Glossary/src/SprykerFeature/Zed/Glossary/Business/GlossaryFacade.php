@@ -3,17 +3,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Business;
+namespace Spryker\Zed\Glossary\Business;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
-use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
-use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
-use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
+use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
+use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
+use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
+use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
 
 /**
  * @method GlossaryDependencyContainer getDependencyContainer()

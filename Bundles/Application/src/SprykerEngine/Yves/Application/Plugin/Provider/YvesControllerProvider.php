@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Application\Plugin\Provider;
+namespace Spryker\Yves\Application\Plugin\Provider;
 
-use SprykerFeature\Shared\Application\Communication\ControllerServiceBuilder;
-use SprykerEngine\Yves\Kernel\BundleControllerAction;
-use SprykerEngine\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
-use SprykerEngine\Yves\Kernel\ControllerLocator;
+use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
+use Spryker\Yves\Kernel\BundleControllerAction;
+use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
+use Spryker\Yves\Kernel\ControllerLocator;
 use Silex\Application;
 use Silex\Controller;
 use Silex\ControllerCollection;
-use SprykerEngine\Yves\Kernel\Locator;
+use Spryker\Yves\Kernel\Locator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

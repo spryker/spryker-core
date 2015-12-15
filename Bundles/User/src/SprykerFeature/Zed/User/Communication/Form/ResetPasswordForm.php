@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User\Communication\Form;
+namespace Spryker\Zed\User\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\User\Communication\Form\Constraints\CurrentPassword;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword;
 
 class ResetPasswordForm extends AbstractForm
 {

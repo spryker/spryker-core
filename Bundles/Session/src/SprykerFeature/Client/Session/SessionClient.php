@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Session;
+namespace Spryker\Client\Session;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\AbstractClient;
 use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;

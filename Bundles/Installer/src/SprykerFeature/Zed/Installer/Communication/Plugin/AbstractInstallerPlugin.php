@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Installer\Communication\Plugin;
+namespace Spryker\Zed\Installer\Communication\Plugin;
 
 use Psr\Log\LogLevel;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 abstract class AbstractInstallerPlugin extends AbstractPlugin implements MessengerInterface
 {

@@ -3,9 +3,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ItemGrouper\Business;
+namespace Spryker\Zed\ItemGrouper\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 
 /**

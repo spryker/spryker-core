@@ -4,39 +4,39 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Business;
+namespace Spryker\Zed\Oms\Business;
 
-use SprykerFeature\Zed\Oms\Business\Process\ProcessSelector;
-use SprykerFeature\Zed\Oms\Business\Util\Drawer;
-use SprykerFeature\Zed\Oms\Business\Process\Process;
-use SprykerFeature\Zed\Oms\Business\Process\Transition;
-use SprykerFeature\Zed\Oms\Business\Process\State;
-use SprykerFeature\Zed\Oms\Business\Process\Event;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
-use SprykerFeature\Zed\Oms\Business\Util\TransitionLog;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Timeout;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Finder;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Dummy;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Builder;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\DummyInterface;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\FinderInterface;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\PersistenceManagerInterface;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
-use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
-use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
-use SprykerFeature\Zed\Oms\Business\Util\DrawerInterface;
-use SprykerFeature\Zed\Oms\Business\Util\OrderItemMatrix;
-use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
-use SprykerFeature\Zed\Oms\Business\Util\TransitionLogInterface;
-use SprykerFeature\Zed\Oms\OmsConfig;
-use SprykerFeature\Zed\Oms\OmsDependencyProvider;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Oms\Business\Process\ProcessSelector;
+use Spryker\Zed\Oms\Business\Util\Drawer;
+use Spryker\Zed\Oms\Business\Process\Process;
+use Spryker\Zed\Oms\Business\Process\Transition;
+use Spryker\Zed\Oms\Business\Process\State;
+use Spryker\Zed\Oms\Business\Process\Event;
+use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
+use Spryker\Zed\Oms\Business\Util\TransitionLog;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
+use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
+use Spryker\Zed\Oms\Business\OrderStateMachine\DummyInterface;
+use Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface;
+use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
+use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManagerInterface;
+use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
+use Spryker\Zed\Oms\Business\Process\EventInterface;
+use Spryker\Zed\Oms\Business\Process\ProcessInterface;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
+use Spryker\Zed\Oms\Business\Process\TransitionInterface;
+use Spryker\Zed\Oms\Business\Util\DrawerInterface;
+use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
+use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
+use Spryker\Zed\Oms\OmsConfig;
+use Spryker\Zed\Oms\OmsDependencyProvider;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 /**
  * @method OmsConfig getConfig()

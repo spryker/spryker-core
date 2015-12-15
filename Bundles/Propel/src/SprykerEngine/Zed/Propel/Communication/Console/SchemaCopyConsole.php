@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Propel\Communication\Console;
+namespace Spryker\Zed\Propel\Communication\Console;
 
-use SprykerEngine\Zed\Propel\Business\PropelFacade;
-use SprykerFeature\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Propel\Business\PropelFacade;
+use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

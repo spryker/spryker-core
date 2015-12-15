@@ -3,13 +3,13 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Client\Customer\Zed;
+namespace Spryker\Client\Customer\Zed;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
-use SprykerFeature\Client\ZedRequest\Client\Response;
+use Spryker\Client\ZedRequest\Client\Response;
 
 interface CustomerStubInterface
 {

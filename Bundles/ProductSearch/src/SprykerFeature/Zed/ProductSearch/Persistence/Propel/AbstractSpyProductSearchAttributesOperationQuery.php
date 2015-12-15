@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Persistence\Propel;
+namespace Spryker\Zed\ProductSearch\Persistence\Propel;
 
 use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributesOperationQuery as BaseSpyProductSearchAttributesOperationQuery;
 

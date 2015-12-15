@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Business\Tree;
+namespace Spryker\Zed\Category\Business\Tree;
 
-use SprykerEngine\Zed\Kernel\Business\ModelResult;
+use Spryker\Zed\Kernel\Business\ModelResult;
 
 /**
  * Interface CategoryTreeWriterInterface

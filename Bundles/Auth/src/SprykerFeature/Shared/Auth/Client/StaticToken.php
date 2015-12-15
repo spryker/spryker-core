@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Auth\Client;
+namespace Spryker\Shared\Auth\Client;
 
 abstract class StaticToken
 {

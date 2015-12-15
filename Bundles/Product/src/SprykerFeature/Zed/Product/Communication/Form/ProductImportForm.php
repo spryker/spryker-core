@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Communication\Form;
+namespace Spryker\Zed\Product\Communication\Form;
 
-use SprykerFeature\Zed\Library\Form;
+use Spryker\Zed\Library\Form;
 
 /**
  * Class Import

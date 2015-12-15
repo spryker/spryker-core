@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Touch\Business;
+namespace Spryker\Zed\Touch\Business;
 
-use SprykerEngine\Zed\Touch\Business\Model\Touch;
-use SprykerEngine\Zed\Touch\Business\Model\TouchRecord;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerEngine\Zed\Touch\Business\Model\TouchInterface;
-use SprykerEngine\Zed\Touch\Business\Model\TouchRecordInterface;
-use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
-use SprykerEngine\Zed\Touch\TouchDependencyProvider;
+use Spryker\Zed\Touch\Business\Model\Touch;
+use Spryker\Zed\Touch\Business\Model\TouchRecord;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Touch\Business\Model\TouchInterface;
+use Spryker\Zed\Touch\Business\Model\TouchRecordInterface;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use Spryker\Zed\Touch\TouchDependencyProvider;
 
 class TouchDependencyContainer extends AbstractBusinessDependencyContainer
 {

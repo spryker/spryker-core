@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Newsletter\Persistence;
+namespace Spryker\Zed\Newsletter\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterTypeQuery;

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Heartbeat\Business\Ambulance;
+namespace Spryker\Shared\Heartbeat\Business\Ambulance;
 
 use Generated\Shared\Transfer\HealthReportTransfer;
 

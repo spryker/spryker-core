@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Business;
+namespace Spryker\Zed\Stock\Business;
 
-use SprykerFeature\Zed\Stock\Business\Model\Writer;
-use SprykerFeature\Zed\Stock\Business\Model\Reader;
-use SprykerFeature\Zed\Stock\Business\Model\Calculator;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Stock\Dependency\Facade\StockToProductInterface;
-use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
-use SprykerFeature\Zed\Stock\Business\Model\ReaderInterface;
-use SprykerFeature\Zed\Stock\Business\Model\WriterInterface;
-use SprykerFeature\Zed\Stock\Business\Model\CalculatorInterface;
-use SprykerFeature\Zed\Stock\Dependency\Facade\StockToTouchInterface;
-use SprykerFeature\Zed\Stock\StockConfig;
+use Spryker\Zed\Stock\Business\Model\Writer;
+use Spryker\Zed\Stock\Business\Model\Reader;
+use Spryker\Zed\Stock\Business\Model\Calculator;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
+use Spryker\Zed\Stock\Persistence\StockQueryContainer;
+use Spryker\Zed\Stock\Business\Model\ReaderInterface;
+use Spryker\Zed\Stock\Business\Model\WriterInterface;
+use Spryker\Zed\Stock\Business\Model\CalculatorInterface;
+use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
+use Spryker\Zed\Stock\StockConfig;
 
 /**
  * @method StockConfig getConfig()

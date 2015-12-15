@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Communication\Plugin\Condition;
+namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use Spryker\Zed\Payone\Business\PayoneDependencyContainer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Generated\Shared\Transfer\OrderTransfer;
 

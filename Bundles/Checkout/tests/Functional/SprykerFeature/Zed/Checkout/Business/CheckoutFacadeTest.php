@@ -4,38 +4,38 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Checkout\Business;
+namespace Functional\Spryker\Zed\Checkout\Business;
 
 use Codeception\TestCase\Test;
-use Functional\SprykerFeature\Zed\Checkout\Dependency\MockOmsOrderHydrator;
+use Functional\Spryker\Zed\Checkout\Dependency\MockOmsOrderHydrator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Shared\Checkout\CheckoutConstants;
-use SprykerFeature\Zed\AvailabilityCheckoutConnector\Communication\Plugin\ProductsAvailablePreConditionPlugin;
-use SprykerFeature\Zed\CartCheckoutConnector\Communication\Plugin\OrderCartHydrationPlugin;
-use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
-use SprykerFeature\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Zed\AvailabilityCheckoutConnector\Communication\Plugin\ProductsAvailablePreConditionPlugin;
+use Spryker\Zed\CartCheckoutConnector\Communication\Plugin\OrderCartHydrationPlugin;
+use Spryker\Zed\Checkout\Business\CheckoutFacade;
+use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use SprykerFeature\Zed\CustomerCheckoutConnector\Communication\Plugin\CustomerPreConditionCheckerPlugin;
-use SprykerFeature\Zed\CustomerCheckoutConnector\Communication\Plugin\OrderCustomerHydrationPlugin;
-use SprykerFeature\Zed\CustomerCheckoutConnector\Communication\Plugin\OrderCustomerSavePlugin;
-use SprykerFeature\Zed\Oms\OmsConfig;
+use Spryker\Zed\CustomerCheckoutConnector\Communication\Plugin\CustomerPreConditionCheckerPlugin;
+use Spryker\Zed\CustomerCheckoutConnector\Communication\Plugin\OrderCustomerHydrationPlugin;
+use Spryker\Zed\CustomerCheckoutConnector\Communication\Plugin\OrderCustomerSavePlugin;
+use Spryker\Zed\Oms\OmsConfig;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
-use SprykerFeature\Zed\SalesCheckoutConnector\Communication\Plugin\SalesOrderSaverPlugin;
+use Spryker\Zed\SalesCheckoutConnector\Communication\Plugin\SalesOrderSaverPlugin;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Business
  * @group CheckoutFacadeTest

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer;
+namespace Spryker\Zed\Kernel\ClassResolver\DependencyContainer;
 
-use SprykerEngine\Zed\Kernel\AbstractDependencyContainer;
-use SprykerEngine\Zed\Kernel\ClassResolver\AbstractClassResolver;
+use Spryker\Zed\Kernel\AbstractDependencyContainer;
+use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyContainerResolver extends AbstractClassResolver
 {

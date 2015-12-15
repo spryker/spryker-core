@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Refund\Business\Model;
+namespace Spryker\Zed\Refund\Business\Model;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -9,12 +9,12 @@ use Generated\Shared\Transfer\RefundExpenseTransfer;
 use Generated\Shared\Transfer\RefundOrderItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
-use SprykerFeature\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
-use SprykerFeature\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use Orm\Zed\Refund\Persistence\SpyRefund;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 
 class Refund
 {

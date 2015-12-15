@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Storage\Client;
+namespace Spryker\Shared\Storage\Client;
 
 /**
  * Class RedisRead

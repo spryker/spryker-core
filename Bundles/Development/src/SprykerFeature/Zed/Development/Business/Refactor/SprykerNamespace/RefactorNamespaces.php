@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Development\Business\Refactor\SprykerNamespace;
+namespace Spryker\Zed\Development\Business\Refactor\SprykerNamespace;
 
-use SprykerFeature\Zed\Development\Business\Refactor\AbstractRefactor;
-use SprykerFeature\Zed\Development\Business\Refactor\RefactorException;
+use Spryker\Zed\Development\Business\Refactor\AbstractRefactor;
+use Spryker\Zed\Development\Business\Refactor\RefactorException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;

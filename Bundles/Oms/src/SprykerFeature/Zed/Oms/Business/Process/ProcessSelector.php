@@ -3,10 +3,10 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Zed\Oms\Business\Process;
+namespace Spryker\Zed\Oms\Business\Process;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Oms\OmsConfig;
+use Spryker\Zed\Oms\OmsConfig;
 
 class ProcessSelector
 {

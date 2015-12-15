@@ -1,9 +1,9 @@
 <?php
 
-namespace SprykerEngine\Yves\Application\Routing;
+namespace Spryker\Yves\Application\Routing;
 
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Library\Filter\CamelCaseToSeparatorFilter;
 use Silex\Application;
 
 class Helper

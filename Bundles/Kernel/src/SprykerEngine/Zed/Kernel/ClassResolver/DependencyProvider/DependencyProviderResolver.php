@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\ClassResolver\DependencyProvider;
+namespace Spryker\Zed\Kernel\ClassResolver\DependencyProvider;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\ClassResolver\AbstractClassResolver;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyProviderResolver extends AbstractClassResolver
 {

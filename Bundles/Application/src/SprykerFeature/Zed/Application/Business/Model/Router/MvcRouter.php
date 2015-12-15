@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Business\Model\Router;
+namespace Spryker\Zed\Application\Business\Model\Router;
 
-use SprykerFeature\Shared\Application\Communication\ControllerServiceBuilder;
-use SprykerEngine\Zed\Kernel\Communication\BundleControllerAction;
-use SprykerEngine\Zed\Kernel\Communication\Controller\RouteNameResolver;
-use SprykerEngine\Zed\Kernel\Communication\ControllerLocator;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
+use Spryker\Zed\Kernel\Communication\BundleControllerAction;
+use Spryker\Zed\Kernel\Communication\Controller\RouteNameResolver;
+use Spryker\Zed\Kernel\Communication\ControllerLocator;
+use Spryker\Zed\Kernel\Locator;
 use Silex\Application;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;

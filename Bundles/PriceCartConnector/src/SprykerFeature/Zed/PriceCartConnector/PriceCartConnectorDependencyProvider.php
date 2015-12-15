@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\PriceCartConnector;
+namespace Spryker\Zed\PriceCartConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {

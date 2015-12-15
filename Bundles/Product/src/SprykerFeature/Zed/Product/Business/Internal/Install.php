@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Internal;
+namespace Spryker\Zed\Product\Business\Internal;
 
-use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
-use SprykerFeature\Zed\Product\Business\Attribute\AttributeManagerInterface;
+use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
+use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Propel\Runtime\Exception\PropelException;
 
 class Install extends AbstractInstaller

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Business\Template;
+namespace Spryker\Zed\Cms\Business\Template;
 
 use Generated\Shared\Transfer\CmsTemplateTransfer;
-use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
-use SprykerFeature\Zed\Cms\Business\Exception\TemplateExistsException;
+use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
+use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
 
 interface TemplateManagerInterface
 {

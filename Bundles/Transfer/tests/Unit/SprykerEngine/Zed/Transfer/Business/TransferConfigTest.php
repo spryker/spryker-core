@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Transfer\Business;
+namespace Unit\Spryker\Zed\Transfer\Business;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Transfer\TransferConfig;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Filesystem\Filesystem;
 
 class TransferConfigTest extends \PHPUnit_Framework_TestCase

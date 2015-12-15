@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cache\Business;
+namespace Spryker\Zed\Cache\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Cache\CacheConfig;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Cache\CacheConfig;
 
 /**
  * @method CacheDependencyContainer getDependencyContainer()

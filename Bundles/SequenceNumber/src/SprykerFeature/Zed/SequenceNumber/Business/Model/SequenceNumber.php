@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\SequenceNumber\Business\Model;
+namespace Spryker\Zed\SequenceNumber\Business\Model;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException;
-use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
-use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
+use Spryker\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException;
+use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
+use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
 use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumber;
 use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 

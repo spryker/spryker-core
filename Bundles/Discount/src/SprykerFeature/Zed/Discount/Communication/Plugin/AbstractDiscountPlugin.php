@@ -1,9 +1,9 @@
 <?php
 
-namespace SprykerFeature\Zed\Discount\Communication\Plugin;
+namespace Spryker\Zed\Discount\Communication\Plugin;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Library\Currency\CurrencyManager;
 
 class AbstractDiscountPlugin extends AbstractPlugin
 {

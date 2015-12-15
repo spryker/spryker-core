@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Tax\Business\Model;
+namespace Spryker\Zed\Tax\Business\Model;
 
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
-use SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
+use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
+use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 
 interface TaxWriterInterface
 {

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Shipment\Communication\Controller;
+namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Shipment\Business\ShipmentFacade;
-use SprykerFeature\Zed\Shipment\Communication\ShipmentDependencyContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Shipment\Business\ShipmentFacade;
+use Spryker\Zed\Shipment\Communication\ShipmentDependencyContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

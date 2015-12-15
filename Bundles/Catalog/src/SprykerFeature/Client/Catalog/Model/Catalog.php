@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Catalog\Model;
+namespace Spryker\Client\Catalog\Model;
 
-use SprykerFeature\Client\Catalog\Model\Exception\ProductNotFoundException;
-use SprykerFeature\Client\Storage\StorageClientInterface;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Client\Catalog\Model\Exception\ProductNotFoundException;
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class Catalog implements CatalogInterface
 {

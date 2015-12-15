@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
+namespace Spryker\Zed\Payone\Business\Api\Request\Container;
 
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 
 interface AuthorizationContainerInterface
 {
@@ -27,7 +27,7 @@ interface AuthorizationContainerInterface
     public function getKey();
 
     /**
-     * @return \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     public function getInvoicing();
 
@@ -228,7 +228,7 @@ interface AuthorizationContainerInterface
     public function __toString();
 
     /**
-     * @param \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer $invoicing
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer $invoicing
      */
     public function setInvoicing(TransactionContainer $invoicing);
 

@@ -4,10 +4,10 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerFeature\Client\Lumberjack;
+namespace Spryker\Client\Lumberjack;
 
-use SprykerEngine\Shared\Lumberjack\Model\Collector\AbstractDataCollector;
-use SprykerEngine\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
+use Spryker\Shared\Lumberjack\Model\Collector\AbstractDataCollector;
+use Spryker\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
 
 class YvesDataCollector extends AbstractDataCollector implements DataCollectorInterface
 {

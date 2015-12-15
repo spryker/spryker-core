@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Session;
+namespace Spryker\Shared\Session;
 
 interface SessionConstants
 {

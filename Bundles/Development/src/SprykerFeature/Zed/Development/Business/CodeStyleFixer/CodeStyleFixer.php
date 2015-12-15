@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Development\Business\CodeStyleFixer;
+namespace Spryker\Zed\Development\Business\CodeStyleFixer;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;

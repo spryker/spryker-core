@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel;
+namespace Unit\Spryker\Zed\Kernel;
 
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Zed\Kernel\Locator;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Kernel
  * @group Locator
@@ -24,7 +24,7 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
     {
         $locator = Locator::getInstance();
 
-        $this->assertInstanceOf('SprykerEngine\Shared\Kernel\BundleProxy', $locator->foo());
+        $this->assertInstanceOf('Spryker\Shared\Kernel\BundleProxy', $locator->foo());
     }
 
     /**
@@ -33,10 +33,10 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
     public function testGetInstanceWithLocatorAsArgumentShouldReturnLocator()
     {
         $locator = Locator::getInstance([
-            new \Unit\SprykerEngine\Shared\Kernel\Fixtures\Locator('Foo'),
+            new \Unit\Spryker\Shared\Kernel\Fixtures\Locator('Foo'),
         ]);
 
-        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Locator', $locator);
+        $this->assertInstanceOf('Spryker\Zed\Kernel\Locator', $locator);
     }
 
 }

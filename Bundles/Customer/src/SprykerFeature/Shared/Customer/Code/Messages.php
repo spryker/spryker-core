@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Customer\Code;
+namespace Spryker\Shared\Customer\Code;
 
 interface Messages
 {

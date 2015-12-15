@@ -3,17 +3,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\ProductCartConnector\Business\Manager;
+namespace Unit\Spryker\Zed\ProductCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use SprykerFeature\Zed\Product\Business\ProductFacade;
-use SprykerFeature\Zed\ProductCartConnector\Business\Manager\ProductManager;
+use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group ProductCartConnector
  * @group Business
@@ -157,7 +157,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function getMockProductFacade()
     {
-        return $this->getMock('SprykerFeature\Zed\Product\Business\ProductFacade', ['getConcreteProduct'], [], '', false);
+        return $this->getMock('Spryker\Zed\Product\Business\ProductFacade', ['getConcreteProduct'], [], '', false);
     }
 
 }

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleSniffer\Spryker\Sniffs\DependencyContainer;
+namespace Unit\Spryker\Zed\Development\Business\CodeStyleSniffer\Spryker\Sniffs\DependencyContainer;
 
 use Spryker\Sniffs\DependencyContainer\OneNewPerMethodSniff;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Development
  * @group Business

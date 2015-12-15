@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Application\Communication;
+namespace Spryker\Zed\Application\Communication;
 
-use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\AfterBootExtension;
-use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\BeforeBootExtension;
-use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\GlobalTemplateVariablesExtension;
-use SprykerEngine\Shared\Application\Communication\Application;
-use SprykerEngine\Shared\Application\Communication\Bootstrap;
-use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\RouterExtension;
-use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\ServiceProviderExtension;
-use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\TwigExtension;
-use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Application\Communication\Bootstrap\Extension\AfterBootExtension;
+use Spryker\Zed\Application\Communication\Bootstrap\Extension\BeforeBootExtension;
+use Spryker\Zed\Application\Communication\Bootstrap\Extension\GlobalTemplateVariablesExtension;
+use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Application\Communication\Bootstrap;
+use Spryker\Zed\Application\Communication\Bootstrap\Extension\RouterExtension;
+use Spryker\Zed\Application\Communication\Bootstrap\Extension\ServiceProviderExtension;
+use Spryker\Zed\Application\Communication\Bootstrap\Extension\TwigExtension;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 
 class ZedBootstrap extends Bootstrap
 {

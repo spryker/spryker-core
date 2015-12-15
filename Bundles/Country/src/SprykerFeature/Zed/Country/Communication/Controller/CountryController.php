@@ -1,9 +1,9 @@
 <?php
 
-namespace SprykerFeature\Zed\Country\Communication\Controller;
+namespace Spryker\Zed\Country\Communication\Controller;
 
 use Generated\Shared\Transfer\CountryTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 /**
  * @method CountryQueryContainer getQueryContainer()

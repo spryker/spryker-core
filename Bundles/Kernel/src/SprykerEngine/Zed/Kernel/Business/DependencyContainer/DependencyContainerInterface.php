@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Business\DependencyContainer;
+namespace Spryker\Zed\Kernel\Business\DependencyContainer;
 
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 interface DependencyContainerInterface
 {

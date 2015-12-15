@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Exception\Container;
+namespace Spryker\Zed\Kernel\Exception\Container;
 
-use SprykerEngine\Zed\Kernel\ClassResolver\ClassInfo;
+use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
 class ContainerKeyNotFoundException extends \Exception
 {

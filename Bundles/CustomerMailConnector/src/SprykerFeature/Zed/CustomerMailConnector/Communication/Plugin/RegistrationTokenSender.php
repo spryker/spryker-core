@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
+namespace Spryker\Zed\CustomerMailConnector\Communication\Plugin;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
-use SprykerFeature\Zed\CustomerMailConnector\Business\CustomerMailConnectorFacade;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
+use Spryker\Zed\CustomerMailConnector\Business\CustomerMailConnectorFacade;
 
 /**
  * @method CustomerMailConnectorFacade getFacade()

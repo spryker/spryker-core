@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Payone\ClientApi;
+namespace Spryker\Client\Payone\ClientApi;
 
-use SprykerFeature\Client\Payone\ClientApi\Request\AbstractRequest;
+use Spryker\Client\Payone\ClientApi\Request\AbstractRequest;
 
 interface HashGeneratorInterface
 {

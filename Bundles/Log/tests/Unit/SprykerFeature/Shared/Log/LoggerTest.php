@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Shared\Log;
+namespace Unit\Spryker\Shared\Log;
 
 use Codeception\TestCase\Test;
-use Unit\SprykerFeature\Shared\Log\Fixtures\TestLoggerConfig;
+use Unit\Spryker\Shared\Log\Fixtures\TestLoggerConfig;
 use Psr\Log\LoggerInterface;
-use SprykerFeature\Shared\Log\LoggerTrait;
-use Unit\SprykerFeature\Shared\Log\Fixtures\TestLoggerConfig2;
+use Spryker\Shared\Log\LoggerTrait;
+use Unit\Spryker\Shared\Log\Fixtures\TestLoggerConfig2;
 
 class LoggerTest extends Test
 {

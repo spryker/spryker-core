@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace ClientUnit\SprykerFeature\Client\Cart;
+namespace ClientUnit\Spryker\Client\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
-use SprykerFeature\Client\Cart\CartClient;
-use SprykerFeature\Client\Cart\Session\CartSessionInterface;
-use SprykerFeature\Client\Cart\Zed\CartStubInterface;
+use Spryker\Client\Cart\CartClient;
+use Spryker\Client\Cart\Session\CartSessionInterface;
+use Spryker\Client\Cart\Zed\CartStubInterface;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Client
  * @group Cart
  * @group Service
@@ -267,7 +267,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         CartStubInterface $cartStub = null
     ) {
         $dependencyContainerMock = $this->getMock(
-            'SprykerEngine\Client\Kernel\AbstractDependencyContainer',
+            'Spryker\Client\Kernel\AbstractDependencyContainer',
             ['createSession', 'createZedStub'], [], '', false);
 
         if ($cartSession !== null) {
@@ -292,7 +292,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     private function getCartClientMock($dependencyContainerMock)
     {
         $cartClientMock = $this->getMock(
-            'SprykerFeature\Client\Cart\CartClient',
+            'Spryker\Client\Cart\CartClient',
             ['getDependencyContainer'], [], '', false);
 
         $cartClientMock->expects($this->any())
@@ -307,7 +307,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
      */
     private function getSessionMock()
     {
-        $sessionMock = $this->getMock('SprykerFeature\Client\Cart\Session\CartSessionInterface', [
+        $sessionMock = $this->getMock('Spryker\Client\Cart\Session\CartSessionInterface', [
             'getCart',
             'setCart',
             'getItemCount',
@@ -322,7 +322,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
      */
     private function getStubMock()
     {
-        return $this->getMock('SprykerFeature\Client\Cart\Zed\CartStubInterface', [
+        return $this->getMock('Spryker\Client\Cart\Zed\CartStubInterface', [
             'addItem',
             'removeItem',
             'increaseItemQuantity',

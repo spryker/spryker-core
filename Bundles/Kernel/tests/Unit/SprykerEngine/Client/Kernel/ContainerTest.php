@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Client\Kernel;
+namespace Unit\Spryker\Client\Kernel;
 
-use SprykerEngine\Client\Kernel\Container;
+use Spryker\Client\Kernel\Container;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Client
  * @group Kernel
  * @group Container
@@ -24,7 +24,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     {
         $container = new Container();
 
-        $this->assertInstanceOf('SprykerEngine\Client\Kernel\Locator', $container->getLocator());
+        $this->assertInstanceOf('Spryker\Client\Kernel\Locator', $container->getLocator());
     }
 
 }

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
+namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 interface ExpenseTotalsCalculatorInterface
 {

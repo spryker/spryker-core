@@ -4,30 +4,30 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Business;
+namespace Spryker\Zed\ProductSearch\Business;
 
-use SprykerFeature\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
-use SprykerFeature\Zed\ProductSearch\Business\Operation\OperationManager;
-use SprykerFeature\Zed\ProductSearch\Business\Locator\OperationLocator;
-use SprykerFeature\Zed\ProductSearch\Business\Operation\DefaultOperation;
-use SprykerFeature\Zed\ProductSearch\Business\Processor\ProductSearchProcessor;
-use SprykerFeature\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Product\Business\ProductFacade;
-use SprykerFeature\Zed\ProductSearch\Business\Internal\InstallProductSearch;
-use SprykerFeature\Zed\ProductSearch\Business\Locator\OperationLocatorInterface;
-use SprykerFeature\Zed\ProductSearch\Business\Operation\OperationInterface;
-use SprykerFeature\Zed\ProductSearch\Business\Operation\OperationManagerInterface;
-use SprykerFeature\Zed\ProductSearch\Business\Processor\ProductSearchProcessorInterface;
-use SprykerFeature\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformerInterface;
-use SprykerFeature\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
-use SprykerFeature\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
-use SprykerFeature\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerFeature\Zed\ProductSearch\ProductSearchConfig;
+use Spryker\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
+use Spryker\Zed\ProductSearch\Business\Operation\OperationManager;
+use Spryker\Zed\ProductSearch\Business\Locator\OperationLocator;
+use Spryker\Zed\ProductSearch\Business\Operation\DefaultOperation;
+use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessor;
+use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch;
+use Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface;
+use Spryker\Zed\ProductSearch\Business\Operation\OperationInterface;
+use Spryker\Zed\ProductSearch\Business\Operation\OperationManagerInterface;
+use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessorInterface;
+use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformerInterface;
+use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
+use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
+use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\ProductSearch\ProductSearchConfig;
 
 /**
  * @method ProductSearchConfig getConfig()

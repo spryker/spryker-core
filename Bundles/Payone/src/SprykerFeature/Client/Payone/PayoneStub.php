@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Payone;
+namespace Spryker\Client\Payone;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method PayoneDependencyContainer getDependencyContainer()

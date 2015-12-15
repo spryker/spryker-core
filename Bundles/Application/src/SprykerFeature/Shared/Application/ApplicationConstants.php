@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Application;
+namespace Spryker\Shared\Application;
 
 interface ApplicationConstants
 {

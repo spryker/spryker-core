@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SharedUnit\SprykerFeature\Shared\Session\Business\Handler;
+namespace SharedUnit\Spryker\Shared\Session\Business\Handler;
 
-use SprykerFeature\Shared\NewRelic\Api;
-use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerFile;
+use Spryker\Shared\NewRelic\Api;
+use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Shared
  * @group Session
  * @group Business

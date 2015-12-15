@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Zed\Exception;
+namespace Spryker\Shared\Library\Zed\Exception;
 
 use Guzzle\Http\Message\Response;
 

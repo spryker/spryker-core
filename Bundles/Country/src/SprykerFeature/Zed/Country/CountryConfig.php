@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Country;
+namespace Spryker\Zed\Country;
 
-use SprykerFeature\Zed\Country\Business\Internal\Regions\RegionInstallInterface;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CountryConfig extends AbstractBundleConfig
 {

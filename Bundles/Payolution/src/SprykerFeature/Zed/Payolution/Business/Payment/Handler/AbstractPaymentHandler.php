@@ -3,17 +3,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Payment\Handler;
+namespace Spryker\Zed\Payolution\Business\Payment\Handler;
 
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
-use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Converter\ConverterInterface;
-use SprykerFeature\Zed\Payolution\Business\Exception\NoMethodMapperException;
-use SprykerFeature\Zed\Payolution\Business\Exception\OrderGrandTotalException;
+use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface;
+use Spryker\Zed\Payolution\Business\Exception\NoMethodMapperException;
+use Spryker\Zed\Payolution\Business\Exception\OrderGrandTotalException;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\Installment\InstallmentInterface;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface;
-use SprykerFeature\Zed\Payolution\PayolutionConfig;
+use Spryker\Zed\Payolution\Business\Payment\Method\Installment\InstallmentInterface;
+use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface;
+use Spryker\Zed\Payolution\PayolutionConfig;
 
 abstract class AbstractPaymentHandler
 {

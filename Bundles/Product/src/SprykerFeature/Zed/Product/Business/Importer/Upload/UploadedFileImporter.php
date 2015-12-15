@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Importer\Upload;
+namespace Spryker\Zed\Product\Business\Importer\Upload;
 
 /**
  * Class UploadedFileImporter

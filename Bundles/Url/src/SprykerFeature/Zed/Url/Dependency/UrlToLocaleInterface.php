@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Dependency;
+namespace Spryker\Zed\Url\Dependency;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
+use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface UrlToLocaleInterface
 {

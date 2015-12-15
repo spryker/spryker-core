@@ -1,8 +1,8 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture;
+namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
 
-use SprykerEngine\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Transfer\TransferInterface;
 
 class NotGatewayController
 {

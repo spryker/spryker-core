@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel;
+namespace Spryker\Zed\Kernel;
 
-use SprykerEngine\Shared\Kernel\AbstractBundle;
+use Spryker\Shared\Kernel\AbstractBundle;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\StockSalesConnector\Business;
+namespace Spryker\Zed\StockSalesConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeInterface;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeInterface;
 
 class StockSalesConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {

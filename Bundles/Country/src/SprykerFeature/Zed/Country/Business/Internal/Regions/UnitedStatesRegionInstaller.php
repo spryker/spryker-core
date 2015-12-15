@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Country\Business\Internal\Regions;
+namespace Spryker\Zed\Country\Business\Internal\Regions;
 
 class UnitedStatesRegionInstaller implements RegionInstallInterface
 {

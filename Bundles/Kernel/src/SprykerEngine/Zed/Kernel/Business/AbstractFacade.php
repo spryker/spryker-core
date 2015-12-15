@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Business;
+namespace Spryker\Zed\Kernel\Business;
 
-use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
-use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractFacade implements FacadeInterface
 {

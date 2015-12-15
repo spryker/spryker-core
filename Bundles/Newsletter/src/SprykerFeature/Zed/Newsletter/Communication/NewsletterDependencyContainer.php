@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Newsletter\Communication;
+namespace Spryker\Zed\Newsletter\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Mail\Business\MailFacade;
-use SprykerFeature\Zed\Newsletter\NewsletterConfig;
-use SprykerFeature\Zed\Newsletter\NewsletterDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Mail\Business\MailFacade;
+use Spryker\Zed\Newsletter\NewsletterConfig;
+use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
 
 /**
  * @method NewsletterConfig getConfig()

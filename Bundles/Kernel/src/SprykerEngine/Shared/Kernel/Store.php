@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Kernel;
+namespace Spryker\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\Locale\LocaleNotFoundException;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\NewRelic\Api;
+use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\NewRelic\Api;
 
 class Store
 {

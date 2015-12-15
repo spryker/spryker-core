@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Price\Communication;
+namespace Spryker\Zed\Price\Communication;
 
-use SprykerFeature\Zed\Price\Business\PriceFacade;
-use SprykerFeature\Zed\Price\Communication\Form\PriceForm;
-use SprykerFeature\Zed\Price\Communication\Form\PriceTypeForm;
-use SprykerFeature\Zed\Price\Communication\Grid\PriceGrid;
-use SprykerFeature\Zed\Price\Communication\Grid\PriceTypeGrid;
-use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
+use Spryker\Zed\Price\Business\PriceFacade;
+use Spryker\Zed\Price\Communication\Form\PriceForm;
+use Spryker\Zed\Price\Communication\Form\PriceTypeForm;
+use Spryker\Zed\Price\Communication\Grid\PriceGrid;
+use Spryker\Zed\Price\Communication\Grid\PriceTypeGrid;
+use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
 class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
 {

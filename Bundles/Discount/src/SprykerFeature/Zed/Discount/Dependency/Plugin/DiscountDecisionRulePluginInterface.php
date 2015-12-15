@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Dependency\Plugin;
+namespace Spryker\Zed\Discount\Dependency\Plugin;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerEngine\Zed\Kernel\Business\ModelResult;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Kernel\Business\ModelResult;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 interface DiscountDecisionRulePluginInterface
 {

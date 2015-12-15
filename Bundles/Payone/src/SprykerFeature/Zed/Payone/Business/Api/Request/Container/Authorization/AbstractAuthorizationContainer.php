@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization;
+namespace Spryker\Zed\Payone\Business\Api\Request\Container\Authorization;
 
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 
 abstract class AbstractAuthorizationContainer extends AbstractRequestContainer implements AuthorizationContainerInterface
 {
@@ -62,27 +62,27 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     protected $narrative_text;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
      */
     protected $personalData;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer
      */
     protected $shippingData;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer
      */
     protected $paymentMethod;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer
      */
     protected $_3dsecure;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     protected $invoicing;
 
@@ -295,7 +295,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     }
 
     /**
-     * @param \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer $invoicing
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer $invoicing
      *
      * @return void
      */
@@ -305,7 +305,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     }
 
     /**
-     * @return \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     public function getInvoicing()
     {

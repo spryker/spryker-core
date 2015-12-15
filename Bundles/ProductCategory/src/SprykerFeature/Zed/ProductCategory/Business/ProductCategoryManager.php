@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Business;
+namespace Spryker\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -13,19 +13,19 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
-use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
-use SprykerFeature\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
-use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
-use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
-use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
-use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
+use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
+use Spryker\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
-use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
+use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {

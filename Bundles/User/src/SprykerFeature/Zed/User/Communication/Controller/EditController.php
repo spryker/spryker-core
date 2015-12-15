@@ -3,20 +3,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User\Communication\Controller;
+namespace Spryker\Zed\User\Communication\Controller;
 
 use Generated\Shared\Transfer\UserTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
-use SprykerFeature\Zed\User\Business\UserFacade;
-use SprykerFeature\Zed\User\Communication\Form\UserForm;
-use SprykerFeature\Zed\User\Communication\UserDependencyContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\User\Business\Exception\UserNotFoundException;
+use Spryker\Zed\User\Business\UserFacade;
+use Spryker\Zed\User\Communication\Form\UserForm;
+use Spryker\Zed\User\Communication\UserDependencyContainer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\User\Communication\Form\UserCreateForm;
+use Spryker\Zed\User\Communication\Form\UserCreateForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use SprykerFeature\Zed\User\Communication\Form\ResetPasswordForm;
+use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 
 /**
  * @method UserFacade getFacade()

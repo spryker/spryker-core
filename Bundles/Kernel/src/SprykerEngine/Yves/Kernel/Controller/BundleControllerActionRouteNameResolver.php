@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Kernel\Controller;
+namespace Spryker\Yves\Kernel\Controller;
 
-use SprykerEngine\Shared\Kernel\Communication\BundleControllerActionInterface;
-use SprykerEngine\Shared\Kernel\Communication\RouteNameResolverInterface;
+use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
+use Spryker\Shared\Kernel\Communication\RouteNameResolverInterface;
 use Zend\Filter\FilterChain;
 use Zend\Filter\StringToLower;
 use Zend\Filter\Word\CamelCaseToDash;

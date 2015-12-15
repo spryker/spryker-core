@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Newsletter;
+namespace Spryker\Client\Newsletter;
 
-use SprykerFeature\Client\Newsletter\Zed\NewsletterStub;
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Newsletter\Zed\NewsletterStubInterface;
-use SprykerFeature\Client\Newsletter\NewsletterDependencyProvider;
+use Spryker\Client\Newsletter\Zed\NewsletterStub;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Newsletter\Zed\NewsletterStubInterface;
+use Spryker\Client\Newsletter\NewsletterDependencyProvider;
 
 class NewsletterDependencyContainer extends AbstractDependencyContainer
 {

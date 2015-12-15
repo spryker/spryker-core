@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures;
+namespace Unit\Spryker\Zed\Kernel\Communication\Fixtures;
 
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 
 class FooMessenger implements MessengerInterface
 {

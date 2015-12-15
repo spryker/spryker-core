@@ -4,25 +4,25 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\ProductOption\Persistence;
+namespace Functional\Spryker\Zed\ProductOption\Persistence;
 
-use Functional\SprykerFeature\Zed\ProductOption\Mock\LocaleFacade;
-use Functional\SprykerFeature\Zed\ProductOption\Mock\ProductFacade;
-use Functional\SprykerFeature\Zed\ProductOption\Mock\ProductOptionQueryContainer;
-use Functional\SprykerFeature\Zed\ProductOption\Mock\ProductQueryContainer;
+use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;
+use Functional\Spryker\Zed\ProductOption\Mock\ProductFacade;
+use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
+use Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Locale\Business\LocaleDependencyContainer;
-use SprykerFeature\Zed\Product\Business\ProductDependencyContainer;
-use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
-use SprykerFeature\Zed\ProductOption\Business\ProductOptionDependencyContainer;
-use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
-use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
-use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Locale\Business\LocaleDependencyContainer;
+use Spryker\Zed\Product\Business\ProductDependencyContainer;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductOption\Business\ProductOptionDependencyContainer;
+use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
 
 /**
  * @group Business

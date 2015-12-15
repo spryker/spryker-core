@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Newsletter\Communication\Plugin;
+namespace Spryker\Zed\Newsletter\Communication\Plugin;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Mail\MailConstants;
-use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface;
-use SprykerFeature\Zed\Newsletter\Communication\NewsletterDependencyContainer;
-use SprykerFeature\Zed\Newsletter\NewsletterConfig;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Mail\MailConstants;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface;
+use Spryker\Zed\Newsletter\Communication\NewsletterDependencyContainer;
+use Spryker\Zed\Newsletter\NewsletterConfig;
 
 /**
  * @method NewsletterDependencyContainer getDependencyContainer()

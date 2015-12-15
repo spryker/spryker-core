@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Communication\Plugin;
+namespace Spryker\Zed\Collector\Communication\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
-use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
-use SprykerFeature\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
 
 abstract class AbstractCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {

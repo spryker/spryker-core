@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Business\Model\Navigation\Extractor;
+namespace Spryker\Zed\Application\Business\Model\Navigation\Extractor;
 
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
+use Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
 
 class PathExtractor implements PathExtractorInterface
 {

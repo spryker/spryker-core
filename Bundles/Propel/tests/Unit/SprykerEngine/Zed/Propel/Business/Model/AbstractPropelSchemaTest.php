@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Propel\Business\Model;
+namespace Unit\Spryker\Zed\Propel\Business\Model;
 
 use Symfony\Component\Filesystem\Filesystem;
 

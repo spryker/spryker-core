@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOption\Persistence;
+namespace Spryker\Zed\ProductOption\Persistence;
 
 use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionTypeUsageExclusionQuery;
 use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionValueUsageConstraintQuery;

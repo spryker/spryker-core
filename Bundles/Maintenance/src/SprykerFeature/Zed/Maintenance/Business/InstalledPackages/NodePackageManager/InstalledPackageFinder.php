@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePackageManager;
+namespace Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager;
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Shared\Transfer\InstalledPackageTransfer;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface;
 use Symfony\Component\Process\Process;
 
 class InstalledPackageFinder implements InstalledPackageFinderInterface

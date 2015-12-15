@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Client\Kernel;
+namespace Spryker\Client\Kernel;
 
 interface BundleDependencyProviderInterface
 {

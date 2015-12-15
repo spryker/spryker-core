@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Order;
+namespace Spryker\Zed\Payolution\Business\Order;
 
 use Generated\Shared\Transfer\OrderTransfer;
 

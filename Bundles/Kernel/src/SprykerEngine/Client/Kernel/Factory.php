@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerEngine\Client\Kernel;
+namespace Spryker\Client\Kernel;
 
-use SprykerEngine\Shared\Kernel\AbstractFactory;
+use Spryker\Shared\Kernel\AbstractFactory;
 
 class Factory extends AbstractFactory
 {

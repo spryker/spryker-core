@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Dependency\Facade;
+namespace Spryker\Zed\Product\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 interface ProductToUrlInterface
 {

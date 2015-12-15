@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cart\Business\StorageProvider;
+namespace Spryker\Zed\Cart\Business\StorageProvider;
 
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException;
+use Spryker\Zed\Cart\Business\Exception\InvalidArgumentException;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 

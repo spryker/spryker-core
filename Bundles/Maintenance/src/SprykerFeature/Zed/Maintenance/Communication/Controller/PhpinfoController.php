@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Communication\Controller;
+namespace Spryker\Zed\Maintenance\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
-use SprykerFeature\Zed\Maintenance\Communication\MaintenanceDependencyContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Maintenance\Business\MaintenanceFacade;
+use Spryker\Zed\Maintenance\Communication\MaintenanceDependencyContainer;
 
 /**
  * @method MaintenanceFacade getFacade()

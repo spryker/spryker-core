@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Communication\Controller;
+namespace Spryker\Zed\Acl\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Acl\Communication\AclDependencyContainer;
 
 /**
  * @method AclDependencyContainer getDependencyContainer()

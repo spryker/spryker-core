@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCartConnector\Communication;
+namespace Spryker\Zed\ProductCartConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
-use SprykerFeature\Zed\ProductCartConnector\ProductCartConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
+use Spryker\Zed\ProductCartConnector\ProductCartConnectorDependencyProvider;
 
 class ProductCartConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {

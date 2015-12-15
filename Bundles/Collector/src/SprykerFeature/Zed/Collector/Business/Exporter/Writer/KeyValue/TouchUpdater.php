@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue;
+namespace Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Base\SpyTouchStorageQuery;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 
 class TouchUpdater implements TouchUpdaterInterface
 {

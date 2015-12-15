@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer\Fixtures\NoWhitespaceBeforeSemicolonFixer\Input;
+namespace Unit\Spryker\Zed\Development\Business\CodeStyleFixer\Fixtures\NoWhitespaceBeforeSemicolonFixer\Input;
 
 class TestClass1Input
 {

@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Communication\Controller;
+namespace Spryker\Zed\Stock\Communication\Controller;
 
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Stock\Communication\StockDependencyContainer;
-use SprykerFeature\Zed\Stock\Business\StockFacade;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Stock\Communication\StockDependencyContainer;
+use Spryker\Zed\Stock\Business\StockFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

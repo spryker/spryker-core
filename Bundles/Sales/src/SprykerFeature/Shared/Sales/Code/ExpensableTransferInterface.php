@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Sales\Code;
+namespace Spryker\Shared\Sales\Code;
 
 //@deprecated is not used
 

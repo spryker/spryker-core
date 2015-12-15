@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Adapter\Http;
+namespace Spryker\Zed\Payone\Business\Api\Adapter\Http;
 
-use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use SprykerFeature\Zed\Payone\Business\Exception\TimeoutException;
+use Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+use Spryker\Zed\Payone\Business\Exception\TimeoutException;
 
 abstract class AbstractHttpAdapter implements AdapterInterface
 {

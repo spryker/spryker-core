@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Storage\Redis;
+namespace Spryker\Client\Storage\Redis;
 
-use SprykerFeature\Client\Storage\StorageClientInterface;
+use Spryker\Client\Storage\StorageClientInterface;
 
 interface ServiceInterface extends StorageClientInterface
 {

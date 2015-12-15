@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Gui\Communication\Plugin\Twig;
+namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
-use SprykerFeature\Zed\Library\Twig\TwigFunction;
+use Spryker\Zed\Library\Twig\TwigFunction;
 
 class Button extends TwigFunction
 {

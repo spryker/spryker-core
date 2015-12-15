@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Shipment;
+namespace Spryker\Shared\Shipment;
 
 interface ShipmentConstants
 {

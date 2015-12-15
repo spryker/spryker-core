@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Checkout\Dependency;
+namespace Functional\Spryker\Zed\Checkout\Dependency;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 
 class MockOmsOrderHydrator implements CheckoutOrderHydrationInterface
 {

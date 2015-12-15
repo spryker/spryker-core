@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Business;
+namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
-use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeInterface;
 
 /**
  * @method StockDependencyContainer getDependencyContainer()

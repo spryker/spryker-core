@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Session;
+namespace Spryker\Client\Session;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
 
 class SessionDependencyContainer extends AbstractDependencyContainer
 {

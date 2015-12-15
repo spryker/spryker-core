@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Payment\Handler\Transaction;
+namespace Spryker\Zed\Payolution\Business\Payment\Handler\Transaction;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Converter\ConverterInterface;
-use SprykerFeature\Zed\Payolution\Business\Payment\Handler\AbstractPaymentHandler;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface;
+use Spryker\Zed\Payolution\Business\Payment\Handler\AbstractPaymentHandler;
+use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
+use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
-use SprykerFeature\Zed\Payolution\PayolutionConfig;
+use Spryker\Zed\Payolution\PayolutionConfig;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 

@@ -4,10 +4,10 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerEngine\Shared\Lumberjack\Model\Writer;
+namespace Spryker\Shared\Lumberjack\Model\Writer;
 
-use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
-use SprykerFeature\Shared\Library\DataDirectory;
+use Spryker\Shared\Lumberjack\Model\EventInterface;
+use Spryker\Shared\Library\DataDirectory;
 
 class File extends AbstractWriter
 {

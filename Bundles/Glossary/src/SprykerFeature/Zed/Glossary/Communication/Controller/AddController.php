@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Communication\Controller;
+namespace Spryker\Zed\Glossary\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Glossary\Communication\GlossaryDependencyContainer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 
 /**

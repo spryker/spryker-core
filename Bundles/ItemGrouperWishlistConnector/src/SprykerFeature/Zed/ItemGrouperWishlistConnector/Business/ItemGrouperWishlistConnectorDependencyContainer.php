@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ItemGrouperWishlistConnector\Business;
+namespace Spryker\Zed\ItemGrouperWishlistConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\ItemGrouper\Business\ItemGrouperFacade;
-use SprykerFeature\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
+use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorDependencyProvider;
 
 class ItemGrouperWishlistConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {

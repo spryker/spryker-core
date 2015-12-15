@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cache;
+namespace Spryker\Zed\Cache;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class CacheDependencyProvider extends AbstractBundleDependencyProvider
 {

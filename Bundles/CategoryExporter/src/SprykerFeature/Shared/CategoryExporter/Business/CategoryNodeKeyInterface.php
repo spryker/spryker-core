@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\CategoryExporter\Business;
+namespace Spryker\Shared\CategoryExporter\Business;
 
 interface CategoryNodeKeyInterface
 {

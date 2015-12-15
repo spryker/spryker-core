@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\TaxProductConnector\Dependency\Facade;
+namespace Spryker\Zed\TaxProductConnector\Dependency\Facade;
 
 interface TaxProductConnectorToProductInterface
 {

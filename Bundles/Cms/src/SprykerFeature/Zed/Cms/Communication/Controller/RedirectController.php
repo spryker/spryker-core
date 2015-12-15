@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Communication\Controller;
+namespace Spryker\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Cms\Business\CmsFacade;
-use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use SprykerFeature\Zed\Cms\Communication\CmsDependencyContainer;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsRedirectForm;
-use SprykerFeature\Zed\Cms\Communication\Table\CmsRedirectTable;
-use SprykerFeature\Zed\Url\Business\UrlFacade;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Communication\CmsDependencyContainer;
+use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
+use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
+use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

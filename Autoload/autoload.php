@@ -1,6 +1,6 @@
 <?php
 
-use SprykerFeature\Shared\Library\Autoloader;
+use Spryker\Shared\Library\Autoloader;
 
 $vendor = __DIR__ . '/../Bundles';
 if (!is_dir($vendor)) {
@@ -10,7 +10,7 @@ if (!is_dir($vendor)) {
     exit(1);
 }
 
-require_once $vendor . '/Library/src/SprykerFeature/Shared/Library/Autoloader.php';
+require_once $vendor . '/Library/src/Spryker/Shared/Library/Autoloader.php';
 
 $bundleParent = realpath($vendor . '/..');
 $vendor = realpath($bundleParent . '/../..');

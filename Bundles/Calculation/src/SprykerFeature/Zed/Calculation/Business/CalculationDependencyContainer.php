@@ -4,23 +4,23 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Calculation\Business;
+namespace Spryker\Zed\Calculation\Business;
 
-use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelper;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ItemTotalPriceCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\StackExecutor;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpensePriceToPayCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ItemPriceToPayCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Calculation\CalculationConfig;
+use Spryker\Zed\Calculation\Business\Model\PriceCalculationHelper;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ItemTotalPriceCalculator;
+use Spryker\Zed\Calculation\Business\Model\StackExecutor;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ExpensePriceToPayCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ItemPriceToPayCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Calculation\CalculationConfig;
 
 /**
  * @method CalculationConfig getConfig()

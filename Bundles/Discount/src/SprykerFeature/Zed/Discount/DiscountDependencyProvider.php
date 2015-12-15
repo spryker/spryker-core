@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount;
+namespace Spryker\Zed\Discount;
 
-use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {

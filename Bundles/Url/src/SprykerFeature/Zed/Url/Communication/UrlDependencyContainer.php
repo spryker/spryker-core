@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Communication;
+namespace Spryker\Zed\Url\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Url\Communication\Form\UrlForm;
-use SprykerFeature\Zed\Url\Communication\Grid\TranslationGrid;
-use SprykerFeature\Zed\Url\Communication\Grid\UrlGrid;
-use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Url\Communication\Form\UrlForm;
+use Spryker\Zed\Url\Communication\Grid\TranslationGrid;
+use Spryker\Zed\Url\Communication\Grid\UrlGrid;
+use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 /**
  * @method UrlQueryContainerInterface getQueryContainer()

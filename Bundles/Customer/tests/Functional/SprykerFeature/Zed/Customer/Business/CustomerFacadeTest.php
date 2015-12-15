@@ -3,17 +3,17 @@
 /**
  * (c) Spryker Systems GmbH copyright protected.
  */
-namespace Functional\SprykerFeature\Zed\Customer\Business;
+namespace Functional\Spryker\Zed\Customer\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Kernel\Locator;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Business\CustomerFacade;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Customer
  * @group Business

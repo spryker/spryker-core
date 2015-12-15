@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\ProductOption\Persistence;
+namespace Functional\Spryker\Zed\ProductOption\Persistence;
 
 use Propel\Runtime\Propel;
 use Orm\Zed\Locale\Persistence\SpyLocale;

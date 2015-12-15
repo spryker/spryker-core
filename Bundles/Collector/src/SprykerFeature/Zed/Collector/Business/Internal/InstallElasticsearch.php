@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Internal;
+namespace Spryker\Zed\Collector\Business\Internal;
 
 use Elastica\Client;
-use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
+use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 
 class InstallElasticsearch extends AbstractInstaller
 {

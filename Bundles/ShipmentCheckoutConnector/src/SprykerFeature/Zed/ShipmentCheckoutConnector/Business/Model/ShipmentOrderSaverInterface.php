@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ShipmentCheckoutConnector\Business\Model;
+namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;

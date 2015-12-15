@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\ApiLog;
+namespace Spryker\Zed\Payone\Business\ApiLog;
 
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
+use Spryker\Shared\Payone\PayoneApiConstants;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 

@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Refund\Business;
+namespace Spryker\Zed\Refund\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Orm\Zed\Refund\Persistence\SpyRefund;
-use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainerInterface;
+use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class RefundManager
 {

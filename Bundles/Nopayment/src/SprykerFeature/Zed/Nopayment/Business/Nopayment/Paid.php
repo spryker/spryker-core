@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Nopayment\Business\Nopayment;
+namespace Spryker\Zed\Nopayment\Business\Nopayment;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use SprykerFeature\Zed\Nopayment\Persistence\NopaymentQueryContainer;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainer;
 use Orm\Zed\Nopayment\Persistence\SpyNopaymentPaid;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Generated\Zed\Ide\AutoCompletion;

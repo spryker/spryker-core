@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Heartbeat;
+namespace Spryker\Zed\Heartbeat;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class HeartbeatDependencyProvider extends AbstractBundleDependencyProvider
 {

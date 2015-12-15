@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Category\Dependency\Facade;
+namespace Spryker\Zed\Category\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
-use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
+use Spryker\Zed\Url\Business\Exception\MissingUrlException;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 interface CategoryToUrlInterface
 {

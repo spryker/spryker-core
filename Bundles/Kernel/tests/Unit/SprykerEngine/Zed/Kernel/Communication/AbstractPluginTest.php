@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\Communication;
+namespace Unit\Spryker\Zed\Kernel\Communication;
 
-use SprykerEngine\Zed\Kernel\AbstractUnitTest;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\ClassResolver\ClassInfo;
-use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
-use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
-use SprykerEngine\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
-use SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
-use SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin;
+use Spryker\Zed\Kernel\AbstractUnitTest;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
+use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Unit\Spryker\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Kernel
  * @group Communication

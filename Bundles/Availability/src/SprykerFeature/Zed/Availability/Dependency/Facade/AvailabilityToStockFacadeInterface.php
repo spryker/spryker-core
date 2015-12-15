@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Availability\Dependency\Facade;
+namespace Spryker\Zed\Availability\Dependency\Facade;
 
 interface AvailabilityToStockFacadeInterface
 {

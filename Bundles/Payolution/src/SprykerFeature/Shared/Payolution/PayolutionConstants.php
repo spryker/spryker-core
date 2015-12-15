@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Payolution;
+namespace Spryker\Shared\Payolution;
 
 interface PayolutionConstants
 {

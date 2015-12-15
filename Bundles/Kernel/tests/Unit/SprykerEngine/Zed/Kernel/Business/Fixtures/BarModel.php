@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\Business\Fixtures;
+namespace Unit\Spryker\Zed\Kernel\Business\Fixtures;
 
 class BarModel
 {

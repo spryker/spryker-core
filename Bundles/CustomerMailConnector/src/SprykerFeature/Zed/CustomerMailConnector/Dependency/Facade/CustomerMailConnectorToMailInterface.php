@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\CustomerMailConnector\Dependency\Facade;
+namespace Spryker\Zed\CustomerMailConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\MailTransfer;
 

@@ -4,20 +4,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Heartbeat\Business;
+namespace Spryker\Zed\Heartbeat\Business;
 
 use Elastica\Client as ElasticaClient;
 use Predis\Client as PredisClient;
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
-use SprykerFeature\Zed\Heartbeat\Business\Ambulance\Doctor;
-use SprykerFeature\Zed\Heartbeat\Business\Assistant\PropelHealthIndicator;
-use SprykerFeature\Zed\Heartbeat\Business\Assistant\SearchHealthIndicator;
-use SprykerFeature\Zed\Heartbeat\Business\Assistant\SessionHealthIndicator;
-use SprykerFeature\Zed\Heartbeat\Business\Assistant\StorageHealthIndicator;
-use SprykerFeature\Zed\Heartbeat\HeartbeatConfig;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
+use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
+use Spryker\Zed\Heartbeat\Business\Assistant\PropelHealthIndicator;
+use Spryker\Zed\Heartbeat\Business\Assistant\SearchHealthIndicator;
+use Spryker\Zed\Heartbeat\Business\Assistant\SessionHealthIndicator;
+use Spryker\Zed\Heartbeat\Business\Assistant\StorageHealthIndicator;
+use Spryker\Zed\Heartbeat\HeartbeatConfig;
+use Spryker\Shared\Application\ApplicationConstants;
 
 /**
  * @method HeartbeatConfig getConfig()

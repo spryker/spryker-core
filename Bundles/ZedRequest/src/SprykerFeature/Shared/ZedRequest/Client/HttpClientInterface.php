@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\ZedRequest\Client;
+namespace Spryker\Shared\ZedRequest\Client;
 
-use SprykerEngine\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Transfer\TransferInterface;
 
 /**
  * Interface HttpClientInterface
@@ -28,7 +28,7 @@ interface HttpClientInterface
      *
      * @throws \LogicException
      *
-     * @return \SprykerFeature\Shared\Library\Communication\Response
+     * @return \Spryker\Shared\Library\Communication\Response
      */
     public function request(
         $pathInfo,

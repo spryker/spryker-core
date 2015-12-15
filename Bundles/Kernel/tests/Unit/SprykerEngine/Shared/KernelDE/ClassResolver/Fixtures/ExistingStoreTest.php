@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Shared\KernelDE\ClassResolver\Fixtures;
+namespace Unit\Spryker\Shared\KernelDE\ClassResolver\Fixtures;
 
 class ExistingStoreTest
 {

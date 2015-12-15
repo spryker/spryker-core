@@ -2,7 +2,7 @@
   "name": "spryker/session",
   "autoload": {
     "psr-0": {
-      "SprykerFeature": "src/",
+      "Spryker": "src/",
       "ClientUnit": "tests/"
     }
   },

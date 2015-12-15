@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Console\Communication;
+namespace Spryker\Zed\Console\Communication;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Zed\Console\Business\Model\Environment;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Zed\Console\Business\Model\Environment;
+use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

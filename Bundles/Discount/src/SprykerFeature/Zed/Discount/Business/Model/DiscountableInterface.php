@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\Model;
+namespace Spryker\Zed\Discount\Business\Model;
 
 interface DiscountableInterface
 {

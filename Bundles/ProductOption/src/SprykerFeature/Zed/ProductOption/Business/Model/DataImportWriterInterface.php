@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOption\Business\Model;
+namespace Spryker\Zed\ProductOption\Business\Model;
 
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
 
 interface DataImportWriterInterface
 {

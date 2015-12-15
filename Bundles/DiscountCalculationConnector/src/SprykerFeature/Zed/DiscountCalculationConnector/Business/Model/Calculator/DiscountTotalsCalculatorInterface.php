@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
+namespace Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
 interface DiscountTotalsCalculatorInterface extends TotalsCalculatorPluginInterface
 {

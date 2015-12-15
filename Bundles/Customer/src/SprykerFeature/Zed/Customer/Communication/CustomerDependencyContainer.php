@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Communication;
+namespace Spryker\Zed\Customer\Communication;
 
-use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use SprykerFeature\Zed\Customer\Communication\Table\AddressTable;
-use SprykerFeature\Zed\Customer\Communication\Table\CustomerTable;
+use Spryker\Zed\Customer\Communication\Form\AddressForm;
+use Spryker\Zed\Customer\Communication\Form\CustomerForm;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Spryker\Zed\Customer\Communication\Table\AddressTable;
+use Spryker\Zed\Customer\Communication\Table\CustomerTable;
 use Symfony\Component\Form\FormInterface;
 
 /**

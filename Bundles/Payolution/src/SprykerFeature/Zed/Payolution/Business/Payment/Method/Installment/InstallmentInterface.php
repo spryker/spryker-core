@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Payment\Method\Installment;
+namespace Spryker\Zed\Payolution\Business\Payment\Method\Installment;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Business\Operation;
+namespace Spryker\Zed\ProductSearch\Business\Operation;
 
 interface OperationInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\User\Persistence\Propel;
+namespace Spryker\Zed\User\Persistence\Propel;
 
 use Orm\Zed\User\Persistence\Base\SpyUserArchiveQuery as BaseSpyUserArchiveQuery;
 

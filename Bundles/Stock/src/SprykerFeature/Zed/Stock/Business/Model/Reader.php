@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Business\Model;
+namespace Spryker\Zed\Stock\Business\Model;
 
 use Guzzle\Common\Exception\InvalidArgumentException;
-use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use SprykerFeature\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
-use SprykerFeature\Zed\Stock\Business\Exception\StockProductNotFoundException;
-use SprykerFeature\Zed\Stock\Dependency\Facade\StockToProductInterface;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
+use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
+use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
-use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
+use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 class Reader implements ReaderInterface
 {

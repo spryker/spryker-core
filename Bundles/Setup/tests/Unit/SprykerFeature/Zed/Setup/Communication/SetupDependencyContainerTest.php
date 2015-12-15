@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Setup\Communication;
+namespace Unit\Spryker\Zed\Setup\Communication;
 
-use SprykerEngine\Zed\Kernel\AbstractUnitTest;
-use SprykerFeature\Zed\Setup\Communication\SetupDependencyContainer;
+use Spryker\Zed\Kernel\AbstractUnitTest;
+use Spryker\Zed\Setup\Communication\SetupDependencyContainer;
 
 /**
  * @method SetupDependencyContainer getDependencyContainer()

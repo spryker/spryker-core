@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Persistence\Propel;
+namespace Spryker\Zed\Glossary\Persistence\Propel;
 
 use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslation as BaseSpyGlossaryTranslation;
 

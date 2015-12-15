@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Communication\Controller;
+namespace Spryker\Zed\Maintenance\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Maintenance\Business\MaintenanceFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

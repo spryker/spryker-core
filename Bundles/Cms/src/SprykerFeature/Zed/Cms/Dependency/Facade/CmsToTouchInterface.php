@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Dependency\Facade;
+namespace Spryker\Zed\Cms\Dependency\Facade;
 
 interface CmsToTouchInterface
 {

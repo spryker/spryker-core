@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Checkout\Business\Workflow;
+namespace Spryker\Zed\Checkout\Business\Workflow;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 

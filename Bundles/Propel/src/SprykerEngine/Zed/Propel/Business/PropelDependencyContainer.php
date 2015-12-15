@@ -3,25 +3,25 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Propel\Business;
+namespace Spryker\Zed\Propel\Business;
 
-use SprykerEngine\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjuster;
-use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemover;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaMerger;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaWriter;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaFinder;
-use SprykerEngine\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchema;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemoverInterface;
-use SprykerEngine\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
-use SprykerEngine\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjusterInterface;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaFinderInterface;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaInterface;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaMergerInterface;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaWriterInterface;
-use SprykerEngine\Zed\Propel\PropelConfig;
-use SprykerEngine\Zed\Propel\PropelDependencyProvider;
+use Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjuster;
+use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
+use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
+use Spryker\Zed\Propel\Business\Model\PropelSchema;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Propel\Business\Model\DirectoryRemoverInterface;
+use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
+use Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjusterInterface;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaInterface;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaMergerInterface;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaWriterInterface;
+use Spryker\Zed\Propel\PropelConfig;
+use Spryker\Zed\Propel\PropelDependencyProvider;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Command\Command;
 

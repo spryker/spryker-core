@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionCartConnector\Business;
+namespace Spryker\Zed\ProductOptionCartConnector\Business;
 
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method ProductOptionCartConnectorDependencyContainer getDependencyContainer()

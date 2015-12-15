@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Calculation\Dependency\Plugin;
+namespace Spryker\Zed\Calculation\Dependency\Plugin;
 
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 interface CalculatorPluginInterface
 {

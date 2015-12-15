@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business;
+namespace Unit\Spryker\Zed\PriceCartConnector\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerFeature\Zed\Price\Business\PriceFacade;
-use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManager;
-use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
+use Spryker\Zed\Price\Business\PriceFacade;
+use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
+use Unit\Spryker\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group PriceCartConnector
  * @group Business
@@ -47,7 +47,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \SprykerFeature\Zed\PriceCartConnector\Business\Exception\PriceMissingException
+     * @expectedException \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      * @expectedExceptionMessage Cart item 123 can not be priced
      *
      * @return void

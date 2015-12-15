@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Communication;
+namespace Spryker\Zed\Kernel\Communication;
 
-use SprykerEngine\Shared\Kernel\Locator\LocatorMatcherInterface;
+use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class ConsoleLocatorMatcher implements LocatorMatcherInterface
 {

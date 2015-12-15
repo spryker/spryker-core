@@ -4,21 +4,21 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Url;
+namespace Functional\Spryker\Zed\Url;
 
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
-use SprykerFeature\Zed\Url\Business\UrlFacade;
-use SprykerFeature\Zed\Url\Persistence\UrlQueryContainer;
-use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
+use Spryker\Zed\Url\Business\UrlFacade;
+use Spryker\Zed\Url\Persistence\UrlQueryContainer;
+use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Url
  * @group UrlFacadeTest

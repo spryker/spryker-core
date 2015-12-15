@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Application\Communication\Bootstrap\Extension;
+namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
-use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\BeforeBootExtensionInterface;
-use SprykerEngine\Shared\Application\Communication\Application;
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Shared\Library\DataDirectory;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\BeforeBootExtensionInterface;
+use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Config;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Library\DataDirectory;
 
 class BeforeBootExtension implements BeforeBootExtensionInterface
 {

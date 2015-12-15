@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\Price\Communication\Plugin\Twig\Filters;
+namespace Spryker\Zed\Price\Communication\Plugin\Twig\Filters;
 
-use SprykerFeature\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Library\Currency\CurrencyManager;
 
 class PriceFilter
 {

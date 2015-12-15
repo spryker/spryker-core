@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Tax\Dependency\Plugin;
+namespace Spryker\Zed\Tax\Dependency\Plugin;
 
 interface TaxChangePluginInterface
 {

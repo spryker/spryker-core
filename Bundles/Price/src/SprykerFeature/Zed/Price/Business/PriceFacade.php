@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Price\Business;
+namespace Spryker\Zed\Price\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceType;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 
 /**
  * @method PriceDependencyContainer getDependencyContainer()

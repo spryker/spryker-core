@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Persistence;
+namespace Spryker\Zed\ProductSearch\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductSearchDependencyContainer extends AbstractPersistenceDependencyContainer
 {

@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOption\Persistence\Propel;
+namespace Spryker\Zed\ProductOption\Persistence\Propel;
 
 use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionConfigurationPresetValue as BaseSpyProductOptionConfigurationPresetValue;
 

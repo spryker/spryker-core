@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Sales\Business;
+namespace Functional\Spryker\Zed\Sales\Business;
 
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Codeception\TestCase\Test;
@@ -14,19 +14,19 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Locator;
 use Orm\Zed\Country\Persistence\SpyCountry;
-use SprykerFeature\Zed\Oms\OmsConfig;
+use Spryker\Zed\Oms\OmsConfig;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
-use SprykerFeature\Zed\Sales\Business\SalesFacade;
+use Spryker\Zed\Sales\Business\SalesFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
-use SprykerFeature\Zed\Sales\SalesDependencyProvider;
-use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
+use Spryker\Zed\Sales\SalesDependencyProvider;
+use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**
  * @group Zed
@@ -50,13 +50,13 @@ class SalesFacadeTest extends Test
         parent::setUp();
         $locator = Locator::getInstance();
 
-        $countryFacadeMock = $this->getMock('SprykerFeature\Zed\Sales\Dependency\Facade\SalesToCountryInterface', ['getIdCountryByIso2Code']);
+        $countryFacadeMock = $this->getMock('Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface', ['getIdCountryByIso2Code']);
         $countryFacadeMock->method('getIdCountryByIso2Code')
             ->will($this->returnValue(1));
 
         $omsOrderProcessEntity = $this->getProcessEntity();
 
-        $omsFacadeMock = $this->getMock('SprykerFeature\Zed\Sales\Dependency\Facade\SalesToOmsInterface', ['selectProcess', 'getInitialStateEntity', 'getProcessEntity']);
+        $omsFacadeMock = $this->getMock('Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface', ['selectProcess', 'getInitialStateEntity', 'getProcessEntity']);
         $omsFacadeMock->method('selectProcess')
             ->will($this->returnValue('CheckoutTest01'));
 

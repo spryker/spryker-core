@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Client\Kernel;
+namespace Spryker\Client\Kernel;
 
-use SprykerEngine\Shared\Kernel\BundleProxy;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Kernel\BundleProxy;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 class Locator implements LocatorLocatorInterface
 {

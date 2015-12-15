@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Maintenance\Business\InstalledPackages;
+namespace Unit\Spryker\Zed\Maintenance\Business\InstalledPackages;
 
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Shared\Transfer\InstalledPackageTransfer;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Maintenance
  * @group Business

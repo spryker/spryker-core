@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Propel;
+namespace Spryker\Zed\Propel;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\FilterTransfer;

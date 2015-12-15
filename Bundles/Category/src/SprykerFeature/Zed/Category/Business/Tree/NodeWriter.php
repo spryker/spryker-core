@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Business\Tree;
+namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 
 class NodeWriter implements NodeWriterInterface

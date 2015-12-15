@@ -4,24 +4,24 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Glossary;
+namespace Functional\Spryker\Zed\Glossary;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
-use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Generated\Shared\Transfer\TranslationTransfer;
-use SprykerEngine\Zed\Touch\TouchDependencyProvider;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
-use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
-use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use Spryker\Zed\Touch\TouchDependencyProvider;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
+use Spryker\Zed\Glossary\GlossaryDependencyProvider;
+use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Glossary
  * @group GlossaryTest

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Shipment\Communication\Plugin;
+namespace Spryker\Zed\Shipment\Communication\Plugin;
 
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 

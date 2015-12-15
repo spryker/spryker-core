@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Gui\Communication\Table;
+namespace Spryker\Zed\Gui\Communication\Table;
 
-use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Zed\Application\Business\Url\Url;
-use SprykerFeature\Zed\Library\Sanitize\Html;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Application\Business\Url\Url;
+use Spryker\Zed\Library\Sanitize\Html;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable

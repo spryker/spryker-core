@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Product\KeyBuilder;
+namespace Spryker\Client\Product\KeyBuilder;
 
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
-use SprykerFeature\Shared\Product\ProductConstants;
+use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
+use Spryker\Shared\Product\ProductConstants;
 
 class ProductResourceKeyBuilder extends SharedResourceKeyBuilder
 {

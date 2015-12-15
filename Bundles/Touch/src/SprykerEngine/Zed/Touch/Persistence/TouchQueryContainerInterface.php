@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Touch\Persistence;
+namespace Spryker\Zed\Touch\Persistence;
 
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Kernel;
+namespace Spryker\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
-use SprykerEngine\Shared\Kernel\Locator\LocatorException;
+use Spryker\Shared\Kernel\Locator\LocatorInterface;
+use Spryker\Shared\Kernel\Locator\LocatorException;
 
 abstract class AbstractLocator implements LocatorInterface
 {

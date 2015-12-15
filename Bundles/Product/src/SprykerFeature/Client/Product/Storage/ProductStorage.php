@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Product\Storage;
+namespace Spryker\Client\Product\Storage;
 
-use SprykerFeature\Client\Storage\StorageClientInterface;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class ProductStorage implements ProductStorageInterface
 {

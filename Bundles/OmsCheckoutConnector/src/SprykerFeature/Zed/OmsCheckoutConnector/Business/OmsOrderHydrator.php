@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\OmsCheckoutConnector\Business;
+namespace Spryker\Zed\OmsCheckoutConnector\Business;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\OmsCheckoutConnector\Business\Exception\NoStatemachineProcessException;
+use Spryker\Zed\OmsCheckoutConnector\Business\Exception\NoStatemachineProcessException;
 
 class OmsOrderHydrator implements OmsOrderHydratorInterface
 {

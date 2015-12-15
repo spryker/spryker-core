@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth;
+namespace Spryker\Zed\Auth;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 
 class AuthDependencyProvider extends AbstractBundleDependencyProvider
 {

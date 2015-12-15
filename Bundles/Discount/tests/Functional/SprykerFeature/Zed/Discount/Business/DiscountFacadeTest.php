@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Discount\Business;
+namespace Functional\Spryker\Zed\Discount\Business;
 
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -20,20 +20,20 @@ use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
-use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\DiscountConfig;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
-use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Discount
  * @group Business

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\DiscountCalculationConnector\Communication;
+namespace Spryker\Zed\DiscountCalculationConnector\Communication;
 
-use SprykerFeature\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade;
-use SprykerFeature\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountFacadeInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade;
+use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountFacadeInterface;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
 class DiscountCalculationConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {

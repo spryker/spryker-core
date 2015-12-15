@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Adapter\Http;
+namespace Spryker\Zed\Payone\Business\Api\Adapter\Http;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
-use SprykerFeature\Zed\Payone\Business\Exception\TimeoutException;
+use Spryker\Zed\Payone\Business\Exception\TimeoutException;
 
 class Guzzle extends AbstractHttpAdapter
 {

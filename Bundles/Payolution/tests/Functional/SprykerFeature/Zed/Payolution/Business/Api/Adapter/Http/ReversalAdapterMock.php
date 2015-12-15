@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
+namespace Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http;
 
 class ReversalAdapterMock extends AbstractAdapterMock
 {

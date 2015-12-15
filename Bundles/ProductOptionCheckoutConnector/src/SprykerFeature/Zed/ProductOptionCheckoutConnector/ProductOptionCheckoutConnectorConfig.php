@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionCheckoutConnector;
+namespace Spryker\Zed\ProductOptionCheckoutConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOptionCheckoutConnectorConfig extends AbstractBundleConfig
 {

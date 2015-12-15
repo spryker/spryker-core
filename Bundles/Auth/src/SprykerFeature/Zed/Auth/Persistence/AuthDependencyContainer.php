@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Persistence;
+namespace Spryker\Zed\Auth\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\AuthPersistence;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 
 class AuthDependencyContainer extends AbstractPersistenceDependencyContainer
 {

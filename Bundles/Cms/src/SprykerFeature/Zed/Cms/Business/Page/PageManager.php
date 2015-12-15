@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Business\Page;
+namespace Spryker\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -12,20 +12,20 @@ use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Cms\CmsConstants;
-use SprykerFeature\Zed\Cms\Business\Block\BlockManagerInterface;
-use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
-use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
-use SprykerFeature\Zed\Cms\Business\Exception\PageExistsException;
-use SprykerFeature\Zed\Cms\Business\Template\TemplateManagerInterface;
-use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
-use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Cms\CmsConstants;
+use Spryker\Zed\Cms\Business\Block\BlockManagerInterface;
+use Spryker\Zed\Cms\Business\Exception\MissingPageException;
+use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
+use Spryker\Zed\Cms\Business\Exception\PageExistsException;
+use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
-use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 class PageManager implements PageManagerInterface
 {

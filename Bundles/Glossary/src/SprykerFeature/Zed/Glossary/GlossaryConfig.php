@@ -3,9 +3,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary;
+namespace Spryker\Zed\Glossary;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GlossaryConfig extends AbstractBundleConfig
 {

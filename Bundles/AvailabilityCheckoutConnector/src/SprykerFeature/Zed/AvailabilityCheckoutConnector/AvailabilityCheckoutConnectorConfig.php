@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\AvailabilityCheckoutConnector;
+namespace Spryker\Zed\AvailabilityCheckoutConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AvailabilityCheckoutConnectorConfig extends AbstractBundleConfig
 {

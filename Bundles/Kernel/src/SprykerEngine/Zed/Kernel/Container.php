@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel;
+namespace Spryker\Zed\Kernel;
 
 use Generated\Zed\Ide\AutoCompletion;
 

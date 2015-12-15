@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
+namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
-use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
-use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
-use SprykerFeature\Zed\Oms\Business\Util\TransitionLogInterface;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Oms\Business\Process\ProcessInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
+use Spryker\Zed\Oms\Business\Process\TransitionInterface;
+use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
@@ -22,7 +22,7 @@ use DateTime;
 use Exception;
 use LogicException;
 use Propel\Runtime\Propel;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
 class OrderStateMachine implements OrderStateMachineInterface
 {

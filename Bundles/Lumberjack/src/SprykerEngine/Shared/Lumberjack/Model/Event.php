@@ -4,7 +4,7 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerEngine\Shared\Lumberjack\Model;
+namespace Spryker\Shared\Lumberjack\Model;
 
 class Event implements EventInterface
 {

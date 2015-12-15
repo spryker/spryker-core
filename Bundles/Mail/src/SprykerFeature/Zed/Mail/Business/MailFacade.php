@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Mail\Business;
+namespace Spryker\Zed\Mail\Business;
 
 use Generated\Shared\Transfer\SendMailResponsesTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method MailDependencyContainer getDependencyContainer()

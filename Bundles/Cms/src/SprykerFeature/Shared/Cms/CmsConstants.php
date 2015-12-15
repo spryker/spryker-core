@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Shared\Cms;
+namespace Spryker\Shared\Cms;
 
 interface CmsConstants
 {

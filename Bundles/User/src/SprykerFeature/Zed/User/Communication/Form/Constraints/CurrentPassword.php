@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User\Communication\Form\Constraints;
+namespace Spryker\Zed\User\Communication\Form\Constraints;
 
-use SprykerFeature\Zed\User\Business\UserFacade;
+use Spryker\Zed\User\Business\UserFacade;
 use Symfony\Component\Validator\Constraint;
 
 class CurrentPassword extends Constraint

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\DiscountCalculationConnector;
+namespace Spryker\Zed\DiscountCalculationConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class DiscountCalculationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {

@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Gui\Communication\Table;
+namespace Spryker\Zed\Gui\Communication\Table;
 
 class TableConfiguration
 {

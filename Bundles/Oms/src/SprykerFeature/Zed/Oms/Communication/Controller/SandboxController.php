@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Communication\Controller;
+namespace Spryker\Zed\Oms\Communication\Controller;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use SprykerFeature\Zed\Oms\Business\OmsFacade;
+use Spryker\Zed\Oms\Business\OmsFacade;
 use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderProcessQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;

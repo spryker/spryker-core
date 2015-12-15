@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Queue\Business\Worker;
+namespace Spryker\Zed\Queue\Business\Worker;
 
 interface TaskWorkerInterface
 {

@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Country\Communication;
+namespace Spryker\Zed\Country\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Country\Business\CountryFacade;
-use SprykerFeature\Zed\Country\Communication\Form\CountryForm;
-use SprykerFeature\Zed\Country\CountryDependencyProvider;
-use SprykerFeature\Zed\Country\Communication\Table\CountryTable;
-use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Country\Business\CountryFacade;
+use Spryker\Zed\Country\Communication\Form\CountryForm;
+use Spryker\Zed\Country\CountryDependencyProvider;
+use Spryker\Zed\Country\Communication\Table\CountryTable;
+use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 class CountryDependencyContainer extends AbstractCommunicationDependencyContainer
 {

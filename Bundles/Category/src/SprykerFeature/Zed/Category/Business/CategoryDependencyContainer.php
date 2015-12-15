@@ -4,27 +4,27 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Business;
+namespace Spryker\Zed\Category\Business;
 
-use SprykerFeature\Zed\Category\Business\Generator\UrlPathGenerator;
-use SprykerFeature\Zed\Category\Business\Tree\ClosureTableWriter;
-use SprykerFeature\Zed\Category\Business\Tree\NodeWriter;
-use SprykerFeature\Zed\Category\Business\Model\CategoryWriter;
-use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManager;
-use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
-use SprykerFeature\Zed\Category\Business\Model\CategoryWriterInterface;
-use SprykerFeature\Zed\Category\Business\Renderer\CategoryTreeRenderer;
-use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReader;
-use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeWriter;
-use SprykerFeature\Zed\Category\Business\Tree\ClosureTableWriterInterface;
-use SprykerFeature\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
-use SprykerFeature\Zed\Category\Business\Tree\NodeWriterInterface;
-use SprykerFeature\Zed\Category\CategoryDependencyProvider;
-use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
-use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
-use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
+use Spryker\Zed\Category\Business\Tree\ClosureTableWriter;
+use Spryker\Zed\Category\Business\Tree\NodeWriter;
+use Spryker\Zed\Category\Business\Model\CategoryWriter;
+use Spryker\Zed\Category\Business\Manager\NodeUrlManager;
+use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
+use Spryker\Zed\Category\Business\Model\CategoryWriterInterface;
+use Spryker\Zed\Category\Business\Renderer\CategoryTreeRenderer;
+use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
+use Spryker\Zed\Category\Business\Tree\CategoryTreeWriter;
+use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
+use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
+use Spryker\Zed\Category\Business\Tree\NodeWriterInterface;
+use Spryker\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
  * @method CategoryQueryContainer getQueryContainer()

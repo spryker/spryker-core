@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Newsletter\Zed;
+namespace Spryker\Client\Newsletter\Zed;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
-use SprykerFeature\Client\ZedRequest\ZedRequestClient;
+use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class NewsletterStub implements NewsletterStubInterface
 {

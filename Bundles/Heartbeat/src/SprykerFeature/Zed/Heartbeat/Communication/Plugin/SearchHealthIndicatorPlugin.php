@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Heartbeat\Communication\Plugin;
+namespace Spryker\Zed\Heartbeat\Communication\Plugin;
 
 use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
-use SprykerFeature\Zed\Heartbeat\Business\HeartbeatFacade;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
+use Spryker\Zed\Heartbeat\Business\HeartbeatFacade;
 
 /**
  * @method HeartbeatFacade getFacade()

@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Business\Key;
+namespace Spryker\Zed\Glossary\Business\Key;
 
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
-use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
+use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
+use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 
 interface KeyManagerInterface

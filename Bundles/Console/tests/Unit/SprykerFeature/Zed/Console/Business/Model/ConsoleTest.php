@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Console\Business\Model\Console;
+namespace Unit\Spryker\Zed\Console\Business\Model\Console;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Unit\SprykerFeature\Zed\Console\Business\Model\Fixtures\ConsoleMock;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock;
 
 class ConsoleTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +22,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $console = $this->getConsole();
         $console->setDependencyContainer($this->getDependencyContainerMock());
 
-        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer',
+        $this->assertInstanceOf('Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer',
             $console->getDependencyContainer()
         );
     }
@@ -35,7 +35,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $console = $this->getConsole();
         $console->setFacade($this->getFacadeMock());
 
-        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Business\AbstractFacade', $console->getFacade());
+        $this->assertInstanceOf('Spryker\Zed\Kernel\Business\AbstractFacade', $console->getFacade());
     }
 
     /**
@@ -56,7 +56,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $console = $this->getConsole();
         $console->setQueryContainer($this->getQueryContainerMock());
 
-        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer',
+        $this->assertInstanceOf('Spryker\Zed\Kernel\Persistence\AbstractQueryContainer',
             $console->getQueryContainer()
         );
     }
@@ -66,7 +66,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
      */
     private function getDependencyContainerMock()
     {
-        return $this->getMock('SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer', [], [],
+        return $this->getMock('Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer', [], [],
             '', false
         );
     }
@@ -76,7 +76,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
      */
     private function getFacadeMock()
     {
-        return $this->getMock('SprykerEngine\Zed\Kernel\Business\AbstractFacade', [], [], '', false);
+        return $this->getMock('Spryker\Zed\Kernel\Business\AbstractFacade', [], [], '', false);
     }
 
     /**
@@ -84,7 +84,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
      */
     private function getQueryContainerMock()
     {
-        return $this->getMock('SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer', [], [], '', false);
+        return $this->getMock('Spryker\Zed\Kernel\Persistence\AbstractQueryContainer', [], [], '', false);
     }
 
     /**

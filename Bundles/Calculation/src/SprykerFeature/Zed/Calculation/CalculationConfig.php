@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Calculation;
+namespace Spryker\Zed\Calculation;
 
-use SprykerFeature\Zed\Calculation\Communication\Plugin\ItemTotalPriceCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\TaxTotalsCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\ProductOptionPriceToPayCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\SubtotalWithoutItemExpensesTotalsCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\RemoveAllExpensesCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin;
-use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
-use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Calculation\Communication\Plugin\ItemTotalPriceCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\TaxTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\ProductOptionPriceToPayCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\SubtotalWithoutItemExpensesTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\RemoveAllExpensesCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
+use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CalculationConfig extends AbstractBundleConfig
 {

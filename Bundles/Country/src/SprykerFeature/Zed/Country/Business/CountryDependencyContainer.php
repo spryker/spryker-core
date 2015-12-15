@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Country\Business;
+namespace Spryker\Zed\Country\Business;
 
-use SprykerFeature\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Country\Business\Cldr\CldrDataProviderInterface;
-use SprykerFeature\Zed\Country\Business\Internal\Install;
-use SprykerFeature\Zed\Country\CountryConfig;
-use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
+use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
+use Spryker\Zed\Country\Business\Internal\Install;
+use Spryker\Zed\Country\CountryConfig;
+use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 
 /**
  * @method CountryConfig getConfig()

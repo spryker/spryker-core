@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Persistence;
+namespace Spryker\Zed\Discount\Persistence;
 
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesForm;
+use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;

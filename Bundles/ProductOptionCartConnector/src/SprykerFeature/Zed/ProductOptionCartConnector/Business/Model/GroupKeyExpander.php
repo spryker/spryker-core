@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionCartConnector\Business\Model;
+namespace Spryker\Zed\ProductOptionCartConnector\Business\Model;
 
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;

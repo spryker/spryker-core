@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter;
+namespace Spryker\Zed\Application\Business\Model\Navigation\Formatter;
 
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface;
-use SprykerFeature\Zed\Application\Business\Model\Url\UrlBuilderInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface;
+use Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface;
 
 class MenuFormatter implements MenuFormatterInterface
 {

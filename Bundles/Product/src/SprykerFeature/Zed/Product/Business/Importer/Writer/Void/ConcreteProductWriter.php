@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Importer\Writer\Void;
+namespace Spryker\Zed\Product\Business\Importer\Writer\Void;
 
 use Generated\Shared\Transfer\ConcreteProductTransfer;
-use SprykerFeature\Zed\Product\Business\Importer\Writer\ConcreteProductWriterInterface;
+use Spryker\Zed\Product\Business\Importer\Writer\ConcreteProductWriterInterface;
 
 /**
  * Class ConcreteProductWriter

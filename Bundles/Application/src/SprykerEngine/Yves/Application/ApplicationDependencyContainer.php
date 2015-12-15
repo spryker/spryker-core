@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerEngine\Yves\Application;
+namespace Spryker\Yves\Application;
 
-use SprykerEngine\Yves\Application\Plugin\Provider\ExceptionService\DefaultExceptionHandler;
-use SprykerEngine\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerDispatcher;
-use SprykerEngine\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface;
-use SprykerEngine\Yves\Kernel\AbstractDependencyContainer;
+use Spryker\Yves\Application\Plugin\Provider\ExceptionService\DefaultExceptionHandler;
+use Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerDispatcher;
+use Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface;
+use Spryker\Yves\Kernel\AbstractDependencyContainer;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationDependencyContainer extends AbstractDependencyContainer

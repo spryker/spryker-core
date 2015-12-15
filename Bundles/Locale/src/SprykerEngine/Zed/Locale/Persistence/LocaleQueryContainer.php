@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Locale\Persistence;
+namespace Spryker\Zed\Locale\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 
 class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQueryContainerInterface

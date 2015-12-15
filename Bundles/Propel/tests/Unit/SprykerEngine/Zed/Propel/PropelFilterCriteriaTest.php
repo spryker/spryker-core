@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Propel;
+namespace Unit\Spryker\Zed\Propel;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use SprykerEngine\Zed\Propel\PropelFilterCriteria;
+use Spryker\Zed\Propel\PropelFilterCriteria;
 
 class PropelFilterCriteriaTest extends \PHPUnit_Framework_TestCase
 {

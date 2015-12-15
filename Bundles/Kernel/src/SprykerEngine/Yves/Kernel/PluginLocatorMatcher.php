@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Kernel;
+namespace Spryker\Yves\Kernel;
 
-use SprykerEngine\Shared\Kernel\Locator\LocatorMatcherInterface;
+use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 /**
  * Class YvesLocatorMatcher

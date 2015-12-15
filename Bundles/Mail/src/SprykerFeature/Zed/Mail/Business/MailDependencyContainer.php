@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Mail\Business;
+namespace Spryker\Zed\Mail\Business;
 
-use SprykerFeature\Shared\Library\Config;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Shared\Mail\MailConstants;
+use Spryker\Shared\Library\Config;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Shared\Mail\MailConstants;
 
 class MailDependencyContainer extends AbstractBusinessDependencyContainer
 {

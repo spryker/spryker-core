@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Cart\Code;
+namespace Spryker\Shared\Cart\Code;
 
 interface DeleteReasonConstant
 {

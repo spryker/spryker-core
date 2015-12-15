@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel;
+namespace Unit\Spryker\Zed\Kernel;
 
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Container;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Kernel
  * @group Container
@@ -24,7 +24,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     {
         $container = new Container();
 
-        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Locator', $container->getLocator());
+        $this->assertInstanceOf('Spryker\Zed\Kernel\Locator', $container->getLocator());
     }
 
 }

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Cart\Transfer;
+namespace Spryker\Shared\Cart\Transfer;
 
-use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
+use Spryker\Shared\Discount\Dependency\Transfer\DiscountableItemCollectionInterface;
 
 interface ItemCollectionInterface extends DiscountableItemCollectionInterface
 {

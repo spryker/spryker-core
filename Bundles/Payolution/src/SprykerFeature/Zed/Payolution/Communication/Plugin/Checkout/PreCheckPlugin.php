@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Communication\Plugin\Checkout;
+namespace Spryker\Zed\Payolution\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
-use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
-use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
+use Spryker\Shared\Payolution\PayolutionApiConstants;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Payolution\Business\PayolutionFacade;
 
 /**
  * @method PayolutionFacade getFacade()

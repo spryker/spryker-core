@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Communication\Form\Transformers;
+namespace Spryker\Zed\Discount\Communication\Form\Transformers;
 
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesForm;
-use SprykerFeature\Zed\Discount\DiscountConfig;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
+use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\DataTransformerInterface;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 

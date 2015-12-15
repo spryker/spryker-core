@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
+namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
-use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
+use Spryker\Zed\Oms\Business\Process\EventInterface;
+use Spryker\Zed\Oms\Business\Process\ProcessInterface;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
+use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 use SimpleXMLElement;
 use LogicException;
 

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\AuthMailConnector;
+namespace Spryker\Zed\AuthMailConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AuthMailConnectorConfig extends AbstractBundleConfig
 {

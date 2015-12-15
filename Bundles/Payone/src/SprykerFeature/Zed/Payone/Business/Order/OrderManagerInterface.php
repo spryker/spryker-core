@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Order;
+namespace Spryker\Zed\Payone\Business\Order;
 
 interface OrderManagerInterface
 {

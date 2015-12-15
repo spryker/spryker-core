@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Application\Communication;
+namespace Spryker\Shared\Application\Communication;
 
-use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\AfterBootExtensionInterface;
-use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\BeforeBootExtensionInterface;
-use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\GlobalTemplateVariableExtensionInterface;
-use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\RouterExtensionInterface;
-use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface;
-use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Shared\Library\Config;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\AfterBootExtensionInterface;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\BeforeBootExtensionInterface;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\GlobalTemplateVariableExtensionInterface;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\RouterExtensionInterface;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Library\Config;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

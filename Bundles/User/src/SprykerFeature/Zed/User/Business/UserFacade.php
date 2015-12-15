@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User\Business;
+namespace Spryker\Zed\User\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\UserTransfer;
 use Generated\Shared\Transfer\CollectionTransfer;
 

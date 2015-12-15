@@ -1,10 +1,10 @@
 <?php
 
-namespace Functional\SprykerFeature\Zed\Cart\Fixture;
+namespace Functional\Spryker\Zed\Cart\Fixture;
 
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Zed\Cart\Business\CartDependencyContainer;
-use SprykerFeature\Zed\Cart\CartConfig;
+use Spryker\Shared\Config;
+use Spryker\Zed\Cart\Business\CartDependencyContainer;
+use Spryker\Zed\Cart\CartConfig;
 
 class CartFixtureDependencyContainer extends CartDependencyContainer
 {

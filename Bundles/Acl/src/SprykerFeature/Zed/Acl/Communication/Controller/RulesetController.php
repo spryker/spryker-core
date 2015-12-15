@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Communication\Controller;
+namespace Spryker\Zed\Acl\Communication\Controller;
 
-use SprykerFeature\Zed\Acl\Business\AclFacade;
-use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Acl\Business\AclFacade;
+use Spryker\Zed\Acl\Communication\AclDependencyContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

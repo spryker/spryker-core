@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture;
+namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
 
-use SprykerEngine\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Transfer\TransferInterface;
 
-class Request extends \SprykerFeature\Shared\Library\Communication\Request
+class Request extends \Spryker\Shared\Library\Communication\Request
 {
 
     /**

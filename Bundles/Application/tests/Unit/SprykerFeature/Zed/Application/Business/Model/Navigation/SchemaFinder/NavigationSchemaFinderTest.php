@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder;
+namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder;
 
-use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
+use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Application
  * @group Business

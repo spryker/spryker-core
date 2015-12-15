@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Mail;
+namespace Spryker\Shared\Mail;
 
 interface MailConstants
 {

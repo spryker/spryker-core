@@ -3,10 +3,10 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Zed\Cache\Communication\Console;
+namespace Spryker\Zed\Cache\Communication\Console;
 
-use SprykerFeature\Zed\Cache\Business\CacheFacade;
-use SprykerFeature\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Cache\Business\CacheFacade;
+use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

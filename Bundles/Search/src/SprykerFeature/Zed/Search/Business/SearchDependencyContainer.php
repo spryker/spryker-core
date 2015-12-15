@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Search\Business;
+namespace Spryker\Zed\Search\Business;
 
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Search\Business\Model\Search;
-use SprykerFeature\Zed\Search\Business\Model\SearchInstaller;
-use SprykerFeature\Zed\Search\SearchConfig;
-use SprykerFeature\Zed\Search\SearchDependencyProvider;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Search\Business\Model\Search;
+use Spryker\Zed\Search\Business\Model\SearchInstaller;
+use Spryker\Zed\Search\SearchConfig;
+use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
  * @method SearchConfig getConfig()

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Storage\Client;
+namespace Spryker\Shared\Storage\Client;
 
-use SprykerFeature\Shared\Library\Storage\AdapterInterface;
-use SprykerFeature\Shared\Library\Storage\AdapterTrait;
+use Spryker\Shared\Library\Storage\AdapterInterface;
+use Spryker\Shared\Library\Storage\AdapterTrait;
 
 /**
  * Class AbstractKeyValue

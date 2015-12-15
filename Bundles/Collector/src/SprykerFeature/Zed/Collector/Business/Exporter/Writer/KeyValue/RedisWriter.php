@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue;
+namespace Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue;
 
-use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
-use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\RedisReadWrite;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
+use Spryker\Shared\Library\Storage\Adapter\KeyValue\RedisReadWrite;
+use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class RedisWriter implements WriterInterface
 {

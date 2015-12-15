@@ -4,23 +4,23 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount;
+namespace Spryker\Zed\Discount;
 
-use SprykerFeature\Zed\Discount\Communication\Plugin\Collector\Aggregate;
-use SprykerFeature\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
-use SprykerFeature\Zed\Discount\Communication\Plugin\Collector\ItemExpense;
-use SprykerFeature\Zed\Discount\Communication\Plugin\Collector\OrderExpense;
-use SprykerFeature\Zed\Discount\Communication\Plugin\Collector\Item;
-use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed;
-use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Percentage;
-use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
-use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Zed\Discount\Business\Collector\CollectorInterface;
-use SprykerFeature\Zed\Discount\Business\Model\CalculatorInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemExpense;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\OrderExpense;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Discount\Business\Collector\CollectorInterface;
+use Spryker\Zed\Discount\Business\Model\CalculatorInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
 class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInterface
 {

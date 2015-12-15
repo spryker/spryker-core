@@ -4,24 +4,24 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Zed;
+namespace Spryker\Shared\Library\Zed;
 
-use SprykerFeature\Shared\Library\Communication\Response as CommunicationResponse;
+use Spryker\Shared\Library\Communication\Response as CommunicationResponse;
 use Guzzle\Http\Client;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
-use SprykerEngine\Client\Lumberjack\EventJournalClient;
-use SprykerEngine\Shared\Lumberjack\Model\Event;
-use SprykerFeature\Shared\Library\Communication\ObjectInterface;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Shared\Library\Communication\Request;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Client\Lumberjack\EventJournalClient;
+use Spryker\Shared\Lumberjack\Model\Event;
+use Spryker\Shared\Library\Communication\ObjectInterface;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Library\System;
+use Spryker\Shared\Library\Communication\Request;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class ZedClient
 {
@@ -87,7 +87,7 @@ class ZedClient
      *
      * @throws \LogicException
      *
-     * @return \SprykerFeature\Shared\Library\Communication\Response
+     * @return \Spryker\Shared\Library\Communication\Response
      */
     public function request($pathInfo, TransferInterface $transferObject = null, array $metaTransfers = [], $timeoutInSeconds = null, $isBackgroundRequest = false)
     {
@@ -233,7 +233,7 @@ class ZedClient
      *
      * @throws Exception\InvalidZedResponseException
      *
-     * @return \SprykerFeature\Shared\Library\Communication\Response
+     * @return \Spryker\Shared\Library\Communication\Response
      */
     protected function getTransferFromResponse(Response $response)
     {
@@ -262,12 +262,12 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param \SprykerFeature\Shared\Library\Communication\Response $responseTransfer
+     * @param \Spryker\Shared\Library\Communication\Response $responseTransfer
      * @param string $rawBody
      *
      * @return void
      */
-    protected function logResponse($pathInfo, \SprykerFeature\Shared\Library\Communication\Response $responseTransfer, $rawBody)
+    protected function logResponse($pathInfo, \Spryker\Shared\Library\Communication\Response $responseTransfer, $rawBody)
     {
         $this->doLog($pathInfo, Types::TRANSFER_RESPONSE, $responseTransfer, $rawBody);
     }

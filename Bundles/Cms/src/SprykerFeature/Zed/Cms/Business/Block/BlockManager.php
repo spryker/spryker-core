@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Business\Block;
+namespace Spryker\Zed\Cms\Business\Block;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Shared\Cms\CmsConstants;
-use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
-use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Spryker\Shared\Cms\CmsConstants;
+use Spryker\Zed\Cms\Business\Exception\MissingPageException;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Orm\Zed\Cms\Persistence\SpyCmsBlock;
 
 class BlockManager implements BlockManagerInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerEngine\Client\Kernel;
+namespace Spryker\Client\Kernel;
 
 abstract class AbstractDependencyProvider implements DependencyProviderInterface
 {

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
+namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Zed\Application\Communication\ApplicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Library\System;
+use Spryker\Zed\Application\Communication\ApplicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 use Silex\ServiceProviderInterface;

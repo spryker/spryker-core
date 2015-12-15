@@ -1,11 +1,11 @@
 <?php
 
-namespace SprykerFeature\Zed\Discount\Communication\Table;
+namespace Spryker\Zed\Discount\Communication\Table;
 
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class VoucherPoolCategoryTable extends AbstractTable
 {

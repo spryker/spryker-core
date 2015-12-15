@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Communication;
+namespace Spryker\Shared\Library\Communication;
 
 class Message extends AbstractObject
 {

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Application;
+namespace Unit\Spryker\Zed\Application;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Application\ApplicationConfig;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Application\ApplicationConfig;
 
 class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +20,7 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \SprykerEngine\Shared\Kernel\AbstractLocatorLocator|static|AutoCompletion
+     * @return \Spryker\Shared\Kernel\AbstractLocatorLocator|static|AutoCompletion
      */
     private function getLocator()
     {

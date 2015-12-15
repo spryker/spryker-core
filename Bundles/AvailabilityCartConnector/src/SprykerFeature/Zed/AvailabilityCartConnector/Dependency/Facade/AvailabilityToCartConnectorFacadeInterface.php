@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\AvailabilityCartConnector\Dependency\Facade;
+namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
 interface AvailabilityToCartConnectorFacadeInterface
 {

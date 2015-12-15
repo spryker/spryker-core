@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Shared\Kernel;
+namespace Unit\Spryker\Shared\Kernel;
 
-use Unit\SprykerEngine\Shared\Kernel\Fixtures\LocatorLocator;
+use Unit\Spryker\Shared\Kernel\Fixtures\LocatorLocator;
 
 /**
  * @group Kernel
@@ -23,7 +23,7 @@ class AbstractLocatorLocatorTest extends \PHPUnit_Framework_TestCase
         $locator = LocatorLocator::getInstance();
         $bundleProxy = $locator->foo();
 
-        $this->assertInstanceOf('SprykerEngine\Shared\Kernel\BundleProxy', $bundleProxy);
+        $this->assertInstanceOf('Spryker\Shared\Kernel\BundleProxy', $bundleProxy);
     }
 
 }

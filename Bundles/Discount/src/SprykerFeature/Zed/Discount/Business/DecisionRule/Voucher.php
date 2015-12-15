@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\DecisionRule;
+namespace Spryker\Zed\Discount\Business\DecisionRule;
 
-use SprykerEngine\Zed\Kernel\Business\ModelResult;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\Kernel\Business\ModelResult;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 
 class Voucher

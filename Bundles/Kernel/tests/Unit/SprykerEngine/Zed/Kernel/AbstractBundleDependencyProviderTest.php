@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel;
+namespace Unit\Spryker\Zed\Kernel;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Kernel
  * @group AbstractBundleDependencyProvider
@@ -62,7 +62,7 @@ class AbstractBundleDependencyProviderTest extends \PHPUnit_Framework_TestCase
      */
     private function getAbstractBundleDependencyProviderMock()
     {
-        return $this->getMockForAbstractClass('SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider');
+        return $this->getMockForAbstractClass('Spryker\Zed\Kernel\AbstractBundleDependencyProvider');
     }
 
 }

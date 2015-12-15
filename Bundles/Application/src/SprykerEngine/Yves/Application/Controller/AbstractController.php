@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Application\Controller;
+namespace Spryker\Yves\Application\Controller;
 
 use Generated\Yves\Ide\AutoCompletion;
-use SprykerEngine\Client\Kernel\AbstractClient;
-use SprykerEngine\Shared\Gui\Form\AbstractForm;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
-use SprykerEngine\Yves\Application\Application;
-use SprykerEngine\Yves\Kernel\Factory;
-use SprykerEngine\Zed\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Yves\Library\Session\TransferSession;
+use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Messenger\Business\Model\MessengerInterface;
+use Spryker\Yves\Application\Application;
+use Spryker\Yves\Kernel\Factory;
+use Spryker\Zed\Kernel\AbstractDependencyContainer;
+use Spryker\Yves\Library\Session\TransferSession;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;

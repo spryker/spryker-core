@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionCheckoutConnector\Business;
+namespace Spryker\Zed\ProductOptionCheckoutConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\ProductOptionCheckoutConnector\ProductOptionCheckoutConnectorConfig;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\ProductOptionCheckoutConnector\ProductOptionCheckoutConnectorConfig;
 
 /**
  * @method ProductOptionCheckoutConnectorConfig getConfig()

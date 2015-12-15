@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Dependency\Facade;
+namespace Spryker\Zed\Acl\Dependency\Facade;
 
 use Generated\Shared\Transfer\UserTransfer;
 

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Kernel;
+namespace Spryker\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
+use Spryker\Shared\Kernel\Factory\FactoryInterface;
 
 abstract class AbstractFactory implements FactoryInterface
 {

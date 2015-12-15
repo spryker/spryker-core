@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Payone\ClientApi;
+namespace Spryker\Client\Payone\ClientApi;
 
-use SprykerFeature\Shared\Payone\Model\AbstractHashProvider;
+use Spryker\Shared\Payone\Model\AbstractHashProvider;
 
 class HashProvider extends AbstractHashProvider
 {

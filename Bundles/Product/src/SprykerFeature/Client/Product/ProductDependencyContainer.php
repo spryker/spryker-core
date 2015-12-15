@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Product;
+namespace Spryker\Client\Product;
 
-use SprykerFeature\Client\Product\KeyBuilder\ProductResourceKeyBuilder;
-use SprykerFeature\Client\Product\Storage\ProductStorage;
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Product\ProductDependencyProvider;
-use SprykerFeature\Client\Product\Storage\ProductStorageInterface;
-use SprykerFeature\Client\Storage\StorageClientInterface;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerEngine\Client\Locale\LocaleClient;
+use Spryker\Client\Product\KeyBuilder\ProductResourceKeyBuilder;
+use Spryker\Client\Product\Storage\ProductStorage;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Product\ProductDependencyProvider;
+use Spryker\Client\Product\Storage\ProductStorageInterface;
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Client\Locale\LocaleClient;
 
 class ProductDependencyContainer extends AbstractDependencyContainer
 {

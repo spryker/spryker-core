@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Client\Locale;
+namespace Spryker\Client\Locale;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
 
 class LocaleDependencyContainer extends AbstractDependencyContainer
 {

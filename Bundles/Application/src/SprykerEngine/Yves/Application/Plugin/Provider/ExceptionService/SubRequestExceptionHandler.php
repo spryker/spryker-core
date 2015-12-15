@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Application\Plugin\Provider\ExceptionService;
+namespace Spryker\Yves\Application\Plugin\Provider\ExceptionService;
 
-use SprykerEngine\Shared\Application\Communication\Application;
+use Spryker\Shared\Application\Communication\Application;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

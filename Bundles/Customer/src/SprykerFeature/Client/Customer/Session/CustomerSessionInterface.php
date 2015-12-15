@@ -3,7 +3,7 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Client\Customer\Session;
+namespace Spryker\Client\Customer\Session;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 

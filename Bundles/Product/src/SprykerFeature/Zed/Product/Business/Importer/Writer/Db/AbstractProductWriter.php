@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Importer\Writer\Db;
+namespace Spryker\Zed\Product\Business\Importer\Writer\Db;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Propel\Runtime\Propel;
-use SprykerFeature\Zed\Product\Business\Importer\Writer\AbstractProductWriterInterface;
+use Spryker\Zed\Product\Business\Importer\Writer\AbstractProductWriterInterface;
 use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
 

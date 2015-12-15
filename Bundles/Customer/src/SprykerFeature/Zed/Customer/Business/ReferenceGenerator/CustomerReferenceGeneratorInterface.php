@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Business\ReferenceGenerator;
+namespace Spryker\Zed\Customer\Business\ReferenceGenerator;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Input;
+namespace Unit\Spryker\Zed\Category\Business\Tree\Fixtures\Input;
 
-use SprykerFeature\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
+use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 
 class CategoryStructureInput
 {

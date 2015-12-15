@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\IdeAutoCompletion;
+namespace Spryker\Zed\Kernel\IdeAutoCompletion;
 
-use SprykerEngine\Zed\Kernel\BundleNameFinder;
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\MethodTagBuilderInterface;
+use Spryker\Zed\Kernel\BundleNameFinder;
+use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\MethodTagBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractIdeAutoCompletionGenerator

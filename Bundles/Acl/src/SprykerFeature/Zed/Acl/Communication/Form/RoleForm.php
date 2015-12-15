@@ -3,9 +3,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Communication\Form;
+namespace Spryker\Zed\Acl\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 
 class RoleForm extends AbstractForm
 {

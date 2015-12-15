@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms;
+namespace Spryker\Zed\Cms;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class CmsConfig extends AbstractBundleConfig
 {

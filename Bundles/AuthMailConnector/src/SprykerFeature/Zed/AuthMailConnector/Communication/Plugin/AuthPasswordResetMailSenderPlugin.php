@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\AuthMailConnector\Communication\Plugin;
+namespace Spryker\Zed\AuthMailConnector\Communication\Plugin;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use SprykerFeature\Zed\AuthMailConnector\Communication\AuthMailConnectorDependencyContainer;
+use Spryker\Zed\AuthMailConnector\Communication\AuthMailConnectorDependencyContainer;
 
 /**
  * @method AuthMailConnectorDependencyContainer getDependencyContainer()

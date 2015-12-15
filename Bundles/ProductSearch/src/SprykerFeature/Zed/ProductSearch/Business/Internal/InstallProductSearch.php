@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Business\Internal;
+namespace Spryker\Zed\ProductSearch\Business\Internal;
 
 use Elastica\Client;
 use Elastica\Type\Mapping;
-use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
+use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 
 class InstallProductSearch extends AbstractInstaller
 {

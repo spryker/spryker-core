@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Communication;
+namespace Spryker\Zed\Kernel\Communication;
 
-use SprykerEngine\Shared\Kernel\AbstractLocator;
-use SprykerEngine\Shared\Kernel\Locator\LocatorException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Shared\Kernel\AbstractLocator;
+use Spryker\Shared\Kernel\Locator\LocatorException;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Kernel\BundleDependencyProviderLocator;
+use Spryker\Zed\Kernel\Container;
 
 class ConsoleLocator extends AbstractLocator
 {

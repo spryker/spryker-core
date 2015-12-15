@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\ProductOptionCartConnector\Business\Model;
+namespace Unit\Spryker\Zed\ProductOptionCartConnector\Business\Model;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use SprykerFeature\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
+use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 use Generated\Shared\Transfer\ChangeTransfer;
 
 class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase

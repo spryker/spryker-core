@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Auth\Token;
+namespace Spryker\Client\Auth\Token;
 
 interface TokenServiceInterface
 {

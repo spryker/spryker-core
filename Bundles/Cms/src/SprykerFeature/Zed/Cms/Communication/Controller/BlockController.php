@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Communication\Controller;
+namespace Spryker\Zed\Cms\Communication\Controller;
 
-use Functional\SprykerFeature\Zed\ProductOption\Mock\LocaleFacade;
+use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Cms\Business\CmsFacade;
-use SprykerFeature\Zed\Cms\Communication\CmsDependencyContainer;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
-use SprykerFeature\Zed\Cms\Communication\Table\CmsBlockTable;
-use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\Communication\CmsDependencyContainer;
+use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
+use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
+use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
+use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

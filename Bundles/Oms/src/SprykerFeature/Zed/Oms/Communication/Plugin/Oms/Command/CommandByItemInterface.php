@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command;
+namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface CommandByItemInterface extends CommandInterface

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion;
+namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion;
 
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\PluginMethodTagBuilder;
-use SprykerFeature\Shared\Library\Autoloader;
+use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\PluginMethodTagBuilder;
+use Spryker\Shared\Library\Autoloader;
 
 /**
  * @group Kernel

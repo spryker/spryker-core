@@ -3,17 +3,17 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Zed\Payolution\Communication;
+namespace Spryker\Zed\Payolution\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Payolution\Communication\Table\Payments;
-use SprykerFeature\Zed\Payolution\Communication\Table\RequestLog;
-use SprykerFeature\Zed\Payolution\Communication\Table\StatusLog;
-use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
-use SprykerFeature\Zed\Payolution\PayolutionDependencyProvider;
-use SprykerFeature\Zed\Mail\Business\MailFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Payolution\Communication\Table\Payments;
+use Spryker\Zed\Payolution\Communication\Table\RequestLog;
+use Spryker\Zed\Payolution\Communication\Table\StatusLog;
+use Spryker\Zed\Payolution\PayolutionConfig;
+use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use Spryker\Zed\Payolution\PayolutionDependencyProvider;
+use Spryker\Zed\Mail\Business\MailFacade;
 
 /**
  * @method PayolutionQueryContainerInterface getQueryContainer()

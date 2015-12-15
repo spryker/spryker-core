@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
+namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
-use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
-use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
+use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
+use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;

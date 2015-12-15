@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Payolution\Business\Api\Response;
+namespace Unit\Spryker\Zed\Payolution\Business\Api\Response;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Converter\Converter;
+use Spryker\Zed\Payolution\Business\Api\Converter\Converter;
 
 class ConverterTest extends \PHPUnit_Framework_TestCase
 {

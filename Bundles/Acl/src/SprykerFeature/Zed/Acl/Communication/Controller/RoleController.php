@@ -3,20 +3,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Communication\Controller;
+namespace Spryker\Zed\Acl\Communication\Controller;
 
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
-use SprykerFeature\Zed\Acl\Business\Exception\RoleNameExistsException;
-use SprykerFeature\Zed\Acl\Business\Exception\RootNodeModificationException;
-use SprykerFeature\Zed\Acl\Communication\Form\RulesetForm;
-use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Acl\Business\AclFacade;
-use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
+use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
+use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
+use Spryker\Zed\Acl\Communication\Form\RulesetForm;
+use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Acl\Business\AclFacade;
+use Spryker\Zed\Acl\Communication\AclDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Acl\Communication\Form\RoleForm;
+use Spryker\Zed\Acl\Communication\Form\RoleForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**

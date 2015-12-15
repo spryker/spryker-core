@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer\Fixtures\NoIsNullFixer\Input;
+namespace Unit\Spryker\Zed\Development\Business\CodeStyleFixer\Fixtures\NoIsNullFixer\Input;
 
 class TestClass1Input
 {

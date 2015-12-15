@@ -4,11 +4,11 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace Unit\SprykerFeature\Zed\Queue\Mock;
+namespace Unit\Spryker\Zed\Queue\Mock;
 
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use PhpAmqpLib\Message\AMQPMessage;
-use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
+use Spryker\Zed\Queue\Business\Model\QueueConnectionInterface;
 
 class MockQueueConnection implements QueueConnectionInterface
 {

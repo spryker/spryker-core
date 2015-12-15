@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Transfer\Exception;
+namespace Spryker\Shared\Transfer\Exception;
 
 class RequiredTransferPropertyException extends \Exception
 {

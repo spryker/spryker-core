@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerEngine\Zed\Transfer\Business\Model;
+namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
-use SprykerFeature\Zed\Application\Business\ApplicationDependencyContainer;
+use Spryker\Zed\Application\Business\ApplicationDependencyContainer;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group ApplicationFacade
  * @group Business
@@ -33,7 +33,7 @@ class ApplicationDependencyContainerTest extends \PHPUnit_Framework_TestCase
     {
         $instance = $this->getDependencyContainer()->createNavigationBuilder();
 
-        $this->assertInstanceOf('SprykerFeature\Zed\Application\Business\Model\Navigation\NavigationBuilder', $instance);
+        $this->assertInstanceOf('Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder', $instance);
     }
 
 }

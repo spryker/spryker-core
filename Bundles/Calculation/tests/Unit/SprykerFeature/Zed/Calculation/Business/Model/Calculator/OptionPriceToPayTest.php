@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
+namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
-use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
+use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group OptionPriceToPayTest

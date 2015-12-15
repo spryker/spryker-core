@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
+namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use DateInterval;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
-use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
-use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Oms\Business\Process\ProcessInterface;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
+use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
@@ -19,7 +19,7 @@ use Exception;
 use ErrorException;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Shared\Library\Log;
+use Spryker\Shared\Library\Log;
 
 class Timeout implements TimeoutInterface
 {

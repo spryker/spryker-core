@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Search\Communication;
+namespace Spryker\Zed\Search\Communication;
 
-use SprykerFeature\Zed\Search\Communication\Table\SearchTable;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Client\Search\SearchClient;
-use SprykerFeature\Zed\Collector\Business\CollectorFacade;
-use SprykerFeature\Zed\Search\SearchConfig;
-use SprykerFeature\Zed\Search\SearchDependencyProvider;
-use SprykerFeature\Zed\Storage\Communication\Table\StorageTable;
+use Spryker\Zed\Search\Communication\Table\SearchTable;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Client\Search\SearchClient;
+use Spryker\Zed\Collector\Business\CollectorFacade;
+use Spryker\Zed\Search\SearchConfig;
+use Spryker\Zed\Search\SearchDependencyProvider;
+use Spryker\Zed\Storage\Communication\Table\StorageTable;
 
 /**
  * @method SearchConfig getConfig()

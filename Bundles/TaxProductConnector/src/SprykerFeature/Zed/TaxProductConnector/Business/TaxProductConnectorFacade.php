@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\TaxProductConnector\Business;
+namespace Spryker\Zed\TaxProductConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
 
 /**
  * @method TaxProductConnectorDependencyContainer getDependencyContainer()

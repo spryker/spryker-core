@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\OmsCheckoutConnector\Communication\Plugin;
+namespace Spryker\Zed\OmsCheckoutConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
-use SprykerFeature\Zed\OmsCheckoutConnector\Business\OmsCheckoutConnectorFacade;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
+use Spryker\Zed\OmsCheckoutConnector\Business\OmsCheckoutConnectorFacade;
 
 /**
  * @method OmsCheckoutConnectorFacade getFacade()

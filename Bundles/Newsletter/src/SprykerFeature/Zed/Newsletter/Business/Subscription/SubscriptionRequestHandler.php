@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
+namespace Spryker\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer;
-use SprykerFeature\Shared\Newsletter\Messages\Messages;
-use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailException;
-use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
+use Spryker\Shared\Newsletter\Messages\Messages;
+use Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailException;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 
 class SubscriptionRequestHandler
 {

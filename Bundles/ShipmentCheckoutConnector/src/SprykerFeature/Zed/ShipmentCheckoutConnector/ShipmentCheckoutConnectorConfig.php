@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ShipmentCheckoutConnector;
+namespace Spryker\Zed\ShipmentCheckoutConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ShipmentCheckoutConnectorConfig extends AbstractBundleConfig
 {

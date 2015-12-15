@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business;
+namespace Spryker\Zed\Sales\Business;
 
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Sales\SalesDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Sales\SalesDependencyProvider;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Communication\Table;
+namespace Spryker\Zed\Cms\Communication\Table;
 
-use SprykerFeature\Zed\Cms\Communication\Form\CmsRedirectForm;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Url\Persistence\Map\SpyRedirectTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;

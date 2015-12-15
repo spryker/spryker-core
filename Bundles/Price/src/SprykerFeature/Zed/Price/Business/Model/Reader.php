@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Price\Business\Model;
+namespace Spryker\Zed\Price\Business\Model;
 
-use SprykerFeature\Zed\Price\Dependency\Facade\PriceToProductInterface;
-use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
+use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
+use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Orm\Zed\Price\Persistence\SpyPriceType;
-use SprykerFeature\Zed\Price\PriceConfig;
-use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Price\PriceConfig;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class Reader implements ReaderInterface
 {

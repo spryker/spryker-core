@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Locale\Business;
+namespace Spryker\Zed\Locale\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Locale\Business\Internal\Install\LocaleInstaller;
-use SprykerEngine\Zed\Locale\Business\Manager\LocaleManager;
-use SprykerEngine\Zed\Locale\LocaleConfig;
-use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller;
+use Spryker\Zed\Locale\Business\Manager\LocaleManager;
+use Spryker\Zed\Locale\LocaleConfig;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 /**
  * @method LocaleConfig getConfig()

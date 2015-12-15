@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
+namespace Spryker\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
-use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterTypeException;
-use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
+use Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterTypeException;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscription;
 
 class SubscriptionManager implements SubscriptionManagerInterface

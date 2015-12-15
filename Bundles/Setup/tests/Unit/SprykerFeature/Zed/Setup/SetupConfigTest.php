@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Setup;
+namespace Unit\Spryker\Zed\Setup;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Setup\SetupConfig;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Setup\SetupConfig;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Setup
  * @group Business

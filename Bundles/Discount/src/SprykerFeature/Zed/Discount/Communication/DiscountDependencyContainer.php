@@ -4,28 +4,28 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Communication;
+namespace Spryker\Zed\Discount\Communication;
 
-use SprykerFeature\Zed\Discount\Communication\Form\CartRuleForm;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
+use Spryker\Zed\Discount\Communication\Form\CartRuleForm;
+use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Generated\Shared\Transfer\DataTablesTransfer;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Zed\Discount\Communication\Form\CollectorPluginForm;
-use SprykerFeature\Zed\Discount\Communication\Form\DecisionRuleForm;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesForm;
-use SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Discount\Communication\Form\CollectorPluginForm;
+use Spryker\Zed\Discount\Communication\Form\DecisionRuleForm;
+use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
+use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
-use SprykerFeature\Zed\Discount\DiscountConfig;
-use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
+use Spryker\Zed\Discount\DiscountConfig;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Symfony\Component\Form\FormTypeInterface;
-use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
-use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
+use Spryker\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
+use Spryker\Zed\Discount\Communication\Table\VoucherPoolTable;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**

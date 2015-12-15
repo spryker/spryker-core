@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Payone\Business\Mode;
+namespace Unit\Spryker\Zed\Payone\Business\Mode;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Payone\Business\Mode\ModeDetector;
-use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
-use SprykerFeature\Zed\Payone\PayoneConfig;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Payone\Business\Mode\ModeDetector;
+use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
+use Spryker\Zed\Payone\PayoneConfig;
 
 /**
  * @group ModeDetector

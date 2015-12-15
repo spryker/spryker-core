@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Catalog\Model\Exception;
+namespace Spryker\Client\Catalog\Model\Exception;
 
 class ProductNotFoundException extends \RuntimeException
 {

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Auth\Business;
+namespace Functional\Spryker\Zed\Auth\Business;
 
 use Codeception\TestCase\Test;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Auth\Business\AuthFacade;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Auth\Business\AuthFacade;
 use Orm\Zed\Auth\Persistence\SpyResetPasswordQuery;
 use Orm\Zed\User\Persistence\SpyUser;
 use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
@@ -59,7 +59,7 @@ class AuthFacadeTest extends Test
      */
     public function testRequestPasswordEmailNotExistingShouldThrowException()
     {
-        $this->setExpectedException('SprykerFeature\Zed\User\Business\Exception\UserNotFoundException');
+        $this->setExpectedException('Spryker\Zed\User\Business\Exception\UserNotFoundException');
         $this->authFacade->requestPasswordReset('username1@example.com');
     }
 

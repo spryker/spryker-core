@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Heartbeat\Persistence\Propel;
+namespace Spryker\Zed\Heartbeat\Persistence\Propel;
 
 use Orm\Zed\Heartbeat\Persistence\Base\SpyPropelHeartbeat as BaseSpyPropelHeartbeat;
 

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
+namespace Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
 
 class DirectDebitContainer extends AbstractPaymentMethodContainer
 {

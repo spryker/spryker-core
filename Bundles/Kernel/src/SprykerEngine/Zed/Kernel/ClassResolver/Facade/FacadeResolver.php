@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\ClassResolver\Facade;
+namespace Spryker\Zed\Kernel\ClassResolver\Facade;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\ClassResolver\AbstractClassResolver;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class FacadeResolver extends AbstractClassResolver
 {

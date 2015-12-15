@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\Model;
+namespace Spryker\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\CommentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderComment;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class CommentManager
 {

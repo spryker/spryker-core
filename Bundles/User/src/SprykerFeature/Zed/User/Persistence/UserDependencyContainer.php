@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User\Persistence;
+namespace Spryker\Zed\User\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
-use SprykerFeature\Zed\Auth\Business\AuthFacade;
-use SprykerFeature\Zed\User\Business\UserFacade;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
+use Spryker\Zed\Auth\Business\AuthFacade;
+use Spryker\Zed\User\Business\UserFacade;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 
 class UserDependencyContainer extends AbstractPersistenceDependencyContainer

@@ -4,20 +4,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Kernel\Communication\Plugin;
+namespace Unit\Spryker\Zed\Kernel\Communication\Plugin;
 
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
-use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
-use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
-use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\FilterControllerEvent;
-use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\GatewayController;
-use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\NotGatewayController;
-use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\Request;
-use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\TransferServer;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater;
+use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
+use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
+use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\FilterControllerEvent;
+use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\GatewayController;
+use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\NotGatewayController;
+use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\Request;
+use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\TransferServer;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Kernel
  * @group Communication
@@ -163,7 +163,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
      */
     private function createRepeaterMock()
     {
-        return $this->getMockBuilder('SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater')
+        return $this->getMockBuilder('Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater')
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -240,7 +240,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
      */
     private function getTransferMock()
     {
-        $transfer = $this->getMock('SprykerEngine\Shared\Transfer\TransferInterface');
+        $transfer = $this->getMock('Spryker\Shared\Transfer\TransferInterface');
 
         return $transfer;
     }

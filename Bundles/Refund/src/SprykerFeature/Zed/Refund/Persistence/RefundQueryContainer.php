@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Refund\Persistence;
+namespace Spryker\Zed\Refund\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 
 class RefundQueryContainer extends AbstractQueryContainer implements RefundQueryContainerInterface

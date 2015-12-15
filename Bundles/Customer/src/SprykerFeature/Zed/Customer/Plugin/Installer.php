@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Communication\Plugin;
+namespace Spryker\Zed\Customer\Communication\Plugin;
 
-use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
-use SprykerFeature\Zed\Installer\Business\Model\InstallerInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Customer\Communication\CustomerDependencyContainer;
+use Spryker\Zed\Installer\Business\Model\InstallerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method CustomerDependencyContainer getDependencyContainer()

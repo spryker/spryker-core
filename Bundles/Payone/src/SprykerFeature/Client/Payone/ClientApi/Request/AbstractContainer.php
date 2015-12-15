@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Payone\ClientApi\Request;
+namespace Spryker\Client\Payone\ClientApi\Request;
 
 abstract class AbstractContainer implements ContainerInterface
 {

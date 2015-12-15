@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Importer\Validator;
+namespace Spryker\Zed\Product\Business\Importer\Validator;
 
-use SprykerFeature\Zed\Product\Business\Validator\DataValidatorInterface;
+use Spryker\Zed\Product\Business\Validator\DataValidatorInterface;
 
 class ImportProductValidator implements DataValidatorInterface
 {

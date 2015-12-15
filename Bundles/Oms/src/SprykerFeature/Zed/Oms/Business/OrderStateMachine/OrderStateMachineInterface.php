@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
+namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 

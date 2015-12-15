@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Shared\Library\Currency;
+namespace Unit\Spryker\Shared\Library\Currency;
 
-use SprykerFeature\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Library\Currency\CurrencyManager;
 
 /**
  * @group Currency

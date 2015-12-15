@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Shared\Checkout;
+namespace Spryker\Shared\Checkout;
 
 class CheckoutConstants
 {

@@ -4,10 +4,10 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerFeature\Zed\Lumberjack\Business;
+namespace Spryker\Zed\Lumberjack\Business;
 
-use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Shared\Lumberjack\Model\EventInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method LumberjackDependencyContainer getDependencyContainer()

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Communication\Controller;
+namespace Spryker\Zed\Kernel\Communication\Controller;
 
-use SprykerEngine\Shared\Kernel\Communication\RouteNameResolverInterface;
+use Spryker\Shared\Kernel\Communication\RouteNameResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Zend\Filter\Word\DashToCamelCase;
 

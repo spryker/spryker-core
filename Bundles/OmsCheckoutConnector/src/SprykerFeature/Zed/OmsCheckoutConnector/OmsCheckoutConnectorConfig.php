@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\OmsCheckoutConnector;
+namespace Spryker\Zed\OmsCheckoutConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class OmsCheckoutConnectorConfig extends AbstractBundleConfig
 {

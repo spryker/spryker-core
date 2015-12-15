@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
+namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Application\Business\Model\Twig\EnvironmentInfo;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Application\Business\Model\Twig\EnvironmentInfo;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 

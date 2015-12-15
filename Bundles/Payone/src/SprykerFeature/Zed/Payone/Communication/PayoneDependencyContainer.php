@@ -4,14 +4,14 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerFeature\Zed\Payone\Communication;
+namespace Spryker\Zed\Payone\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Oms\Business\OmsFacade;
-use SprykerFeature\Zed\Payone\PayoneConfig;
-use SprykerFeature\Zed\Payone\PayoneDependencyProvider;
-use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use SprykerFeature\Zed\Refund\Business\RefundFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Oms\Business\OmsFacade;
+use Spryker\Zed\Payone\PayoneConfig;
+use Spryker\Zed\Payone\PayoneDependencyProvider;
+use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
+use Spryker\Zed\Refund\Business\RefundFacade;
 
 /**
  * @method PayoneConfig getConfig()

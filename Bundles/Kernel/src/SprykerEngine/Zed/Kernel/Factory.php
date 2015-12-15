@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel;
+namespace Spryker\Zed\Kernel;
 
-use SprykerEngine\Shared\Kernel\AbstractFactory;
+use Spryker\Shared\Kernel\AbstractFactory;
 
 class Factory extends AbstractFactory
 {

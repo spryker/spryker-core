@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Checkout\Business;
+namespace Spryker\Zed\Checkout\Business;
 
-use SprykerFeature\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Checkout\Business\Workflow\CheckoutWorkflowInterface;
-use SprykerFeature\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflowInterface;
+use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 
 class CheckoutDependencyContainer extends AbstractBusinessDependencyContainer
 {

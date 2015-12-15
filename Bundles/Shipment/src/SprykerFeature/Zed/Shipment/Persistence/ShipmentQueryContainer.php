@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Shipment\Persistence;
+namespace Spryker\Zed\Shipment\Persistence;
 
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 
 class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQueryContainerInterface

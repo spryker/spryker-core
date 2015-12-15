@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Acl;
+namespace Functional\Spryker\Zed\Acl;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Acl\AclDependencyProvider;
-use SprykerFeature\Zed\Acl\Business\AclFacade;
-use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
-use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
-use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use SprykerFeature\Zed\User\Business\UserFacade;
-use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Acl\AclDependencyProvider;
+use Spryker\Zed\Acl\Business\AclFacade;
+use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
+use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
+use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\User\Business\UserFacade;
+use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 /**
  * @group Zed
@@ -205,7 +205,7 @@ class AclTest extends Test
         try {
             $this->facade->getGroup($groupDto->getIdAclGroup());
         } catch (EmptyEntityException $e) {
-            $this->assertInstanceOf('\SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException', $e);
+            $this->assertInstanceOf('\Spryker\Zed\Acl\Business\Exception\EmptyEntityException', $e);
         }
     }
 
@@ -240,7 +240,7 @@ class AclTest extends Test
         try {
             $this->facade->getRoleById($roleDto->getIdAclRole());
         } catch (EmptyEntityException $e) {
-            $this->assertInstanceOf('\SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException', $e);
+            $this->assertInstanceOf('\Spryker\Zed\Acl\Business\Exception\EmptyEntityException', $e);
         }
     }
 
@@ -368,7 +368,7 @@ class AclTest extends Test
             try {
                 $this->facade->getRule($ruleDto->getIdAclRule());
             } catch (RuleNotFoundException $e) {
-                $this->assertInstanceOf('\SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException', $e);
+                $this->assertInstanceOf('\Spryker\Zed\Acl\Business\Exception\RuleNotFoundException', $e);
             }
         }
     }

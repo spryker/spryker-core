@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\Country\Communication\Form;
+namespace Spryker\Zed\Country\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\User\Persistence\Base\SpyUserQuery;
 

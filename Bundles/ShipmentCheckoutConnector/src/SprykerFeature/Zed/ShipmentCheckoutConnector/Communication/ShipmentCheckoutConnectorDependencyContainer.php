@@ -4,11 +4,11 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerFeature\Zed\ShipmentCheckoutConnector\Communication;
+namespace Spryker\Zed\ShipmentCheckoutConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Shipment\Business\ShipmentFacade;
-use SprykerFeature\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Shipment\Business\ShipmentFacade;
+use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
 
 class ShipmentCheckoutConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {

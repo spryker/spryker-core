@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Client\ZedRequest\Client;
+namespace Unit\Spryker\Client\ZedRequest\Client;
 
-use SprykerFeature\Shared\ZedRequest\Client\Message;
-use SprykerFeature\Client\ZedRequest\Client\Response;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use Unit\SprykerFeature\Client\ZedRequest\Client\Fixture\TestTransfer;
+use Spryker\Shared\ZedRequest\Client\Message;
+use Spryker\Client\ZedRequest\Client\Response;
+use Spryker\Shared\Transfer\TransferInterface;
+use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Client
  * @group ZedRequest
  */

@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerFeature\Shared\Kernel\ClassResolver\Fixtures;
+namespace Unit\Spryker\Shared\Kernel\ClassResolver\Fixtures;
 
 class Foo
 {

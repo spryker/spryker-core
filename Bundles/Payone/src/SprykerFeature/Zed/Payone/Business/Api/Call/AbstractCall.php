@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Call;
+namespace Spryker\Zed\Payone\Business\Api\Call;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use SprykerFeature\Zed\Payone\Business\Key\HashGeneratorInterface;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
+use Spryker\Zed\Payone\Business\Key\HashGeneratorInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 
 abstract class AbstractCall
 {

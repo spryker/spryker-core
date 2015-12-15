@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Kernel;
+namespace Spryker\Shared\Kernel;
 
 /**
  * Class AbstractLocatorLocator

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Gui\Communication\Form\Type\Extension;
+namespace Spryker\Zed\Gui\Communication\Form\Type\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormView;

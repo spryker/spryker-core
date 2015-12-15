@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel;
+namespace Unit\Spryker\Zed\Kernel;
 
-use SprykerEngine\Zed\Kernel\BundleNameFinder;
+use Spryker\Zed\Kernel\BundleNameFinder;
 
 /**
  * @group Kernel

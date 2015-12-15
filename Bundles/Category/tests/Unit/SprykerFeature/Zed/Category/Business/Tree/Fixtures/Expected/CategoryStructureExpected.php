@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Expected;
+namespace Unit\Spryker\Zed\Category\Business\Tree\Fixtures\Expected;
 
 class CategoryStructureExpected
 {

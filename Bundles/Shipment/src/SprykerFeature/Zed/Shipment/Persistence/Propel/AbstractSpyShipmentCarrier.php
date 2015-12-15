@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Shipment\Persistence\Propel;
+namespace Spryker\Zed\Shipment\Persistence\Propel;
 
 use Orm\Zed\Shipment\Persistence\Base\SpyShipmentCarrier as BaseSpyShipmentCarrier;
 

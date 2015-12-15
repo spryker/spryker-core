@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
+namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use SprykerEngine\Shared\Kernel\Store;
+use Spryker\Shared\Kernel\Store;
 use Silex\Provider\TranslationServiceProvider as SilexTranslationServiceProvider;
-use SprykerFeature\Zed\Library\Translate;
+use Spryker\Zed\Library\Translate;
 
 class TranslationServiceProvider extends SilexTranslationServiceProvider implements ServiceProviderInterface
 {

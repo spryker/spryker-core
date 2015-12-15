@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerEngine\Client\Kernel\DependencyContainer;
+namespace Spryker\Client\Kernel\DependencyContainer;
 
-use SprykerEngine\Client\Kernel\Container;
+use Spryker\Client\Kernel\Container;
 
 interface DependencyContainerInterface
 {

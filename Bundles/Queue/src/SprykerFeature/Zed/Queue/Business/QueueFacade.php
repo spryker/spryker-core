@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Queue\Business;
+namespace Spryker\Zed\Queue\Business;
 
 use Generated\Shared\Transfer\QueueMessageTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 
 /**
  * @method QueueDependencyContainer getDependencyContainer()

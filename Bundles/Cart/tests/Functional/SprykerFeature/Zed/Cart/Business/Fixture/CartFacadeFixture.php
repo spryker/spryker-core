@@ -1,12 +1,12 @@
 <?php
 
-namespace Functional\SprykerFeature\Zed\Cart\Fixture;
+namespace Functional\Spryker\Zed\Cart\Fixture;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Cart\Business\CartFacade;
-use SprykerFeature\Zed\Cart\CartConfig;
+use Spryker\Shared\Config;
+use Spryker\Shared\Kernel\Factory\FactoryInterface;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Cart\Business\CartFacade;
+use Spryker\Zed\Cart\CartConfig;
 
 class CartFacadeFixture extends CartFacade
 {

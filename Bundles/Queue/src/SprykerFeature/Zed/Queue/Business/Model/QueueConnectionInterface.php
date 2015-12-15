@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Queue\Business\Model;
+namespace Spryker\Zed\Queue\Business\Model;
 
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use PhpAmqpLib\Message\AMQPMessage;

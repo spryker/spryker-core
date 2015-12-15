@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication\Plugin\TransferObject;
+namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\Log;
-use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Library\Log;
+use Spryker\Shared\ZedRequest\Client\RequestInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class Repeater extends AbstractPlugin

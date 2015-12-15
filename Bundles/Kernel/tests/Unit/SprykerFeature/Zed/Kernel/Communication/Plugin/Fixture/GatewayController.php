@@ -1,10 +1,10 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture;
+namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
 
 use Generated\Shared\Transfer\CartTransfer;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 class GatewayController extends AbstractGatewayController
 {

@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Communication;
+namespace Spryker\Zed\Oms\Communication;
 
-use SprykerFeature\Zed\Oms\Communication\Table\TransitionLogTable;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 /**
  * @method OmsQueryContainerInterface getQueryContainer()

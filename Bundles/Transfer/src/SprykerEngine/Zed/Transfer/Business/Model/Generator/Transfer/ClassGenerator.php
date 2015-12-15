@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer;
+namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionInterface;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
+use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface;
+use Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
 
 class ClassGenerator implements GeneratorInterface
 {

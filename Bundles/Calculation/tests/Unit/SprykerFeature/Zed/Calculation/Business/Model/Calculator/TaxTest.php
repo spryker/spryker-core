@@ -4,21 +4,21 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
+namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
-use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelper;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
+use Spryker\Zed\Calculation\Business\Model\PriceCalculationHelper;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group TaxTest

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Storage\Communication\Table;
+namespace Spryker\Zed\Storage\Communication\Table;
 
-use SprykerFeature\Client\Storage\StorageClientInterface;
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class StorageTable extends AbstractTable
 {

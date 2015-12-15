@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
+namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
@@ -12,15 +12,15 @@ use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Sales\Code\ExpenseConstants;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
-use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * Class GrandTotalTest

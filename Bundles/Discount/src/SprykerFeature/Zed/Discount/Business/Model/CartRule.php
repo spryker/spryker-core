@@ -1,18 +1,18 @@
 <?php
 
-namespace SprykerFeature\Zed\Discount\Business\Model;
+namespace Spryker\Zed\Discount\Business\Model;
 
 use DateTime;
 use DateTimeZone;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Zed\Discount\Business\Writer\DiscountCollectorWriter;
-use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
-use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
-use SprykerFeature\Zed\Discount\Communication\Form\CartRuleForm;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter;
+use Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
+use Spryker\Zed\Discount\Business\Writer\DiscountWriter;
+use Spryker\Zed\Discount\Communication\Form\CartRuleForm;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 class CartRule implements CartRuleInterface

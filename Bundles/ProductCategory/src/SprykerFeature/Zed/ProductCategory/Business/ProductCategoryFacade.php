@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Business;
+namespace Spryker\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
-use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
+use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 
 /**
  * @property ProductCategoryDependencyContainer $dependencyContainer

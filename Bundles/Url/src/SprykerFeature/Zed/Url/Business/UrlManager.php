@@ -4,21 +4,21 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Business;
+namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
-use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
-use SprykerFeature\Zed\Url\Dependency\UrlToLocaleInterface;
-use SprykerFeature\Zed\Url\Dependency\UrlToTouchInterface;
-use SprykerFeature\Zed\Url\Persistence\Exception\MissingResourceException;
+use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
+use Spryker\Zed\Url\Business\Exception\MissingUrlException;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
+use Spryker\Zed\Url\Dependency\UrlToLocaleInterface;
+use Spryker\Zed\Url\Dependency\UrlToTouchInterface;
+use Spryker\Zed\Url\Persistence\Exception\MissingResourceException;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrl;
-use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
+use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlManager implements UrlManagerInterface
 {

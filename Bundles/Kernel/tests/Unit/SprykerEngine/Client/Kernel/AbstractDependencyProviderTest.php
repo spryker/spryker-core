@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Client\Kernel;
+namespace Unit\Spryker\Client\Kernel;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
-use SprykerEngine\Client\Kernel\Container;
+use Spryker\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\Container;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Client
  * @group Kernel
  * @group AbstractDependencyProvider
@@ -36,7 +36,7 @@ class AbstractDependencyProviderTest extends \PHPUnit_Framework_TestCase
      */
     private function getAbstractDependencyProviderMock()
     {
-        return $this->getMockForAbstractClass('SprykerEngine\Client\Kernel\AbstractDependencyProvider');
+        return $this->getMockForAbstractClass('Spryker\Client\Kernel\AbstractDependencyProvider');
     }
 
 }

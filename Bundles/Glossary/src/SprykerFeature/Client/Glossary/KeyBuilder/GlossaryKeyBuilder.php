@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Glossary\KeyBuilder;
+namespace Spryker\Client\Glossary\KeyBuilder;
 
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerFeature\Shared\Glossary\Code\KeyBuilder\GlossaryKeyBuilder as GlossaryKeyBuilderTrait;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\Glossary\Code\KeyBuilder\GlossaryKeyBuilder as GlossaryKeyBuilderTrait;
 
 class GlossaryKeyBuilder implements KeyBuilderInterface
 {

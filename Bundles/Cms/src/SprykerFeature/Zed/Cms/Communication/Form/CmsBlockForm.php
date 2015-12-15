@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Communication\Form;
+namespace Spryker\Zed\Cms\Communication\Form;
 
 use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsBlockForm extends AbstractForm

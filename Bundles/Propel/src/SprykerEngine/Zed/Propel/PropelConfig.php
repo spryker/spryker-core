@@ -3,12 +3,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Propel;
+namespace Spryker\Zed\Propel;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class PropelConfig extends AbstractBundleConfig
 {

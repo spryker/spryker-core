@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Application\Business\Model\Navigation\Cache;
+namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
+use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Application
  * @group Business

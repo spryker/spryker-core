@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication\Plugin;
+namespace Spryker\Zed\Application\Communication\Plugin;
 
-use SprykerEngine\Shared\Application\Communication\Application;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Application\Communication\Application;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 class Pimple extends AbstractPlugin
 {

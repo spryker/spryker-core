@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Client\Cms\KeyBuilder;
+namespace Spryker\Client\Cms\KeyBuilder;
 
-use SprykerFeature\Shared\Cms\CmsConstants;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
+use Spryker\Shared\Cms\CmsConstants;
+use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 
 class CmsBlockKeyBuilder extends SharedResourceKeyBuilder
 {

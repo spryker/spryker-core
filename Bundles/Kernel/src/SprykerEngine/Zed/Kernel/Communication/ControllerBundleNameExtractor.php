@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Communication;
+namespace Spryker\Zed\Kernel\Communication;
 
 class ControllerBundleNameExtractor
 {

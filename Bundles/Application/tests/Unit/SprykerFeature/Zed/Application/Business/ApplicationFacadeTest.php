@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerEngine\Zed\Application\Business\Model;
+namespace Functional\Spryker\Zed\Application\Business\Model;
 
-use SprykerFeature\Zed\Application\Business\ApplicationFacade;
+use Spryker\Zed\Application\Business\ApplicationFacade;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Application
  * @group Business

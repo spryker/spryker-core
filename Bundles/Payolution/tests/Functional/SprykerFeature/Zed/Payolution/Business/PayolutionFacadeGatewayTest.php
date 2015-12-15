@@ -3,7 +3,7 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace Functional\SprykerFeature\Zed\Payolution\Business;
+namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Zed\Kernel\Locator;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
@@ -24,7 +24,7 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
+use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 /**
  * Note:
@@ -93,7 +93,7 @@ class PayolutionFacadeGatewayTest extends Test
 
         $paymentEntity = $this->orderEntity->getSpyPaymentPayolutions()->getFirst();
 
-        $this->assertInstanceOf('SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution', $paymentEntity);
+        $this->assertInstanceOf('Spryker\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution', $paymentEntity);
         $this->assertEquals(ApiConstants::BRAND_INVOICE, $paymentEntity->getAccountBrand());
         $this->assertEquals('127.0.0.1', $paymentEntity->getClientIp());
     }

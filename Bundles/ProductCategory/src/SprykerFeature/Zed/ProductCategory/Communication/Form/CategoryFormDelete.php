@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
+namespace Spryker\Zed\ProductCategory\Communication\Form;
 
-use SprykerFeature\Zed\ProductCategory\Communication\Form\Constraints\CategoryFieldNotBlank;
+use Spryker\Zed\ProductCategory\Communication\Form\Constraints\CategoryFieldNotBlank;
 
 class CategoryFormDelete extends CategoryFormEdit
 {

@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\CategoryExporter;
+namespace Spryker\Client\CategoryExporter;
 
-use SprykerFeature\Client\CategoryExporter\KeyBuilder\CategoryResourceKeyBuilder;
-use SprykerFeature\Client\CategoryExporter\KeyBuilder\NavigationKeyBuilder as KeyBuilderNavigationKeyBuilder;
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\CategoryExporter\Builder\CategoryTreeBuilder;
-use SprykerFeature\Client\CategoryExporter\Model\Navigation;
-use SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Client\CategoryExporter\KeyBuilder\CategoryResourceKeyBuilder;
+use Spryker\Client\CategoryExporter\KeyBuilder\NavigationKeyBuilder as KeyBuilderNavigationKeyBuilder;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\CategoryExporter\Builder\CategoryTreeBuilder;
+use Spryker\Client\CategoryExporter\Model\Navigation;
+use Spryker\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class CategoryExporterDependencyContainer extends AbstractDependencyContainer
 {

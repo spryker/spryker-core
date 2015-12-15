@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\PriceCartConnector\Communication\Plugin;
+namespace Spryker\Zed\PriceCartConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface;
-use SprykerFeature\Zed\PriceCartConnector\Communication\PriceCartConnectorDependencyContainer;
+use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface;
+use Spryker\Zed\PriceCartConnector\Communication\PriceCartConnectorDependencyContainer;
 
 /**
  * @method PriceCartConnectorDependencyContainer getDependencyContainer()

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Communication\Form;
+namespace Spryker\Zed\Stock\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class StockForm extends AbstractForm

@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Shipment\Business\Model;
+namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
-use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
-use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodPriceCalculationPluginInterface;
-use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodTaxCalculationPluginInterface;
+use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
+use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
+use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPriceCalculationPluginInterface;
+use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodTaxCalculationPluginInterface;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
-use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
-use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
+use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
+use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 class Method
 {

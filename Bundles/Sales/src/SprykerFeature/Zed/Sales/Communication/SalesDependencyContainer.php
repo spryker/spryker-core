@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Communication;
+namespace Spryker\Zed\Sales\Communication;
 
-use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
+use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Oms\Business\OmsFacade;
-use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm\Collection;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use SprykerFeature\Zed\Sales\SalesDependencyProvider;
-use SprykerFeature\Zed\Sales\Communication\Table\OrdersTable;
-use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
-use SprykerFeature\Zed\Sales\Communication\Form\AddressForm;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Oms\Business\OmsFacade;
+use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm\Collection;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\SalesDependencyProvider;
+use Spryker\Zed\Sales\Communication\Table\OrdersTable;
+use Spryker\Zed\Sales\Communication\Form\CustomerForm;
+use Spryker\Zed\Sales\Communication\Form\AddressForm;
 
 /**
  * @method SalesQueryContainerInterface getQueryContainer()

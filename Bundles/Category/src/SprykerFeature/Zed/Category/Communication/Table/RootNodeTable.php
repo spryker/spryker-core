@@ -3,13 +3,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Communication\Table;
+namespace Spryker\Zed\Category\Communication\Table;
 
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RootNodeTable extends AbstractTable
 {

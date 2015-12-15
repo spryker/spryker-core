@@ -3,5 +3,5 @@
 
 require_once(__DIR__ . '/../../../../../autoload.php');
 
-$bootstrap = new SprykerFeature\Zed\Console\Communication\ConsoleBootstrap();
+$bootstrap = new Spryker\Zed\Console\Communication\ConsoleBootstrap();
 $bootstrap->run();

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\Decorator;
+namespace Spryker\Zed\Application\Business\Model\Navigation\Collector\Decorator;
 
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
 
 class NavigationCollectorCacheDecorator implements NavigationCollectorInterface
 {

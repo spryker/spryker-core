@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Communication\Plugin;
+namespace Spryker\Zed\Collector\Communication\Plugin;
 
-use SprykerFeature\Zed\Collector\Communication\CollectorDependencyContainer;
-use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Zed\Collector\Communication\CollectorDependencyContainer;
+use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 /**
  * @method CollectorDependencyContainer getDependencyContainer()

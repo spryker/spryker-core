@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Development\Business\CodeStyleSniffer;
+namespace Spryker\Zed\Development\Business\CodeStyleSniffer;
 
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;

@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Stock;
+namespace Functional\Spryker\Zed\Stock;
 
 use Codeception\TestCase\Test;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use SprykerFeature\Zed\Stock\Business\StockFacade;
+use Spryker\Zed\Stock\Business\StockFacade;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
-use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
+use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
  * @group StockTest

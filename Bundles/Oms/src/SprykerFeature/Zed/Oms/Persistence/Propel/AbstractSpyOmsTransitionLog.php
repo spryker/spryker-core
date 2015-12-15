@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Persistence\Propel;
+namespace Spryker\Zed\Oms\Persistence\Propel;
 
 use Orm\Zed\Oms\Persistence\Base\SpyOmsTransitionLog as BaseSpyOmsTransitionLog;
 use Propel\Runtime\Connection\ConnectionInterface;

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Dependency\Facade;
+namespace Spryker\Zed\Stock\Dependency\Facade;
 
-use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 interface StockToProductInterface
 {

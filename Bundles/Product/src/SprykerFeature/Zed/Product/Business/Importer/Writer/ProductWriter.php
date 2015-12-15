@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Importer\Writer;
+namespace Spryker\Zed\Product\Business\Importer\Writer;
 
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
-use SprykerFeature\Shared\Product\Model\AbstractProductInterface;
+use Spryker\Shared\Product\Model\AbstractProductInterface;
 
 class ProductWriter implements ProductWriterInterface
 {

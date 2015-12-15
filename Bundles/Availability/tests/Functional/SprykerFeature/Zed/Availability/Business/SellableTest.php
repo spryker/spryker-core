@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Availability;
+namespace Functional\Spryker\Zed\Availability;
 
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Zed\Availability\AvailabilityDependencyProvider;
-use SprykerFeature\Zed\Availability\Business\AvailabilityDependencyContainer;
-use SprykerFeature\Zed\Availability\Business\AvailabilityFacade;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Availability\AvailabilityDependencyProvider;
+use Spryker\Zed\Availability\Business\AvailabilityDependencyContainer;
+use Spryker\Zed\Availability\Business\AvailabilityFacade;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -21,7 +21,7 @@ use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Business
  * @group Availability

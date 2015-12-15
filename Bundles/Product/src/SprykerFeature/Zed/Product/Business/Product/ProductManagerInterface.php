@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Product;
+namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
-use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductExistsException;
-use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
+use Spryker\Zed\Product\Business\Exception\AbstractProductExistsException;
+use Spryker\Zed\Product\Business\Exception\ConcreteProductExistsException;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 interface ProductManagerInterface
 {

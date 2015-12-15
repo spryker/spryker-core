@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Queue;
+namespace Spryker\Zed\Queue;
 
 use Generated\Shared\Transfer\AmqpParameterTransfer;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class QueueConfig extends AbstractBundleConfig
 {

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Communication\Constraint;
+namespace Spryker\Zed\Category\Communication\Constraint;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\Validator\Constraint;
 
 class CategoryNameExists extends Constraint

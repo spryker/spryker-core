@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Business\Model;
+namespace Spryker\Zed\Auth\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
-use SprykerFeature\Zed\Auth\Business\Exception\UserNotLoggedException;
-use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
+use Spryker\Zed\Auth\Business\Exception\UserNotLoggedException;
+use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 interface AuthInterface
 {

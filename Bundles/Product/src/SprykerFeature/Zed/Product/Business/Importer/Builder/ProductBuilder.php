@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Importer\Builder;
+namespace Spryker\Zed\Product\Business\Importer\Builder;
 
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
-use SprykerFeature\Zed\Product\Business\Builder\ProductBuilderInterface;
+use Spryker\Zed\Product\Business\Builder\ProductBuilderInterface;
 
 class ProductBuilder implements ProductBuilderInterface
 {

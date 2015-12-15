@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Collector;
+namespace Spryker\Client\Collector;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Collector\KeyBuilder\UrlKeyBuilder;
-use SprykerFeature\Client\Collector\Matcher\UrlMatcher;
-use SprykerFeature\Client\Storage\StorageClient;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder;
+use Spryker\Client\Collector\Matcher\UrlMatcher;
+use Spryker\Client\Storage\StorageClient;
 
 class CollectorDependencyContainer extends AbstractDependencyContainer
 {

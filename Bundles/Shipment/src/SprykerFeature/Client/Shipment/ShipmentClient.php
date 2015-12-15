@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Shipment;
+namespace Spryker\Client\Shipment;
 
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
-use SprykerEngine\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method ShipmentDependencyContainer getDependencyContainer()

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Error;
+namespace Spryker\Shared\Library\Error;
 
-use SprykerFeature\Shared\Library\Application\Version;
-use SprykerFeature\Shared\Library\Exception\AbstractErrorRendererException;
+use Spryker\Shared\Library\Application\Version;
+use Spryker\Shared\Library\Exception\AbstractErrorRendererException;
 
 class ErrorRenderer
 {

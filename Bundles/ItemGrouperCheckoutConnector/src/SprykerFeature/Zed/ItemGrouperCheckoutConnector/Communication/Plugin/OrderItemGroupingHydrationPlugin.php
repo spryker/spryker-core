@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ItemGrouperCheckoutConnector\Communication\Plugin;
+namespace Spryker\Zed\ItemGrouperCheckoutConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\GroupableContainerTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
-use SprykerFeature\Zed\ItemGrouperCheckoutConnector\Business\ItemGrouperCheckoutConnectorFacade;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
+use Spryker\Zed\ItemGrouperCheckoutConnector\Business\ItemGrouperCheckoutConnectorFacade;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 

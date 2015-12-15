@@ -1,8 +1,8 @@
 <?php
 
-namespace Unit\SprykerEngine\Client\Kernel\Fixtures;
+namespace Unit\Spryker\Client\Kernel\Fixtures;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
 
 class KernelDependencyContainer extends AbstractDependencyContainer
 {

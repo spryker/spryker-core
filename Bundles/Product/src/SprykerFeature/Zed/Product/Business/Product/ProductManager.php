@@ -4,27 +4,27 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Product;
+namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
-use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
-use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductAttributesExistException;
-use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductExistsException;
-use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use SprykerFeature\Zed\Product\Dependency\Facade\ProductToTouchInterface;
-use SprykerFeature\Zed\Product\Dependency\Facade\ProductToUrlInterface;
-use SprykerFeature\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
+use Spryker\Zed\Product\Business\Exception\AbstractProductExistsException;
+use Spryker\Zed\Product\Business\Exception\ConcreteProductAttributesExistException;
+use Spryker\Zed\Product\Business\Exception\ConcreteProductExistsException;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyLocalizedAbstractProductAttributes;
 use Orm\Zed\Product\Persistence\SpyLocalizedProductAttributes;
 use Orm\Zed\Product\Persistence\SpyProduct;
-use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 

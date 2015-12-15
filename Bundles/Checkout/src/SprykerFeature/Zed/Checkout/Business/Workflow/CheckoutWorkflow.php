@@ -4,21 +4,21 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Checkout\Business\Workflow;
+namespace Spryker\Zed\Checkout\Business\Workflow;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Propel;
-use SprykerFeature\Shared\Checkout\CheckoutConstants;
-use SprykerFeature\Shared\Library\Error\ErrorHandler;
-use SprykerFeature\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
+use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Shared\Library\Error\ErrorHandler;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
 {

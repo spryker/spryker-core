@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Search\Provider;
+namespace Spryker\Client\Search\Provider;
 
 use Elastica\Index;
-use SprykerFeature\Shared\Search\Provider\AbstractIndexClientProvider;
+use Spryker\Shared\Search\Provider\AbstractIndexClientProvider;
 
 class IndexClientProvider extends AbstractIndexClientProvider
 {

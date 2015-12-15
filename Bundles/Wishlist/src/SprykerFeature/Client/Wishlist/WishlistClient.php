@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Wishlist;
+namespace Spryker\Client\Wishlist;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerEngine\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method WishlistDependencyContainer getDependencyContainer()

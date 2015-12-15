@@ -4,34 +4,34 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Payone\Business\Api\Request\Container;
+namespace Unit\Spryker\Zed\Payone\Business\Api\Request\Container;
 
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CashOnDeliveryContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\DirectDebitContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\EWalletContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\FinancingContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\OnlineBankTransferContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrepaymentContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\BankAccountCheckContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer as CaptureBusinessContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer as DebitBusinessContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer as AuthorizationBusinessContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\BankAccountContainer as DebitBankAccountContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\GetInvoiceContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer as RefundBankAccountContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CashOnDeliveryContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\DirectDebitContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\EWalletContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\FinancingContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\OnlineBankTransferContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrepaymentContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\BankAccountCheckContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer as CaptureBusinessContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer as DebitBusinessContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer as AuthorizationBusinessContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\BankAccountContainer as DebitBankAccountContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\GetInvoiceContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer as RefundBankAccountContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
+use Spryker\Shared\Payone\PayoneApiConstants;
 
 /**
  * @group RequestContainer
@@ -79,7 +79,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testRefundContainer()
     {
         $container = new RefundContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $this->setStandardParams($container);
         $container->setAmount($this->amount);
@@ -91,7 +91,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->amount, $container->getAmount());
         $this->assertEquals($this->sequenceNumber, $container->getSequenceNumber());
         $this->assertEquals($this->txId, $container->getTxid());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
     }
 
     /**
@@ -109,7 +109,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testDebitContainer()
     {
         $container = new DebitContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $this->setStandardParams($container);
         $container->setAmount($this->amount);
@@ -122,8 +122,8 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->amount, $container->getAmount());
         $this->assertEquals($this->sequenceNumber, $container->getSequenceNumber());
         $this->assertEquals($this->txId, $container->getTxid());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer', $container->getBusiness());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer', $container->getBusiness());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
     }
 
     /**
@@ -153,8 +153,8 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->amount, $container->getAmount());
         $this->assertEquals($this->sequenceNumber, $container->getSequenceNumber());
         $this->assertEquals($this->txId, $container->getTxid());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer', $container->getBusiness());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer', $container->getBusiness());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
     }
 
     /**
@@ -172,7 +172,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testAuthorizationContainer()
     {
         $container = new AuthorizationContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $this->setStandardParams($container);
         $container->setAmount($this->amount);
@@ -193,12 +193,12 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->aid, $container->getAid());
         $this->assertEquals($this->clearingType, $container->getClearingType());
         $this->assertEquals($this->narrativeText, $container->getNarrativeText());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer', $container->getBusiness());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer', $container->get3dsecure());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer', $container->getPersonalData());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrepaymentContainer', $container->getPaymentMethod());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container->getPaymentMethod());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer', $container->getBusiness());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer', $container->get3dsecure());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer', $container->getPersonalData());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrepaymentContainer', $container->getPaymentMethod());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container->getPaymentMethod());
     }
 
     /**
@@ -216,7 +216,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testPreAuthorizationContainer()
     {
         $container = new PreAuthorizationContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $this->setStandardParams($container);
         $container->setAmount($this->amount);
@@ -236,11 +236,11 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->aid, $container->getAid());
         $this->assertEquals($this->clearingType, $container->getClearingType());
         $this->assertEquals($this->narrativeText, $container->getNarrativeText());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer', $container->get3dsecure());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer', $container->getPersonalData());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrepaymentContainer', $container->getPaymentMethod());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container->getPaymentMethod());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer', $container->get3dsecure());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer', $container->getPersonalData());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrepaymentContainer', $container->getPaymentMethod());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container->getPaymentMethod());
     }
 
     /**
@@ -258,7 +258,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testBankAccountCheckContainer()
     {
         $container = new BankAccountCheckContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $this->setStandardParams($container);
         $container->setAid($this->aid);
@@ -304,7 +304,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testGetInvoiceContainer()
     {
         $container = new GetInvoiceContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $this->setStandardParams($container);
         $container->setInvoiceTitle('invoicetitle');
@@ -329,7 +329,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testPersonalContainer()
     {
         $container = new PersonalContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setAddressAddition('addition');
         $this->assertEquals('addition', $container->getAddressAddition());
@@ -397,8 +397,8 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testPrepaymentContainer()
     {
         $container = new PrepaymentContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setClearingBankAccount('account');
         $this->assertEquals('account', $container->getClearingBankAccount());
@@ -431,14 +431,14 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testEWalletContainer()
     {
         $container = new EWalletContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setWalletType('type');
         $this->assertEquals('type', $container->getWalletType());
 
         $container->setRedirect(new RedirectContainer());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer', $container->getRedirect());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer', $container->getRedirect());
 
         $this->assertCount(1, $container->toArray());
     }
@@ -449,8 +449,8 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testOnlineBankTransferContainer()
     {
         $container = new OnlineBankTransferContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setBankAccount('account');
         $this->assertEquals('account', $container->getBankAccount());
@@ -474,7 +474,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('grouptype', $container->getBankGroupType());
 
         $container->setRedirect(new RedirectContainer());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer', $container->getRedirect());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer', $container->getRedirect());
 
         $this->assertCount(7, $container->toArray());
     }
@@ -485,8 +485,8 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testCashOnDeliveryContainer()
     {
         $container = new CashOnDeliveryContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setShippingProvider('shippingprovider');
         $this->assertEquals('shippingprovider', $container->getShippingProvider());
@@ -500,8 +500,8 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testDirectDebitContainer()
     {
         $container = new DirectDebitContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setIban('iban');
         $this->assertEquals('iban', $container->getIban());
@@ -533,14 +533,14 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testFinancingContainer()
     {
         $container = new FinancingContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setFinancingType('type');
         $this->assertEquals('type', $container->getFinancingType());
 
         $container->setRedirect(new RedirectContainer());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer', $container->getRedirect());
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer', $container->getRedirect());
 
         $this->assertCount(1, $container->toArray());
     }
@@ -560,7 +560,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function test3DSecureContainer()
     {
         $container = new ThreeDSecureContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setCavv('cavv');
         $this->assertEquals('cavv', $container->getCavv());
@@ -589,7 +589,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testRedirectContainer()
     {
         $container = new RedirectContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setBackUrl('backurl');
         $this->assertEquals('backurl', $container->getBackUrl());
@@ -618,7 +618,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testInvoicingTransactionContainer()
     {
         $container = new TransactionContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setInvoiceappendix('appendix');
         $this->assertEquals('appendix', $container->getInvoiceappendix());
@@ -656,7 +656,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testInvoicingItemContainer()
     {
         $container = new ItemContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setDe('de');
         $this->assertEquals('de', $container->getDe());
@@ -700,7 +700,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testAuthorizationBusinessContainer()
     {
         $container = new AuthorizationBusinessContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setBookingDate('bookingdate');
         $this->assertEquals('bookingdate', $container->getBookingDate());
@@ -729,7 +729,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testCaptureBusinessContainer()
     {
         $container = new CaptureBusinessContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setBookingDate('bookingdate');
         $this->assertEquals('bookingdate', $container->getBookingDate());
@@ -761,7 +761,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testDebitBusinessContainer()
     {
         $container = new DebitBusinessContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setBookingDate('bookingdate');
         $this->assertEquals('bookingdate', $container->getBookingDate());
@@ -793,7 +793,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testAuthorizationShippingContainer()
     {
         $container = new ShippingContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setShippingCity('city');
         $this->assertEquals('city', $container->getShippingCity());
@@ -837,7 +837,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testDebitBankAccountContainer()
     {
         $container = new DebitBankAccountContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setBankAccount('bankaccount');
         $this->assertEquals('bankaccount', $container->getBankAccount());
@@ -884,7 +884,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     public function testRefundBankAccountContainer()
     {
         $container = new RefundBankAccountContainer();
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 
         $container->setBankAccount('bankaccount');
         $this->assertEquals('bankaccount', $container->getBankAccount());

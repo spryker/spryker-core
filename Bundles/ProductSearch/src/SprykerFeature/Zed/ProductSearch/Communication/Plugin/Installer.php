@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Communication\Plugin;
+namespace Spryker\Zed\ProductSearch\Communication\Plugin;
 
-use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
-use SprykerFeature\Zed\ProductSearch\Business\ProductSearchFacade;
-use SprykerFeature\Zed\ProductSearch\Communication\ProductSearchDependencyContainer;
+use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
+use Spryker\Zed\ProductSearch\Communication\ProductSearchDependencyContainer;
 
 /**
  * @method ProductSearchDependencyContainer getDependencyContainer()

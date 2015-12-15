@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CustomerCheckoutConnector\Business;
+namespace Spryker\Zed\CustomerCheckoutConnector\Business;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use SprykerFeature\Shared\Checkout\CheckoutConstants;
-use SprykerFeature\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface;
+use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface;
 
 class PreConditionChecker implements PreConditionCheckerInterface
 {

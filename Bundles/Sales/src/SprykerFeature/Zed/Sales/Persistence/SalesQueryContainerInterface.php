@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Persistence;
+namespace Spryker\Zed\Sales\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;

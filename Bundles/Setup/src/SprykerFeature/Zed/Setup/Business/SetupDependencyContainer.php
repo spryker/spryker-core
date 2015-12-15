@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Setup\Business;
+namespace Spryker\Zed\Setup\Business;
 
-use SprykerFeature\Zed\Setup\Business\Model\DirectoryRemover;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
-use SprykerFeature\Zed\Setup\Business\Model\Cronjobs;
-use SprykerFeature\Zed\Setup\Business\Model\DirectoryRemoverInterface;
-use SprykerFeature\Zed\Setup\SetupConfig;
-use SprykerFeature\Zed\Setup\SetupDependencyProvider;
+use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater;
+use Spryker\Zed\Setup\Business\Model\Cronjobs;
+use Spryker\Zed\Setup\Business\Model\DirectoryRemoverInterface;
+use Spryker\Zed\Setup\SetupConfig;
+use Spryker\Zed\Setup\SetupDependencyProvider;
 use Symfony\Component\Console\Command\Command;
 
 /**

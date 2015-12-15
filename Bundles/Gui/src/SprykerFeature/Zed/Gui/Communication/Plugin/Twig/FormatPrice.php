@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Gui\Communication\Plugin\Twig;
+namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
-use SprykerFeature\Shared\Library\Currency\CurrencyManager;
-use SprykerFeature\Zed\Library\Twig\TwigFunction;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Library\Twig\TwigFunction;
 
 class FormatPrice extends TwigFunction
 {

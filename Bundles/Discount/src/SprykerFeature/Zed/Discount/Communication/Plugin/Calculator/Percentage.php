@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Communication\Plugin\Calculator;
+namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 /**
  * @method DiscountFacade getFacade()

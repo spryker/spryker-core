@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cache;
+namespace Spryker\Zed\Cache;
 
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CacheConfig extends AbstractBundleConfig
 {

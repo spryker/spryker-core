@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia;
+namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 
-use SprykerFeature\Zed\Library\Twig\TwigFunction;
+use Spryker\Zed\Library\Twig\TwigFunction;
 
 abstract class AbstractActionButton extends TwigFunction
 {

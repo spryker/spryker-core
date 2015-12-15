@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Library\Twig;
+namespace Spryker\Zed\Library\Twig;
 
 abstract class TwigFunction extends \Twig_SimpleFunction
 {

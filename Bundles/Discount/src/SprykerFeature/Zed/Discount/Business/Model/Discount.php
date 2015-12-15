@@ -4,21 +4,21 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\Model;
+namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
-use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-use SprykerFeature\Zed\Discount\DiscountConfig;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
+use Spryker\Zed\Discount\DiscountConfig;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 

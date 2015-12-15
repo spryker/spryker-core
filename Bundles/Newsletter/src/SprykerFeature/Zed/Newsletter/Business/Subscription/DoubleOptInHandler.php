@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
+namespace Spryker\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
-use SprykerFeature\Shared\Newsletter\Messages\Messages;
-use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException;
+use Spryker\Shared\Newsletter\Messages\Messages;
+use Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException;
 
 class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptInHandlerInterface, DoubleOptInHandlerInterface
 {

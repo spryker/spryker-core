@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Kernel\Communication\Plugin;
+namespace Spryker\Zed\Kernel\Communication\Plugin;
 
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\ZedRequest\Client\Message;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
-use SprykerFeature\Zed\Kernel\Communication\GatewayControllerListenerInterface;
-use SprykerFeature\Zed\Kernel\Communication\KernelDependencyContainer;
-use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
-use SprykerFeature\Zed\ZedRequest\Business\Client\Response;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\ZedRequest\Client\Message;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
+use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
+use Spryker\Zed\Kernel\Communication\KernelDependencyContainer;
+use Spryker\Zed\ZedRequest\Business\Client\Request;
+use Spryker\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use SprykerEngine\Zed\Messenger\MessengerConfig;
+use Spryker\Zed\Messenger\MessengerConfig;
 
 /**
  * @method KernelDependencyContainer getDependencyContainer()
@@ -69,7 +69,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         $parameters = $methodReflection->getParameters();
         $countParameters = count($parameters);
 
-        if ($countParameters > 2 || $countParameters === 2 && end($parameters)->getClass() !== 'SprykerFeature\\Shared\\Library\\Transfer\\Request') {
+        if ($countParameters > 2 || $countParameters === 2 && end($parameters)->getClass() !== 'Spryker\\Shared\\Library\\Transfer\\Request') {
             throw new \LogicException('Only one transfer object can be received in yves-action');
         }
 
@@ -184,7 +184,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             return true;
         }
 
-        if ($class->getName() === 'SprykerEngine\Shared\Transfer\TransferInterface') {
+        if ($class->getName() === 'Spryker\Shared\Transfer\TransferInterface') {
             return true;
         }
 

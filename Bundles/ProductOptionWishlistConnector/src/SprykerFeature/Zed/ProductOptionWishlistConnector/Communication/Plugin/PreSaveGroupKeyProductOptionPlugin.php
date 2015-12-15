@@ -3,12 +3,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionWishlistConnector\Communication\Plugin;
+namespace Spryker\Zed\ProductOptionWishlistConnector\Communication\Plugin;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
+use Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
 class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSavePluginInterface
 {

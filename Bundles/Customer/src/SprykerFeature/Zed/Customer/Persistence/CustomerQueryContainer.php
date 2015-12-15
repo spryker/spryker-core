@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Persistence;
+namespace Spryker\Zed\Customer\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * @method CustomerDependencyContainer getDependencyContainer()

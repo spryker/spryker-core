@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\SalesCheckoutConnector\Business;
+namespace Spryker\Zed\SalesCheckoutConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\SalesCheckoutConnector\SalesCheckoutConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\SalesCheckoutConnector\SalesCheckoutConnectorDependencyProvider;
 
 class SalesCheckoutConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {

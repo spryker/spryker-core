@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Factory;
+namespace Spryker\Zed\Kernel\Factory;
 
 interface FactoryInterface
 {

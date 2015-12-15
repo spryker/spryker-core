@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerEngine\Shared\Kernel;
+namespace Spryker\Shared\Kernel;
 
-use SprykerFeature\Shared\Library\Config;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class TransferLocatorHelper
 {
@@ -42,8 +42,8 @@ class TransferLocatorHelper
         $projectNamespace = Config::get(ApplicationConstants::PROJECT_NAMESPACE);
         $namespaces = [
             $projectNamespace . '\\',
-            'SprykerFeature\\',
-            'SprykerEngine\\',
+            'Spryker\\',
+            'Spryker\\',
             'Shared\\',
             'Transfer\\',
         ];

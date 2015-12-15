@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Business\Model\Twig;
+namespace Spryker\Zed\Application\Business\Model\Twig;
 
-use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Zed\Library\Twig\TwigFunction;
+use Spryker\Shared\Library\System;
+use Spryker\Zed\Library\Twig\TwigFunction;
 
 class EnvironmentInfo extends TwigFunction
 {
@@ -30,9 +30,9 @@ class EnvironmentInfo extends TwigFunction
                 . '<span>' . APPLICATION_ENV . '</span>'
                 . '<dl>'
                 . '<dt>Locale:'
-                . '<dd>' . \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale()
+                . '<dd>' . \Spryker\Shared\Kernel\Store::getInstance()->getCurrentLocale()
                 . '<dt>Store:'
-                . '<dd>' . \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName()
+                . '<dd>' . \Spryker\Shared\Kernel\Store::getInstance()->getStoreName()
                 . '<dt>Server:'
                 . '<dd>' . System::getHostName()
                 . '<dt>Controller:'

@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Category\Business\Tree;
+namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryException;
-use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
+use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryException;
+use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {

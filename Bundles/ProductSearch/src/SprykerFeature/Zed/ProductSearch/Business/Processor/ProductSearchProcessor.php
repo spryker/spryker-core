@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Business\Processor;
+namespace Spryker\Zed\ProductSearch\Business\Processor;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class ProductSearchProcessor implements ProductSearchProcessorInterface
 {

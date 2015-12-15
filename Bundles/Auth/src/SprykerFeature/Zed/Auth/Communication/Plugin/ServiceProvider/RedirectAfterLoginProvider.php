@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider;
+namespace Spryker\Zed\Auth\Communication\Plugin\ServiceProvider;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use SprykerFeature\Zed\Auth\AuthConfig;
-use SprykerFeature\Zed\Auth\Business\AuthFacade;
-use SprykerFeature\Zed\Auth\Communication\AuthDependencyContainer;
+use Spryker\Zed\Auth\AuthConfig;
+use Spryker\Zed\Auth\Business\AuthFacade;
+use Spryker\Zed\Auth\Communication\AuthDependencyContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;

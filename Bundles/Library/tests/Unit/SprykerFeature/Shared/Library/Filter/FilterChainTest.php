@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Shared\Library\Filter;
+namespace Unit\Spryker\Shared\Library\Filter;
 
-use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
-use SprykerFeature\Shared\Library\Filter\FilterChain;
+use Spryker\Shared\Library\Filter\CamelCaseToSeparatorFilter;
+use Spryker\Shared\Library\Filter\FilterChain;
 
 /**
  * @group Filter

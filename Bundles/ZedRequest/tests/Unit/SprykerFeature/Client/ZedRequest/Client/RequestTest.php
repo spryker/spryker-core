@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Client\ZedRequest\Client;
+namespace Unit\Spryker\Client\ZedRequest\Client;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Client\ZedRequest\Client\Request;
-use Unit\SprykerFeature\Client\ZedRequest\Client\Fixture\TestTransfer;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Client\ZedRequest\Client\Request;
+use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Client
  * @group ZedRequest
  */

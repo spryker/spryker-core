@@ -4,10 +4,10 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerFeature\Zed\Lumberjack\Business;
+namespace Spryker\Zed\Lumberjack\Business;
 
-use SprykerFeature\Zed\Lumberjack\Business\Model\EventJournal;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Lumberjack\Business\Model\EventJournal;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 
 class LumberjackDependencyContainer extends AbstractBusinessDependencyContainer
 {

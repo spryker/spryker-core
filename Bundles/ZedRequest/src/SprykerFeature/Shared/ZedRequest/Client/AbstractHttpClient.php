@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\ZedRequest\Client;
+namespace Spryker\Shared\ZedRequest\Client;
 
 use Generated\Client\Ide\AutoCompletion;
 use Guzzle\Http\Client;
@@ -14,18 +14,18 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerFeature\Client\Auth\AuthClientInterface;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
-use SprykerEngine\Shared\Lumberjack\Model\Event;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Shared\ZedRequest\Client\Exception\RequestException;
-use SprykerFeature\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
-use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
+use Spryker\Shared\Kernel\Factory\FactoryInterface;
+use Spryker\Client\Auth\AuthClientInterface;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Library\System;
+use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
+use Spryker\Shared\Lumberjack\Model\SharedEventJournal;
+use Spryker\Shared\Lumberjack\Model\Event;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
+use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
+use Spryker\Zed\ZedRequest\Business\Client\Request;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
@@ -121,7 +121,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      *
      * @throws \LogicException
      *
-     * @return \SprykerFeature\Shared\Library\Communication\Response
+     * @return \Spryker\Shared\Library\Communication\Response
      */
     public function request(
         $pathInfo,

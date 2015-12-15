@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\NewRelic;
+namespace Spryker\Shared\NewRelic;
 
 use Guzzle\Http\Client;
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\NewRelic\Exception\RecordDeploymentException;
+use Spryker\Shared\Config;
+use Spryker\Shared\NewRelic\Exception\RecordDeploymentException;
 
 /**
  * The PHP API for New Relic

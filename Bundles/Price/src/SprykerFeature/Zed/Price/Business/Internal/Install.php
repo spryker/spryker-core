@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Price\Business\Internal;
+namespace Spryker\Zed\Price\Business\Internal;
 
-use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
-use SprykerFeature\Zed\Price\Business\PriceFacade;
-use SprykerFeature\Zed\Price\Business\PriceSettings;
-use SprykerFeature\Zed\Price\PriceConfig;
+use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
+use Spryker\Zed\Price\Business\PriceFacade;
+use Spryker\Zed\Price\Business\PriceSettings;
+use Spryker\Zed\Price\PriceConfig;
 
 class Install extends AbstractInstaller
 {

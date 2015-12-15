@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Communication\Controller;
+namespace Spryker\Zed\Payolution\Communication\Controller;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Payolution\Business\PayolutionFacade;
 
 /**
  * @method PayolutionFacade getFacade()

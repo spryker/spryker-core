@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Wishlist\Dependency;
+namespace Spryker\Zed\Wishlist\Dependency;
 
 interface PostSavePluginInterface
 {

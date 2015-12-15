@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Shared\ZedRequest\Client\Fixture;
+namespace Unit\Spryker\Shared\ZedRequest\Client\Fixture;
 
-use SprykerEngine\Shared\Transfer\AbstractTransfer;
-use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 
 class Transfer extends AbstractTransfer
 {

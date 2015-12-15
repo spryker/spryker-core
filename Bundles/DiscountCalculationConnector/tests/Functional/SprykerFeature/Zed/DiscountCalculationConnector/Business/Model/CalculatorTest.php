@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model;
+namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model;
 
 use Generated\Shared\Transfer\DiscountItemsTransfer;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
@@ -13,18 +13,18 @@ use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerFeature\Shared\Sales\Code\ExpenseConstants;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Shared\Sales\Code\ExpenseConstants;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\StackExecutor;
-use SprykerFeature\Zed\DiscountCalculationConnector\Communication\Plugin\DiscountCalculatorPlugin;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\DiscountCalculationConnector\Communication\Plugin\GrandTotalWithDiscountsTotalsCalculatorPlugin;
-use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Zed\Calculation\Business\Model\StackExecutor;
+use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\DiscountCalculatorPlugin;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\GrandTotalWithDiscountsTotalsCalculatorPlugin;
+use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group CalculatorTest
@@ -56,12 +56,12 @@ class CalculatorTest extends AbstractFunctionalTest
     protected function createCalculatorStack()
     {
         $stack = [
-            $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin'),
+            $this->getPluginByClassName('Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin'),
             new DiscountCalculatorPlugin(),
-            $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin'),
-            $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin'),
-            $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin'),
-            $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin'),
+            $this->getPluginByClassName('Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin'),
+            $this->getPluginByClassName('Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin'),
+            $this->getPluginByClassName('Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin'),
+            $this->getPluginByClassName('Spryker\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin'),
             new GrandTotalWithDiscountsTotalsCalculatorPlugin(),
         ];
 

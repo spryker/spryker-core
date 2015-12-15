@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\Model;
+namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
-use SprykerFeature\Zed\Discount\DiscountConfigInterface;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Spryker\Zed\Discount\DiscountConfigInterface;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 

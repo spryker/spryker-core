@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Dependency;
+namespace Spryker\Zed\Url\Dependency;
 
 interface UrlToTouchInterface
 {

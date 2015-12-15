@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
+namespace Spryker\Zed\Payone\Business\Api\Request\Container;
 
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 
 class CaptureContainer extends AbstractRequestContainer
 {
@@ -39,12 +39,12 @@ class CaptureContainer extends AbstractRequestContainer
     protected $currency;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer
      */
     protected $business;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     protected $invoicing;
 

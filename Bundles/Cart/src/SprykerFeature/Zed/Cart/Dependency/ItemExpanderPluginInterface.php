@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cart\Dependency;
+namespace Spryker\Zed\Cart\Dependency;
 
 use Generated\Shared\Transfer\ChangeTransfer;
 

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter;
+namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerFeature\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class ExportMarker implements MarkerInterface
 {

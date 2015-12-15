@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Search\Business;
+namespace Spryker\Zed\Search\Business;
 
 use Elastica\Document;
 use Elastica\Response;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method SearchDependencyContainer getDependencyContainer

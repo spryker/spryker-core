@@ -4,25 +4,25 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Communication;
+namespace Spryker\Zed\ProductCategory\Communication;
 
-use SprykerFeature\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
+use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Zed\Category\Business\CategoryFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use SprykerFeature\Zed\Cms\Business\CmsFacade; //TODO: https://spryker.atlassian.net/browse/CD-540
-use SprykerFeature\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
-use SprykerFeature\Zed\ProductCategory\Communication\Table\ProductTable;
-use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
-use SprykerFeature\Zed\ProductCategory\ProductCategoryDependencyProvider;
-use SprykerFeature\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
-use SprykerFeature\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
-use SprykerFeature\Zed\Product\Business\ProductFacade;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
-use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
-use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
+use Spryker\Zed\Category\Business\CategoryFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Cms\Business\CmsFacade; //TODO: https://spryker.atlassian.net/browse/CD-540
+use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
+use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
+use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
+use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
+use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
+use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 
 /**
  * @method ProductCategoryQueryContainer getQueryContainer()

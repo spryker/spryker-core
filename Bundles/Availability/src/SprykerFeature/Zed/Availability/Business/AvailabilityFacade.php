@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Availability\Business;
+namespace Spryker\Zed\Availability\Business;
 
-use SprykerFeature\Zed\AvailabilityCheckoutConnector\Dependency\Facade\AvailabilityToCheckoutConnectorFacadeInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\AvailabilityCheckoutConnector\Dependency\Facade\AvailabilityToCheckoutConnectorFacadeInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method AvailabilityDependencyContainer getDependencyContainer()

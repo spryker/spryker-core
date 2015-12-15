@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Payone;
+namespace Spryker\Shared\Payone;
 
 interface PayoneApiConstants
 {

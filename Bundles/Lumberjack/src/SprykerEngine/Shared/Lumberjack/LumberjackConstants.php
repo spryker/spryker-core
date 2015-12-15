@@ -4,7 +4,7 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerEngine\Shared\Lumberjack;
+namespace Spryker\Shared\Lumberjack;
 
 interface LumberjackConstants
 {

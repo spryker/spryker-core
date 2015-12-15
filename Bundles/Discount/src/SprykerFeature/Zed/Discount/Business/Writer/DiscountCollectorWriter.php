@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\Writer;
+namespace Spryker\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountCollector;

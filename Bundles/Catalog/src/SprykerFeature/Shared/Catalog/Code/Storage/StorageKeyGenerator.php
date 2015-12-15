@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Catalog\Code\Storage;
+namespace Spryker\Shared\Catalog\Code\Storage;
 
-use SprykerFeature\Shared\Library\Storage\StorageKeyGenerator as BaseStorageKeyGenerator;
+use Spryker\Shared\Library\Storage\StorageKeyGenerator as BaseStorageKeyGenerator;
 
 class StorageKeyGenerator extends BaseStorageKeyGenerator
 {

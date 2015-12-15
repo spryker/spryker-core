@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cart\Communication\Controller;
+namespace Spryker\Zed\Cart\Communication\Controller;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerFeature\Zed\Cart\Business\CartFacade;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Cart\Business\CartFacade;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method CartFacade getFacade()

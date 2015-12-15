@@ -3,9 +3,9 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerFeature\Client\Lumberjack;
+namespace Spryker\Client\Lumberjack;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\AbstractDependencyProvider;
 
 class LumberjackDependencyProvider extends AbstractDependencyProvider
 {

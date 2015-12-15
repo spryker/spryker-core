@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Business\Model;
+namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RoleTransfer;
-use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
-use SprykerFeature\Zed\Acl\Business\Exception\RoleNameExistsException;
-use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
+use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
+use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
+use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
 
 interface RoleInterface
 {

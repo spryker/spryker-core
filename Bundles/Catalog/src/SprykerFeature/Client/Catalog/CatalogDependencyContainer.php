@@ -4,25 +4,25 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Catalog;
+namespace Spryker\Client\Catalog;
 
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Client\Catalog\KeyBuilder\ProductResourceKeyBuilder;
-use SprykerFeature\Client\Catalog\Model\Extractor\RangeExtractor;
-use SprykerFeature\Client\Catalog\Model\Extractor\FacetExtractor;
-use SprykerFeature\Client\Catalog\Model\Builder\FacetAggregationBuilder;
-use SprykerFeature\Client\Catalog\Model\Builder\FilterBuilder;
-use SprykerFeature\Client\Catalog\Model\Builder\NestedFilterBuilder;
-use SprykerFeature\Client\Catalog\Model\FacetFilterHandler;
-use SprykerFeature\Client\Catalog\Model\FulltextSearch;
-use SprykerFeature\Client\Catalog\Model\FacetSearch;
-use SprykerFeature\Client\Catalog\Model\Catalog as ModelCatalog;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Client\Catalog\KeyBuilder\ProductResourceKeyBuilder;
+use Spryker\Client\Catalog\Model\Extractor\RangeExtractor;
+use Spryker\Client\Catalog\Model\Extractor\FacetExtractor;
+use Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilder;
+use Spryker\Client\Catalog\Model\Builder\FilterBuilder;
+use Spryker\Client\Catalog\Model\Builder\NestedFilterBuilder;
+use Spryker\Client\Catalog\Model\FacetFilterHandler;
+use Spryker\Client\Catalog\Model\FulltextSearch;
+use Spryker\Client\Catalog\Model\FacetSearch;
+use Spryker\Client\Catalog\Model\Catalog as ModelCatalog;
 use Elastica\Index;
 use Generated\Client\Ide\FactoryAutoCompletion\Catalog;
-use SprykerFeature\Client\Catalog\CatalogDependencyProvider;
-use SprykerFeature\Client\Catalog\Model\FacetConfig;
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Client\Catalog\CatalogDependencyProvider;
+use Spryker\Client\Catalog\Model\FacetConfig;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CatalogDependencyContainer extends AbstractDependencyContainer

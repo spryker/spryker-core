@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Installer\Business;
+namespace Spryker\Zed\Installer\Business;
 
-use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method InstallerDependencyContainer getDependencyContainer()

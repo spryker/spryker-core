@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Newsletter;
+namespace Spryker\Zed\Newsletter;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Newsletter\NewsletterConstants;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Newsletter\NewsletterConstants;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class NewsletterConfig extends AbstractBundleConfig
 {

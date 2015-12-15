@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Business;
+namespace Spryker\Zed\Kernel\Business;
 
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Container;
 
 interface FacadeInterface
 {

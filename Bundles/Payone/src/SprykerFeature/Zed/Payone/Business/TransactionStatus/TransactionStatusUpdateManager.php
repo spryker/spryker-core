@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\TransactionStatus;
+namespace Spryker\Zed\Payone\Business\TransactionStatus;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use SprykerFeature\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
-use SprykerFeature\Shared\Payone\PayoneTransactionStatusConstants;
-use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
-use SprykerFeature\Zed\Payone\Business\Key\HashGenerator;
-use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
+use Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
+use Spryker\Shared\Payone\PayoneTransactionStatusConstants;
+use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
+use Spryker\Zed\Payone\Business\Key\HashGenerator;
+use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;

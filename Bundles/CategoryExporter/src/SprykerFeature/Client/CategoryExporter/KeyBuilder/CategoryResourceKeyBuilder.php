@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\CategoryExporter\KeyBuilder;
+namespace Spryker\Client\CategoryExporter\KeyBuilder;
 
-use SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder\SharedCategoryResourceKeyBuilder;
+use Spryker\Shared\CategoryExporter\Code\KeyBuilder\SharedCategoryResourceKeyBuilder;
 
 class CategoryResourceKeyBuilder extends SharedCategoryResourceKeyBuilder
 {

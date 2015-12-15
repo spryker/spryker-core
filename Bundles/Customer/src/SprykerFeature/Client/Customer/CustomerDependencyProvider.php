@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Customer;
+namespace Spryker\Client\Customer;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
-use SprykerEngine\Client\Kernel\Container;
+use Spryker\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractDependencyProvider
 {

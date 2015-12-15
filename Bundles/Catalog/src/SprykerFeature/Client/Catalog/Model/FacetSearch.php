@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Catalog\Model;
+namespace Spryker\Client\Catalog\Model;
 
 use Elastica\Filter\Term;
 use Elastica\Index;
 use Elastica\Query;
 use Elastica\Query\Filtered;
-use SprykerFeature\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface;
-use SprykerFeature\Client\Catalog\Model\Builder\NestedFilterBuilderInterface;
-use SprykerFeature\Client\Catalog\Model\Extractor\AggregationExtractorInterface;
+use Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface;
+use Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface;
+use Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

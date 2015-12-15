@@ -4,38 +4,38 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Business;
+namespace Spryker\Zed\Application\Business;
 
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\Decorator\NavigationCollectorCacheDecorator;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidator;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidator;
-use SprykerFeature\Zed\Application\Business\Model\Url\UrlBuilder;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Extractor\PathExtractor;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollector;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
+use Spryker\Zed\Application\Business\Model\Navigation\Collector\Decorator\NavigationCollectorCacheDecorator;
+use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
+use Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidator;
+use Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidator;
+use Spryker\Zed\Application\Business\Model\Url\UrlBuilder;
+use Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractor;
+use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollector;
+use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
+use Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
 use Psr\Log\LoggerInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Application\ApplicationConfig;
-use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep;
-use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption;
-use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase;
-use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\DeleteGeneratedDirectory;
-use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\ExportKeyValue;
-use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\ExportSearch;
-use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\InstallDemoData;
-use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\NavigationBuilder;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinderInterface;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface;
-use SprykerFeature\Zed\Application\Business\Model\Url\UrlBuilderInterface;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Application\ApplicationConfig;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteGeneratedDirectory;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportKeyValue;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportSearch;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\InstallDemoData;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall;
+use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder;
+use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder;
+use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinderInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface;
+use Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface;
+use Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface;
 
 /**
  * @method ApplicationConfig getConfig()

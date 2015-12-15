@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Discount\Communication\Form\Validators;
+namespace Unit\Spryker\Zed\Discount\Communication\Form\Validators;
 
 use Codeception\TestCase\Test;
-use SprykerFeature\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
+use Spryker\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
 
 class MaximCalculatedRangeValidatorTest extends Test
 {

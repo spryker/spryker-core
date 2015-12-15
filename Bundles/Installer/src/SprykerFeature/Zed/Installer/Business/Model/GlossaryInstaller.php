@@ -3,10 +3,10 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerFeature\Zed\Installer\Business\Model;
+namespace Spryker\Zed\Installer\Business\Model;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Symfony\Component\Yaml\Yaml;
 
 class GlossaryInstaller extends AbstractInstaller

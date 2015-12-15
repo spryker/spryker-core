@@ -3,10 +3,10 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Zed\Payolution\Communication\Controller;
+namespace Spryker\Zed\Payolution\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Payolution\Communication\PayolutionDependencyContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Payolution\Communication\PayolutionDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**

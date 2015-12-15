@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Search\Business\Model;
+namespace Spryker\Zed\Search\Business\Model;
 
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 class SearchInstaller implements SearchInstallerInterface
 {

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Log\Config;
+namespace Spryker\Shared\Log\Config;
 
 use Monolog\Handler\HandlerInterface;
 

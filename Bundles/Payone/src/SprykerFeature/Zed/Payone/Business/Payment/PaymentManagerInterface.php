@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Payment;
+namespace Spryker\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -13,11 +13,11 @@ use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 
 interface PaymentManagerInterface
 {

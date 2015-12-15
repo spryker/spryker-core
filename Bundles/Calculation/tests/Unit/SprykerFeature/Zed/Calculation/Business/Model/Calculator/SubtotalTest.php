@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Calculation\Business\Model\Calculator;
+namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use SprykerFeature\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group SubtotalTest

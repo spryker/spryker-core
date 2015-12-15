@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
+namespace Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\DiscountItemsTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTotalItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 {

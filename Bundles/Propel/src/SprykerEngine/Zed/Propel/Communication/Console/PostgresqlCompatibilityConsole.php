@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Propel\Communication\Console;
+namespace Spryker\Zed\Propel\Communication\Console;
 
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Zed\Console\Business\Model\Console;
+use Spryker\Shared\Config;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use SprykerEngine\Zed\Propel\Business\PropelFacade;
+use Spryker\Zed\Propel\Business\PropelFacade;
 
 /**
  * @method PropelFacade getFacade()

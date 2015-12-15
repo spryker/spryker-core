@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Shared\Kernel\Fixtures\Transfer;
+namespace Unit\Spryker\Shared\Kernel\Fixtures\Transfer;
 
-use Unit\SprykerEngine\Shared\Kernel\Fixtures\Transfer\Foo\Bar;
-use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use Unit\Spryker\Shared\Kernel\Fixtures\Transfer\Foo\Bar;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 class Foo extends AbstractTransfer
 {

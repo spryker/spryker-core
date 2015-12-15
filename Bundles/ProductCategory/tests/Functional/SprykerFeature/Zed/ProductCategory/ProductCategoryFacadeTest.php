@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\ProductCategory;
+namespace Functional\Spryker\Zed\ProductCategory;
 
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -12,19 +12,19 @@ use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Zed\Category\Business\CategoryFacade;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Product\Business\ProductFacade;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
-use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
-use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\ProductCategory\ProductCategoryDependencyProvider;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Category\Business\CategoryFacade;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Product\Persistence\ProductQueryContainer;
+use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group ProductCategory
  * @group ProductCategoryFacade

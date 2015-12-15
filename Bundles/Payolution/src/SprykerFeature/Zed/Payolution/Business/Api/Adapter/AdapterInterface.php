@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Api\Adapter;
+namespace Spryker\Zed\Payolution\Business\Api\Adapter;
 
 interface AdapterInterface
 {

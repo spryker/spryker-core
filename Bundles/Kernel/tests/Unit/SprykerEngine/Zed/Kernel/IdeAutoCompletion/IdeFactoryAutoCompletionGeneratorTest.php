@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion;
+namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion;
 
-use Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion\Fixtures\BundleNameFinder;
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeFactoryAutoCompletionGenerator;
-use Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion\Fixtures\MethodTagBuilder;
+use Unit\Spryker\Zed\Kernel\IdeAutoCompletion\Fixtures\BundleNameFinder;
+use Spryker\Zed\Kernel\IdeAutoCompletion\IdeFactoryAutoCompletionGenerator;
+use Unit\Spryker\Zed\Kernel\IdeAutoCompletion\Fixtures\MethodTagBuilder;
 
 /**
  * @group Kernel
@@ -49,7 +49,7 @@ class IdeFactoryAutoCompletionGeneratorTest extends AbstractAutoCompletion
         $generator = new IdeFactoryAutoCompletionGenerator($this->getOptions());
         $generator = $generator->addMethodTagBuilder(new MethodTagBuilder());
 
-        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeFactoryAutoCompletionGenerator', $generator);
+        $this->assertInstanceOf('Spryker\Zed\Kernel\IdeAutoCompletion\IdeFactoryAutoCompletionGenerator', $generator);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia;
+namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 
 class EditActionButton extends AbstractActionButton
 {

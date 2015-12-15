@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Session\Business\Handler;
+namespace Spryker\Shared\Session\Business\Handler;
 
-use SprykerFeature\Shared\NewRelic\ApiInterface;
+use Spryker\Shared\NewRelic\ApiInterface;
 
 class SessionHandlerFile implements \SessionHandlerInterface
 {

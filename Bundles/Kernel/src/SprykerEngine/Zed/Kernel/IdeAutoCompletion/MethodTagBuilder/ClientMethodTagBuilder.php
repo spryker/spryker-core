@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
+namespace Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

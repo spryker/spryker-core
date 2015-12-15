@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Search\Business\Model;
+namespace Spryker\Zed\Search\Business\Model;
 
 use Elastica\Document;
 use Elastica\Exception\ResponseException;
 use Elastica\Response;
-use SprykerFeature\Client\Search\SearchClient;
+use Spryker\Client\Search\SearchClient;
 
 class Search
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer\Fixtures\SprykerUseStatementFixer\Input;
+namespace Unit\Spryker\Zed\Development\Business\CodeStyleFixer\Fixtures\SprykerUseStatementFixer\Input;
 
-use SprykerEngine\Zed\Foo;
-use SprykerFeature\Zed\X\Y\Baz as YBaz;
+use Spryker\Zed\Foo;
+use Spryker\Zed\X\Y\Baz as YBaz;
 use Pyz\Zed\Foo\Bar\Baz;
 
 class TestClass2Input extends \Pyz\Zed\Foo\Bar\Baz

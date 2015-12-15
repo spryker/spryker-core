@@ -3,12 +3,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Communication\Controller;
+namespace Spryker\Zed\Glossary\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Glossary\Communication\GlossaryDependencyContainer;
+use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

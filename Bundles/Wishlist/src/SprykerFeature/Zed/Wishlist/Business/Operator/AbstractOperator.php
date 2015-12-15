@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Wishlist\Business\Operator;
+namespace Spryker\Zed\Wishlist\Business\Operator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerFeature\Zed\Wishlist\Business\Storage\StorageInterface;
-use SprykerFeature\Zed\Wishlist\Dependency\PostSavePluginInterface;
-use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
+use Spryker\Zed\Wishlist\Business\Storage\StorageInterface;
+use Spryker\Zed\Wishlist\Dependency\PostSavePluginInterface;
+use Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
 abstract class AbstractOperator
 {

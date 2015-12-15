@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount;
+namespace Spryker\Zed\Discount;
 
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
 interface DiscountConfigInterface
 {

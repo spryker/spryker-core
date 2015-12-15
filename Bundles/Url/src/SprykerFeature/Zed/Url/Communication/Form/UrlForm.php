@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Communication\Form;
+namespace Spryker\Zed\Url\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints;
 
 class UrlForm extends AbstractForm
@@ -117,7 +117,7 @@ class UrlForm extends AbstractForm
     }
 
     /**
-     * @return \SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainer
+     * @return \Spryker\Zed\Locale\Persistence\LocaleQueryContainer
      */
     public function getLocaleQueryContainer()
     {

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Response\Container;
+namespace Spryker\Zed\Payone\Business\Api\Response\Container;
 
 class AddressCheckResponseContainer extends AbstractResponseContainer
 {

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Nopayment\Persistence;
+namespace Spryker\Zed\Nopayment\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Nopayment\Persistence\SpyNopaymentPaidQuery;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin;
+namespace Spryker\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin;
 
 use Solarium\Core\Query\Query as BaseQuery;
 
@@ -22,7 +22,7 @@ class Query extends BaseQuery
      * @var array
      */
     protected $options = [
-        'resultclass' => 'SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\Result',
+        'resultclass' => 'Spryker\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\Result',
         'handler' => 'cores/',
     ];
 

@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Refund\Business;
+namespace Spryker\Zed\Refund\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Refund\Business\RefundDependencyContainer as SprykerRefundDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Refund\Business\RefundDependencyContainer as SprykerRefundDependencyContainer;
 use Orm\Zed\Refund\Persistence\SpyRefund;
-use SprykerFeature\Zed\Refund\RefundDependencyProvider;
+use Spryker\Zed\Refund\RefundDependencyProvider;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 

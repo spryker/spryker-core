@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Payment\Method\Installment;
+namespace Spryker\Zed\Payolution\Business\Payment\Method\Installment;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
+use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
+use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 class Installment extends AbstractPaymentMethod implements InstallmentInterface

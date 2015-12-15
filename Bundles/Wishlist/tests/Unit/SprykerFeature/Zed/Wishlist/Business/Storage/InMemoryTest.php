@@ -3,13 +3,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Bundles\Wishlist\tests\Unit\SprykerFeature\Zed\Wishlist\Business\Storage;
+namespace Bundles\Wishlist\tests\Unit\Spryker\Zed\Wishlist\Business\Storage;
 
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerFeature\Zed\Wishlist\Business\Storage\InMemory;
+use Spryker\Zed\Wishlist\Business\Storage\InMemory;
 
 class InMemoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -180,7 +180,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
         $concreateProductTransfer->setIdAbstractProduct(1);
 
         $productFacadeMock = $this
-            ->getMockBuilder('SprykerFeature\Zed\Product\Business\ProductFacade')
+            ->getMockBuilder('Spryker\Zed\Product\Business\ProductFacade')
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\DiscountCalculationConnector\Business;
+namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 /**
  * @method DiscountCalculationConnectorDependencyContainer getDependencyContainer()

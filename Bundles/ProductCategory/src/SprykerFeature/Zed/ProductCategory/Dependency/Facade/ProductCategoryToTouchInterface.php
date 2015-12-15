@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Dependency\Facade;
+namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
 interface ProductCategoryToTouchInterface
 {

@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Wishlist\Business\Storage;
+namespace Spryker\Zed\Wishlist\Business\Storage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerFeature\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
-use SprykerFeature\Zed\Wishlist\Business\Model\Customer;
-use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
+use Spryker\Zed\Wishlist\Business\Model\Customer;
+use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Propel implements StorageInterface
 {

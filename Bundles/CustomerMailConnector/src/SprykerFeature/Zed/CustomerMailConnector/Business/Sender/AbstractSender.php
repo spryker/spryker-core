@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CustomerMailConnector\Business\Sender;
+namespace Spryker\Zed\CustomerMailConnector\Business\Sender;
 
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Mail\Business\MailFacade;
+use Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Mail\Business\MailFacade;
 
 abstract class AbstractSender
 {

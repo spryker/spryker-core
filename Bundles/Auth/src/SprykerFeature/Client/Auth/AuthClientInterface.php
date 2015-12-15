@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Auth;
+namespace Spryker\Client\Auth;
 
 interface AuthClientInterface
 {

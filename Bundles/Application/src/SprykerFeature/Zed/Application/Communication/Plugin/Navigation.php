@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication\Plugin;
+namespace Spryker\Zed\Application\Communication\Plugin;
 
-use SprykerFeature\Zed\Application\Business\ApplicationFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Application\Business\ApplicationFacade;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method ApplicationFacade getFacade()

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Cart;
+namespace Spryker\Client\Cart;
 
-use SprykerFeature\Client\Cart\Zed\CartStub;
-use SprykerFeature\Client\Cart\Session\CartSession;
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Cart\Zed\CartStubInterface;
+use Spryker\Client\Cart\Zed\CartStub;
+use Spryker\Client\Cart\Session\CartSession;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Cart\Zed\CartStubInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartDependencyContainer extends AbstractDependencyContainer

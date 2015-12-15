@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\OrderProcess;
+namespace Spryker\Zed\Sales\Business\OrderProcess;
 
 interface OrderprocessConstant
 {

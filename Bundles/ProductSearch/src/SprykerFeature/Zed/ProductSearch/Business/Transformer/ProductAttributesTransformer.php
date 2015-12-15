@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Business\Transformer;
+namespace Spryker\Zed\ProductSearch\Business\Transformer;
 
-use SprykerFeature\Zed\ProductSearch\Business\Locator\OperationLocatorInterface;
-use SprykerFeature\Zed\ProductSearch\Business\Operation\OperationInterface;
-use SprykerFeature\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
+use Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface;
+use Spryker\Zed\ProductSearch\Business\Operation\OperationInterface;
+use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperation;
 use Propel\Runtime\Collection\ObjectCollection;
 

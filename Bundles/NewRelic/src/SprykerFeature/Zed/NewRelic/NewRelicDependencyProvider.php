@@ -3,9 +3,9 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\NewRelic;
+namespace Spryker\Zed\NewRelic;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class NewRelicDependencyProvider extends AbstractBundleDependencyProvider
 {

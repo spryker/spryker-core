@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Communication;
+namespace Spryker\Zed\Product\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\Product\Business\ProductFacade;
-use SprykerFeature\Zed\Product\Communication\Table\ProductTable;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
-use SprykerFeature\Zed\Product\ProductConfig;
-use SprykerFeature\Zed\Product\ProductDependencyProvider;
-use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
-use SprykerFeature\Zed\Url\Business\UrlFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Product\Communication\Table\ProductTable;
+use Spryker\Zed\Product\Persistence\ProductQueryContainer;
+use Spryker\Zed\Product\ProductConfig;
+use Spryker\Zed\Product\ProductDependencyProvider;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
+use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
+use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
  * @method ProductQueryContainer getQueryContainer()

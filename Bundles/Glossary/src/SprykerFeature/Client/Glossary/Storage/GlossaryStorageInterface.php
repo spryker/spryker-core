@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Glossary\Storage;
+namespace Spryker\Client\Glossary\Storage;
 
 interface GlossaryStorageInterface
 {

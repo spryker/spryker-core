@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cache\Business\Model;
+namespace Spryker\Zed\Cache\Business\Model;
 
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Zed\Cache\CacheConfig;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Cache\CacheConfig;
 use Symfony\Component\Filesystem\Filesystem;
 
 class CacheDelete

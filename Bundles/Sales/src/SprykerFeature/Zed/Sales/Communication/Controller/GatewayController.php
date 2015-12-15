@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Communication\Controller;
+namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Sales\Business\SalesFacade;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Sales\Business\SalesFacade;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method SalesFacade getFacade()

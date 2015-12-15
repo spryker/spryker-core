@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Shared\Kernel\Fixtures;
+namespace Unit\Spryker\Shared\Kernel\Fixtures;
 
 class KernelDependencyContainer
 {

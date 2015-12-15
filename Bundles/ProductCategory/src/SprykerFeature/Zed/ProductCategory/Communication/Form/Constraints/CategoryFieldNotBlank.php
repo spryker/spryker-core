@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Communication\Form\Constraints;
+namespace Spryker\Zed\ProductCategory\Communication\Form\Constraints;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 

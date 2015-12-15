@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer;
+namespace Spryker\Zed\Kernel\ClassResolver\DependencyContainer;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\ClassResolver\ClassInfo;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class BundleConfigNotFoundException extends \Exception
 {

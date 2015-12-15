@@ -1,11 +1,11 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer;
+namespace Unit\Spryker\Zed\Development\Business\CodeStyleFixer;
 
-use SprykerFeature\Zed\Development\Business\CodeStyleFixer\PhpdocPipeFixer;
+use Spryker\Zed\Development\Business\CodeStyleFixer\PhpdocPipeFixer;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Development
  * @group CodeStyleFixer

@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Persistence\Propel;
+namespace Spryker\Zed\Auth\Persistence\Propel;
 
 use Orm\Zed\Auth\Persistence\Base\SpyResetPasswordQuery as BaseSpyResetPasswordQuery;
 

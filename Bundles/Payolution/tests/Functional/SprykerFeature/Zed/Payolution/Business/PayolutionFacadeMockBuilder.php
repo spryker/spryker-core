@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Payolution\Business;
+namespace Functional\Spryker\Zed\Payolution\Business;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
-use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
-use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainer;
+use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payolution\Business\PayolutionDependencyContainer;
+use Spryker\Zed\Payolution\Business\PayolutionFacade;
+use Spryker\Zed\Payolution\PayolutionConfig;
+use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
 
 class PayolutionFacadeMockBuilder
 {
@@ -40,7 +40,7 @@ class PayolutionFacadeMockBuilder
         // Mock the facade to override getDependencyContainer() and have it return out
         // previously created mock.
         $facade = $testCase->getMock(
-            'SprykerFeature\Zed\Payolution\Business\PayolutionFacade',
+            'Spryker\Zed\Payolution\Business\PayolutionFacade',
             ['getDependencyContainer']
         );
         $facade->expects($testCase->any())
@@ -58,7 +58,7 @@ class PayolutionFacadeMockBuilder
     protected static function getDependencyContainerMock(\PHPUnit_Framework_TestCase $testCase)
     {
         $dependencyContainerMock = $testCase->getMock(
-            'SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer',
+            'Spryker\Zed\Payolution\Business\PayolutionDependencyContainer',
             ['createAdapter']
         );
 

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\ClassResolver\Facade;
+namespace Spryker\Zed\Kernel\ClassResolver\Facade;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\ClassResolver\ClassInfo;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class FacadeNotFoundException extends \Exception
 {

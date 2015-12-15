@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOption\Business\Model;
+namespace Spryker\Zed\ProductOption\Business\Model;
 
 use Generated\Shared\Transfer\ProductOptionsNameValueTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ArrayCollection;
-use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;

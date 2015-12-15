@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Mode;
+namespace Spryker\Zed\Payone\Business\Mode;
 
-use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
-use SprykerFeature\Zed\Payone\PayoneConfig;
+use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
+use Spryker\Zed\Payone\PayoneConfig;
 
 class ModeDetector implements ModeDetectorInterface
 {

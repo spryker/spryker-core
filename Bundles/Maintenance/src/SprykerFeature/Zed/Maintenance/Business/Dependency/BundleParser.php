@@ -4,21 +4,21 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Business\Dependency;
+namespace Spryker\Zed\Maintenance\Business\Dependency;
 
-use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
+use Spryker\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 class BundleParser
 {
 
-    const SPRYKER_ENGINE = 'SprykerEngine';
+    const SPRYKER_ENGINE = 'Spryker';
 
     /**
      * @var array
      */
-    protected $coreBundleNamespaces = ['SprykerFeature', self::SPRYKER_ENGINE];
+    protected $coreBundleNamespaces = ['Spryker', self::SPRYKER_ENGINE];
 
     /**
      * @var MaintenanceConfig

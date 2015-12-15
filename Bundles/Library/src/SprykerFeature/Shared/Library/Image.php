@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library;
+namespace Spryker\Shared\Library;
 
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Product\ProductConstants;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Product\ProductConstants;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class Image
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerEngine\Shared\Gui\Form;
+namespace Spryker\Shared\Gui\Form;
 
-use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 
 class NullFormTransfer extends AbstractTransfer
 {

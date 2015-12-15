@@ -1,16 +1,16 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Cart\Business\StorageProvider;
+namespace Unit\Spryker\Zed\Cart\Business\StorageProvider;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\AbstractTransfer;
 use Generated\Shared\Transfer\CartTransfer;
-use SprykerFeature\Zed\Cart\Business\StorageProvider\InMemoryProvider;
-use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
+use Spryker\Zed\Cart\Business\StorageProvider\InMemoryProvider;
+use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Cart
  * @group Business
@@ -146,7 +146,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
+     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not change cart item "123" with "-3" as value.
      *
      * @return void
@@ -163,7 +163,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
+     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not change cart item "123" with "0" as value.
      *
      * @return void
@@ -180,7 +180,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
+     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not change cart item "123" with "-3" as value.
      *
      * @return void
@@ -197,7 +197,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
+     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not change cart item "123" with "0" as value.
      *
      * @return void

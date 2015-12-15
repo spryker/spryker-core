@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Storage;
+namespace Spryker\Client\Storage;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method StorageDependencyContainer getDependencyContainer()

@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Maintenance\Business\InstalledPackages;
+namespace Unit\Spryker\Zed\Maintenance\Business\InstalledPackages;
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Shared\Transfer\InstalledPackageTransfer;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Maintenance
  * @group Business
@@ -39,7 +39,7 @@ class InstalledPackageCollectorFilterTest extends \PHPUnit_Framework_TestCase
             ->setLicense(['MIT', 'GPL']);
         $collection->addPackage($package2);
 
-        $finderMock = $this->getMock('SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface', ['findInstalledPackages']);
+        $finderMock = $this->getMock('Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface', ['findInstalledPackages']);
         $finderMock->expects($this->once())
             ->method('findInstalledPackages')
             ->will($this->returnValue($collection));

@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Dependency\Facade;
+namespace Spryker\Zed\Glossary\Dependency\Facade;
 
 interface GlossaryToTouchInterface
 {

@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Persistence\Propel;
+namespace Spryker\Zed\Stock\Persistence\Propel;
 
 use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Stock\Persistence\Base\SpyStockProduct as BaseSpyStockProduct;
@@ -46,5 +46,5 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
         $this->save();
     }
 
-} // SprykerFeature\Zed\Stock\Persistence\Propel\AbstractSpyStockProduct
+} // Spryker\Zed\Stock\Persistence\Propel\AbstractSpyStockProduct
 

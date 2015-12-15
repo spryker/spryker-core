@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\Model;
+namespace Spryker\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -13,14 +13,14 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\AddressTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
-use SprykerEngine\Zed\Propel\PropelFilterCriteria;
-use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
-use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Propel\PropelFilterCriteria;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderManager
 {

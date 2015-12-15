@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Locale\Communication\Plugin;
+namespace Spryker\Zed\Locale\Communication\Plugin;
 
-use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
-use SprykerEngine\Zed\Locale\Communication\LocaleDependencyContainer;
+use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Zed\Locale\Communication\LocaleDependencyContainer;
 
 /**
  * @method LocaleDependencyContainer getDependencyContainer()

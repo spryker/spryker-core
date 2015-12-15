@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Model;
+namespace Spryker\Zed\Product\Business\Model;
 
 class ProductBatchResult implements ProductBatchResultInterface
 {

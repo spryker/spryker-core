@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer\Fixtures\PhpdocReturnVoidFixer\Input;
+namespace Unit\Spryker\Zed\Development\Business\CodeStyleFixer\Fixtures\PhpdocReturnVoidFixer\Input;
 
 class TestClass1Input
 {

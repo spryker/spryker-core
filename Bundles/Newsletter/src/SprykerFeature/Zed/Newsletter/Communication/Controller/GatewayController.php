@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Newsletter\Communication\Controller;
+namespace Spryker\Zed\Newsletter\Communication\Controller;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use SprykerFeature\Zed\Newsletter\Business\NewsletterFacade;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Newsletter\Business\NewsletterFacade;
 
 /**
  * @method NewsletterFacade getFacade()

@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Persistence\Propel;
+namespace Spryker\Zed\Acl\Persistence\Propel;
 
 use Orm\Zed\Acl\Persistence\Base\SpyAclGroupQuery as BaseSpyAclGroupQuery;
 

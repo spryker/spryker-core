@@ -1,14 +1,14 @@
 <?php
 
-namespace SprykerFeature\Zed\Discount\Communication\Form;
+namespace Spryker\Zed\Discount\Communication\Form;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerEngine\Shared\Gui\Form\AbstractForm;
-use SprykerFeature\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use SprykerFeature\Zed\Discount\DiscountConfig;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 

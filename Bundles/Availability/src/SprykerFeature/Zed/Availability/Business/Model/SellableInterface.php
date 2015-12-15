@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Availability\Business\Model;
+namespace Spryker\Zed\Availability\Business\Model;
 
 interface SellableInterface
 {

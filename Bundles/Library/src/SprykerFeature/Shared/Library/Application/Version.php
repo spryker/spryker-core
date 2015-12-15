@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Application;
+namespace Spryker\Shared\Library\Application;
 
 class Version
 {

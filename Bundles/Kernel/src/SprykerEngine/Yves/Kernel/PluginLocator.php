@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Kernel;
+namespace Spryker\Yves\Kernel;
 
-use SprykerEngine\Shared\Kernel\AbstractLocator;
-use SprykerEngine\Shared\Kernel\Locator\LocatorException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Kernel\AbstractLocator;
+use Spryker\Shared\Kernel\Locator\LocatorException;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 class PluginLocator extends AbstractLocator
 {

@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Setup\Communication\Controller;
+namespace Spryker\Zed\Setup\Communication\Controller;
 
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\Environment;
-use SprykerFeature\Shared\Setup\SetupConstants;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Library\Environment;
+use Spryker\Shared\Setup\SetupConstants;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {

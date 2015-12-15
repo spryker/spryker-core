@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\Model;
+namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-use SprykerEngine\Zed\Kernel\Business\ModelResult;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
+use Spryker\Zed\Kernel\Business\ModelResult;
 
 class DecisionRuleEngine implements DecisionRuleInterface
 {

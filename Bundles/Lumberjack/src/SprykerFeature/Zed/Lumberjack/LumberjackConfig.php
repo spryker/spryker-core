@@ -3,9 +3,9 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerFeature\Zed\Lumberjack;
+namespace Spryker\Zed\Lumberjack;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class LumberjackConfig extends AbstractBundleConfig
 {

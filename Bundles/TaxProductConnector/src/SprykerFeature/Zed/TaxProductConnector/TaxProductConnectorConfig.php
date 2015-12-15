@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\TaxProductConnector;
+namespace Spryker\Zed\TaxProductConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TaxProductConnectorConfig extends AbstractBundleConfig
 {

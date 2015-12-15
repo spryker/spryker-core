@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Sales\Code;
+namespace Spryker\Shared\Sales\Code;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Kernel\Locator;
 
 /**
  * @TODO Validate cross-bundle Dependencies
@@ -65,7 +65,7 @@ abstract class AbstractItemGrouper
         $index = [];
         $methodName = 'get' . ucfirst($key);
 
-        /** @var \SprykerFeature\Shared\Sales\Transfer\OrderItem $item */
+        /** @var \Spryker\Shared\Sales\Transfer\OrderItem $item */
         foreach ($items as $item) {
             $groupKey = $item->$methodName();
             if (isset($index[$groupKey])) {

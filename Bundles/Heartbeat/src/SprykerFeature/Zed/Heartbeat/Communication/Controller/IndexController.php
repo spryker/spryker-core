@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Heartbeat\Communication\Controller;
+namespace Spryker\Zed\Heartbeat\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends AbstractController

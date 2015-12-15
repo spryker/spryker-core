@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Nopayment\Communication\Plugin\Condition;
+namespace Spryker\Zed\Nopayment\Communication\Plugin\Condition;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use SprykerFeature\Zed\Nopayment\Communication\NopaymentDependencyContainer;
+use Spryker\Zed\Nopayment\Communication\NopaymentDependencyContainer;
 
 /**
  * @method NopaymentDependencyContainer getDependencyContainer()

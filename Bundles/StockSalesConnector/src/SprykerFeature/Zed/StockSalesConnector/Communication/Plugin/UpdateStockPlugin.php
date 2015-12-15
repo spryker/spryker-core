@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\StockSalesConnector\Communication\Plugin;
+namespace Spryker\Zed\StockSalesConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\StockProductTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\StockSalesConnector\Business\StockSalesConnectorDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\StockSalesConnector\Business\StockSalesConnectorDependencyContainer;
 
 /**
  * @method StockSalesConnectorDependencyContainer getDependencyContainer()

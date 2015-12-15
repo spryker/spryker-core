@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Communication\Form;
+namespace Spryker\Zed\Cms\Communication\Form;
 
-use SprykerFeature\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\Business\CmsFacade;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsGlossaryForm extends AbstractForm

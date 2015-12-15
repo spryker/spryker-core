@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Tax;
+namespace Functional\Spryker\Zed\Tax;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
-use SprykerFeature\Zed\Tax\Business\TaxFacade;
+use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
+use Spryker\Zed\Tax\Business\TaxFacade;
 use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
@@ -231,7 +231,7 @@ class WriterTest extends Test
      */
     public function testExceptionRaisedIfAttemptingToCreateTaxSetWithoutAnyTaxRates()
     {
-        $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException');
+        $this->setExpectedException('Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException');
 
         $this->taxFacade->createTaxSet($this->createTaxSetTransfer());
     }
@@ -258,7 +258,7 @@ class WriterTest extends Test
      */
     public function testExceptionRaisedIfAttemptingToRemoveTaxRateFromTaxSetWithSingleTaxRate()
     {
-        $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException');
+        $this->setExpectedException('Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException');
 
         $taxRateTransfer = $this->createTaxRateTransfer();
         $rateId = $this->taxFacade->createTaxRate($taxRateTransfer)->getIdTaxRate();

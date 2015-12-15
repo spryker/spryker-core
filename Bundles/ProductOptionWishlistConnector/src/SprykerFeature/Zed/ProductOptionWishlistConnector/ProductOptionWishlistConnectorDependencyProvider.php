@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionWishlistConnector;
+namespace Spryker\Zed\ProductOptionWishlistConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class ProductOptionWishlistConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {

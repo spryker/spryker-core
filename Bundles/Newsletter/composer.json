@@ -2,7 +2,7 @@
   "name": "spryker/newsletter",
   "autoload": {
     "psr-0": {
-      "SprykerFeature": "src/",
+      "Spryker": "src/",
       "Acceptance": "tests/",
       "Function": "tests/",
       "Integration": "tests/",

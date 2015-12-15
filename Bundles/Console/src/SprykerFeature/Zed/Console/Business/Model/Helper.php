@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Console\Business\Model;
+namespace Spryker\Zed\Console\Business\Model;
 
 use Silex\Application;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;

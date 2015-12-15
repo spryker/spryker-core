@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\Model\Split;
+namespace Spryker\Zed\Sales\Business\Model\Split;
 
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
-use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
+use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderItem implements ItemInterface
 {

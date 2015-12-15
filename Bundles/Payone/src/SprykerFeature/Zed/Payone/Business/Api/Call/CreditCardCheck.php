@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Call;
+namespace Spryker\Zed\Payone\Business\Api\Call;
 
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
+use Spryker\Shared\Payone\PayoneApiConstants;
 
 class CreditCardCheck extends AbstractCall
 {

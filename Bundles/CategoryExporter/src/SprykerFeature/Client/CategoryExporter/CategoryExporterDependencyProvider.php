@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\CategoryExporter;
+namespace Spryker\Client\CategoryExporter;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\AbstractDependencyProvider;
 
 class CategoryExporterDependencyProvider extends AbstractDependencyProvider
 {

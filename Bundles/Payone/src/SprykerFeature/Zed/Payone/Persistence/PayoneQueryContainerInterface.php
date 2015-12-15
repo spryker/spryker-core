@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Persistence;
+namespace Spryker\Zed\Payone\Persistence;
 
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Communication;
+namespace Spryker\Zed\ProductSearch\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\ProductSearch\Business\ProductSearchFacade;
-use SprykerFeature\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
+use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class ProductSearchDependencyContainer extends AbstractCommunicationDependencyContainer
 {

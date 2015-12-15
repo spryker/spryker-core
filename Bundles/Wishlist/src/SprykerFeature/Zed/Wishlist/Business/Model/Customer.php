@@ -3,12 +3,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Wishlist\Business\Model;
+namespace Spryker\Zed\Wishlist\Business\Model;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
+use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Customer
 {

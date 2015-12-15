@@ -4,36 +4,36 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business;
+namespace Spryker\Zed\Payone\Business;
 
-use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\Prepayment;
-use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\EWallet;
-use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\OnlineBankTransfer;
-use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\Invoice;
-use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
-use SprykerFeature\Zed\Payone\Business\Mode\ModeDetector;
-use SprykerFeature\Zed\Payone\Business\Key\HashProvider;
-use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProvider;
-use SprykerFeature\Zed\Payone\Business\Api\Adapter\Http\Guzzle;
-use SprykerFeature\Zed\Payone\Business\Order\OrderManager;
-use SprykerFeature\Zed\Payone\Business\Payment\PaymentManager;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\Prepayment;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\EWallet;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\OnlineBankTransfer;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice;
+use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
+use Spryker\Zed\Payone\Business\Mode\ModeDetector;
+use Spryker\Zed\Payone\Business\Key\HashProvider;
+use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProvider;
+use Spryker\Zed\Payone\Business\Api\Adapter\Http\Guzzle;
+use Spryker\Zed\Payone\Business\Order\OrderManager;
+use Spryker\Zed\Payone\Business\Payment\PaymentManager;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
-use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
-use SprykerFeature\Zed\Payone\Business\Key\HashGenerator;
-use SprykerFeature\Zed\Payone\Business\Payment\PaymentManagerInterface;
-use SprykerFeature\Zed\Payone\Business\Order\OrderManagerInterface;
-use SprykerFeature\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
-use SprykerFeature\Zed\Payone\PayoneConfig;
-use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
-use SprykerFeature\Shared\Payone\Dependency\HashInterface;
-use SprykerFeature\Zed\Payone\PayoneDependencyProvider;
-use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainer;
-use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
-use SprykerFeature\Zed\Payone\Business\ApiLog\ApiLogFinder;
+use Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
+use Spryker\Zed\Payone\Business\Key\HashGenerator;
+use Spryker\Zed\Payone\Business\Payment\PaymentManagerInterface;
+use Spryker\Zed\Payone\Business\Order\OrderManagerInterface;
+use Spryker\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
+use Spryker\Zed\Payone\PayoneConfig;
+use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
+use Spryker\Shared\Payone\Dependency\HashInterface;
+use Spryker\Zed\Payone\PayoneDependencyProvider;
+use Spryker\Zed\Payone\Persistence\PayoneQueryContainer;
+use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
+use Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder;
 
 /**
  * @method PayoneConfig getConfig()

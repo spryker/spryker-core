@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Acl\Messages;
+namespace Spryker\Shared\Acl\Messages;
 
 class Messages
 {

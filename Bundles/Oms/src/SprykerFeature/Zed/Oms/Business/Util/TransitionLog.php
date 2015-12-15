@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Business\Util;
+namespace Spryker\Zed\Oms\Business\Util;
 
-use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
+use Spryker\Shared\Library\System;
+use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class TransitionLog implements TransitionLogInterface
 {

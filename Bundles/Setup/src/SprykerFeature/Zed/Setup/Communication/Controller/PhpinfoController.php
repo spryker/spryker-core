@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Setup\Communication\Controller;
+namespace Spryker\Zed\Setup\Communication\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 class PhpinfoController extends AbstractController
 {

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Touch\Business\Model;
+namespace Spryker\Zed\Touch\Business\Model;
 
 use DateTime;
 use Generated\Shared\Transfer\TouchTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class Touch implements TouchInterface
 {

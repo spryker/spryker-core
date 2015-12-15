@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Glossary;
+namespace Spryker\Client\Glossary;
 
 interface GlossaryClientInterface
 {

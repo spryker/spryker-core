@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Payone\Dependency;
+namespace Spryker\Shared\Payone\Dependency;
 
 interface HashInterface
 {

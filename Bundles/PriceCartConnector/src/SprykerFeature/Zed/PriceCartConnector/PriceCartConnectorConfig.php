@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\PriceCartConnector;
+namespace Spryker\Zed\PriceCartConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Zed\Price\PriceConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Price\PriceConfig;
 
 class PriceCartConnectorConfig extends AbstractBundleConfig
 {

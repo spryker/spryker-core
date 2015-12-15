@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Calculation\Business\Model;
+namespace Spryker\Zed\Calculation\Business\Model;
 
 interface PriceCalculationHelperInterface
 {

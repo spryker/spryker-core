@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider;
+namespace Spryker\Zed\Propel\Communication\Plugin\ServiceProvider;
 
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ServiceContainer\StandardServiceContainer;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEngine\Zed\Propel\Communication\PropelDependencyContainer;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Propel\Communication\PropelDependencyContainer;
+use Spryker\Shared\Application\ApplicationConstants;
 
 /**
  * @method PropelDependencyContainer getDependencyContainer()

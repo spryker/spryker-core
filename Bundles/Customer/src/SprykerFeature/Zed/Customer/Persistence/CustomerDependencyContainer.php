@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Persistence;
+namespace Spryker\Zed\Customer\Persistence;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 
 class CustomerDependencyContainer extends AbstractPersistenceDependencyContainer

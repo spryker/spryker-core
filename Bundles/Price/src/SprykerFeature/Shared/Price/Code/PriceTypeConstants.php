@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Price\Code;
+namespace Spryker\Shared\Price\Code;
 
 interface PriceTypeConstants
 {

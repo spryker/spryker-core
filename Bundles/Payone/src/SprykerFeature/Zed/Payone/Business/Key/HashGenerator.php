@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Key;
+namespace Spryker\Zed\Payone\Business\Key;
 
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
-use SprykerFeature\Shared\Payone\Dependency\HashInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+use Spryker\Shared\Payone\Dependency\HashInterface;
 
 class HashGenerator implements HashGeneratorInterface
 {

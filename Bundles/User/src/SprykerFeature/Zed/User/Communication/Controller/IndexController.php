@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User\Communication\Controller;
+namespace Spryker\Zed\User\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\User\Business\UserFacade;
-use SprykerFeature\Zed\User\Communication\UserDependencyContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\User\Business\UserFacade;
+use Spryker\Zed\User\Communication\UserDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 /**
  * @method UserDependencyContainer getDependencyContainer

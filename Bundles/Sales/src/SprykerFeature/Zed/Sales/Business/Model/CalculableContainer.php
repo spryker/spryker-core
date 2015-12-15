@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\Sales\Business\Model;
+namespace Spryker\Zed\Sales\Business\Model;
 
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Generated\Shared\Transfer\CalculableContainerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 

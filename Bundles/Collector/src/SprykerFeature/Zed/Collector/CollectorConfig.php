@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector;
+namespace Spryker\Zed\Collector;
 
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Config;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CollectorConfig extends AbstractBundleConfig
 {

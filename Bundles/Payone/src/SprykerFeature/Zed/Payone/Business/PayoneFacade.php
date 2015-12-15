@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business;
+namespace Spryker\Zed\Payone\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
@@ -16,13 +16,13 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
+use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 
 /**
  * @method PayoneDependencyContainer getDependencyContainer()

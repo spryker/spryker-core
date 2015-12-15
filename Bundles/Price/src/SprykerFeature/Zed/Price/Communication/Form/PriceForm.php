@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Price\Communication\Form;
+namespace Spryker\Zed\Price\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Propel\Runtime\Exception\PropelException;
 use Symfony\Component\Validator\Constraints;
-use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
+use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 
 class PriceForm extends AbstractForm
 {

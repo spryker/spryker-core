@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Gui\Communication\Table;
+namespace Spryker\Zed\Gui\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Symfony\Component\HttpFoundation\Request;

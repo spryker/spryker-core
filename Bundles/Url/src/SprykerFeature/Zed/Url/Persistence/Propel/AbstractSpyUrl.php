@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Persistence\Propel;
+namespace Spryker\Zed\Url\Persistence\Propel;
 
-use SprykerFeature\Zed\Url\Persistence\Exception\MissingResourceException;
-use SprykerFeature\Zed\Url\Persistence\Exception\UnknownResourceTypeException;
+use Spryker\Zed\Url\Persistence\Exception\MissingResourceException;
+use Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException;
 use Orm\Zed\Url\Persistence\Base\SpyUrl as BaseSpyUrl;
 
 /**

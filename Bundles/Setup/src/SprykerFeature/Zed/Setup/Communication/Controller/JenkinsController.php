@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Setup\Communication\Controller;
+namespace Spryker\Zed\Setup\Communication\Controller;
 
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\DataDirectory;
-use SprykerFeature\Shared\Library\Environment;
-use SprykerFeature\Shared\Library\Log;
-use SprykerFeature\Shared\Setup\SetupConstants;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Library\DataDirectory;
+use Spryker\Shared\Library\Environment;
+use Spryker\Shared\Library\Log;
+use Spryker\Shared\Setup\SetupConstants;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 /**
  * @deprecated

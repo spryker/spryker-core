@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Shared\Kernel\Fixtures;
+namespace Unit\Spryker\Shared\Kernel\Fixtures;
 
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use SprykerEngine\Shared\Kernel\BundleProxy;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Shared\Kernel\BundleProxy;
 
 class LocatorLocator extends AbstractLocatorLocator
 {

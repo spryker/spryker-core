@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Persistence\Propel;
+namespace Spryker\Zed\ProductCategory\Persistence\Propel;
 
 use Orm\Zed\ProductCategory\Persistence\Base\SpyProductCategory as BaseSpyProductCategory;
 

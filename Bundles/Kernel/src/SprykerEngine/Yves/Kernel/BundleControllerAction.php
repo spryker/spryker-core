@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Kernel;
+namespace Spryker\Yves\Kernel;
 
-use SprykerEngine\Shared\Kernel\Communication\BundleControllerActionInterface;
+use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 
 class BundleControllerAction implements BundleControllerActionInterface
 {

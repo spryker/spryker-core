@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Application\Communication\Bootstrap\Extension;
+namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
-use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
-use SprykerEngine\Shared\Application\Communication\Application;
-use SprykerFeature\Shared\Library\Context;
-use SprykerFeature\Shared\Library\DateFormatter;
-use SprykerFeature\Shared\Library\Twig\DateFormatterTwigExtension;
-use SprykerFeature\Zed\Application\Business\Model\Twig\ZedExtension;
-use SprykerFeature\Zed\Price\Communication\Plugin\Twig\PriceTwigExtensions;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
+use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Library\Context;
+use Spryker\Shared\Library\DateFormatter;
+use Spryker\Shared\Library\Twig\DateFormatterTwigExtension;
+use Spryker\Zed\Application\Business\Model\Twig\ZedExtension;
+use Spryker\Zed\Price\Communication\Plugin\Twig\PriceTwigExtensions;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Component\Translation\Translator;
 

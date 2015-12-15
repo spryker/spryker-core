@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Business\Model\Navigation\Validator;
+namespace Spryker\Zed\Application\Business\Model\Navigation\Validator;
 
 class UrlUniqueValidator implements UrlUniqueValidatorInterface
 {

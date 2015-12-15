@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Storage;
+namespace Spryker\Shared\Library\Storage;
 
 use Elastica\Client;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface as KeyValueReadInterface;
-use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface as KeyValueReadWriteInterface;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface as KeyValueReadInterface;
+use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface as KeyValueReadWriteInterface;
+use Spryker\Shared\Application\ApplicationConstants;
 
 /**
  * Class StorageInstanceBuilder
@@ -18,7 +18,7 @@ use SprykerFeature\Shared\Application\ApplicationConstants;
 class StorageInstanceBuilder
 {
 
-    const KV_NAMESPACE = '\SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\\';
+    const KV_NAMESPACE = '\Spryker\Shared\Library\Storage\Adapter\KeyValue\\';
     const SEARCH_ELASTICA_ADAPTER = 'elastica';
     const ADAPTER_READ_WRITE = 'ReadWrite';
     const ADAPTER_READ = 'Read';

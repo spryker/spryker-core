@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Storage\Communication;
+namespace Spryker\Zed\Storage\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Client\Storage\StorageClientInterface;
-use SprykerFeature\Zed\Collector\Business\CollectorFacade;
-use SprykerFeature\Zed\Storage\Communication\Table\StorageTable;
-use SprykerFeature\Zed\Storage\StorageDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Zed\Collector\Business\CollectorFacade;
+use Spryker\Zed\Storage\Communication\Table\StorageTable;
+use Spryker\Zed\Storage\StorageDependencyProvider;
 
 class StorageDependencyContainer extends AbstractCommunicationDependencyContainer
 {

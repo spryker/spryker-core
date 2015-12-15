@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CartCheckoutConnector;
+namespace Spryker\Zed\CartCheckoutConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 class CartCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {

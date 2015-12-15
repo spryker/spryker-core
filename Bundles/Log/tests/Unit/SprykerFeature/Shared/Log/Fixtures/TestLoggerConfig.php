@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Shared\Log\Fixtures;
+namespace Unit\Spryker\Shared\Log\Fixtures;
 
 use Monolog\Handler\HandlerInterface;
-use SprykerFeature\Shared\Log\Config\LoggerConfigInterface;
+use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
 class TestLoggerConfig implements LoggerConfigInterface
 {

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Product;
+namespace Spryker\Client\Product;
 
 interface ProductClientInterface
 {

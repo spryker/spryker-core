@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Persistence;
+namespace Spryker\Zed\Kernel\Persistence;
 
-use SprykerEngine\Shared\Kernel\Locator\LocatorMatcherInterface;
+use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class QueryContainerLocatorMatcher implements LocatorMatcherInterface
 {

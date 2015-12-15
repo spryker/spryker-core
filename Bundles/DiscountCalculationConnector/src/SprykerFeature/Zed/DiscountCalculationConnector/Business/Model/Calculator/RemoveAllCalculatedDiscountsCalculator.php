@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
+namespace Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class RemoveAllCalculatedDiscountsCalculator
 {

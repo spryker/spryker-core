@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\NewRelic;
+namespace Spryker\Shared\NewRelic;
 
 interface NewRelicConstants
 {

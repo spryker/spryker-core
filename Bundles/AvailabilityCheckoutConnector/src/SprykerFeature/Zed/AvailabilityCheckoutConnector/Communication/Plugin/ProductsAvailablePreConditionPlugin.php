@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\AvailabilityCheckoutConnector\Communication\Plugin;
+namespace Spryker\Zed\AvailabilityCheckoutConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Checkout\CheckoutConstants;
-use SprykerFeature\Zed\AvailabilityCheckoutConnector\Communication\AvailabilityCheckoutConnectorDependencyContainer;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Zed\AvailabilityCheckoutConnector\Communication\AvailabilityCheckoutConnectorDependencyContainer;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
 /**
  * @method AvailabilityCheckoutConnectorDependencyContainer getDependencyContainer()

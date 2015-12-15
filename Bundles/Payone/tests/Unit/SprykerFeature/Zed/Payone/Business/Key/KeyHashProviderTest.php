@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Payone\Business\Key;
+namespace Unit\Spryker\Zed\Payone\Business\Key;
 
-use SprykerFeature\Zed\Payone\Business\Key\HashProvider;
+use Spryker\Zed\Payone\Business\Key\HashProvider;
 
 /**
  * @group KeyHash

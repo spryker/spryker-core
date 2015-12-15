@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\NewRelic\Communication\Console;
+namespace Spryker\Zed\NewRelic\Communication\Console;
 
-use SprykerFeature\Zed\Console\Business\Model\Console;
-use SprykerFeature\Zed\NewRelic\Communication\NewRelicDependencyContainer;
+use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\NewRelic\Communication\NewRelicDependencyContainer;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

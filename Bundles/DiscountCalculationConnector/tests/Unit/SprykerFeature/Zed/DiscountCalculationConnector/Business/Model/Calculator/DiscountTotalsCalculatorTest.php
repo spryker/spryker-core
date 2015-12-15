@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
+namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group DiscountCalculationConnector
  * @group Business

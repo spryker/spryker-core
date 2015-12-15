@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Payment\Handler\Transaction;
+namespace Spryker\Zed\Payolution\Business\Payment\Handler\Transaction;
 
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;

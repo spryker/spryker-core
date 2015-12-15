@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Business\Model;
+namespace Spryker\Zed\Stock\Business\Model;
 
-use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use SprykerFeature\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
-use SprykerFeature\Zed\Stock\Business\Exception\StockProductNotFoundException;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
+use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 
 interface ReaderInterface

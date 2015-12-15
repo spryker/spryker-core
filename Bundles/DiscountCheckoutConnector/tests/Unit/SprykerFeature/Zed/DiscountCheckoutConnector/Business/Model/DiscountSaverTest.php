@@ -4,21 +4,21 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model;
+namespace Unit\Spryker\Zed\DiscountCheckoutConnector\Business\Model;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerEngine\Zed\Kernel\AbstractUnitTest;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\Kernel\AbstractUnitTest;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
-use SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
+use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group DiscountCheckoutConnector
  * @group Business
@@ -164,7 +164,7 @@ class DiscountSaverTest extends AbstractUnitTest
      */
     private function getDiscountQueryContainerMock(array $methods = [])
     {
-        $discountQueryContainerMock = $this->getMock('SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface', $methods);
+        $discountQueryContainerMock = $this->getMock('Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface', $methods);
 
         return $discountQueryContainerMock;
     }
@@ -178,7 +178,7 @@ class DiscountSaverTest extends AbstractUnitTest
     private function getDiscountSaverMock(array $discountSaverMethods = [], array $queryContainerMethods = [])
     {
         $discountSaverMock = $this->getMock(
-            'SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver',
+            'Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver',
             $discountSaverMethods,
             [$this->getDiscountQueryContainerMock($queryContainerMethods), new DiscountFacade()]
         );

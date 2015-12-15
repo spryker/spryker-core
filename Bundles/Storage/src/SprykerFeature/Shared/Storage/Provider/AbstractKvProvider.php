@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Storage\Provider;
+namespace Spryker\Shared\Storage\Provider;
 
-use SprykerEngine\Shared\Kernel\AbstractClientProvider;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\AbstractClientProvider;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Application\ApplicationConstants;
 
 abstract class AbstractKvProvider extends AbstractClientProvider
 {

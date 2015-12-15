@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Business;
+namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
-use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
-use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
+use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
+use Spryker\Zed\Url\Business\Exception\MissingUrlException;
+use Spryker\Zed\Url\Business\Exception\RedirectExistsException;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Orm\Zed\Url\Persistence\SpyRedirect;
 
 interface RedirectManagerInterface

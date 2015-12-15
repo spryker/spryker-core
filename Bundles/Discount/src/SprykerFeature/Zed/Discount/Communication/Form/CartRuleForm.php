@@ -1,9 +1,9 @@
 <?php
 
-namespace SprykerFeature\Zed\Discount\Communication\Form;
+namespace Spryker\Zed\Discount\Communication\Form;
 
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\DiscountConfig;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CartRuleForm extends AbstractRuleForm

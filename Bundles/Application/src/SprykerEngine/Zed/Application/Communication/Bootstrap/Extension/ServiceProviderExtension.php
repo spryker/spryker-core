@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Application\Communication\Bootstrap\Extension;
+namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
-use SprykerFeature\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider as ServiceProviderSessionServiceProvider;
-use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
-use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\NewRelicServiceProvider;
-use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
-use SprykerEngine\Zed\Translation\Communication\Plugin\TranslationServiceProvider;
-use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\EnvironmentInformationServiceProvider;
-use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider as ServiceProviderTwigServiceProvider;
-use SprykerFeature\Zed\Acl\Communication\Plugin\Bootstrap\AclBootstrapProvider;
-use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider;
-use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider;
-use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
-use SprykerFeature\Zed\Auth\Communication\Plugin\Bootstrap\AuthBootstrapProvider;
-use SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
-use SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider as ServiceProviderSessionServiceProvider;
+use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\NewRelicServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
+use Spryker\Zed\Translation\Communication\Plugin\TranslationServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\EnvironmentInformationServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider as ServiceProviderTwigServiceProvider;
+use Spryker\Zed\Acl\Communication\Plugin\Bootstrap\AclBootstrapProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
+use Spryker\Zed\Auth\Communication\Plugin\Bootstrap\AuthBootstrapProvider;
+use Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
+use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
@@ -27,11 +27,11 @@ use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
-use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface;
-use SprykerEngine\Shared\Application\Communication\Application;
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface;
+use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Config;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
 
 class ServiceProviderExtension extends LocatorAwareExtension implements ServiceProviderExtensionInterface
 {

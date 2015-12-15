@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerEngine\Zed\Transfer\Business\Model;
+namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Transfer\Business\TransferFacade;
-use SprykerEngine\Zed\Transfer\TransferConfig;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Transfer\Business\TransferFacade;
+use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Finder\Finder;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
@@ -34,7 +34,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
      */
     private function getMessenger()
     {
-        return $this->getMock('SprykerEngine\Shared\Kernel\Messenger\MessengerInterface');
+        return $this->getMock('Spryker\Shared\Kernel\Messenger\MessengerInterface');
     }
 
     /**

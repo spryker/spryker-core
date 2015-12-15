@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
+namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 interface DefinitionBuilderInterface
 {

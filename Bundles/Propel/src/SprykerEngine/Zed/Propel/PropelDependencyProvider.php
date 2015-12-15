@@ -3,20 +3,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Propel;
+namespace Spryker\Zed\Propel;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Propel\Communication\Console\BuildModelConsole;
-use SprykerEngine\Zed\Propel\Communication\Console\BuildSqlConsole;
-use SprykerEngine\Zed\Propel\Communication\Console\ConvertConfigConsole;
-use SprykerEngine\Zed\Propel\Communication\Console\CreateDatabaseConsole;
-use SprykerEngine\Zed\Propel\Communication\Console\DiffConsole;
-use SprykerEngine\Zed\Propel\Communication\Console\InsertSqlConsole;
-use SprykerEngine\Zed\Propel\Communication\Console\MigrateConsole;
-use SprykerEngine\Zed\Propel\Communication\Console\PostgresqlCompatibilityConsole;
-use SprykerEngine\Zed\Propel\Communication\Console\PropelInstallConsole;
-use SprykerEngine\Zed\Propel\Communication\Console\SchemaCopyConsole;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\Communication\Console\BuildModelConsole;
+use Spryker\Zed\Propel\Communication\Console\BuildSqlConsole;
+use Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole;
+use Spryker\Zed\Propel\Communication\Console\CreateDatabaseConsole;
+use Spryker\Zed\Propel\Communication\Console\DiffConsole;
+use Spryker\Zed\Propel\Communication\Console\InsertSqlConsole;
+use Spryker\Zed\Propel\Communication\Console\MigrateConsole;
+use Spryker\Zed\Propel\Communication\Console\PostgresqlCompatibilityConsole;
+use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
+use Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole;
 use Symfony\Component\Console\Command\Command;
 
 class PropelDependencyProvider extends AbstractBundleDependencyProvider

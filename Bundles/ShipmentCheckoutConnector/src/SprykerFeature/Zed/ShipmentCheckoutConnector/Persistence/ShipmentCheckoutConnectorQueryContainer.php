@@ -3,14 +3,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ShipmentCheckoutConnector\Persistence;
+namespace Spryker\Zed\ShipmentCheckoutConnector\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
-use SprykerFeature\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
+use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
+use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
 
 class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer implements ShipmentCheckoutConnectorQueryContainerInterface
 {

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Development;
+namespace Unit\Spryker\Zed\Development;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Development\DevelopmentConfig;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Development\DevelopmentConfig;
 
 class DevelopmentConfigTest extends \PHPUnit_Framework_TestCase
 {

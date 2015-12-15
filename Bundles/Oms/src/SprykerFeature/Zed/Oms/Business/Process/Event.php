@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Business\Process;
+namespace Spryker\Zed\Oms\Business\Process;
 
 class Event implements EventInterface
 {

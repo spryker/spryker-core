@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Application\Communication;
+namespace Spryker\Shared\Application\Communication;
 
-use SprykerEngine\Shared\Kernel\Communication\BundleControllerActionInterface;
-use SprykerEngine\Shared\Kernel\Communication\RouteNameResolverInterface;
-use SprykerEngine\Shared\Kernel\Communication\ControllerLocatorInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
+use Spryker\Shared\Kernel\Communication\RouteNameResolverInterface;
+use Spryker\Shared\Kernel\Communication\ControllerLocatorInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 class ControllerServiceBuilder
 {

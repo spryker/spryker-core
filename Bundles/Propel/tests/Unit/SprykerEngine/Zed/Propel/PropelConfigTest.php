@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Propel;
+namespace Unit\Spryker\Zed\Propel;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Propel\PropelConfig;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Propel\PropelConfig;
 
 class PropelConfigTest extends \PHPUnit_Framework_TestCase
 {

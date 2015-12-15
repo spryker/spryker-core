@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Communication\Controller;
+namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerFeature\Zed\Customer\Business\CustomerFacade;
-use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
-use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
+use Spryker\Zed\Customer\Communication\CustomerDependencyContainer;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method CustomerFacade getFacade()

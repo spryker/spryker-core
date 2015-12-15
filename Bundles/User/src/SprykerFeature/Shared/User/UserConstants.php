@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\User;
+namespace Spryker\Shared\User;
 
 interface UserConstants
 {

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder;
+namespace Spryker\Shared\CategoryExporter\Code\KeyBuilder;
 
-use SprykerFeature\Shared\Category\CategoryConstants;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
+use Spryker\Shared\Category\CategoryConstants;
+use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 
 abstract class SharedCategoryResourceKeyBuilder extends SharedResourceKeyBuilder
 {

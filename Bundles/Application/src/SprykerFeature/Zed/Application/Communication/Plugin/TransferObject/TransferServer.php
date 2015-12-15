@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication\Plugin\TransferObject;
+namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Library\Communication\Response;
-use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
-use SprykerFeature\Shared\ZedRequest\Client\ResponseInterface;
-use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Library\Communication\Response;
+use Spryker\Zed\ZedRequest\Business\Client\Request;
+use Spryker\Shared\ZedRequest\Client\ResponseInterface;
+use Spryker\Shared\ZedRequest\Client\RequestInterface;
+use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 

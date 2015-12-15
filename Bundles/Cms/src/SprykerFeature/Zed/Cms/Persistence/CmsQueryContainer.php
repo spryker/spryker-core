@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Persistence;
+namespace Spryker\Zed\Cms\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Shared\Cms\CmsConstants;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Shared\Cms\CmsConstants;
 use Orm\Zed\Category\Persistence\Base\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
+use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;

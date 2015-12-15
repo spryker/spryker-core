@@ -3,15 +3,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Communication;
+namespace Spryker\Zed\Glossary\Communication;
 
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Glossary\Communication\Form\TranslationForm;
-use SprykerFeature\Zed\Glossary\Communication\Table\TranslationTable;
-use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
-use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
+use Spryker\Zed\Glossary\Communication\Table\TranslationTable;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
+use Spryker\Zed\Glossary\GlossaryDependencyProvider;
+use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
  * @method GlossaryQueryContainerInterface getQueryContainer()

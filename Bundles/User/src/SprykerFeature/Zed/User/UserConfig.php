@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User;
+namespace Spryker\Zed\User;
 
-use SprykerFeature\Shared\User\UserConstants;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\User\UserConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class UserConfig extends AbstractBundleConfig
 {

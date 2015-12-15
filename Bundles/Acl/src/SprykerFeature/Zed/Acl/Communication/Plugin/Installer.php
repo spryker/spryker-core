@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Communication\Plugin;
+namespace Spryker\Zed\Acl\Communication\Plugin;
 
-use SprykerFeature\Zed\Acl\Business\AclFacade;
-use SprykerFeature\Zed\Installer\Business\Model\InstallerInterface;
-use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Zed\Acl\Business\AclFacade;
+use Spryker\Zed\Installer\Business\Model\InstallerInterface;
+use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 /**
  * @method AclFacade getFacade()

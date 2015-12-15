@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Search\Business\Model;
+namespace Spryker\Zed\Search\Business\Model;
 
 interface SearchInstallerInterface
 {

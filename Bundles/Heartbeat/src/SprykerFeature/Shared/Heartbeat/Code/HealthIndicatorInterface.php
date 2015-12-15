@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Heartbeat\Code;
+namespace Spryker\Shared\Heartbeat\Code;
 
 use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 

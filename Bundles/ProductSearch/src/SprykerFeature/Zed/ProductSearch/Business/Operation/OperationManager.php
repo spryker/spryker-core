@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Business\Operation;
+namespace Spryker\Zed\ProductSearch\Business\Operation;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperation;
 
 class OperationManager implements OperationManagerInterface

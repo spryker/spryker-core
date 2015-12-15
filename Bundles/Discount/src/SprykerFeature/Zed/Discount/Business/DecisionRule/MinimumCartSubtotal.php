@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\DecisionRule;
+namespace Spryker\Zed\Discount\Business\DecisionRule;
 
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
-use SprykerEngine\Zed\Kernel\Business\ModelResult;
+use Spryker\Zed\Kernel\Business\ModelResult;
 
 class MinimumCartSubtotal
 {

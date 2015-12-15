@@ -2,7 +2,7 @@
 /**
  * (c) Copyright Spryker Systems GmbH 2015
  */
-namespace SprykerEngine\Zed\Propel\Business\Model;
+namespace Spryker\Zed\Propel\Business\Model;
 
 use DOMDocument;
 use DOMXPath;

@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Dependency\Plugin;
+namespace Spryker\Zed\Collector\Dependency\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
-use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 
 interface CollectorPluginInterface
 {

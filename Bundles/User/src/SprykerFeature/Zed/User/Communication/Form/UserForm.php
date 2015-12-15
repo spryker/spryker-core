@@ -3,9 +3,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User\Communication\Form;
+namespace Spryker\Zed\User\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 
 class UserForm extends AbstractForm

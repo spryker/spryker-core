@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Validator;
+namespace Spryker\Zed\Product\Business\Validator;
 
 /**
  * Interface DataValidatorInterface

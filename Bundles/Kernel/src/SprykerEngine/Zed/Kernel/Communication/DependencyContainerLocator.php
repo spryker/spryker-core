@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Communication;
+namespace Spryker\Zed\Kernel\Communication;
 
-use SprykerEngine\Shared\Kernel\Locator\LocatorException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Kernel\AbstractLocator;
+use Spryker\Shared\Kernel\Locator\LocatorException;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Kernel\AbstractLocator;
 
 class DependencyContainerLocator extends AbstractLocator
 {

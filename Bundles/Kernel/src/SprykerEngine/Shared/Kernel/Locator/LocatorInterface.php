@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Kernel\Locator;
+namespace Spryker\Shared\Kernel\Locator;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 interface LocatorInterface
 {

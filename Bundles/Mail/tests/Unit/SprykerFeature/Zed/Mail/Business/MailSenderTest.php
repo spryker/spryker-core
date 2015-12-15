@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Mail\Business;
+namespace Unit\Spryker\Zed\Mail\Business;
 
 use Generated\Shared\Transfer\AttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\SendMailResponsesTransfer;
 use Generated\Shared\Transfer\SendMailResponseTransfer;
-use SprykerFeature\Shared\Library\PHPUnit\Constraints\ArrayContainsKeyEqualToConstraint;
-use SprykerFeature\Zed\Mail\Business\MandrillMailSender;
+use Spryker\Shared\Library\PHPUnit\Constraints\ArrayContainsKeyEqualToConstraint;
+use Spryker\Zed\Mail\Business\MandrillMailSender;
 
 /**
  * @group Zed
@@ -63,7 +63,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $mandrillMessengerMock = $this->getMock('\\Mandrill_Messages', [], [$this->mandrillMock]);
         $this->mandrillMock->messages = $mandrillMessengerMock;
 
-        $this->inclusionHandler = $this->getMock('\\SprykerFeature\\Zed\\Mail\\Business\\InclusionHandlerInterface');
+        $this->inclusionHandler = $this->getMock('\\Spryker\\Zed\\Mail\\Business\\InclusionHandlerInterface');
 
         $this->mailSender = new MandrillMailSender($this->mandrillMock, $this->inclusionHandler);
     }

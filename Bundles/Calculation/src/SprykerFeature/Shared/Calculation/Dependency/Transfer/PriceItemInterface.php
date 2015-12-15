@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Calculation\Dependency\Transfer;
+namespace Spryker\Shared\Calculation\Dependency\Transfer;
 
-use SprykerEngine\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Transfer\TransferInterface;
 
 interface PriceItemInterface extends TransferInterface
 {

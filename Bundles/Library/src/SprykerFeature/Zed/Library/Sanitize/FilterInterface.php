@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Library\Sanitize;
+namespace Spryker\Zed\Library\Sanitize;
 
 interface FilterInterface
 {

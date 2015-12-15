@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Bundles\Wishlist\tests\Unit\SprykerFeature\Zed\Wishlist\Business\Storage;
+namespace Bundles\Wishlist\tests\Unit\Spryker\Zed\Wishlist\Business\Storage;
 
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Zed\Wishlist\Business\Storage\Propel;
+use Spryker\Zed\Wishlist\Business\Storage\Propel;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 
@@ -172,7 +172,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         WishlistItemSpy $wishlistItemSpy = null
     ) {
         $wishlistQueryContainerMock = $this
-            ->getMockBuilder('SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainerInterface')
+            ->getMockBuilder('Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -234,7 +234,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
     protected function getCustomerMock($value = null)
     {
         $customerMock = $this
-            ->getMockBuilder('SprykerFeature\Zed\Wishlist\Business\Model\Customer')
+            ->getMockBuilder('Spryker\Zed\Wishlist\Business\Model\Customer')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -249,7 +249,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
     protected function getProductFacadeMock()
     {
         $productFacadeMock = $this
-            ->getMockBuilder('SprykerFeature\Zed\Product\Business\ProductFacade')
+            ->getMockBuilder('Spryker\Zed\Product\Business\ProductFacade')
             ->disableOriginalConstructor()
             ->getMock();
 

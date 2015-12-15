@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ItemGrouper\Business\Model;
+namespace Spryker\Zed\ItemGrouper\Business\Model;
 
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;

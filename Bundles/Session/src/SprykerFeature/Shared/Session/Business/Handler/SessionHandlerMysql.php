@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Session\Business\Handler;
+namespace Spryker\Shared\Session\Business\Handler;
 
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Library\Environment;
-use SprykerFeature\Shared\NewRelic\ApiInterface;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Library\Environment;
+use Spryker\Shared\NewRelic\ApiInterface;
 
 class SessionHandlerMysql implements \SessionHandlerInterface
 {

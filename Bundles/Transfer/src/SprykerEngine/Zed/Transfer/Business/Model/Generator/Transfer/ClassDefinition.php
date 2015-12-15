@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer;
+namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;

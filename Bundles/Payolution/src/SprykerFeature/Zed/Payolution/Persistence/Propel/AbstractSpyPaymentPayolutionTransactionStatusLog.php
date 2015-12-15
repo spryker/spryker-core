@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Payolution\Persistence\Propel;
+namespace Spryker\Zed\Payolution\Persistence\Propel;
 
 use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog as BaseSpyPaymentPayolutionTransactionStatusLog;
 

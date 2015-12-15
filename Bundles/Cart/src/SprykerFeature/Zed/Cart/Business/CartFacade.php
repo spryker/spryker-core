@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cart\Business;
+namespace Spryker\Zed\Cart\Business;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Cart\Business\Model\CalculableContainer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Cart\Business\Model\CalculableContainer;
 
 /**
  * @method CartDependencyContainer getDependencyContainer()

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Console\Business\Model;
+namespace Spryker\Zed\Console\Business\Model;
 
-use SprykerFeature\Shared\Library\Application\Environment as SprykerEnvironment;
+use Spryker\Shared\Library\Application\Environment as SprykerEnvironment;
 use Symfony\Component\Process\Process;
 
 class Environment

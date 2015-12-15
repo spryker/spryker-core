@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Maintenance;
+namespace Unit\Spryker\Zed\Maintenance;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Maintenance\MaintenanceConfig;
 
 class MaintenanceConfigTest extends \PHPUnit_Framework_TestCase
 {

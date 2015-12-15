@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ItemGrouperCheckoutConnector;
+namespace Spryker\Zed\ItemGrouperCheckoutConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 class ItemGrouperCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {

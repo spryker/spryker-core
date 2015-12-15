@@ -1,13 +1,13 @@
 <?php
 
-namespace SprykerFeature\Zed\Product\Communication\Controller;
+namespace Spryker\Zed\Product\Communication\Controller;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Product\Business\ProductFacade;
-use SprykerFeature\Zed\Product\Communication\ProductDependencyContainer;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Product\Communication\ProductDependencyContainer;
+use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Client\Locale;
+namespace Spryker\Client\Locale;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\AbstractDependencyProvider;
 
 class LocaleDependencyProvider extends AbstractDependencyProvider
 {

@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Business;
+namespace Spryker\Zed\Acl\Business;
 
-use SprykerFeature\Zed\Acl\Business\Model\Role;
-use SprykerFeature\Zed\Acl\Business\Model\Group;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Zed\Acl\Business\Model\GroupInterface;
-use SprykerFeature\Zed\Acl\Business\Model\RoleInterface;
-use SprykerFeature\Zed\Acl\AclDependencyProvider;
-use SprykerFeature\Zed\Acl\Business\Model\RuleValidator;
-use SprykerFeature\Zed\Acl\Business\Model\Installer;
-use SprykerFeature\Zed\Acl\Business\Model\Rule;
-use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Business\Model\Role;
+use Spryker\Zed\Acl\Business\Model\Group;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Acl\AclConfig;
+use Spryker\Zed\Acl\Business\Model\GroupInterface;
+use Spryker\Zed\Acl\Business\Model\RoleInterface;
+use Spryker\Zed\Acl\AclDependencyProvider;
+use Spryker\Zed\Acl\Business\Model\RuleValidator;
+use Spryker\Zed\Acl\Business\Model\Installer;
+use Spryker\Zed\Acl\Business\Model\Rule;
+use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 
 /**
  * @method AclConfig getConfig()

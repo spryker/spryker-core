@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Country\Business;
+namespace Spryker\Zed\Country\Business;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
-use SprykerFeature\Zed\Country\Business\Exception\CountryExistsException;
-use SprykerFeature\Zed\Country\Business\Exception\MissingCountryException;
-use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
+use Spryker\Zed\Country\Business\Exception\CountryExistsException;
+use Spryker\Zed\Country\Business\Exception\MissingCountryException;
+use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 use Orm\Zed\Country\Persistence\SpyCountry;
 
 class CountryManager implements CountryManagerInterface

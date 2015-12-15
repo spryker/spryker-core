@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Communication\Table;
+namespace Spryker\Zed\Oms\Communication\Table;
 
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 
 class TransitionLogTable extends AbstractTable

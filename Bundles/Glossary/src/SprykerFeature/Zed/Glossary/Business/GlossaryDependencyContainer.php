@@ -3,19 +3,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Business;
+namespace Spryker\Zed\Glossary\Business;
 
-use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
-use SprykerFeature\Zed\Glossary\Business\Key\KeyManager;
-use SprykerFeature\Zed\Glossary\Business\Translation\TranslationManager;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Glossary\Business\Key\KeyManagerInterface;
-use SprykerFeature\Zed\Glossary\Business\Translation\TranslationManagerInterface;
-use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
-use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
-use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
-use SprykerFeature\Zed\Glossary\GlossaryConfig;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Spryker\Zed\Glossary\Business\Key\KeyManager;
+use Spryker\Zed\Glossary\Business\Translation\TranslationManager;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Glossary\Business\Key\KeyManagerInterface;
+use Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
+use Spryker\Zed\Glossary\GlossaryDependencyProvider;
+use Spryker\Zed\Glossary\GlossaryConfig;
+use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
  * @method GlossaryConfig getConfig()

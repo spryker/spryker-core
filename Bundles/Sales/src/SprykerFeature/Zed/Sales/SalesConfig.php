@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales;
+namespace Spryker\Zed\Sales;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\SequenceNumber\SequenceNumberConstants;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 
 class SalesConfig extends AbstractBundleConfig
 {

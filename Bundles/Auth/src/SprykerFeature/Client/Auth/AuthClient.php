@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Auth;
+namespace Spryker\Client\Auth;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
-use SprykerFeature\Client\Auth\Token\TokenService;
+use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Auth\Token\TokenService;
 
 /**
  * @method AuthDependencyContainer getDependencyContainer()

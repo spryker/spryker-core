@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Business\Model;
+namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RolesTransfer;
-use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Zed\Acl\Business\Exception\RootNodeModificationException;
+use Spryker\Zed\Acl\AclConfig;
+use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Orm\Zed\Acl\Persistence\SpyAclRole;
-use SprykerFeature\Zed\Library\Copy;
-use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
-use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
-use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Library\Copy;
+use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
+use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
+use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Generated\Shared\Transfer\RoleTransfer;
-use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
-use SprykerFeature\Zed\Acl\Business\Exception\RoleNameExistsException;
+use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
+use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 
 class Role implements RoleInterface
 {

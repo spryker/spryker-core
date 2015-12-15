@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer;
+namespace Spryker\Zed\Customer;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\SequenceNumber\SequenceNumberConstants;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerEngine\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\Store;
 
 class CustomerConfig extends AbstractBundleConfig
 {

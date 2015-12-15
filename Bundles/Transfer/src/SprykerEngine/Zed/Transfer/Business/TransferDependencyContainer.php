@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Transfer\Business;
+namespace Spryker\Zed\Transfer\Business;
 
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
-use SprykerEngine\Zed\Transfer\Business\Model\TransferCleaner;
-use SprykerEngine\Zed\Transfer\Business\Model\TransferGenerator;
-use SprykerEngine\Zed\Transfer\TransferConfig;
+use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
+use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
+use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
+use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
+use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
+use Spryker\Zed\Transfer\TransferConfig;
 use Psr\Log\LoggerInterface;
 
 /**

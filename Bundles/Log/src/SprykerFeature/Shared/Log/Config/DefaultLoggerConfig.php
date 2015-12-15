@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Log\Config;
+namespace Spryker\Shared\Log\Config;
 
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
-use SprykerEngine\Shared\Config;
+use Spryker\Shared\Config;
 
 class DefaultLoggerConfig implements LoggerConfigInterface
 {

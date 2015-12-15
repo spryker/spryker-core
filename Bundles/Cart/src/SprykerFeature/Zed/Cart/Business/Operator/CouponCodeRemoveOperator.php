@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cart\Business\Operator;
+namespace Spryker\Zed\Cart\Business\Operator;
 
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerFeature\Shared\Cart\Messages\Messages;
+use Spryker\Shared\Cart\Messages\Messages;
 use Generated\Shared\Transfer\CartTransfer;
 
 class CouponCodeRemoveOperator extends AbstractOperator

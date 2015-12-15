@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Category;
+namespace Spryker\Shared\Category;
 
 interface CategoryConstants
 {

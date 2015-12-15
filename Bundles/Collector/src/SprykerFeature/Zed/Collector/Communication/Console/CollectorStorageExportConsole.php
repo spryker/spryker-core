@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Communication\Console;
+namespace Spryker\Zed\Collector\Communication\Console;
 
-use SprykerFeature\Zed\Collector\Business\CollectorFacade;
-use SprykerFeature\Zed\Collector\Communication\CollectorDependencyContainer;
+use Spryker\Zed\Collector\Business\CollectorFacade;
+use Spryker\Zed\Collector\Communication\CollectorDependencyContainer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

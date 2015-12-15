@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Business\Model;
+namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\GroupsTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
-use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
-use SprykerFeature\Zed\Acl\Business\Exception\GroupNameExistsException;
-use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
+use Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
+use Spryker\Zed\Acl\Business\Exception\GroupNameExistsException;
+use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
 use Orm\Zed\Acl\Persistence\SpyAclGroup;
 
 interface GroupInterface

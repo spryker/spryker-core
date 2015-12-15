@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\SequenceNumber;
+namespace Spryker\Zed\SequenceNumber;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SequenceNumberConfig extends AbstractBundleConfig
 {

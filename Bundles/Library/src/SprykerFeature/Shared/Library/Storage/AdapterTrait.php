@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Storage;
+namespace Spryker\Shared\Library\Storage;
 
 /**
  * Class AdapterTrait

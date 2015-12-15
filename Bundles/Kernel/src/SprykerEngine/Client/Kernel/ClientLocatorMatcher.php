@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Client\Kernel;
+namespace Spryker\Client\Kernel;
 
-use SprykerEngine\Shared\Kernel\Locator\LocatorMatcherInterface;
+use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class ClientLocatorMatcher implements LocatorMatcherInterface
 {

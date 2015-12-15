@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter\KeyBuilder;
+namespace Spryker\Zed\Collector\Business\Exporter\KeyBuilder;
 
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class SearchMarkerKeyBuilder implements KeyBuilderInterface
 {

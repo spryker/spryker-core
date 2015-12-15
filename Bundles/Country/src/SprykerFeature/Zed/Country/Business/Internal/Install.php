@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Country\Business\Internal;
+namespace Spryker\Zed\Country\Business\Internal;
 
-use SprykerFeature\Zed\Country\CountryConfig;
-use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
-use SprykerFeature\Zed\Country\Business\Cldr\CldrDataProviderInterface;
-use SprykerFeature\Zed\Country\Business\CountryManagerInterface;
-use SprykerFeature\Zed\Country\Business\Internal\Regions\RegionInstallInterface;
-use SprykerFeature\Zed\Country\Business\RegionManagerInterface;
+use Spryker\Zed\Country\CountryConfig;
+use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
+use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
+use Spryker\Zed\Country\Business\CountryManagerInterface;
+use Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface;
+use Spryker\Zed\Country\Business\RegionManagerInterface;
 
 class Install extends AbstractInstaller
 {

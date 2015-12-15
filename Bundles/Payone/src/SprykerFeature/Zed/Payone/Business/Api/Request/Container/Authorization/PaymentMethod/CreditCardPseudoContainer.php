@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
+namespace Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
 
 class CreditCardPseudoContainer extends AbstractPaymentMethodContainer
 {

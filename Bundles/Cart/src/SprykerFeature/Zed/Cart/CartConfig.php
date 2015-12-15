@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cart;
+namespace Spryker\Zed\Cart;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 class CartConfig extends AbstractBundleConfig
 {

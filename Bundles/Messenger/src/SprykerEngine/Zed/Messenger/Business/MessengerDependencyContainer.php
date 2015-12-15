@@ -3,16 +3,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Messenger\Business;
+namespace Spryker\Zed\Messenger\Business;
 
-use SprykerEngine\Zed\Messenger\Business\Model\InMemoryMessageTray;
-use SprykerEngine\Zed\Messenger\Business\Model\MessageTrayInterface;
-use SprykerEngine\Zed\Messenger\Business\Model\SessionMessageTray;
+use Spryker\Zed\Messenger\Business\Model\InMemoryMessageTray;
+use Spryker\Zed\Messenger\Business\Model\MessageTrayInterface;
+use Spryker\Zed\Messenger\Business\Model\SessionMessageTray;
 use Generated\Zed\Ide\FactoryAutoCompletion\MessengerBusiness;
-use SprykerEngine\Zed\Messenger\MessengerDependencyProvider;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerEngine\Zed\Messenger\MessengerConfig;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Messenger\MessengerDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Messenger\MessengerConfig;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**

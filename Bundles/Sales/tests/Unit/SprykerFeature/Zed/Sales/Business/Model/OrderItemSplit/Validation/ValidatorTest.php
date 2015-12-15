@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation;
+namespace Unit\Spryker\Zed\Sales\Business\Model\OrderItemSplit\Validation;
 
 use Propel\Runtime\Collection\Collection;
-use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\Validator;
-use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\Messages;
+use Spryker\Zed\Sales\Business\Model\Split\Validation\Validator;
+use Spryker\Zed\Sales\Business\Model\Split\Validation\Messages;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;

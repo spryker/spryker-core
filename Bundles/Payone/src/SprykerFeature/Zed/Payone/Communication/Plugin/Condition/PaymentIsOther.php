@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Communication\Plugin\Condition;
+namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
 
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
-use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
-use SprykerFeature\Zed\Payone\Business\PayoneFacade;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
+use Spryker\Zed\Payone\Business\PayoneDependencyContainer;
+use Spryker\Zed\Payone\Business\PayoneFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\TransactionStatus;
+namespace Spryker\Zed\Payone\Business\Api\TransactionStatus;
 
-use SprykerFeature\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
+use Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
 
 class TransactionStatusRequest extends AbstractRequest implements TransactionStatusUpdateInterface
 {

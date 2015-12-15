@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CustomerMailConnector;
+namespace Spryker\Zed\CustomerMailConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Customer\CustomerConstants;
-use SprykerFeature\Shared\Mail\MailConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Customer\CustomerConstants;
+use Spryker\Shared\Mail\MailConstants;
 
 class CustomerMailConnectorConfig extends AbstractBundleConfig
 {

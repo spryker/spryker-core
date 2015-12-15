@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Persistence;
+namespace Spryker\Zed\Category\Persistence;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
@@ -14,8 +14,8 @@ use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\ActiveQuery\Join;

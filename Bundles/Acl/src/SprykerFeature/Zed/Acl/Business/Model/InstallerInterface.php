@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Business\Model;
+namespace Spryker\Zed\Acl\Business\Model;
 
 interface InstallerInterface
 {

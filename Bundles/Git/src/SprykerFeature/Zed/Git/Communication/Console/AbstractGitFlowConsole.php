@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Git\Communication\Console;
+namespace Spryker\Zed\Git\Communication\Console;
 
-use SprykerFeature\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Input\InputInterface;

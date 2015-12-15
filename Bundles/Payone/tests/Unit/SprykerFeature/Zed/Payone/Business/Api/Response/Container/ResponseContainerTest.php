@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Payone\Business\Api\Response\Container;
+namespace Unit\Spryker\Zed\Payone\Business\Api\Response\Container;
 
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 
 /**
  * @group ResponseContainer
@@ -26,7 +26,7 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
         $params = array_merge($this->getStandardResponseParams(), $this->getAuthorizationResponseParams());
         $container = new AuthorizationResponseContainer($params);
 
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
         $this->assertStandardParams($container);
         $this->assertEquals('clearingamount', $container->getClearingAmount());
         $this->assertEquals('clearingbankaccount', $container->getClearingBankaccount());
@@ -79,7 +79,7 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
         $params = array_merge($this->getStandardResponseParams(), $this->getCaptureResponseParams());
         $container = new CaptureResponseContainer($params);
 
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
         $this->assertStandardParams($container);
         $this->assertEquals('clearingamount', $container->getClearingAmount());
         $this->assertEquals('clearingbankaccount', $container->getClearingBankaccount());
@@ -153,7 +153,7 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
 
         $container = new DebitResponseContainer($params);
 
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
         $this->assertStandardParams($container);
         $this->assertEquals('settleaccount', $container->getSettleaccount());
         $this->assertEquals('txid', $container->getTxid());
@@ -179,7 +179,7 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
 
         $container = new RefundResponseContainer($params);
 
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
+        $this->assertInstanceOf('Spryker\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer', $container);
         $this->assertStandardParams($container);
         $this->assertEquals('protectresultavs', $container->getProtectResultAvs());
         $this->assertEquals('txid', $container->getTxid());

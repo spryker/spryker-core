@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture;
+namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent as SymfonyFilterControllerEvent;

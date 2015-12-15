@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Kernel;
+namespace Spryker\Yves\Kernel;
 
 use Generated\Yves\Ide\AutoCompletion;
-use SprykerEngine\Yves\Kernel\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Yves\Kernel\DependencyContainer\DependencyContainerInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 abstract class AbstractDependencyContainer implements DependencyContainerInterface
 {

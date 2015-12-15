@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library;
+namespace Spryker\Shared\Library;
 
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class Cloud
 {

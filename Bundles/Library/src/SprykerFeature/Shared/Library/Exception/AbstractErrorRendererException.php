@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Exception;
+namespace Spryker\Shared\Library\Exception;
 
 abstract class AbstractErrorRendererException extends \Exception
 {

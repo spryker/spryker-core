@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Newsletter\Business;
+namespace Functional\Spryker\Zed\Newsletter\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainerLocator;
-use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
-use SprykerFeature\Zed\Newsletter\Business\NewsletterFacade;
-use SprykerFeature\Zed\Newsletter\NewsletterDependencyProvider;
-use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Kernel\Persistence\QueryContainerLocator;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
+use Spryker\Zed\Newsletter\Business\NewsletterFacade;
+use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterType;
 
 /**

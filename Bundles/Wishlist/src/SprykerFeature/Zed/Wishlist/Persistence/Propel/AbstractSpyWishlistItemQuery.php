@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Wishlist\Persistence\Propel;
+namespace Spryker\Zed\Wishlist\Persistence\Propel;
 
 use Orm\Zed\Wishlist\Persistence\Base\SpyWishlistItemQuery as BaseSpyWishlistItemQuery;
 

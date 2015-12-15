@@ -1,8 +1,8 @@
 <?php
 
-namespace Unit\SprykerEngine\Client\Kernel\Fixtures;
+namespace Unit\Spryker\Client\Kernel\Fixtures;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\AbstractClient;
 
 class KernelClient extends AbstractClient
 {

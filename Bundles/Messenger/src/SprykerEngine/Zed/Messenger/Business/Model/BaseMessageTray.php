@@ -3,9 +3,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Messenger\Business\Model;
+namespace Spryker\Zed\Messenger\Business\Model;
 
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
 
 class BaseMessageTray
 {

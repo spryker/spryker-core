@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Communication\Plugin\Bootstrap;
+namespace Spryker\Zed\Acl\Communication\Plugin\Bootstrap;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use SprykerFeature\Zed\Acl\Business\AclFacade;
-use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
+use Spryker\Zed\Acl\Business\AclFacade;
+use Spryker\Zed\Acl\Communication\AclDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

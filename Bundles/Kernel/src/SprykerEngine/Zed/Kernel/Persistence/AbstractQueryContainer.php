@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Persistence;
+namespace Spryker\Zed\Kernel\Persistence;
 
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Persistence\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Persistence\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 abstract class AbstractQueryContainer implements QueryContainerInterface
 {

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Importer;
+namespace Spryker\Zed\Product\Business\Importer;
 
-use SprykerFeature\Zed\Product\Business\Model\ProductBatchResult;
+use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 
 interface FileImporterInterface
 {

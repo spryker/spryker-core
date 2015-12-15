@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Communication\Plugin\Calculator;
+namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
-use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
-use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
-use SprykerFeature\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
+use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()

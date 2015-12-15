@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Propel\Business\Builder;
+namespace Spryker\Zed\Propel\Business\Builder;
 
 use Propel\Generator\Builder\Om\QueryBuilder as PropelQueryBuilder;
 
@@ -25,7 +25,7 @@ class QueryBuilder extends PropelQueryBuilder
 
         return "
             /** @var \\Generated\\Zed\\Ide\\AutoCompletion \$locator */
-            \$locator = \\SprykerEngine\\Zed\\Kernel\\Locator::getInstance();
+            \$locator = \\Spryker\\Zed\\Kernel\\Locator::getInstance();
             $objName = \$locator->"
         . lcfirst($bundle)
         . '()->entity'

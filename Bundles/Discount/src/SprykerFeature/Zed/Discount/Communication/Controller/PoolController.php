@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Communication\Controller;
+namespace Spryker\Zed\Discount\Communication\Controller;
 
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Propel\Runtime\Map\TableMap;
-use SprykerFeature\Zed\Discount\DiscountConfig;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Discount\DiscountConfig;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Payolution;
+namespace Spryker\Client\Payolution;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\AbstractDependencyProvider;
 
 class PayolutionDependencyProvider extends AbstractDependencyProvider
 {

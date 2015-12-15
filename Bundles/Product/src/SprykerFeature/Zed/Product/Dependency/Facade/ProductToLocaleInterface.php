@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Dependency\Facade;
+namespace Spryker\Zed\Product\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
+use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface ProductToLocaleInterface
 {

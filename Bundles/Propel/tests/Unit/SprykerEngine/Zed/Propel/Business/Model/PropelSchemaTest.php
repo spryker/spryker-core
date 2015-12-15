@@ -3,13 +3,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Propel\Business\Model;
+namespace Unit\Spryker\Zed\Propel\Business\Model;
 
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchema;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaMerger;
-use SprykerEngine\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaFinder;
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaWriter;
+use Spryker\Zed\Propel\Business\Model\PropelSchema;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
+use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
 use Symfony\Component\Filesystem\Filesystem;
 
 class PropelSchemaTest extends \PHPUnit_Framework_TestCase

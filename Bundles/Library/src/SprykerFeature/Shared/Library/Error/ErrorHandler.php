@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Error;
+namespace Spryker\Shared\Library\Error;
 
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class ErrorHandler
 {

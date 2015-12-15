@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cms\Communication\Controller;
+namespace Spryker\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use SprykerFeature\Shared\Cms\CmsConstants;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Cms\Business\CmsFacade;
-use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
-use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsGlossaryForm;
-use SprykerFeature\Zed\Cms\Communication\Table\CmsGlossaryTable;
-use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Shared\Cms\CmsConstants;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\Business\Exception\MissingPageException;
+use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
+use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
+use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;
 use Symfony\Component\HttpFoundation\JsonResponse;

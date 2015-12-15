@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Communication;
+namespace Spryker\Shared\Library\Communication;
 
-use SprykerEngine\Shared\Kernel\TransferLocator;
-use SprykerEngine\Shared\Kernel\TransferLocatorHelper;
-use SprykerEngine\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\TransferLocator;
+use Spryker\Shared\Kernel\TransferLocatorHelper;
+use Spryker\Shared\Transfer\TransferInterface;
 
 class Response extends AbstractObject implements
     EmbeddedTransferInterface

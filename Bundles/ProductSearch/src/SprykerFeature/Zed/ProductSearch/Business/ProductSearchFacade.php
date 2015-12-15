@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Business;
+namespace Spryker\Zed\ProductSearch\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method ProductSearchDependencyContainer getDependencyContainer()

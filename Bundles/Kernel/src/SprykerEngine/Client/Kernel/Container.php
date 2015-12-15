@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerEngine\Client\Kernel;
+namespace Spryker\Client\Kernel;
 
 use Generated\Client\Ide\AutoCompletion;
 

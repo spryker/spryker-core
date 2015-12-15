@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Queue\Communication\Console;
+namespace Spryker\Zed\Queue\Communication\Console;
 
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Zed\Console\Business\Model\Console;
-use SprykerFeature\Zed\Queue\Business\QueueFacade;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Queue\Business\QueueFacade;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

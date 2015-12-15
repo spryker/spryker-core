@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Queue\Dependency\Plugin;
+namespace Spryker\Zed\Queue\Dependency\Plugin;
 
 use Psr\Log\LoggerInterface;
 

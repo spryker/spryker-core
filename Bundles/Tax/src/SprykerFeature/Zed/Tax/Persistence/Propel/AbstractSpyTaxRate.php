@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Tax\Persistence\Propel;
+namespace Spryker\Zed\Tax\Persistence\Propel;
 
 use Orm\Zed\Tax\Persistence\Base\SpyTaxRate as BaseSpyTaxRate;
 

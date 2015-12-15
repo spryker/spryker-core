@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\Model;
+namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
-use SprykerFeature\Zed\Discount\DiscountConfigInterface;
+use Spryker\Zed\Discount\DiscountConfigInterface;
 
 class Calculator implements CalculatorInterface
 {

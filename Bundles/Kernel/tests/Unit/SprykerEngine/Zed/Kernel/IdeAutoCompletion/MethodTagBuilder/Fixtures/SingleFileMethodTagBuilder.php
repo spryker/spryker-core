@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\Fixtures;
+namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\Fixtures;
 
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\AbstractSingleFileMethodTagBuilder;
+use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\AbstractSingleFileMethodTagBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SingleFileMethodTagBuilder extends AbstractSingleFileMethodTagBuilder

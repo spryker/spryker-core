@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer;
+namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business

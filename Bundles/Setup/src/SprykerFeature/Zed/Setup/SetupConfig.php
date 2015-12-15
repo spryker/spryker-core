@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Setup;
+namespace Spryker\Zed\Setup;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerEngine\Zed\Propel\Communication\Console\PropelInstallConsole;
-use SprykerEngine\Zed\Transfer\Communication\Console\GeneratorConsole;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Zed\Application\Communication\Console\BuildNavigationConsole;
-use SprykerFeature\Zed\Cache\Communication\Console\DeleteAllCachesConsole;
-use SprykerFeature\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
-use SprykerFeature\Zed\Search\Communication\Console\SearchConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\Npm\RunnerConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
+use Spryker\Zed\Transfer\Communication\Console\GeneratorConsole;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Application\Communication\Console\BuildNavigationConsole;
+use Spryker\Zed\Cache\Communication\Console\DeleteAllCachesConsole;
+use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
+use Spryker\Zed\Search\Communication\Console\SearchConsole;
+use Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
+use Spryker\Zed\Setup\Communication\Console\Npm\RunnerConsole;
+use Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
 
 class SetupConfig extends AbstractBundleConfig
 {

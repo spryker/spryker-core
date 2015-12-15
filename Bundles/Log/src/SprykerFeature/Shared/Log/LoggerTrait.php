@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Log;
+namespace Spryker\Shared\Log;
 
 use Psr\Log\LoggerInterface;
-use SprykerFeature\Shared\Log\Config\LoggerConfigInterface;
+use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
 trait LoggerTrait
 {

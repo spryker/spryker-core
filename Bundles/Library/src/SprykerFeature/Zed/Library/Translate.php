@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Library;
+namespace Spryker\Zed\Library;
 
 class Translate extends \Zend_Translate
 {

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel;
+namespace Spryker\Zed\Kernel;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Config;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 abstract class AbstractBundleConfig
 {

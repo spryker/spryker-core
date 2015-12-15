@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\PriceCartConnector\Business;
+namespace Spryker\Zed\PriceCartConnector\Business;
 
-use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManager;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Price\Business\PriceFacade;
-use SprykerFeature\Zed\PriceCartConnector\PriceCartConnectorConfig;
+use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Price\Business\PriceFacade;
+use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 /**
  * @method PriceCartConnectorDependencyContainer getDependencyContainer()

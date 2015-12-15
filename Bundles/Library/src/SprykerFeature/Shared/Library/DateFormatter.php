@@ -3,9 +3,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library;
+namespace Spryker\Shared\Library;
 
-use SprykerFeature\Shared\Library\Exception\UnsupportedDateFormatException;
+use Spryker\Shared\Library\Exception\UnsupportedDateFormatException;
 
 class DateFormatter
 {
@@ -77,7 +77,7 @@ class DateFormatter
      * @param string $dateFormat
      * @param \DateTimeZone $timezone
      *
-     * @throws \SprykerFeature\Shared\Library\Exception\UnsupportedDateFormatException
+     * @throws \Spryker\Shared\Library\Exception\UnsupportedDateFormatException
      *
      * @return string
      */

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Shared\Kernel;
+namespace Unit\Spryker\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\BundleProxy;
-use Unit\SprykerEngine\Shared\Kernel\Fixtures\LocatorLocator;
-use Unit\SprykerEngine\Shared\Kernel\Fixtures\LocatorWithMatcher;
-use Unit\SprykerEngine\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
+use Spryker\Shared\Kernel\BundleProxy;
+use Unit\Spryker\Shared\Kernel\Fixtures\LocatorLocator;
+use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithMatcher;
+use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
 
 /**
  * @group Kernel
@@ -26,7 +26,7 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
         $bundleProxy = new BundleProxy(LocatorLocator::getInstance());
 
         $this->assertInstanceOf(
-            'SprykerEngine\Shared\Kernel\BundleProxy',
+            'Spryker\Shared\Kernel\BundleProxy',
             $bundleProxy->addLocator(new LocatorWithMatcher('Foo'))
         );
     }
@@ -49,7 +49,7 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
     {
         $bundleProxy = new BundleProxy(LocatorLocator::getInstance());
 
-        $this->assertInstanceOf('SprykerEngine\Shared\Kernel\BundleProxy', $bundleProxy->setBundle('Foo'));
+        $this->assertInstanceOf('Spryker\Shared\Kernel\BundleProxy', $bundleProxy->setBundle('Foo'));
     }
 
     /**

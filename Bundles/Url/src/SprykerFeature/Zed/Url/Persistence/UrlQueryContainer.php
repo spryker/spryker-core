@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Persistence;
+namespace Spryker\Zed\Url\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Url\Persistence\Map\SpyRedirectTableMap;
 use Orm\Zed\Url\Persistence\SpyRedirectQuery;
 use Orm\Zed\Url\Persistence\SpyUrl;

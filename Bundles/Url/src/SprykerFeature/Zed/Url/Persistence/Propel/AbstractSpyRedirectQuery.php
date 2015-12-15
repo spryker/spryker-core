@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Persistence\Propel;
+namespace Spryker\Zed\Url\Persistence\Propel;
 
 use Orm\Zed\Url\Persistence\Base\SpyRedirectQuery as BaseSpyRedirectQuery;
 

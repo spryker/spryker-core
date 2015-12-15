@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\TaxProductConnector\Business\Plugin;
+namespace Spryker\Zed\TaxProductConnector\Business\Plugin;
 
-use SprykerFeature\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
-use SprykerFeature\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface;
-use SprykerFeature\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
+use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
+use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface;
+use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
 
 class TaxChangeTouchPlugin implements TaxChangePluginInterface
 {

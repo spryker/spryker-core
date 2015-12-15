@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Transfer;
+namespace Spryker\Shared\Transfer;
 
 interface TransferInterface
 {

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Business;
+namespace Spryker\Zed\Kernel\Business;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\AbstractDependencyContainer as BaseDependencyContainer;
-use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractDependencyContainer as BaseDependencyContainer;
+use Spryker\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Kernel\Container;
 
 abstract class AbstractBusinessDependencyContainer extends BaseDependencyContainer implements DependencyContainerInterface
 {

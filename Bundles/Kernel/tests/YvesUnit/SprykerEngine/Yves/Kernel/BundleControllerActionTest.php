@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace YvesUnit\SprykerEngine\Yves\Kernel;
+namespace YvesUnit\Spryker\Yves\Kernel;
 
-use SprykerEngine\Yves\Kernel\BundleControllerAction;
+use Spryker\Yves\Kernel\BundleControllerAction;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Yves
  * @group Kernel
  * @group BundleControllerAction

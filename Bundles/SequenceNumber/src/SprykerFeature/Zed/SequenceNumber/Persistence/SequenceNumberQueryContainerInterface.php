@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\SequenceNumber\Persistence;
+namespace Spryker\Zed\SequenceNumber\Persistence;
 
 interface SequenceNumberQueryContainerInterface
 {

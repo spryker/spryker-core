@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Persistence\QueryContainer;
+namespace Spryker\Zed\Kernel\Persistence\QueryContainer;
 
 interface QueryContainerInterface
 {

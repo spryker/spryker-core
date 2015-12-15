@@ -7,14 +7,14 @@
  * Time: 10:52
  */
 
-namespace SprykerFeature\Zed\Oms\Persistence;
+namespace Spryker\Zed\Oms\Persistence;
 
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use DateTime;
 

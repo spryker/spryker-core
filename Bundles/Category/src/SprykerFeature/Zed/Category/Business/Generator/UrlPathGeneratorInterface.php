@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Business\Generator;
+namespace Spryker\Zed\Category\Business\Generator;
 
 interface UrlPathGeneratorInterface
 {

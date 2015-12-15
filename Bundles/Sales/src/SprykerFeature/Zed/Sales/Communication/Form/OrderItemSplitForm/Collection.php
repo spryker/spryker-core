@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
+namespace Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
-use SprykerFeature\Zed\Sales\Communication\Exception\FormNotFoundException;
+use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
+use Spryker\Zed\Sales\Communication\Exception\FormNotFoundException;
 
 class Collection
 {

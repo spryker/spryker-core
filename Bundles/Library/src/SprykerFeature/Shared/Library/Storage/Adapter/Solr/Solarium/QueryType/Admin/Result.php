@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin;
+namespace Spryker\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin;
 
 use Solarium\Core\Query\Result\QueryType as BaseResult;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerEngine\Zed\Touch\Persistence\Propel;
+namespace Spryker\Zed\Touch\Persistence\Propel;
 
 use Orm\Zed\Touch\Persistence\Base\SpyTouchStorageQuery as BaseSpyTouchStorageQuery;
 

@@ -3,12 +3,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Communication\Table;
+namespace Spryker\Zed\Acl\Communication\Table;
 
-use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RulesetTable extends AbstractTable
 {

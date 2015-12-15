@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Checkout\Communication\Controller;
+namespace Spryker\Zed\Checkout\Communication\Controller;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Checkout\Business\CheckoutFacade;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method CheckoutFacade getFacade()

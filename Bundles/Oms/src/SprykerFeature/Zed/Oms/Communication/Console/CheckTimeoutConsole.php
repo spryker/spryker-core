@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Communication\Console;
+namespace Spryker\Zed\Oms\Communication\Console;
 
-use SprykerFeature\Zed\Console\Business\Model\Console;
-use SprykerFeature\Zed\Oms\Business\OmsFacade;
+use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Oms\Business\OmsFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

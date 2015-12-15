@@ -4,24 +4,24 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Business\Model;
+namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\GroupsTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
+use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use Orm\Zed\Acl\Persistence\SpyAclGroup;
 use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRoles;
 use Orm\Zed\Acl\Persistence\SpyAclUserHasGroup;
-use SprykerFeature\Zed\Library\Copy;
-use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
-use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use SprykerFeature\Zed\Acl\Business\Exception\GroupNameExistsException;
-use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
-use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
-use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasUserException;
+use Spryker\Zed\Library\Copy;
+use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
+use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Acl\Business\Exception\GroupNameExistsException;
+use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
+use Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
+use Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasUserException;
 
 class Group implements GroupInterface
 {

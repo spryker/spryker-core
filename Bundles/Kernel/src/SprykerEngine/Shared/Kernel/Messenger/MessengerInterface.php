@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Kernel\Messenger;
+namespace Spryker\Shared\Kernel\Messenger;
 
 use Psr\Log\LoggerInterface;
 

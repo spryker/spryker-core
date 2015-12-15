@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\ZedRequest\Client;
+namespace Spryker\Shared\ZedRequest\Client;
 
-use SprykerEngine\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Transfer\TransferInterface;
 
 interface RequestInterface
 {

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Business\Builder;
+namespace Spryker\Zed\ProductSearch\Business\Builder;
 
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
-use SprykerFeature\Shared\Product\ProductConstants;
+use Spryker\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
+use Spryker\Shared\Product\ProductConstants;
 
 class ProductResourceKeyBuilder extends SharedResourceKeyBuilder
 {

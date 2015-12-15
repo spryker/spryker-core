@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Invoice;
+namespace Spryker\Shared\Invoice;
 
 interface InvoiceConstants
 {

@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User\Communication\Form;
+namespace Spryker\Zed\User\Communication\Form;
 
 class UserCreateForm extends UserForm
 {

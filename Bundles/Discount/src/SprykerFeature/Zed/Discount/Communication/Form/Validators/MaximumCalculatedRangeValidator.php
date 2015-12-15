@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Communication\Form\Validators;
+namespace Spryker\Zed\Discount\Communication\Form\Validators;
 
 class MaximumCalculatedRangeValidator
 {

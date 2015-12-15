@@ -4,21 +4,21 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Price\Business;
+namespace Spryker\Zed\Price\Business;
 
-use SprykerFeature\Zed\Price\Business\Model\BulkWriter;
-use SprykerFeature\Zed\Price\Business\Model\Writer;
-use SprykerFeature\Zed\Price\Business\Model\Reader;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Price\Business\Model\BulkWriterInterface;
-use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
-use SprykerFeature\Zed\Price\Business\Model\WriterInterface;
-use SprykerFeature\Zed\Price\Business\Model\ReaderInterface;
-use SprykerFeature\Zed\Price\Dependency\Facade\PriceToProductInterface;
-use SprykerFeature\Zed\Price\Dependency\Facade\PriceToTouchInterface;
-use SprykerFeature\Zed\Price\Business\Internal\Install;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerFeature\Zed\Price\PriceConfig;
+use Spryker\Zed\Price\Business\Model\BulkWriter;
+use Spryker\Zed\Price\Business\Model\Writer;
+use Spryker\Zed\Price\Business\Model\Reader;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Price\Business\Model\BulkWriterInterface;
+use Spryker\Zed\Price\Persistence\PriceQueryContainer;
+use Spryker\Zed\Price\Business\Model\WriterInterface;
+use Spryker\Zed\Price\Business\Model\ReaderInterface;
+use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
+use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
+use Spryker\Zed\Price\Business\Internal\Install;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Price\PriceConfig;
 
 /**
  * @method PriceConfig getConfig()

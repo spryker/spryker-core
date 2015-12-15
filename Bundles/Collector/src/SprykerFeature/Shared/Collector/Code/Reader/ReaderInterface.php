@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Collector\Code\Reader;
+namespace Spryker\Shared\Collector\Code\Reader;
 
 interface ReaderInterface
 {

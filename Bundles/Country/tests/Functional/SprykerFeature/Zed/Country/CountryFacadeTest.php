@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Country;
+namespace Functional\Spryker\Zed\Country;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Country\Business\CountryFacade;
-use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
-use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Country\Business\CountryFacade;
+use Spryker\Zed\Country\Persistence\CountryQueryContainer;
+use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 use Orm\Zed\Country\Persistence\SpyCountry;
 
 /**
@@ -54,7 +54,7 @@ class CountryFacadeTest extends AbstractFunctionalTest
      */
     protected function getMockLogger()
     {
-        return $this->getMock('SprykerEngine\\Shared\\Kernel\\Messenger\\MessengerInterface');
+        return $this->getMock('Spryker\\Shared\\Kernel\\Messenger\\MessengerInterface');
     }
 
     /**

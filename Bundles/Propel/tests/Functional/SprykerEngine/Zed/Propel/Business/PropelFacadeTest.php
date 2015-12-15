@@ -3,13 +3,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerEngine\Zed\Propel\Business;
+namespace Functional\Spryker\Zed\Propel\Business;
 
-use SprykerEngine\Zed\Propel\Business\PropelFacade;
-use SprykerEngine\Zed\Propel\PropelConfig;
+use Spryker\Zed\Propel\Business\PropelFacade;
+use Spryker\Zed\Propel\PropelConfig;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Propel
  * @group Business

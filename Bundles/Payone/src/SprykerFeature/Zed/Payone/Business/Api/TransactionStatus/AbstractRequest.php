@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\TransactionStatus;
+namespace Spryker\Zed\Payone\Business\Api\TransactionStatus;
 
 class AbstractRequest
 {

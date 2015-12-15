@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerEngine\Zed\Locale;
+namespace Functional\Spryker\Zed\Locale;
 
 use Codeception\TestCase\Test;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainer;
-use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 class LocaleTest extends Test
 {

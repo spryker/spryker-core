@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Heartbeat\Business\Assistant;
+namespace Spryker\Zed\Heartbeat\Business\Assistant;
 
-use SprykerFeature\Shared\Heartbeat\Code\AbstractHealthIndicator;
-use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
+use Spryker\Shared\Heartbeat\Code\AbstractHealthIndicator;
+use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {

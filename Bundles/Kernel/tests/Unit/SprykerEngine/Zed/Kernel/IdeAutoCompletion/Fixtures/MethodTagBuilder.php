@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion\Fixtures;
+namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion\Fixtures;
 
-use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\MethodTagBuilderInterface;
+use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\MethodTagBuilderInterface;
 
 class MethodTagBuilder implements MethodTagBuilderInterface
 {

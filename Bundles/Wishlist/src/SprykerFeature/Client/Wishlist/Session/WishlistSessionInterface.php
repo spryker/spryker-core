@@ -2,7 +2,7 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Client\Wishlist\Session;
+namespace Spryker\Client\Wishlist\Session;
 
 use Generated\Shared\Transfer\WishlistTransfer;
 

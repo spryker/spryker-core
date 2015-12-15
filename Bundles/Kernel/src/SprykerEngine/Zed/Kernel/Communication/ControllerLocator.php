@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Communication;
+namespace Spryker\Zed\Kernel\Communication;
 
-use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
-use SprykerEngine\Shared\Kernel\Communication\BundleControllerActionInterface;
-use SprykerEngine\Shared\Kernel\Communication\ControllerLocatorInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
-use SprykerEngine\Zed\Kernel\ClassNamePattern;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Shared\Kernel\ClassMapFactory;
-use SprykerFeature\Shared\Library\Log;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
+use Spryker\Shared\Kernel\Communication\ControllerLocatorInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Kernel\BundleDependencyProviderLocator;
+use Spryker\Zed\Kernel\ClassNamePattern;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Shared\Kernel\ClassMapFactory;
+use Spryker\Shared\Library\Log;
 
 class ControllerLocator implements ControllerLocatorInterface
 {

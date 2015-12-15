@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Setup;
+namespace Spryker\Shared\Setup;
 
 interface SetupConstants
 {

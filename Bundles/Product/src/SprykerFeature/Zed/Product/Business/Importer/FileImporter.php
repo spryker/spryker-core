@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Importer;
+namespace Spryker\Zed\Product\Business\Importer;
 
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
-use SprykerFeature\Zed\Product\Business\Builder\ProductBuilderInterface;
-use SprykerFeature\Zed\Product\Business\Model\ProductBatchResult;
-use SprykerFeature\Zed\Product\Business\Importer\Reader\File;
-use SprykerFeature\Zed\Product\Business\Importer\Writer\ProductWriterInterface;
-use SprykerFeature\Zed\Product\Business\Model\ProductBatchResultInterface;
-use SprykerFeature\Zed\Product\Business\Validator\DataValidatorInterface;
+use Spryker\Zed\Product\Business\Builder\ProductBuilderInterface;
+use Spryker\Zed\Product\Business\Model\ProductBatchResult;
+use Spryker\Zed\Product\Business\Importer\Reader\File;
+use Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface;
+use Spryker\Zed\Product\Business\Model\ProductBatchResultInterface;
+use Spryker\Zed\Product\Business\Validator\DataValidatorInterface;
 
 class FileImporter implements FileImporterInterface
 {

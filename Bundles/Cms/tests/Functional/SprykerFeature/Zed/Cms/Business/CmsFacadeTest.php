@@ -4,24 +4,24 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace Functional\SprykerFeature\Zed\Cms\Business;
+namespace Functional\Spryker\Zed\Cms\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\Cms\Business\CmsFacade;
-use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-use SprykerFeature\Zed\Url\Business\UrlFacade;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Glossary\GlossaryDependencyProvider;
+use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
+use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use Spryker\Zed\Url\Business\UrlFacade;
 
 class CmsFacadeTest extends Test
 {

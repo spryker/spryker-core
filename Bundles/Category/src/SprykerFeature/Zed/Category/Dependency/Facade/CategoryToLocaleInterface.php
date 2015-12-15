@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Dependency\Facade;
+namespace Spryker\Zed\Category\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 

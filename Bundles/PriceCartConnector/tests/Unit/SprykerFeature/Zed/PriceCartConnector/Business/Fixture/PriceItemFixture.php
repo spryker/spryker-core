@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture;
+namespace Unit\Spryker\Zed\PriceCartConnector\Business\Fixture;
 
-use SprykerFeature\Shared\Calculation\Dependency\Transfer\PriceItemInterface;
+use Spryker\Shared\Calculation\Dependency\Transfer\PriceItemInterface;
 
 class PriceItemFixture extends CartItemFixture implements PriceItemInterface
 {

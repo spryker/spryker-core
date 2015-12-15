@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Persistence\Propel;
+namespace Spryker\Zed\Sales\Persistence\Propel;
 
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItemBundleQuery as BaseSpySalesOrderItemBundleQuery;
 

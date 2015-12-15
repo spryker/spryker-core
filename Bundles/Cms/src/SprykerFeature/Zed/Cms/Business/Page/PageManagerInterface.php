@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Business\Page;
+namespace Spryker\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
-use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
-use SprykerFeature\Zed\Cms\Business\Exception\PageExistsException;
+use Spryker\Zed\Cms\Business\Exception\MissingPageException;
+use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
+use Spryker\Zed\Cms\Business\Exception\PageExistsException;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
-use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
-use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
+use Spryker\Zed\Url\Business\Exception\MissingUrlException;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 interface PageManagerInterface
 {

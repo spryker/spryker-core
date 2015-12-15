@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Sales\Dependency\Facade;
+namespace Spryker\Zed\Sales\Dependency\Facade;
 
 interface SalesToCountryInterface
 {

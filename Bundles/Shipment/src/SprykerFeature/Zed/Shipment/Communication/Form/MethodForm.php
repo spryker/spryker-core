@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Shipment\Communication\Form;
+namespace Spryker\Zed\Shipment\Communication\Form;
 
-use SprykerFeature\Shared\Library\Currency\CurrencyManager;
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use SprykerFeature\Zed\Shipment\ShipmentConfig;
-use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
+use Spryker\Zed\Shipment\ShipmentConfig;
+use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 

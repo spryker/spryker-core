@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation;
+namespace Unit\Spryker\Zed\Sales\Business\Model\OrderItemSplit\Validation;
 
-use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItem;
+use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 
@@ -127,7 +127,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
     {
         $validatorMock = $this
             ->getMockBuilder(
-                'SprykerFeature\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface',
+                'Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface',
                 ['validate']
             )
             ->disableOriginalConstructor()
@@ -143,7 +143,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
     {
         return $this
             ->getMockBuilder(
-                'SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface',
+                'Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface',
                 ['querySalesOrderItem']
             )
             ->getMock();
@@ -170,7 +170,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
     {
         $calculatorMock = $this
             ->getMockBuilder(
-                'SprykerFeature\Zed\Sales\Business\Model\Split\CalculatorInterface',
+                'Spryker\Zed\Sales\Business\Model\Split\CalculatorInterface',
                 ['calculateQuantityAmountLeft']
             )
             ->disableOriginalConstructor()

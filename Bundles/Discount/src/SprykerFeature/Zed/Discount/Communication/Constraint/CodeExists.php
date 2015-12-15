@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Communication\Constraint;
+namespace Spryker\Zed\Discount\Communication\Constraint;
 
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Symfony\Component\Validator\Constraint;
 
 class CodeExists extends Constraint

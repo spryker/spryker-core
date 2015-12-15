@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
+namespace Spryker\Shared\Library\Storage\Adapter\KeyValue;
 
 use Predis\Client;
 use Predis\Connection\ConnectionException;

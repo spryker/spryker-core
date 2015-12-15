@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Business;
+namespace Spryker\Zed\Kernel\Business;
 
-use SprykerEngine\Shared\Kernel\AbstractLocator;
-use SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException;
-use SprykerEngine\Shared\Kernel\Locator\LocatorException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Shared\Library\Log;
+use Spryker\Shared\Kernel\AbstractLocator;
+use Spryker\Shared\Kernel\ClassResolver\ClassNotFoundException;
+use Spryker\Shared\Kernel\Locator\LocatorException;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Kernel\BundleDependencyProviderLocator;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Shared\Library\Log;
 
 class FacadeLocator extends AbstractLocator
 {

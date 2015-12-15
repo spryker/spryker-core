@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Wishlist\Communication\Controller;
+namespace Spryker\Zed\Wishlist\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use SprykerFeature\Zed\Wishlist\Business\WishlistFacadeInterface;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Spryker\Zed\Wishlist\Business\WishlistFacadeInterface;
 
 /**
  * @method WishlistFacadeInterface getFacade()

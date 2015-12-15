@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\SequenceNumber\Persistence\Propel;
+namespace Spryker\Zed\SequenceNumber\Persistence\Propel;
 
 use Orm\Zed\SequenceNumber\Persistence\Base\SpySequenceNumberQuery as BaseSpySequenceNumberQuery;
 

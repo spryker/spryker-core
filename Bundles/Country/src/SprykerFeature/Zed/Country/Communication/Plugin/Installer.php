@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Country\Communication\Plugin;
+namespace Spryker\Zed\Country\Communication\Plugin;
 
-use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
-use SprykerFeature\Zed\Country\Communication\CountryDependencyContainer;
+use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Zed\Country\Communication\CountryDependencyContainer;
 
 /**
  * @method CountryDependencyContainer getDependencyContainer()

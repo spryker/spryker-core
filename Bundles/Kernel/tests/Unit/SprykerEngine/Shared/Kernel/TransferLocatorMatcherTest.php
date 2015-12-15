@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Shared\Kernel;
+namespace Unit\Spryker\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\TransferLocatorMatcher;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Shared\Kernel\TransferLocatorMatcher;
+use Spryker\Zed\Kernel\Locator;
 
 /**
  * @group Kernel

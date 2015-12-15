@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
+namespace Spryker\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
-use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException;
+use Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException;
 
 class SingleOptInHandler extends AbstractOptInHandler implements SubscriberOptInHandlerInterface
 {

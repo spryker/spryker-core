@@ -1,14 +1,14 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Queue\Business\Worker;
+namespace Unit\Spryker\Zed\Queue\Business\Worker;
 
 use Codeception\TestCase\Test;
-use Unit\SprykerFeature\Zed\Queue\Mock\MockQueueConnection;
-use SprykerFeature\Zed\Queue\Business\Provider\TaskProvider;
-use SprykerFeature\Zed\Queue\Business\Worker\TaskWorker;
+use Unit\Spryker\Zed\Queue\Mock\MockQueueConnection;
+use Spryker\Zed\Queue\Business\Provider\TaskProvider;
+use Spryker\Zed\Queue\Business\Worker\TaskWorker;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Queue
  * @group Business
@@ -52,7 +52,7 @@ class TaskWorkerTest extends Test
     protected function getMockTaskPlugin()
     {
         $mockBuilder = $this->getMockBuilder(
-            'Unit\SprykerFeature\Zed\Queue\Mock\MockTaskPlugin'
+            'Unit\Spryker\Zed\Queue\Mock\MockTaskPlugin'
         )->setConstructorArgs(['task_name', 'test_queue']);
         $mockTaskPlugin = $mockBuilder->getMock();
         $mockTaskPlugin

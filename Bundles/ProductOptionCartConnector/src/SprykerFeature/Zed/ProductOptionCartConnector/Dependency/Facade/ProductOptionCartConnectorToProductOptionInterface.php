@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionCartConnector\Dependency\Facade;
+namespace Spryker\Zed\ProductOptionCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductOptionTransfer;
 

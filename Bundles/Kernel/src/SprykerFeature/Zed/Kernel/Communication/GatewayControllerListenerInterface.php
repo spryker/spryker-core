@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Kernel\Communication;
+namespace Spryker\Zed\Kernel\Communication;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 

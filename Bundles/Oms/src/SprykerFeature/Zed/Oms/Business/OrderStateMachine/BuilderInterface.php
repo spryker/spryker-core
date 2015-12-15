@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
+namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
+use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 
 interface BuilderInterface
 {

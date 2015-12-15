@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOption\Business;
+namespace Spryker\Zed\ProductOption\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
-use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
+use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 
 /**

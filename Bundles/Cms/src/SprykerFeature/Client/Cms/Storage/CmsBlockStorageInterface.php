@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Client\Cms\Storage;
+namespace Spryker\Client\Cms\Storage;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Client\Storage\Redis;
+namespace Unit\Spryker\Client\Storage\Redis;
 
 use Codeception\TestCase\Test;
 use Predis\ClientInterface;
-use SprykerFeature\Client\Storage\Redis\Service;
+use Spryker\Client\Storage\Redis\Service;
 
 /**
  * @group Storage

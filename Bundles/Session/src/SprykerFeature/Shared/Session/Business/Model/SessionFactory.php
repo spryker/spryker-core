@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Session\Business\Model;
+namespace Spryker\Shared\Session\Business\Model;
 
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Library\Environment;
-use SprykerFeature\Shared\NewRelic\Api;
-use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerCouchbase;
-use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerFile;
-use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerMysql;
-use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerRedis;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Library\Environment;
+use Spryker\Shared\NewRelic\Api;
+use Spryker\Shared\Session\Business\Handler\SessionHandlerCouchbase;
+use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
+use Spryker\Shared\Session\Business\Handler\SessionHandlerMysql;
+use Spryker\Shared\Session\Business\Handler\SessionHandlerRedis;
 
 abstract class SessionFactory
 {

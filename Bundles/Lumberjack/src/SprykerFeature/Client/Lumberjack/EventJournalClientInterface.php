@@ -2,9 +2,9 @@
 /**
  * (c) Copyright Spryker Systems GmbH 2015
  */
-namespace SprykerFeature\Client\Lumberjack;
+namespace Spryker\Client\Lumberjack;
 
-use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
+use Spryker\Shared\Lumberjack\Model\EventInterface;
 
 interface EventJournalClientInterface
 {

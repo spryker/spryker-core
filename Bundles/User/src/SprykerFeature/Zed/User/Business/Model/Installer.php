@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User\Business\Model;
+namespace Spryker\Zed\User\Business\Model;
 
-use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
-use SprykerFeature\Zed\User\UserConfig;
+use Spryker\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\UserConfig;
 
 class Installer implements InstallerInterface
 {

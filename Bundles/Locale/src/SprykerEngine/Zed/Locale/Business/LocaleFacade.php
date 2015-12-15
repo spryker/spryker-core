@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Locale\Business;
+namespace Spryker\Zed\Locale\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Locale\Business\Exception\LocaleExistsException;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
+use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 /**
  * @method LocaleDependencyContainer getDependencyContainer()
@@ -50,7 +50,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function getCurrentLocaleName()
     {
-        return \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale();
+        return \Spryker\Shared\Kernel\Store::getInstance()->getCurrentLocale();
     }
 
     /**

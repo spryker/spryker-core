@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace YvesUnit\SprykerEngine\Yves\Kernel;
+namespace YvesUnit\Spryker\Yves\Kernel;
 
-use SprykerEngine\Yves\Kernel\Locator;
+use Spryker\Yves\Kernel\Locator;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Yves
  * @group Kernel
  * @group Locator
@@ -24,7 +24,7 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
     {
         $locator = Locator::getInstance();
 
-        $this->assertInstanceOf('SprykerEngine\Shared\Kernel\BundleProxy', $locator->locateFoo());
+        $this->assertInstanceOf('Spryker\Shared\Kernel\BundleProxy', $locator->locateFoo());
     }
 
 }

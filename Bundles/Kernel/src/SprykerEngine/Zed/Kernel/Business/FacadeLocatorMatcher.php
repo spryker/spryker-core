@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Business;
+namespace Spryker\Zed\Kernel\Business;
 
-use SprykerEngine\Shared\Kernel\Locator\LocatorMatcherInterface;
+use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class FacadeLocatorMatcher implements LocatorMatcherInterface
 {

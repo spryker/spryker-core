@@ -3,13 +3,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Communication\Controller;
+namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Customer\Business\CustomerFacade;
-use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Communication\CustomerDependencyContainer;
+use Spryker\Zed\Customer\Communication\Form\CustomerForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

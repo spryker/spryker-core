@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace YvesUnit\SprykerEngine\Yves\Kernel;
+namespace YvesUnit\Spryker\Yves\Kernel;
 
-use SprykerEngine\Yves\Kernel\BundleControllerAction;
-use SprykerEngine\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
+use Spryker\Yves\Kernel\BundleControllerAction;
+use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Yves
  * @group Kernel
  * @group BundleControllerActionRouteNameResolver

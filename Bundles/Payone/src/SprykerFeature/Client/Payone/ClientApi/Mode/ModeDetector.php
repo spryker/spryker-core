@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Payone\ClientApi\Mode;
+namespace Spryker\Client\Payone\ClientApi\Mode;
 
-use SprykerFeature\Shared\Library\Environment;
-use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
+use Spryker\Shared\Library\Environment;
+use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 
 /**
  * @deprecated Use Zed one instead

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\IdeAutoCompletion;
+namespace Spryker\Zed\Kernel\IdeAutoCompletion;
 
 class IdeAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerator
 {

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Dependency\Plugin;
+namespace Spryker\Zed\Sales\Dependency\Plugin;
 
 use Propel\Runtime\Collection\ObjectCollection;
 

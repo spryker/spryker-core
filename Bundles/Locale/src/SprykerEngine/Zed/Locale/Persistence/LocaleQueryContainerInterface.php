@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Locale\Persistence;
+namespace Spryker\Zed\Locale\Persistence;
 
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 

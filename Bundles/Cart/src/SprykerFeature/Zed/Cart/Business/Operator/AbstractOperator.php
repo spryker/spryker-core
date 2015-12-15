@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cart\Business\Operator;
+namespace Spryker\Zed\Cart\Business\Operator;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
-use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
+use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Psr\Log\LoggerInterface;
-use SprykerFeature\Zed\Cart\Business\Model\CalculableContainer;
-use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
-use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
-use SprykerFeature\Zed\ItemGrouper\Business\ItemGrouperFacade;
+use Spryker\Zed\Cart\Business\Model\CalculableContainer;
+use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
+use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
+use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
 abstract class AbstractOperator implements OperatorInterface
 {

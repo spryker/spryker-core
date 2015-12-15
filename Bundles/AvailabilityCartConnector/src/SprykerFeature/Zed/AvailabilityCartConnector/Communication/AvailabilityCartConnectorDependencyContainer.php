@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\AvailabilityCartConnector\Communication;
+namespace Spryker\Zed\AvailabilityCartConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\AvailabilityCartConnector\AvailabilityCartConnectorDependencyProvider;
-use SprykerFeature\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityToCartConnectorFacadeInterface as AvailabilityFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\AvailabilityCartConnector\AvailabilityCartConnectorDependencyProvider;
+use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityToCartConnectorFacadeInterface as AvailabilityFacade;
 
 class AvailabilityCartConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {

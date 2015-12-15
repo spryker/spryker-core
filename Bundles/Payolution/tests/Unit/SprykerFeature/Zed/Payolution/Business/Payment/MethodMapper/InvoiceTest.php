@@ -3,7 +3,7 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace Unit\SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
+namespace Unit\Spryker\Zed\Payolution\Business\Payment\MethodMapper;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
-use SprykerFeature\Zed\Payolution\PayolutionConfig;
+use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
+use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
+use Spryker\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
@@ -159,7 +159,7 @@ class InvoiceTest extends Test
     private function getBundleConfigMock()
     {
         return $this->getMock(
-            'SprykerFeature\Zed\Payolution\PayolutionConfig',
+            'Spryker\Zed\Payolution\PayolutionConfig',
             [],
             [],
             '',

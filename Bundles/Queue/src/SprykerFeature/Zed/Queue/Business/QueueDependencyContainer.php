@@ -1,18 +1,18 @@
 <?php
 
-namespace SprykerFeature\Zed\Queue\Business;
+namespace Spryker\Zed\Queue\Business;
 
-use SprykerFeature\Zed\Queue\Business\Provider\TaskProvider;
-use SprykerFeature\Zed\Queue\Business\Worker\TaskWorker;
-use SprykerFeature\Zed\Queue\Business\Model\QueueConnection;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
-use SprykerFeature\Zed\Queue\Business\Provider\TaskProviderInterface;
-use SprykerFeature\Zed\Queue\Business\Worker\TaskWorkerInterface;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
-use SprykerFeature\Zed\Queue\QueueConfig;
-use SprykerFeature\Zed\Queue\QueueDependencyProvider;
+use Spryker\Zed\Queue\Business\Provider\TaskProvider;
+use Spryker\Zed\Queue\Business\Worker\TaskWorker;
+use Spryker\Zed\Queue\Business\Model\QueueConnection;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Queue\Business\Model\QueueConnectionInterface;
+use Spryker\Zed\Queue\Business\Provider\TaskProviderInterface;
+use Spryker\Zed\Queue\Business\Worker\TaskWorkerInterface;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
+use Spryker\Zed\Queue\QueueConfig;
+use Spryker\Zed\Queue\QueueDependencyProvider;
 
 /**
  * @method QueueConfig getConfig()

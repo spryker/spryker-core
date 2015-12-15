@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture;
+namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
 
-use SprykerFeature\Shared\Library\Communication\Request;
-use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
-use SprykerFeature\Zed\ZedRequest\Business\Client\Request as ZedRequest;
+use Spryker\Shared\Library\Communication\Request;
+use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
+use Spryker\Zed\ZedRequest\Business\Client\Request as ZedRequest;
 
 class TransferServer extends CoreTransferServer
 {

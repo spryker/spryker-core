@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application;
+namespace Spryker\Zed\Application;
 
-use SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class ApplicationConfig extends AbstractBundleConfig
 {

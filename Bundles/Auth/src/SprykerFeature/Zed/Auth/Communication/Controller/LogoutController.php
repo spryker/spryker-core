@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Communication\Controller;
+namespace Spryker\Zed\Auth\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Auth\Communication\AuthDependencyContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Auth\Communication\AuthDependencyContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use SprykerFeature\Zed\Auth\Business\AuthFacade;
+use Spryker\Zed\Auth\Business\AuthFacade;
 
 /**
  * @method AuthDependencyContainer getDependencyContainer()

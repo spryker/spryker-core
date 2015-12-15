@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOption\Business\Model;
+namespace Spryker\Zed\ProductOption\Business\Model;
 
 use Generated\Shared\Transfer\ProductOptionTransfer;
 

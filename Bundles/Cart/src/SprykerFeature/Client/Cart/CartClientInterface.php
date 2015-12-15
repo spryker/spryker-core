@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Cart;
+namespace Spryker\Client\Cart;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ItemTransfer;

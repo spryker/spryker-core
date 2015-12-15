@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Country\Persistence\Propel;
+namespace Spryker\Zed\Country\Persistence\Propel;
 
 use Orm\Zed\Country\Persistence\Base\SpyCountryQuery as BaseSpyCountryQuery;
 

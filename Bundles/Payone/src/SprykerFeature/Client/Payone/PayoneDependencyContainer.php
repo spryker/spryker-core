@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Payone;
+namespace Spryker\Client\Payone;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Payone\ClientApi\HashGeneratorInterface;
-use SprykerFeature\Shared\Payone\Dependency\HashInterface;
-use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Payone\ClientApi\HashGeneratorInterface;
+use Spryker\Shared\Payone\Dependency\HashInterface;
+use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 
 class PayoneDependencyContainer extends AbstractDependencyContainer
 {

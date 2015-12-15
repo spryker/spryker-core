@@ -4,23 +4,23 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Console\Business\Model;
+namespace Spryker\Zed\Console\Business\Model;
 
 use Psr\Log\LoggerInterface;
 use Silex\Application;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
-use SprykerEngine\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
-use SprykerEngine\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
-use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Shared\NewRelic\Api;
-use SprykerFeature\Zed\Console\Communication\ConsoleBootstrap;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use Spryker\Shared\Library\System;
+use Spryker\Shared\NewRelic\Api;
+use Spryker\Zed\Console\Communication\ConsoleBootstrap;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -122,7 +122,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @throws \SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException
      *
      * @return AbstractCommunicationDependencyContainer
      */

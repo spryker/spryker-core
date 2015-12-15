@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\DiscountCheckoutConnector\Communication\Plugin;
+namespace Spryker\Zed\DiscountCheckoutConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
-use SprykerFeature\Zed\DiscountCheckoutConnector\Business\DiscountCheckoutConnectorFacade;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
+use Spryker\Zed\DiscountCheckoutConnector\Business\DiscountCheckoutConnectorFacade;
 
 /**
  * @method DiscountCheckoutConnectorFacade getFacade()

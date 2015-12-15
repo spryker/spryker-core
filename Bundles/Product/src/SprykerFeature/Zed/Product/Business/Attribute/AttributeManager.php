@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Attribute;
+namespace Spryker\Zed\Product\Business\Attribute;
 
-use SprykerFeature\Zed\Product\Business\Exception\AttributeExistsException;
-use SprykerFeature\Zed\Product\Business\Exception\AttributeTypeExistsException;
-use SprykerFeature\Zed\Product\Business\Exception\MissingAttributeTypeException;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\Product\Business\Exception\AttributeExistsException;
+use Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException;
+use Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Orm\Zed\Product\Persistence\SpyProductAttributesMetadata;
 use Orm\Zed\Product\Persistence\SpyProductAttributeType;
 

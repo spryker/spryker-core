@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Persistence;
+namespace Spryker\Zed\Kernel\Persistence;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\AbstractDependencyContainer as BaseDependencyContainer;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Persistence\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractDependencyContainer as BaseDependencyContainer;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Persistence\DependencyContainer\DependencyContainerInterface;
 
 abstract class AbstractPersistenceDependencyContainer extends BaseDependencyContainer implements DependencyContainerInterface
 {

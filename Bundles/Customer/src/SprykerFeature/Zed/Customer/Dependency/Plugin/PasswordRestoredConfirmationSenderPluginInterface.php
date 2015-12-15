@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Dependency\Plugin;
+namespace Spryker\Zed\Customer\Dependency\Plugin;
 
 interface PasswordRestoredConfirmationSenderPluginInterface
 {

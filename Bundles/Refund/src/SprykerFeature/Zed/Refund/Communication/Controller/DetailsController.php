@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Refund\Communication\Controller;
+namespace Spryker\Zed\Refund\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Refund\Business\RefundFacade;
-use SprykerFeature\Zed\Refund\Communication\RefundDependencyContainer;
-use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Refund\Business\RefundFacade;
+use Spryker\Zed\Refund\Communication\RefundDependencyContainer;
+use Spryker\Zed\Refund\Persistence\RefundQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

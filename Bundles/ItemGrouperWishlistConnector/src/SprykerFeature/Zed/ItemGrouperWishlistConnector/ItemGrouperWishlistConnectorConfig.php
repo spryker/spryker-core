@@ -3,9 +3,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ItemGrouperWishlistConnector;
+namespace Spryker\Zed\ItemGrouperWishlistConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ItemGrouperWishlistConnectorConfig extends AbstractBundleConfig
 {

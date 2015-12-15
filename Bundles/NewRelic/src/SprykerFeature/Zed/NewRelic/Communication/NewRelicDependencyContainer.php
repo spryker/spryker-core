@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\NewRelic\Communication;
+namespace Spryker\Zed\NewRelic\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Shared\NewRelic\Api;
-use SprykerFeature\Zed\NewRelic\NewRelicConfig;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Shared\NewRelic\Api;
+use Spryker\Zed\NewRelic\NewRelicConfig;
 
 /**
  * @method NewRelicConfig getConfig()

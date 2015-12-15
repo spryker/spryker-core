@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Exception;
+namespace Spryker\Zed\Product\Business\Exception;
 
 class AttributeExistsException extends \Exception
 {

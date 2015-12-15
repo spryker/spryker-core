@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider;
+namespace Unit\Spryker\Zed\Auth\Communication\Plugin\ServiceProvider;
 
-use SprykerEngine\Zed\Kernel\AbstractUnitTest;
-use SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
+use Spryker\Zed\Kernel\AbstractUnitTest;
+use Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Auth
  * @group Communication
@@ -228,10 +228,10 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
     private function getRedirectAfterLoginProvider(array $methods = [])
     {
         if (empty($methods)) {
-            return $this->getPluginByClassName('SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider');
+            return $this->getPluginByClassName('Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider');
         }
 
-        return $this->getMock('SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider', $methods, [], '', false);
+        return $this->getMock('Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider', $methods, [], '', false);
     }
 
 }

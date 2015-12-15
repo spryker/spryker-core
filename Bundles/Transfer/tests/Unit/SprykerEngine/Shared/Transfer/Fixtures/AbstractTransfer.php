@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Shared\Transfer\Fixtures;
+namespace Unit\Spryker\Shared\Transfer\Fixtures;
 
-use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerEngine\Shared\Transfer\AbstractTransfer as ParentAbstractTransfer;
+use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Transfer\AbstractTransfer as ParentAbstractTransfer;
 
 class AbstractTransfer extends ParentAbstractTransfer
 {
@@ -84,13 +84,13 @@ class AbstractTransfer extends ParentAbstractTransfer
             'is_transfer' => false,
         ],
         self::TRANSFER => [
-            'type' => 'Unit\SprykerEngine\Shared\Transfer\Fixtures\AbstractTransfer',
+            'type' => 'Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer',
             'name_underscore' => 'transfer',
             'is_collection' => false,
             'is_transfer' => true,
         ],
         self::TRANSFER_COLLECTION => [
-            'type' => 'Unit\SprykerEngine\Shared\Transfer\Fixtures\AbstractTransfer',
+            'type' => 'Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer',
             'name_underscore' => 'transfer_collection',
             'is_collection' => true,
             'is_transfer' => true,

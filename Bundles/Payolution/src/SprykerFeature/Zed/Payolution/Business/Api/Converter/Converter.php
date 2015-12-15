@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Api\Converter;
+namespace Spryker\Zed\Payolution\Business\Api\Converter;
 
 use Generated\Shared\Transfer\PayolutionCalculationInstallmentTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
-use SprykerFeature\Shared\Library\Currency\CurrencyManager;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use DOMDocument;
 use DOMElement;
 

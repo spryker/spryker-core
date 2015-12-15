@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Communication\Plugin\Refund;
+namespace Spryker\Zed\Payone\Communication\Plugin\Refund;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Payone\Business\PayoneFacade;
-use SprykerFeature\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Payone\Business\PayoneFacade;
+use Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
 
 /**
  * @method PayoneFacade getFacade()

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Shared\Transfer;
+namespace Unit\Spryker\Shared\Transfer;
 
-use Unit\SprykerEngine\Shared\Transfer\Fixtures\AbstractTransfer;
+use Unit\Spryker\Shared\Transfer\Fixtures\AbstractTransfer;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Shared
  * @group Transfer
  */
@@ -52,7 +52,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer = new AbstractTransfer();
         $transfer->fromArray($data);
 
-        $this->assertInstanceOf('SprykerEngine\Shared\Transfer\TransferInterface', $transfer->getTransfer());
+        $this->assertInstanceOf('Spryker\Shared\Transfer\TransferInterface', $transfer->getTransfer());
         $this->assertInstanceOf('\ArrayObject', $transfer->getTransferCollection());
         $this->assertCount(1, $transfer->getTransferCollection());
     }
@@ -74,7 +74,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer = new AbstractTransfer();
         $transfer->fromArray($data);
 
-        $this->assertInstanceOf('SprykerEngine\Shared\Transfer\TransferInterface', $transfer->getTransfer());
+        $this->assertInstanceOf('Spryker\Shared\Transfer\TransferInterface', $transfer->getTransfer());
     }
 
     /**

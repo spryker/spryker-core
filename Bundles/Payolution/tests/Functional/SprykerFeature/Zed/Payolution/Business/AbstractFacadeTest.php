@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Payolution\Business;
+namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
@@ -12,10 +12,10 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
-use SprykerFeature\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
-use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
+use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use Spryker\Shared\Payolution\PayolutionApiConstants;
+use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
+use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;

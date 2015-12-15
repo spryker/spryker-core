@@ -1,9 +1,9 @@
 <?php
 
-namespace SprykerFeature\Zed\Price\Communication\Plugin\Twig;
+namespace Spryker\Zed\Price\Communication\Plugin\Twig;
 
-use SprykerFeature\Shared\Library\Currency\CurrencyManager;
-use SprykerFeature\Zed\Price\Communication\Plugin\Twig\Filters\PriceFilter;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Price\Communication\Plugin\Twig\Filters\PriceFilter;
 
 class PriceTwigExtensions extends \Twig_Extension
 {

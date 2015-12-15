@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Application\Communication;
+namespace Spryker\Shared\Application\Communication;
 
 use Silex\Application\TranslationTrait;
 use Silex\Application\TwigTrait;
 use Silex\Application\UrlGeneratorTrait;
-use SprykerEngine\Shared\Gui\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;

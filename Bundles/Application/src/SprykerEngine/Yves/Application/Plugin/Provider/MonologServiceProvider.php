@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Application\Plugin\Provider;
+namespace Spryker\Yves\Application\Plugin\Provider;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use SprykerFeature\Shared\Library\Log;
-use SprykerFeature\Shared\Library\Monolog\LumberjackHandler;
+use Spryker\Shared\Library\Log;
+use Spryker\Shared\Library\Monolog\LumberjackHandler;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
 /**
- * @deprecated Use SprykerFeature\Shared\Log\LoggerTrait where ever you need to log something with monolog
+ * @deprecated Use Spryker\Shared\Log\LoggerTrait where ever you need to log something with monolog
  * instead of using the silex monolog service.
  */
 class MonologServiceProvider implements ServiceProviderInterface

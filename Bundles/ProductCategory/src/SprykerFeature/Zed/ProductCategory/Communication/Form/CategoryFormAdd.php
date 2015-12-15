@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
+namespace Spryker\Zed\ProductCategory\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 
 class CategoryFormAdd extends AbstractForm

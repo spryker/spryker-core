@@ -4,20 +4,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Business;
+namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Dummy;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Oms\Business\Process\Process;
-use SprykerFeature\Zed\Oms\Business\Process\Event;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Oms\Business\Process\Process;
+use Spryker\Zed\Oms\Business\Process\Event;
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
-use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 
 /**
  * @method OmsDependencyContainer getDependencyContainer()

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Heartbeat;
+namespace Spryker\Zed\Heartbeat;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class HeartbeatConfig extends AbstractBundleConfig
 {

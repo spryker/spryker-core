@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Country\Business\Cldr;
+namespace Spryker\Zed\Country\Business\Cldr;
 
 interface CldrDataProviderInterface
 {

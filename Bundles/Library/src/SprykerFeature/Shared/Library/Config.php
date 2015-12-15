@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library;
+namespace Spryker\Shared\Library;
 
-use SprykerEngine\Shared\Kernel\Store;
+use Spryker\Shared\Kernel\Store;
 
 /**
  * Runtime-Config for Yves and Zed
  *
- * @deprecated Please use SprykerEngine\Shared\Config
+ * @deprecated Please use Spryker\Shared\Config
  */
 class Config
 {

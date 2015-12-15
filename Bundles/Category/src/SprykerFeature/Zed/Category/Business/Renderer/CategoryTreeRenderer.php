@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Business\Renderer;
+namespace Spryker\Zed\Category\Business\Renderer;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use SprykerFeature\Zed\Library\Service\GraphViz;
+use Spryker\Zed\Library\Service\GraphViz;
 
 class CategoryTreeRenderer
 {

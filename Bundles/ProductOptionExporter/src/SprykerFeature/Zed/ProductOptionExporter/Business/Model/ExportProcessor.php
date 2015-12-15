@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionExporter\Business\Model;
+namespace Spryker\Zed\ProductOptionExporter\Business\Model;
 
-use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductOptionInterface;
-use SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductInterface;
+use Spryker\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductOptionInterface;
+use Spryker\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class ExportProcessor implements ExportProcessorInterface

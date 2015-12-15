@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Tax\Business\Model;
+namespace Spryker\Zed\Tax\Business\Model;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
-use SprykerFeature\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
-use SprykerFeature\Zed\Tax\TaxConfig;
-use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
+use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
+use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
+use Spryker\Zed\Tax\TaxConfig;
+use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Zed\Ide\AutoCompletion;

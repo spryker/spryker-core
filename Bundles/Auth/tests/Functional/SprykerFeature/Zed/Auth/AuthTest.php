@@ -4,21 +4,21 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Auth;
+namespace Functional\Spryker\Zed\Auth;
 
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Auth\AuthConfig;
-use SprykerFeature\Shared\Auth\AuthConstants;
-use SprykerFeature\Zed\Auth\Business\AuthFacade;
-use SprykerFeature\Zed\User\Business\UserFacade;
-use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Auth\AuthConfig;
+use Spryker\Shared\Auth\AuthConstants;
+use Spryker\Zed\Auth\Business\AuthFacade;
+use Spryker\Zed\User\Business\UserFacade;
+use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Generated\Shared\Transfer\UserTransfer;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Auth
  */

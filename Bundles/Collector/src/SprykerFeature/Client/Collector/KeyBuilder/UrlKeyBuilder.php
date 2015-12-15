@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Collector\KeyBuilder;
+namespace Spryker\Client\Collector\KeyBuilder;
 
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\UrlKeyBuilder as SharedUrlKeyBuilder;
+use Spryker\Shared\Collector\Code\KeyBuilder\UrlKeyBuilder as SharedUrlKeyBuilder;
 
 class UrlKeyBuilder extends SharedUrlKeyBuilder
 {

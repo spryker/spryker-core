@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder;
+namespace Spryker\Shared\CategoryExporter\Code\KeyBuilder;
 
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 abstract class NavigationKeyBuilder implements KeyBuilderInterface
 {

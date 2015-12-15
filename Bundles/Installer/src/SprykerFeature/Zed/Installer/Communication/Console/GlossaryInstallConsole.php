@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Installer\Communication\Console;
+namespace Spryker\Zed\Installer\Communication\Console;
 
-use SprykerFeature\Zed\Console\Business\Model\Console;
-use SprykerFeature\Zed\Installer\Business\InstallerFacade;
-use SprykerFeature\Zed\Installer\Business\Model\GlossaryInstaller;
+use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Installer\Business\InstallerFacade;
+use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

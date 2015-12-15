@@ -1,8 +1,8 @@
 <?php
 
-namespace Unit\SprykerEngine\Client\Kernel\Fixtures;
+namespace Unit\Spryker\Client\Kernel\Fixtures;
 
-use SprykerEngine\Client\Kernel\Factory;
+use Spryker\Client\Kernel\Factory;
 
 class KernelFactory extends Factory
 {

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms;
+namespace Spryker\Zed\Oms;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class OmsConfig extends AbstractBundleConfig
 {

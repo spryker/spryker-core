@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Mail\Business;
+namespace Unit\Spryker\Zed\Mail\Business;
 
-use SprykerFeature\Zed\Mail\Business\InclusionHandler;
-use SprykerFeature\Zed\Mail\Business\InclusionHandlerInterface;
+use Spryker\Zed\Mail\Business\InclusionHandler;
+use Spryker\Zed\Mail\Business\InclusionHandlerInterface;
 
 /**
  * @group InclusionHandler

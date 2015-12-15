@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Installer\Business\Model;
+namespace Spryker\Zed\Installer\Business\Model;
 
 use Psr\Log\AbstractLogger;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 
 abstract class AbstractInstaller extends AbstractLogger implements MessengerInterface
 {

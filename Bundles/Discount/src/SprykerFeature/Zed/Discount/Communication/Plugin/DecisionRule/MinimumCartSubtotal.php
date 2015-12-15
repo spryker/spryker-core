@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule;
+namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-use SprykerEngine\Zed\Kernel\Business\ModelResult;
-use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
+use Spryker\Zed\Kernel\Business\ModelResult;
+use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()

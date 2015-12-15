@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\SequenceNumber;
+namespace Functional\Spryker\Zed\SequenceNumber;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Propel\Runtime\Propel;
-use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
-use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumber;
-use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
-use SprykerFeature\Zed\SequenceNumber\SequenceNumberConfig;
+use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
+use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumber;
+use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
+use Spryker\Zed\SequenceNumber\SequenceNumberConfig;
 
 /**
  * @group SequenceNumberTest

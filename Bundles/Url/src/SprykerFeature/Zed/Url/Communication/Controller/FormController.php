@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Url\Communication\Controller;
+namespace Spryker\Zed\Url\Communication\Controller;
 
 use Generated\Shared\Transfer\UrlTransfer;
-use SprykerFeature\Zed\Url\Communication\UrlDependencyContainer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Url\Communication\UrlDependencyContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**

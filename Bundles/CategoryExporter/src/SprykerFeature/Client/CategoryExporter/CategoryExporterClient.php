@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\CategoryExporter;
+namespace Spryker\Client\CategoryExporter;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method CategoryExporterDependencyContainer getDependencyContainer()

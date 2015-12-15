@@ -1,11 +1,11 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer\Fixtures\SprykerUseStatementFixer\Input;
+namespace Unit\Spryker\Zed\Development\Business\CodeStyleFixer\Fixtures\SprykerUseStatementFixer\Input;
 
-use SprykerEngine\Zed\Foo;
+use Spryker\Zed\Foo;
 use Pyz\Zed\Foo\Bar\Baz;
 use X\Y;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinder as InstalledPackagesInstalledPackageFinder;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinder as InstalledPackagesInstalledPackageFinder;
 use Foo\InstalledPackageFinder;
 
 class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz

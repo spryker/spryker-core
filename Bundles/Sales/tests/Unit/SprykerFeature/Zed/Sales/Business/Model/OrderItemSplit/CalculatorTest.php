@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation;
+namespace Unit\Spryker\Zed\Sales\Business\Model\OrderItemSplit\Validation;
 
-use SprykerFeature\Zed\Sales\Business\Model\Split\Calculator;
+use Spryker\Zed\Sales\Business\Model\Split\Calculator;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 class CalculatorTest extends \PHPUnit_Framework_TestCase

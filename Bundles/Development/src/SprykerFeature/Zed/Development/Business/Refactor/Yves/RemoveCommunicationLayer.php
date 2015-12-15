@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Development\Business\Refactor\Yves;
+namespace Spryker\Zed\Development\Business\Refactor\Yves;
 
-use SprykerFeature\Zed\Development\Business\Refactor\AbstractRefactor;
-use SprykerFeature\Zed\Development\Business\Refactor\RefactorException;
+use Spryker\Zed\Development\Business\Refactor\AbstractRefactor;
+use Spryker\Zed\Development\Business\Refactor\RefactorException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -87,8 +87,8 @@ class RemoveCommunicationLayer extends AbstractRefactor
     protected function fixYvesBootstrap($content)
     {
         return preg_replace(
-            '/SprykerEngine\\\\Yves\\\\Application\\\\YvesBootstrap/',
-            'SprykerEngine\\Yves\\Application\\Bootstrap\\YvesBootstrap',
+            '/Spryker\\\\Yves\\\\Application\\\\YvesBootstrap/',
+            'Spryker\\Yves\\Application\\Bootstrap\\YvesBootstrap',
             $content
         );
     }
@@ -101,8 +101,8 @@ class RemoveCommunicationLayer extends AbstractRefactor
     protected function fixAbstractRouter($content)
     {
         return preg_replace(
-            '/SprykerEngine\\\\Yves\\\\Application\\\\Business\\\Routing\\\\AbstractRouter/',
-            'SprykerEngine\\Yves\\Application\\Routing\\AbstractRouter',
+            '/Spryker\\\\Yves\\\\Application\\\\Business\\\Routing\\\\AbstractRouter/',
+            'Spryker\\Yves\\Application\\Routing\\AbstractRouter',
             $content
         );
     }
@@ -115,8 +115,8 @@ class RemoveCommunicationLayer extends AbstractRefactor
     protected function fixRoutingHelper($content)
     {
         return preg_replace(
-            '/SprykerEngine\\\\Yves\\\\Application\\\\Business\\\Routing\\\\Helper/',
-            'SprykerEngine\\Yves\\Application\\Routing\\Helper',
+            '/Spryker\\\\Yves\\\\Application\\\\Business\\\Routing\\\\Helper/',
+            'Spryker\\Yves\\Application\\Routing\\Helper',
             $content
         );
     }

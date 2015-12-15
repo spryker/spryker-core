@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Product\Business\Model;
+namespace Unit\Spryker\Zed\Product\Business\Model;
 
-use SprykerFeature\Zed\Product\Business\Model\Filesystem;
+use Spryker\Zed\Product\Business\Model\Filesystem;
 
 class FilesystemTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +22,7 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
      */
     protected function getFilesystemMock()
     {
-        $mock = $this->getMock('SprykerFeature\Zed\Product\Business\Model\Filesystem', ['getConfig']);
+        $mock = $this->getMock('Spryker\Zed\Product\Business\Model\Filesystem', ['getConfig']);
 
         $config = (object) [
             'originalProductImageDirectory' => self::PATH_ORIGINAL,

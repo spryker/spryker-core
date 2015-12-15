@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Kernel;
+namespace Spryker\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException;
-use SprykerEngine\Shared\Kernel\ClassResolver\InstanceBuilder;
+use Spryker\Shared\Kernel\ClassResolver\ClassNotFoundException;
+use Spryker\Shared\Kernel\ClassResolver\InstanceBuilder;
 
 class ClassMapFactory
 {

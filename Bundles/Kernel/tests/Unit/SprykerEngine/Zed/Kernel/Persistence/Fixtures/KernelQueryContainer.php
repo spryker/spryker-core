@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\Persistence\Fixtures;
+namespace Unit\Spryker\Zed\Kernel\Persistence\Fixtures;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 class KernelQueryContainer extends AbstractQueryContainer
 {

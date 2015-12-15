@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Kernel\Communication\Controller;
+namespace Spryker\Zed\Kernel\Communication\Controller;
 
 use Silex\Application;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Shared\NewRelic\Api;
-use SprykerFeature\Shared\ZedRequest\Client\Message;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Shared\NewRelic\Api;
+use Spryker\Shared\ZedRequest\Client\Message;
 
 abstract class AbstractGatewayController extends AbstractController
 {

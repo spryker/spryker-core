@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Country\Communication\Table;
+namespace Spryker\Zed\Country\Communication\Table;
 
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class DetailsTable extends AbstractTable

@@ -1,9 +1,9 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Kernel\Communication;
+namespace Unit\Spryker\Zed\Kernel\Communication;
 
 use Silex\Application;
-use Unit\SprykerFeature\Zed\Kernel\Communication\Fixtures\FixtureGatewayController;
+use Unit\Spryker\Zed\Kernel\Communication\Fixtures\FixtureGatewayController;
 
 class AbstractGatewayControllerTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +16,7 @@ class AbstractGatewayControllerTest extends \PHPUnit_Framework_TestCase
         $application = new Application();
 
         $this->assertInstanceOf(
-            'SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController',
+            'Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController',
             new FixtureGatewayController($application)
         );
     }

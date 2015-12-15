@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Communication\Console;
+namespace Spryker\Zed\Collector\Communication\Console;
 
-use SprykerFeature\Zed\Console\Business\Model\Console;
-use SprykerFeature\Zed\Collector\Business\Model\BatchResult;
+use Spryker\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Collector\Business\Model\BatchResult;
 
 abstract class AbstractCollectorConsole extends Console
 {

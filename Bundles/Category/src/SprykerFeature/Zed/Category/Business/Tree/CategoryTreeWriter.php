@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Business\Tree;
+namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Shared\Category\CategoryConstants;
-use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
-use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
+use Spryker\Shared\Category\CategoryConstants;
+use Spryker\Zed\Category\Business\Manager\NodeUrlManagerInterface;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 
 class CategoryTreeWriter

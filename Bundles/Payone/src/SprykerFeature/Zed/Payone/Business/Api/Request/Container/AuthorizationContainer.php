@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
+namespace Spryker\Zed\Payone\Business\Api\Request\Container;
 
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer;
 
 class AuthorizationContainer extends AbstractAuthorizationContainer
 {

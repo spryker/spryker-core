@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel;
+namespace Spryker\Zed\Kernel;
 
-use SprykerEngine\Shared\Kernel\ClassMapFactory;
-use SprykerEngine\Zed\Kernel\Factory\FactoryInterface;
+use Spryker\Shared\Kernel\ClassMapFactory;
+use Spryker\Zed\Kernel\Factory\FactoryInterface;
 
 abstract class AbstractFactory implements FactoryInterface
 {

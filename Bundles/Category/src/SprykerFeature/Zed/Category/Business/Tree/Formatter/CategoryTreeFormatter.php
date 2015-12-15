@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Category\Business\Tree\Formatter;
+namespace Spryker\Zed\Category\Business\Tree\Formatter;
 
 class CategoryTreeFormatter
 {

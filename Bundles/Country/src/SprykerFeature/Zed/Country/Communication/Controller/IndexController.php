@@ -1,9 +1,9 @@
 <?php
 
-namespace SprykerFeature\Zed\Country\Communication\Controller;
+namespace Spryker\Zed\Country\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Country\Communication\Table\CountryTable;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Country\Communication\Table\CountryTable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController extends AbstractController

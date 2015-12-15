@@ -6,8 +6,8 @@
 
 namespace Generated\Shared\Transfer;
 
-use SprykerEngine\Shared\Transfer\AbstractTransfer;
-use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\Transfer\AbstractTransfer;
+use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**

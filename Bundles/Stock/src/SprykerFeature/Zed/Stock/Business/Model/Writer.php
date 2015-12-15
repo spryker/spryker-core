@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Business\Model;
+namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
-use SprykerFeature\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
-use SprykerFeature\Zed\Stock\Business\Exception\StockProductNotFoundException;
-use SprykerFeature\Zed\Stock\Business\Exception\StockTypeNotFoundException;
-use SprykerFeature\Zed\Stock\Dependency\Facade\StockToTouchInterface;
+use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
+use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
+use Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException;
+use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
-use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
+use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 

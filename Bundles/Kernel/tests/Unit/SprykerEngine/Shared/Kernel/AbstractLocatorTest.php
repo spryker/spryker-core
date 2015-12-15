@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Shared\Kernel;
+namespace Unit\Spryker\Shared\Kernel;
 
-use Unit\SprykerEngine\Shared\Kernel\Fixtures\Locator;
-use Unit\SprykerEngine\Shared\Kernel\Fixtures\MissingPropertyLocator;
+use Unit\Spryker\Shared\Kernel\Fixtures\Locator;
+use Unit\Spryker\Shared\Kernel\Fixtures\MissingPropertyLocator;
 
 /**
  * @group Kernel
@@ -22,7 +22,7 @@ class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateInstanceWithoutAFactoryClassNamePatternPropertyShouldThrowException()
     {
-        $this->setExpectedException('SprykerEngine\Shared\Kernel\Locator\LocatorException');
+        $this->setExpectedException('Spryker\Shared\Kernel\Locator\LocatorException');
 
         $locator = new MissingPropertyLocator();
     }
@@ -34,7 +34,7 @@ class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
     {
         $locator = new Locator('foo');
 
-        $this->assertInstanceOf('SprykerEngine\Shared\Kernel\AbstractLocator', $locator);
+        $this->assertInstanceOf('Spryker\Shared\Kernel\AbstractLocator', $locator);
     }
 
 }

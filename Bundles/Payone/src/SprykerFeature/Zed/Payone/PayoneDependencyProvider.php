@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone;
+namespace Spryker\Zed\Payone;
 
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 class PayoneDependencyProvider extends AbstractBundleDependencyProvider
 {

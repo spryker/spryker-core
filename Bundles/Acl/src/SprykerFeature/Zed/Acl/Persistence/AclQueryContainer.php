@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Persistence;
+namespace Spryker\Zed\Acl\Persistence;
 
 use Generated\Shared\Transfer\RolesTransfer;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Zed\Acl\AclConfig;
+use Spryker\Zed\Acl\AclConfig;
 use Orm\Zed\Acl\Persistence\Base\SpyAclUserHasGroupQuery;
 use Orm\Zed\Acl\Persistence\Map\SpyAclGroupsHasRolesTableMap;
 use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;

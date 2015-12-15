@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Storage\Business;
+namespace Spryker\Zed\Storage\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Client\Storage\StorageClient;
-use SprykerFeature\Zed\Storage\Business\Model\Storage;
-use SprykerFeature\Zed\Storage\StorageDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Client\Storage\StorageClient;
+use Spryker\Zed\Storage\Business\Model\Storage;
+use Spryker\Zed\Storage\StorageDependencyProvider;
 
 class StorageDependencyContainer extends AbstractBusinessDependencyContainer
 {

@@ -4,20 +4,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\CustomerCheckoutConnector\Business;
+namespace Functional\Spryker\Zed\CustomerCheckoutConnector\Business;
 
 use Codeception\TestCase\Test;
-use Functional\SprykerFeature\Zed\CustomerCheckoutConnector\Dependency\CustomerFacade;
+use Functional\Spryker\Zed\CustomerCheckoutConnector\Dependency\CustomerFacade;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Zed\Customer\Business\CustomerDependencyContainer;
-use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Customer\Business\CustomerDependencyContainer;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use SprykerFeature\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorDependencyContainer;
-use SprykerFeature\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorFacade;
-use SprykerFeature\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorDependencyProvider;
+use Spryker\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorDependencyContainer;
+use Spryker\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorFacade;
+use Spryker\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorDependencyProvider;
 
 /**
  * @group Zed

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Shared\Kernel\Fixtures;
+namespace Unit\Spryker\Shared\Kernel\Fixtures;
 
-use SprykerEngine\Shared\Kernel\AbstractFactory;
+use Spryker\Shared\Kernel\AbstractFactory;
 
 class Factory extends AbstractFactory
 {

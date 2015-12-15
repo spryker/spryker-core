@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Category\Business\Tree;
+namespace Spryker\Zed\Category\Business\Tree;
 
 class CategoryTreeFormat
 {

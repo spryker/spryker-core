@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Filter;
+namespace Spryker\Shared\Library\Filter;
 
 class SeparatorToCamelCaseFilter implements FilterInterface
 {

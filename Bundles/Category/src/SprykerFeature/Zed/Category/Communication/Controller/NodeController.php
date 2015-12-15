@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Communication\Controller;
+namespace Spryker\Zed\Category\Communication\Controller;
 
 use Generated\Shared\Transfer\NodeTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Category\Business\CategoryFacade;
-use SprykerFeature\Zed\Category\CategoryConfig;
-use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Category\Business\CategoryFacade;
+use Spryker\Zed\Category\CategoryConfig;
+use Spryker\Zed\Category\Communication\CategoryDependencyContainer;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

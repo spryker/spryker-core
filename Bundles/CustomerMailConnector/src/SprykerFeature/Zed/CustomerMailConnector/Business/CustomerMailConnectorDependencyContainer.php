@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CustomerMailConnector\Business;
+namespace Spryker\Zed\CustomerMailConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\CustomerMailConnector\Business\Sender\PasswordRestoredConfirmationSender;
-use SprykerFeature\Zed\CustomerMailConnector\Business\Sender\PasswordRestoreTokenSender;
-use SprykerFeature\Zed\CustomerMailConnector\Business\Sender\RegistrationTokenSender;
-use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
-use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoredConfirmationSender;
+use Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoreTokenSender;
+use Spryker\Zed\CustomerMailConnector\Business\Sender\RegistrationTokenSender;
+use Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
+use Spryker\Zed\CustomerMailConnector\CustomerMailConnectorDependencyProvider;
 
 /**
  * @method CustomerMailConnectorConfig getConfig()

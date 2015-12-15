@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Shared\Kernel\Factory;
+namespace Spryker\Shared\Kernel\Factory;
 
 class FactoryException extends \Exception
 {

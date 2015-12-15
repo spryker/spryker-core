@@ -1,9 +1,9 @@
 <?php
 
-namespace SprykerFeature\Zed\Queue;
+namespace Spryker\Zed\Queue;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 class QueueDependencyProvider extends AbstractBundleDependencyProvider
 {

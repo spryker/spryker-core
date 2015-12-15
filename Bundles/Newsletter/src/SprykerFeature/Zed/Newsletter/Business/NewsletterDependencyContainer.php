@@ -4,23 +4,23 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Newsletter\Business;
+namespace Spryker\Zed\Newsletter\Business;
 
-use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberKeyGenerator;
-use SprykerFeature\Zed\Newsletter\Business\Subscription\DoubleOptInHandler;
-use SprykerFeature\Zed\Newsletter\Business\Subscription\SingleOptInHandler;
-use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberManager;
-use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriptionManager;
-use SprykerFeature\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface;
-use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface;
-use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface;
-use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface;
-use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface;
-use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler;
-use SprykerFeature\Zed\Newsletter\NewsletterConfig;
-use SprykerFeature\Zed\Newsletter\NewsletterDependencyProvider;
-use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGenerator;
+use Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandler;
+use Spryker\Zed\Newsletter\Business\Subscription\SingleOptInHandler;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriberManager;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManager;
+use Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler;
+use Spryker\Zed\Newsletter\NewsletterConfig;
+use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 
 /**
  * @method NewsletterConfig getConfig()

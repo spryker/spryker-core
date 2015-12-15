@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Communication\Controller;
+namespace Spryker\Zed\Payolution\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Payolution\Communication\PayolutionDependencyContainer;
-use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Payolution\Communication\PayolutionDependencyContainer;
+use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

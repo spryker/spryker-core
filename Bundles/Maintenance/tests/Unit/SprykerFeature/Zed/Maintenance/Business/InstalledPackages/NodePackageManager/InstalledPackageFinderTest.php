@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePackageManager;
+namespace Unit\Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager;
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
 use Symfony\Component\Process\Process;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Maintenance
  * @group Business

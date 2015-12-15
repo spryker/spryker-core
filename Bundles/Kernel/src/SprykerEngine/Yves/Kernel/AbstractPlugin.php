@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Kernel;
+namespace Spryker\Yves\Kernel;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
-use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
-use SprykerEngine\Yves\Kernel\DependencyContainer\DependencyContainerInterface;
+use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Shared\Kernel\Locator\LocatorInterface;
+use Spryker\Yves\Kernel\DependencyContainer\DependencyContainerInterface;
 
 abstract class AbstractPlugin
 {

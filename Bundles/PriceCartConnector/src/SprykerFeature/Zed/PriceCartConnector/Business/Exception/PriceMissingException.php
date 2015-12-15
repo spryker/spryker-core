@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\PriceCartConnector\Business\Exception;
+namespace Spryker\Zed\PriceCartConnector\Business\Exception;
 
 class PriceMissingException extends \Exception
 {

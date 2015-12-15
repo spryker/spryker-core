@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod;
+namespace Spryker\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod;
 
 class BankAccountContainer extends AbstractPaymentMethodContainer
 {

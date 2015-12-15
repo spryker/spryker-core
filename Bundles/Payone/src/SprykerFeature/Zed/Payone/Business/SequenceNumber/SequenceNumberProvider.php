@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\SequenceNumber;
+namespace Spryker\Zed\Payone\Business\SequenceNumber;
 
-use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
+use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 
 class SequenceNumberProvider implements SequenceNumberProviderInterface
 {

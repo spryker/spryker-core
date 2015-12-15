@@ -3,16 +3,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Communication\Table;
+namespace Spryker\Zed\Glossary\Communication\Table;
 
 use Propel\Runtime\Map\TableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
-use SprykerFeature\Zed\Glossary\Communication\Form\TranslationForm;
+use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class TranslationTable extends AbstractTable
 {

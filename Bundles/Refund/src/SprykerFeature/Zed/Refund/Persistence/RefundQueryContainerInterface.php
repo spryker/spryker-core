@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Refund\Persistence;
+namespace Spryker\Zed\Refund\Persistence;
 
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 

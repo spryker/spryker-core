@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Communication\Plugin\Condition;
+namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Payone\Business\PayoneFacade;
-use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
+use Spryker\Zed\Payone\Business\PayoneFacade;
+use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
 
 /**
  * @method PayoneFacade getFacade()

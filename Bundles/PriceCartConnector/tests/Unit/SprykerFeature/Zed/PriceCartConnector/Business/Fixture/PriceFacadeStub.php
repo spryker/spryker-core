@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture;
+namespace Unit\Spryker\Zed\PriceCartConnector\Business\Fixture;
 
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Price\Business\PriceFacade;
+use Spryker\Shared\Kernel\Factory\FactoryInterface;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Price\Business\PriceFacade;
 
 class PriceFacadeStub extends PriceFacade
 {

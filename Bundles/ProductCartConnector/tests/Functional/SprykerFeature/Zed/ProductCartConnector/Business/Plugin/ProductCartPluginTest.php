@@ -4,24 +4,24 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\ProductCartConnector\Business\Plugin;
+namespace Functional\Spryker\Zed\ProductCartConnector\Business\Plugin;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerFeature\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyLocalizedProductAttributes;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Zed\Kernel\Locator;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group ProductCartConnector
  * @group Business

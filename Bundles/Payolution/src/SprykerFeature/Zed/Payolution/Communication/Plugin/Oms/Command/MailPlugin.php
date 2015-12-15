@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Communication\Plugin\Oms\Command;
+namespace Spryker\Zed\Payolution\Communication\Plugin\Oms\Command;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
-use SprykerFeature\Zed\Payolution\Communication\PayolutionDependencyContainer;
-use SprykerFeature\Zed\Payolution\PayolutionConfig;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
+use Spryker\Zed\Payolution\Business\PayolutionFacade;
+use Spryker\Zed\Payolution\Communication\PayolutionDependencyContainer;
+use Spryker\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Generated\Shared\Transfer\MailTransfer;

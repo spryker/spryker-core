@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Communication;
+namespace Spryker\Zed\Kernel\Communication;
 
-use SprykerEngine\Shared\Kernel\Communication\BundleControllerActionInterface;
+use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Zend\Filter\Word\DashToCamelCase;
 

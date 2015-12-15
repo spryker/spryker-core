@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Kernel\Communication\Plugin;
+namespace Spryker\Zed\Kernel\Communication\Plugin;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
-use SprykerFeature\Zed\Kernel\Communication\GatewayControllerListenerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
+use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelEvents;

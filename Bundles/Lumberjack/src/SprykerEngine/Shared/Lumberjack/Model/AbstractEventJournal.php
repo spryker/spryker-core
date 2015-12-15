@@ -4,12 +4,12 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerEngine\Shared\Lumberjack\Model;
+namespace Spryker\Shared\Lumberjack\Model;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\Lumberjack\LumberjackConstants;
-use SprykerEngine\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
-use SprykerEngine\Shared\Lumberjack\Model\Writer\WriterInterface;
+use Spryker\Shared\Config;
+use Spryker\Shared\Lumberjack\LumberjackConstants;
+use Spryker\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
+use Spryker\Shared\Lumberjack\Model\Writer\WriterInterface;
 
 abstract class AbstractEventJournal implements EventJournalInterface
 {

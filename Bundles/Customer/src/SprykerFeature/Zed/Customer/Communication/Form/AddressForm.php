@@ -1,13 +1,13 @@
 <?php
 
-namespace SprykerFeature\Zed\Customer\Communication\Form;
+namespace Spryker\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use SprykerEngine\Shared\Gui\Form\AbstractForm;
-use SprykerFeature\Zed\Customer\CustomerConfig;
-use SprykerFeature\Zed\Country\Business\CountryFacade;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Customer\CustomerConfig;
+use Spryker\Zed\Country\Business\CountryFacade;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class AddressForm extends AbstractForm

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Business\Processor;
+namespace Spryker\Zed\ProductSearch\Business\Processor;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Setup\Business\Model;
+namespace Spryker\Zed\Setup\Business\Model;
 
-use SprykerFeature\Shared\Library\Environment;
-use SprykerFeature\Zed\Setup\SetupConfig;
+use Spryker\Shared\Library\Environment;
+use Spryker\Zed\Setup\SetupConfig;
 
 class Cronjobs
 {
@@ -406,7 +406,7 @@ class Cronjobs
      */
     protected function getCommand($command, $store)
     {
-        $environment = \SprykerFeature\Shared\Library\Environment::getInstance();
+        $environment = \Spryker\Shared\Library\Environment::getInstance();
         $environment_name = $environment->getEnvironment();
         if ($environment->isNotDevelopment()) {
             return "<command>[ -f ../../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../../current/deploy/vars

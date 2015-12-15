@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\Distributor;
+namespace Spryker\Zed\Discount\Business\Distributor;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
+use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 class Distributor implements DistributorInterface
 {

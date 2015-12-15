@@ -3,10 +3,10 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerEngine\Zed\Kernel\ClassResolver;
+namespace Spryker\Zed\Kernel\ClassResolver;
 
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class ClassInfo
 {

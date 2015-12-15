@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\ZedRequest;
+namespace Spryker\Client\ZedRequest;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
-use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Client\ZedRequest\Client\ZedClient;
-use SprykerFeature\Shared\ZedRequest\Client\Message;
+use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Client\ZedRequest\Client\ZedClient;
+use Spryker\Shared\ZedRequest\Client\Message;
 
 /**
  * @method ZedRequestDependencyContainer getDependencyContainer()

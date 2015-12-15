@@ -3,15 +3,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Communication\Plugin\Collector;
+namespace Spryker\Zed\Discount\Communication\Plugin\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
+use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 /**
  * @method DiscountFacade getFacade()

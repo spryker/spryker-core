@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Setup\Business\Model;
+namespace Unit\Spryker\Zed\Setup\Business\Model;
 
-use SprykerFeature\Zed\Setup\Business\Model\DirectoryRemover;
+use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Setup
  * @group Business

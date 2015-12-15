@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\Model;
+namespace Spryker\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
+use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
 {

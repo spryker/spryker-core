@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business;
+namespace Spryker\Zed\Collector\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Collector\Business\Model\BatchResult;
-use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Collector\Business\Model\BatchResult;
+use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

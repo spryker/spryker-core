@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Checkout;
+namespace Spryker\Client\Checkout;
 
-use SprykerFeature\Client\Checkout\CheckoutDependencyProvider;
-use SprykerFeature\Client\Checkout\Zed\CheckoutStub;
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Checkout\Zed\CheckoutStubInterface;
+use Spryker\Client\Checkout\CheckoutDependencyProvider;
+use Spryker\Client\Checkout\Zed\CheckoutStub;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Checkout\Zed\CheckoutStubInterface;
 
 class CheckoutDependencyContainer extends AbstractDependencyContainer
 {

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Business;
+namespace Spryker\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Propel\Runtime\Collection\ObjectCollection;

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Price\Communication\Plugin;
+namespace Spryker\Zed\Price\Communication\Plugin;
 
-use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
-use SprykerFeature\Zed\Price\Business\PriceFacade;
-use SprykerFeature\Zed\Price\Communication\PriceDependencyContainer;
+use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Zed\Price\Business\PriceFacade;
+use Spryker\Zed\Price\Communication\PriceDependencyContainer;
 
 /**
  * @method PriceDependencyContainer getDependencyContainer()

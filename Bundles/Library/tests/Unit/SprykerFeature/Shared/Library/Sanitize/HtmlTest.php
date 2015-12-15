@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Shared\Library\Sanitize;
+namespace Unit\Spryker\Shared\Library\Sanitize;
 
-use SprykerFeature\Zed\Library\Sanitize\Html;
+use Spryker\Zed\Library\Sanitize\Html;
 
 /**
  * @group Sanitize

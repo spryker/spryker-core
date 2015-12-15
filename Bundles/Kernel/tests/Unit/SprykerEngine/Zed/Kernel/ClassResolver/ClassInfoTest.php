@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\ClassResolver;
+namespace Unit\Spryker\Zed\Kernel\ClassResolver;
 
-use SprykerEngine\Zed\Kernel\ClassResolver\ClassInfo;
+use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Kernel
  * @group ClassInfo
@@ -24,7 +24,7 @@ class ClassInfoTest extends \PHPUnit_Framework_TestCase
     {
         $classInfo = new ClassInfo();
         $this->assertInstanceOf(
-            'SprykerEngine\Zed\Kernel\ClassResolver\ClassInfo',
+            'Spryker\Zed\Kernel\ClassResolver\ClassInfo',
             $classInfo->setClass($classInfo)
         );
     }
@@ -37,7 +37,7 @@ class ClassInfoTest extends \PHPUnit_Framework_TestCase
         $classInfo = new ClassInfo();
         $classInfo->setClass($classInfo);
 
-        $this->assertSame('SprykerEngine', $classInfo->getNamespace());
+        $this->assertSame('Spryker', $classInfo->getNamespace());
     }
 
     /**

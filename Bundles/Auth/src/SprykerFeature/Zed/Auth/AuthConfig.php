@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth;
+namespace Spryker\Zed\Auth;
 
-use SprykerFeature\Shared\Auth\AuthConstants;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Auth\AuthConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AuthConfig extends AbstractBundleConfig
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Discount\Communication\Form;
+namespace Spryker\Zed\Discount\Communication\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 

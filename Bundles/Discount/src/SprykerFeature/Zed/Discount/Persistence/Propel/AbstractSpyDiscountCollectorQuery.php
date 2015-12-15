@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Discount\Persistence\Propel;
+namespace Spryker\Zed\Discount\Persistence\Propel;
 
 use Orm\Zed\Discount\Persistence\Base\SpyDiscountCollectorQuery as BaseSpyDiscountCollectorQuery;
 

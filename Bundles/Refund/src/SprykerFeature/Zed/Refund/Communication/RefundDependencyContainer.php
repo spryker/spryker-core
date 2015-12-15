@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Refund\Communication;
+namespace Spryker\Zed\Refund\Communication;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Shared\Library\Context;
-use SprykerFeature\Shared\Library\DateFormatter;
-use SprykerFeature\Zed\Refund\Business\RefundFacade;
-use SprykerFeature\Zed\Refund\Communication\Form\RefundForm;
-use SprykerFeature\Zed\Refund\Communication\Table\RefundTable;
-use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainer;
-use SprykerFeature\Zed\Refund\RefundConfig;
-use SprykerFeature\Zed\Refund\RefundDependencyProvider;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Shared\Library\Context;
+use Spryker\Shared\Library\DateFormatter;
+use Spryker\Zed\Refund\Business\RefundFacade;
+use Spryker\Zed\Refund\Communication\Form\RefundForm;
+use Spryker\Zed\Refund\Communication\Table\RefundTable;
+use Spryker\Zed\Refund\Persistence\RefundQueryContainer;
+use Spryker\Zed\Refund\RefundConfig;
+use Spryker\Zed\Refund\RefundDependencyProvider;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 
 /**
  * @method RefundQueryContainer getQueryContainer()

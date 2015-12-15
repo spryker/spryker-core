@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\DiscountCalculationConnector\Business;
+namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
-use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
-use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
-use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
-use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Calculation\Business\CalculationFacade;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 
 class DiscountCalculationConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {

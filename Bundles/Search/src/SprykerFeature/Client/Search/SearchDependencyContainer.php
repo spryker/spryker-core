@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Search;
+namespace Spryker\Client\Search;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Search\Provider\IndexClientProvider;
-use SprykerFeature\Client\ZedRequest\Client\ZedClient;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Search\Provider\IndexClientProvider;
+use Spryker\Client\ZedRequest\Client\ZedClient;
 
 class SearchDependencyContainer extends AbstractDependencyContainer
 {

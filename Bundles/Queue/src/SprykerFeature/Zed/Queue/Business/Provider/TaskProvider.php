@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Queue\Business\Provider;
+namespace Spryker\Zed\Queue\Business\Provider;
 
-use SprykerFeature\Zed\Queue\Business\Exception\NoTaskConfiguredForGivenQueueException;
-use SprykerFeature\Zed\Queue\Business\Exception\TaskAlreadyDefinedForQueueException;
-use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
+use Spryker\Zed\Queue\Business\Exception\NoTaskConfiguredForGivenQueueException;
+use Spryker\Zed\Queue\Business\Exception\TaskAlreadyDefinedForQueueException;
+use Spryker\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
 
 class TaskProvider implements TaskProviderInterface
 {

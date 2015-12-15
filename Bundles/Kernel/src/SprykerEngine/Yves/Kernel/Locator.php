@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Kernel;
+namespace Spryker\Yves\Kernel;
 
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use SprykerEngine\Shared\Kernel\BundleProxy;
-use SprykerEngine\Shared\Kernel\TransferLocator;
-use SprykerEngine\Client\Kernel\ClientLocator;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Shared\Kernel\BundleProxy;
+use Spryker\Shared\Kernel\TransferLocator;
+use Spryker\Client\Kernel\ClientLocator;
 
 class Locator extends AbstractLocatorLocator
 {

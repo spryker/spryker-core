@@ -3,11 +3,11 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Zed\AuthMailConnector\Communication;
+namespace Spryker\Zed\AuthMailConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Mail\Business\MailFacade;
-use SprykerFeature\Zed\AuthMailConnector\AuthMailConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Mail\Business\MailFacade;
+use Spryker\Zed\AuthMailConnector\AuthMailConnectorDependencyProvider;
 
 class AuthMailConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {

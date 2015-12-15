@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Persistence;
+namespace Spryker\Zed\Kernel\Persistence;
 
-use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException;
-use SprykerEngine\Shared\Kernel\Locator\LocatorException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Kernel\AbstractLocator;
-use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Shared\Library\Log;
+use Spryker\Shared\Kernel\ClassResolver\ClassNotFoundException;
+use Spryker\Shared\Kernel\Locator\LocatorException;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Kernel\AbstractLocator;
+use Spryker\Zed\Kernel\BundleDependencyProviderLocator;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Shared\Library\Log;
 
 class QueryContainerLocator extends AbstractLocator
 {

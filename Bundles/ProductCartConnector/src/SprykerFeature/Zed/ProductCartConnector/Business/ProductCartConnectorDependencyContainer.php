@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCartConnector\Business;
+namespace Spryker\Zed\ProductCartConnector\Business;
 
-use SprykerFeature\Zed\ProductCartConnector\Business\Manager\ProductManager;
-use SprykerFeature\Zed\ProductCartConnector\ProductCartConnectorDependencyProvider;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\ProductCartConnector\Business\Manager\ProductManagerInterface;
-use SprykerFeature\Zed\ProductCartConnector\ProductCartConnectorConfig;
+use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
+use Spryker\Zed\ProductCartConnector\ProductCartConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManagerInterface;
+use Spryker\Zed\ProductCartConnector\ProductCartConnectorConfig;
 
 /**
  * @method ProductCartConnectorDependencyContainer getDependencyContainer()

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Collector\Matcher;
+namespace Spryker\Client\Collector\Matcher;
 
 interface UrlMatcherInterface
 {

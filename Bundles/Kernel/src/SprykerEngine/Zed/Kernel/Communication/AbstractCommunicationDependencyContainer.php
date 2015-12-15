@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Communication;
+namespace Spryker\Zed\Kernel\Communication;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\AbstractDependencyContainer as BaseDependencyContainer;
-use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractDependencyContainer as BaseDependencyContainer;
+use Spryker\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;

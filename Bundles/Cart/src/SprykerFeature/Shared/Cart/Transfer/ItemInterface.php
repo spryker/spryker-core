@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Cart\Transfer;
+namespace Spryker\Shared\Cart\Transfer;
 
 interface ItemInterface
 {

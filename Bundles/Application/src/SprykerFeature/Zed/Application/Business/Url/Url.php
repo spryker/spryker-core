@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Application\Business\Url;
+namespace Spryker\Zed\Application\Business\Url;
 
-use SprykerFeature\Zed\Library\Sanitize\Html;
-use SprykerFeature\Zed\Url\Business\Exception\UrlInvalidException;
+use Spryker\Zed\Library\Sanitize\Html;
+use Spryker\Zed\Url\Business\Exception\UrlInvalidException;
 
 /**
  * Parses and generates URLs based on URL parts. In favor of performance, URL parts are not validated.

@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Business;
+namespace Spryker\Zed\Cms\Business;
 
-use SprykerFeature\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
-use SprykerFeature\Zed\Cms\Business\Block\BlockManager;
-use SprykerFeature\Zed\Cms\Business\Template\TemplateManager;
-use SprykerFeature\Zed\Cms\Business\Page\PageManager;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Cms\Business\Block\BlockManagerInterface;
-use SprykerFeature\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface;
-use SprykerFeature\Zed\Cms\Business\Page\PageManagerInterface;
-use SprykerFeature\Zed\Cms\Business\Template\TemplateManagerInterface;
-use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
-use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
+use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
+use Spryker\Zed\Cms\Business\Block\BlockManager;
+use Spryker\Zed\Cms\Business\Template\TemplateManager;
+use Spryker\Zed\Cms\Business\Page\PageManager;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Cms\Business\Block\BlockManagerInterface;
+use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface;
+use Spryker\Zed\Cms\Business\Page\PageManagerInterface;
+use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
+use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use sprykerfeature\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Symfony\Component\Finder\Finder;
 
 class CmsDependencyContainer extends AbstractBusinessDependencyContainer

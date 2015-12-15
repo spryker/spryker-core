@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Category\Business\Tree;
+namespace Unit\Spryker\Zed\Category\Business\Tree;
 
-use SprykerFeature\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
-use Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Expected\CategoryStructureExpected;
-use Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInput;
+use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
+use Unit\Spryker\Zed\Category\Business\Tree\Fixtures\Expected\CategoryStructureExpected;
+use Unit\Spryker\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInput;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Category
  * @group Business

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\Model\Split\Validation;
+namespace Spryker\Zed\Sales\Business\Model\Split\Validation;
 
 class Messages
 {

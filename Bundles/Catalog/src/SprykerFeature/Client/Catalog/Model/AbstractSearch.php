@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Catalog\Model;
+namespace Spryker\Client\Catalog\Model;
 
 use Elastica\Query;
 use Elastica\Index;
 use Elastica\ResultSet;
-use SprykerFeature\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface;
-use SprykerFeature\Client\Catalog\Model\Extractor\AggregationExtractorInterface;
+use Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface;
+use Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractSearch

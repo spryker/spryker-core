@@ -1,13 +1,13 @@
 <?php
 
-namespace SprykerFeature\Zed\Sales\Communication\Controller;
+namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Sales\Business\SalesFacade;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Sales\Business\SalesFacade;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
+use Spryker\Zed\Sales\Communication\SalesDependencyContainer;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()

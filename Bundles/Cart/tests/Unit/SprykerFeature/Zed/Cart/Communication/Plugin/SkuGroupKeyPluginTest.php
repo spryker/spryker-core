@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Cart\Communication\Plugin;
+namespace Unit\Spryker\Zed\Cart\Communication\Plugin;
 
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use SprykerFeature\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
+use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Cart
  * @group Communication

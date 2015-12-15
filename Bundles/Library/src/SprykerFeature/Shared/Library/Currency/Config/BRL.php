@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Currency\Config;
+namespace Spryker\Shared\Library\Currency\Config;
 
-use SprykerFeature\Shared\Library\Currency\CurrencyInterface;
+use Spryker\Shared\Library\Currency\CurrencyInterface;
 
 class BRL implements CurrencyInterface
 {

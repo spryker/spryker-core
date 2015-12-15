@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionExporter\Dependency\Facade;
+namespace Spryker\Zed\ProductOptionExporter\Dependency\Facade;
 
 interface ProductOptionExporterToProductInterface
 {

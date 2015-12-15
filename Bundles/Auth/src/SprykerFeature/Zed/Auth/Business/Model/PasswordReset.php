@@ -3,14 +3,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Business\Model;
+namespace Spryker\Zed\Auth\Business\Model;
 
-use SprykerFeature\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
-use SprykerFeature\Zed\Auth\Persistence\AuthQueryContainer;
+use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
+use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
 use Orm\Zed\Auth\Persistence\SpyResetPassword;
-use SprykerFeature\Zed\User\Business\UserFacade;
+use Spryker\Zed\User\Business\UserFacade;
 use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
-use SprykerFeature\Zed\Auth\AuthConfig;
+use Spryker\Zed\Auth\AuthConfig;
 
 class PasswordReset
 {

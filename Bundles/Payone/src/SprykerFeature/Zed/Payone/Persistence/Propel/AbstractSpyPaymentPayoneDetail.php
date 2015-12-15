@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Payone\Persistence\Propel;
+namespace Spryker\Zed\Payone\Persistence\Propel;
 
 use Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneDetail as BaseSpyPaymentPayoneDetail;
 

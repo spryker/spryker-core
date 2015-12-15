@@ -77,7 +77,7 @@
   "autoload": {
     "files": ["Autoload/autoload.php"],
     "psr-0": {
-      "SprykerFeature\\Shared\\Library": "Bundles/Library/src/"
+      "Spryker\\Shared\\Library": "Bundles/Library/src/"
     }
   },
   "bin": [

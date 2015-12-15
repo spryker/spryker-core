@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Storage\Business\Model;
+namespace Spryker\Zed\Storage\Business\Model;
 
-use SprykerFeature\Client\Storage\StorageClient;
+use Spryker\Client\Storage\StorageClient;
 
 class Storage
 {

@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerEngine\Zed\Transfer\Business\Model;
+namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Transfer\Business\TransferDependencyContainer;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Transfer\Business\TransferDependencyContainer;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
@@ -32,7 +32,7 @@ class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
      */
     private function getMessenger()
     {
-        return $this->getMock('SprykerEngine\Shared\Kernel\Messenger\MessengerInterface');
+        return $this->getMock('Spryker\Shared\Kernel\Messenger\MessengerInterface');
     }
 
     /**
@@ -44,7 +44,7 @@ class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
             $this->getMessenger()
         );
 
-        $this->assertInstanceOf('SprykerEngine\Zed\Transfer\Business\Model\TransferGenerator', $transferGenerator);
+        $this->assertInstanceOf('Spryker\Zed\Transfer\Business\Model\TransferGenerator', $transferGenerator);
     }
 
     /**
@@ -54,7 +54,7 @@ class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
     {
         $transferCleaner = $this->getDependencyContainer()->createTransferCleaner();
 
-        $this->assertInstanceOf('SprykerEngine\Zed\Transfer\Business\Model\TransferCleaner', $transferCleaner);
+        $this->assertInstanceOf('Spryker\Zed\Transfer\Business\Model\TransferCleaner', $transferCleaner);
     }
 
 }

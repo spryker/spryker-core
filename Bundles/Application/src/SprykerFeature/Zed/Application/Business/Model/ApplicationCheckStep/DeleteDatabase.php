@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep;
+namespace Spryker\Zed\Application\Business\Model\ApplicationCheckStep;
 
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Shared\Application\ApplicationConstants;
 use Symfony\Component\Process\Process;
 
 class DeleteDatabase extends AbstractApplicationCheckStep

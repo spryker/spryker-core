@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Price\Business\Model;
+namespace Spryker\Zed\Price\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
-use SprykerFeature\Zed\Price\Dependency\Facade\PriceToTouchInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Price\Persistence\PriceQueryContainer;
+use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Price\PriceConfig;
-use Bundles\Price\src\SprykerFeature\Zed\Price\Business\Exception\ProductPriceChangeException;
+use Spryker\Zed\Price\PriceConfig;
+use Bundles\Price\src\Spryker\Zed\Price\Business\Exception\ProductPriceChangeException;
 
 class Writer implements WriterInterface
 {

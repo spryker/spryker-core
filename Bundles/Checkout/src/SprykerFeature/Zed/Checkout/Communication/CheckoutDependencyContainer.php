@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Checkout\Communication;
+namespace Spryker\Zed\Checkout\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
 class CheckoutDependencyContainer extends AbstractCommunicationDependencyContainer
 {

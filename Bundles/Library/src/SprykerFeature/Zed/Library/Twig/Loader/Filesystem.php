@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Library\Twig\Loader;
+namespace Spryker\Zed\Library\Twig\Loader;
 
 use Zend\Filter\Word\CamelCaseToDash;
 

@@ -4,7 +4,7 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerEngine\Shared\Lumberjack\Model\Collector;
+namespace Spryker\Shared\Lumberjack\Model\Collector;
 
 abstract class AbstractDataCollector implements DataCollectorInterface
 {

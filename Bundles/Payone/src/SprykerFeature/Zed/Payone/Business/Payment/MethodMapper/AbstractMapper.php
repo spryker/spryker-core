@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
+namespace Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
-use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
-use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
+use Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
+use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 
 abstract class AbstractMapper implements PaymentMethodMapperInterface

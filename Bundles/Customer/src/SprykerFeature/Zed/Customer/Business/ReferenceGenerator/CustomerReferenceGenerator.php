@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Business\ReferenceGenerator;
+namespace Spryker\Zed\Customer\Business\ReferenceGenerator;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
+use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
 {

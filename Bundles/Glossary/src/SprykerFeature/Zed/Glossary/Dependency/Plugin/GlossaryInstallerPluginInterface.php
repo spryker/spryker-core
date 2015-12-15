@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Dependency\Plugin;
+namespace Spryker\Zed\Glossary\Dependency\Plugin;
 
 interface GlossaryInstallerPluginInterface
 {

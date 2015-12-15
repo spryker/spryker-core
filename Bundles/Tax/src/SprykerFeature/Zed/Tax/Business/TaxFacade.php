@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Tax\Business;
+namespace Spryker\Zed\Tax\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateCollectionTransfer;
 use Generated\Shared\Transfer\TaxSetCollectionTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
-use SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
+use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
+use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 
 /**
  * @method TaxDependencyContainer getDependencyContainer()

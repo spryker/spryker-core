@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Communication\Form;
+namespace Spryker\Zed\Cms\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Url\Business\UrlFacade;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Url\Business\UrlFacade;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Symfony\Component\Validator\Context\ExecutionContext;
 

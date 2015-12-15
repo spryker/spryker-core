@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Business\Model;
+namespace Spryker\Zed\Maintenance\Business\Model;
 
 use Symfony\Component\Filesystem\Filesystem;
 

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Console\Business;
+namespace Spryker\Zed\Console\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Console\ConsoleConfig;
-use SprykerFeature\Zed\Console\ConsoleDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Console\ConsoleConfig;
+use Spryker\Zed\Console\ConsoleDependencyProvider;
 use Symfony\Component\Console\Command\Command;
 
 /**

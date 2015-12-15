@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\ZedRequest\Client;
+namespace Spryker\Client\ZedRequest\Client;
 
-use SprykerFeature\Shared\ZedRequest\Client\AbstractResponse;
+use Spryker\Shared\ZedRequest\Client\AbstractResponse;
 
 class Response extends AbstractResponse
 {

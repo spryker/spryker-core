@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Payolution\Business;
+namespace Functional\Spryker\Zed\Payolution\Business;
 
-use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreCheckAdapterMock;
+use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreCheckAdapterMock;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
+use Spryker\Shared\Payolution\PayolutionApiConstants;
 
 class PayolutionFacadePreCheckTest extends AbstractFacadeTest
 {

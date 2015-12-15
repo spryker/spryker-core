@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
+namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
-use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
-use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
-use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
-use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
+use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
+use Spryker\Zed\ProductCategory\ProductCategoryConfig;
+use Spryker\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Form;

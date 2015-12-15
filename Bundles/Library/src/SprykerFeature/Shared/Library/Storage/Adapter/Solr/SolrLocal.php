@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Storage\Adapter\Solr;
+namespace Spryker\Shared\Library\Storage\Adapter\Solr;
 
 use Solarium\Core\Query\QueryInterface;
-use SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\Query;
+use Spryker\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\Query;
 
 /**
  * Class SolrReadWrite

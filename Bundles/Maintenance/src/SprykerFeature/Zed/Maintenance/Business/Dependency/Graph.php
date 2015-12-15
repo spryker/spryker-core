@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Business\Dependency;
+namespace Spryker\Zed\Maintenance\Business\Dependency;
 
-use SprykerFeature\Zed\Library\Service\GraphViz;
+use Spryker\Zed\Library\Service\GraphViz;
 
 class Graph
 {

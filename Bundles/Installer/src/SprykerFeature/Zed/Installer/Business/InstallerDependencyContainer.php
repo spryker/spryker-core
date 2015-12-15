@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Installer\Business;
+namespace Spryker\Zed\Installer\Business;
 
-use SprykerFeature\Zed\Installer\Business\Model\GlossaryInstaller;
-use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Installer\InstallerConfig;
-use SprykerFeature\Zed\Installer\InstallerDependencyProvider;
+use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
+use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Installer\InstallerConfig;
+use Spryker\Zed\Installer\InstallerDependencyProvider;
 
 /**
  * @method InstallerConfig getConfig()

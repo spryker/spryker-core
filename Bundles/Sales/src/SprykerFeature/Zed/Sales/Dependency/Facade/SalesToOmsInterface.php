@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Sales\Dependency\Facade;
+namespace Spryker\Zed\Sales\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;

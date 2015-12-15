@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication\Console\ApplicationCheckStep;
+namespace Spryker\Zed\Application\Communication\Console\ApplicationCheckStep;
 
-use SprykerFeature\Zed\Application\Business\ApplicationFacade;
+use Spryker\Zed\Application\Business\ApplicationFacade;
 
 /**
  * @method ApplicationFacade getFacade()

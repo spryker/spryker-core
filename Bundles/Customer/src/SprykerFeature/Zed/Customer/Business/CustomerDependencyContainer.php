@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Business;
+namespace Spryker\Zed\Customer\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Customer\Business\Customer\Customer;
-use SprykerFeature\Zed\Customer\Business\Customer\Address;
-use SprykerFeature\Zed\Customer\CustomerConfig;
-use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
-use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
-use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
-use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Customer\Business\Customer\Customer;
+use Spryker\Zed\Customer\Business\Customer\Address;
+use Spryker\Zed\Customer\CustomerConfig;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
+use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**
  * @method CustomerConfig getConfig()

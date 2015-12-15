@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Touch\Business;
+namespace Spryker\Zed\Touch\Business;
 
 use Generated\Shared\Transfer\TouchTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 
 /**

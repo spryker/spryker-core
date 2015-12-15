@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Setup\Business;
+namespace Functional\Spryker\Zed\Setup\Business;
 
-use SprykerFeature\Zed\Setup\Business\SetupDependencyContainer;
+use Spryker\Zed\Setup\Business\SetupDependencyContainer;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Setup
  * @group Business
@@ -33,7 +33,7 @@ class SetupDependencyContainerTest extends \PHPUnit_Framework_TestCase
     {
         $instance = $this->getDependencyContainer()->createModelCronjobs();
 
-        $this->assertInstanceOf('SprykerFeature\Zed\Setup\Business\Model\Cronjobs', $instance);
+        $this->assertInstanceOf('Spryker\Zed\Setup\Business\Model\Cronjobs', $instance);
     }
 
     /**
@@ -43,7 +43,7 @@ class SetupDependencyContainerTest extends \PHPUnit_Framework_TestCase
     {
         $instance = $this->getDependencyContainer()->createModelGeneratedDirectoryRemover();
 
-        $this->assertInstanceOf('SprykerFeature\Zed\Setup\Business\Model\DirectoryRemover', $instance);
+        $this->assertInstanceOf('Spryker\Zed\Setup\Business\Model\DirectoryRemover', $instance);
     }
 
 }

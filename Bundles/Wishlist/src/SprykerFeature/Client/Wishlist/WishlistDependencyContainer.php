@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Wishlist;
+namespace Spryker\Client\Wishlist;
 
-use SprykerFeature\Client\Wishlist\Storage\WishlistStorage;
-use SprykerFeature\Client\Wishlist\Zed\WishlistStub;
-use SprykerFeature\Client\Wishlist\Session\WishlistSession;
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Customer\CustomerClientInterface;
-use SprykerFeature\Client\Wishlist\Session\WishlistSessionInterface;
-use SprykerFeature\Client\Wishlist\Storage\WishlistStorageInterface;
-use SprykerFeature\Client\Wishlist\Zed\WishlistStubInterface;
-use SprykerFeature\Client\Wishlist\WishlistDependencyProvider;
+use Spryker\Client\Wishlist\Storage\WishlistStorage;
+use Spryker\Client\Wishlist\Zed\WishlistStub;
+use Spryker\Client\Wishlist\Session\WishlistSession;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Customer\CustomerClientInterface;
+use Spryker\Client\Wishlist\Session\WishlistSessionInterface;
+use Spryker\Client\Wishlist\Storage\WishlistStorageInterface;
+use Spryker\Client\Wishlist\Zed\WishlistStubInterface;
+use Spryker\Client\Wishlist\WishlistDependencyProvider;
 
 class WishlistDependencyContainer extends AbstractDependencyContainer
 {

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Yves\Library\Session;
+namespace Spryker\Yves\Library\Session;
 
-use SprykerEngine\Shared\Transfer\TransferInterface;
+use Spryker\Shared\Transfer\TransferInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class TransferSession

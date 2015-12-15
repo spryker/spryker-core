@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Payment;
+namespace Spryker\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
-use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
+use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 
 interface PaymentMethodMapperInterface

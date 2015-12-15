@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Refund;
+namespace Spryker\Zed\Refund;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
 use Symfony\Component\Intl\Exception\NotImplementedException;
 
 class RefundConfig extends AbstractBundleConfig

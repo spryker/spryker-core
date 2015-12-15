@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Discount\Business\DecisionRule;
+namespace Functional\Spryker\Zed\Discount\Business\DecisionRule;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use SprykerFeature\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
+use Spryker\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
-use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group DiscountDecisionRuleMinimumCartSubtotalTest

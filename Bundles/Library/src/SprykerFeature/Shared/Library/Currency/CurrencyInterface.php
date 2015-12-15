@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Currency;
+namespace Spryker\Shared\Library\Currency;
 
 interface CurrencyInterface
 {

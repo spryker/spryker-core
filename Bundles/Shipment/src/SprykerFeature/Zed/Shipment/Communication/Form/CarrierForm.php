@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Shipment\Communication\Form;
+namespace Spryker\Zed\Shipment\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 
 class CarrierForm extends AbstractForm

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Shared\Library\Filter;
+namespace Unit\Spryker\Shared\Library\Filter;
 
-use SprykerFeature\Shared\Library\Filter\SeparatorToCamelCaseFilter;
+use Spryker\Shared\Library\Filter\SeparatorToCamelCaseFilter;
 
 /**
  * @group Filter

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Customer;
+namespace Spryker\Shared\Customer;
 
 interface CustomerConstants
 {

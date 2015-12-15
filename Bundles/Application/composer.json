@@ -2,8 +2,8 @@
   "name": "spryker/application",
   "autoload": {
     "psr-0": {
-      "SprykerFeature": "src/",
-      "SprykerEngine": "src/",
+      "Spryker": "src/",
+      "Spryker": "src/",
       "Acceptance": "tests/",
       "Functional": "tests/",
       "Integration": "tests/",

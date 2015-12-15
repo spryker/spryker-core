@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Business\Mapping;
+namespace Spryker\Zed\Cms\Business\Mapping;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -12,16 +12,16 @@ use Generated\Shared\Transfer\PageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Zed\Cms\Business\Exception\MappingAmbiguousException;
-use SprykerFeature\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
-use SprykerFeature\Zed\Cms\Business\Page\PageManagerInterface;
-use SprykerFeature\Zed\Cms\Business\Template\TemplateManagerInterface;
-use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
+use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
+use Spryker\Zed\Cms\Business\Page\PageManagerInterface;
+use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
-use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
+use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 {

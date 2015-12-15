@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Availability\Business\Model;
+namespace Spryker\Zed\Availability\Business\Model;
 
-use SprykerFeature\Zed\Oms\Business\OmsFacade;
-use SprykerFeature\Zed\Stock\Business\StockFacade;
+use Spryker\Zed\Oms\Business\OmsFacade;
+use Spryker\Zed\Stock\Business\StockFacade;
 
 class Sellable implements SellableInterface
 {

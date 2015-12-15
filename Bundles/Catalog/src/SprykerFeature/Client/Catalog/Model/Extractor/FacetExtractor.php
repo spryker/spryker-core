@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Catalog\Model\Extractor;
+namespace Spryker\Client\Catalog\Model\Extractor;
 
 class FacetExtractor extends AbstractAggregationExtractor
 {

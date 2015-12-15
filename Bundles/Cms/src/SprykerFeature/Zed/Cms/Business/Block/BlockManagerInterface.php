@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Business\Block;
+namespace Spryker\Zed\Cms\Business\Block;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsBlock;

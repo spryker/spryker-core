@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\ConsoleLocator\Console\Foo;
+namespace Unit\Spryker\Zed\Kernel\Communication\Fixtures\ConsoleLocator\Console\Foo;
 
-use SprykerFeature\Zed\Console\Business\Model\Console;
+use Spryker\Zed\Console\Business\Model\Console;
 
 class Bar extends Console
 {

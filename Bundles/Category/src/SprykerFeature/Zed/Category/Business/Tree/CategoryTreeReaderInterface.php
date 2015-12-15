@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Business\Tree;
+namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryException;
-use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
+use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryException;
+use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 
 interface CategoryTreeReaderInterface
 {

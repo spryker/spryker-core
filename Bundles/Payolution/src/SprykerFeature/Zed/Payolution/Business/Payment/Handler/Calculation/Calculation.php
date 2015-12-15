@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Payment\Handler\Calculation;
+namespace Spryker\Zed\Payolution\Business\Payment\Handler\Calculation;
 
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
-use SprykerFeature\Zed\Payolution\Business\Payment\Handler\AbstractPaymentHandler;
+use Spryker\Shared\Payolution\PayolutionApiConstants;
+use Spryker\Zed\Payolution\Business\Payment\Handler\AbstractPaymentHandler;
 
 class Calculation extends AbstractPaymentHandler implements CalculationInterface
 {

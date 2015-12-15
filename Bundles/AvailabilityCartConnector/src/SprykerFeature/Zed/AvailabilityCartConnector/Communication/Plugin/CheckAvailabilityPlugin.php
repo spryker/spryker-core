@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\AvailabilityCartConnector\Communication\Plugin;
+namespace Spryker\Zed\AvailabilityCartConnector\Communication\Plugin;
 
-use SprykerFeature\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnectorDependencyContainer as DependencyContainer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnectorDependencyContainer as DependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method DependencyContainer getDependencyContainer()

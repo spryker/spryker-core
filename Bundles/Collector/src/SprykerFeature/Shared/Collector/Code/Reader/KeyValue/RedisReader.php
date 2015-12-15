@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Collector\Code\Reader\KeyValue;
+namespace Spryker\Shared\Collector\Code\Reader\KeyValue;
 
-use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
-use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
-use SprykerFeature\Shared\Collector\Code\Reader\ReaderInterface;
+use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
+use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
+use Spryker\Shared\Collector\Code\Reader\ReaderInterface;
 
 class RedisReader implements ReaderInterface
 {

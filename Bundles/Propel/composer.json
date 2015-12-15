@@ -2,7 +2,7 @@
   "name": "spryker/propel",
   "autoload": {
     "psr-0": {
-      "SprykerEngine": "src/",
+      "Spryker": "src/",
       "Acceptance": "tests/",
       "Function": "tests/",
       "Integration": "tests/",

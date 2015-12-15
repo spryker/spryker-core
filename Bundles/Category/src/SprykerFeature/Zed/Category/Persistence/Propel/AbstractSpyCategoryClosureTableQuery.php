@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Persistence\Propel;
+namespace Spryker\Zed\Category\Persistence\Propel;
 
 use Orm\Zed\Category\Persistence\Base\SpyCategoryClosureTableQuery as BaseSpyCategoryClosureTableQuery;
 

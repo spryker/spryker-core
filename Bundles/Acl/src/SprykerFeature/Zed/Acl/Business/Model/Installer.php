@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Business\Model;
+namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RuleTransfer;
-use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
-use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
-use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
-use SprykerFeature\Zed\User\Business\UserFacade;
+use Spryker\Zed\Acl\AclConfig;
+use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
+use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
+use Spryker\Zed\User\Business\Exception\UserNotFoundException;
+use Spryker\Zed\User\Business\UserFacade;
 
 class Installer implements InstallerInterface
 {

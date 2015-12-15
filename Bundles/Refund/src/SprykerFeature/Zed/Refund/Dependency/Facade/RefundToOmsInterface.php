@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Refund\Dependency\Facade;
+namespace Spryker\Zed\Refund\Dependency\Facade;
 
 use Propel\Runtime\Collection\ObjectCollection;
 

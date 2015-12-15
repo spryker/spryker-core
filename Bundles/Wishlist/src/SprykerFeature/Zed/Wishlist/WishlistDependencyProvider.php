@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Wishlist;
+namespace Spryker\Zed\Wishlist;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Zed\Wishlist\Business\Operator\Add;
-use SprykerFeature\Zed\Wishlist\Business\Operator\Decrease;
-use SprykerFeature\Zed\Wishlist\Business\Operator\Increase;
-use SprykerFeature\Zed\Wishlist\Business\Operator\Remove;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Wishlist\Business\Operator\Add;
+use Spryker\Zed\Wishlist\Business\Operator\Decrease;
+use Spryker\Zed\Wishlist\Business\Operator\Increase;
+use Spryker\Zed\Wishlist\Business\Operator\Remove;
 
 class WishlistDependencyProvider extends AbstractBundleDependencyProvider
 {

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Library\Service;
+namespace Spryker\Zed\Library\Service;
 
 /**
  * Image_GraphViz

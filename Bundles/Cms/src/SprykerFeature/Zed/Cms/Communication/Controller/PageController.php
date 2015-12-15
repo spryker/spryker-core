@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Communication\Controller;
+namespace Spryker\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Cms\Business\CmsFacade;
-use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
-use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
-use SprykerFeature\Zed\Url\Business\UrlFacade;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
+use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
+use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

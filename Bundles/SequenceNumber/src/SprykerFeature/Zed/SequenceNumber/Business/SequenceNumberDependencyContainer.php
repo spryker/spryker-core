@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\SequenceNumber\Business;
+namespace Spryker\Zed\SequenceNumber\Business;
 
-use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumber;
-use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
+use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumber;
+use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
-use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumberInterface;
-use SprykerFeature\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainerInterface;
-use SprykerFeature\Zed\SequenceNumber\SequenceNumberConfig;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
+use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumberInterface;
+use Spryker\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainerInterface;
+use Spryker\Zed\SequenceNumber\SequenceNumberConfig;
 use Propel\Runtime\Propel;
 
 /**

@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Business\Translation;
+namespace Spryker\Zed\Glossary\Business\Translation;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -11,15 +11,15 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
-use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
-use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
-use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
-use SprykerFeature\Zed\Glossary\Business\Key\KeyManagerInterface;
-use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
-use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
+use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
+use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
+use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
+use Spryker\Zed\Glossary\Business\Key\KeyManagerInterface;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
+use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation;
 

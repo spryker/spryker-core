@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionExporter\Business\Model;
+namespace Spryker\Zed\ProductOptionExporter\Business\Model;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 

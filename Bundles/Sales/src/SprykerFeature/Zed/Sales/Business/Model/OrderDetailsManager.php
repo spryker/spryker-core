@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\Model;
+namespace Spryker\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -14,13 +14,13 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use SprykerFeature\Zed\Library\Copy;
-use SprykerFeature\Zed\Oms\Business\OmsFacade;
-use SprykerFeature\Zed\Sales\Business\Exception\InvalidSalesOrderException;
-use SprykerFeature\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface;
+use Spryker\Zed\Library\Copy;
+use Spryker\Zed\Oms\Business\OmsFacade;
+use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
+use Spryker\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class OrderDetailsManager

@@ -2,7 +2,7 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Client\Wishlist\Storage;
+namespace Spryker\Client\Wishlist\Storage;
 
 use Generated\Shared\Transfer\WishlistTransfer;
 

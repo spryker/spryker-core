@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Generator;
+namespace Unit\Spryker\Zed\Transfer\Business\Model\Generator;
 
 class TransferDefinitionMergerHelper
 {

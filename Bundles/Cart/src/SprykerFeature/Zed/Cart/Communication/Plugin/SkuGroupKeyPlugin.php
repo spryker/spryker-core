@@ -1,11 +1,11 @@
 <?php
 
-namespace SprykerFeature\Zed\Cart\Communication\Plugin;
+namespace Spryker\Zed\Cart\Communication\Plugin;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {

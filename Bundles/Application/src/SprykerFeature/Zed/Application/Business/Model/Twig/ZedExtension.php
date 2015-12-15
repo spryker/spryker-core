@@ -4,25 +4,25 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Business\Model\Twig;
+namespace Spryker\Zed\Application\Business\Model\Twig;
 
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButton;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButton;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButton;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButton;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\StaticPath;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Widget;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Panel;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Modal;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\ListGroup;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\GridConfirmDialog;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Grid;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\FormatPrice;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\ConfirmDialog;
-use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Button;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButton;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButton;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButton;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButton;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\StaticPath;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Widget;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Panel;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Modal;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\ListGroup;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\GridConfirmDialog;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Grid;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPrice;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\ConfirmDialog;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Button;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Zed\Kernel\Locator;
 
 class ZedExtension extends \Twig_Extension
 {

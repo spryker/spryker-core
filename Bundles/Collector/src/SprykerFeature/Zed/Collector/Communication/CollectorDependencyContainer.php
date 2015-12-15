@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Communication;
+namespace Spryker\Zed\Collector\Communication;
 
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\Collector\CollectorDependencyProvider;
-use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Collector\CollectorDependencyProvider;
+use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
 class CollectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {

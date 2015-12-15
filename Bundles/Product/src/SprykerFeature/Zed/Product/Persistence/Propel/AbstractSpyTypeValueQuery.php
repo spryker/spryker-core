@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Product\Persistence\Propel;
+namespace Spryker\Zed\Product\Persistence\Propel;
 
 use Orm\Zed\Product\Persistence\Base\SpyTypeValueQuery as BaseSpyTypeValueQuery;
 

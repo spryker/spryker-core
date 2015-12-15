@@ -4,26 +4,26 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business;
+namespace Spryker\Zed\Payolution\Business;
 
-use SprykerFeature\Zed\Payolution\Business\Log\TransactionStatusLog;
-use SprykerFeature\Zed\Payolution\Business\Api\Converter\Converter;
-use SprykerFeature\Zed\Payolution\Business\Order\Saver;
-use SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\Guzzle;
-use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Calculation\Calculation;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\Installment\Installment;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
-use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Transaction\Transaction;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Converter\ConverterInterface;
-use SprykerFeature\Zed\Payolution\Business\Order\SaverInterface;
-use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Transaction\TransactionInterface;
-use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Calculation\CalculationInterface;
-use SprykerFeature\Zed\Payolution\Business\Log\TransactionStatusLogInterface;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
-use SprykerFeature\Zed\Payolution\PayolutionConfig;
+use Spryker\Zed\Payolution\Business\Log\TransactionStatusLog;
+use Spryker\Zed\Payolution\Business\Api\Converter\Converter;
+use Spryker\Zed\Payolution\Business\Order\Saver;
+use Spryker\Zed\Payolution\Business\Api\Adapter\Http\Guzzle;
+use Spryker\Zed\Payolution\Business\Payment\Handler\Calculation\Calculation;
+use Spryker\Zed\Payolution\Business\Payment\Method\Installment\Installment;
+use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
+use Spryker\Zed\Payolution\Business\Payment\Handler\Transaction\Transaction;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface;
+use Spryker\Zed\Payolution\Business\Order\SaverInterface;
+use Spryker\Zed\Payolution\Business\Payment\Handler\Transaction\TransactionInterface;
+use Spryker\Zed\Payolution\Business\Payment\Handler\Calculation\CalculationInterface;
+use Spryker\Zed\Payolution\Business\Log\TransactionStatusLogInterface;
+use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
+use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use Spryker\Zed\Payolution\PayolutionConfig;
 
 /**
  * @method PayolutionQueryContainerInterface getQueryContainer()

@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Error;
+namespace Spryker\Shared\Library\Error;
 
-use SprykerEngine\Shared\Lumberjack\Model\Event;
-use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
-use SprykerEngine\Shared\Lumberjack\Model\EventJournalInterface;
-use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
-use SprykerFeature\Shared\Library\Application\Version;
-use SprykerFeature\Shared\Library\Log;
-use SprykerFeature\Shared\NewRelic\Api;
-use SprykerFeature\Shared\NewRelic\ApiInterface;
+use Spryker\Shared\Lumberjack\Model\Event;
+use Spryker\Shared\Lumberjack\Model\EventInterface;
+use Spryker\Shared\Lumberjack\Model\EventJournalInterface;
+use Spryker\Shared\Lumberjack\Model\SharedEventJournal;
+use Spryker\Shared\Library\Application\Version;
+use Spryker\Shared\Library\Log;
+use Spryker\Shared\NewRelic\Api;
+use Spryker\Shared\NewRelic\ApiInterface;
 
 class ErrorLogger
 {

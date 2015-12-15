@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Persistence\DependencyContainer;
+namespace Spryker\Zed\Kernel\Persistence\DependencyContainer;
 
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Container;
 
 interface DependencyContainerInterface
 {

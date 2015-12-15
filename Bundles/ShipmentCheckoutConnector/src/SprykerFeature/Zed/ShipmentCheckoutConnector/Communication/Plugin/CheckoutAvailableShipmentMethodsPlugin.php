@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ShipmentCheckoutConnector\Communication\Plugin;
+namespace Spryker\Zed\ShipmentCheckoutConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\ShipmentCheckoutConnector\Communication\ShipmentCheckoutConnectorDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ShipmentCheckoutConnector\Communication\ShipmentCheckoutConnectorDependencyContainer;
 
 /**
  * @method ShipmentCheckoutConnectorDependencyContainer getDependencyContainer()

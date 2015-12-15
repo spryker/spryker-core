@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel;
+namespace Spryker\Zed\Kernel;
 
-use SprykerEngine\Client\Kernel\ClientLocator;
-use SprykerEngine\Shared\Kernel\BundleProxy;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use SprykerEngine\Shared\Kernel\TransferLocator;
-use SprykerEngine\Zed\Kernel\Business\FacadeLocator;
-use SprykerEngine\Zed\Kernel\Communication\ConsoleLocator;
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainerLocator;
+use Spryker\Client\Kernel\ClientLocator;
+use Spryker\Shared\Kernel\BundleProxy;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Shared\Kernel\TransferLocator;
+use Spryker\Zed\Kernel\Business\FacadeLocator;
+use Spryker\Zed\Kernel\Communication\ConsoleLocator;
+use Spryker\Zed\Kernel\Persistence\QueryContainerLocator;
 
 class Locator extends AbstractLocatorLocator
 {

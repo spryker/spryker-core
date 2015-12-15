@@ -4,20 +4,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Communication;
+namespace Spryker\Zed\Acl\Communication;
 
-use SprykerFeature\Zed\Acl\Communication\Table\GroupTable;
-use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Zed\Acl\AclDependencyProvider;
-use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
-use SprykerFeature\Zed\Acl\Communication\Form\RoleForm;
-use SprykerFeature\Zed\Acl\Communication\Form\RulesetForm;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Acl\Communication\Table\GroupUsersTable;
-use SprykerFeature\Zed\Acl\Communication\Table\RoleTable;
-use SprykerFeature\Zed\Acl\Communication\Table\RulesetTable;
-use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use SprykerFeature\Zed\User\Business\UserFacade;
+use Spryker\Zed\Acl\Communication\Table\GroupTable;
+use Spryker\Zed\Acl\AclConfig;
+use Spryker\Zed\Acl\AclDependencyProvider;
+use Spryker\Zed\Acl\Communication\Form\GroupForm;
+use Spryker\Zed\Acl\Communication\Form\RoleForm;
+use Spryker\Zed\Acl\Communication\Form\RulesetForm;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Acl\Communication\Table\GroupUsersTable;
+use Spryker\Zed\Acl\Communication\Table\RoleTable;
+use Spryker\Zed\Acl\Communication\Table\RulesetTable;
+use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

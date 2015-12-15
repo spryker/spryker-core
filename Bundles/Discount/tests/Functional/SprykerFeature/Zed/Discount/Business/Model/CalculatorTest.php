@@ -4,20 +4,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Discount\Business\Model;
+namespace Functional\Spryker\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Zed\Discount\Business\Distributor\Distributor;
-use SprykerFeature\Zed\Discount\Business\Model\Calculator;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Discount\Business\Model\CollectorResolver;
-use SprykerFeature\Zed\Discount\DiscountConfig;
-use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
+use Spryker\Shared\Config;
+use Spryker\Zed\Discount\Business\Distributor\Distributor;
+use Spryker\Zed\Discount\Business\Model\Calculator;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Discount\Business\Model\CollectorResolver;
+use Spryker\Zed\Discount\DiscountConfig;
+use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
  * @group DiscountCalculatorTest

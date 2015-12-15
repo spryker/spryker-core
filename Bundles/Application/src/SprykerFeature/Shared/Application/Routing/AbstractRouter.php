@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Application\Routing;
+namespace Spryker\Shared\Application\Routing;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\RedirectResponse;

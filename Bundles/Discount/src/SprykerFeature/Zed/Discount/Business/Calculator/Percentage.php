@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\Calculator;
+namespace Spryker\Zed\Discount\Business\Calculator;
 
-use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
+use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 class Percentage implements CalculatorInterface
 {

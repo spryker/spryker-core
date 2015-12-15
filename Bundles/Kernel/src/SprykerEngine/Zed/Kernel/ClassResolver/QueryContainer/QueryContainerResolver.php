@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer;
+namespace Spryker\Zed\Kernel\ClassResolver\QueryContainer;
 
-use SprykerEngine\Zed\Kernel\ClassResolver\AbstractClassResolver;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 class QueryContainerResolver extends AbstractClassResolver
 {

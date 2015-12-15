@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Nopayment\Communication;
+namespace Spryker\Zed\Nopayment\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Nopayment\Persistence\NopaymentQueryContainer;
-use SprykerFeature\Zed\Nopayment\Business\NopaymentFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainer;
+use Spryker\Zed\Nopayment\Business\NopaymentFacade;
 
 class NopaymentDependencyContainer extends AbstractCommunicationDependencyContainer
 {

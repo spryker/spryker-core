@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution;
+namespace Spryker\Zed\Payolution;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Payolution\PayolutionConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Payolution\PayolutionConstants;
 
 class PayolutionConfig extends AbstractBundleConfig
 {

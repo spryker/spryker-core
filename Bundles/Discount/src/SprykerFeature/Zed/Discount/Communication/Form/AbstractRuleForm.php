@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\Discount\Communication\Form;
+namespace Spryker\Zed\Discount\Communication\Form;
 
-use SprykerEngine\Shared\Gui\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
 
 abstract class AbstractRuleForm extends AbstractForm
 {

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Client\Locale;
+namespace Spryker\Client\Locale;
 
-use SprykerEngine\Client\Kernel\AbstractClient;
-use SprykerEngine\Shared\Kernel\Store;
+use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Shared\Kernel\Store;
 
 /**
  * @method LocaleDependencyContainer getDependencyContainer()

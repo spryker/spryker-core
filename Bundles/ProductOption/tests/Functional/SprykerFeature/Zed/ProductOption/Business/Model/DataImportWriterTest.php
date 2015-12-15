@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\ProductOption\Business\Model;
+namespace Functional\Spryker\Zed\ProductOption\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
-use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
+use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionConfigurationPresetQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusionQuery;

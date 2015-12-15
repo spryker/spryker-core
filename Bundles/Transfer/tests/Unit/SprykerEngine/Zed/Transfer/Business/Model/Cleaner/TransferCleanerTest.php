@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Transfer\Business\Model\Cleaner;
+namespace Unit\Spryker\Zed\Transfer\Business\Model\Cleaner;
 
-use SprykerEngine\Zed\Transfer\Business\Model\TransferCleaner;
+use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 
 /**
- * @group SprykerEngine
+ * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business

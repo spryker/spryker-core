@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\OmsDiscountConnector;
+namespace Spryker\Zed\OmsDiscountConnector;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class OmsDiscountConnectorConfig extends AbstractBundleConfig
 {

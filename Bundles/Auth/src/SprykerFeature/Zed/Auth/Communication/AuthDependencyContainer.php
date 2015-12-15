@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Communication;
+namespace Spryker\Zed\Auth\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Auth\Communication\Form\LoginForm;
-use SprykerFeature\Zed\Auth\Communication\Form\ResetPasswordForm;
-use SprykerFeature\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
-use SprykerFeature\Zed\User\Business\UserFacade;
-use SprykerFeature\Zed\Auth\AuthDependencyProvider;
-use SprykerFeature\Zed\Auth\AuthConfig;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Auth\Communication\Form\LoginForm;
+use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
+use Spryker\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
+use Spryker\Zed\User\Business\UserFacade;
+use Spryker\Zed\Auth\AuthDependencyProvider;
+use Spryker\Zed\Auth\AuthConfig;
 
 /**
  * @method AuthConfig getConfig()

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Price\Dependency\Facade;
+namespace Spryker\Zed\Price\Dependency\Facade;
 
-use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 interface PriceToProductInterface
 {

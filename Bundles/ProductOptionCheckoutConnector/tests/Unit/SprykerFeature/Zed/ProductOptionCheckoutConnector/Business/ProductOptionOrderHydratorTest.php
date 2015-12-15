@@ -3,17 +3,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\ProductOptionCheckoutConnector\Business;
+namespace Unit\Spryker\Zed\ProductOptionCheckoutConnector\Business;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use SprykerFeature\Zed\ProductOptionCheckoutConnector\Business\ProductOptionOrderHydrator;
+use Spryker\Zed\ProductOptionCheckoutConnector\Business\ProductOptionOrderHydrator;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group ProducOptionCheckoutConnector
  * @group Business

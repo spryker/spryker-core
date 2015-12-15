@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCategory\Business;
+namespace Spryker\Zed\ProductCategory\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use SprykerFeature\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
-use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
-use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
-use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
-use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
-use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use SprykerFeature\Zed\ProductCategory\ProductCategoryDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
+use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 class ProductCategoryDependencyContainer extends AbstractBusinessDependencyContainer
 {

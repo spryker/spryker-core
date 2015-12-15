@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter;
+namespace Spryker\Zed\Collector\Business\Exporter;
 
-use SprykerFeature\Zed\Collector\Business\Model\CountableIteratorInterface;
+use Spryker\Zed\Collector\Business\Model\CountableIteratorInterface;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class BatchIterator implements CountableIteratorInterface

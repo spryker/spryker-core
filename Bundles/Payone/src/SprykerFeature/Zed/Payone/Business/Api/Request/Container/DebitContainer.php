@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
+namespace Spryker\Zed\Payone\Business\Api\Request\Container;
 
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\AbstractPaymentMethodContainer;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\AbstractPaymentMethodContainer;
 
 class DebitContainer extends AbstractRequestContainer
 {
@@ -50,17 +50,17 @@ class DebitContainer extends AbstractRequestContainer
     protected $use_customerdata;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer
      */
     protected $business;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\AbstractPaymentMethodContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\AbstractPaymentMethodContainer
      */
     protected $paymentMethod;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     protected $invoicing;
 

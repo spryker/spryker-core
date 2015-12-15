@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Log;
+namespace Spryker\Shared\Log;
 
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use SprykerFeature\Shared\Log\Config\DefaultLoggerConfig;
-use SprykerFeature\Shared\Log\Config\LoggerConfigInterface;
+use Spryker\Shared\Log\Config\DefaultLoggerConfig;
+use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
 class LoggerFactory
 {

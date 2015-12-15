@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Product\Model;
+namespace Spryker\Shared\Product\Model;
 
 interface AbstractProductInterface
 {

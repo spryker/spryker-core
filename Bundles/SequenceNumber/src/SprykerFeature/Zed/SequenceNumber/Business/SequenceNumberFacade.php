@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\SequenceNumber\Business;
+namespace Spryker\Zed\SequenceNumber\Business;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method SequenceNumberDependencyContainer getDependencyContainer()

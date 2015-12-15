@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Communication;
+namespace Spryker\Zed\Stock\Communication;
 
-use SprykerFeature\Zed\Stock\Business\StockFacade;
-use SprykerFeature\Zed\Stock\Communication\Form\StockForm;
-use SprykerFeature\Zed\Stock\Communication\Form\StockProductForm;
-use SprykerFeature\Zed\Stock\Communication\Grid\StockGrid;
-use SprykerFeature\Zed\Stock\Communication\Grid\StockProductGrid;
-use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Stock\Business\StockFacade;
+use Spryker\Zed\Stock\Communication\Form\StockForm;
+use Spryker\Zed\Stock\Communication\Form\StockProductForm;
+use Spryker\Zed\Stock\Communication\Grid\StockGrid;
+use Spryker\Zed\Stock\Communication\Grid\StockProductGrid;
+use Spryker\Zed\Stock\Persistence\StockQueryContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 
 class StockDependencyContainer extends AbstractCommunicationDependencyContainer

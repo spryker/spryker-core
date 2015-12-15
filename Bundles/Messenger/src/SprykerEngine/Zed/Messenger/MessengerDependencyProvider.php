@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Messenger;
+namespace Spryker\Zed\Messenger;
 
-use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {

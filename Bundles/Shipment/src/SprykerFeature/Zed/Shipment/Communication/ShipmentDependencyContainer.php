@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Shipment\Communication;
+namespace Spryker\Zed\Shipment\Communication;
 
-use SprykerFeature\Zed\Shipment\Communication\Form\MethodForm;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Shipment\Communication\Form\CarrierForm;
-use SprykerFeature\Zed\Shipment\Communication\Table\MethodTable;
-use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainer;
-use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
-use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
+use Spryker\Zed\Shipment\Communication\Form\MethodForm;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
+use Spryker\Zed\Shipment\Communication\Table\MethodTable;
+use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
+use Spryker\Zed\Shipment\ShipmentDependencyProvider;
+use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 /**
  * @method ShipmentQueryContainer getQueryContainer()

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command;
+namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 abstract class AbstractCommand extends AbstractPlugin

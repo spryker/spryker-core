@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Communication\Controller;
+namespace Spryker\Zed\Product\Communication\Controller;
 
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Product\Communication\Form\ProductImportForm;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Product\Communication\Form\ProductImportForm;
 use Symfony\Component\HttpFoundation\Request;
 
 class ImportController extends AbstractController

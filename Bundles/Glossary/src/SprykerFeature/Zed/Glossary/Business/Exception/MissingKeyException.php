@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Business\Exception;
+namespace Spryker\Zed\Glossary\Business\Exception;
 
 class MissingKeyException extends \Exception
 {

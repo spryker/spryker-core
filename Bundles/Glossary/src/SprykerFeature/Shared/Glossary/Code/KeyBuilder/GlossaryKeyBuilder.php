@@ -3,9 +3,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Glossary\Code\KeyBuilder;
+namespace Spryker\Shared\Glossary\Code\KeyBuilder;
 
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
 
 trait GlossaryKeyBuilder
 {

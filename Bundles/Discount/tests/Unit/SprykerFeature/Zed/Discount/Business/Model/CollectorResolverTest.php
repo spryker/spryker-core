@@ -3,16 +3,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Discount\Business\Model;
+namespace Unit\Spryker\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use SprykerFeature\Zed\Discount\Business\Model\CollectorResolver;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use SprykerFeature\Zed\Discount\DiscountConfigInterface;
-use SprykerFeature\Zed\Cart\Business\Model\CalculableContainer;
+use Spryker\Zed\Discount\Business\Model\CollectorResolver;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
+use Spryker\Zed\Discount\DiscountConfigInterface;
+use Spryker\Zed\Cart\Business\Model\CalculableContainer;
 use Generated\Shared\Transfer\DiscountTransfer;
 
 class CollectorResolverTest extends Test
@@ -161,7 +161,7 @@ class CollectorResolverTest extends Test
     protected function createCollectorPluginMock(array $collectedItems)
     {
         $collectorPluginMock = $this
-            ->getMockBuilder('\SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface')
+            ->getMockBuilder('\Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -178,7 +178,7 @@ class CollectorResolverTest extends Test
     protected function getDiscountCollectorConfigurator(array $collectorPlugins)
     {
         $discountConfigMock = $this
-            ->getMockBuilder('\SprykerFeature\Zed\Discount\DiscountConfigInterface')
+            ->getMockBuilder('\Spryker\Zed\Discount\DiscountConfigInterface')
             ->disableOriginalConstructor()
             ->getMock();
 

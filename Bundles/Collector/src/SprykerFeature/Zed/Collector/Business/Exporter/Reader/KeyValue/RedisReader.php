@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter\Reader\KeyValue;
+namespace Spryker\Zed\Collector\Business\Exporter\Reader\KeyValue;
 
-use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
-use SprykerFeature\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
+use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
+use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 
 class RedisReader implements ReaderInterface
 {

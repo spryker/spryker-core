@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Newsletter\Persistence\Propel;
+namespace Spryker\Zed\Newsletter\Persistence\Propel;
 
 use Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterTypeQuery as BaseSpyNewsletterTypeQuery;
 

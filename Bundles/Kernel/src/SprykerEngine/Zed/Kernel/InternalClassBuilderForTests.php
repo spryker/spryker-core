@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel;
+namespace Spryker\Zed\Kernel;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 trait InternalClassBuilderForTests
 {
@@ -106,11 +106,11 @@ trait InternalClassBuilderForTests
         if (class_exists($dependencyProviderClassName)) {
             return $dependencyProviderClassName;
         }
-        $dependencyProviderClassName = '\\SprykerFeature\\Zed\\' . $bundle . '\\' . $bundle . 'DependencyProvider';
+        $dependencyProviderClassName = '\\Spryker\\Zed\\' . $bundle . '\\' . $bundle . 'DependencyProvider';
         if (class_exists($dependencyProviderClassName)) {
             return $dependencyProviderClassName;
         }
-        $dependencyProviderClassName = '\\SprykerEngine\\Zed\\' . $bundle . '\\' . $bundle . 'DependencyProvider';
+        $dependencyProviderClassName = '\\Spryker\\Zed\\' . $bundle . '\\' . $bundle . 'DependencyProvider';
         if (class_exists($dependencyProviderClassName)) {
             return $dependencyProviderClassName;
         }

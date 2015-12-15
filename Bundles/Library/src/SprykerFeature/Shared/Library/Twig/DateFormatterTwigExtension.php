@@ -3,9 +3,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Twig;
+namespace Spryker\Shared\Library\Twig;
 
-use SprykerFeature\Shared\Library\DateFormatter;
+use Spryker\Shared\Library\DateFormatter;
 
 class DateFormatterTwigExtension extends \Twig_Extension
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace SprykerFeature\Zed\Sales\Communication\Form;
+namespace Spryker\Zed\Sales\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 

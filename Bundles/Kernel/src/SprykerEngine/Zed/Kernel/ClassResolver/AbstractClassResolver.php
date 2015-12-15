@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\ClassResolver;
+namespace Spryker\Zed\Kernel\ClassResolver;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Application\ApplicationConstants;
 
 abstract class AbstractClassResolver
 {

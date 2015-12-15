@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Customer;
+namespace Spryker\Client\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
-use SprykerEngine\Client\Kernel\AbstractClient;
-use SprykerFeature\Client\ZedRequest\Client\Response;
+use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\ZedRequest\Client\Response;
 
 /**
  * @method CustomerDependencyContainer getDependencyContainer()

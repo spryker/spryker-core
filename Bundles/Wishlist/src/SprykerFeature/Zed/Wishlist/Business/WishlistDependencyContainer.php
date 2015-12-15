@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Wishlist\Business;
+namespace Spryker\Zed\Wishlist\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Wishlist\Business\Model\Customer;
-use SprykerFeature\Zed\Wishlist\Business\Operator\AbstractOperator;
-use SprykerFeature\Zed\Wishlist\Business\Storage\StorageInterface;
-use SprykerFeature\Zed\Wishlist\Business\Storage\Propel;
-use SprykerFeature\Zed\Wishlist\Business\Storage\InMemory;
-use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainer;
-use SprykerFeature\Zed\Wishlist\Business\Operator\Add;
-use SprykerFeature\Zed\Wishlist\Business\Operator\Increase;
-use SprykerFeature\Zed\Wishlist\Business\Operator\Remove;
-use SprykerFeature\Zed\Wishlist\Business\Operator\Decrease;
-use SprykerFeature\Zed\Wishlist\WishlistDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Wishlist\Business\Model\Customer;
+use Spryker\Zed\Wishlist\Business\Operator\AbstractOperator;
+use Spryker\Zed\Wishlist\Business\Storage\StorageInterface;
+use Spryker\Zed\Wishlist\Business\Storage\Propel;
+use Spryker\Zed\Wishlist\Business\Storage\InMemory;
+use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
+use Spryker\Zed\Wishlist\Business\Operator\Add;
+use Spryker\Zed\Wishlist\Business\Operator\Increase;
+use Spryker\Zed\Wishlist\Business\Operator\Remove;
+use Spryker\Zed\Wishlist\Business\Operator\Decrease;
+use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
  * @method WishlistQueryContainer getQueryContainer()

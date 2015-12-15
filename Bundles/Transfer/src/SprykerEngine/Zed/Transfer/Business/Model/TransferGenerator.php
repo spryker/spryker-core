@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Transfer\Business\Model;
+namespace Spryker\Zed\Transfer\Business\Model;
 
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
+use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
+use Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
 use Psr\Log\LoggerInterface;
 
 class TransferGenerator

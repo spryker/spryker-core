@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
+namespace Spryker\Zed\Payolution\Business\Api\Adapter\Http;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Exception\ApiHttpRequestException;
+use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 
 abstract class AbstractHttpAdapter implements AdapterInterface
 {

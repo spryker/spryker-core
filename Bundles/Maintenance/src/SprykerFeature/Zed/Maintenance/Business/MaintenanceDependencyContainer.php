@@ -4,23 +4,23 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Business;
+namespace Spryker\Zed\Maintenance\Business;
 
-use SprykerFeature\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
+use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Maintenance\Business\Dependency\BundleParser;
-use SprykerFeature\Zed\Maintenance\Business\Dependency\Graph;
-use SprykerFeature\Zed\Maintenance\Business\Dependency\Manager;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder as ComposerInstalledPackageFinder;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
-use SprykerFeature\Zed\Maintenance\Business\Model\PropelBaseFolderFinder;
-use SprykerFeature\Zed\Maintenance\Business\Model\PropelMigrationCleanerInterface;
-use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Maintenance\Business\Dependency\BundleParser;
+use Spryker\Zed\Maintenance\Business\Dependency\Graph;
+use Spryker\Zed\Maintenance\Business\Dependency\Manager;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder as ComposerInstalledPackageFinder;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
+use Spryker\Zed\Maintenance\Business\Model\PropelBaseFolderFinder;
+use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleanerInterface;
+use Spryker\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Process\Process;
 
 /**

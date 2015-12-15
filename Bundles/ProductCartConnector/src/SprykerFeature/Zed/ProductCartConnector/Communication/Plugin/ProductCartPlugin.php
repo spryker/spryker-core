@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductCartConnector\Communication\Plugin;
+namespace Spryker\Zed\ProductCartConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
+use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
 
 /**
  * @method ProductCartConnectorFacade getFacade()

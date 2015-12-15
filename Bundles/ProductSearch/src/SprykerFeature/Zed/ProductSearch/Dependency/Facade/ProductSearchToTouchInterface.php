@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Dependency\Facade;
+namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
 interface ProductSearchToTouchInterface
 {

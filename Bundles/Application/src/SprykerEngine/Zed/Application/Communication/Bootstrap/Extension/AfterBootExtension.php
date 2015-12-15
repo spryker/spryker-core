@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Application\Communication\Bootstrap\Extension;
+namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
-use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\AfterBootExtensionInterface;
-use SprykerEngine\Shared\Application\Communication\Application;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Application\Communication\Bootstrap\Extension\AfterBootExtensionInterface;
+use Spryker\Shared\Application\Communication\Application;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Application\ApplicationConstants;
 
 class AfterBootExtension implements AfterBootExtensionInterface
 {

@@ -1,23 +1,23 @@
 <?php
 
-namespace Functional\SprykerFeature\Zed\Cart\Business;
+namespace Functional\Spryker\Zed\Cart\Business;
 
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
-use SprykerFeature\Zed\Cart\Business\CartDependencyContainer;
-use SprykerFeature\Zed\Cart\Business\CartFacade;
-use SprykerFeature\Zed\Cart\CartDependencyProvider;
-use SprykerFeature\Zed\Price\Business\PriceFacade;
+use Spryker\Zed\Cart\Business\CartDependencyContainer;
+use Spryker\Zed\Cart\Business\CartFacade;
+use Spryker\Zed\Cart\CartDependencyProvider;
+use Spryker\Zed\Price\Business\PriceFacade;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Cart
  * @group Business
@@ -80,7 +80,7 @@ class CartFacadeTest extends AbstractFunctionalTest
      */
     private function getMockCartBusinessFactory()
     {
-        return $this->getMock('SprykerEngine\Zed\Kernel\Business\Factory', ['create'], ['Cart']);
+        return $this->getMock('Spryker\Zed\Kernel\Business\Factory', ['create'], ['Cart']);
     }
 
     /**

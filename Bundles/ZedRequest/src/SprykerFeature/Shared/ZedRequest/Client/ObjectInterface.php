@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\ZedRequest\Client;
+namespace Spryker\Shared\ZedRequest\Client;
 
 interface ObjectInterface
 {

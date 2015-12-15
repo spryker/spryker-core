@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business\Importer\Writer;
+namespace Spryker\Zed\Product\Business\Importer\Writer;
 
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 

@@ -4,37 +4,37 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Product\Business;
+namespace Spryker\Zed\Product\Business;
 
-use SprykerFeature\Zed\Product\Business\Attribute\AttributeManager;
-use SprykerFeature\Zed\Product\Business\Model\ProductBatchResult;
-use SprykerFeature\Zed\Product\Business\Importer\Writer\Db\ConcreteProductWriter;
-use SprykerFeature\Zed\Product\Business\Importer\Writer\Db\AbstractProductWriter;
-use SprykerFeature\Zed\Product\Business\Importer\Writer\ProductWriter;
-use SprykerFeature\Zed\Product\Business\Importer\Builder\ProductBuilder;
-use SprykerFeature\Zed\Product\Business\Importer\Reader\File\CsvReader;
+use Spryker\Zed\Product\Business\Attribute\AttributeManager;
+use Spryker\Zed\Product\Business\Model\ProductBatchResult;
+use Spryker\Zed\Product\Business\Importer\Writer\Db\ConcreteProductWriter;
+use Spryker\Zed\Product\Business\Importer\Writer\Db\AbstractProductWriter;
+use Spryker\Zed\Product\Business\Importer\Writer\ProductWriter;
+use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
+use Spryker\Zed\Product\Business\Importer\Reader\File\CsvReader;
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Product\Business\Attribute\AttributeManagerInterface;
-use SprykerFeature\Zed\Product\Business\Builder\ProductBuilderInterface;
-use SprykerFeature\Zed\Product\Business\Importer\FileImporter;
-use SprykerFeature\Zed\Product\Business\Importer\Reader\File\IteratorReaderInterface;
-use SprykerFeature\Zed\Product\Business\Importer\Upload\UploadedFileImporter;
-use SprykerFeature\Zed\Product\Business\Importer\Validator\ImportProductValidator;
-use SprykerFeature\Zed\Product\Business\Importer\Writer\AbstractProductWriterInterface;
-use SprykerFeature\Zed\Product\Business\Importer\Writer\ConcreteProductWriterInterface;
-use SprykerFeature\Zed\Product\Business\Importer\Writer\ProductWriterInterface;
-use SprykerFeature\Zed\Product\Business\Internal\Install;
-use SprykerFeature\Zed\Product\Business\Model\ProductBatchResultInterface;
-use SprykerFeature\Zed\Product\Business\Product\ProductManagerInterface;
-use SprykerFeature\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
-use SprykerFeature\Zed\Product\Dependency\Facade\ProductToTouchInterface;
-use SprykerFeature\Zed\Product\Dependency\Facade\ProductToUrlInterface;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerFeature\Zed\Product\ProductConfig;
-use SprykerFeature\Zed\Product\ProductDependencyProvider;
-use SprykerFeature\Zed\Product\Business\Product\ProductManager;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
+use Spryker\Zed\Product\Business\Builder\ProductBuilderInterface;
+use Spryker\Zed\Product\Business\Importer\FileImporter;
+use Spryker\Zed\Product\Business\Importer\Reader\File\IteratorReaderInterface;
+use Spryker\Zed\Product\Business\Importer\Upload\UploadedFileImporter;
+use Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator;
+use Spryker\Zed\Product\Business\Importer\Writer\AbstractProductWriterInterface;
+use Spryker\Zed\Product\Business\Importer\Writer\ConcreteProductWriterInterface;
+use Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface;
+use Spryker\Zed\Product\Business\Internal\Install;
+use Spryker\Zed\Product\Business\Model\ProductBatchResultInterface;
+use Spryker\Zed\Product\Business\Product\ProductManagerInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Product\ProductConfig;
+use Spryker\Zed\Product\ProductDependencyProvider;
+use Spryker\Zed\Product\Business\Product\ProductManager;
 
 /**
  * @method ProductConfig getConfig()

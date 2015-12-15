@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Newsletter;
+namespace Spryker\Shared\Newsletter;
 
 interface NewsletterConstants
 {

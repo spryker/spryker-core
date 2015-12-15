@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Session\Communication\Plugin\ServiceProvider;
+namespace Spryker\Zed\Session\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Client\Session\SessionClientInterface;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Session\SessionConstants;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Zed\Session\Business\Model\SessionFactory;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Client\Session\SessionClientInterface;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Session\SessionConstants;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Session\Business\Model\SessionFactory;
 
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

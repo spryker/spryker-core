@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Communication\Controller;
+namespace Spryker\Zed\Discount\Communication\Controller;
 
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableParameters;
+use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Discount\Communication\Form\VoucherForm;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
+use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;

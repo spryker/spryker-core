@@ -1,10 +1,10 @@
 <?php
 
-namespace SprykerFeature\Zed\Gui\Communication\Form;
+namespace Spryker\Zed\Gui\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
+use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\Gui\Communication\Form\Type\SelectType;
 use Symfony\Component\Form\Extension\Validator\Constraints\Form;
 use Symfony\Component\Validator\Constraint;
 

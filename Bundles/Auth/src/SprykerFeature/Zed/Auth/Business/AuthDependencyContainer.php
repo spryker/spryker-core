@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Business;
+namespace Spryker\Zed\Auth\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Auth\AuthConfig;
-use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
-use SprykerFeature\Zed\Auth\Business\Model\Auth;
-use SprykerFeature\Zed\Auth\Business\Model\PasswordReset;
-use SprykerFeature\Zed\Auth\AuthDependencyProvider;
-use SprykerFeature\Zed\Auth\Persistence\AuthQueryContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Auth\AuthConfig;
+use Spryker\Zed\Auth\Business\Client\StaticToken;
+use Spryker\Zed\Auth\Business\Model\Auth;
+use Spryker\Zed\Auth\Business\Model\PasswordReset;
+use Spryker\Zed\Auth\AuthDependencyProvider;
+use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
 
 /**
  * @method AuthConfig getConfig()

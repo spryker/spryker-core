@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Catalog\Model;
+namespace Spryker\Client\Catalog\Model;
 
-use SprykerFeature\Client\Catalog\Model\Exception\ProductNotFoundException;
+use Spryker\Client\Catalog\Model\Exception\ProductNotFoundException;
 
 interface CatalogInterface
 {

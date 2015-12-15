@@ -10,7 +10,7 @@ use Codeception\TestCase;
 use Codeception\Module;
 use Propel\Runtime\Propel;
 use Silex\Application;
-use SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class Functional extends Module
 {

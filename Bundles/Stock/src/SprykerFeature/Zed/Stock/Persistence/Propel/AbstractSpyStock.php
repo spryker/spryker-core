@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Persistence\Propel;
+namespace Spryker\Zed\Stock\Persistence\Propel;
 
 use Orm\Zed\Stock\Persistence\Base\SpyStock as BaseSpyStock;
 

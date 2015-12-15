@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Mail\Business;
+namespace Spryker\Zed\Mail\Business;
 
 use Generated\Shared\Transfer\AttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;

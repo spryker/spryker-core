@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CustomerMailConnector\Business\Sender;
+namespace Spryker\Zed\CustomerMailConnector\Business\Sender;
 
 use Generated\Shared\Transfer\MailTransfer;
 

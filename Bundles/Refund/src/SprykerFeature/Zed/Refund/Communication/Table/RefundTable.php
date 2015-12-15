@@ -1,12 +1,12 @@
 <?php
 
-namespace SprykerFeature\Zed\Refund\Communication\Table;
+namespace Spryker\Zed\Refund\Communication\Table;
 
-use SprykerFeature\Shared\Library\Currency\CurrencyManager;
-use SprykerFeature\Shared\Library\DateFormatter;
-use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
-use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Refund\Business\RefundFacade;
+use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Library\DateFormatter;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
+use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Refund\Business\RefundFacade;
 use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 

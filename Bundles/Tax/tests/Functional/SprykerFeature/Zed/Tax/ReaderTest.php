@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Tax;
+namespace Functional\Spryker\Zed\Tax;
 
 use Codeception\TestCase\Test;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use SprykerFeature\Zed\Tax\Business\TaxFacade;
+use Spryker\Zed\Tax\Business\TaxFacade;
 use Generated\Zed\Ide\AutoCompletion;
 
 /**
@@ -114,7 +114,7 @@ class ReaderTest extends Test
      */
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxRate()
     {
-        $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
+        $this->setExpectedException('Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
         $this->taxFacade->getTaxSet(self::NON_EXISTENT_ID);
     }
 
@@ -123,7 +123,7 @@ class ReaderTest extends Test
      */
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxSet()
     {
-        $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
+        $this->setExpectedException('Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
         $this->taxFacade->getTaxRate(self::NON_EXISTENT_ID);
     }
 

@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Client\ZedRequest\Client\Fixture;
+namespace Unit\Spryker\Client\ZedRequest\Client\Fixture;
 
-use SprykerFeature\Shared\ZedRequest\Client\AbstractObject;
+use Spryker\Shared\ZedRequest\Client\AbstractObject;
 
 class CommunicationObject extends AbstractObject
 {

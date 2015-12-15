@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\SequenceNumber;
+namespace Spryker\Shared\SequenceNumber;
 
 interface SequenceNumberConstants
 {

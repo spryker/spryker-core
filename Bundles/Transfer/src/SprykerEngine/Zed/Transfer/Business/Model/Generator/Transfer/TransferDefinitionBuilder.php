@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer;
+namespace Spryker\Zed\Transfer\Business\Model\Generator\Transfer;
 
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\AbstractDefinitionBuilder;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\MergerInterface;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
+use Spryker\Zed\Transfer\Business\Model\Generator\AbstractDefinitionBuilder;
+use Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
+use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 
 class TransferDefinitionBuilder extends AbstractDefinitionBuilder
 {

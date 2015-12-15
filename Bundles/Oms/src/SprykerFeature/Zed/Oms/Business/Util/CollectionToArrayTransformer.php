@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Business\Util;
+namespace Spryker\Zed\Oms\Business\Util;
 
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;

@@ -1,12 +1,12 @@
 <?php
 
-namespace SprykerFeature\Zed\Refund\Communication\Form;
+namespace Spryker\Zed\Refund\Communication\Form;
 
 use Generated\Shared\Transfer\RefundTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Refund\Business\RefundFacade;
-use SprykerFeature\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Refund\Business\RefundFacade;
+use Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 
 class RefundForm extends AbstractForm

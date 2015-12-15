@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
+namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\ServiceProviderInterface;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Zed\Application\Business\Model\Twig\RouteResolver;
-use SprykerFeature\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
-use SprykerFeature\Zed\Library\Twig\Loader\Filesystem;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Library\Config;
+use Spryker\Zed\Application\Business\Model\Twig\RouteResolver;
+use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
+use Spryker\Zed\Library\Twig\Loader\Filesystem;
 use Silex\Application;
-use SprykerEngine\Yves\Application\Application as SprykerApplication;
+use Spryker\Yves\Application\Application as SprykerApplication;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -50,8 +50,8 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/',
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/',
 
-                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/src/SprykerFeature/Zed/%1$s/Presentation/',
-                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/src/SprykerEngine/Zed/%1$s/Presentation/',
+                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/src/Spryker/Zed/%1$s/Presentation/',
+                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/src/Spryker/Zed/%1$s/Presentation/',
                 ]
             );
         });
@@ -160,7 +160,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      */
     protected function provideFormTypeTemplates()
     {
-        $path = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Gui/src/SprykerFeature/Zed/Gui/Presentation/Form/Type';
+        $path = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Presentation/Form/Type';
 
         $this->app['twig.loader.filesystem']->addPath(
             $path

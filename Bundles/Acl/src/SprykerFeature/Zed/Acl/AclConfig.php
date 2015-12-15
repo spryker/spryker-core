@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl;
+namespace Spryker\Zed\Acl;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\Acl\AclConstants;
-use SprykerFeature\Shared\Library\Config;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Acl\AclConstants;
+use Spryker\Shared\Library\Config;
 
 class AclConfig extends AbstractBundleConfig
 {

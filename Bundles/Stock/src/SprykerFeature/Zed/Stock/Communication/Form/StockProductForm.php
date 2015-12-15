@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Stock\Communication\Form;
+namespace Spryker\Zed\Stock\Communication\Form;
 
-use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Stock\Persistence\StockQueryContainer;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class StockProductForm extends AbstractForm

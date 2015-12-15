@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Git\Communication\Console;
+namespace Spryker\Zed\Git\Communication\Console;
 
 class GitFlowFinishConsole extends AbstractGitFlowConsole
 {

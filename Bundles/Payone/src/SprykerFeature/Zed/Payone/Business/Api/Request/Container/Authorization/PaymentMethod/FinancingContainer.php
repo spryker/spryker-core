@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
+namespace Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
 
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 
 class FinancingContainer extends AbstractPaymentMethodContainer
 {
@@ -19,7 +19,7 @@ class FinancingContainer extends AbstractPaymentMethodContainer
     protected $financingtype;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     protected $redirect;
 
@@ -42,7 +42,7 @@ class FinancingContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @param \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
      *
      * @return void
      */
@@ -52,7 +52,7 @@ class FinancingContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @return \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     public function getRedirect()
     {

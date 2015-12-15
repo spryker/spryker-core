@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User\Communication;
+namespace Spryker\Zed\User\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Acl\Business\AclFacade;
-use SprykerFeature\Zed\User\Communication\Form\UserCreateForm;
-use SprykerFeature\Zed\User\Communication\Form\UserUpdateForm;
-use SprykerFeature\Zed\User\Communication\Table\UsersTable;
-use SprykerFeature\Zed\User\Communication\Form\ResetPasswordForm;
-use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
-use SprykerFeature\Zed\User\UserDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Acl\Business\AclFacade;
+use Spryker\Zed\User\Communication\Form\UserCreateForm;
+use Spryker\Zed\User\Communication\Form\UserUpdateForm;
+use Spryker\Zed\User\Communication\Table\UsersTable;
+use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
+use Spryker\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\UserDependencyProvider;
 
 /**
  * @method UserQueryContainer getQueryContainer()

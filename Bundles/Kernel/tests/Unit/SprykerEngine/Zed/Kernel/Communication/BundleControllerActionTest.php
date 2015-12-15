@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerEngine\Zed\Kernel\Communication;
+namespace Unit\Spryker\Zed\Kernel\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\BundleControllerAction;
+use Spryker\Zed\Kernel\Communication\BundleControllerAction;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

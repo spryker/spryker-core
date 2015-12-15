@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Newsletter\Messages;
+namespace Spryker\Shared\Newsletter\Messages;
 
 class Messages
 {

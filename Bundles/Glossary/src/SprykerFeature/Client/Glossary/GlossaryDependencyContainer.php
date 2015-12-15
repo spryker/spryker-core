@@ -3,14 +3,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Glossary;
+namespace Spryker\Client\Glossary;
 
-use SprykerFeature\Client\Glossary\KeyBuilder\GlossaryKeyBuilder;
-use SprykerFeature\Client\Glossary\Storage\GlossaryStorage;
-use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
-use SprykerFeature\Client\Glossary\GlossaryDependencyProvider;
-use SprykerFeature\Client\Storage\StorageClientInterface;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Client\Glossary\KeyBuilder\GlossaryKeyBuilder;
+use Spryker\Client\Glossary\Storage\GlossaryStorage;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Glossary\GlossaryDependencyProvider;
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class GlossaryDependencyContainer extends AbstractDependencyContainer
 {

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\Storage\Adapter\Solr;
+namespace Spryker\Shared\Library\Storage\Adapter\Solr;
 
-use SprykerFeature\Shared\Library\Storage\AdapterInterface;
-use SprykerFeature\Shared\Library\Storage\AdapterTrait;
-use SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\Query;
+use Spryker\Shared\Library\Storage\AdapterInterface;
+use Spryker\Shared\Library\Storage\AdapterTrait;
+use Spryker\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\Query;
 
 /**
  * Class Solr
@@ -48,7 +48,7 @@ abstract class Solr implements AdapterInterface
             $resource = new \Solarium\Client($this->config);
             $resource->registerQueryType(
                 Query::QUERY_ADMIN,
-                'SprykerFeature\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\Query'
+                'Spryker\Shared\Library\Storage\Adapter\Solr\Solarium\QueryType\Admin\Query'
             );
             if ($this->endpoint) {
                 $resource->setDefaultEndpoint($this->endpoint);

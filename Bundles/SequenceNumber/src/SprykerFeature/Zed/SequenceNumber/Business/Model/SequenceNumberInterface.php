@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\SequenceNumber\Business\Model;
+namespace Spryker\Zed\SequenceNumber\Business\Model;
 
 interface SequenceNumberInterface
 {

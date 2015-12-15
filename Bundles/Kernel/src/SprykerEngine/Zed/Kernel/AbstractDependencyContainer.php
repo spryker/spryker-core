@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel;
+namespace Spryker\Zed\Kernel;
 
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
-use SprykerEngine\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
-use SprykerEngine\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
-use SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
-use SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
-use SprykerEngine\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
+use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
+use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
+use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractDependencyContainer
 {

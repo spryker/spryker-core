@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Business\Model\ApplicationCheckStep;
+namespace Spryker\Zed\Application\Business\Model\ApplicationCheckStep;
 
 use Symfony\Component\Filesystem\Filesystem;
 

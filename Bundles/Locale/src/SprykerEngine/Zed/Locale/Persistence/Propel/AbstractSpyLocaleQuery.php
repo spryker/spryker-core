@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Locale\Persistence\Propel;
+namespace Spryker\Zed\Locale\Persistence\Propel;
 
 use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery as BaseSpyLocaleQuery;
 

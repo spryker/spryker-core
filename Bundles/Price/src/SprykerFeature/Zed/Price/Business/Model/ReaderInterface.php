@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Price\Business\Model;
+namespace Spryker\Zed\Price\Business\Model;
 
 use Orm\Zed\Price\Persistence\SpyPriceType;
-use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 interface ReaderInterface
 {

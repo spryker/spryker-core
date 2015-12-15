@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\ClassResolver\Config;
+namespace Spryker\Zed\Kernel\ClassResolver\Config;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerEngine\Zed\Kernel\ClassResolver\AbstractClassResolver;
-use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\BundleConfigNotFoundException;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
+use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\BundleConfigNotFoundException;
 
 class BundleConfigResolver extends AbstractClassResolver
 {

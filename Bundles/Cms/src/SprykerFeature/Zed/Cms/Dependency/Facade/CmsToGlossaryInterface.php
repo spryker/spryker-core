@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Cms\Dependency\Facade;
+namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
-use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
-use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
-use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
+use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
+use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
+use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
+use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
+use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
 
 interface CmsToGlossaryInterface
 {

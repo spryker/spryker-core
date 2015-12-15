@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\User\Persistence;
+namespace Spryker\Zed\User\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 

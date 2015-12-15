@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ZedRequest;
+namespace Spryker\Zed\ZedRequest;
 
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {

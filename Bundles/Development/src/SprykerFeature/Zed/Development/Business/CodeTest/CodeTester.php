@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Development\Business\CodeTest;
+namespace Spryker\Zed\Development\Business\CodeTest;
 
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;

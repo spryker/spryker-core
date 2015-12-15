@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing;
+namespace Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing;
 
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractContainer;
 
 class ItemContainer extends AbstractContainer
 {

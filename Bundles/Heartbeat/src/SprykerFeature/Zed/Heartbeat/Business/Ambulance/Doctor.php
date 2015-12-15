@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Heartbeat\Business\Ambulance;
+namespace Spryker\Zed\Heartbeat\Business\Ambulance;
 
 use Generated\Shared\Transfer\HealthReportTransfer;
-use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
+use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class Doctor
 {

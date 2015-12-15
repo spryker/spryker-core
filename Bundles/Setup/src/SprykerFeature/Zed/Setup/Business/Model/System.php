@@ -8,7 +8,7 @@
  * @deprecated
  */
 
-namespace SprykerFeature\Zed\Setup\Business\Model;
+namespace Spryker\Zed\Setup\Business\Model;
 
 class System
 {

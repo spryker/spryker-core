@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductSearch\Business\Locator;
+namespace Spryker\Zed\ProductSearch\Business\Locator;
 
-use SprykerFeature\Zed\ProductSearch\Business\Operation\OperationInterface;
+use Spryker\Zed\ProductSearch\Business\Operation\OperationInterface;
 
 /**
  * Class OperationLocator

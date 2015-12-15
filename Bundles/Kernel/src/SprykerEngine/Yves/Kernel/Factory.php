@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Kernel;
+namespace Spryker\Yves\Kernel;
 
-use SprykerEngine\Shared\Kernel\AbstractFactory;
-use SprykerEngine\Shared\Kernel\ClassMapFactory;
+use Spryker\Shared\Kernel\AbstractFactory;
+use Spryker\Shared\Kernel\ClassMapFactory;
 
 class Factory extends AbstractFactory
 {

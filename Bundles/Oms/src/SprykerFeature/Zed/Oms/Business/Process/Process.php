@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Oms\Business\Process;
+namespace Spryker\Zed\Oms\Business\Process;
 
-use SprykerFeature\Zed\Oms\Business\Util\DrawerInterface;
+use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 use Exception;
 
 class Process implements ProcessInterface

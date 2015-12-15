@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\ProductOptionExporter\Business\Model;
+namespace Functional\Spryker\Zed\ProductOptionExporter\Business\Model;
 
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Generated\Zed\Ide\AutoCompletion;
-use Functional\SprykerFeature\Zed\ProductOption\Persistence\DbFixturesLoader;
-use SprykerFeature\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
+use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
+use Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 /**

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Heartbeat\Business;
+namespace Spryker\Zed\Heartbeat\Business;
 
 use Generated\Shared\Transfer\HealthReportTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method HeartbeatDependencyContainer getDependencyContainer()

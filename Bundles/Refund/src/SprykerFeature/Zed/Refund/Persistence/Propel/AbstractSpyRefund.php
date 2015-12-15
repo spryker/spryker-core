@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerFeature\Zed\Refund\Persistence\Propel;
+namespace Spryker\Zed\Refund\Persistence\Propel;
 
 use Orm\Zed\Refund\Persistence\Base\SpyRefund as BaseSpyRefund;
 

@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Glossary;
+namespace Spryker\Client\Glossary;
 
-use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
-use SprykerEngine\Client\Kernel\Container;
+use Spryker\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\Container;
 
 class GlossaryDependencyProvider extends AbstractDependencyProvider
 {

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Locale\Business\Internal\Install;
+namespace Spryker\Zed\Locale\Business\Internal\Install;
 
-use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
+use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 
 class LocaleInstaller extends AbstractInstaller

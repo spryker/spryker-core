@@ -4,23 +4,23 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business;
+namespace Spryker\Zed\Sales\Business;
 
-use SprykerFeature\Zed\Sales\Business\Model\OrderReferenceGenerator;
-use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\Validator;
-use SprykerFeature\Zed\Sales\Business\Model\Split\Calculator;
-use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItem;
-use SprykerFeature\Zed\Sales\Business\Model\OrderManager;
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Sales\Business\Model\CommentManager;
-use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;
-use SprykerFeature\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface;
-use SprykerFeature\Zed\Sales\Business\Model\Split\ItemInterface;
-use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use SprykerFeature\Zed\Sales\SalesDependencyProvider;
-use SprykerFeature\Zed\Sales\SalesConfig;
-use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
+use Spryker\Zed\Sales\Business\Model\OrderReferenceGenerator;
+use Spryker\Zed\Sales\Business\Model\Split\Validation\Validator;
+use Spryker\Zed\Sales\Business\Model\Split\Calculator;
+use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
+use Spryker\Zed\Sales\Business\Model\OrderManager;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Sales\Business\Model\CommentManager;
+use Spryker\Zed\Sales\Business\Model\OrderDetailsManager;
+use Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface;
+use Spryker\Zed\Sales\Business\Model\Split\ItemInterface;
+use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\SalesDependencyProvider;
+use Spryker\Zed\Sales\SalesConfig;
+use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**
  * @method SalesConfig getConfig()

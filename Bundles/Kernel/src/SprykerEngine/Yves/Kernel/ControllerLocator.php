@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Kernel;
+namespace Spryker\Yves\Kernel;
 
-use SprykerEngine\Shared\Kernel\ClassMapFactory;
-use SprykerEngine\Shared\Kernel\Communication\BundleControllerActionInterface;
-use SprykerEngine\Shared\Kernel\Communication\ControllerLocatorInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use Spryker\Shared\Kernel\ClassMapFactory;
+use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
+use Spryker\Shared\Kernel\Communication\ControllerLocatorInterface;
+use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 class ControllerLocator implements ControllerLocatorInterface
 {

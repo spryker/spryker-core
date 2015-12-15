@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\ZedRequest\Stub;
+namespace Spryker\Client\ZedRequest\Stub;
 
-use SprykerFeature\Client\ZedRequest\ZedRequestClient;
-use SprykerFeature\Shared\ZedRequest\Client\Message;
+use Spryker\Client\ZedRequest\ZedRequestClient;
+use Spryker\Shared\ZedRequest\Client\Message;
 
 class BaseStub
 {

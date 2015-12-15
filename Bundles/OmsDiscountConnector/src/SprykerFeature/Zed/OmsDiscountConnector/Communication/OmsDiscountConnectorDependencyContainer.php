@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\OmsDiscountConnector\Communication;
+namespace Spryker\Zed\OmsDiscountConnector\Communication;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\OmsDiscountConnector\OmsDiscountConnectorDependencyProvider;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorDependencyProvider;
 
 class OmsDiscountConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {

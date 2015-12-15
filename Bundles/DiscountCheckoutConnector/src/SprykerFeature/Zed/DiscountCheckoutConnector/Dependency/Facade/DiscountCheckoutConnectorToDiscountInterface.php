@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\DiscountCheckoutConnector\Dependency\Facade;
+namespace Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade;
 
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\Persistence;
+namespace Spryker\Zed\Kernel\Persistence;
 
-use SprykerEngine\Shared\Kernel\AbstractFactory;
-use SprykerEngine\Shared\Kernel\ClassMapFactory;
+use Spryker\Shared\Kernel\AbstractFactory;
+use Spryker\Shared\Kernel\ClassMapFactory;
 
 /**
  * @deprecated Use "new" for instance creation, do not use Factory anymore. This will be removed soon

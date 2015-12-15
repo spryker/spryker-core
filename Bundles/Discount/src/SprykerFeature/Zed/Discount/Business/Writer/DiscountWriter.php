@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\Writer;
+namespace Spryker\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Propel\Runtime\Exception\PropelException;

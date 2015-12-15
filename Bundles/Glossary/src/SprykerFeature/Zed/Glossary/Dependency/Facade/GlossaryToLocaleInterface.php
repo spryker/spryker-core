@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Glossary\Dependency\Facade;
+namespace Spryker\Zed\Glossary\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
+use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface GlossaryToLocaleInterface
 {

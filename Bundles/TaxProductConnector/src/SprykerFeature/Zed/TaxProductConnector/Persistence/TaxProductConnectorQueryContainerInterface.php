@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\TaxProductConnector\Persistence;
+namespace Spryker\Zed\TaxProductConnector\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
 

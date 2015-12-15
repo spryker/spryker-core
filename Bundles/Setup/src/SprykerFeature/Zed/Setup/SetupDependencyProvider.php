@@ -4,23 +4,23 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Setup;
+namespace Spryker\Zed\Setup;
 
-use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
-use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerFeature\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\GenerateYvesIdeAutoCompletionConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\GenerateZedIdeAutoCompletionConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\InstallConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\Npm\RunnerConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
+use Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole;
+use Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
+use Spryker\Zed\Setup\Communication\Console\GenerateYvesIdeAutoCompletionConsole;
+use Spryker\Zed\Setup\Communication\Console\GenerateZedIdeAutoCompletionConsole;
+use Spryker\Zed\Setup\Communication\Console\InstallConsole;
+use Spryker\Zed\Setup\Communication\Console\Npm\RunnerConsole;
+use Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
 use Symfony\Component\Console\Command\Command;
-use SprykerFeature\Zed\Setup\Communication\Console\DeployPreparePropelConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\JenkinsDisableConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\JenkinsEnableConsole;
-use SprykerFeature\Zed\Setup\Communication\Console\JenkinsGenerateConsole;
+use Spryker\Zed\Setup\Communication\Console\DeployPreparePropelConsole;
+use Spryker\Zed\Setup\Communication\Console\JenkinsDisableConsole;
+use Spryker\Zed\Setup\Communication\Console\JenkinsEnableConsole;
+use Spryker\Zed\Setup\Communication\Console\JenkinsGenerateConsole;
 
 class SetupDependencyProvider extends AbstractBundleDependencyProvider
 {

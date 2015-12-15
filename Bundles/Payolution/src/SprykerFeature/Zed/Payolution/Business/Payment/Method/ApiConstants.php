@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Payment\Method;
+namespace Spryker\Zed\Payolution\Business\Payment\Method;
 
 interface ApiConstants
 {

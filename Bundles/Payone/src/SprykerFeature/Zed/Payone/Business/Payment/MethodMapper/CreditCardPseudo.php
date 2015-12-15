@@ -4,20 +4,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
+namespace Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardTransfer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer;
+use Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
+use Spryker\Shared\Payone\PayoneApiConstants;
+use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 
 class CreditCardPseudo extends AbstractMapper

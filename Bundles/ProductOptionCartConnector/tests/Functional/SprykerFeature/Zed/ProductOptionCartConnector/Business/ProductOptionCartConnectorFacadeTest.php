@@ -3,14 +3,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\ProductOptionCartConnector\Business;
+namespace Functional\Spryker\Zed\ProductOptionCartConnector\Business;
 
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerFeature\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Functional\SprykerFeature\Zed\ProductOption\Persistence\DbFixturesLoader;
+use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
 
 /**
  * @group Business

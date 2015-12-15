@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Application\Business\Url;
+namespace Functional\Spryker\Zed\Application\Business\Url;
 
-use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerFeature\Zed\Application\Business\Url\Url;
+use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Application\Business\Url\Url;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Url
  * @group UrlTest

@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Heartbeat\Business\Assistant;
+namespace Spryker\Zed\Heartbeat\Business\Assistant;
 
 use Predis\Client;
-use SprykerFeature\Shared\Heartbeat\Code\AbstractHealthIndicator;
-use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
+use Spryker\Shared\Heartbeat\Code\AbstractHealthIndicator;
+use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {

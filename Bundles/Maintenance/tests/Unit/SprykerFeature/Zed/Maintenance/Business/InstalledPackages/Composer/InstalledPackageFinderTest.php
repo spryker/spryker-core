@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer;
+namespace Unit\Spryker\Zed\Maintenance\Business\InstalledPackages\Composer;
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder;
 
 /**
- * @group SprykerFeature
+ * @group Spryker
  * @group Zed
  * @group Maintenance
  * @group Business

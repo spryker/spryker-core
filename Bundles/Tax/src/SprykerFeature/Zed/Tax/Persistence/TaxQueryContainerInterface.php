@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Tax\Persistence;
+namespace Spryker\Zed\Tax\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;

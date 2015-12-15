@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Country\Business;
+namespace Spryker\Zed\Country\Business;
 
 use Generated\Shared\Transfer\CountryTransfer;
-use SprykerFeature\Zed\Country\Business\Exception\MissingCountryException;
+use Spryker\Zed\Country\Business\Exception\MissingCountryException;
 
 interface CountryManagerInterface
 {

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\ZedRequest\Provider;
+namespace Spryker\Shared\ZedRequest\Provider;
 
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Application\ApplicationConstants;
-use SprykerEngine\Shared\Kernel\AbstractClientProvider;
-use SprykerFeature\Shared\ZedRequest\Client\AbstractZedClient;
+use Spryker\Shared\Library\Config;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\AbstractClientProvider;
+use Spryker\Shared\ZedRequest\Client\AbstractZedClient;
 
 /**
  * Class ZedRequestClientProvider

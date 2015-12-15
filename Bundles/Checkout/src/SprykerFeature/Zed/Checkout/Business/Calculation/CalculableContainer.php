@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Checkout\Business\Calculation;
+namespace Spryker\Zed\Checkout\Business\Calculation;
 
 use Generated\Shared\Transfer\CartTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Generated\Shared\Transfer\CalculableContainerTransfer;
 
 class CalculableContainer implements CalculableInterface

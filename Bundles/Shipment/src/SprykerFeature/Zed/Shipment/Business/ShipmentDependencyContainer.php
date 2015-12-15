@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Shipment\Business;
+namespace Spryker\Zed\Shipment\Business;
 
-use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Shipment\Business\Model\Carrier;
-use SprykerFeature\Zed\Shipment\Business\Model\Method;
-use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
-use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
+use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Shipment\Business\Model\Carrier;
+use Spryker\Zed\Shipment\Business\Model\Method;
+use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
+use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
  * @method ShipmentQueryContainerInterface getQueryContainer()

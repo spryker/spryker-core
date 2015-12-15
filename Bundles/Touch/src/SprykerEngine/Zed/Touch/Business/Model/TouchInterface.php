@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Touch\Business\Model;
+namespace Spryker\Zed\Touch\Business\Model;
 
 use Generated\Shared\Transfer\TouchTransfer;
 

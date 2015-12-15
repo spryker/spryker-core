@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Acl\Business\Exception;
+namespace Spryker\Zed\Acl\Business\Exception;
 
 class RootNodeModificationException extends \Exception
 {

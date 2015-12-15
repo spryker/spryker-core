@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Cms\Persistence\Propel;
+namespace Spryker\Zed\Cms\Persistence\Propel;
 
 use Orm\Zed\Cms\Persistence\Base\SpyCmsPageQuery as BaseSpyCmsPageQuery;
 

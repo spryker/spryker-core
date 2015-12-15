@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Kernel\DependencyContainer;
+namespace Spryker\Yves\Kernel\DependencyContainer;
 
 interface DependencyContainerInterface
 {

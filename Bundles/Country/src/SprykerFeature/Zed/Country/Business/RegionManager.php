@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Country\Business;
+namespace Spryker\Zed\Country\Business;
 
-use SprykerFeature\Zed\Country\Business\Exception\RegionExistsException;
-use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
+use Spryker\Zed\Country\Business\Exception\RegionExistsException;
+use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 use Orm\Zed\Country\Persistence\SpyRegion;
 
 class RegionManager implements RegionManagerInterface

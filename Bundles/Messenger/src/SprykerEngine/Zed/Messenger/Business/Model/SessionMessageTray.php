@@ -3,11 +3,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Messenger\Business\Model;
+namespace Spryker\Zed\Messenger\Business\Model;
 
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
