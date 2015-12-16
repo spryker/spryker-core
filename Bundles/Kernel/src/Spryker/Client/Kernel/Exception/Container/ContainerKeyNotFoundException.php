@@ -29,7 +29,7 @@ class ContainerKeyNotFoundException extends \Exception
      *
      * @return string
      */
-    private function buildMessage(ClassInfo $callerClassInfo, $key)
+    protected function buildMessage(ClassInfo $callerClassInfo, $key)
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(

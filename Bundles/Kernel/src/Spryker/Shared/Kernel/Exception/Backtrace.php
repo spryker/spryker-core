@@ -9,6 +9,12 @@ namespace Spryker\Shared\Kernel\Exception;
 use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 
+/**
+ * Class will output a clickable backtrace for php storm. To use this feature create config_local.php in config/Shared
+ * and add `$config[ApplicationConstants::BACKTRACE_USER_PATH] = '/Users/your-name/www';`
+ *
+ * When you get a Kernel Exception, copy the backtrace and go to PhpStorm -> Tools -> Analyze Stacktrace
+ */
 class Backtrace
 {
 
@@ -28,7 +34,7 @@ class Backtrace
     }
 
     /**
-     * @param $backtrace
+     * @param array $backtrace
      *
      * @return string
      */
@@ -52,19 +58,19 @@ class Backtrace
     }
 
     /**
-     * @param $backtraceFileName
+     * @param $backtraceFile
      *
      * @return string
      */
-    private function getUserFilePath($backtraceFileName)
+    private function getUserFilePath($backtraceFile)
     {
-        $backtraceFileName = str_replace(
+        $backtraceFile = str_replace(
             self::CURRENT_PATH,
             Config::get(ApplicationConstants::BACKTRACE_USER_PATH, self::CURRENT_PATH),
-            $backtraceFileName
+            $backtraceFile
         );
 
-        return $backtraceFileName;
+        return $backtraceFile;
     }
 
     /**

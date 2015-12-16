@@ -27,7 +27,7 @@ class DependencyContainerNotFoundException extends \Exception
      *
      * @return string
      */
-    private function buildMessage(ClassInfo $callerClassInfo)
+    protected function buildMessage(ClassInfo $callerClassInfo)
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
