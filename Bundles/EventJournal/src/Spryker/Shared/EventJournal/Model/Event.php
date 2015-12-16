@@ -16,12 +16,12 @@ class Event implements EventInterface
     /**
      * @var array
      */
-    private $fields = [];
+    protected $fields = [];
 
     /**
      * @var array
      */
-    private static $staticFields  = [];
+    protected static $staticFields  = [];
 
     public function __construct()
     {

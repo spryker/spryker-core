@@ -45,7 +45,7 @@ class File extends AbstractWriter
      */
     protected function getJsonEntry(EventInterface $event)
     {
-        $json = json_encode($event->getFields(), JSON_PRETTY_PRINT);
+        $json = json_encode($event->getFields());
         if ($json === false) {
             return '';
         }
@@ -123,7 +123,7 @@ class File extends AbstractWriter
      */
     protected function getRandomizedFileIndex()
     {
-        return rand(0, 0);
+        return rand(0, 9);
     }
 
     /**

@@ -5,13 +5,9 @@
 
 namespace Spryker\Client\EventJournal;
 
-use Generated\Client\Ide\FactoryAutoCompletion\EventJournalService;
-use Spryker\Client\Kernel\AbstractServiceDependencyContainer;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
 
-/**
- * @method EventJournalService getFactory()
- */
-class EventJournalDependencyContainer extends AbstractServiceDependencyContainer
+class EventJournalDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
