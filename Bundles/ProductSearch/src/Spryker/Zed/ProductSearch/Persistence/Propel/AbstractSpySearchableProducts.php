@@ -5,7 +5,7 @@
 
 namespace Spryker\Zed\ProductSearch\Persistence\Propel;
 
-use Orm\Zed\ProductSearch\Persistence\Base\SpySearchableProducts as BaseSpySearchableProducts;
+use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearch as BaseSpyProductSearch;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_searchable_products' table.
@@ -16,6 +16,6 @@ use Orm\Zed\ProductSearch\Persistence\Base\SpySearchableProducts as BaseSpySearc
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpySearchableProducts extends BaseSpySearchableProducts
+abstract class AbstractSpyProductSearch extends BaseSpyProductSearch
 {
 }

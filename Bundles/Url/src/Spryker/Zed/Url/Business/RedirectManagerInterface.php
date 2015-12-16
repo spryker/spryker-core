@@ -14,7 +14,7 @@ use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 use Spryker\Zed\Url\Business\Exception\MissingUrlException;
 use Spryker\Zed\Url\Business\Exception\RedirectExistsException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
-use Orm\Zed\Url\Persistence\SpyRedirect;
+use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 
 interface RedirectManagerInterface
 {
@@ -27,7 +27,7 @@ interface RedirectManagerInterface
      * @throws \Exception
      * @throws PropelException
      *
-     * @return SpyRedirect
+     * @return SpyUrlRedirect
      */
     public function createRedirect($toUrl, $status = 301);
 
@@ -40,11 +40,11 @@ interface RedirectManagerInterface
     public function createRedirectAndTouch($toUrl, $status = 301);
 
     /**
-     * @param SpyRedirect $redirectEntity
+     * @param SpyUrlRedirect $redirectEntity
      *
      * @return RedirectTransfer
      */
-    public function convertRedirectEntityToTransfer(SpyRedirect $redirectEntity);
+    public function convertRedirectEntityToTransfer(SpyUrlRedirect $redirectEntity);
 
     /**
      * @param RedirectTransfer $redirect
@@ -71,22 +71,22 @@ interface RedirectManagerInterface
     /**
      * @param string $url
      * @param LocaleTransfer $locale
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
      * @throws UrlExistsException
      * @throws MissingLocaleException
      *
      * @return UrlTransfer
      */
-    public function createRedirectUrl($url, LocaleTransfer $locale, $idRedirect);
+    public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect);
 
     /**
      * @param string $url
      * @param LocaleTransfer $locale
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
      * @return UrlTransfer
      */
-    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idRedirect);
+    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect);
 
 }

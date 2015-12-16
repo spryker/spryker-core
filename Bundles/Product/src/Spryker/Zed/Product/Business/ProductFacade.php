@@ -193,27 +193,27 @@ class ProductFacade extends AbstractFacade
 
     /**
      * @param ConcreteProductTransfer $concreteProductTransfer
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return int
      */
-    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idAbstractProduct)
+    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idProductAbstract)
     {
         $productManager = $this->getFactory()->createProductManager();
 
-        return $productManager->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
+        return $productManager->createConcreteProduct($concreteProductTransfer, $idProductAbstract);
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    public function touchProductActive($idAbstractProduct)
+    public function touchProductActive($idProductAbstract)
     {
         $productManager = $this->getFactory()->createProductManager();
 
-        $productManager->touchProductActive($idAbstractProduct);
+        $productManager->touchProductActive($idProductAbstract);
     }
 
     /**

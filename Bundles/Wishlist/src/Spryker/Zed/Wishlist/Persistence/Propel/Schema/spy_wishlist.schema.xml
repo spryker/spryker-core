@@ -29,9 +29,9 @@
             <reference foreign="id_product" local="fk_product"/>
         </foreign-key>
 
-        <column name="fk_abstract_product" required="true" type="INTEGER"/>
-        <foreign-key name="spy_wishlist_item-fk_abstract_product" foreignTable="spy_abstract_product">
-            <reference foreign="id_abstract_product" local="fk_abstract_product"/>
+        <column name="fk_product_abstract" required="true" type="INTEGER"/>
+        <foreign-key name="spy_wishlist_item-fk_product_abstract" foreignTable="spy_product_abstract">
+            <reference foreign="id_product_abstract" local="fk_product_abstract"/>
         </foreign-key>
 
         <id-method-parameter value="spy_wishlist_item_pk_seq"/>

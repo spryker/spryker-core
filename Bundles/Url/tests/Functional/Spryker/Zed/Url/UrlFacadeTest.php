@@ -76,7 +76,7 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $redirect = $this->urlFacade->createRedirect('/some/url/like/string2');
 
         $urlCountBeforeCreation = $urlQuery->count();
-        $newUrl = $this->urlFacade->createUrl('/some/url/like/string', $locale, 'redirect', $redirect->getIdRedirect());
+        $newUrl = $this->urlFacade->createUrl('/some/url/like/string', $locale, 'redirect', $redirect->getIdUrlRedirect());
         $urlCountAfterCreation = $urlQuery->count();
 
         $this->assertTrue($urlCountAfterCreation > $urlCountBeforeCreation);
@@ -97,7 +97,7 @@ class UrlFacadeTest extends AbstractFunctionalTest
             ->setUrl('/YetSomeOtherPageUrl')
             ->setFkLocale($this->localeFacade->createLocale('QWERT')->getIdLocale())
             ->setResourceType('redirect')
-            ->setResourceId($redirect->getIdRedirect());
+            ->setResourceId($redirect->getIdUrlRedirect());
 
         $urlCountBeforeCreation = $urlQuery->count();
         $url = $this->urlFacade->saveUrl($url);
@@ -122,16 +122,16 @@ class UrlFacadeTest extends AbstractFunctionalTest
             ->setUrl('/SoManyPageUrls')
             ->setFkLocale($this->localeFacade->createLocale('WERTZ')->getIdLocale())
             ->setResourceType('redirect')
-            ->setResourceId($redirect1->getIdRedirect());
+            ->setResourceId($redirect1->getIdUrlRedirect());
 
         $url = $this->urlFacade->saveUrl($url);
 
-        $this->assertEquals($redirect1->getIdRedirect(), $urlQuery->findOne()->getResourceId());
+        $this->assertEquals($redirect1->getIdUrlRedirect(), $urlQuery->findOne()->getResourceId());
 
-        $url->setResourceId($redirect2->getIdRedirect());
+        $url->setResourceId($redirect2->getIdUrlRedirect());
         $this->urlFacade->saveUrl($url);
 
-        $this->assertEquals($redirect2->getIdRedirect(), $urlQuery->findOne()->getResourceId());
+        $this->assertEquals($redirect2->getIdUrlRedirect(), $urlQuery->findOne()->getResourceId());
     }
 
     /**
@@ -142,7 +142,7 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $locale = $this->localeFacade->createLocale('UNIXA');
         $redirect = $this->urlFacade->createRedirect('/SoManyPageUrls4');
 
-        $idPageUrl = $this->urlFacade->createUrl('/abcdefg', $locale, 'redirect', $redirect->getIdRedirect())->getIdUrl();
+        $idPageUrl = $this->urlFacade->createUrl('/abcdefg', $locale, 'redirect', $redirect->getIdUrlRedirect())->getIdUrl();
 
         $this->assertTrue($this->urlFacade->hasUrlId($idPageUrl));
     }
@@ -155,7 +155,7 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $locale = $this->localeFacade->createLocale('DFGHE');
         $redirect = $this->urlFacade->createRedirect('/SoManyPageUrls5');
 
-        $this->urlFacade->createUrl('/someOtherPageUrl', $locale, 'redirect', $redirect->getIdRedirect());
+        $this->urlFacade->createUrl('/someOtherPageUrl', $locale, 'redirect', $redirect->getIdUrlRedirect());
 
         $url = $this->urlFacade->getUrlByPath('/someOtherPageUrl');
         $this->assertNotNull($url);
@@ -172,7 +172,7 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $locale = $this->localeFacade->createLocale('DFGHX');
         $redirect = $this->urlFacade->createRedirect('/SoManyPageUrls5');
 
-        $id = $this->urlFacade->createUrl('/someOtherPageUrl2', $locale, 'redirect', $redirect->getIdRedirect())->getIdUrl();
+        $id = $this->urlFacade->createUrl('/someOtherPageUrl2', $locale, 'redirect', $redirect->getIdUrlRedirect())->getIdUrl();
 
         $url = $this->urlFacade->getUrlById($id);
         $this->assertNotNull($url);
@@ -189,7 +189,7 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $locale = $this->localeFacade->createLocale('ABCDE');
         $redirect = $this->urlFacade->createRedirect('/ARedirectUrl');
 
-        $idUrl = $this->urlFacade->createUrl('/aPageUrl', $locale, 'redirect', $redirect->getIdRedirect())->getIdUrl();
+        $idUrl = $this->urlFacade->createUrl('/aPageUrl', $locale, 'redirect', $redirect->getIdUrlRedirect())->getIdUrl();
 
         $touchQuery = $this->touchQueryContainer->queryTouchEntry('url', $idUrl);
         $touchQuery->setQueryKey('count');
@@ -215,7 +215,7 @@ class UrlFacadeTest extends AbstractFunctionalTest
 
         $this->assertTrue($redirectCountAfterCreation > $redirectCountBeforeCreation);
 
-        $this->assertNotNull($newRedirect->getIdRedirect());
+        $this->assertNotNull($newRedirect->getIdUrlRedirect());
     }
 
     /**
@@ -235,7 +235,7 @@ class UrlFacadeTest extends AbstractFunctionalTest
 
         $this->assertTrue($redirectCountAfterCreation > $redirectCountBeforeCreation);
 
-        $this->assertNotNull($redirect->getIdRedirect());
+        $this->assertNotNull($redirect->getIdUrlRedirect());
     }
 
     /**
@@ -249,7 +249,7 @@ class UrlFacadeTest extends AbstractFunctionalTest
 
         $redirect = $this->urlFacade->saveRedirect($redirect);
 
-        $redirectQuery = $this->urlQueryContainer->queryRedirectById($redirect->getIdRedirect());
+        $redirectQuery = $this->urlQueryContainer->queryRedirectById($redirect->getIdUrlRedirect());
 
         $this->assertEquals('/pageToUrl2', $redirectQuery->findOne()->getToUrl());
 

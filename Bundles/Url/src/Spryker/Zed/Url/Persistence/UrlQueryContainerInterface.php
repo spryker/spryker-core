@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Url\Persistence;
 
-use Orm\Zed\Url\Persistence\SpyRedirectQuery;
+use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 interface UrlQueryContainerInterface
@@ -32,16 +32,16 @@ interface UrlQueryContainerInterface
     public function queryUrls();
 
     /**
-     * @return SpyRedirectQuery
+     * @return SpyUrlRedirectQuery
      */
     public function queryRedirects();
 
     /**
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
-     * @return SpyRedirectQuery
+     * @return SpyUrlRedirectQuery
      */
-    public function queryRedirectById($idRedirect);
+    public function queryRedirectById($idUrlRedirect);
 
     /**
      * @param int $idCategoryNode

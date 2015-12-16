@@ -12,8 +12,8 @@ use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
-use Orm\Zed\Product\Persistence\SpyAbstractProduct;
-use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 
@@ -127,7 +127,7 @@ class ReaderTest extends Test
      */
     protected function deletePriceEntitiesAbstract($requestProduct)
     {
-        SpyPriceProductQuery::create()->filterBySpyAbstractProduct($requestProduct)->delete();
+        SpyPriceProductQuery::create()->filterBySpyProductAbstract($requestProduct)->delete();
     }
 
     /**
@@ -145,7 +145,7 @@ class ReaderTest extends Test
     {
         (new SpyPriceProduct())
             ->setPrice(100)
-            ->setSpyAbstractProduct($requestProduct)
+            ->setSpyProductAbstract($requestProduct)
             ->setPriceType($requestPriceType)
             ->save();
     }
@@ -161,12 +161,12 @@ class ReaderTest extends Test
         $priceType2 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_2)->findOneOrCreate();
         $priceType2->setName(self::DUMMY_PRICE_TYPE_2)->save();
 
-        $abstractProduct = SpyAbstractProductQuery::create()
+        $abstractProduct = SpyProductAbstractQuery::create()
             ->filterBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT)
             ->findOne();
 
         if ($abstractProduct === null) {
-            $abstractProduct = new SpyAbstractProduct();
+            $abstractProduct = new SpyProductAbstract();
         }
 
         $abstractProduct->setSku(self::DUMMY_SKU_ABSTRACT_PRODUCT)
@@ -181,19 +181,19 @@ class ReaderTest extends Test
             $concreteProduct = new SpyProduct();
         }
         $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
-            ->setSpyAbstractProduct($abstractProduct)
+            ->setSpyProductAbstract($abstractProduct)
             ->setAttributes('{}')
             ->save();
 
         $this->deletePriceEntitiesConcrete($concreteProduct);
         $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
-            ->setSpyAbstractProduct($abstractProduct)
+            ->setSpyProductAbstract($abstractProduct)
             ->setAttributes('{}')
             ->save();
 
         $this->deletePriceEntitiesAbstract($abstractProduct);
         (new SpyPriceProduct())
-            ->setSpyAbstractProduct($abstractProduct)
+            ->setSpyProductAbstract($abstractProduct)
             ->setPriceType($priceType1)
             ->setPrice(100)
             ->save();

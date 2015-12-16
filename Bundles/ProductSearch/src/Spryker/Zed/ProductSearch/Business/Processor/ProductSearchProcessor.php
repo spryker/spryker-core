@@ -44,7 +44,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
     public function buildProducts(array $productsRaw, array $processedProducts, LocaleTransfer $locale)
     {
         foreach ($productsRaw as $index => $productData) {
-            $productKey = $this->keyBuilder->generateKey($productData['id_abstract_product'], $locale->getLocaleName());
+            $productKey = $this->keyBuilder->generateKey($productData['id_product_abstract'], $locale->getLocaleName());
             $processedProducts[$productKey] = $this->buildBaseProduct($productData, $locale);
         }
 
@@ -63,7 +63,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
 
         return [
             'search-result-data' => [
-                'id_abstract_product' => $productData['id_abstract_product'],
+                'id_product_abstract' => $productData['id_product_abstract'],
                 'abstract_sku' => $productData['abstract_sku'],
                 'abstract_name' => $productData['abstract_name'],
                 'url' => $productUrls[0],

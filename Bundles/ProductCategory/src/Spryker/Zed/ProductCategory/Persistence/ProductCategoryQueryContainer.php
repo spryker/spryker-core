@@ -12,9 +12,9 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
-use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
@@ -66,15 +66,15 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param int $idCategory
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return SpyProductCategoryQuery
      */
-    public function queryProductCategoryMappingByIds($idCategory, $idAbstractProduct)
+    public function queryProductCategoryMappingByIds($idCategory, $idProductAbstract)
     {
         $query = $this->queryProductCategoryMappings();
         $query
-            ->filterByFkAbstractProduct($idAbstractProduct)
+            ->filterByFkProductAbstract($idProductAbstract)
             ->filterByFkCategory($idCategory);
 
         return $query;
@@ -91,7 +91,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     {
         $query = $this->queryProductCategoryMappings();
         $query
-            ->useSpyAbstractProductQuery()
+            ->useSpyProductAbstractQuery()
                 ->filterBySku($sku)
             ->endUse()
             ->useSpyCategoryQuery()
@@ -105,14 +105,14 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return SpyProductCategoryQuery
      */
-    public function queryLocalizedProductCategoryMappingByIdProduct($idAbstractProduct)
+    public function queryLocalizedProductCategoryMappingByIdProduct($idProductAbstract)
     {
         $query = $this->queryProductCategoryMappings();
-        $query->filterByFkAbstractProduct($idAbstractProduct);
+        $query->filterByFkProductAbstract($idProductAbstract);
 
         return $query;
     }
@@ -126,10 +126,10 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale)
     {
         return $this->queryProductCategoryMappings()
-            ->innerJoinSpyAbstractProduct()
+            ->innerJoinSpyProductAbstract()
             ->addJoin(
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
-                SpyLocalizedAbstractProductAttributesTableMap::COL_FK_ABSTRACT_PRODUCT,
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                SpyLocalizedAbstractProductAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
                 Criteria::INNER_JOIN
             )
             ->addJoin(
@@ -152,11 +152,11 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 'name'
             )
             ->withColumn(
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
-                'id_abstract_product'
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                'id_product_abstract'
             )
             ->withColumn(
-                SpyAbstractProductTableMap::COL_ATTRIBUTES,
+                SpyProductAbstractTableMap::COL_ATTRIBUTES,
                 'abstract_attributes'
             )
             ->withColumn(
@@ -164,7 +164,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 'abstract_localized_attributes'
             )
             ->withColumn(
-                SpyAbstractProductTableMap::COL_SKU,
+                SpyProductAbstractTableMap::COL_SKU,
                 'sku'
             )
             ->withColumn(
@@ -176,7 +176,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 'id_product_category'
             )
             ->filterByFkCategory($idCategory)
-            ->orderByFkAbstractProduct();
+            ->orderByFkProductAbstract();
     }
 
     /**
@@ -184,16 +184,16 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @param LocaleTransfer $locale
      * @param int $idExcludedCategory null
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null)
     {
         $idExcludedCategory = (int) $idExcludedCategory;
-        $query = SpyAbstractProductQuery::create();
+        $query = SpyProductAbstractQuery::create();
 
         $query->addJoin(
-            SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
-            SpyLocalizedAbstractProductAttributesTableMap::COL_FK_ABSTRACT_PRODUCT,
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            SpyLocalizedAbstractProductAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
             Criteria::INNER_JOIN
         )
         ->addJoin(
@@ -216,7 +216,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
             'name'
         )
         ->withColumn(
-            SpyAbstractProductTableMap::COL_ATTRIBUTES,
+            SpyProductAbstractTableMap::COL_ATTRIBUTES,
             'abstract_attributes'
         )
         ->withColumn(
@@ -225,12 +225,12 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         );
 
         $query->groupByAttributes();
-        $query->groupByIdAbstractProduct();
+        $query->groupByIdProductAbstract();
 
         if (trim($term) !== '') {
             $term = '%' . mb_strtoupper($term) . '%';
 
-            $query->where('UPPER(' . SpyAbstractProductTableMap::COL_SKU . ') LIKE ?', $term, \PDO::PARAM_STR)
+            $query->where('UPPER(' . SpyProductAbstractTableMap::COL_SKU . ') LIKE ?', $term, \PDO::PARAM_STR)
                 ->_or()
                 ->where('UPPER(' . SpyLocalizedAbstractProductAttributesTableMap::COL_NAME . ') LIKE ?', $term, \PDO::PARAM_STR);
         }
@@ -238,8 +238,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         if ($idExcludedCategory > 0) {
             $query
                 ->addJoin(
-                    SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
-                    SpyProductCategoryTableMap::COL_FK_ABSTRACT_PRODUCT,
+                    SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                    SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
                     Criteria::INNER_JOIN
                 )
                 ->_and()
@@ -251,14 +251,14 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param int $idCategory
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return SpyProductQuery
      */
-    public function queryProductCategoryPreconfig($idCategory, $idAbstractProduct)
+    public function queryProductCategoryPreconfig($idCategory, $idProductAbstract)
     {
         return SpyProductQuery::create()
-            ->filterByFkAbstractProduct($idAbstractProduct)
+            ->filterByFkProductAbstract($idProductAbstract)
             ->addAnd(
                 SpyProductTableMap::COL_IS_ACTIVE,
                 true,

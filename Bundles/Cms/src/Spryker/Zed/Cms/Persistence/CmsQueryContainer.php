@@ -299,14 +299,14 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
      * @return SpyUrlQuery
      */
-    public function queryRedirectById($idRedirect)
+    public function queryRedirectById($idUrlRedirect)
     {
         return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_URL)
-            ->queryRedirectById($idRedirect);
+            ->queryRedirectById($idUrlRedirect);
     }
 
     /**

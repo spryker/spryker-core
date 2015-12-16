@@ -36,7 +36,7 @@ class ProductManager implements ProductManagerInterface
             $concreteProductTransfer = $this->productFacade->getConcreteProduct($cartItem->getSku());
 
             $cartItem->setId($concreteProductTransfer->getIdConcreteProduct())
-                ->setIdAbstractProduct($concreteProductTransfer->getIdAbstractProduct())
+                ->setIdProductAbstract($concreteProductTransfer->getIdProductAbstract())
                 ->setAbstractSku($concreteProductTransfer->getAbstractProductSku())
                 ->setName($concreteProductTransfer->getName());
 

@@ -10,8 +10,8 @@ interface TaxProductConnectorToProductInterface
 {
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      */
-    public function touchProductActive($idAbstractProduct);
+    public function touchProductActive($idProductAbstract);
 
 }

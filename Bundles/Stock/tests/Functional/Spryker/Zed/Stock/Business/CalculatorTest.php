@@ -7,8 +7,8 @@
 namespace Functional\Spryker\Zed\Stock;
 
 use Codeception\TestCase\Test;
-use Orm\Zed\Product\Persistence\SpyAbstractProduct;
-use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Stock\Business\StockFacade;
@@ -64,12 +64,12 @@ class CalculatorTest extends Test
      */
     protected function setTestData()
     {
-        $abstractProduct = SpyAbstractProductQuery::create()
+        $abstractProduct = SpyProductAbstractQuery::create()
             ->filterBySku('test')
             ->findOne();
 
         if ($abstractProduct === null) {
-            $abstractProduct = new SpyAbstractProduct();
+            $abstractProduct = new SpyProductAbstract();
             $abstractProduct->setSku('test');
         }
 
@@ -85,7 +85,7 @@ class CalculatorTest extends Test
             $product->setSku('test2');
         }
 
-        $product->setFkAbstractProduct($abstractProduct->getIdAbstractProduct())
+        $product->setFkProductAbstract($abstractProduct->getIdProductAbstract())
             ->setAttributes('{}')
             ->save();
 

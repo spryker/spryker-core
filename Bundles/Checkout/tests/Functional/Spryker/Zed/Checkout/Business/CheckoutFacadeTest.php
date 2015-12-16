@@ -27,7 +27,7 @@ use Spryker\Zed\CustomerCheckoutConnector\Communication\Plugin\CustomerPreCondit
 use Spryker\Zed\CustomerCheckoutConnector\Communication\Plugin\OrderCustomerHydrationPlugin;
 use Spryker\Zed\CustomerCheckoutConnector\Communication\Plugin\OrderCustomerSavePlugin;
 use Spryker\Zed\Oms\OmsConfig;
-use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
@@ -187,7 +187,7 @@ class CheckoutFacadeTest extends Test
     public function testCheckoutResponseContainsErrorIfStockNotSufficient()
     {
         $checkoutRequest = $this->getBaseCheckoutTransfer();
-        $abstractProduct1 = new SpyAbstractProduct();
+        $abstractProduct1 = new SpyProductAbstract();
         $abstractProduct1
             ->setSku('AOSB1339')
             ->setAttributes('{}');
@@ -195,7 +195,7 @@ class CheckoutFacadeTest extends Test
         $concreteProduct1
             ->setSku('OSB1339')
             ->setAttributes('{}')
-            ->setSpyAbstractProduct($abstractProduct1)
+            ->setSpyProductAbstract($abstractProduct1)
             ->save();
 
         $stock = new SpyStock();
@@ -260,7 +260,7 @@ class CheckoutFacadeTest extends Test
             ->setIso2Code('xi')
             ->save();
 
-        $abstractProduct1 = new SpyAbstractProduct();
+        $abstractProduct1 = new SpyProductAbstract();
         $abstractProduct1
             ->setSku('AOSB1337')
             ->setAttributes('{}');
@@ -268,17 +268,17 @@ class CheckoutFacadeTest extends Test
         $concreteProduct1
             ->setSku('OSB1337')
             ->setAttributes('{}')
-            ->setSpyAbstractProduct($abstractProduct1)
+            ->setSpyProductAbstract($abstractProduct1)
             ->save();
 
-        $abstractProduct2 = new SpyAbstractProduct();
+        $abstractProduct2 = new SpyProductAbstract();
         $abstractProduct2
             ->setSku('AOSB1338')
             ->setAttributes('{}');
         $concreteProduct2 = new SpyProduct();
         $concreteProduct2
             ->setSku('OSB1338')
-            ->setSpyAbstractProduct($abstractProduct2)
+            ->setSpyProductAbstract($abstractProduct2)
             ->setAttributes('{}')
             ->save();
 

@@ -183,24 +183,24 @@ class ProductOptionReader implements ProductOptionReaderInterface
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function getValueUsagesForTypeUsage($idTypeUsage, $idLocale)
+    public function getValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale)
     {
-        return $this->queryContainer->queryValueUsagesForTypeUsage($idTypeUsage, $idLocale);
+        return $this->queryContainer->queryValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale);
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return array
      */
-    public function getTypeExclusionsForTypeUsage($idTypeUsage)
+    public function getTypeExclusionsForTypeUsage($idProductAttributeTypeUsage)
     {
-        return $this->queryContainer->queryTypeExclusionsForTypeUsage($idTypeUsage);
+        return $this->queryContainer->queryTypeExclusionsForTypeUsage($idProductAttributeTypeUsage);
     }
 
     /**
@@ -245,13 +245,13 @@ class ProductOptionReader implements ProductOptionReaderInterface
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return string|null
      */
-    public function getEffectiveTaxRateForTypeUsage($idTypeUsage)
+    public function getEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage)
     {
-        return $this->queryContainer->queryEffectiveTaxRateForTypeUsage($idTypeUsage);
+        return $this->queryContainer->queryEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage);
     }
 
 }

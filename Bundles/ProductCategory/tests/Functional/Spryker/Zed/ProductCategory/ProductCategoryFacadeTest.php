@@ -111,14 +111,14 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $localizedAttributes->setLocale($locale);
         $localizedAttributes->setName($abstractName);
         $abstractProductTransfer->addLocalizedAttributes($localizedAttributes);
-        $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProductTransfer);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProductTransfer);
 
         $concreteProductTransfer = new ConcreteProductTransfer();
         $concreteProductTransfer->setSku($concreteSku);
         $concreteProductTransfer->setAttributes([]);
         $concreteProductTransfer->addLocalizedAttributes($localizedAttributes);
         $concreteProductTransfer->setIsActive(true);
-        $this->productFacade->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
+        $this->productFacade->createConcreteProduct($concreteProductTransfer, $idProductAbstract);
 
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setName($categoryName);

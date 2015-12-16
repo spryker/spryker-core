@@ -10,8 +10,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Product\Business\Importer\Writer\ConcreteProductWriterInterface;
-use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyLocalizedProductAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 
 class ConcreteProductWriter implements ConcreteProductWriterInterface
@@ -94,11 +94,11 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
                 SpyProductTableMap::TABLE_NAME,
                 SpyProductTableMap::COL_SKU,
                 SpyProductTableMap::COL_IS_ACTIVE,
-                SpyProductTableMap::COL_FK_ABSTRACT_PRODUCT,
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
                 SpyProductTableMap::COL_ATTRIBUTES,
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
-                SpyAbstractProductTableMap::TABLE_NAME,
-                SpyAbstractProductTableMap::COL_SKU
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                SpyProductAbstractTableMap::TABLE_NAME,
+                SpyProductAbstractTableMap::COL_SKU
             )
         );
     }
@@ -124,11 +124,11 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
                     %3$s=VALUES(%3$s),
                     %4$s=VALUES(%4$s),
                     %5$s=VALUES(%5$s);',
-                SpyLocalizedProductAttributesTableMap::TABLE_NAME,
-                SpyLocalizedProductAttributesTableMap::COL_FK_PRODUCT,
-                SpyLocalizedProductAttributesTableMap::COL_FK_LOCALE,
-                SpyLocalizedProductAttributesTableMap::COL_NAME,
-                SpyLocalizedProductAttributesTableMap::COL_ATTRIBUTES,
+                SpyProductLocalizedAttributesTableMap::TABLE_NAME,
+                SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
+                SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE,
+                SpyProductLocalizedAttributesTableMap::COL_NAME,
+                SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES,
                 SpyProductTableMap::COL_ID_PRODUCT,
                 SpyProductTableMap::TABLE_NAME,
                 SpyProductTableMap::COL_SKU

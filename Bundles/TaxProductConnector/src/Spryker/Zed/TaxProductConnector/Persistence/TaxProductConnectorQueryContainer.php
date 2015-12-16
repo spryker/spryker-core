@@ -8,8 +8,8 @@ namespace Spryker\Zed\TaxProductConnector\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
-use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 class TaxProductConnectorQueryContainer extends AbstractQueryContainer implements TaxProductConnectorQueryContainerInterface
@@ -20,13 +20,13 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @param int $idTaxRate
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function getAbstractProductIdsForTaxRate($idTaxRate)
     {
-        return SpyAbstractProductQuery::create()
+        return SpyProductAbstractQuery::create()
             ->select([
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             ])
             ->useSpyTaxSetQuery()
                 ->useSpyTaxSetTaxQuery()
@@ -42,19 +42,19 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @param int $idTaxSet
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function getAbstractProductIdsForTaxSet($idTaxSet)
     {
-        return SpyAbstractProductQuery::create()
+        return SpyProductAbstractQuery::create()
             ->addJoin(
-                SpyAbstractProductTableMap::COL_FK_TAX_SET,
+                SpyProductAbstractTableMap::COL_FK_TAX_SET,
                 SpyTaxSetTableMap::COL_ID_TAX_SET,
                 Criteria::INNER_JOIN
             )
             ->filterByFkTaxSet($idTaxSet)
             ->select([
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             ]);
     }
 

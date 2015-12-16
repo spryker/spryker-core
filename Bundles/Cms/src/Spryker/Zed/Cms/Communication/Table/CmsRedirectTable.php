@@ -10,7 +10,7 @@ use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\Url\Persistence\Map\SpyRedirectTableMap;
+use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
@@ -44,7 +44,7 @@ class CmsRedirectTable extends AbstractTable
             SpyUrlTableMap::COL_ID_URL => 'ID',
             SpyUrlTableMap::COL_URL => 'From Url',
             CmsQueryContainer::TO_URL => 'To Url',
-            SpyRedirectTableMap::COL_STATUS => 'Status',
+            SpyUrlRedirectTableMap::COL_STATUS => 'Status',
             self::ACTIONS => self::ACTIONS,
         ]);
         $config->setSortable([
@@ -56,7 +56,7 @@ class CmsRedirectTable extends AbstractTable
             SpyUrlTableMap::COL_ID_URL,
             SpyUrlTableMap::COL_URL,
             CmsQueryContainer::TO_URL => 'to_url',
-            SpyRedirectTableMap::COL_STATUS,
+            SpyUrlRedirectTableMap::COL_STATUS,
         ]);
 
         return $config;
@@ -78,7 +78,7 @@ class CmsRedirectTable extends AbstractTable
                 SpyUrlTableMap::COL_ID_URL => $item[SpyUrlTableMap::COL_ID_URL],
                 SpyUrlTableMap::COL_URL => $item[SpyUrlTableMap::COL_URL],
                 CmsQueryContainer::TO_URL => $item[CmsQueryContainer::TO_URL],
-                SpyRedirectTableMap::COL_STATUS => $item[CmsRedirectForm::STATUS],
+                SpyUrlRedirectTableMap::COL_STATUS => $item[CmsRedirectForm::STATUS],
                 self::ACTIONS => $this->buildLinks($item),
             ];
         }

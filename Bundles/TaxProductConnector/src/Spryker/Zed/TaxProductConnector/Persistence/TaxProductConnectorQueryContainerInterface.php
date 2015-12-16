@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\TaxProductConnector\Persistence;
 
-use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 
 interface TaxProductConnectorQueryContainerInterface
 {
@@ -14,14 +14,14 @@ interface TaxProductConnectorQueryContainerInterface
     /**
      * @param int $idTaxRate
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function getAbstractProductIdsForTaxRate($idTaxRate);
 
     /**
      * @param int $idTaxSet
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function getAbstractProductIdsForTaxSet($idTaxSet);
 

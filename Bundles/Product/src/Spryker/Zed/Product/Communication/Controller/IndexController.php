@@ -8,7 +8,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Communication\ProductCommunicationFactory;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
-use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController extends AbstractController
 {
 
-    const ID_ABSTRACT_PRODUCT = 'id-abstract-product';
+    const ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     const COL_ID_PRODUCT_CATEGORY = 'id_product_category';
     const COL_CATEGORY_NAME = 'category_name';
 
@@ -56,10 +56,10 @@ class IndexController extends AbstractController
      */
     public function viewAction(Request $request)
     {
-        $idAbstractProduct = $request->query->getInt(self::ID_ABSTRACT_PRODUCT);
+        $idProductAbstract = $request->query->getInt(self::ID_PRODUCT_ABSTRACT);
 
         $abstractProduct = $this->getQueryContainer()
-            ->querySkuFromAbstractProductById($idAbstractProduct)
+            ->querySkuFromAbstractProductById($idProductAbstract)
             ->findOne();
 
         $concreteProductCollection = $this->getQueryContainer()
@@ -71,7 +71,7 @@ class IndexController extends AbstractController
         $currentLocale = $this->getCurrentLocale();
 
         $attributesCollection = $this->getQueryContainer()
-            ->queryAbstractProductAttributeCollection($abstractProduct->getIdAbstractProduct(), $currentLocale->getIdLocale())
+            ->queryAbstractProductAttributeCollection($abstractProduct->getIdProductAbstract(), $currentLocale->getIdLocale())
             ->findOne();
 
         $attributes = [
@@ -160,16 +160,16 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param SpyAbstractProduct $abstractProduct
+     * @param SpyProductAbstract $abstractProduct
      * @param int $idLocale
      *
      * @return array
      */
-    protected function getProductCategories(SpyAbstractProduct $abstractProduct, $idLocale)
+    protected function getProductCategories(SpyProductAbstract $abstractProduct, $idLocale)
     {
         $productCategoryEntityList = $this->getFactory()
             ->createProductCategoryQueryContainer()
-            ->queryLocalizedProductCategoryMappingByIdProduct($abstractProduct->getIdAbstractProduct())
+            ->queryLocalizedProductCategoryMappingByIdProduct($abstractProduct->getIdProductAbstract())
             ->find();
 
         $categories = [];

@@ -6,8 +6,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
-use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 class ProductTable extends AbstractTable
@@ -16,7 +16,7 @@ class ProductTable extends AbstractTable
     const OPTIONS = 'Options';
 
     /**
-     * @var SpyAbstractProductQuery
+     * @var SpyProductAbstractQuery
      */
     protected $productQuery;
 
@@ -36,13 +36,13 @@ class ProductTable extends AbstractTable
     protected $yvesUrl;
 
     /**
-     * @param SpyAbstractProductQuery $productQuery
+     * @param SpyProductAbstractQuery $productQuery
      * @param UrlFacade $urlFacade
      * @param LocaleTransfer $localeTransfer
      * @param $yvesUrl
      */
     public function __construct(
-        SpyAbstractProductQuery $productQuery,
+        SpyProductAbstractQuery $productQuery,
         UrlFacade $urlFacade,
         LocaleTransfer $localeTransfer,
         $yvesUrl
@@ -61,8 +61,8 @@ class ProductTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => 'Id Abstract Product',
-            SpyAbstractProductTableMap::COL_SKU => 'SKU',
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => 'Id Product Abstract',
+            SpyProductAbstractTableMap::COL_SKU => 'SKU',
             self::OPTIONS => self::OPTIONS,
         ]);
 
@@ -81,8 +81,8 @@ class ProductTable extends AbstractTable
         $abstractProducts = [];
         foreach ($queryResults as $item) {
             $abstractProducts[] = [
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $item[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
-                SpyAbstractProductTableMap::COL_SKU => $item[SpyAbstractProductTableMap::COL_SKU],
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
+                SpyProductAbstractTableMap::COL_SKU => $item[SpyProductAbstractTableMap::COL_SKU],
                 self::OPTIONS => $this->createActionColumn($item),
             ];
         }
@@ -100,8 +100,8 @@ class ProductTable extends AbstractTable
         $urls = [];
 
         $urls['viewUrl'] = sprintf(
-            '<a href="/product/index/view/?id-abstract-product=%d" class="btn btn-sm btn-primary">%s</a>',
-            $item[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
+            '<a href="/product/index/view/?id-product-abstract=%d" class="btn btn-sm btn-primary">%s</a>',
+            $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
             'View'
         );
 
@@ -122,8 +122,8 @@ class ProductTable extends AbstractTable
     protected function getYvesProductUrl(array $item)
     {
         $yvesProductUrl = $this->urlFacade
-            ->getUrlByIdAbstractProductAndIdLocale(
-                $item[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
+            ->getUrlByIdProductAbstractAndIdLocale(
+                $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 $this->localeTransfer->getIdLocale()
             );
 

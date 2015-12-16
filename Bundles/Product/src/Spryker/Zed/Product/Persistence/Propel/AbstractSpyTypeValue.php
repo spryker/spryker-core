@@ -2,7 +2,7 @@
 
 namespace Spryker\Zed\Product\Persistence\Propel;
 
-use Orm\Zed\Product\Persistence\Base\SpyTypeValue as BaseSpyTypeValue;
+use Orm\Zed\Product\Persistence\Base\SpyProductAttributeTypeValue as BaseSpyProductAttributeTypeValue;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_attribute_type_value' table.
@@ -13,6 +13,6 @@ use Orm\Zed\Product\Persistence\Base\SpyTypeValue as BaseSpyTypeValue;
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyTypeValue extends BaseSpyTypeValue
+abstract class AbstractSpyProductAttributeTypeValue extends BaseSpyProductAttributeTypeValue
 {
 }

@@ -60,11 +60,11 @@ interface ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return SpyProductCategoryQuery
      */
-    public function getProductCategoryMappingById($idCategory, $idAbstractProduct);
+    public function getProductCategoryMappingById($idCategory, $idProductAbstract);
 
     /**
      * @param int $idCategory

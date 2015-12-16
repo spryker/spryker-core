@@ -177,7 +177,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
     public function createProductFacadeConcreteProductMock()
     {
         $concreateProductTransfer = new ConcreteProductTransfer();
-        $concreateProductTransfer->setIdAbstractProduct(1);
+        $concreateProductTransfer->setIdProductAbstract(1);
 
         $productFacadeMock = $this
             ->getMockBuilder('Spryker\Zed\Product\Business\ProductFacade')

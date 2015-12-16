@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Product\Business\Importer\Writer\AbstractProductWriterInterface;
-use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
 
 class AbstractProductWriter implements AbstractProductWriterInterface
@@ -81,9 +81,9 @@ class AbstractProductWriter implements AbstractProductWriterInterface
                 ON DUPLICATE KEY UPDATE
                  %2$s=VALUES(%2$s),
                  %3$s=VALUES(%3$s);',
-                SpyAbstractProductTableMap::TABLE_NAME,
-                SpyAbstractProductTableMap::COL_SKU,
-                SpyAbstractProductTableMap::COL_ATTRIBUTES
+                SpyProductAbstractTableMap::TABLE_NAME,
+                SpyProductAbstractTableMap::COL_SKU,
+                SpyProductAbstractTableMap::COL_ATTRIBUTES
             )
         );
     }
@@ -107,13 +107,13 @@ class AbstractProductWriter implements AbstractProductWriterInterface
                     %4$s=VALUES(%4$s),
                     %5$s=VALUES(%5$s);',
                 SpyLocalizedAbstractProductAttributesTableMap::TABLE_NAME,
-                SpyLocalizedAbstractProductAttributesTableMap::COL_FK_ABSTRACT_PRODUCT,
+                SpyLocalizedAbstractProductAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
                 SpyLocalizedAbstractProductAttributesTableMap::COL_FK_LOCALE,
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
                 SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES,
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
-                SpyAbstractProductTableMap::TABLE_NAME,
-                SpyAbstractProductTableMap::COL_SKU
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                SpyProductAbstractTableMap::TABLE_NAME,
+                SpyProductAbstractTableMap::COL_SKU
             )
         );
     }

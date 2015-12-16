@@ -8,7 +8,7 @@ namespace Spryker\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
 interface ProductCategoryQueryContainerInterface
@@ -30,12 +30,12 @@ interface ProductCategoryQueryContainerInterface
     public function queryProductCategoryMappingsByCategoryId($idCategory);
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param int $idCategoryNode
      *
      * @return SpyProductCategoryQuery
      */
-    public function queryProductCategoryMappingByIds($idAbstractProduct, $idCategoryNode);
+    public function queryProductCategoryMappingByIds($idProductAbstract, $idCategoryNode);
 
     /**
      * @param string $sku
@@ -47,11 +47,11 @@ interface ProductCategoryQueryContainerInterface
     public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale);
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return SpyProductCategoryQuery
      */
-    public function queryLocalizedProductCategoryMappingByIdProduct($idAbstractProduct);
+    public function queryLocalizedProductCategoryMappingByIdProduct($idProductAbstract);
 
     /**
      * @param int $idCategory
@@ -66,7 +66,7 @@ interface ProductCategoryQueryContainerInterface
      * @param LocaleTransfer $locale
      * @param null $idExcludedCategory
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null);
 

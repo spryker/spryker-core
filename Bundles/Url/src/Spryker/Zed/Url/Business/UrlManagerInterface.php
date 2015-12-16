@@ -128,11 +128,11 @@ interface UrlManagerInterface
     public function createUrlForCurrentLocale($url, $resourceType, $idResource);
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param int $idLocale
      *
      * @return UrlTransfer
      */
-    public function getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale);
+    public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
 
 }

@@ -8,6 +8,7 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
@@ -82,13 +83,15 @@ class AbstractFacadeTest extends Test
             ->setZipCode('10623');
         $billingAddress->save();
 
-        $customer = (new SpyCustomer())
-            ->setFirstName('John')
-            ->setLastName('Doe')
-            ->setEmail('john@doe.com')
-            ->setDateOfBirth('1970-01-01')
-            ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
-            ->setCustomerReference('payolution-pre-authorization-test');
+        $customer = (new SpyCustomerQuery())
+            ->filterByFirstName('John')
+            ->filterByLastName('Doe')
+            ->filterByEmail('john@doe.com')
+            ->filterByDateOfBirth('1970-01-01')
+            ->filterByGender(SpyCustomerTableMap::COL_GENDER_MALE)
+            ->filterByCustomerReference('payolution-pre-authorization-test')
+            ->findOneOrCreate();
+
         $customer->save();
 
         $this->orderEntity = (new SpySalesOrder())
