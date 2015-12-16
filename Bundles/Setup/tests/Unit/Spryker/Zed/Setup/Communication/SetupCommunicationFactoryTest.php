@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\AbstractUnitTest;
 use Spryker\Zed\Setup\Communication\SetupCommunicationFactory;
 
 /**
- * @method SetupCommunicationFactory getCommunicationFactory()
+ * @method SetupCommunicationFactory getFactory()
  */
 class SetupCommunicationFactoryTest extends AbstractUnitTest
 {
@@ -20,7 +20,7 @@ class SetupCommunicationFactoryTest extends AbstractUnitTest
      */
     public function testCreateSetupInstallCommandNamesMustReturnArray()
     {
-        $communicationFactory = $this->getCommunicationFactory();
+        $communicationFactory = $this->getFactory();
 
         $this->assertInternalType('array', $communicationFactory->createSetupInstallCommandNames());
     }

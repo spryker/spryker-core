@@ -42,8 +42,8 @@ class AbstractPluginTest extends AbstractUnitTest
         $classInfo->setClass('\\Namespace\\Application\\Bundle\\Layer\\Foo\\Bar');
         $communicationFactoryResolverMock->method('getClassInfo')->willReturn($classInfo);
 
-        $pluginMock = $this->getPluginMock(['getCommunicationFactoryResolver']);
-        $pluginMock->method('getCommunicationFactoryResolver')->willReturn($communicationFactoryResolverMock);
+        $pluginMock = $this->getPluginMock(['getFactoryResolver']);
+        $pluginMock->method('getFactoryResolver')->willReturn($communicationFactoryResolverMock);
 
         $pluginMock->getCommunicationFactory();
     }
