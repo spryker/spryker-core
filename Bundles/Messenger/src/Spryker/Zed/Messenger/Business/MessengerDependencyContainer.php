@@ -8,7 +8,6 @@ namespace Spryker\Zed\Messenger\Business;
 use Spryker\Zed\Messenger\Business\Model\InMemoryMessageTray;
 use Spryker\Zed\Messenger\Business\Model\MessageTrayInterface;
 use Spryker\Zed\Messenger\Business\Model\SessionMessageTray;
-use Generated\Zed\Ide\FactoryAutoCompletion\MessengerBusiness;
 use Spryker\Zed\Messenger\MessengerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Spryker\Zed\Messenger\MessengerConfig;
@@ -47,7 +46,7 @@ class MessengerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createSessionMessageTray()
     {
-        return new SessionMessageTray($this->createSession(), $this->getGlossaryFacade());
+        return new SessionMessageTray($this->getSession(), $this->getGlossaryFacade());
     }
 
     /**

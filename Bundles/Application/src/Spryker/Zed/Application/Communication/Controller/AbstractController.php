@@ -260,8 +260,9 @@ abstract class AbstractController
 
     /**
      * @param string $message
+     * @param array $data
      *
-     * @return self
+     * @return $this
      */
     protected function addInfoMessage($message, array $data = [])
     {
@@ -272,8 +273,9 @@ abstract class AbstractController
 
     /**
      * @param string $message
+     * @param array $data
      *
-     * @return self
+     * @return $this
      */
     protected function addErrorMessage($message, array $data = [])
     {
