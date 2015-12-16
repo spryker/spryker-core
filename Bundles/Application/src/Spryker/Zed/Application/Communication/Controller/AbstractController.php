@@ -114,7 +114,7 @@ abstract class AbstractController
      *
      * @return AbstractCommunicationDependencyContainer
      */
-    private function resolveDependencyContainer()
+    protected function resolveDependencyContainer()
     {
         return $this->getDependencyContainerResolver()->resolve($this);
     }
@@ -143,7 +143,7 @@ abstract class AbstractController
      *
      * @return AbstractFacade
      */
-    private function resolveFacade()
+    protected function resolveFacade()
     {
         return $this->getFacadeResolver()->resolve($this);
     }
@@ -185,7 +185,7 @@ abstract class AbstractController
      *
      * @return AbstractQueryContainer
      */
-    private function resolveQueryContainer()
+    protected function resolveQueryContainer()
     {
         return $this->getQueryContainerResolver()->resolve($this);
     }

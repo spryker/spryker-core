@@ -72,7 +72,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
      *
      * @return AbstractBundleDependencyProvider
      */
-    private function resolveDependencyProvider()
+    protected function resolveDependencyProvider()
     {
         return $this->getDependencyProviderResolver()->resolve($this);
     }
@@ -117,7 +117,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
      *
      * @return AbstractPersistenceDependencyContainer
      */
-    private function resolveDependencyContainer()
+    protected function resolveDependencyContainer()
     {
         return $this->getQueryContainerResolver()->resolve($this);
     }

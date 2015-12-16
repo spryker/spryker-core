@@ -127,7 +127,7 @@ class Console extends SymfonyCommand
      *
      * @return AbstractCommunicationDependencyContainer
      */
-    private function resolveDependencyContainer()
+    protected function resolveDependencyContainer()
     {
         return $this->getDependencyContainerResolver()->resolve($this);
     }

@@ -84,7 +84,7 @@ abstract class AbstractDependencyContainer
      *
      * @return AbstractBundleDependencyProvider
      */
-    private function resolveDependencyProvider()
+    protected function resolveDependencyProvider()
     {
         return $this->getDependencyProviderResolver()->resolve($this);
     }
@@ -135,7 +135,7 @@ abstract class AbstractDependencyContainer
      *
      * @return AbstractQueryContainer
      */
-    private function resolveQueryContainer()
+    protected function resolveQueryContainer()
     {
         return $this->getQueryContainerResolver()->resolve($this);
     }
@@ -171,7 +171,7 @@ abstract class AbstractDependencyContainer
      *
      * @return AbstractBundleConfig
      */
-    private function resolveBundleConfig()
+    protected function resolveBundleConfig()
     {
         $resolver = new BundleConfigResolver();
 

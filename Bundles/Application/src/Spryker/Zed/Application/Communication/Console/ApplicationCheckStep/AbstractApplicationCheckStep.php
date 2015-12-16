@@ -108,7 +108,7 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
      *
      * @return AbstractFacade
      */
-    private function resolveFacade()
+    protected function resolveFacade()
     {
         return $this->getFacadeResolver()->resolve($this);
     }

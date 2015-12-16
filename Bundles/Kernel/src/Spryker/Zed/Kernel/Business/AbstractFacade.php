@@ -99,7 +99,7 @@ abstract class AbstractFacade implements FacadeInterface
      *
      * @return AbstractBusinessDependencyContainer
      */
-    private function resolveDependencyContainer()
+    protected function resolveDependencyContainer()
     {
         return $this->getDependencyContainerResolver()->resolve($this);
     }

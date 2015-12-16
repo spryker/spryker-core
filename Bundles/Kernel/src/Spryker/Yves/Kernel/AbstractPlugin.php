@@ -43,7 +43,7 @@ abstract class AbstractPlugin
      *
      * @return AbstractDependencyContainer
      */
-    private function resolveDependencyContainer()
+    protected function resolveDependencyContainer()
     {
         return $this->getDependencyContainerResolver()->resolve($this);
     }
@@ -73,7 +73,7 @@ abstract class AbstractPlugin
      *
      * @return AbstractClient
      */
-    private function resolveClient()
+    protected function resolveClient()
     {
         return $this->getClientResolver()->resolve($this);
     }

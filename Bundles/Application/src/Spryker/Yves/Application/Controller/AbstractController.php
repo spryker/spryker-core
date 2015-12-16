@@ -349,7 +349,7 @@ abstract class AbstractController
      *
      * @return AbstractClient
      */
-    private function resolveClient()
+    protected function resolveClient()
     {
         return $this->getClientResolver()->resolve($this);
     }
@@ -379,7 +379,7 @@ abstract class AbstractController
      *
      * @return AbstractDependencyContainer
      */
-    private function resolveDependencyContainer()
+    protected function resolveDependencyContainer()
     {
         return $this->getDependencyContainerResolver()->resolve($this);
     }

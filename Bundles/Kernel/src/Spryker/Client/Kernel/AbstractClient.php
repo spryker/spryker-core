@@ -58,7 +58,7 @@ abstract class AbstractClient
      *
      * @return DependencyContainerInterface
      */
-    private function resolveDependencyContainer()
+    protected function resolveDependencyContainer()
     {
         return $this->getDependencyContainerResolver()->resolve($this);
     }

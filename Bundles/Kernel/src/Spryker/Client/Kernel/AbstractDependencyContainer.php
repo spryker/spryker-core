@@ -69,7 +69,7 @@ abstract class AbstractDependencyContainer implements DependencyContainerInterfa
      *
      * @return AbstractDependencyProvider
      */
-    private function resolveDependencyProvider()
+    protected function resolveDependencyProvider()
     {
         return $this->getDependencyProviderResolver()->resolve($this);
     }
