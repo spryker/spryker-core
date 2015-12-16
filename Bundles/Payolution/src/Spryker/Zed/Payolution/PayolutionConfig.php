@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Payolution;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Payolution\PayolutionConstants;
 
@@ -201,7 +202,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getWebshopUrl()
     {
-        return $this->get(PayolutionConstants::WEBSHOP_URL);
+        return $this->get(ApplicationConstants::HOST_YVES);
     }
 
 }
