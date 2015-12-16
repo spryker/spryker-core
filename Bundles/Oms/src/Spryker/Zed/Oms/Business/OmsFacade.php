@@ -20,7 +20,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 
 /**
- * @method OmsDependencyContainer getBusinessFactory()
+ * @method OmsBusinessFactory getBusinessFactory()
  */
 class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterface
 {

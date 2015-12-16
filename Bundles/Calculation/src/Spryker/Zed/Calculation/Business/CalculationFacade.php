@@ -12,7 +12,7 @@ use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\CalculationConfig;
 
 /**
- * @method CalculationDependencyContainer getBusinessFactory()
+ * @method CalculationBusinessFactory getBusinessFactory()
  * @method CalculationConfig getConfig()
  */
 class CalculationFacade extends AbstractFacade

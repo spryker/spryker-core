@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method MailDependencyContainer getBusinessFactory()
+ * @method MailBusinessFactory getBusinessFactory()
  */
 class MailFacade extends AbstractFacade
 {

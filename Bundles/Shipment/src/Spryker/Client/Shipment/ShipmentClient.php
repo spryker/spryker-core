@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method ShipmentDependencyContainer getFactory()
+ * @method ShipmentFactory getFactory()
  */
 class ShipmentClient extends AbstractClient implements ShipmentClientInterface
 {

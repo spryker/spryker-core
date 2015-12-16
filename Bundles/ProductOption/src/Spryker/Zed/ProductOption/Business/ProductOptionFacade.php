@@ -14,7 +14,7 @@ use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageE
 use Generated\Shared\Transfer\ProductOptionTransfer;
 
 /**
- * @method ProductOptionDependencyContainer getBusinessFactory()
+ * @method ProductOptionBusinessFactory getBusinessFactory()
  */
 class ProductOptionFacade extends AbstractFacade
 {

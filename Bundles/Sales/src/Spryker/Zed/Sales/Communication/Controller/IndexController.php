@@ -7,11 +7,11 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\Communication\SalesDependencyContainer;
+use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method SalesDependencyContainer getCommunicationFactory()
+ * @method SalesCommunicationFactory getCommunicationFactory()
  */
 class IndexController extends AbstractController
 {

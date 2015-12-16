@@ -14,7 +14,7 @@ use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method CollectorDependencyContainer getBusinessFactory()
+ * @method CollectorBusinessFactory getBusinessFactory()
  */
 class CollectorFacade extends AbstractFacade
 {

@@ -6,24 +6,24 @@
 
 namespace Functional\Spryker\Zed\Setup\Business;
 
-use Spryker\Zed\Setup\Business\SetupDependencyContainer;
+use Spryker\Zed\Setup\Business\SetupBusinessFactory;
 
 /**
  * @group Spryker
  * @group Zed
  * @group Setup
  * @group Business
- * @group SetupDependencyContainer
+ * @group SetupBusinessFactory
  */
-class SetupDependencyContainerTest extends \PHPUnit_Framework_TestCase
+class SetupBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return SetupDependencyContainer
+     * @return SetupBusinessFactory
      */
     private function getBusinessFactory()
     {
-        return new SetupDependencyContainer();
+        return new SetupBusinessFactory();
     }
 
     /**

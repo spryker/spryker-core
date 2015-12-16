@@ -8,7 +8,7 @@ namespace Spryker\Zed\Glossary\Communication\Controller;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Glossary\Communication\GlossaryDependencyContainer;
+use Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method GlossaryDependencyContainer getCommunicationFactory()
+ * @method GlossaryCommunicationFactory getCommunicationFactory()
  * @method GlossaryFacade getFacade()
  * @method GlossaryQueryContainer getQueryContainer()
  */

@@ -7,12 +7,12 @@
 namespace Spryker\Zed\Price\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Price\Communication\PriceDependencyContainer;
+use Spryker\Zed\Price\Communication\PriceCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method PriceDependencyContainer getCommunicationFactory()
+ * @method PriceCommunicationFactory getCommunicationFactory()
  */
 class PriceGridController extends AbstractController
 {

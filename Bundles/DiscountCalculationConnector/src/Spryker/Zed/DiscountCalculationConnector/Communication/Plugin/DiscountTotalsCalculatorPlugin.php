@@ -9,11 +9,11 @@ namespace Spryker\Zed\DiscountCalculationConnector\Communication\Plugin;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
-use Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorDependencyContainer;
+use Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method DiscountCalculationConnectorDependencyContainer getCommunicationFactory()
+ * @method DiscountCalculationConnectorCommunicationFactory getCommunicationFactory()
  */
 class DiscountTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculatorPluginInterface
 {

@@ -9,7 +9,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * @method PropelDependencyContainer getBusinessFactory()
+ * @method PropelBusinessFactory getBusinessFactory()
  */
 class PropelFacade extends AbstractFacade
 {

@@ -8,14 +8,14 @@ namespace Spryker\Zed\Search\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Search\Business\SearchFacade;
-use Spryker\Zed\Search\Communication\SearchDependencyContainer;
+use Spryker\Zed\Search\Communication\SearchCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method SearchFacade getFacade()
- * @method SearchDependencyContainer getCommunicationFactory()
+ * @method SearchCommunicationFactory getCommunicationFactory()
  */
 class MaintenanceController extends AbstractController
 {

@@ -9,11 +9,11 @@ namespace Spryker\Zed\Shipment\Communication\Controller;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
-use Spryker\Zed\Shipment\Communication\ShipmentDependencyContainer;
+use Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method ShipmentDependencyContainer getCommunicationFactory()
+ * @method ShipmentCommunicationFactory getCommunicationFactory()
  * @method ShipmentFacade getFacade()
  */
 class CarrierController extends AbstractController

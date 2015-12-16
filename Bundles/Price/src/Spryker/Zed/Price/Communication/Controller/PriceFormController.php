@@ -9,12 +9,12 @@ namespace Spryker\Zed\Price\Communication\Controller;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Price\Business\PriceFacade;
-use Spryker\Zed\Price\Communication\PriceDependencyContainer;
+use Spryker\Zed\Price\Communication\PriceCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method PriceDependencyContainer getCommunicationFactory()
+ * @method PriceCommunicationFactory getCommunicationFactory()
  * @method PriceFacade getFacade()
  */
 class PriceFormController extends AbstractController

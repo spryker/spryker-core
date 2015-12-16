@@ -10,7 +10,7 @@ use Spryker\Shared\Lumberjack\Model\EventInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method LumberjackDependencyContainer getBusinessFactory()
+ * @method LumberjackBusinessFactory getBusinessFactory()
  */
 class LumberjackFacade extends AbstractFacade
 {

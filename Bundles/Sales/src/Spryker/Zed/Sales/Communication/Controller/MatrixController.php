@@ -7,10 +7,10 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\Communication\SalesDependencyContainer;
+use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 
 /**
- * @method SalesDependencyContainer getCommunicationFactory()
+ * @method SalesCommunicationFactory getCommunicationFactory()
  */
 class MatrixController extends AbstractController
 {

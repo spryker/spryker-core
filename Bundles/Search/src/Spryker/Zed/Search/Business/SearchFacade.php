@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method SearchDependencyContainer getBusinessFactory
+ * @method SearchBusinessFactory getBusinessFactory
  */
 class SearchFacade extends AbstractFacade
 {

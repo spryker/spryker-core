@@ -12,7 +12,7 @@ use Spryker\Client\Collector\Matcher\UrlMatcherInterface;
 /**
  * @todo Rename all YvesExport Bundles to PageExport or just Export.
  *
- * @method CollectorDependencyContainer getFactory()
+ * @method CollectorFactory getFactory()
  */
 class CollectorClient extends AbstractClient implements UrlMatcherInterface
 {

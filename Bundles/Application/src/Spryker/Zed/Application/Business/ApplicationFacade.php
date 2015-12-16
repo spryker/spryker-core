@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 
 /**
- * @method ApplicationDependencyContainer getBusinessFactory()
+ * @method ApplicationBusinessFactory getBusinessFactory()
  */
 class ApplicationFacade extends AbstractFacade
 {

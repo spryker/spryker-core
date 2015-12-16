@@ -9,7 +9,7 @@ use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 /**
- * @method WishlistDependencyContainer getBusinessFactory()
+ * @method WishlistBusinessFactory getBusinessFactory()
  */
 interface WishlistFacadeInterface
 {

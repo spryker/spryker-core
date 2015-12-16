@@ -10,10 +10,10 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use Spryker\Zed\Kernel\Business\ModelResult;
-use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 
 /**
- * @method DiscountDependencyContainer getCommunicationFactory()
+ * @method DiscountCommunicationFactory getCommunicationFactory()
  */
 class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisionRulePluginInterface
 {

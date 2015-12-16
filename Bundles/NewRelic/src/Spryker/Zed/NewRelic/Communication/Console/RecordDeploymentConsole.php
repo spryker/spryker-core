@@ -7,13 +7,13 @@
 namespace Spryker\Zed\NewRelic\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
-use Spryker\Zed\NewRelic\Communication\NewRelicDependencyContainer;
+use Spryker\Zed\NewRelic\Communication\NewRelicCommunicationFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method NewRelicDependencyContainer getCommunicationFactory()
+ * @method NewRelicCommunicationFactory getCommunicationFactory()
  */
 class RecordDeploymentConsole extends Console
 {

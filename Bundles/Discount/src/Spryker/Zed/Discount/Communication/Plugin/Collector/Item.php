@@ -10,10 +10,10 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 
 /**
- * @method DiscountDependencyContainer getCommunicationFactory()
+ * @method DiscountCommunicationFactory getCommunicationFactory()
  */
 class Item extends AbstractDiscountPlugin implements DiscountCollectorPluginInterface
 {

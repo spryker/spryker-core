@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\HealthReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method HeartbeatDependencyContainer getBusinessFactory()
+ * @method HeartbeatBusinessFactory getBusinessFactory()
  */
 class HeartbeatFacade extends AbstractFacade
 {

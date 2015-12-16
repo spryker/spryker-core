@@ -11,7 +11,7 @@ use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 
 /**
- * @method UserDependencyContainer getPersistenceFactory()
+ * @method UserPersistenceFactory getPersistenceFactory()
  */
 class UserQueryContainer extends AbstractQueryContainer
 {

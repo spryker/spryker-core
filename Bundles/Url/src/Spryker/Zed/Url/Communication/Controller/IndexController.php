@@ -9,10 +9,10 @@ namespace Spryker\Zed\Url\Communication\Controller;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Spryker\Zed\Url\Communication\UrlDependencyContainer;
+use Spryker\Zed\Url\Communication\UrlCommunicationFactory;
 
 /**
- * @method UrlDependencyContainer getCommunicationFactory
+ * @method UrlCommunicationFactory getCommunicationFactory
  */
 class IndexController extends AbstractController
 {

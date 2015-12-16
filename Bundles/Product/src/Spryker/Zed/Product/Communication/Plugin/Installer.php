@@ -8,10 +8,10 @@ namespace Spryker\Zed\Product\Communication\Plugin;
 
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 use Spryker\Zed\Product\Business\ProductFacade;
-use Spryker\Zed\Product\Communication\ProductDependencyContainer;
+use Spryker\Zed\Product\Communication\ProductCommunicationFactory;
 
 /**
- * @method ProductDependencyContainer getCommunicationFactory()
+ * @method ProductCommunicationFactory getCommunicationFactory()
  * @method ProductFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin

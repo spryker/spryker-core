@@ -25,7 +25,7 @@ use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseCo
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 
 /**
- * @method PayoneDependencyContainer getBusinessFactory()
+ * @method PayoneBusinessFactory getBusinessFactory()
  */
 class PayoneFacade extends AbstractFacade
 {

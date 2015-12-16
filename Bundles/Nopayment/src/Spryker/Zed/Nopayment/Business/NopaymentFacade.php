@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
- * @method NopaymentDependencyContainer getBusinessFactory()
+ * @method NopaymentBusinessFactory getBusinessFactory()
  */
 class NopaymentFacade extends AbstractFacade
 {

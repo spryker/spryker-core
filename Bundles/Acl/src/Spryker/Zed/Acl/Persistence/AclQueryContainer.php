@@ -27,7 +27,7 @@ use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 
 /**
- * @method AclDependencyContainer getPersistenceFactory()
+ * @method AclPersistenceFactory getPersistenceFactory()
  */
 class AclQueryContainer extends AbstractQueryContainer
 {

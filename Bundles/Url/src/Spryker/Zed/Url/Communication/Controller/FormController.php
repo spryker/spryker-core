@@ -7,12 +7,12 @@
 namespace Spryker\Zed\Url\Communication\Controller;
 
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Url\Communication\UrlDependencyContainer;
+use Spryker\Zed\Url\Communication\UrlCommunicationFactory;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method UrlDependencyContainer getCommunicationFactory()
+ * @method UrlCommunicationFactory getCommunicationFactory()
  */
 class FormController extends AbstractController
 {

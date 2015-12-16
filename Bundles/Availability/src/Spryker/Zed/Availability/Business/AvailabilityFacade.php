@@ -10,7 +10,7 @@ use Spryker\Zed\AvailabilityCheckoutConnector\Dependency\Facade\AvailabilityToCh
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method AvailabilityDependencyContainer getBusinessFactory()
+ * @method AvailabilityBusinessFactory getBusinessFactory()
  */
 class AvailabilityFacade extends AbstractFacade implements AvailabilityToCheckoutConnectorFacadeInterface
 {

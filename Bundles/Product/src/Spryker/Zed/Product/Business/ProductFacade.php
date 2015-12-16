@@ -21,7 +21,7 @@ use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
- * @method ProductDependencyContainer getBusinessFactory()
+ * @method ProductBusinessFactory getBusinessFactory()
  */
 class ProductFacade extends AbstractFacade
 {

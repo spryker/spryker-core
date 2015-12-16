@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\CmsFacade;
-use Spryker\Zed\Cms\Communication\CmsDependencyContainer;
+use Spryker\Zed\Cms\Communication\CmsCommunicationFactory;
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsDependencyContainer getCommunicationFactory()
+ * @method CmsCommunicationFactory getCommunicationFactory()
  * @method CmsFacade getFacade()
  * @method CmsQueryContainer getQueryContainer()
  */

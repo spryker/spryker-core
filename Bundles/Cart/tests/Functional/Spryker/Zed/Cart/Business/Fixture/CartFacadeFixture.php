@@ -11,12 +11,12 @@ use Spryker\Zed\Cart\CartConfig;
 class CartFacadeFixture extends CartFacade
 {
 
-    private $mockDependencyContainer;
+    private $mockBusinessFactory;
 
     public function __construct(FactoryInterface $factory, Locator $locator)
     {
         parent::__construct($factory, $locator);
-        $this->mockDependencyContainer = new CartFixtureDependencyContainer(
+        $this->mockBusinessFactory = new CartFixtureBusinessFactory(
             $factory,
             $locator,
             new CartConfig(Config::getInstance(), $locator)
@@ -25,7 +25,7 @@ class CartFacadeFixture extends CartFacade
 
     protected function getBusinessFactory()
     {
-        return $this->mockDependencyContainer;
+        return $this->mockBusinessFactory;
     }
 
 }

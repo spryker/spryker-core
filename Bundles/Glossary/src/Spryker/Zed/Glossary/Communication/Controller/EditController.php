@@ -7,11 +7,11 @@ namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Glossary\Communication\GlossaryDependencyContainer;
+use Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 
 /**
- * @method GlossaryDependencyContainer getCommunicationFactory()
+ * @method GlossaryCommunicationFactory getCommunicationFactory()
  * @method GlossaryFacade getFacade()
  */
 class EditController extends AbstractController

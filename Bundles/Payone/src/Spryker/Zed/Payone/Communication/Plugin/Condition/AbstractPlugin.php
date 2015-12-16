@@ -8,12 +8,12 @@ namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use Spryker\Zed\Payone\Business\PayoneDependencyContainer;
+use Spryker\Zed\Payone\Business\PayoneCommunicationFactory;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Generated\Shared\Transfer\OrderTransfer;
 
 /**
- * @method PayoneDependencyContainer getCommunicationFactory()
+ * @method PayoneCommunicationFactory getCommunicationFactory()
  */
 abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInterface
 {

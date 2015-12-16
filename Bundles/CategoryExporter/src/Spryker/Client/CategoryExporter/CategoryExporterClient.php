@@ -9,7 +9,7 @@ namespace Spryker\Client\CategoryExporter;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method CategoryExporterDependencyContainer getFactory()
+ * @method CategoryExporterFactory getFactory()
  */
 class CategoryExporterClient extends AbstractClient
 {

@@ -12,7 +12,7 @@ use Orm\Zed\Price\Persistence\SpyPriceType;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 
 /**
- * @method PriceDependencyContainer getBusinessFactory()
+ * @method PriceBusinessFactory getBusinessFactory()
  */
 class PriceFacade extends AbstractFacade
 {

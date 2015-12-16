@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Category\CategoryConfig;
-use Spryker\Zed\Category\Communication\CategoryDependencyContainer;
+use Spryker\Zed\Category\Communication\CategoryCommunicationFactory;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method CategoryFacade getFacade()
- * @method CategoryDependencyContainer getCommunicationFactory()
+ * @method CategoryCommunicationFactory getCommunicationFactory()
  * @method CategoryQueryContainer getQueryContainer()
  */
 class NodeController extends AbstractController

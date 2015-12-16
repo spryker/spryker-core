@@ -11,7 +11,7 @@ use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Checkout\Business\Calculation\CalculableContainer;
 
 /**
- * @method CalculationCheckoutConnectorDependencyContainer getBusinessFactory()
+ * @method CalculationCheckoutConnectorBusinessFactory getBusinessFactory()
  */
 class CalculationCheckoutConnectorFacade extends AbstractFacade
 {

@@ -10,7 +10,7 @@ use Elastica\Index;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method SearchDependencyContainer getFactory()
+ * @method SearchFactory getFactory()
  */
 class SearchClient extends AbstractClient
 {

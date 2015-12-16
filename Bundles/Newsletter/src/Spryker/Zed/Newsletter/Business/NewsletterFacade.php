@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method NewsletterDependencyContainer getBusinessFactory()
+ * @method NewsletterBusinessFactory getBusinessFactory()
  */
 class NewsletterFacade extends AbstractFacade
 {

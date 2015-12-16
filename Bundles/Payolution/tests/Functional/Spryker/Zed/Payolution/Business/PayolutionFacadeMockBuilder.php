@@ -7,7 +7,7 @@
 namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use Spryker\Zed\Payolution\Business\PayolutionDependencyContainer;
+use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
 use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
@@ -53,7 +53,7 @@ class PayolutionFacadeMockBuilder
     /**
      * @param \PHPUnit_Framework_TestCase $testCase
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|PayolutionDependencyContainer
+     * @return \PHPUnit_Framework_MockObject_MockObject|PayolutionBusinessFactory
      */
     protected static function getBusinessFactoryMock(\PHPUnit_Framework_TestCase $testCase)
     {

@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 
 /**
- * @method TouchDependencyContainer getBusinessFactory()
+ * @method TouchBusinessFactory getBusinessFactory()
  */
 class TouchFacade extends AbstractFacade
 {

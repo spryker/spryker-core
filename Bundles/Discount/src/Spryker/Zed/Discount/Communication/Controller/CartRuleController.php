@@ -5,13 +5,13 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method DiscountDependencyContainer getCommunicationFactory()
+ * @method DiscountCommunicationFactory getCommunicationFactory()
  * @method DiscountFacade getFacade()
  * @method DiscountQueryContainer getQueryContainer()
  */

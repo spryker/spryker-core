@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
 
 /**
- * @method InstallerDependencyContainer getBusinessFactory()
+ * @method InstallerBusinessFactory getBusinessFactory()
  */
 class InstallerFacade extends AbstractFacade
 {

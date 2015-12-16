@@ -9,7 +9,7 @@ namespace Spryker\Client\Storage;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method StorageDependencyContainer getFactory()
+ * @method StorageFactory getFactory()
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {

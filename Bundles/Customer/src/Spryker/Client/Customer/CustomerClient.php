@@ -14,7 +14,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\ZedRequest\Client\Response;
 
 /**
- * @method CustomerDependencyContainer getFactory()
+ * @method CustomerFactory getFactory()
  */
 class CustomerClient extends AbstractClient implements CustomerClientInterface
 {

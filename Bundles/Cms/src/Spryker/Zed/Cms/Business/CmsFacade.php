@@ -21,7 +21,7 @@ use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
- * @method CmsDependencyContainer getBusinessFactory()
+ * @method CmsBusinessFactory getBusinessFactory()
  */
 class CmsFacade extends AbstractFacade
 {

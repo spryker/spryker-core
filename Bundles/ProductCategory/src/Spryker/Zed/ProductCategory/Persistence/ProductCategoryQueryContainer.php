@@ -20,7 +20,7 @@ use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
 /**
- * @method ProductCategoryDependencyContainer getPersistenceFactory()
+ * @method ProductCategoryPersistenceFactory getPersistenceFactory()
  */
 class ProductCategoryQueryContainer extends AbstractQueryContainer implements ProductCategoryQueryContainerInterface
 {

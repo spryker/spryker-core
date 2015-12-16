@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Cache\CacheConfig;
 
 /**
- * @method CacheDependencyContainer getBusinessFactory()
+ * @method CacheBusinessFactory getBusinessFactory()
  * @method CacheConfig getConfig()
  */
 class CacheFacade extends AbstractFacade

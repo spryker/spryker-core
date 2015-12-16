@@ -17,7 +17,7 @@ use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributesOperationTab
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery;
 
 /**
- * @method ProductSearchDependencyContainer getPersistenceFactory()
+ * @method ProductSearchPersistenceFactory getPersistenceFactory()
  */
 class ProductSearchQueryContainer extends AbstractQueryContainer implements ProductSearchQueryContainerInterface
 {

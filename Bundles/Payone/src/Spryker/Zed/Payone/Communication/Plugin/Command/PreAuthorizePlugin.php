@@ -10,11 +10,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Payone\Business\PayoneFacade;
-use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
+use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
- * @method PayoneDependencyContainer getCommunicationFactory()
+ * @method PayoneCommunicationFactory getCommunicationFactory()
  * @method PayoneFacade getFacade()
  */
 class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface

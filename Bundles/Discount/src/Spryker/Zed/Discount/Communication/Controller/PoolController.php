@@ -13,12 +13,12 @@ use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method DiscountDependencyContainer getCommunicationFactory()
+ * @method DiscountCommunicationFactory getCommunicationFactory()
  * @method DiscountQueryContainer getQueryContainer()
  * @method DiscountFacade getFacade()
  */

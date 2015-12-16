@@ -9,10 +9,10 @@ namespace Spryker\Zed\Nopayment\Communication\Plugin\Condition;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\Nopayment\Communication\NopaymentDependencyContainer;
+use Spryker\Zed\Nopayment\Communication\NopaymentCommunicationFactory;
 
 /**
- * @method NopaymentDependencyContainer getCommunicationFactory()
+ * @method NopaymentCommunicationFactory getCommunicationFactory()
  */
 class NopaymentConditionPlugin extends AbstractPlugin implements ConditionInterface
 {

@@ -9,7 +9,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Glossary\Storage\GlossaryStorageInterface;
 
 /**
- * @method GlossaryDependencyContainer getFactory()
+ * @method GlossaryFactory getFactory()
  */
 class GlossaryClient extends AbstractClient implements GlossaryClientInterface
 {

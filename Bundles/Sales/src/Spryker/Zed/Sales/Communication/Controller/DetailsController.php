@@ -9,14 +9,14 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\Communication\SalesDependencyContainer;
+use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @method SalesDependencyContainer getCommunicationFactory()
+ * @method SalesCommunicationFactory getCommunicationFactory()
  * @method SalesFacade getFacade()
  * @method SalesQueryContainerInterface getQueryContainer()
  */

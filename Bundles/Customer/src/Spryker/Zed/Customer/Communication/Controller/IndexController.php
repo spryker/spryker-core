@@ -8,12 +8,12 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Customer\Business\CustomerFacade;
-use Spryker\Zed\Customer\Communication\CustomerDependencyContainer;
+use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerDependencyContainer getCommunicationFactory()
+ * @method CustomerCommunicationFactory getCommunicationFactory()
  */
 class IndexController extends AbstractController
 {

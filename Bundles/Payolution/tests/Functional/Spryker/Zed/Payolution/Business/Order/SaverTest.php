@@ -17,7 +17,7 @@ use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Spryker\Zed\Payolution\Business\Order\Saver;
-use Spryker\Zed\Payolution\Business\PayolutionDependencyContainer;
+use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
@@ -36,7 +36,7 @@ class SaverTest extends Test
     public function testSaveOrderPaymentCreatesPersistentPaymentData()
     {
         $orderTransfer = $this->getOrderTransfer();
-        $orderManager = new Saver($this->getPayolutionBusinessDependencyContainer());
+        $orderManager = new Saver($this->getPayolutionBusinessBusinessFactory());
         $orderManager->saveOrderPayment($orderTransfer);
 
         $paymentEntity = SpyPaymentPayolutionQuery::create()->findOneByFkSalesOrder($orderTransfer->getIdSalesOrder());
@@ -55,7 +55,7 @@ class SaverTest extends Test
     public function testSaveOrderPaymentHasAddressData()
     {
         $orderTransfer = $this->getOrderTransfer();
-        $orderManager = new Saver($this->getPayolutionBusinessDependencyContainer());
+        $orderManager = new Saver($this->getPayolutionBusinessBusinessFactory());
         $orderManager->saveOrderPayment($orderTransfer);
 
         $paymentTransfer = $orderTransfer->getPayolutionPayment();
@@ -83,11 +83,11 @@ class SaverTest extends Test
     }
 
     /**
-     * @return PayolutionDependencyContainer
+     * @return PayolutionBusinessFactory
      */
-    private function getPayolutionBusinessDependencyContainer()
+    private function getPayolutionBusinessBusinessFactory()
     {
-        $dependencyContainer = new PayolutionDependencyContainer();
+        $dependencyContainer = new PayolutionBusinessFactory();
 
         return $dependencyContainer;
     }

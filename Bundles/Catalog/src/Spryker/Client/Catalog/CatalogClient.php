@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Spryker\Client\Catalog\Model\Catalog;
 
 /**
- * @method CatalogDependencyContainer getFactory()
+ * @method CatalogFactory getFactory()
  */
 class CatalogClient extends AbstractClient
 {

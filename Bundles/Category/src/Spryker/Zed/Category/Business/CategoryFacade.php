@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CategoryDependencyContainer getBusinessFactory()
+ * @method CategoryBusinessFactory getBusinessFactory()
  */
 class CategoryFacade extends AbstractFacade
 {

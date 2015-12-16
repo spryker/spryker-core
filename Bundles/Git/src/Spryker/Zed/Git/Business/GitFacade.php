@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * @method GitDependencyContainer getBusinessFactory()
+ * @method GitBusinessFactory getBusinessFactory()
  */
 class GitFacade extends AbstractFacade
 {

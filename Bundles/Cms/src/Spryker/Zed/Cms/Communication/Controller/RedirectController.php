@@ -12,14 +12,14 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\CmsDependencyProvider;
-use Spryker\Zed\Cms\Communication\CmsDependencyContainer;
+use Spryker\Zed\Cms\Communication\CmsCommunicationFactory;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
 use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsDependencyContainer getCommunicationFactory()
+ * @method CmsCommunicationFactory getCommunicationFactory()
  * @method CmsFacade getFacade()
  */
 class RedirectController extends AbstractController

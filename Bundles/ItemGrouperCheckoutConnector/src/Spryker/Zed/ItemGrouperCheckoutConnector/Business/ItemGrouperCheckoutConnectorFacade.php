@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 
 /**
- * @method ItemGrouperCheckoutConnectorDependencyContainer getBusinessFactory()
+ * @method ItemGrouperCheckoutConnectorBusinessFactory getBusinessFactory()
  */
 class ItemGrouperCheckoutConnectorFacade extends AbstractFacade
 {

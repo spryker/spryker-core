@@ -9,14 +9,14 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Customer\Business\CustomerFacade;
-use Spryker\Zed\Customer\Communication\CustomerDependencyContainer;
+use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Spryker\Zed\Customer\CustomerConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerDependencyContainer getCommunicationFactory()
+ * @method CustomerCommunicationFactory getCommunicationFactory()
  */
 class AddressController extends AbstractController
 {

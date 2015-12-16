@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\UserTransfer;
 
 /**
- * @method AuthDependencyContainer getBusinessFactory()
+ * @method AuthBusinessFactory getBusinessFactory()
  */
 class AuthFacade extends AbstractFacade
 {

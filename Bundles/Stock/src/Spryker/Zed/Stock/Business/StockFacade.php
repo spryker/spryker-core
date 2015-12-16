@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeInterface;
 
 /**
- * @method StockDependencyContainer getBusinessFactory()
+ * @method StockBusinessFactory getBusinessFactory()
  */
 class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInterface, StockToSalesFacadeInterface
 {

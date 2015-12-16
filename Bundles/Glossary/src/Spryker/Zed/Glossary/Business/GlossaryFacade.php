@@ -16,7 +16,7 @@ use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
 
 /**
- * @method GlossaryDependencyContainer getBusinessFactory()
+ * @method GlossaryBusinessFactory getBusinessFactory()
  */
 class GlossaryFacade extends AbstractFacade
 {

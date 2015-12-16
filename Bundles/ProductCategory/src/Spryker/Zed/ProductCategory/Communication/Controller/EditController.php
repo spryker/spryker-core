@@ -14,14 +14,14 @@ use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Spryker\Zed\ProductCategory\ProductCategoryConfig;
-use Spryker\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
+use Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method ProductCategoryFacade getFacade()
- * @method ProductCategoryDependencyContainer getCommunicationFactory()
+ * @method ProductCategoryCommunicationFactory getCommunicationFactory()
  * @method ProductCategoryQueryContainer getQueryContainer()
  */
 class EditController extends AddController

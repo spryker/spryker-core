@@ -7,10 +7,10 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Symfony\Component\HttpFoundation\Request;
-use Spryker\Zed\Sales\Communication\SalesDependencyContainer;
+use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 
 /**
- * @method SalesDependencyContainer getCommunicationFactory()
+ * @method SalesCommunicationFactory getCommunicationFactory()
  * @method SalesFacade getFacade()
  */
 class EditController extends AbstractController

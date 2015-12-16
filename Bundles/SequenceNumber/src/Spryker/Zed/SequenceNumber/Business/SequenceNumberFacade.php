@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method SequenceNumberDependencyContainer getBusinessFactory()
+ * @method SequenceNumberBusinessFactory getBusinessFactory()
  */
 class SequenceNumberFacade extends AbstractFacade
 {

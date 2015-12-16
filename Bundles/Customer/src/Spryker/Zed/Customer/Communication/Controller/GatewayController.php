@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
-use Spryker\Zed\Customer\Communication\CustomerDependencyContainer;
+use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerDependencyContainer getCommunicationFactory()
+ * @method CustomerCommunicationFactory getCommunicationFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

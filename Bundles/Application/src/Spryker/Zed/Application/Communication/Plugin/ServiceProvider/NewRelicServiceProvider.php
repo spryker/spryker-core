@@ -8,13 +8,13 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Library\System;
-use Spryker\Zed\Application\Communication\ApplicationDependencyContainer;
+use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
 /**
- * @method ApplicationDependencyContainer getCommunicationFactory()
+ * @method ApplicationCommunicationFactory getCommunicationFactory()
  */
 class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

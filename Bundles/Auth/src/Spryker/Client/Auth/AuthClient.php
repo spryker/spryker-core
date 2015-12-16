@@ -10,7 +10,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Auth\Token\TokenService;
 
 /**
- * @method AuthDependencyContainer getFactory()
+ * @method AuthFactory getFactory()
  */
 class AuthClient extends AbstractClient implements AuthClientInterface
 {

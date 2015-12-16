@@ -11,7 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method SetupDependencyContainer getBusinessFactory()
+ * @method SetupBusinessFactory getBusinessFactory()
  */
 class SetupFacade extends AbstractFacade
 {

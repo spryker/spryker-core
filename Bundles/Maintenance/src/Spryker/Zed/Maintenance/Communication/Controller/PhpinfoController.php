@@ -8,11 +8,11 @@ namespace Spryker\Zed\Maintenance\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Maintenance\Business\MaintenanceFacade;
-use Spryker\Zed\Maintenance\Communication\MaintenanceDependencyContainer;
+use Spryker\Zed\Maintenance\Communication\MaintenanceCommunicationFactory;
 
 /**
  * @method MaintenanceFacade getFacade()
- * @method MaintenanceDependencyContainer getCommunicationFactory()
+ * @method MaintenanceCommunicationFactory getCommunicationFactory()
  */
 class PhpinfoController extends AbstractController
 {

@@ -12,13 +12,13 @@ use Generated\Shared\Transfer\RefundOrderItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Refund\Business\RefundFacade;
-use Spryker\Zed\Refund\Communication\RefundDependencyContainer;
+use Spryker\Zed\Refund\Communication\RefundCommunicationFactory;
 use Spryker\Zed\Refund\Persistence\RefundQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method RefundDependencyContainer getCommunicationFactory()
+ * @method RefundCommunicationFactory getCommunicationFactory()
  * @method RefundQueryContainer getQueryContainer()
  * @method RefundFacade getFacade()
  */

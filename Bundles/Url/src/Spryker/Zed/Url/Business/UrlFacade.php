@@ -16,7 +16,7 @@ use Spryker\Zed\Url\Business\Exception\MissingUrlException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
- * @method UrlDependencyContainer getBusinessFactory()
+ * @method UrlBusinessFactory getBusinessFactory()
  */
 class UrlFacade extends AbstractFacade
 {

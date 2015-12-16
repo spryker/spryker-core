@@ -17,7 +17,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsDependencyContainer getCommunicationFactory()
+ * @method CmsCommunicationFactory getCommunicationFactory()
  * @method CmsFacade getFacade()
  */
 class PageController extends AbstractController

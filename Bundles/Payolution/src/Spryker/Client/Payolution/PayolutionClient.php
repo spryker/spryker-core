@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Payolution\Session\PayolutionSession;
 
 /**
- * @method PayolutionDependencyContainer getFactory()
+ * @method PayolutionFactory getFactory()
  */
 class PayolutionClient extends AbstractClient implements PayolutionClientInterface
 {

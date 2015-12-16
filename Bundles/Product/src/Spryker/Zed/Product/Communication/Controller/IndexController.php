@@ -6,7 +6,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Product\Business\ProductFacade;
-use Spryker\Zed\Product\Communication\ProductDependencyContainer;
+use Spryker\Zed\Product\Communication\ProductCommunicationFactory;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method ProductFacade getFacade()
  * @method ProductQueryContainer getQueryContainer()
- * @method ProductDependencyContainer getCommunicationFactory()
+ * @method ProductCommunicationFactory getCommunicationFactory()
  */
 class IndexController extends AbstractController
 {

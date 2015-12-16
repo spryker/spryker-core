@@ -11,11 +11,11 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Payone\Business\PayoneFacade;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
-use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
+use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
- * @method PayoneDependencyContainer getCommunicationFactory()
+ * @method PayoneCommunicationFactory getCommunicationFactory()
  * @method PayoneFacade getFacade()
  */
 class CapturePlugin extends AbstractPlugin implements CommandByOrderInterface

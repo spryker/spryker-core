@@ -6,11 +6,11 @@
 namespace Spryker\Zed\Payolution\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Payolution\Communication\PayolutionDependencyContainer;
+use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method PayolutionDependencyContainer getCommunicationFactory()
+ * @method PayolutionCommunicationFactory getCommunicationFactory()
  */
 class IndexController extends AbstractController
 {

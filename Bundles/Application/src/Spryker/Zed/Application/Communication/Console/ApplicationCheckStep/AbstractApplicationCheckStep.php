@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Application\Communication\ApplicationDependencyContainer;
+use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -28,7 +28,7 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     protected $facade;
 
     /**
-     * @var ApplicationDependencyContainer
+     * @var ApplicationCommunicationFactory
      */
     protected $communicationFactory;
 

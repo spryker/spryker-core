@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Checkout\Zed\CheckoutStub;
 
 /**
- * @method CheckoutDependencyContainer getFactory()
+ * @method CheckoutFactory getFactory()
  */
 class CheckoutClient extends AbstractClient implements CheckoutClientInterface
 {

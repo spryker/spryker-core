@@ -9,7 +9,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Lumberjack\Model\EventInterface;
 
 /**
- * @method LumberjackDependencyContainer getFactory()
+ * @method LumberjackFactory getFactory()
  */
 class LumberjackClient extends AbstractClient
 {

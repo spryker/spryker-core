@@ -10,7 +10,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Kernel\Store;
 
 /**
- * @method LocaleDependencyContainer getFactory()
+ * @method LocaleFactory getFactory()
  */
 class LocaleClient extends AbstractClient implements LocaleClientInterface
 {

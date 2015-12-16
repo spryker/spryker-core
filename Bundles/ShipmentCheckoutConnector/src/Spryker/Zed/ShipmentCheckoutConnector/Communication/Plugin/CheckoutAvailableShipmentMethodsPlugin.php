@@ -8,10 +8,10 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ShipmentCheckoutConnector\Communication\ShipmentCheckoutConnectorDependencyContainer;
+use Spryker\Zed\ShipmentCheckoutConnector\Communication\ShipmentCheckoutConnectorCommunicationFactory;
 
 /**
- * @method ShipmentCheckoutConnectorDependencyContainer getCommunicationFactory()
+ * @method ShipmentCheckoutConnectorCommunicationFactory getCommunicationFactory()
  */
 class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
 {

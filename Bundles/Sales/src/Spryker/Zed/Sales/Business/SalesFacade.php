@@ -19,7 +19,7 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
- * @method SalesDependencyContainer getBusinessFactory()
+ * @method SalesBusinessFactory getBusinessFactory()
  */
 class SalesFacade extends AbstractFacade
 {

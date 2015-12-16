@@ -14,7 +14,7 @@ use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 /**
- * @method LocaleDependencyContainer getBusinessFactory()
+ * @method LocaleBusinessFactory getBusinessFactory()
  */
 class LocaleFacade extends AbstractFacade
 {

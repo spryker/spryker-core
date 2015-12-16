@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method PayolutionDependencyContainer getBusinessFactory()
+ * @method PayolutionBusinessFactory getBusinessFactory()
  */
 class PayolutionFacade extends AbstractFacade
 {

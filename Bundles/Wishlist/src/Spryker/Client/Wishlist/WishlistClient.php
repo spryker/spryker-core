@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method WishlistDependencyContainer getFactory()
+ * @method WishlistFactory getFactory()
  */
 class WishlistClient extends AbstractClient implements WishlistClientInterface
 {

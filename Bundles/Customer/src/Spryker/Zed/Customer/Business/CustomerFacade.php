@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CustomerDependencyContainer getBusinessFactory()
+ * @method CustomerBusinessFactory getBusinessFactory()
  */
 class CustomerFacade extends AbstractFacade
 {

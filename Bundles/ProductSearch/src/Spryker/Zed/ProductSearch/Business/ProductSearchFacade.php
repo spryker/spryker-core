@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ProductSearchDependencyContainer getBusinessFactory()
+ * @method ProductSearchBusinessFactory getBusinessFactory()
  */
 class ProductSearchFacade extends AbstractFacade
 {

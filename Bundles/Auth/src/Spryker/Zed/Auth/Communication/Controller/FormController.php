@@ -7,12 +7,12 @@
 namespace Spryker\Zed\Auth\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Auth\Communication\AuthDependencyContainer;
+use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AuthDependencyContainer getCommunicationFactory()
+ * @method AuthCommunicationFactory getCommunicationFactory()
  */
 class FormController extends AbstractController
 {

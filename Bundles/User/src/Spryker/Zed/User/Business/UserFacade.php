@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\UserTransfer;
 use Generated\Shared\Transfer\CollectionTransfer;
 
 /**
- * @method UserDependencyContainer getBusinessFactory()
+ * @method UserBusinessFactory getBusinessFactory()
  */
 class UserFacade extends AbstractFacade
 {

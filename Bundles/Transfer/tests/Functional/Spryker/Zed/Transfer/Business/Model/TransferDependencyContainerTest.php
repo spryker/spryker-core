@@ -7,24 +7,24 @@
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
-use Spryker\Zed\Transfer\Business\TransferDependencyContainer;
+use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
 
 /**
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
- * @group TransferDependencyContainer
+ * @group TransferBusinessFactory
  */
-class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
+class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return TransferDependencyContainer
+     * @return TransferBusinessFactory
      */
     private function getBusinessFactory()
     {
-        return new TransferDependencyContainer();
+        return new TransferBusinessFactory();
     }
 
     /**

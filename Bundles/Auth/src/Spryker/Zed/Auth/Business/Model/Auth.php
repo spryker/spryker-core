@@ -10,7 +10,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Zed\Auth\AuthConfig;
-use Spryker\Zed\Auth\Business\AuthDependencyContainer;
+use Spryker\Zed\Auth\Business\AuthBusinessFactory;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Exception\UserNotLoggedException;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
@@ -37,7 +37,7 @@ class Auth implements AuthInterface
     protected $userFacade;
 
     /**
-     * @var AuthDependencyContainer
+     * @var AuthBusinessFactory
      */
     protected $dependencyContainer;
 

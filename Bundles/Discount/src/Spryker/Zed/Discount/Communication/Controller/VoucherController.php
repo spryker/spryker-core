@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method DiscountDependencyContainer getCommunicationFactory()
+ * @method DiscountCommunicationFactory getCommunicationFactory()
  * @method DiscountFacade getFacade()
  */
 class VoucherController extends AbstractController

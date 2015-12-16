@@ -6,24 +6,24 @@
 
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
-use Spryker\Zed\Application\Business\ApplicationDependencyContainer;
+use Spryker\Zed\Application\Business\ApplicationBusinessFactory;
 
 /**
  * @group Spryker
  * @group Zed
  * @group ApplicationFacade
  * @group Business
- * @group ApplicationFacadeDependencyContainer
+ * @group ApplicationFacadeBusinessFactory
  */
-class ApplicationDependencyContainerTest extends \PHPUnit_Framework_TestCase
+class ApplicationBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return ApplicationDependencyContainer
+     * @return ApplicationBusinessFactory
      */
     private function getBusinessFactory()
     {
-        return new ApplicationDependencyContainer();
+        return new ApplicationBusinessFactory();
     }
 
     /**

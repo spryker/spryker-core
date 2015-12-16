@@ -11,14 +11,14 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
-use Spryker\Zed\Customer\Communication\CustomerDependencyContainer;
+use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerDependencyContainer getCommunicationFactory()
+ * @method CustomerCommunicationFactory getCommunicationFactory()
  */
 class ProfileController extends AbstractController
 {

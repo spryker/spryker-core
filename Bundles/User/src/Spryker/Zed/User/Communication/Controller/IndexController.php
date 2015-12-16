@@ -8,12 +8,12 @@ namespace Spryker\Zed\User\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\User\Business\UserFacade;
-use Spryker\Zed\User\Communication\UserDependencyContainer;
+use Spryker\Zed\User\Communication\UserCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 /**
- * @method UserDependencyContainer getCommunicationFactory
+ * @method UserCommunicationFactory getCommunicationFactory
  * @method UserFacade getFacade()
  * @method UserQueryContainer getQueryContainer()
  */

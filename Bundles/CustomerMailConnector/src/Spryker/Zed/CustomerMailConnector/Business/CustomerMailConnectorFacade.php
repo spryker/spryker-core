@@ -9,7 +9,7 @@ namespace Spryker\Zed\CustomerMailConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CustomerMailConnectorDependencyContainer getBusinessFactory()
+ * @method CustomerMailConnectorBusinessFactory getBusinessFactory()
  */
 class CustomerMailConnectorFacade extends AbstractFacade
 {

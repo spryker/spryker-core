@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsDependencyContainer getCommunicationFactory()
+ * @method CmsCommunicationFactory getCommunicationFactory()
  * @method CmsQueryContainer getQueryContainer()
  * @method CmsFacade getFacade()
  */

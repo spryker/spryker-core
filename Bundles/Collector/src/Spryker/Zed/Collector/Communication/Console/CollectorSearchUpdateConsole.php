@@ -7,12 +7,12 @@
 namespace Spryker\Zed\Collector\Communication\Console;
 
 use Spryker\Zed\Collector\Business\CollectorFacade;
-use Spryker\Zed\Collector\Communication\CollectorDependencyContainer;
+use Spryker\Zed\Collector\Communication\CollectorCommunicationFactory;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method CollectorDependencyContainer getCommunicationFactory()
+ * @method CollectorCommunicationFactory getCommunicationFactory()
  * @method CollectorFacade getFacade()
  */
 class CollectorSearchUpdateConsole extends AbstractCollectorConsole

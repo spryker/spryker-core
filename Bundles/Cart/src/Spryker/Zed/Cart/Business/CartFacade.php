@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Cart\Business\Model\CalculableContainer;
 
 /**
- * @method CartDependencyContainer getBusinessFactory()
+ * @method CartBusinessFactory getBusinessFactory()
  */
 class CartFacade extends AbstractFacade
 {

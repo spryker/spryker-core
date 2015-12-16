@@ -7,24 +7,24 @@
 namespace Functional\Spryker\Zed\Maintenance\Business\Model;
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
-use Spryker\Zed\Maintenance\Business\MaintenanceDependencyContainer;
+use Spryker\Zed\Maintenance\Business\MaintenanceBusinessFactory;
 
 /**
  * @group Spryker
  * @group Zed
  * @group Maintenance
  * @group Business
- * @group MaintenanceDependencyContainer
+ * @group MaintenanceBusinessFactory
  */
-class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
+class MaintenanceBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return MaintenanceDependencyContainer
+     * @return MaintenanceBusinessFactory
      */
     private function getBusinessFactory()
     {
-        return new MaintenanceDependencyContainer();
+        return new MaintenanceBusinessFactory();
     }
 
     /**

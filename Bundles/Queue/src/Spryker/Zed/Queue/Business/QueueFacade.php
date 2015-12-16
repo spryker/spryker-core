@@ -7,7 +7,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 
 /**
- * @method QueueDependencyContainer getBusinessFactory()
+ * @method QueueBusinessFactory getBusinessFactory()
  */
 class QueueFacade extends AbstractFacade
 {

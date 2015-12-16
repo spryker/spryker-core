@@ -8,11 +8,11 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\Business\SalesFacade;
-use Spryker\Zed\Sales\Communication\SalesDependencyContainer;
+use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 
 /**
- * @method SalesDependencyContainer getCommunicationFactory()
+ * @method SalesCommunicationFactory getCommunicationFactory()
  * @method SalesFacade getFacade()
  */
 class OrderItemSplitController extends AbstractController

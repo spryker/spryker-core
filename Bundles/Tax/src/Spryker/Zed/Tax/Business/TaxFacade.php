@@ -16,7 +16,7 @@ use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 
 /**
- * @method TaxDependencyContainer getBusinessFactory()
+ * @method TaxBusinessFactory getBusinessFactory()
  */
 class TaxFacade extends AbstractFacade
 {

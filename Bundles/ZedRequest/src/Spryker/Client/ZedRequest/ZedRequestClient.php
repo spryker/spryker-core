@@ -12,7 +12,7 @@ use Spryker\Client\ZedRequest\Client\ZedClient;
 use Spryker\Shared\ZedRequest\Client\Message;
 
 /**
- * @method ZedRequestDependencyContainer getFactory()
+ * @method ZedRequestFactory getFactory()
  */
 class ZedRequestClient extends AbstractClient
 {

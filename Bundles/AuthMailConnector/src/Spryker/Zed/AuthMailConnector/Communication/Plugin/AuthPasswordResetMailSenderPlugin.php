@@ -10,10 +10,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use Spryker\Zed\AuthMailConnector\Communication\AuthMailConnectorDependencyContainer;
+use Spryker\Zed\AuthMailConnector\Communication\AuthMailConnectorCommunicationFactory;
 
 /**
- * @method AuthMailConnectorDependencyContainer getCommunicationFactory()
+ * @method AuthMailConnectorCommunicationFactory getCommunicationFactory()
  */
 class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPasswordResetSenderInterface
 {

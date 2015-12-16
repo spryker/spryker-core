@@ -10,7 +10,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method CustomerDependencyContainer getPersistenceFactory()
+ * @method CustomerPersistenceFactory getPersistenceFactory()
  */
 class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQueryContainerInterface
 {

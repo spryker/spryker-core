@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Payone\Business\PayoneFacade;
-use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
+use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 
 /**
- * @method PayoneDependencyContainer getCommunicationFactory()
+ * @method PayoneCommunicationFactory getCommunicationFactory()
  * @method PayoneFacade getFacade()
  */
 class CheckoutPostSaveHookPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface

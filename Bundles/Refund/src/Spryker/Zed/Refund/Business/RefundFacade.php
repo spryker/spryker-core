@@ -9,14 +9,14 @@ namespace Spryker\Zed\Refund\Business;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Refund\Business\RefundDependencyContainer as SprykerRefundDependencyContainer;
+use Spryker\Zed\Refund\Business\RefundBusinessFactory as SprykerRefundBusinessFactory;
 use Orm\Zed\Refund\Persistence\SpyRefund;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 
 /**
- * @method SprykerRefundDependencyContainer getBusinessFactory()
+ * @method SprykerRefundBusinessFactory getBusinessFactory()
  */
 class RefundFacade extends AbstractFacade
 {

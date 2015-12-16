@@ -7,10 +7,10 @@
 namespace Spryker\Zed\Locale\Communication\Plugin;
 
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
-use Spryker\Zed\Locale\Communication\LocaleDependencyContainer;
+use Spryker\Zed\Locale\Communication\LocaleCommunicationFactory;
 
 /**
- * @method LocaleDependencyContainer getCommunicationFactory()
+ * @method LocaleCommunicationFactory getCommunicationFactory()
  */
 class Installer extends AbstractInstallerPlugin
 {

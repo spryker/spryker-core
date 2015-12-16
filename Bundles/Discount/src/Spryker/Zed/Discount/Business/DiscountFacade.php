@@ -28,7 +28,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 /**
- * @method DiscountDependencyContainer getBusinessFactory()
+ * @method DiscountBusinessFactory getBusinessFactory()
  */
 class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 {
