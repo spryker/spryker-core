@@ -65,16 +65,4 @@ abstract class AbstractLocator implements LocatorInterface
         throw new \ErrorException('Need implementation in each locator');
     }
 
-    /**
-     * @param string $bundle
-     *
-     * @throws LocatorException
-     *
-     * @return AbstractFactory
-     */
-    protected function getFactory($bundle)
-    {
-        return ClassMapFactory::getInstance()->create($this->application, $this->bundle, $this->suffix, $this->layer, [$bundle]);
-    }
-
 }

@@ -6,6 +6,7 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
+use Spryker\Client\ZedRequest\Client\Response as ClientResponse;
 use Generated\Client\Ide\AutoCompletion;
 use Guzzle\Http\Client;
 use Guzzle\Http\Exception\RequestException as GuzzleRequestException;
@@ -14,8 +15,8 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
-use Spryker\Shared\Kernel\Factory\FactoryInterface;
 use Spryker\Client\Auth\AuthClientInterface;
+use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Shared\Library\Config;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
@@ -25,7 +26,6 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
-use Spryker\Zed\ZedRequest\Business\Client\Request;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
@@ -73,26 +73,18 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected $locator;
 
     /**
-     * @var FactoryInterface
-     */
-    protected $factory;
-
-    /**
      * @var AuthClientInterface
      */
     protected $authClient;
 
     /**
-     * @param FactoryInterface $factory
      * @param AuthClientInterface $authClient
      * @param string $baseUrl
      */
     public function __construct(
-        FactoryInterface $factory,
         AuthClientInterface $authClient,
         $baseUrl
     ) {
-        $this->factory = $factory;
         $this->authClient = $authClient;
         $this->baseUrl = $baseUrl;
     }
@@ -237,7 +229,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
-        $request = $this->getClientRequest();
+        $request = $this->getRequest();
         $request->setSessionId(session_id());
         $request->setTime(time());
         $request->setHost(System::getHostname() ?: 'n/a');
@@ -286,7 +278,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         if (empty($data) || !is_array($data)) {
             throw new InvalidZedResponseException('no valid JSON', $response);
         }
-        $responseTransfer = $this->factory->createClientResponse();
+        $responseTransfer = new ClientResponse();
         $responseTransfer->fromArray($data);
 
         return $responseTransfer;
@@ -377,11 +369,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @return Request
      */
-    private function getClientRequest()
+    protected function getRequest()
     {
-        $request = $this->factory->createClientRequest();
-
-        return $request;
+        return new Request();
     }
 
 }

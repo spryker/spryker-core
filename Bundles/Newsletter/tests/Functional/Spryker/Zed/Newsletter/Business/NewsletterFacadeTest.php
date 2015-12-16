@@ -234,7 +234,7 @@ class NewsletterFacadeTest extends Test
         $this->newsletterFacade = new NewsletterFacade();
         $queryContainer = new NewsletterQueryContainer();
         $queryContainer->setExternalDependencies($container);
-        $this->newsletterFacade->setOwnQueryContainer($queryContainer);
+        $this->newsletterFacade->setQueryContainer($queryContainer);
         $this->newsletterFacade->setExternalDependencies($container);
     }
 

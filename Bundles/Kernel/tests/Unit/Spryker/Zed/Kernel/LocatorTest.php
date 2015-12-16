@@ -32,9 +32,8 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetInstanceWithLocatorAsArgumentShouldReturnLocator()
     {
-        $locator = Locator::getInstance([
-            new \Unit\Spryker\Shared\Kernel\Fixtures\Locator('Foo'),
-        ]);
+        $injectedLocator = Locator::getInstance();
+        $locator = Locator::getInstance([$injectedLocator]);
 
         $this->assertInstanceOf('Spryker\Zed\Kernel\Locator', $locator);
     }

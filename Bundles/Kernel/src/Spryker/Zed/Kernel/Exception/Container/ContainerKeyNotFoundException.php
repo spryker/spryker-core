@@ -29,7 +29,7 @@ class ContainerKeyNotFoundException extends \Exception
      *
      * @return string
      */
-    private function buildMessage(ClassInfo $callerClassInfo, $key)
+    protected function buildMessage(ClassInfo $callerClassInfo, $key)
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
@@ -38,7 +38,7 @@ class ContainerKeyNotFoundException extends \Exception
             ) . PHP_EOL;
 
         $message .= sprintf(
-            'You can fix this by adding the key "%s" to your container in your "%s"DependencyProvider.',
+            'You can fix this by adding the key "%s" to your "%sDependencyProvider"',
             $key,
             $callerClassInfo->getBundle()
         );

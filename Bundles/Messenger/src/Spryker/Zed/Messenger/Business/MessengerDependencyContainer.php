@@ -16,7 +16,6 @@ use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * @method MessengerBusiness getFactory()
  * @method MessengerConfig getConfig()
  */
 class MessengerDependencyContainer extends AbstractBusinessDependencyContainer

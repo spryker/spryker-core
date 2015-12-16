@@ -91,19 +91,14 @@ abstract class AbstractPlugin
     {
         if ($this->dependencyContainer === null) {
             $this->dependencyContainer = $this->resolveDependencyContainer();
+        }
 
-            if ($this->container === null) {
-                $dependencyProvider = $this->resolveDependencyProvider();
-                $container = new Container();
-                $dependencyProvider->provideCommunicationLayerDependencies($container);
-                $this->container = $container;
-            }
-
+        if ($this->container !== null) {
             $this->dependencyContainer->setContainer($this->container);
+        }
 
-            if ($this->queryContainer !== null) {
-                $this->dependencyContainer->setQueryContainer($this->getQueryContainer());
-            }
+        if ($this->queryContainer !== null) {
+            $this->dependencyContainer->setQueryContainer($this->queryContainer);
         }
 
         return $this->dependencyContainer;

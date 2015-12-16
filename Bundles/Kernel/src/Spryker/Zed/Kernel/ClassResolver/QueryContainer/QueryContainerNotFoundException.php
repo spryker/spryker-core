@@ -9,6 +9,7 @@ namespace Spryker\Zed\Kernel\ClassResolver\QueryContainer;
 use Spryker\Shared\Config;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\Exception\Backtrace;
 
 class QueryContainerNotFoundException extends \Exception
 {
@@ -26,7 +27,7 @@ class QueryContainerNotFoundException extends \Exception
      *
      * @return string
      */
-    private function buildMessage(ClassInfo $callerClassInfo)
+    protected function buildMessage(ClassInfo $callerClassInfo)
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
@@ -41,6 +42,8 @@ class QueryContainerNotFoundException extends \Exception
             Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );
+
+        $message .= new Backtrace();
 
         return $message;
     }

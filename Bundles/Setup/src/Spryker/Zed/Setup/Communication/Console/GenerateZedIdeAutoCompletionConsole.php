@@ -10,9 +10,7 @@ use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder
 use Spryker\Zed\Console\Business\Model\Console;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeBundleAutoCompletionGenerator;
-use Spryker\Zed\Kernel\IdeAutoCompletion\IdeFactoryAutoCompletionGenerator;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConsoleMethodTagBuilder;
-use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConstructableMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\FacadeMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\PluginMethodTagBuilder;
@@ -45,7 +43,6 @@ class GenerateZedIdeAutoCompletionConsole extends Console
     {
         $this->generateZedInterface();
         $this->generateZedBundleInterface();
-        $this->generateZedFactoryInterface();
     }
 
     /**
@@ -96,35 +93,6 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $generator->create('');
 
         $this->info('Generate Zed IdeBundleAutoCompletion file');
-    }
-
-    /**
-     * @return void
-     */
-    protected function generateZedFactoryInterface()
-    {
-        $businessMethodTagGenerator = new ConstructableMethodTagBuilder([
-            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Business/',
-            ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed',
-        ]);
-        $communicationMethodTagGenerator = new ConstructableMethodTagBuilder([
-            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',
-            ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed',
-        ]);
-
-        $options = [
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Zed\Ide\FactoryAutoCompletion',
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Zed/Ide/',
-        ];
-
-        $generator = new IdeFactoryAutoCompletionGenerator($options);
-        $generator
-            ->addMethodTagBuilder($businessMethodTagGenerator)
-            ->addMethodTagBuilder($communicationMethodTagGenerator);
-
-        $generator->create('');
-
-        $this->info('Generate Zed IdeFactoryAutoCompletion file');
     }
 
 }

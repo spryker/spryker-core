@@ -45,14 +45,12 @@ class ControllerLocator implements ControllerLocatorInterface
      */
     public function locate(\Pimple $application, LocatorLocatorInterface $locator)
     {
-        $factory = new Factory($this->bundleControllerAction->getBundle());
-
         $resolvedController = ClassMapFactory::getInstance()->create(
             $this->application,
             $this->bundleControllerAction->getBundle(),
             'Controller' . $this->bundleControllerAction->getController() . 'Controller',
             $this->layer,
-            [$application, $factory, $locator]
+            [$application]
         );
 
         return $resolvedController;

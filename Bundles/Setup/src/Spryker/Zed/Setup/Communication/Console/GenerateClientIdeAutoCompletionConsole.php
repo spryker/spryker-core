@@ -13,8 +13,6 @@ use Spryker\Zed\Console\Business\Model\Console;
 use Spryker\Zed\Kernel\BundleNameFinder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeBundleAutoCompletionGenerator;
-use Spryker\Zed\Kernel\IdeAutoCompletion\IdeFactoryAutoCompletionGenerator;
-use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConstructableMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -43,7 +41,6 @@ class GenerateClientIdeAutoCompletionConsole extends Console
     {
         $this->generateClientInterface();
         $this->generateClientBundleInterface();
-        $this->generateClientFactoryInterface();
     }
 
     /**
@@ -100,38 +97,6 @@ class GenerateClientIdeAutoCompletionConsole extends Console
         $generator->create();
 
         $this->info('Generated Client IdeBundleAutoCompletion file');
-    }
-
-    /**
-     * @return void
-     */
-    protected function generateClientFactoryInterface()
-    {
-        $methodTagGenerator = new ConstructableMethodTagBuilder([
-            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Service/',
-            ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Client',
-            ConstructableMethodTagBuilder::OPTION_KEY_CLASS_NAME_PART_LEVEL => 4,
-        ]);
-
-        $options = [
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Client\Ide\FactoryAutoCompletion',
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Client/Ide/',
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_HAS_LAYERS => true,
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Client',
-            IdeFactoryAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => new BundleNameFinder(
-                [
-                    IdeFactoryAutoCompletionGenerator::OPTION_KEY_APPLICATION => 'Client',
-                    BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN => $this->getProjectNamespace() . '/',
-                ]
-            ),
-        ];
-
-        $generator = new IdeFactoryAutoCompletionGenerator($options);
-        $generator->addMethodTagBuilder($methodTagGenerator);
-
-        $generator->create();
-
-        $this->info('Generated Client IdeFactoryAutoCompletion file');
     }
 
     /**

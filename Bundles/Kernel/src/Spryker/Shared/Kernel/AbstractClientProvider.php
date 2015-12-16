@@ -12,11 +12,6 @@ abstract class AbstractClientProvider
 {
 
     /**
-     * @var FactoryInterface
-     */
-    protected $factory;
-
-    /**
      * @var LocatorLocatorInterface
      */
     protected $locator;
@@ -34,25 +29,23 @@ abstract class AbstractClientProvider
     public function getInstance()
     {
         if ($this->client === null) {
-            $this->client = $this->createClient();
+            $this->client = $this->createZedClient();
         }
 
         return $this->client;
     }
 
     /**
-     * @param FactoryInterface $factory
      * @param LocatorLocatorInterface $locator
      */
-    public function __construct(FactoryInterface $factory, LocatorLocatorInterface $locator)
+    public function __construct(LocatorLocatorInterface $locator)
     {
-        $this->factory = $factory;
         $this->locator = $locator;
     }
 
     /**
      * @return mixed
      */
-    abstract protected function createClient();
+    abstract protected function createZedClient();
 
 }

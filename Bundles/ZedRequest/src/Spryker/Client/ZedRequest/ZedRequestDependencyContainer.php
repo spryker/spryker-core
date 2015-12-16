@@ -33,7 +33,6 @@ class ZedRequestDependencyContainer extends AbstractDependencyContainer
     protected function createHttpClient()
     {
         $httpClient = new HttpClient(
-            $this->getFactory(),
             $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_AUTH),
             $this->getConfig()->getZedRequestBaseUrl(),
             $this->getConfig()->getRawToken()

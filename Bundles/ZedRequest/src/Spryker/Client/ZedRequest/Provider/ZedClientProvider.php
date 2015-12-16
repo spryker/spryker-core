@@ -11,9 +11,9 @@ use Spryker\Shared\ZedRequest\Provider\AbstractZedClientProvider;
 class ZedClientProvider extends AbstractZedClientProvider
 {
 
-    public function createClient()
+    public function createZedClient()
     {
-        return parent::createClient();
+        return parent::createZedClient();
     }
 
 }

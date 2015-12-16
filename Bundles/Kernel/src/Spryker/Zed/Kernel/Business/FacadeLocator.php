@@ -10,9 +10,9 @@ use Spryker\Shared\Kernel\AbstractLocator;
 use Spryker\Shared\Kernel\ClassResolver\ClassNotFoundException;
 use Spryker\Shared\Kernel\Locator\LocatorException;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Zed\Kernel\BundleDependencyProviderLocator;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Shared\Library\Log;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 
 class FacadeLocator extends AbstractLocator
 {
@@ -50,26 +50,8 @@ class FacadeLocator extends AbstractLocator
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
-        $factory = $this->getFactory($bundle);
-
-        $facade = $factory->create($bundle . self::FACADE_SUFFIX);
-
-        try {
-            $bundleProviderLocator = new BundleDependencyProviderLocator(); // TODO Make singleton because of performance
-            $bundleBuilder = $bundleProviderLocator->locate($bundle, $locator);
-
-            $container = new Container();
-            $bundleBuilder->provideBusinessLayerDependencies($container);
-            $facade->setExternalDependencies($container);
-
-            // TODO make lazy
-            if ($locator->$bundle()->hasQueryContainer()) {
-                $facade->setOwnQueryContainer($locator->$bundle()->queryContainer());
-            }
-        } catch (ClassNotFoundException $e) {
-            // TODO remove try-catch when all bundles have a Builder
-            Log::log(APPLICATION . ' - ' . $bundle, 'builder_missing.log');
-        }
+        $facadeResolver = new FacadeResolver();
+        $facade = $facadeResolver->resolve($bundle);
 
         return $facade;
     }
@@ -81,9 +63,14 @@ class FacadeLocator extends AbstractLocator
      */
     public function canLocate($bundle)
     {
-        $factory = $this->getFactory($bundle);
+        try {
+            $facadeResolver = new FacadeResolver();
+            $facadeResolver->resolve($bundle);
 
-        return $factory->exists($bundle . self::FACADE_SUFFIX);
+            return true;
+        } catch (FacadeNotFoundException $exception) {
+            return false;
+        }
     }
 
 }

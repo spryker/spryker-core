@@ -373,10 +373,9 @@ class GlossaryTest extends AbstractFunctionalTest
             return (new Connection())->get();
         };
 
-//        $this->glossaryFacade->setExternalDependencies($container);
         $this->touchFacade->method('getContainer')->will($this->returnValue($touchContainer));
 
-        $this->glossaryFacade->setOwnQueryContainer($this->glossaryQueryContainer);
+        $this->glossaryFacade->setQueryContainer($this->glossaryQueryContainer);
     }
 
 }

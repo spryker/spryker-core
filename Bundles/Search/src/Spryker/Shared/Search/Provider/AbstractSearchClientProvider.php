@@ -24,7 +24,7 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
      *
      * @return Client
      */
-    protected function createClient()
+    protected function createZedClient()
     {
         return (new Client([
             'protocol' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT),

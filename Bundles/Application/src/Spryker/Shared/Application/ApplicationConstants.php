@@ -19,6 +19,8 @@ interface ApplicationConstants
     const SET_REPEAT_DATA = 'SET_REPEAT_DATA';
     const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';
     const STORE_PREFIX = 'STORE_PREFIX';
+    const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
+
     // see http://twig.sensiolabs.org/doc/api.html#environment-options
     const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';
     const ZED_TWIG_OPTIONS = 'ZED_TWIG_OPTIONS';

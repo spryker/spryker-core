@@ -69,11 +69,11 @@ class AclTest extends Test
         $dependencyProvider->providePersistenceLayerDependencies($container);
 
         $this->facade = new AclFacade();
-        $this->facade->setOwnQueryContainer(new AclQueryContainer());
+        $this->facade->setQueryContainer(new AclQueryContainer());
         $this->facade->setExternalDependencies($container);
 
         $this->userFacade = new UserFacade();
-        $this->userFacade->setOwnQueryContainer(new UserQueryContainer());
+        $this->userFacade->setQueryContainer(new UserQueryContainer());
         $this->userFacade->setExternalDependencies($container);
     }
 

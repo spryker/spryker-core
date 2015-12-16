@@ -6,10 +6,6 @@
 
 namespace Unit\Spryker\Zed\Application;
 
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Config;
-use Spryker\Shared\Kernel\AbstractLocatorLocator;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Application\ApplicationConfig;
 
 class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
@@ -20,15 +16,7 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfig()
     {
-        return new ApplicationConfig(Config::getInstance(), $this->getLocator());
-    }
-
-    /**
-     * @return AbstractLocatorLocator|static|AutoCompletion
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
+        return new ApplicationConfig();
     }
 
     /**

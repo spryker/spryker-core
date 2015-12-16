@@ -10,7 +10,6 @@ use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Shared\Kernel\Communication\ControllerLocatorInterface;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Zed\Kernel\BundleDependencyProviderLocator;
 use Spryker\Zed\Kernel\ClassNamePattern;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Shared\Kernel\ClassMapFactory;
@@ -32,6 +31,11 @@ class ControllerLocator implements ControllerLocatorInterface
     /**
      * @var string
      */
+    protected $action;
+
+    /**
+     * @var string
+     */
     private $controllerPattern;
 
     /**
@@ -42,12 +46,10 @@ class ControllerLocator implements ControllerLocatorInterface
     /**
      * @param BundleControllerActionInterface $bundleControllerAction
      * @param string $controllerNamePattern
-     * @param string $widgetControllerNamePattern
      */
     public function __construct(
         BundleControllerActionInterface $bundleControllerAction,
-        $controllerNamePattern = ClassNamePattern::CONTROLLER,
-        $widgetControllerNamePattern = ClassNamePattern::CONTROLLER_WIDGET
+        $controllerNamePattern = ClassNamePattern::CONTROLLER
     ) {
         $this->bundle = $bundleControllerAction->getBundle();
         $this->action = $bundleControllerAction->getAction();
@@ -56,10 +58,6 @@ class ControllerLocator implements ControllerLocatorInterface
         $this->controllerPattern = $this->preparePattern(
             $bundleControllerAction->getController(),
             $controllerNamePattern
-        );
-        $this->widgetControllerPattern = $this->preparePattern(
-            $bundleControllerAction->getController(),
-            $widgetControllerNamePattern
         );
     }
 
@@ -75,6 +73,8 @@ class ControllerLocator implements ControllerLocatorInterface
     }
 
     /**
+     * @TODO remove ClassMapFactory usage
+     *
      * @param \Pimple $application
      * @param LocatorLocatorInterface $locator
      *
@@ -86,32 +86,6 @@ class ControllerLocator implements ControllerLocatorInterface
             'Zed', $this->bundle, 'Controller' . $this->controller . 'Controller', 'Communication', [$application]
         );
 
-        // @todo REFACTOR -  move to constructor when all controllers are upgraded
-        $bundleName = lcfirst($this->bundle);
-
-        if (!method_exists($resolvedController, 'setOwnFacade')) {
-            Log::log($resolvedController, 'wrong_controller.txt');
-        }
-
-        $bundleConfigLocator = new BundleDependencyProviderLocator(); // @todo Make singleton because of performance
-        $bundleBuilder = $bundleConfigLocator->locate($this->bundle, $locator);
-
-        $container = new Container();
-        $container = $this->addDefaultDependencies($container);
-
-        $bundleBuilder->provideCommunicationLayerDependencies($container);
-        $resolvedController->setExternalDependencies($container);
-
-        // @todo make lazy
-        if ($locator->$bundleName()->hasFacade()) {
-            $resolvedController->setOwnFacade($locator->$bundleName()->facade());
-        }
-
-        // @todo make lazy
-        if ($locator->$bundleName()->hasQueryContainer()) {
-            $resolvedController->setOwnQueryContainer($locator->$bundleName()->queryContainer());
-        }
-
         return $resolvedController;
     }
 
@@ -121,21 +95,6 @@ class ControllerLocator implements ControllerLocatorInterface
     public function canLocate()
     {
         return ClassMapFactory::getInstance()->has('Zed', $this->bundle, 'Controller' . $this->controller . 'Controller', 'Communication');
-    }
-
-    /**
-     * @param Container $container
-     *
-     * @return Container
-     */
-    protected function addDefaultDependencies(Container $container)
-    {
-        $container[AbstractCommunicationDependencyContainer::FORM_FACTORY] = function (Container $container) {
-            return (new Pimple())
-                ->getApplication()[AbstractCommunicationDependencyContainer::FORM_FACTORY];
-        };
-
-        return $container;
     }
 
 }

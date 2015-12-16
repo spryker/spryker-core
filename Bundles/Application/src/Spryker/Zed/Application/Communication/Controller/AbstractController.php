@@ -8,6 +8,10 @@ namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
+use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
@@ -24,7 +28,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 abstract class AbstractController
 {
 
-    const DEPENDENCY_CONTAINER = 'DependencyContainer';
     const TWIG_MESSENGER_PLUGIN = 'TwigMessengerPlugin';
 
     /**
@@ -95,12 +98,12 @@ abstract class AbstractController
             $this->dependencyContainer = $this->resolveDependencyContainer();
         }
 
-        if ($this->getQueryContainer() !== null) {
-            $this->dependencyContainer->setQueryContainer($this->getQueryContainer());
+        if ($this->queryContainer !== null) {
+            $this->dependencyContainer->setQueryContainer($this->queryContainer);
         }
 
-        if ($this->getContainer() !== null) {
-            $this->dependencyContainer->setContainer($this->getContainer());
+        if ($this->container !== null) {
+            $this->dependencyContainer->setContainer($this->container);
         }
 
         return $this->dependencyContainer;
@@ -111,23 +114,17 @@ abstract class AbstractController
      *
      * @return AbstractCommunicationDependencyContainer
      */
-    private function resolveDependencyContainer()
+    protected function resolveDependencyContainer()
     {
-        $classResolver = new DependencyContainerResolver();
-
-        return $classResolver->resolve($this);
+        return $this->getDependencyContainerResolver()->resolve($this);
     }
 
     /**
-     * @param AbstractFacade $facade
-     *
-     * @return self
+     * @return DependencyContainerResolver
      */
-    public function setOwnFacade(AbstractFacade $facade)
+    protected function getDependencyContainerResolver()
     {
-        $this->facade = $facade;
-
-        return $this;
+        return new DependencyContainerResolver();
     }
 
     /**
@@ -135,7 +132,28 @@ abstract class AbstractController
      */
     protected function getFacade()
     {
+        if ($this->facade === null) {
+            $this->facade = $this->resolveFacade();
+        }
         return $this->facade;
+    }
+
+    /**
+     * @throws FacadeNotFoundException
+     *
+     * @return AbstractFacade
+     */
+    protected function resolveFacade()
+    {
+        return $this->getFacadeResolver()->resolve($this);
+    }
+
+    /**
+     * @return FacadeResolver
+     */
+    protected function getFacadeResolver()
+    {
+        return new FacadeResolver();
     }
 
     /**
@@ -143,7 +161,7 @@ abstract class AbstractController
      *
      * @return self
      */
-    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
+    public function setQueryContainer(AbstractQueryContainer $queryContainer)
     {
         $this->queryContainer = $queryContainer;
 
@@ -155,7 +173,29 @@ abstract class AbstractController
      */
     protected function getQueryContainer()
     {
+        if ($this->queryContainer === null) {
+            $this->queryContainer = $this->resolveQueryContainer();
+        }
+
         return $this->queryContainer;
+    }
+
+    /**
+     * @throws QueryContainerNotFoundException
+     *
+     * @return AbstractQueryContainer
+     */
+    protected function resolveQueryContainer()
+    {
+        return $this->getQueryContainerResolver()->resolve($this);
+    }
+
+    /**
+     * @return QueryContainerResolver
+     */
+    protected function getQueryContainerResolver()
+    {
+        return new QueryContainerResolver();
     }
 
     /**
