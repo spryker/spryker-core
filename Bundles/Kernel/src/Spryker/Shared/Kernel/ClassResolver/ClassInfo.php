@@ -8,7 +8,7 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 
-abstract class AbstractClassInfo
+class ClassInfo
 {
 
     const KEY_NAMESPACE = 0;
@@ -37,18 +37,28 @@ abstract class AbstractClassInfo
         }
         $this->callerClassName = $callerClass;
 
-        if (strpos($callerClass, '\\') === false) {
+        if ($this->isFullyQualifiedClassName($callerClass)) {
+            $callerClassParts = explode('\\', $callerClass);
+            $callerClassParts = $this->removeTestNamespace($callerClassParts);
+        } else {
             $callerClassParts = [
                 self::KEY_BUNDLE => $callerClass,
             ];
-        } else {
-            $callerClassParts = explode('\\', $callerClass);
-            $callerClassParts = $this->removeTestNamespace($callerClassParts);
         }
 
         $this->callerClassParts = $callerClassParts;
 
         return $this;
+    }
+
+    /**
+     * @param string $callerClass
+     *
+     * @return bool
+     */
+    private function isFullyQualifiedClassName($callerClass)
+    {
+        return (strpos($callerClass, '\\') !== false);
     }
 
     /**

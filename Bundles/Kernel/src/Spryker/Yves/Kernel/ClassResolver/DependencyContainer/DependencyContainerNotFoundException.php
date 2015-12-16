@@ -8,7 +8,7 @@ namespace Spryker\Yves\Kernel\ClassResolver\DependencyContainer;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
-use Spryker\Yves\Kernel\ClassResolver\ClassInfo;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 
 class DependencyContainerNotFoundException extends \Exception

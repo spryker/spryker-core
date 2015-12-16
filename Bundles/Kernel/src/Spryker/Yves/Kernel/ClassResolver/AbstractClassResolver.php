@@ -7,6 +7,7 @@
 namespace Spryker\Yves\Kernel\ClassResolver;
 
 use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver as SharedAbstractClassResolver;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
 abstract class AbstractClassResolver extends SharedAbstractClassResolver
 {

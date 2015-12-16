@@ -6,7 +6,7 @@
 
 namespace Spryker\Client\Kernel\Exception\Container;
 
-use Spryker\Client\Kernel\ClassResolver\ClassInfo;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
 class ContainerKeyNotFoundException extends \Exception
 {

@@ -6,9 +6,9 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver;
 
-use Spryker\Shared\Kernel\ClassResolver\AbstractClassInfo;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo as SharedClassInfo;
 
-class ClassInfo extends AbstractClassInfo
+class ClassInfo extends SharedClassInfo
 {
 
     const KEY_LAYER = 3;
