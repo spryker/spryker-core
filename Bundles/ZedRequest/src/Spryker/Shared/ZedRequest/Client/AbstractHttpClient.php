@@ -229,7 +229,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
-        $request = $this->getClientRequest();
+        $request = $this->getRequest();
         $request->setSessionId(session_id());
         $request->setTime(time());
         $request->setHost(System::getHostname() ?: 'n/a');
@@ -369,7 +369,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @return Request
      */
-    private function getClientRequest()
+    protected function getRequest()
     {
         return new Request();
     }

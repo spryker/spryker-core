@@ -26,7 +26,7 @@ abstract class AbstractZedClientProvider extends AbstractClientProvider
      *
      * @return AbstractZedClient
      */
-    protected function createClient()
+    protected function createZedClient()
     {
         $httpClient = new HttpClient(
             $this->locator,

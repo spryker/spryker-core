@@ -29,7 +29,7 @@ abstract class AbstractClientProvider
     public function getInstance()
     {
         if ($this->client === null) {
-            $this->client = $this->createClient();
+            $this->client = $this->createZedClient();
         }
 
         return $this->client;
@@ -46,6 +46,6 @@ abstract class AbstractClientProvider
     /**
      * @return mixed
      */
-    abstract protected function createClient();
+    abstract protected function createZedClient();
 
 }

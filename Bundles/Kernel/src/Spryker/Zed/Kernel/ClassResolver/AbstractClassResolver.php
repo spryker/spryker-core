@@ -45,7 +45,7 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
 
     /**
      * @param string $namespace
-     * @param string $store
+     * @param string|null $store
      *
      * @return string
      */

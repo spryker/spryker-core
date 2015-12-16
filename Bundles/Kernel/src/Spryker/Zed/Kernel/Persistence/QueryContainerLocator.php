@@ -70,7 +70,7 @@ class QueryContainerLocator extends AbstractLocator
     /**
      * @return QueryContainerResolver
      */
-    private function getQueryContainerResolver()
+    protected function getQueryContainerResolver()
     {
         return new QueryContainerResolver();
     }

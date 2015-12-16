@@ -24,7 +24,7 @@ abstract class AbstractKvProvider extends AbstractClientProvider
     /**
      * @return mixed
      */
-    protected function createClient()
+    protected function createZedClient()
     {
         $kvName = Config::get(ApplicationConstants::STORAGE_KV_SOURCE);
         $kvConfig = $this->getConfigByKvName($kvName);

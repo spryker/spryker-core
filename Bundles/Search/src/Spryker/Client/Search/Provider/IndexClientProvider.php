@@ -17,7 +17,7 @@ class IndexClientProvider extends AbstractIndexClientProvider
      */
     public function getClient()
     {
-        return $this->createClient();
+        return $this->createZedClient();
     }
 
 }

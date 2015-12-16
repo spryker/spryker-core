@@ -25,7 +25,7 @@ abstract class AbstractIndexClientProvider extends AbstractClientProvider
      *
      * @return Index
      */
-    protected function createClient()
+    protected function createZedClient()
     {
         return (new Client([
             'protocol' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT),

@@ -47,7 +47,7 @@ class DependencyContainerResolver extends AbstractClassResolver
 
     /**
      * @param string $namespace
-     * @param string $store
+     * @param string|null $store
      *
      * @return string
      */
