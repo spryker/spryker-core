@@ -47,8 +47,8 @@ class TranslationGridTest extends Test
 
         $this->generateTestLocales();
 
-        $dependencyContainer = $this->getGlossaryQueryContainer();
-        $this->query = $dependencyContainer->queryKeysAndTranslationsForEachLanguage(array_keys($this->locales));
+        $queryContainer = $this->getGlossaryQueryContainer();
+        $this->query = $queryContainer->queryKeysAndTranslationsForEachLanguage(array_keys($this->locales));
         $this->request = Request::createFromGlobals();
     }
 

@@ -39,7 +39,7 @@ class Auth implements AuthInterface
     /**
      * @var AuthBusinessFactory
      */
-    protected $dependencyContainer;
+    protected $businessFactory;
 
     /**
      * @todo cleanup dependencies

@@ -45,12 +45,12 @@ class SellableTest extends AbstractFunctionalTest
         $this->availabilityFacade = new AvailabilityFacade();
 
         $container = new Container();
-        $dependencyContainer = new AvailabilityBusinessFactory();
+        $businessFactory = new AvailabilityBusinessFactory();
         $dependencyProvider = new AvailabilityDependencyProvider();
         $dependencyProvider->provideBusinessLayerDependencies($container);
-        $dependencyContainer->setContainer($container);
+        $businessFactory->setContainer($container);
 
-        $this->availabilityFacade->setBusinessFactory($dependencyContainer);
+        $this->availabilityFacade->setBusinessFactory($businessFactory);
     }
 
     /**

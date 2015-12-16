@@ -87,9 +87,9 @@ class SaverTest extends Test
      */
     private function getPayolutionBusinessBusinessFactory()
     {
-        $dependencyContainer = new PayolutionBusinessFactory();
+        $businessFactory = new PayolutionBusinessFactory();
 
-        return $dependencyContainer;
+        return $businessFactory;
     }
 
     /**

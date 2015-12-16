@@ -8,7 +8,7 @@ namespace Functional\Spryker\Zed\Touch;
 
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Touch\Business\TouchTouchTest.phpFactory;
+use Spryker\Zed\Touch\Business\TouchBusinessFactory;
 use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -43,9 +43,9 @@ class TouchTest extends AbstractFunctionalTest
         $container = new Container();
         $dependencyProvider = new TouchDependencyProvider();
         $dependencyProvider->provideBusinessLayerDependencies($container);
-        $dependencyContainer = new TouchTouchTest.phpFactory();
-        $dependencyContainer->setContainer($container);
-        $this->touchFacade->setBusinessFactory($dependencyContainer);
+        $businessFactory = new TouchBusinessFactory();
+        $businessFactory->setContainer($container);
+        $this->touchFacade->setBusinessFactory($businessFactory);
         $this->touchQueryContainer = new TouchQueryContainer();
     }
 

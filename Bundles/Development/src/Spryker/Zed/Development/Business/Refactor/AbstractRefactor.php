@@ -157,13 +157,13 @@ abstract class AbstractRefactor implements RefactorInterface
     }
 
     /**
-     * @param SplFileInfo $dependencyContainer
+     * @param SplFileInfo $file
      *
      * @return bool
      */
-    protected function isProject(SplFileInfo $dependencyContainer)
+    protected function isProject(SplFileInfo $file)
     {
-        if ($this->getNamespaceFromFileInfo($dependencyContainer) === self::NAMESPACE_PROJECT) {
+        if ($this->getNamespaceFromFileInfo($file) === self::NAMESPACE_PROJECT) {
             return true;
         }
 
