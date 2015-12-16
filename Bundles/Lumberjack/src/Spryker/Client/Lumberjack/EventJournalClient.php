@@ -8,6 +8,9 @@ namespace Spryker\Client\Lumberjack;
 
 use Spryker\Shared\Lumberjack\Model\AbstractEventJournal;
 
+/**
+ * @deprecated Lumberjack is deprecated use EventJournal instead.
+ */
 class EventJournalClient extends AbstractEventJournal implements EventJournalClientInterface
 {
 }

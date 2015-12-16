@@ -9,6 +9,9 @@ namespace Spryker\Client\Lumberjack;
 use Spryker\Shared\Lumberjack\Model\Collector\AbstractDataCollector;
 use Spryker\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
 
+/**
+ * @deprecated Lumberjack is deprecated use EventJournal instead.
+ */
 class YvesDataCollector extends AbstractDataCollector implements DataCollectorInterface
 {
 

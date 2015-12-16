@@ -7,6 +7,9 @@ namespace Spryker\Zed\Lumberjack;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @deprecated Lumberjack is deprecated use EventJournal instead.
+ */
 class LumberjackConfig extends AbstractBundleConfig
 {
 }
