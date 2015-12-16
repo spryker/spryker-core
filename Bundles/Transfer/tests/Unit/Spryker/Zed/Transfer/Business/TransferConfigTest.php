@@ -19,15 +19,7 @@ class TransferConfigTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfig()
     {
-        return new TransferConfig(Config::getInstance(), $this->getLocator());
-    }
-
-    /**
-     * @return Locator
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
+        return new TransferConfig(Config::getInstance());
     }
 
     /**

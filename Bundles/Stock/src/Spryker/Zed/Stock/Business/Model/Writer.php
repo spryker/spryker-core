@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
@@ -43,26 +41,18 @@ class Writer implements WriterInterface
     protected $touchFacade;
 
     /**
-     * @var LocatorLocatorInterface|AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @param StockQueryContainer $queryContainer
      * @param ReaderInterface $readerInterface
      * @param StockToTouchInterface $touchFacade
-     * @param LocatorLocatorInterface $locator
      */
     public function __construct(
         StockQueryContainer $queryContainer,
         ReaderInterface $readerInterface,
-        StockToTouchInterface $touchFacade,
-        LocatorLocatorInterface $locator
+        StockToTouchInterface $touchFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $readerInterface;
         $this->touchFacade = $touchFacade;
-        $this->locator = $locator;
     }
 
     /**

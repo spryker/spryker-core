@@ -11,7 +11,6 @@ use Spryker\Zed\Stock\Business\Model\Reader;
 use Spryker\Zed\Stock\Business\Model\Calculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 use Spryker\Zed\Stock\Business\Model\ReaderInterface;
 use Spryker\Zed\Stock\Business\Model\WriterInterface;
 use Spryker\Zed\Stock\Business\Model\CalculatorInterface;
@@ -54,17 +53,8 @@ class StockBusinessFactory extends AbstractBusinessFactory
         return new Writer(
             $this->getQueryContainer(),
             $this->getReaderModel(),
-            $this->getTouchFacade(),
-            $this->getLocator()
+            $this->getTouchFacade()
         );
-    }
-
-    /**
-     * @return StockQueryContainer
-     */
-    protected function getQueryContainer()
-    {
-        return $this->getLocator()->stock()->queryContainer();
     }
 
     /**

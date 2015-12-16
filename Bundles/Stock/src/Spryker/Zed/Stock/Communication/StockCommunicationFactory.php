@@ -6,25 +6,19 @@
 
 namespace Spryker\Zed\Stock\Communication;
 
-use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Stock\Communication\Form\StockForm;
 use Spryker\Zed\Stock\Communication\Form\StockProductForm;
 use Spryker\Zed\Stock\Communication\Grid\StockGrid;
 use Spryker\Zed\Stock\Communication\Grid\StockProductGrid;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method StockQueryContainer getQueryContainer()
+ */
 class StockCommunicationFactory extends AbstractCommunicationFactory
 {
-
-    /**
-     * @return StockFacade
-     */
-    public function getStockFacade()
-    {
-        return $this->getLocator()->stock()->facade();
-    }
 
     /**
      * @param Request $request
@@ -75,14 +69,6 @@ class StockCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer()->queryAllStockProductsJoinedStockJoinedProduct(),
             $request
         );
-    }
-
-    /**
-     * @return StockQueryContainer
-     */
-    public function getQueryContainer()
-    {
-        return $this->getLocator()->stock()->queryContainer();
     }
 
 }

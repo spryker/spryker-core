@@ -20,6 +20,7 @@ use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\User\UserDependencyProvider;
 
 /**
  * @group Zed
@@ -71,6 +72,10 @@ class AclTest extends Test
         $this->facade = new AclFacade();
         $this->facade->setQueryContainer(new AclQueryContainer());
         $this->facade->setExternalDependencies($container);
+
+        $userDependencyProvider = new UserDependencyProvider();
+        $userDependencyProvider->provideBusinessLayerDependencies($container);
+        $userDependencyProvider->provideCommunicationLayerDependencies($container);
 
         $this->userFacade = new UserFacade();
         $this->userFacade->setQueryContainer(new UserQueryContainer());

@@ -10,12 +10,11 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeInterface;
 
 /**
  * @method StockBusinessFactory getFactory()
  */
-class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInterface, StockToSalesFacadeInterface
+class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInterface
 {
 
     /**

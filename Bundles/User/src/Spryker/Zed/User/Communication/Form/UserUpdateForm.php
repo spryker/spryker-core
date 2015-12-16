@@ -5,6 +5,9 @@
 
 namespace Spryker\Zed\User\Communication\Form;
 
+use Spryker\Zed\User\Business\UserFacade;
+use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
+
 class UserUpdateForm extends UserForm
 {
 
@@ -14,11 +17,21 @@ class UserUpdateForm extends UserForm
     private $idUser;
 
     /**
-     * @param int $idUser
+     * @var UserFacade
      */
-    public function __construct($idUser)
+    protected $userFacade;
+
+    /**
+     * @param int $idUser
+     * @param UserFacade $userFacade
+     * @param UserToAclInterface $aclFacade
+     */
+    public function __construct($idUser, UserFacade $userFacade, UserToAclInterface $aclFacade)
     {
+        parent::__construct($aclFacade);
+
         $this->idUser = $idUser;
+        $this->userFacade = $userFacade;
     }
 
     /**
@@ -40,8 +53,7 @@ class UserUpdateForm extends UserForm
      */
     protected function populateFormFields()
     {
-        $userFacade = $this->getLocator()->user()->facade();
-        $userTransfer = $userFacade->getUserById($this->idUser);
+        $userTransfer = $this->userFacade->getUserById($this->idUser);
 
         $formData = $userTransfer->toArray();
         $formData = $this->populateSelectedAclGroups($formData);
@@ -56,8 +68,7 @@ class UserUpdateForm extends UserForm
      */
     protected function populateSelectedAclGroups(array $formData)
     {
-        $aclFacade = $this->getLocator()->acl()->facade();
-        $userAclGroupsTransfer = $aclFacade->getUserGroups($this->idUser);
+        $userAclGroupsTransfer = $this->aclFacade->getUserGroups($this->idUser);
 
         $groupChoices = $this->getGroupChoices();
         foreach ($userAclGroupsTransfer->getGroups() as $aclGroupTransfer) {

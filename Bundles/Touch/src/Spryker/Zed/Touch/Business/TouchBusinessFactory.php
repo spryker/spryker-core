@@ -11,7 +11,6 @@ use Spryker\Zed\Touch\Business\Model\TouchRecord;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Touch\Business\Model\TouchInterface;
 use Spryker\Zed\Touch\Business\Model\TouchRecordInterface;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Spryker\Zed\Touch\TouchDependencyProvider;
 
 class TouchBusinessFactory extends AbstractBusinessFactory
@@ -37,14 +36,6 @@ class TouchBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
-    }
-
-    /**
-     * @return TouchQueryContainerInterface
-     */
-    protected function getQueryContainer()
-    {
-        return $this->getLocator()->touch()->queryContainer();
     }
 
 }

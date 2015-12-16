@@ -7,6 +7,7 @@ namespace Spryker\Zed\User\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
+use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
 
 class UserForm extends AbstractForm
 {
@@ -22,6 +23,21 @@ class UserForm extends AbstractForm
      * @var array
      */
     protected $allAclGroups;
+
+    /**
+     * @var UserToAclInterface
+     */
+    protected $aclFacade;
+
+    /**
+     * UserForm constructor.
+     *
+     * @param UserToAclInterface $aclFacade
+     */
+    public function __construct(UserToAclInterface $aclFacade)
+    {
+        $this->aclFacade = $aclFacade;
+    }
 
     /**
      * Prepares form
@@ -159,7 +175,7 @@ class UserForm extends AbstractForm
     protected function getGroupChoices()
     {
         if ($this->allAclGroups === null) {
-            $groupsTransfer = $this->getLocator()->acl()->facade()->getAllGroups();
+            $groupsTransfer = $this->aclFacade->getAllGroups();
 
             foreach ($groupsTransfer->getGroups() as $groupTransfer) {
                 $this->allAclGroups[$groupTransfer->getIdAclGroup()] =

@@ -6,6 +6,7 @@
 namespace Spryker\Zed\User\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword;
 
 class ResetPasswordForm extends AbstractForm
@@ -13,6 +14,21 @@ class ResetPasswordForm extends AbstractForm
 
     const CURRENT_PASSWORD = 'current_password';
     const PASSWORD = 'password';
+
+    /**
+     * @var UserFacade
+     */
+    protected $userFacade;
+
+    /**
+     * ResetPasswordForm constructor.
+     *
+     * @param UserFacade $userFacade
+     */
+    public function __construct(UserFacade $userFacade)
+    {
+        $this->userFacade = $userFacade;
+    }
 
     /**
      * Prepares form
@@ -28,7 +44,7 @@ class ResetPasswordForm extends AbstractForm
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                     new CurrentPassword([
-                        'facadeUser' => $this->getLocator()->user()->facade(),
+                        'facadeUser' => $this->userFacade,
                     ]),
                 ],
             ]

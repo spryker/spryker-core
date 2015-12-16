@@ -8,6 +8,7 @@ namespace Spryker\Zed\StockSalesConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeInterface;
+use Spryker\Zed\StockSalesConnector\StockSalesConnectorDependencyProvider;
 
 class StockSalesConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -17,7 +18,7 @@ class StockSalesConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function getStockFacade()
     {
-        return $this->getLocator()->stock()->facade();
+        return $this->getProvidedDependency(StockSalesConnectorDependencyProvider::FACADE_STOCK);
     }
 
 }

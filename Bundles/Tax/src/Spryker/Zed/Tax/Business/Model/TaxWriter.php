@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Tax\Business\Model;
 
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
@@ -16,17 +15,11 @@ use Spryker\Zed\Tax\TaxConfig;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Collection\Collection;
 
 class TaxWriter implements TaxWriterInterface
 {
-
-    /**
-     * @var AutoCompletion
-     */
-    protected $locator;
 
     /**
      * @var TaxQueryContainerInterface
@@ -44,16 +37,13 @@ class TaxWriter implements TaxWriterInterface
     protected $taxChangePlugins;
 
     /**
-     * @param LocatorLocatorInterface $locator
      * @param TaxQueryContainerInterface $queryContainer
      * @param TaxChangePluginInterface[] $taxChangePlugins
      */
     public function __construct(
-        LocatorLocatorInterface $locator,
         TaxQueryContainerInterface $queryContainer,
         array $taxChangePlugins
     ) {
-        $this->locator = $locator;
         $this->queryContainer = $queryContainer;
         $this->taxChangePlugins = $taxChangePlugins;
     }
