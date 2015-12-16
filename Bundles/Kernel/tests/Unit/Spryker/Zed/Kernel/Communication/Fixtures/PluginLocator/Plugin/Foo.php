@@ -7,18 +7,18 @@
 namespace Unit\Spryker\Zed\Kernel\Communication\Fixtures\PluginLocator\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Kernel\Communication\CommunicationFactoryInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 class Foo extends AbstractPlugin
 {
 
     /**
-     * @return DependencyContainerInterface
+     * @return CommunicationFactoryInterface
      */
-    public function getDependencyContainer()
+    public function getCommunicationFactory()
     {
-        return parent::getDependencyContainer();
+        return parent::getCommunicationFactory();
     }
 
     /**

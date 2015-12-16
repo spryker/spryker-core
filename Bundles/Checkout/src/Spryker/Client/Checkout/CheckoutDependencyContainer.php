@@ -8,10 +8,10 @@ namespace Spryker\Client\Checkout;
 
 use Spryker\Client\Checkout\CheckoutDependencyProvider;
 use Spryker\Client\Checkout\Zed\CheckoutStub;
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Checkout\Zed\CheckoutStubInterface;
 
-class CheckoutDependencyContainer extends AbstractDependencyContainer
+class CheckoutDependencyContainer extends AbstractFactory
 {
 
     /**

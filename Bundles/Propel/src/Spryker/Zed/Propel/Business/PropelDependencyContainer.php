@@ -12,7 +12,7 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchema;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Propel\Business\Model\DirectoryRemoverInterface;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
 use Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjusterInterface;
@@ -28,7 +28,7 @@ use Symfony\Component\Console\Command\Command;
 /**
  * @method PropelConfig getConfig()
  */
-class PropelDependencyContainer extends AbstractBusinessDependencyContainer
+class PropelDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

@@ -14,7 +14,7 @@ use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneDependencyContainer getCommunicationFactory()
  * @method PayoneFacade getFacade()
  */
 class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface

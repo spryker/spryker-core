@@ -6,11 +6,11 @@
 
 namespace Spryker\Zed\ProductCartConnector\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
 use Spryker\Zed\ProductCartConnector\ProductCartConnectorDependencyProvider;
 
-class ProductCartConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
+class ProductCartConnectorDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

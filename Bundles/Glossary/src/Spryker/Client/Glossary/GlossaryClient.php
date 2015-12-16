@@ -9,7 +9,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Glossary\Storage\GlossaryStorageInterface;
 
 /**
- * @method GlossaryDependencyContainer getDependencyContainer()
+ * @method GlossaryDependencyContainer getFactory()
  */
 class GlossaryClient extends AbstractClient implements GlossaryClientInterface
 {
@@ -33,7 +33,7 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
      */
     private function createTranslator($localeName)
     {
-        return $this->getDependencyContainer()->createTranslator($localeName);
+        return $this->getFactory()->createTranslator($localeName);
     }
 
 }

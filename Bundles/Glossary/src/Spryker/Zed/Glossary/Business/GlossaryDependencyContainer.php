@@ -8,7 +8,7 @@ namespace Spryker\Zed\Glossary\Business;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Glossary\Business\Key\KeyManager;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManager;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Glossary\Business\Key\KeyManagerInterface;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
@@ -21,7 +21,7 @@ use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
  * @method GlossaryConfig getConfig()
  * @method GlossaryQueryContainerInterface getQueryContainer()
  */
-class GlossaryDependencyContainer extends AbstractBusinessDependencyContainer
+class GlossaryDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

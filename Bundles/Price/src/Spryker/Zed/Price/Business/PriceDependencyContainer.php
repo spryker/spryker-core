@@ -9,7 +9,7 @@ namespace Spryker\Zed\Price\Business;
 use Spryker\Zed\Price\Business\Model\BulkWriter;
 use Spryker\Zed\Price\Business\Model\Writer;
 use Spryker\Zed\Price\Business\Model\Reader;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Price\Business\Model\BulkWriterInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\Price\Business\Model\WriterInterface;
@@ -23,7 +23,7 @@ use Spryker\Zed\Price\PriceConfig;
 /**
  * @method PriceConfig getConfig()
  */
-class PriceDependencyContainer extends AbstractBusinessDependencyContainer
+class PriceDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

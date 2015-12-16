@@ -11,7 +11,7 @@ use Spryker\Zed\Sales\Business\Model\Split\Validation\Validator;
 use Spryker\Zed\Sales\Business\Model\Split\Calculator;
 use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
 use Spryker\Zed\Sales\Business\Model\OrderManager;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Model\CommentManager;
 use Spryker\Zed\Sales\Business\Model\OrderDetailsManager;
 use Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface;
@@ -25,7 +25,7 @@ use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 /**
  * @method SalesConfig getConfig()
  */
-class SalesDependencyContainer extends AbstractBusinessDependencyContainer
+class SalesDependencyContainer extends AbstractBusinessFactory
 {
 
     public function createOrderManager()

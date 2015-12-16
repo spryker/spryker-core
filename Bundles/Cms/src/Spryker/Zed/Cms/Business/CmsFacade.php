@@ -21,7 +21,7 @@ use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
- * @method CmsDependencyContainer getDependencyContainer()
+ * @method CmsDependencyContainer getBusinessFactory()
  */
 class CmsFacade extends AbstractFacade
 {
@@ -36,7 +36,7 @@ class CmsFacade extends AbstractFacade
      */
     public function createTemplate($name, $path)
     {
-        $templateManager = $this->getDependencyContainer()->getTemplateManager();
+        $templateManager = $this->getBusinessFactory()->getTemplateManager();
 
         return $templateEntity = $templateManager->createTemplate($name, $path);
     }
@@ -50,7 +50,7 @@ class CmsFacade extends AbstractFacade
      */
     public function getTemplate($path)
     {
-        $templateManager = $this->getDependencyContainer()->getTemplateManager();
+        $templateManager = $this->getBusinessFactory()->getTemplateManager();
 
         return $templateManager->getTemplateByPath($path);
     }
@@ -62,7 +62,7 @@ class CmsFacade extends AbstractFacade
      */
     public function hasTemplate($path)
     {
-        $templateManager = $this->getDependencyContainer()->getTemplateManager();
+        $templateManager = $this->getBusinessFactory()->getTemplateManager();
 
         return $templateManager->hasTemplatePath($path);
     }
@@ -76,7 +76,7 @@ class CmsFacade extends AbstractFacade
      */
     public function savePage(PageTransfer $pageTransfer)
     {
-        $pageManager = $this->getDependencyContainer()->getPageManager();
+        $pageManager = $this->getBusinessFactory()->getPageManager();
 
         return $pageManager->savePage($pageTransfer);
     }
@@ -88,7 +88,7 @@ class CmsFacade extends AbstractFacade
      */
     public function saveBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
-        $blockManager = $this->getDependencyContainer()->getBlockManager();
+        $blockManager = $this->getBusinessFactory()->getBlockManager();
 
         return $blockManager->saveBlock($cmsBlockTransfer);
     }
@@ -100,7 +100,7 @@ class CmsFacade extends AbstractFacade
      */
     public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer)
     {
-        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+        $glossaryKeyMappingManager = $this->getBusinessFactory()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->savePageKeyMapping($pageKeyMappingTransfer);
     }
@@ -112,7 +112,7 @@ class CmsFacade extends AbstractFacade
      */
     public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer)
     {
-        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+        $glossaryKeyMappingManager = $this->getBusinessFactory()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
     }
@@ -125,7 +125,7 @@ class CmsFacade extends AbstractFacade
      */
     public function hasPagePlaceholderMapping($idPage, $placeholder)
     {
-        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+        $glossaryKeyMappingManager = $this->getBusinessFactory()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->hasPagePlaceholderMapping($idPage, $placeholder);
     }
@@ -137,7 +137,7 @@ class CmsFacade extends AbstractFacade
      */
     public function hasBlockCategoryNodeMapping($idCategory)
     {
-        $blockManager = $this->getDependencyContainer()->getBlockManager();
+        $blockManager = $this->getBusinessFactory()->getBlockManager();
 
         return $blockManager->hasBlockCategoryNodeMapping($idCategory);
     }
@@ -152,7 +152,7 @@ class CmsFacade extends AbstractFacade
      */
     public function getPagePlaceholderMapping($idPage, $placeholder)
     {
-        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+        $glossaryKeyMappingManager = $this->getBusinessFactory()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->getPagePlaceholderMapping($idPage, $placeholder);
     }
@@ -164,7 +164,7 @@ class CmsFacade extends AbstractFacade
      */
     public function saveTemplate(CmsTemplateTransfer $cmsTemplateTransfer)
     {
-        $templateManager = $this->getDependencyContainer()->getTemplateManager();
+        $templateManager = $this->getBusinessFactory()->getTemplateManager();
 
         return $templateManager->saveTemplate($cmsTemplateTransfer);
     }
@@ -181,7 +181,7 @@ class CmsFacade extends AbstractFacade
      */
     public function translatePlaceholder($idPage, $placeholder, array $data = [])
     {
-        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+        $glossaryKeyMappingManager = $this->getBusinessFactory()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->translatePlaceholder($idPage, $placeholder, $data);
     }
@@ -195,7 +195,7 @@ class CmsFacade extends AbstractFacade
      */
     public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value)
     {
-        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+        $glossaryKeyMappingManager = $this->getBusinessFactory()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->addPlaceholderText($pageTransfer, $placeholder, $value);
     }
@@ -212,7 +212,7 @@ class CmsFacade extends AbstractFacade
      */
     public function deletePageKeyMapping(PageTransfer $pageTransfer, $placeholder)
     {
-        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+        $glossaryKeyMappingManager = $this->getBusinessFactory()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->deletePageKeyMapping($pageTransfer, $placeholder);
     }
@@ -227,7 +227,7 @@ class CmsFacade extends AbstractFacade
      */
     public function createPageUrl(PageTransfer $pageTransfer, $url)
     {
-        $pageManager = $this->getDependencyContainer()->getPageManager();
+        $pageManager = $this->getBusinessFactory()->getPageManager();
 
         return $pageManager->createPageUrl($pageTransfer, $url);
     }
@@ -239,7 +239,7 @@ class CmsFacade extends AbstractFacade
      */
     public function touchPageActive(PageTransfer $pageTransfer)
     {
-        $pageManager = $this->getDependencyContainer()->getPageManager();
+        $pageManager = $this->getBusinessFactory()->getPageManager();
         $pageManager->touchPageActive($pageTransfer);
     }
 
@@ -250,7 +250,7 @@ class CmsFacade extends AbstractFacade
      */
     public function touchBlockActive(CmsBlockTransfer $cmsBlockTransfer)
     {
-        $blockManager = $this->getDependencyContainer()->getBlockManager();
+        $blockManager = $this->getBusinessFactory()->getBlockManager();
         $blockManager->touchBlockActive($cmsBlockTransfer);
     }
 
@@ -261,7 +261,7 @@ class CmsFacade extends AbstractFacade
      */
     public function touchBlockDelete(CmsBlockTransfer $cmsBlockTransfer)
     {
-        $blockManager = $this->getDependencyContainer()->getBlockManager();
+        $blockManager = $this->getBusinessFactory()->getBlockManager();
         $blockManager->touchBlockDelete($cmsBlockTransfer);
     }
 
@@ -273,7 +273,7 @@ class CmsFacade extends AbstractFacade
      */
     public function savePageUrlAndTouch(PageTransfer $pageTransfer, $url)
     {
-        $pageManager = $this->getDependencyContainer()->getPageManager();
+        $pageManager = $this->getBusinessFactory()->getPageManager();
 
         return $pageManager->savePageUrlAndTouch($pageTransfer, $url);
     }
@@ -286,7 +286,7 @@ class CmsFacade extends AbstractFacade
      */
     public function savePageBlockAndTouch(PageTransfer $pageTransfer, CmsBlockTransfer $blockTransfer)
     {
-        $pageManager = $this->getDependencyContainer()->getPageManager();
+        $pageManager = $this->getBusinessFactory()->getPageManager();
 
         return $pageManager->savePageBlockAndTouch($pageTransfer, $blockTransfer);
     }
@@ -298,7 +298,7 @@ class CmsFacade extends AbstractFacade
      */
     public function deleteGlossaryKeysByIdPage($idPage)
     {
-        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+        $glossaryKeyMappingManager = $this->getBusinessFactory()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->deleteGlossaryKeysByIdPage($idPage);
     }
@@ -310,7 +310,7 @@ class CmsFacade extends AbstractFacade
      */
     public function syncTemplate($cmsTemplateFolderPath)
     {
-        $templateManager = $this->getDependencyContainer()->getTemplateManager();
+        $templateManager = $this->getBusinessFactory()->getTemplateManager();
 
         return $templateManager->syncTemplate($cmsTemplateFolderPath);
     }
@@ -323,7 +323,7 @@ class CmsFacade extends AbstractFacade
      */
     public function generateGlossaryKeyName($templateName, $placeholder)
     {
-        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+        $glossaryKeyMappingManager = $this->getBusinessFactory()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->generateGlossaryKeyName($templateName, $placeholder);
     }
@@ -335,7 +335,7 @@ class CmsFacade extends AbstractFacade
      */
     public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode)
     {
-        $blockManager = $this->getDependencyContainer()->getBlockManager();
+        $blockManager = $this->getBusinessFactory()->getBlockManager();
 
         $blockManager->updateBlocksAssignedToDeletedCategoryNode($idCategoryNode);
     }
@@ -347,7 +347,7 @@ class CmsFacade extends AbstractFacade
      */
     public function getCmsBlocksByIdCategoryNode($idCategoryNode)
     {
-        $blockManager = $this->getDependencyContainer()->getBlockManager();
+        $blockManager = $this->getBusinessFactory()->getBlockManager();
 
         return $blockManager->getCmsBlocksByIdCategoryNode($idCategoryNode);
     }

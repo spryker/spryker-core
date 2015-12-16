@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ProductSearchDependencyContainer getDependencyContainer()
+ * @method ProductSearchDependencyContainer getBusinessFactory()
  */
 class ProductSearchFacade extends AbstractFacade
 {
@@ -24,7 +24,7 @@ class ProductSearchFacade extends AbstractFacade
      */
     public function enrichProductsWithSearchAttributes(array $productsRaw, array $processedProducts)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->getProductAttributesTransformer()
             ->buildProductAttributes($productsRaw, $processedProducts);
     }
@@ -38,7 +38,7 @@ class ProductSearchFacade extends AbstractFacade
      */
     public function createSearchProducts(array $productsRaw, array $processedProducts, LocaleTransfer $locale)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->getProductSearchProcessor()
             ->buildProducts($productsRaw, $processedProducts, $locale);
     }
@@ -50,7 +50,7 @@ class ProductSearchFacade extends AbstractFacade
      */
     public function install(MessengerInterface $messenger)
     {
-        $this->getDependencyContainer()->getInstaller($messenger)->install();
+        $this->getBusinessFactory()->getInstaller($messenger)->install();
     }
 
 }

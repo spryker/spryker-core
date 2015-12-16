@@ -14,7 +14,7 @@ use Spryker\Client\Cart\Session\CartSessionInterface;
 use Spryker\Client\Cart\Zed\CartStubInterface;
 
 /**
- * @method CartDependencyContainer getDependencyContainer()
+ * @method CartDependencyContainer getFactory()
  */
 class CartClient extends AbstractClient implements CartClientInterface
 {
@@ -32,7 +32,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     protected function getSession()
     {
-        return $this->getDependencyContainer()->createSession();
+        return $this->getFactory()->createSession();
     }
 
     /**
@@ -75,7 +75,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     protected function getZedStub()
     {
-        return $this->getDependencyContainer()->createZedStub();
+        return $this->getFactory()->createZedStub();
     }
 
     /**

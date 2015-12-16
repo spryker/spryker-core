@@ -334,7 +334,7 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testCreatingTranslationForCurrentLocaleInsertsSomething()
     {
-        $this->markTestSkipped('[ErrorException] Container does not exist in Pyz\Zed\Glossary\Business\GlossaryDependencyContainer @see spryker/spryker#796');
+        $this->markTestSkipped('[ErrorException] Container does not exist in Pyz\Zed\Glossary\Business\GlossaryBusinessFactory @see spryker/spryker#796');
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $this->glossaryFacade->createKey('SomeNonExistingKey5');
 

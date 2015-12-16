@@ -25,7 +25,7 @@ use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseCo
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 
 /**
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneDependencyContainer getBusinessFactory()
  */
 class PayoneFacade extends AbstractFacade
 {
@@ -37,7 +37,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function saveOrder(OrderTransfer $orderTransfer)
     {
-        $this->getDependencyContainer()->createOrderManager()->saveOrder($orderTransfer);
+        $this->getBusinessFactory()->createOrderManager()->saveOrder($orderTransfer);
     }
 
     /**
@@ -47,7 +47,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function authorizePayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->authorizePayment($idPayment);
+        return $this->getBusinessFactory()->createPaymentManager()->authorizePayment($idPayment);
     }
 
     /**
@@ -57,7 +57,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function preAuthorizePayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->preAuthorizePayment($idPayment);
+        return $this->getBusinessFactory()->createPaymentManager()->preAuthorizePayment($idPayment);
     }
 
     /**
@@ -67,7 +67,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function capturePayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->capturePayment($idPayment);
+        return $this->getBusinessFactory()->createPaymentManager()->capturePayment($idPayment);
     }
 
     /**
@@ -77,7 +77,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function debitPayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->debitPayment($idPayment);
+        return $this->getBusinessFactory()->createPaymentManager()->debitPayment($idPayment);
     }
 
     /**
@@ -87,7 +87,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function refundPayment(PayoneRefundTransfer $refundTransfer)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->refundPayment($refundTransfer);
+        return $this->getBusinessFactory()->createPaymentManager()->refundPayment($refundTransfer);
     }
 
     /**
@@ -97,7 +97,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->creditCardCheck($creditCardData);
+        return $this->getBusinessFactory()->createPaymentManager()->creditCardCheck($creditCardData);
     }
 
     /**
@@ -107,8 +107,8 @@ class PayoneFacade extends AbstractFacade
      */
     public function processTransactionStatusUpdate(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer)
     {
-        $transactionManager = $this->getDependencyContainer()->createTransactionStatusManager();
-        $transactionTransfer = $this->getDependencyContainer()->createTransactionStatusUpdateRequest($transactionStatusUpdateTransfer);
+        $transactionManager = $this->getBusinessFactory()->createTransactionStatusManager();
+        $transactionTransfer = $this->getBusinessFactory()->createTransactionStatusUpdateRequest($transactionStatusUpdateTransfer);
 
         return $transactionManager->processTransactionStatusUpdate($transactionTransfer);
     }
@@ -120,7 +120,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isAuthorizationApproved(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationApproved($orderTransfer);
+        return $this->getBusinessFactory()->createApiLogFinder()->isAuthorizationApproved($orderTransfer);
     }
 
     /**
@@ -130,7 +130,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isAuthorizationRedirect(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationRedirect($orderTransfer);
+        return $this->getBusinessFactory()->createApiLogFinder()->isAuthorizationRedirect($orderTransfer);
     }
 
     /**
@@ -140,7 +140,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPreauthorizationApproved(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isPreauthorizationApproved($orderTransfer);
+        return $this->getBusinessFactory()->createApiLogFinder()->isPreauthorizationApproved($orderTransfer);
     }
 
     /**
@@ -150,7 +150,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPreauthorizationRedirect(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isPreauthorizationRedirect($orderTransfer);
+        return $this->getBusinessFactory()->createApiLogFinder()->isPreauthorizationRedirect($orderTransfer);
     }
 
     /**
@@ -160,7 +160,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isAuthorizationError(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationError($orderTransfer);
+        return $this->getBusinessFactory()->createApiLogFinder()->isAuthorizationError($orderTransfer);
     }
 
     /**
@@ -170,7 +170,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isCaptureApproved(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isCaptureApproved($orderTransfer);
+        return $this->getBusinessFactory()->createApiLogFinder()->isCaptureApproved($orderTransfer);
     }
 
     /**
@@ -180,7 +180,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isCaptureError(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isCaptureError($orderTransfer);
+        return $this->getBusinessFactory()->createApiLogFinder()->isCaptureError($orderTransfer);
     }
 
     /**
@@ -190,7 +190,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isRefundApproved(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isRefundApproved($orderTransfer);
+        return $this->getBusinessFactory()->createApiLogFinder()->isRefundApproved($orderTransfer);
     }
 
     /**
@@ -200,7 +200,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isRefundError(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isRefundError($orderTransfer);
+        return $this->getBusinessFactory()->createApiLogFinder()->isRefundError($orderTransfer);
     }
 
     /**
@@ -210,7 +210,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isRefundPossible(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->isRefundPossible($orderTransfer);
+        return $this->getBusinessFactory()->createPaymentManager()->isRefundPossible($orderTransfer);
     }
 
     /**
@@ -220,7 +220,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPaymentDataRequired(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->isPaymentDataRequired($orderTransfer);
+        return $this->getBusinessFactory()->createPaymentManager()->isPaymentDataRequired($orderTransfer);
     }
 
     /**
@@ -230,7 +230,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function getAuthorizationResponse(PayonePaymentTransfer $payment)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->getAuthorizationResponse($payment);
+        return $this->getBusinessFactory()->createApiLogFinder()->getAuthorizationResponse($payment);
     }
 
     /**
@@ -241,7 +241,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createTransactionStatusManager()
             ->isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem);
     }
@@ -254,7 +254,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPaymentPaid($idSalesOrder, $idSalesOrderItem)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createTransactionStatusManager()
             ->isPaymentPaid($idSalesOrder, $idSalesOrderItem);
     }
@@ -267,7 +267,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPaymentOverpaid($idSalesOrder, $idSalesOrderItem)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createTransactionStatusManager()
             ->isPaymentOverpaid($idSalesOrder, $idSalesOrderItem);
     }
@@ -280,7 +280,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createTransactionStatusManager()
             ->isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem);
     }
@@ -293,7 +293,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPaymentAppointed($idSalesOrder, $idSalesOrderItem)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createTransactionStatusManager()
             ->isPaymentAppointed($idSalesOrder, $idSalesOrderItem);
     }
@@ -306,7 +306,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPaymentOther($idSalesOrder, $idSalesOrderItem)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createTransactionStatusManager()
             ->isPaymentOther($idSalesOrder, $idSalesOrderItem);
     }
@@ -319,7 +319,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPaymentCapture($idSalesOrder, $idSalesOrderItem)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createTransactionStatusManager()
             ->isPaymentCapture($idSalesOrder, $idSalesOrderItem);
     }
@@ -332,7 +332,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createPaymentManager()
             ->postSaveHook($orderTransfer, $checkoutResponse);
     }
@@ -344,7 +344,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function getPaymentLogs(ObjectCollection $orders)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->getPaymentLogs($orders);
+        return $this->getBusinessFactory()->createPaymentManager()->getPaymentLogs($orders);
     }
 
     /**
@@ -354,7 +354,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function getPaymentData($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->getPaymentData($idPayment);
+        return $this->getBusinessFactory()->createPaymentManager()->getPaymentData($idPayment);
     }
 
     /**
@@ -365,7 +365,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder)
     {
-        $this->getDependencyContainer()->createPaymentManager()->updatePaymentDetail($paymentData, $idOrder);
+        $this->getBusinessFactory()->createPaymentManager()->updatePaymentDetail($paymentData, $idOrder);
     }
 
 }

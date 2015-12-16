@@ -16,7 +16,7 @@ use Spryker\Zed\AvailabilityCheckoutConnector\Communication\AvailabilityCheckout
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
 /**
- * @method AvailabilityCheckoutConnectorDependencyContainer getDependencyContainer()
+ * @method AvailabilityCheckoutConnectorDependencyContainer getCommunicationFactory()
  */
 class ProductsAvailablePreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
@@ -29,7 +29,7 @@ class ProductsAvailablePreConditionPlugin extends AbstractPlugin implements Chec
      */
     protected function isProductSellable($sku, $quantity)
     {
-        return $this->getDependencyContainer()->getAvailabilityFacade()->isProductSellable($sku, $quantity);
+        return $this->getCommunicationFactory()->getAvailabilityFacade()->isProductSellable($sku, $quantity);
     }
 
     /**

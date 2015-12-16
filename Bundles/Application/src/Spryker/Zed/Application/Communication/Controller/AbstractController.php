@@ -14,10 +14,10 @@ use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundExcept
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
-use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use Spryker\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\CommunicationFactoryInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -36,9 +36,9 @@ abstract class AbstractController
     private $application;
 
     /**
-     * @var AbstractCommunicationDependencyContainer
+     * @var AbstractCommunicationFactory
      */
-    private $dependencyContainer;
+    private $communicationFactory;
 
     /**
      * @var AbstractFacade
@@ -90,41 +90,41 @@ abstract class AbstractController
     }
 
     /**
-     * @return DependencyContainerInterface
+     * @return CommunicationFactoryInterface
      */
-    protected function getDependencyContainer()
+    protected function getCommunicationFactory()
     {
-        if ($this->dependencyContainer === null) {
-            $this->dependencyContainer = $this->resolveDependencyContainer();
+        if ($this->communicationFactory === null) {
+            $this->communicationFactory = $this->resolveCommunicationFactory();
         }
 
         if ($this->queryContainer !== null) {
-            $this->dependencyContainer->setQueryContainer($this->queryContainer);
+            $this->communicationFactory->setQueryContainer($this->queryContainer);
         }
 
         if ($this->container !== null) {
-            $this->dependencyContainer->setContainer($this->container);
+            $this->communicationFactory->setContainer($this->container);
         }
 
-        return $this->dependencyContainer;
+        return $this->communicationFactory;
     }
 
     /**
-     * @throws DependencyContainerNotFoundException
+     * @throws FactoryNotFoundException
      *
-     * @return AbstractCommunicationDependencyContainer
+     * @return AbstractCommunicationFactory
      */
-    protected function resolveDependencyContainer()
+    protected function resolveCommunicationFactory()
     {
-        return $this->getDependencyContainerResolver()->resolve($this);
+        return $this->getFactoryResolver()->resolve($this);
     }
 
     /**
-     * @return DependencyContainerResolver
+     * @return FactoryResolver
      */
-    protected function getDependencyContainerResolver()
+    protected function getFactoryResolver()
     {
-        return new DependencyContainerResolver();
+        return new FactoryResolver();
     }
 
     /**

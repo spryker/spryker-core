@@ -13,14 +13,14 @@ use Spryker\Zed\Acl\Communication\Form\RulesetForm;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Acl\Business\AclFacade;
-use Spryker\Zed\Acl\Communication\AclDependencyContainer;
+use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Acl\Communication\Form\RoleForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * @method AclDependencyContainer getDependencyContainer()
+ * @method AclCommunicationFactory getCommunicationFactory()
  * @method AclFacade getFacade()
  * @method AclQueryContainer getQueryContainer()
  */
@@ -35,7 +35,7 @@ class RoleController extends AbstractController
      */
     public function indexAction()
     {
-        $roleTable = $this->getDependencyContainer()->createRoleTable();
+        $roleTable = $this->getCommunicationFactory()->createRoleTable();
 
         return [
             'roleTable' => $roleTable->render(),
@@ -47,7 +47,7 @@ class RoleController extends AbstractController
      */
     public function tableAction()
     {
-        $roleTable = $this->getDependencyContainer()->createRoleTable();
+        $roleTable = $this->getCommunicationFactory()->createRoleTable();
 
         return $this->jsonResponse(
             $roleTable->fetchData()
@@ -59,7 +59,7 @@ class RoleController extends AbstractController
      */
     public function createAction()
     {
-        $ruleForm = $this->getDependencyContainer()->createRoleForm();
+        $ruleForm = $this->getCommunicationFactory()->createRoleForm();
         $ruleForm->handleRequest();
 
         if ($ruleForm->isValid()) {
@@ -120,7 +120,7 @@ class RoleController extends AbstractController
     public function rulesetTableAction(Request $request)
     {
         $idRole = $request->get('id-role');
-        $rulesetTable = $this->getDependencyContainer()->createRulesetTable($idRole);
+        $rulesetTable = $this->getCommunicationFactory()->createRulesetTable($idRole);
 
         return $this->jsonResponse(
             $rulesetTable->fetchData()
@@ -144,17 +144,17 @@ class RoleController extends AbstractController
 
         $roleTransfer = $this->getFacade()->getRoleById($idRole);
 
-        $roleForm = $this->getDependencyContainer()->createRoleForm();
+        $roleForm = $this->getCommunicationFactory()->createRoleForm();
         $this->handleRoleForm($roleForm, $roleTransfer);
 
-        $rulesetForm = $this->getDependencyContainer()->createRulesetForm();
+        $rulesetForm = $this->getCommunicationFactory()->createRulesetForm();
         $this->handleRulesetForm($rulesetForm, $idRole);
 
         if ($rulesetForm->isSubmitted() && $rulesetForm->isValid()) {
             return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idRole));
         }
 
-        $rulesetTable = $this->getDependencyContainer()->createRulesetTable($idRole);
+        $rulesetTable = $this->getCommunicationFactory()->createRulesetTable($idRole);
 
         return [
             'roleForm' => $roleForm->createView(),

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Transfer\Business;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
@@ -22,7 +22,7 @@ use Psr\Log\LoggerInterface;
 /**
  * @method TransferConfig getConfig()
  */
-class TransferDependencyContainer extends AbstractBusinessDependencyContainer
+class TransferDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

@@ -11,7 +11,7 @@ use Spryker\Zed\Url\Communication\UrlDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method UrlDependencyContainer getDependencyContainer()
+ * @method UrlDependencyContainer getCommunicationFactory()
  */
 class GridController extends AbstractController
 {
@@ -21,7 +21,7 @@ class GridController extends AbstractController
      */
     public function translationAction_original()
     {
-        $grid = $this->getDependencyContainer()->getUrlKeyTranslationGrid();
+        $grid = $this->getCommunicationFactory()->getUrlKeyTranslationGrid();
 
         return $this->jsonResponse($grid->renderData());
     }
@@ -31,7 +31,7 @@ class GridController extends AbstractController
      */
     public function translationAction()
     {
-        $form = $this->getDependencyContainer()->getUrlForm();
+        $form = $this->getCommunicationFactory()->getUrlForm();
         $form->init();
 
         return $this->jsonResponse($form->renderData());

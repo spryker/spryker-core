@@ -11,7 +11,7 @@ use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
 use Spryker\Zed\ProductSearch\Communication\ProductSearchDependencyContainer;
 
 /**
- * @method ProductSearchDependencyContainer getDependencyContainer()
+ * @method ProductSearchDependencyContainer getCommunicationFactory()
  * @method ProductSearchFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method StockDependencyContainer getDependencyContainer()
+ * @method StockDependencyContainer getCommunicationFactory()
  * @method StockFacade getFacade()
  */
 class FormController extends AbstractController
@@ -28,7 +28,7 @@ class FormController extends AbstractController
      */
     public function stockAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->getStockForm($request);
+        $form = $this->getCommunicationFactory()->getStockForm($request);
 
         if ($form->isValid()) {
             $stockTypeTransfer = new TypeTransfer();
@@ -52,7 +52,7 @@ class FormController extends AbstractController
      */
     public function stockProductAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->getStockProductForm($request);
+        $form = $this->getCommunicationFactory()->getStockProductForm($request);
 
         if ($form->isValid()) {
             $stockProduct = new StockProductTransfer();

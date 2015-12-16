@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method SearchFacade getFacade()
- * @method SearchDependencyContainer getDependencyContainer()
+ * @method SearchDependencyContainer getCommunicationFactory()
  */
 class MaintenanceController extends AbstractController
 {
@@ -39,7 +39,7 @@ class MaintenanceController extends AbstractController
      */
     public function dropTimestampsAction()
     {
-        $this->getDependencyContainer()->createCollectorFacade()->deleteSearchTimestamps();
+        $this->getCommunicationFactory()->createCollectorFacade()->deleteSearchTimestamps();
 
         return $this->redirectResponse(self::URL_SEARCH_MAINTENANCE);
     }
@@ -49,7 +49,7 @@ class MaintenanceController extends AbstractController
      */
     public function listAction()
     {
-        $table = $this->getDependencyContainer()->createSearchTable();
+        $table = $this->getCommunicationFactory()->createSearchTable();
 
         return $this->viewResponse(['searchTable' => $table->render()]);
     }
@@ -59,7 +59,7 @@ class MaintenanceController extends AbstractController
      */
     public function listAjaxAction()
     {
-        $table = $this->getDependencyContainer()->createSearchTable();
+        $table = $this->getCommunicationFactory()->createSearchTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -87,7 +87,7 @@ class MaintenanceController extends AbstractController
     {
         $key = $request->get('key');
 
-        $type = $this->getDependencyContainer()->getConfig()->getElasticaDocumentType();
+        $type = $this->getCommunicationFactory()->getConfig()->getElasticaDocumentType();
         $document = $this->getFacade()->getDocument($key, $type);
 
         return $this->viewResponse([

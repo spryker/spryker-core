@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerDependencyContainer getCommunicationFactory()
  */
 class AddressController extends AbstractController
 {
@@ -30,7 +30,7 @@ class AddressController extends AbstractController
     {
         $idCustomer = $request->get(CustomerConfig::PARAM_ID_CUSTOMER);
 
-        $table = $this->getDependencyContainer()
+        $table = $this->getCommunicationFactory()
             ->createCustomerAddressTable($idCustomer);
 
         return $this->viewResponse([
@@ -46,7 +46,7 @@ class AddressController extends AbstractController
     {
         $idCustomer = $request->get(CustomerConfig::PARAM_ID_CUSTOMER);
 
-        $table = $this->getDependencyContainer()
+        $table = $this->getCommunicationFactory()
             ->createCustomerAddressTable($idCustomer);
 
         return $this->jsonResponse($table->fetchData());
@@ -105,7 +105,7 @@ class AddressController extends AbstractController
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
-        $addressForm = $this->getDependencyContainer()->createAddressForm();
+        $addressForm = $this->getCommunicationFactory()->createAddressForm();
         $addressForm->handleRequest($request);
 
         if ($addressForm->isValid()) {
@@ -135,7 +135,7 @@ class AddressController extends AbstractController
     {
         $idCustomer = $request->query->getInt(CustomerConfig::PARAM_ID_CUSTOMER);
 
-        $addressForm = $this->getDependencyContainer()->createAddressForm();
+        $addressForm = $this->getCommunicationFactory()->createAddressForm();
         $addressForm->handleRequest($request);
 
         if ($addressForm->isValid()) {

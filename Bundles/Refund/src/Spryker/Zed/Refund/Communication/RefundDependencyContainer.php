@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Refund\Communication;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Shared\Library\Context;
 use Spryker\Shared\Library\DateFormatter;
 use Spryker\Zed\Refund\Business\RefundFacade;
@@ -22,7 +22,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
  * @method RefundQueryContainer getQueryContainer()
  * @method RefundConfig getConfig()
  */
-class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
+class RefundDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

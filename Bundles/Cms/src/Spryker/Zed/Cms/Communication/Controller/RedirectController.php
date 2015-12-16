@@ -19,7 +19,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsDependencyContainer getDependencyContainer()
+ * @method CmsDependencyContainer getCommunicationFactory()
  * @method CmsFacade getFacade()
  */
 class RedirectController extends AbstractController
@@ -32,7 +32,7 @@ class RedirectController extends AbstractController
      */
     public function indexAction()
     {
-        $redirectTable = $this->getDependencyContainer()
+        $redirectTable = $this->getCommunicationFactory()
             ->createCmsRedirectTable();
 
         return [
@@ -45,7 +45,7 @@ class RedirectController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()
+        $table = $this->getCommunicationFactory()
             ->createCmsRedirectTable();
 
         return $this->jsonResponse($table->fetchData());
@@ -56,7 +56,7 @@ class RedirectController extends AbstractController
      */
     public function addAction()
     {
-        $form = $this->getDependencyContainer()
+        $form = $this->getCommunicationFactory()
             ->createCmsRedirectForm('add');
 
         $form->handleRequest();
@@ -88,7 +88,7 @@ class RedirectController extends AbstractController
     {
         $idUrl = $request->get(CmsRedirectTable::REQUEST_ID_URL);
 
-        $form = $this->getDependencyContainer()
+        $form = $this->getCommunicationFactory()
             ->createCmsRedirectForm('update', $idUrl);
 
         $form->handleRequest();
@@ -122,7 +122,7 @@ class RedirectController extends AbstractController
      */
     private function getUrlFacade()
     {
-        return $this->getDependencyContainer()
+        return $this->getCommunicationFactory()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
     }
 
@@ -131,7 +131,7 @@ class RedirectController extends AbstractController
      */
     private function getLocaleFacade()
     {
-        return $this->getDependencyContainer()
+        return $this->getCommunicationFactory()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
     }
 

@@ -11,7 +11,7 @@ use Spryker\Zed\Installer\Business\Model\InstallerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerDependencyContainer getCommunicationFactory()
  */
 class Installer extends AbstractPlugin implements InstallerInterface
 {
@@ -21,7 +21,7 @@ class Installer extends AbstractPlugin implements InstallerInterface
      */
     public function install()
     {
-        $this->getDependencyContainer()->createInstaller()->install();
+        $this->getCommunicationFactory()->createInstaller()->install();
     }
 
 }

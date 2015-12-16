@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @method AuthDependencyContainer getDependencyContainer()
+ * @method AuthDependencyContainer getCommunicationFactory()
  * @method AuthFacade getFacade()
  */
 class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProviderInterface

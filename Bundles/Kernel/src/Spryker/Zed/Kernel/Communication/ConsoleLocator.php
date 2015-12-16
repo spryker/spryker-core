@@ -12,8 +12,6 @@ use Spryker\Shared\Kernel\LocatorLocatorInterface;
 class ConsoleLocator extends AbstractLocator
 {
 
-    const DEPENDENCY_CONTAINER = 'DependencyContainer';
-
     /**
      * @var string
      */

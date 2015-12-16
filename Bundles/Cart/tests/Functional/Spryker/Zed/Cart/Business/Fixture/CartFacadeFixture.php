@@ -23,7 +23,7 @@ class CartFacadeFixture extends CartFacade
         );
     }
 
-    protected function getDependencyContainer()
+    protected function getBusinessFactory()
     {
         return $this->mockDependencyContainer;
     }

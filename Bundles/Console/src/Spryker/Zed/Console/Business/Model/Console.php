@@ -10,12 +10,12 @@ use Psr\Log\LoggerInterface;
 use Silex\Application;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
-use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use Spryker\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\CommunicationFactoryInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
@@ -46,9 +46,9 @@ class Console extends SymfonyCommand
     protected $output;
 
     /**
-     * @var DependencyContainerInterface
+     * @var CommunicationFactoryInterface
      */
-    private $dependencyContainer;
+    private $communicationFactory;
 
     /**
      * @var AbstractFacade
@@ -91,53 +91,53 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param AbstractCommunicationDependencyContainer $dependencyContainer
+     * @param AbstractCommunicationFactory $communicationFactory
      *
      * @return self
      */
-    public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
+    public function setCommunicationFactory(AbstractCommunicationFactory $communicationFactory)
     {
-        $this->dependencyContainer = $dependencyContainer;
+        $this->communicationFactory = $communicationFactory;
 
         return $this;
     }
 
     /**
-     * @return AbstractCommunicationDependencyContainer
+     * @return AbstractCommunicationFactory
      */
-    protected function getDependencyContainer()
+    protected function getCommunicationFactory()
     {
-        if ($this->dependencyContainer === null) {
-            $this->dependencyContainer = $this->resolveDependencyContainer();
+        if ($this->communicationFactory === null) {
+            $this->communicationFactory = $this->resolveCommunicationFactory();
         }
 
         if ($this->container !== null) {
-            $this->dependencyContainer->setContainer($this->container);
+            $this->communicationFactory->setContainer($this->container);
         }
 
         if ($this->queryContainer !== null) {
-            $this->dependencyContainer->setQueryContainer($this->queryContainer);
+            $this->communicationFactory->setQueryContainer($this->queryContainer);
         }
 
-        return $this->dependencyContainer;
+        return $this->communicationFactory;
     }
 
     /**
-     * @throws DependencyContainerNotFoundException
+     * @throws FactoryNotFoundException
      *
-     * @return AbstractCommunicationDependencyContainer
+     * @return AbstractCommunicationFactory
      */
-    protected function resolveDependencyContainer()
+    protected function resolveCommunicationFactory()
     {
-        return $this->getDependencyContainerResolver()->resolve($this);
+        return $this->getFactoryResolver()->resolve($this);
     }
 
     /**
-     * @return DependencyContainerResolver
+     * @return FactoryResolver
      */
-    protected function getDependencyContainerResolver()
+    protected function getFactoryResolver()
     {
-        return new DependencyContainerResolver();
+        return new FactoryResolver();
     }
 
     /**

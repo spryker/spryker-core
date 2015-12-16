@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method ProductCategoryFacade getFacade()
- * @method ProductCategoryDependencyContainer getDependencyContainer()
+ * @method ProductCategoryDependencyContainer getCommunicationFactory()
  * @method ProductCategoryQueryContainer getQueryContainer()
  */
 class AddController extends AbstractController
@@ -34,12 +34,12 @@ class AddController extends AbstractController
     {
         $idParentNode = $request->get(ProductCategoryConfig::PARAM_ID_PARENT_NODE);
 
-        $form = $this->getDependencyContainer()
+        $form = $this->getCommunicationFactory()
             ->createCategoryFormAdd($idParentNode);
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $localeTransfer = $this->getDependencyContainer()
+            $localeTransfer = $this->getCommunicationFactory()
                 ->createCurrentLocale();
 
             $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
@@ -67,10 +67,10 @@ class AddController extends AbstractController
     public function productCategoryTableAction(Request $request)
     {
         $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
-        $locale = $this->getDependencyContainer()
+        $locale = $this->getCommunicationFactory()
             ->createCurrentLocale();
 
-        $productCategoryTable = $this->getDependencyContainer()
+        $productCategoryTable = $this->getCommunicationFactory()
             ->createProductCategoryTable($locale, $idCategory);
 
         return $this->jsonResponse(
@@ -86,10 +86,10 @@ class AddController extends AbstractController
     public function productTableAction(Request $request)
     {
         $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
-        $locale = $this->getDependencyContainer()
+        $locale = $this->getCommunicationFactory()
             ->createCurrentLocale();
 
-        $productTable = $this->getDependencyContainer()
+        $productTable = $this->getCommunicationFactory()
             ->createProductTable($locale, $idCategory);
 
         return $this->jsonResponse(

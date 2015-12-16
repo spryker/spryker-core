@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method MailDependencyContainer getDependencyContainer()
+ * @method MailDependencyContainer getBusinessFactory()
  */
 class MailFacade extends AbstractFacade
 {
@@ -23,7 +23,7 @@ class MailFacade extends AbstractFacade
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
-        return $this->getDependencyContainer()->getMailSender()->sendMail($mailTransfer);
+        return $this->getBusinessFactory()->getMailSender()->sendMail($mailTransfer);
     }
 
     /**
@@ -33,7 +33,7 @@ class MailFacade extends AbstractFacade
      */
     public function isMailSent(SendMailResponsesTransfer $mailResponses)
     {
-        return $this->getDependencyContainer()->getMailSender()->isMailSent($mailResponses);
+        return $this->getBusinessFactory()->getMailSender()->isMailSent($mailResponses);
     }
 
 }

@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductCategory\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
@@ -16,7 +16,7 @@ use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterfac
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
-class ProductCategoryDependencyContainer extends AbstractBusinessDependencyContainer
+class ProductCategoryDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

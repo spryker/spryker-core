@@ -77,7 +77,7 @@ class OneNewPerMethodSniff implements \PHP_CodeSniffer_Sniff
     {
         $className = $this->getClassName($phpCsFile);
 
-        return (substr($className, -19) === 'DependencyContainer');
+        return (substr($className, -7) === 'Factory');
     }
 
     /**

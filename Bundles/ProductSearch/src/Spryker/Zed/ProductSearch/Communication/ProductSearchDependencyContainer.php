@@ -6,11 +6,11 @@
 
 namespace Spryker\Zed\ProductSearch\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
-class ProductSearchDependencyContainer extends AbstractCommunicationDependencyContainer
+class ProductSearchDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

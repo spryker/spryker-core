@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Auth\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Model\Auth;
@@ -18,7 +18,7 @@ use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
  * @method AuthConfig getConfig()
  * @method AuthQueryContainer getQueryContainer()
  */
-class AuthDependencyContainer extends AbstractBusinessDependencyContainer
+class AuthDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

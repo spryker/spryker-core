@@ -6,11 +6,11 @@
 
 namespace Spryker\Zed\OmsDiscountConnector\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorDependencyProvider;
 
-class OmsDiscountConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
+class OmsDiscountConnectorDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

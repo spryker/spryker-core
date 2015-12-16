@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ShipmentDependencyContainer getDependencyContainer()
+ * @method ShipmentDependencyContainer getBusinessFactory()
  */
 class ShipmentFacade extends AbstractFacade
 {
@@ -25,7 +25,7 @@ class ShipmentFacade extends AbstractFacade
      */
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer)
     {
-        $carrierModel = $this->getDependencyContainer()
+        $carrierModel = $this->getBusinessFactory()
             ->createCarrier();
 
         return $carrierModel->create($carrierTransfer);
@@ -38,7 +38,7 @@ class ShipmentFacade extends AbstractFacade
      */
     public function createMethod(ShipmentMethodTransfer $methodTransfer)
     {
-        $methodModel = $this->getDependencyContainer()
+        $methodModel = $this->getBusinessFactory()
             ->createMethod();
 
         return $methodModel->create($methodTransfer);
@@ -51,7 +51,7 @@ class ShipmentFacade extends AbstractFacade
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability)
     {
-        $methodModel = $this->getDependencyContainer()
+        $methodModel = $this->getBusinessFactory()
             ->createMethod();
 
         return $methodModel->getAvailableMethods($shipmentMethodAvailability);
@@ -64,7 +64,7 @@ class ShipmentFacade extends AbstractFacade
      */
     public function getShipmentMethodTransferById($idMethod)
     {
-        $methodModel = $this->getDependencyContainer()
+        $methodModel = $this->getBusinessFactory()
             ->createMethod();
 
         return $methodModel->getShipmentMethodTransferById($idMethod);
@@ -77,7 +77,7 @@ class ShipmentFacade extends AbstractFacade
      */
     public function hasMethod($idMethod)
     {
-        $methodModel = $this->getDependencyContainer()
+        $methodModel = $this->getBusinessFactory()
             ->createMethod();
 
         return $methodModel->hasMethod($idMethod);
@@ -90,7 +90,7 @@ class ShipmentFacade extends AbstractFacade
      */
     public function deleteMethod($idMethod)
     {
-        $methodModel = $this->getDependencyContainer()
+        $methodModel = $this->getBusinessFactory()
             ->createMethod();
 
         return $methodModel->deleteMethod($idMethod);
@@ -103,7 +103,7 @@ class ShipmentFacade extends AbstractFacade
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
-        $methodModel = $this->getDependencyContainer()
+        $methodModel = $this->getBusinessFactory()
             ->createMethod();
 
         return $methodModel->updateMethod($methodTransfer);

@@ -6,12 +6,12 @@
 
 namespace Spryker\Zed\User\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Auth\Business\AuthFacade;
 use Spryker\Zed\User\Business\UserFacade;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 
-class UserDependencyContainer extends AbstractPersistenceDependencyContainer
+class UserDependencyContainer extends AbstractPersistenceFactory
 {
 
     /**

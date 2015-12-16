@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\StockSalesConnector\Business\StockSalesConnectorDependencyContainer;
 
 /**
- * @method StockSalesConnectorDependencyContainer getDependencyContainer()
+ * @method StockSalesConnectorDependencyContainer getCommunicationFactory()
  */
 class UpdateStockPlugin extends AbstractPlugin
 {
@@ -27,7 +27,7 @@ class UpdateStockPlugin extends AbstractPlugin
      */
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1)
     {
-        $this->getDependencyContainer()->getStockFacade()->incrementStockProduct($sku, $stockType, $incrementBy);
+        $this->getCommunicationFactory()->getStockFacade()->incrementStockProduct($sku, $stockType, $incrementBy);
     }
 
     /**
@@ -39,7 +39,7 @@ class UpdateStockPlugin extends AbstractPlugin
      */
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1)
     {
-        $this->getDependencyContainer()->getStockFacade()->decrementStockProduct($sku, $stockType, $decrementBy);
+        $this->getCommunicationFactory()->getStockFacade()->decrementStockProduct($sku, $stockType, $decrementBy);
     }
 
     /**
@@ -49,7 +49,7 @@ class UpdateStockPlugin extends AbstractPlugin
      */
     public function updateStockProduct(StockProductTransfer $transferStockProduct)
     {
-        return $this->getDependencyContainer()->getStockFacade()->updateStockProduct($transferStockProduct);
+        return $this->getCommunicationFactory()->getStockFacade()->updateStockProduct($transferStockProduct);
     }
 
 }

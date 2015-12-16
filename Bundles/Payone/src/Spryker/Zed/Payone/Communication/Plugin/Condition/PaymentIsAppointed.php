@@ -12,7 +12,7 @@ use Spryker\Zed\Payone\Business\PayoneFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneDependencyContainer getCommunicationFactory()
  * @method PayoneFacade getFacade()
  */
 class PaymentIsAppointed extends AbstractCondition

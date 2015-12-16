@@ -16,7 +16,7 @@ use Spryker\Zed\Newsletter\Communication\NewsletterDependencyContainer;
 use Spryker\Zed\Newsletter\NewsletterConfig;
 
 /**
- * @method NewsletterDependencyContainer getDependencyContainer()
+ * @method NewsletterDependencyContainer getCommunicationFactory()
  */
 class DoubleOptInSubscriptionSender extends AbstractPlugin implements SubscriberOptInSenderInterface
 {
@@ -28,7 +28,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
      */
     public function send(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
-        $config = $this->getDependencyContainer()->getConfig();
+        $config = $this->getCommunicationFactory()->getConfig();
 
         $mailTransfer = $this->createMailTransfer();
 
@@ -43,7 +43,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
         );
         $this->setMailMergeData($mailTransfer, $globalMergeVars);
 
-        $mailFacade = $this->getDependencyContainer()->getMailFacade();
+        $mailFacade = $this->getCommunicationFactory()->getMailFacade();
         $responses = $mailFacade->sendMail($mailTransfer);
         $result = $mailFacade->isMailSent($responses);
 
@@ -154,7 +154,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
      */
     protected function translate($keyName)
     {
-        $glossaryFacade = $this->getDependencyContainer()->getGlossaryFacade();
+        $glossaryFacade = $this->getCommunicationFactory()->getGlossaryFacade();
         if ($glossaryFacade->hasTranslation($keyName)) {
             return $glossaryFacade->translate($keyName);
         }

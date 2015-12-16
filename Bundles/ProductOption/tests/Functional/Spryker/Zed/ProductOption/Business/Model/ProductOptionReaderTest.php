@@ -91,13 +91,13 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->ids = DbFixturesLoader::loadFixtures();
 
         $this->facade = $this->getFacade();
-        $this->facade->setDependencyContainer(new ProductOptionDependencyContainer());
+        $this->facade->setBusinessFactory(new ProductOptionDependencyContainer());
 
         $this->localeFacade = new LocaleFacade();
-        $this->localeFacade->setDependencyContainer(new LocaleDependencyContainer());
+        $this->localeFacade->setBusinessFactory(new LocaleDependencyContainer());
 
         $this->productFacade = new ProductFacade();
-        $this->productFacade->setDependencyContainer(new ProductDependencyContainer());
+        $this->productFacade->setBusinessFactory(new ProductDependencyContainer());
 
         $this->productQueryContainer = new ProductQueryContainer();
         $this->productOptionQueryContainer = new ProductOptionQueryContainer();

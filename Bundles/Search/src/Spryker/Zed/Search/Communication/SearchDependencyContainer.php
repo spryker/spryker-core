@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Search\Communication;
 
 use Spryker\Zed\Search\Communication\Table\SearchTable;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Client\Search\SearchClient;
 use Spryker\Zed\Collector\Business\CollectorFacade;
 use Spryker\Zed\Search\SearchConfig;
@@ -17,7 +17,7 @@ use Spryker\Zed\Storage\Communication\Table\StorageTable;
 /**
  * @method SearchConfig getConfig()
  */
-class SearchDependencyContainer extends AbstractCommunicationDependencyContainer
+class SearchDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

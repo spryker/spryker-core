@@ -21,7 +21,7 @@ class SetupDependencyContainerTest extends \PHPUnit_Framework_TestCase
     /**
      * @return SetupDependencyContainer
      */
-    private function getDependencyContainer()
+    private function getBusinessFactory()
     {
         return new SetupDependencyContainer();
     }
@@ -31,7 +31,7 @@ class SetupDependencyContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateModelCronjobsShouldReturnFullyConfiguredInstance()
     {
-        $instance = $this->getDependencyContainer()->createModelCronjobs();
+        $instance = $this->getBusinessFactory()->createModelCronjobs();
 
         $this->assertInstanceOf('Spryker\Zed\Setup\Business\Model\Cronjobs', $instance);
     }
@@ -41,7 +41,7 @@ class SetupDependencyContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateModelGeneratedDirectoryRemoverShouldReturnFullyConfiguredInstance()
     {
-        $instance = $this->getDependencyContainer()->createModelGeneratedDirectoryRemover();
+        $instance = $this->getBusinessFactory()->createModelGeneratedDirectoryRemover();
 
         $this->assertInstanceOf('Spryker\Zed\Setup\Business\Model\DirectoryRemover', $instance);
     }

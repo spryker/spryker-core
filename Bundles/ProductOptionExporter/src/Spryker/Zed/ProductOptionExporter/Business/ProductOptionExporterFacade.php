@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
- * @method ProductOptionExporterDependencyContainer getDependencyContainer()
+ * @method ProductOptionExporterDependencyContainer getBusinessFactory()
  */
 class ProductOptionExporterFacade extends AbstractFacade
 {
@@ -24,7 +24,7 @@ class ProductOptionExporterFacade extends AbstractFacade
      */
     public function processDataForExport(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
-        return $this->getDependencyContainer()->getProcessorModel()->processDataForExport($resultSet, $processedResultSet, $locale);
+        return $this->getBusinessFactory()->getProcessorModel()->processDataForExport($resultSet, $processedResultSet, $locale);
     }
 
 }

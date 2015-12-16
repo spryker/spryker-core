@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method GlossaryFacade getFacade()
  * @method GlossaryQueryContainerInterface getQueryContainer()
- * @method GlossaryDependencyContainer getDependencyContainer()
+ * @method GlossaryDependencyContainer getCommunicationFactory()
  */
 class AjaxController extends AbstractController
 {
@@ -31,7 +31,7 @@ class AjaxController extends AbstractController
     public function keysAction(Request $request)
     {
         $term = $request->query->get(self::SEARCH_TERM);
-        $keys = $this->getDependencyContainer()
+        $keys = $this->getCommunicationFactory()
             ->createQueryContainer()
             ->queryActiveKeysByName('%' . $term . '%')
             ->select([

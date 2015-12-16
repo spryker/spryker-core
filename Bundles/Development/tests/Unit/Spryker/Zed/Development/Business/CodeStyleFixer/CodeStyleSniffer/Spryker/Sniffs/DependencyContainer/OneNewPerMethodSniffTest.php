@@ -33,7 +33,7 @@ class OneNewPerMethodSniffTest extends \PHPUnit_Framework_TestCase
     {
         $fixtureDirectory = $this->getFixtureDirectory();
 
-        return $fixtureDirectory . '/InValidDependencyContainer.php';
+        return $fixtureDirectory . '/InValidFactory.php';
     }
 
     /**

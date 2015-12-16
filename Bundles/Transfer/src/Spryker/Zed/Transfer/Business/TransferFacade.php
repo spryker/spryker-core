@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 
 /**
- * @method TransferDependencyContainer getDependencyContainer()
+ * @method TransferDependencyContainer getBusinessFactory()
  */
 class TransferFacade extends AbstractFacade
 {
@@ -22,7 +22,7 @@ class TransferFacade extends AbstractFacade
      */
     public function generateTransferObjects(LoggerInterface $messenger)
     {
-        $this->getDependencyContainer()->createTransferGenerator($messenger)->execute();
+        $this->getBusinessFactory()->createTransferGenerator($messenger)->execute();
     }
 
     /**
@@ -30,7 +30,7 @@ class TransferFacade extends AbstractFacade
      */
     public function deleteGeneratedTransferObjects()
     {
-        $this->getDependencyContainer()->createTransferCleaner()->cleanDirectory();
+        $this->getBusinessFactory()->createTransferCleaner()->cleanDirectory();
     }
 
 }

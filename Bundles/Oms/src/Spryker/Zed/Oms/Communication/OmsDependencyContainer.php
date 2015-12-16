@@ -6,13 +6,13 @@
 namespace Spryker\Zed\Oms\Communication;
 
 use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 /**
  * @method OmsQueryContainerInterface getQueryContainer()
  */
-class OmsDependencyContainer extends AbstractCommunicationDependencyContainer
+class OmsDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

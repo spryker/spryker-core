@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Spryker\Client\Catalog\Model\Catalog;
 
 /**
- * @method CatalogDependencyContainer getDependencyContainer()
+ * @method CatalogDependencyContainer getFactory()
  */
 class CatalogClient extends AbstractClient
 {
@@ -20,7 +20,7 @@ class CatalogClient extends AbstractClient
      */
     public function createCatalogModel()
     {
-        return $this->getDependencyContainer()->createCatalogModel();
+        return $this->getFactory()->createCatalogModel();
     }
 
     /**
@@ -31,7 +31,7 @@ class CatalogClient extends AbstractClient
      */
     public function createFacetSearch(Request $request, array $category)
     {
-        return $this->getDependencyContainer()->createFacetSearch($request, $category);
+        return $this->getFactory()->createFacetSearch($request, $category);
     }
 
     /**
@@ -41,7 +41,7 @@ class CatalogClient extends AbstractClient
      */
     public function createFulltextSearch(Request $request)
     {
-        return $this->getDependencyContainer()->createFulltextSearch($request);
+        return $this->getFactory()->createFulltextSearch($request);
     }
 
     /**
@@ -49,7 +49,7 @@ class CatalogClient extends AbstractClient
      */
     public function createFacetConfig()
     {
-        return $this->getDependencyContainer()->createFacetConfig();
+        return $this->getFactory()->createFacetConfig();
     }
 
 }

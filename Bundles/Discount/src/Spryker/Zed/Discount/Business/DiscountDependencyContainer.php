@@ -30,7 +30,7 @@ use Spryker\Zed\Discount\Business\Writer\DiscountWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Discount\Business\DecisionRule\Voucher;
 use Spryker\Zed\Discount\Business\Writer\VoucherCodesWriter;
 use Spryker\Zed\Discount\DiscountConfig;
@@ -48,7 +48,7 @@ use Spryker\Shared\Kernel\Store;
  * @method DiscountConfig getConfig()
  * @method DiscountQueryContainer getQueryContainer()
  */
-class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
+class DiscountDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

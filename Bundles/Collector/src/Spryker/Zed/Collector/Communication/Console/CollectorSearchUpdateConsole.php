@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method CollectorDependencyContainer getDependencyContainer()
+ * @method CollectorDependencyContainer getCommunicationFactory()
  * @method CollectorFacade getFacade()
  */
 class CollectorSearchUpdateConsole extends AbstractCollectorConsole
@@ -40,7 +40,7 @@ class CollectorSearchUpdateConsole extends AbstractCollectorConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $locale = $this->getDependencyContainer()->createLocaleFacade()->getCurrentLocale();
+        $locale = $this->getCommunicationFactory()->createLocaleFacade()->getCurrentLocale();
         $exportResults = $this->getFacade()->updateSearchForLocale($locale);
 
         $this->info($this->buildSummary($exportResults));

@@ -8,9 +8,9 @@ namespace Spryker\Zed\DiscountCalculationConnector\Communication;
 
 use Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade;
 use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountFacadeInterface;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
-class DiscountCalculationConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
+class DiscountCalculationConnectorDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

@@ -9,7 +9,7 @@ namespace Spryker\Client\Storage;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method StorageDependencyContainer getDependencyContainer()
+ * @method StorageDependencyContainer getFactory()
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {
@@ -19,7 +19,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function getService()
     {
-        return $this->getDependencyContainer()->createService();
+        return $this->getFactory()->createService();
     }
 
     /**

@@ -22,7 +22,7 @@ class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
     /**
      * @return MaintenanceDependencyContainer
      */
-    private function getDependencyContainer()
+    private function getBusinessFactory()
     {
         return new MaintenanceDependencyContainer();
     }
@@ -34,7 +34,7 @@ class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface',
-            $this->getDependencyContainer()->createPackageCollector()
+            $this->getBusinessFactory()->createPackageCollector()
         );
     }
 
@@ -45,7 +45,7 @@ class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter',
-            $this->getDependencyContainer()->createMarkDownWriter(new InstalledPackagesTransfer())
+            $this->getBusinessFactory()->createMarkDownWriter(new InstalledPackagesTransfer())
         );
     }
 

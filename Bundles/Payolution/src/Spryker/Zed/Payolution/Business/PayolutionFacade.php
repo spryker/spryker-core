@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method PayolutionDependencyContainer getDependencyContainer()
+ * @method PayolutionDependencyContainer getBusinessFactory()
  */
 class PayolutionFacade extends AbstractFacade
 {
@@ -24,7 +24,7 @@ class PayolutionFacade extends AbstractFacade
     public function saveOrderPayment(OrderTransfer $orderTransfer)
     {
         return $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createOrderSaver()
             ->saveOrderPayment($orderTransfer);
     }
@@ -37,7 +37,7 @@ class PayolutionFacade extends AbstractFacade
     public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
         $payolutionResponseTransfer = $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createPaymentTransactionHandler()
             ->preCheckPayment($checkoutRequestTransfer);
 
@@ -52,7 +52,7 @@ class PayolutionFacade extends AbstractFacade
     public function preAuthorizePayment($idPayment)
     {
         return $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createPaymentTransactionHandler()
             ->preAuthorizePayment($idPayment);
     }
@@ -65,7 +65,7 @@ class PayolutionFacade extends AbstractFacade
     public function reAuthorizePayment($idPayment)
     {
         return $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createPaymentTransactionHandler()
             ->reAuthorizePayment($idPayment);
     }
@@ -78,7 +78,7 @@ class PayolutionFacade extends AbstractFacade
     public function revertPayment($idPayment)
     {
         return $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createPaymentTransactionHandler()
             ->revertPayment($idPayment);
     }
@@ -91,7 +91,7 @@ class PayolutionFacade extends AbstractFacade
     public function capturePayment($idPayment)
     {
         return $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createPaymentTransactionHandler()
             ->capturePayment($idPayment);
     }
@@ -104,7 +104,7 @@ class PayolutionFacade extends AbstractFacade
     public function refundPayment($idPayment)
     {
         return $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createPaymentTransactionHandler()
             ->refundPayment($idPayment);
     }
@@ -117,7 +117,7 @@ class PayolutionFacade extends AbstractFacade
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
         $payolutionResponseTransfer = $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createPaymentCalculationHandler()
             ->calculateInstallmentPayments($checkoutRequestTransfer);
 
@@ -132,7 +132,7 @@ class PayolutionFacade extends AbstractFacade
     public function isPreAuthorizationApproved(OrderTransfer $orderTransfer)
     {
         return $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createTransactionStatusLog()
             ->isPreAuthorizationApproved($orderTransfer);
     }
@@ -145,7 +145,7 @@ class PayolutionFacade extends AbstractFacade
     public function isReAuthorizationApproved(OrderTransfer $orderTransfer)
     {
         return $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createTransactionStatusLog()
             ->isReAuthorizationApproved($orderTransfer);
     }
@@ -158,7 +158,7 @@ class PayolutionFacade extends AbstractFacade
     public function isReversalApproved(OrderTransfer $orderTransfer)
     {
         return $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createTransactionStatusLog()
             ->isReversalApproved($orderTransfer);
     }
@@ -171,7 +171,7 @@ class PayolutionFacade extends AbstractFacade
     public function isCaptureApproved(OrderTransfer $orderTransfer)
     {
         return $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createTransactionStatusLog()
             ->isCaptureApproved($orderTransfer);
     }
@@ -184,7 +184,7 @@ class PayolutionFacade extends AbstractFacade
     public function isRefundApproved(OrderTransfer $orderTransfer)
     {
         return $this
-            ->getDependencyContainer()
+            ->getBusinessFactory()
             ->createTransactionStatusLog()
             ->isRefundApproved($orderTransfer);
     }

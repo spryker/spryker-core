@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Setup\Business;
 
 use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use Spryker\Zed\Setup\Business\Model\Cronjobs;
 use Spryker\Zed\Setup\Business\Model\DirectoryRemoverInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Console\Command\Command;
 /**
  * @method SetupConfig getConfig()
  */
-class SetupDependencyContainer extends AbstractBusinessDependencyContainer
+class SetupDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

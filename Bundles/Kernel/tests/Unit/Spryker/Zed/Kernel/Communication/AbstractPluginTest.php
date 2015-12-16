@@ -9,12 +9,12 @@ namespace Unit\Spryker\Zed\Kernel\Communication;
 use Spryker\Zed\Kernel\AbstractUnitTest;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
-use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
-use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\Spryker\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin;
 
@@ -31,38 +31,38 @@ class AbstractPluginTest extends AbstractUnitTest
     /**
      * @return void
      */
-    public function testGetDependencyContainerShouldThrowExceptionIfDependencyContainerNotFound()
+    public function testGetCommunicationFactoryShouldThrowExceptionIfCommunicationFactoryNotFound()
     {
-        $this->setExpectedException(DependencyContainerNotFoundException::class);
+        $this->setExpectedException(FactoryNotFoundException::class);
 
-        $dependencyContainerResolverMock = $this->getMock(DependencyContainerResolver::class, ['canResolve', 'getClassInfo']);
-        $dependencyContainerResolverMock->method('canResolve')->willReturn(false);
+        $communicationFactoryResolverMock = $this->getMock(FactoryResolver::class, ['canResolve', 'getClassInfo']);
+        $communicationFactoryResolverMock->method('canResolve')->willReturn(false);
 
         $classInfo = new ClassInfo();
         $classInfo->setClass('\\Namespace\\Application\\Bundle\\Layer\\Foo\\Bar');
-        $dependencyContainerResolverMock->method('getClassInfo')->willReturn($classInfo);
+        $communicationFactoryResolverMock->method('getClassInfo')->willReturn($classInfo);
 
-        $pluginMock = $this->getPluginMock(['getDependencyContainerResolver']);
-        $pluginMock->method('getDependencyContainerResolver')->willReturn($dependencyContainerResolverMock);
+        $pluginMock = $this->getPluginMock(['getCommunicationFactoryResolver']);
+        $pluginMock->method('getCommunicationFactoryResolver')->willReturn($communicationFactoryResolverMock);
 
-        $pluginMock->getDependencyContainer();
+        $pluginMock->getCommunicationFactory();
     }
 
     /**
      * @return void
      */
-    public function testGetDependencyContainerShouldReturnInstanceIfExists()
+    public function testGetCommunicationFactoryShouldReturnInstanceIfExists()
     {
         $plugin = new FooPlugin();
 
         $pluginReflection = new \ReflectionClass($plugin);
-        $dependencyContainerProperty = $pluginReflection->getParentClass()->getProperty('dependencyContainer');
-        $dependencyContainerProperty->setAccessible(true);
-        $dependencyContainerProperty->setValue($plugin, $this->getMock(AbstractCommunicationDependencyContainer::class, null, [], '', false));
+        $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('communicationFactory');
+        $communicationFactoryProperty->setAccessible(true);
+        $communicationFactoryProperty->setValue($plugin, $this->getMock(AbstractCommunicationFactory::class, null, [], '', false));
 
-        $dependencyContainer = $plugin->getDependencyContainer();
+        $communicationFactory = $plugin->getCommunicationFactory();
 
-        $this->assertInstanceOf(AbstractCommunicationDependencyContainer::class, $dependencyContainer);
+        $this->assertInstanceOf(AbstractCommunicationFactory::class, $communicationFactory);
     }
 
     /**

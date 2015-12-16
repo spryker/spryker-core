@@ -11,7 +11,7 @@ use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Price\Communication\PriceDependencyContainer;
 
 /**
- * @method PriceDependencyContainer getDependencyContainer()
+ * @method PriceDependencyContainer getCommunicationFactory()
  * @method PriceFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin

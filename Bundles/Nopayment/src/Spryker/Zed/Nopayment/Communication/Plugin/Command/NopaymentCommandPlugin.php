@@ -14,7 +14,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Nopayment\Communication\NopaymentDependencyContainer;
 
 /**
- * @method NopaymentDependencyContainer getDependencyContainer()
+ * @method NopaymentDependencyContainer getCommunicationFactory()
  */
 class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
@@ -28,7 +28,7 @@ class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInt
      */
     public function run(array $orderItems, SpySalesOrder $order, ReadOnlyArrayObject $data)
     {
-        return $this->getDependencyContainer()->createFacade()->setAsPaid($orderItems);
+        return $this->getCommunicationFactory()->createFacade()->setAsPaid($orderItems);
     }
 
 }

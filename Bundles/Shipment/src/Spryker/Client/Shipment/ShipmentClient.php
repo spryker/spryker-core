@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method ShipmentDependencyContainer getDependencyContainer()
+ * @method ShipmentDependencyContainer getFactory()
  */
 class ShipmentClient extends AbstractClient implements ShipmentClientInterface
 {
@@ -23,7 +23,7 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createZedStub()
             ->getAvailableMethods($shipmentMethodAvailability);
     }

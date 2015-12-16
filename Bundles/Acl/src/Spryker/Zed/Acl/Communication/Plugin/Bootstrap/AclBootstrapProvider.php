@@ -10,11 +10,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Acl\Business\AclFacade;
-use Spryker\Zed\Acl\Communication\AclDependencyContainer;
+use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AclDependencyContainer getDependencyContainer()
+ * @method AclCommunicationFactory getCommunicationFactory()
  * @method AclFacade getFacade()
  */
 class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -37,8 +37,8 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
     public function boot(Application $app)
     {
         $facadeAcl = $this->getFacade();
-        $facadeUser = $this->getDependencyContainer()->createUserFacade();
-        $config = $this->getDependencyContainer()->getConfig();
+        $facadeUser = $this->getCommunicationFactory()->createUserFacade();
+        $config = $this->getCommunicationFactory()->getConfig();
 
         $app->before(function (Request $request) use ($app, $facadeAcl, $facadeUser, $config) {
             $bundle = $request->attributes->get('module');

@@ -8,11 +8,11 @@ namespace Spryker\Client\Storage;
 
 use Spryker\Client\Storage\Redis\Service;
 use Predis\Client;
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Library\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 
-class StorageDependencyContainer extends AbstractDependencyContainer
+class StorageDependencyContainer extends AbstractFactory
 {
 
     /**

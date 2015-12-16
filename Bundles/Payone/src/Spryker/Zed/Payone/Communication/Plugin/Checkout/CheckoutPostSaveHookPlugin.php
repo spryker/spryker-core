@@ -14,7 +14,7 @@ use Spryker\Zed\Payone\Business\PayoneFacade;
 use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
 
 /**
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneDependencyContainer getCommunicationFactory()
  * @method PayoneFacade getFacade()
  */
 class CheckoutPostSaveHookPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface

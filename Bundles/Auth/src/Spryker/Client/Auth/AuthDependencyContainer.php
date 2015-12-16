@@ -6,10 +6,10 @@
 
 namespace Spryker\Client\Auth;
 
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Auth\Token\TokenService;
 
-class AuthDependencyContainer extends AbstractDependencyContainer
+class AuthDependencyContainer extends AbstractFactory
 {
 
     /**

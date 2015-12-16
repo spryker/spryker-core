@@ -9,10 +9,10 @@ namespace Spryker\Yves\Application;
 use Spryker\Yves\Application\Plugin\Provider\ExceptionService\DefaultExceptionHandler;
 use Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerDispatcher;
 use Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface;
-use Spryker\Yves\Kernel\AbstractDependencyContainer;
+use Spryker\Yves\Kernel\AbstractFactory;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApplicationDependencyContainer extends AbstractDependencyContainer
+class ApplicationDependencyContainer extends AbstractFactory
 {
 
     /**

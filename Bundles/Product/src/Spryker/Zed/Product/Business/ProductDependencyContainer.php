@@ -14,7 +14,7 @@ use Spryker\Zed\Product\Business\Importer\Writer\ProductWriter;
 use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
 use Spryker\Zed\Product\Business\Importer\Reader\File\CsvReader;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use Spryker\Zed\Product\Business\Builder\ProductBuilderInterface;
 use Spryker\Zed\Product\Business\Importer\FileImporter;
@@ -40,7 +40,7 @@ use Spryker\Zed\Product\Business\Product\ProductManager;
  * @method ProductConfig getConfig()
  * @method ProductQueryContainerInterface getQueryContainer()
  */
-class ProductDependencyContainer extends AbstractBusinessDependencyContainer
+class ProductDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

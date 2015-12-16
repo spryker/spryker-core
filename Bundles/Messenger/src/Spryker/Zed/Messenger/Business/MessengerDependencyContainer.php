@@ -9,7 +9,7 @@ use Spryker\Zed\Messenger\Business\Model\InMemoryMessageTray;
 use Spryker\Zed\Messenger\Business\Model\MessageTrayInterface;
 use Spryker\Zed\Messenger\Business\Model\SessionMessageTray;
 use Spryker\Zed\Messenger\MessengerDependencyProvider;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\MessengerConfig;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 /**
  * @method MessengerConfig getConfig()
  */
-class MessengerDependencyContainer extends AbstractBusinessDependencyContainer
+class MessengerDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

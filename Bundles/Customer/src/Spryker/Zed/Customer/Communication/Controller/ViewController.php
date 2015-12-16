@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerDependencyContainer getCommunicationFactory()
  */
 class ViewController extends AbstractController
 {

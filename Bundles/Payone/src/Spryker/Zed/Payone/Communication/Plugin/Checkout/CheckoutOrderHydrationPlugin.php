@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 
 /**
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneDependencyContainer getCommunicationFactory()
  */
 class CheckoutOrderHydrationPlugin extends AbstractPlugin implements CheckoutOrderHydrationInterface
 {

@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method NewsletterDependencyContainer getDependencyContainer()
+ * @method NewsletterDependencyContainer getFactory()
  */
 class NewsletterClient extends AbstractClient implements NewsletterClientInterface
 {
@@ -25,7 +25,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
      */
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
-        return $this->getDependencyContainer()->createZedNewsletterStub()
+        return $this->getFactory()->createZedNewsletterStub()
             ->subscribeWithSingleOptIn($newsletterSubscriptionRequest);
     }
 
@@ -36,7 +36,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
      */
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
-        return $this->getDependencyContainer()->createZedNewsletterStub()
+        return $this->getFactory()->createZedNewsletterStub()
             ->subscribeWithDoubleOptIn($newsletterSubscriptionRequest);
     }
 
@@ -47,7 +47,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
-        return $this->getDependencyContainer()->createZedNewsletterStub()
+        return $this->getFactory()->createZedNewsletterStub()
             ->approveDoubleOptInSubscriber($newsletterSubscriber);
     }
 
@@ -58,7 +58,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
      */
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
-        return $this->getDependencyContainer()->createZedNewsletterStub()
+        return $this->getFactory()->createZedNewsletterStub()
             ->unsubscribe($newsletterSubscriptionRequest);
     }
 
@@ -69,7 +69,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
      */
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {
-        return $this->getDependencyContainer()->createZedNewsletterStub()
+        return $this->getFactory()->createZedNewsletterStub()
             ->checkSubscription($newsletterUnsubscriptionRequest);
     }
 

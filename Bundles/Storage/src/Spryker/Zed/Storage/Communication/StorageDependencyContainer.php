@@ -6,13 +6,13 @@
 
 namespace Spryker\Zed\Storage\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Zed\Collector\Business\CollectorFacade;
 use Spryker\Zed\Storage\Communication\Table\StorageTable;
 use Spryker\Zed\Storage\StorageDependencyProvider;
 
-class StorageDependencyContainer extends AbstractCommunicationDependencyContainer
+class StorageDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

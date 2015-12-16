@@ -9,14 +9,14 @@ namespace Spryker\Zed\Storage\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method StorageDependencyContainer getDependencyContainer()
+ * @method StorageDependencyContainer getBusinessFactory()
  */
 class StorageFacade extends AbstractFacade
 {
 
     public function get($key)
     {
-        return $this->getDependencyContainer()->createStorage()->get($key);
+        return $this->getBusinessFactory()->createStorage()->get($key);
     }
 
     /**
@@ -24,7 +24,7 @@ class StorageFacade extends AbstractFacade
      */
     public function getTotalCount()
     {
-        return $this->getDependencyContainer()->createStorage()->getTotalCount();
+        return $this->getBusinessFactory()->createStorage()->getTotalCount();
     }
 
     /**
@@ -32,7 +32,7 @@ class StorageFacade extends AbstractFacade
      */
     public function getTimestamps()
     {
-        return $this->getDependencyContainer()->createStorage()->getTimestamps();
+        return $this->getBusinessFactory()->createStorage()->getTimestamps();
     }
 
     /**
@@ -40,7 +40,7 @@ class StorageFacade extends AbstractFacade
      */
     public function deleteAll()
     {
-        return $this->getDependencyContainer()->createStorage()->deleteAll();
+        return $this->getBusinessFactory()->createStorage()->deleteAll();
     }
 
     /**
@@ -50,7 +50,7 @@ class StorageFacade extends AbstractFacade
      */
     public function deleteMulti(array $keys)
     {
-        $this->getDependencyContainer()->createStorage()->deleteMulti($keys);
+        $this->getBusinessFactory()->createStorage()->deleteMulti($keys);
     }
 
 }

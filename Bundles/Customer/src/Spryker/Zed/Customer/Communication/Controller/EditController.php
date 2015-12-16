@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerDependencyContainer getCommunicationFactory()
  */
 class EditController extends AbstractController
 {
@@ -32,7 +32,7 @@ class EditController extends AbstractController
     {
         $idCustomer = $request->query->getInt(CustomerConfig::PARAM_ID_CUSTOMER);
 
-        $form = $this->getDependencyContainer()
+        $form = $this->getCommunicationFactory()
             ->createCustomerForm(CustomerForm::UPDATE);
 
         $form->handleRequest($request);

@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\User\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\User\Communication\Form\UserCreateForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
@@ -18,7 +18,7 @@ use Spryker\Zed\User\UserDependencyProvider;
 /**
  * @method UserQueryContainer getQueryContainer()
  */
-class UserDependencyContainer extends AbstractCommunicationDependencyContainer
+class UserDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CategoryDependencyContainer getDependencyContainer()
+ * @method CategoryDependencyContainer getCommunicationFactory()
  * @method CategoryFacade getFacade()
  */
 class FormController extends AbstractController
@@ -29,7 +29,7 @@ class FormController extends AbstractController
      */
     public function categoryAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createCategoryForm($request);
+        $form = $this->getCommunicationFactory()->createCategoryForm($request);
 
         $form->init();
 
@@ -55,7 +55,7 @@ class FormController extends AbstractController
      */
     public function categoryNodeAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createCategoryNodeForm($request);
+        $form = $this->getCommunicationFactory()->createCategoryNodeForm($request);
 
         $form->init();
 
@@ -79,7 +79,7 @@ class FormController extends AbstractController
      */
     protected function getLocale()
     {
-        return $this->getDependencyContainer()->getCurrentLocale();
+        return $this->getCommunicationFactory()->getCurrentLocale();
     }
 
 }

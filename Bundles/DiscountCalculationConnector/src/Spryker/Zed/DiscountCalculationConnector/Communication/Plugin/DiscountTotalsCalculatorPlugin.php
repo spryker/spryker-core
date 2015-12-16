@@ -13,7 +13,7 @@ use Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationCo
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method DiscountCalculationConnectorDependencyContainer getDependencyContainer()
+ * @method DiscountCalculationConnectorDependencyContainer getCommunicationFactory()
  */
 class DiscountTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculatorPluginInterface
 {
@@ -30,7 +30,7 @@ class DiscountTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCal
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
-        $this->getDependencyContainer()
+        $this->getCommunicationFactory()
             ->getDiscountCalculationFacade()
             ->recalculateDiscountTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }

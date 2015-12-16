@@ -33,7 +33,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             ->method('getCart')
             ->will($this->returnValue($cartTransfer));
 
-        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock);
+        $dependencyContainerMock = $this->getFactoryMock($sessionMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $this->assertSame($cartTransfer, $cartClientMock->getCart());
@@ -50,7 +50,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             ->with(0)
             ->will($this->returnValue($sessionMock));
 
-        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock);
+        $dependencyContainerMock = $this->getFactoryMock($sessionMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $cartClientMock->clearCart();
@@ -72,7 +72,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             ->with($cartTransfer)
             ->will($this->returnValue($sessionMock));
 
-        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock);
+        $dependencyContainerMock = $this->getFactoryMock($sessionMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $cartClientMock->clearCart();
@@ -88,7 +88,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             ->method('getItemCount')
             ->will($this->returnValue(0));
 
-        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock);
+        $dependencyContainerMock = $this->getFactoryMock($sessionMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $this->assertSame(0, $cartClientMock->getItemCount());
@@ -111,7 +111,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             ->method('addItem')
             ->will($this->returnValue($cartTransfer));
 
-        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
+        $dependencyContainerMock = $this->getFactoryMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $cartTransfer = $cartClientMock->addItem($itemTransfer);
@@ -139,7 +139,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             ->method('removeItem')
             ->will($this->returnValue($cartTransfer));
 
-        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
+        $dependencyContainerMock = $this->getFactoryMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $cartTransfer = $cartClientMock->removeItem($itemTransfer);
@@ -172,7 +172,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             ->method('increaseItemQuantity')
             ->will($this->returnValue($cartTransfer));
 
-        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
+        $dependencyContainerMock = $this->getFactoryMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $itemTransfer = new ItemTransfer();
@@ -209,7 +209,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             ->method('increaseItemQuantity')
             ->will($this->returnValue($cartTransfer));
 
-        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
+        $dependencyContainerMock = $this->getFactoryMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $itemTransfer = new ItemTransfer();
@@ -245,7 +245,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             ->method('increaseItemQuantity')
             ->will($this->returnValue($cartTransfer));
 
-        $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
+        $dependencyContainerMock = $this->getFactoryMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $itemTransfer = new ItemTransfer();
@@ -262,26 +262,26 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    private function getDependencyContainerMock(
+    private function getFactoryMock(
         CartSessionInterface $cartSession = null,
         CartStubInterface $cartStub = null
     ) {
-        $dependencyContainerMock = $this->getMock(
-            'Spryker\Client\Kernel\AbstractDependencyContainer',
+        $factoryMock = $this->getMock(
+            'Spryker\Client\Kernel\AbstractFactory',
             ['createSession', 'createZedStub'], [], '', false);
 
         if ($cartSession !== null) {
-            $dependencyContainerMock->expects($this->any())
+            $factoryMock->expects($this->any())
                 ->method('createSession')
                 ->will($this->returnValue($cartSession));
         }
         if ($cartStub !== null) {
-            $dependencyContainerMock->expects($this->any())
+            $factoryMock->expects($this->any())
                 ->method('createZedStub')
                 ->will($this->returnValue($cartStub));
         }
 
-        return $dependencyContainerMock;
+        return $factoryMock;
     }
 
     /**
@@ -293,10 +293,10 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     {
         $cartClientMock = $this->getMock(
             'Spryker\Client\Cart\CartClient',
-            ['getDependencyContainer'], [], '', false);
+            ['getFactory'], [], '', false);
 
         $cartClientMock->expects($this->any())
-            ->method('getDependencyContainer')
+            ->method('getFactory')
             ->will($this->returnValue($dependencyContainerMock));
 
         return $cartClientMock;

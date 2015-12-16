@@ -47,21 +47,21 @@ trait InternalClassBuilderForTests
     /**
      * @param AbstractBundleConfig $bundleConfig
      *
-     * @return AbstractDependencyContainer
+     * @return AbstractFactory
      */
-    protected function getDependencyContainer(AbstractBundleConfig $bundleConfig = null)
+    protected function getFactory(AbstractBundleConfig $bundleConfig = null)
     {
         $namespace = $this->getNamespaceFromTestClassName();
         $bundle = $this->getBundleFromTestClassName();
         $layer = $this->getLayerFromTestClassName();
 
-        $dependencyContainer = $this->getDependencyContainerByClassName($namespace, $bundle, $layer);
+        $factory = $this->getFactoryByClassName($namespace, $bundle, $layer);
 
         if ($bundleConfig !== null) {
-            $dependencyContainer->setConfig($bundleConfig);
+            $factory->setConfig($bundleConfig);
         }
 
-        return $dependencyContainer;
+        return $factory;
     }
 
     /**
@@ -176,11 +176,11 @@ trait InternalClassBuilderForTests
      * @param string $bundle
      * @param string $layer
      *
-     * @return AbstractDependencyContainer
+     * @return AbstractFactory
      */
-    protected function getDependencyContainerByClassName($namespace, $bundle, $layer)
+    protected function getFactoryByClassName($namespace, $bundle, $layer)
     {
-        $className = '\\' . $namespace . '\\Zed\\' . $bundle . '\\' . $layer . '\\' . $bundle . 'DependencyContainer';
+        $className = '\\' . $namespace . '\\Zed\\' . $bundle . '\\' . $layer . '\\' . $bundle . $layer . 'Factory';
         $class = new $className();
 
         return $class;

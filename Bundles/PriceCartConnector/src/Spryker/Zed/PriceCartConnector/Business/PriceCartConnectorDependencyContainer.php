@@ -7,15 +7,15 @@
 namespace Spryker\Zed\PriceCartConnector\Business;
 
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 /**
- * @method PriceCartConnectorDependencyContainer getDependencyContainer()
+ * @method PriceCartConnectorDependencyContainer getBusinessFactory()
  * @method PriceCartConnectorConfig getConfig()
  */
-class PriceCartConnectorDependencyContainer extends AbstractBusinessDependencyContainer
+class PriceCartConnectorDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

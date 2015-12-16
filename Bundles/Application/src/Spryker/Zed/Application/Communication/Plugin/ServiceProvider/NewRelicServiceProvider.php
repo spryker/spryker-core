@@ -14,7 +14,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 
 /**
- * @method ApplicationDependencyContainer getDependencyContainer()
+ * @method ApplicationDependencyContainer getCommunicationFactory()
  */
 class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -47,7 +47,7 @@ class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderI
 
             $host = isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : System::getHostname();
 
-            $this->getDependencyContainer()->createNewRelicApi()
+            $this->getCommunicationFactory()->createNewRelicApi()
                 ->setNameOfTransaction($transactionName)
                 ->addCustomParameter('request_uri', $requestUri)
                 ->addCustomParameter('host', $host);

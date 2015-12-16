@@ -14,7 +14,7 @@ use Spryker\Zed\Payolution\Business\Payment\Handler\Calculation\Calculation;
 use Spryker\Zed\Payolution\Business\Payment\Method\Installment\Installment;
 use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
 use Spryker\Zed\Payolution\Business\Payment\Handler\Transaction\Transaction;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface;
 use Spryker\Zed\Payolution\Business\Order\SaverInterface;
@@ -29,7 +29,7 @@ use Spryker\Zed\Payolution\PayolutionConfig;
  * @method PayolutionQueryContainerInterface getQueryContainer()
  * @method PayolutionConfig getConfig()
  */
-class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
+class PayolutionDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

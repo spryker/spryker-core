@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method ShipmentDependencyContainer getDependencyContainer()
+ * @method ShipmentDependencyContainer getCommunicationFactory()
  * @method ShipmentFacade getFacade()
  */
 class MethodController extends AbstractController
@@ -28,7 +28,7 @@ class MethodController extends AbstractController
      */
     public function addAction()
     {
-        $form = $this->getDependencyContainer()
+        $form = $this->getCommunicationFactory()
             ->createMethodForm();
         $form->handleRequest();
 
@@ -59,7 +59,7 @@ class MethodController extends AbstractController
         $idMethod = $request->query->get(self::ID_METHOD_PARAMETER);
 
         if ($this->getFacade()->hasMethod($idMethod)) {
-            $form = $this->getDependencyContainer()
+            $form = $this->getCommunicationFactory()
                 ->createMethodForm($idMethod);
             $form->handleRequest();
 

@@ -19,13 +19,13 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Calculation\CalculationConfig;
 
 /**
  * @method CalculationConfig getConfig()
  */
-class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
+class CalculationDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

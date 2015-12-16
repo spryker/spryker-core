@@ -9,7 +9,7 @@ namespace Spryker\Zed\Heartbeat\Business;
 use Elastica\Client as ElasticaClient;
 use Predis\Client as PredisClient;
 use Spryker\Shared\Config;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 use Spryker\Zed\Heartbeat\Business\Assistant\PropelHealthIndicator;
@@ -22,7 +22,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 /**
  * @method HeartbeatConfig getConfig()
  */
-class HeartbeatDependencyContainer extends AbstractBusinessDependencyContainer
+class HeartbeatDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

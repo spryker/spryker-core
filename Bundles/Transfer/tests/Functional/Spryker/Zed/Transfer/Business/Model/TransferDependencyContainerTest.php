@@ -22,7 +22,7 @@ class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
     /**
      * @return TransferDependencyContainer
      */
-    private function getDependencyContainer()
+    private function getBusinessFactory()
     {
         return new TransferDependencyContainer();
     }
@@ -40,7 +40,7 @@ class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateTransferGeneratorShouldReturnFullyConfiguredInstance()
     {
-        $transferGenerator = $this->getDependencyContainer()->createTransferGenerator(
+        $transferGenerator = $this->getBusinessFactory()->createTransferGenerator(
             $this->getMessenger()
         );
 
@@ -52,7 +52,7 @@ class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateTransferCleanerShouldReturnFullyConfiguredInstance()
     {
-        $transferCleaner = $this->getDependencyContainer()->createTransferCleaner();
+        $transferCleaner = $this->getBusinessFactory()->createTransferCleaner();
 
         $this->assertInstanceOf('Spryker\Zed\Transfer\Business\Model\TransferCleaner', $transferCleaner);
     }

@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Cms\Communication;
 
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\CmsConfig;
@@ -25,7 +25,7 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
  * @method CmsQueryContainer getQueryContainer()
  * @method CmsConfig getConfig()
  */
-class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
+class CmsDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

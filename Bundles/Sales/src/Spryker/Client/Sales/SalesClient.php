@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method SalesDependencyContainer getDependencyContainer()
+ * @method SalesDependencyContainer getFactory()
  */
 class SalesClient extends AbstractClient implements SalesClientInterface
 {
@@ -23,7 +23,7 @@ class SalesClient extends AbstractClient implements SalesClientInterface
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createZedSalesStub()
             ->getOrders($orderListTransfer);
     }
@@ -35,7 +35,7 @@ class SalesClient extends AbstractClient implements SalesClientInterface
      */
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createZedSalesStub()
             ->getOrderDetails($orderTransfer);
     }

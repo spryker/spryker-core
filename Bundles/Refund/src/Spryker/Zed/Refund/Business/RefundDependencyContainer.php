@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Refund\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Refund\Business\Model\Refund;
 use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
@@ -17,7 +17,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 /**
  * @method RefundQueryContainerInterface getQueryContainer()
  */
-class RefundDependencyContainer extends AbstractBusinessDependencyContainer
+class RefundDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

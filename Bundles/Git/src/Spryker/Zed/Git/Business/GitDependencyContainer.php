@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Git\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Git\GitConfig;
 use Spryker\Zed\Git\GitDependencyProvider;
 use Symfony\Component\Console\Command\Command;
@@ -14,7 +14,7 @@ use Symfony\Component\Console\Command\Command;
 /**
  * @method GitConfig getConfig()
  */
-class GitDependencyContainer extends AbstractBusinessDependencyContainer
+class GitDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

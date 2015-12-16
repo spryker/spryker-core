@@ -10,7 +10,7 @@ use Spryker\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnecto
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method DependencyContainer getDependencyContainer()
+ * @method DependencyContainer getCommunicationFactory()
  */
 class CheckAvailabilityPlugin extends AbstractPlugin
 {
@@ -23,7 +23,7 @@ class CheckAvailabilityPlugin extends AbstractPlugin
      */
     public function isProductSellable($sku, $quantity)
     {
-        return $this->getDependencyContainer()->getAvailabilityFacade()->isProductSellable($sku, $quantity);
+        return $this->getCommunicationFactory()->getAvailabilityFacade()->isProductSellable($sku, $quantity);
     }
 
     /**
@@ -33,7 +33,7 @@ class CheckAvailabilityPlugin extends AbstractPlugin
      */
     public function calculateStockForProduct($sku)
     {
-        return $this->getDependencyContainer()->getAvailabilityFacade()->calculateStockForProduct($sku);
+        return $this->getCommunicationFactory()->getAvailabilityFacade()->calculateStockForProduct($sku);
     }
 
 }

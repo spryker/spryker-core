@@ -7,7 +7,7 @@
 namespace Unit\Spryker\Zed\Console\Business\Model\Console;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock;
 
@@ -17,13 +17,13 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetDependencyContainerShouldReturnInstanceIfSet()
+    public function testGetCommunicationFactoryShouldReturnInstanceIfSet()
     {
         $console = $this->getConsole();
-        $console->setDependencyContainer($this->getDependencyContainerMock());
+        $console->setCommunicationFactory($this->getCommunicationFactoryMock());
 
-        $this->assertInstanceOf('Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer',
-            $console->getDependencyContainer()
+        $this->assertInstanceOf('Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
+            $console->getCommunicationFactory()
         );
     }
 
@@ -62,11 +62,11 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return AbstractCommunicationDependencyContainer
+     * @return AbstractCommunicationFactory
      */
-    private function getDependencyContainerMock()
+    private function getCommunicationFactoryMock()
     {
-        return $this->getMock('Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer', [], [],
+        return $this->getMock('Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory', [], [],
             '', false
         );
     }

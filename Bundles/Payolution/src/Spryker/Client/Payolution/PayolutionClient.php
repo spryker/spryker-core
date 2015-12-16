@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Payolution\Session\PayolutionSession;
 
 /**
- * @method PayolutionDependencyContainer getDependencyContainer()
+ * @method PayolutionDependencyContainer getFactory()
  */
 class PayolutionClient extends AbstractClient implements PayolutionClientInterface
 {
@@ -25,7 +25,7 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
         return $this
-            ->getDependencyContainer()
+            ->getFactory()
             ->createPayolutionStub()
             ->calculateInstallmentPayments($checkoutRequestTransfer);
     }
@@ -35,7 +35,7 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
      */
     protected function getSession()
     {
-        return $this->getDependencyContainer()->createPayolutionSession();
+        return $this->getFactory()->createPayolutionSession();
     }
 
     /**

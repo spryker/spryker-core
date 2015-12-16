@@ -12,14 +12,14 @@ use Spryker\Shared\ZedRequest\Client\Message;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
-use Spryker\Zed\Kernel\Communication\KernelDependencyContainer;
+use Spryker\Zed\Kernel\Communication\KernelCommunicationFactory;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Spryker\Zed\Messenger\MessengerConfig;
 
 /**
- * @method KernelDependencyContainer getDependencyContainer()
+ * @method KernelCommunicationFactory getCommunicationFactory()
  */
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
@@ -129,7 +129,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      */
     protected function setMessengerMessages(Response $response)
     {
-        $MessengerFacade = $this->getDependencyContainer()->createMessengerFacade();
+        $MessengerFacade = $this->getCommunicationFactory()->createMessengerFacade();
 
         $MessengerTransfer = $MessengerFacade->getStoredMessages();
         if ($MessengerTransfer === null) {

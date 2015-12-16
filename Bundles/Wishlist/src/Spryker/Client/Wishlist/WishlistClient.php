@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method WishlistDependencyContainer getDependencyContainer()
+ * @method WishlistDependencyContainer getFactory()
  */
 class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
@@ -134,7 +134,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      */
     protected function getCustomerTransfer()
     {
-        $customerClient = $this->getDependencyContainer()->createCustomerClient();
+        $customerClient = $this->getFactory()->createCustomerClient();
         $customerTransfer = $customerClient->getCustomer();
 
         return $customerTransfer;
@@ -145,7 +145,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      */
     protected function getSession()
     {
-        return $this->getDependencyContainer()->createSession();
+        return $this->getFactory()->createSession();
     }
 
     /**
@@ -153,7 +153,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      */
     protected function getZedStub()
     {
-        return $this->getDependencyContainer()->createZedStub();
+        return $this->getFactory()->createZedStub();
     }
 
     /**
@@ -161,7 +161,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      */
     protected function getStorage()
     {
-        return $this->getDependencyContainer()->createStorage();
+        return $this->getFactory()->createStorage();
     }
 
 }

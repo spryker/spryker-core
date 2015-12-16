@@ -12,7 +12,7 @@ use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
 
 /**
  * @method PayoneFacade getFacade()
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneDependencyContainer getCommunicationFactory()
  */
 class RefundIsApprovedPlugin extends AbstractPlugin
 {

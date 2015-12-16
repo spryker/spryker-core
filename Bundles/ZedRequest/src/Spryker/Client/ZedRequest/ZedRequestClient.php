@@ -12,7 +12,7 @@ use Spryker\Client\ZedRequest\Client\ZedClient;
 use Spryker\Shared\ZedRequest\Client\Message;
 
 /**
- * @method ZedRequestDependencyContainer getDependencyContainer()
+ * @method ZedRequestDependencyContainer getFactory()
  */
 class ZedRequestClient extends AbstractClient
 {
@@ -28,7 +28,7 @@ class ZedRequestClient extends AbstractClient
     private function getClient()
     {
         if ($this->zedClient === null) {
-            $this->zedClient = $this->getDependencyContainer()->createClient();
+            $this->zedClient = $this->getFactory()->createClient();
         }
 
         return $this->zedClient;

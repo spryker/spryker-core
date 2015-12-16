@@ -5,7 +5,7 @@ namespace Spryker\Zed\Queue\Business;
 use Spryker\Zed\Queue\Business\Provider\TaskProvider;
 use Spryker\Zed\Queue\Business\Worker\TaskWorker;
 use Spryker\Zed\Queue\Business\Model\QueueConnection;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Queue\Business\Model\QueueConnectionInterface;
 use Spryker\Zed\Queue\Business\Provider\TaskProviderInterface;
 use Spryker\Zed\Queue\Business\Worker\TaskWorkerInterface;
@@ -17,7 +17,7 @@ use Spryker\Zed\Queue\QueueDependencyProvider;
 /**
  * @method QueueConfig getConfig()
  */
-class QueueDependencyContainer extends AbstractBusinessDependencyContainer
+class QueueDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

@@ -27,7 +27,7 @@ class CmsClient extends AbstractClient implements CmsClientInterface
      */
     private function createCmsBlockFinder()
     {
-        return $this->getDependencyContainer()->createCmsBlockFinder();
+        return $this->getFactory()->createCmsBlockFinder();
     }
 
 }

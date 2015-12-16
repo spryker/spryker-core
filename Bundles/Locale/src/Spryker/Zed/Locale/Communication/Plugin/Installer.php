@@ -10,7 +10,7 @@ use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 use Spryker\Zed\Locale\Communication\LocaleDependencyContainer;
 
 /**
- * @method LocaleDependencyContainer getDependencyContainer()
+ * @method LocaleDependencyContainer getCommunicationFactory()
  */
 class Installer extends AbstractInstallerPlugin
 {
@@ -20,7 +20,7 @@ class Installer extends AbstractInstallerPlugin
      */
     public function install()
     {
-        $this->getDependencyContainer()->getInstallerFacade()->install($this->messenger);
+        $this->getCommunicationFactory()->getInstallerFacade()->install($this->messenger);
     }
 
 }

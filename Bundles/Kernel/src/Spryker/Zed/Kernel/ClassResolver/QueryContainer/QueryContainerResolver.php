@@ -44,7 +44,6 @@ class QueryContainerResolver extends AbstractClassResolver
         );
     }
 
-
     /**
      * @param string $namespace
      * @param string|null $store

@@ -8,11 +8,11 @@ namespace Spryker\Client\Glossary;
 use Spryker\Client\Glossary\KeyBuilder\GlossaryKeyBuilder;
 use Spryker\Client\Glossary\Storage\GlossaryStorage;
 use Spryker\Client\Glossary\Storage\GlossaryStorageInterface;
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
-class GlossaryDependencyContainer extends AbstractDependencyContainer
+class GlossaryDependencyContainer extends AbstractFactory
 {
 
     /**

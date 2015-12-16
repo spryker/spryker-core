@@ -6,14 +6,14 @@
 
 namespace Spryker\Zed\Country\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Country\Communication\Form\CountryForm;
 use Spryker\Zed\Country\CountryDependencyProvider;
 use Spryker\Zed\Country\Communication\Table\CountryTable;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 
-class CountryDependencyContainer extends AbstractCommunicationDependencyContainer
+class CountryDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

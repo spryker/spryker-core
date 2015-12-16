@@ -6,11 +6,11 @@
 
 namespace Spryker\Zed\ItemGrouperWishlistConnector\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorDependencyProvider;
 
-class ItemGrouperWishlistConnectorDependencyContainer extends AbstractBusinessDependencyContainer
+class ItemGrouperWishlistConnectorDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

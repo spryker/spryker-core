@@ -21,7 +21,7 @@ use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
- * @method ProductDependencyContainer getDependencyContainer()
+ * @method ProductDependencyContainer getBusinessFactory()
  */
 class ProductFacade extends AbstractFacade
 {
@@ -33,7 +33,7 @@ class ProductFacade extends AbstractFacade
      */
     public function importProductsFromFile(\SplFileInfo $file)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createProductImporter()
             ->importFile($file);
     }
@@ -45,7 +45,7 @@ class ProductFacade extends AbstractFacade
      */
     public function importUploadedFile($uploadedFilename)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createHttpFileImporter()
             ->receiveUploadedFile($uploadedFilename);
     }
@@ -59,7 +59,7 @@ class ProductFacade extends AbstractFacade
      */
     public function getAbstractProductIdBySku($sku)
     {
-        return $this->getDependencyContainer()->createProductManager()->getAbstractProductIdBySku($sku);
+        return $this->getBusinessFactory()->createProductManager()->getAbstractProductIdBySku($sku);
     }
 
     /**
@@ -71,7 +71,7 @@ class ProductFacade extends AbstractFacade
      */
     public function getConcreteProductIdBySku($sku)
     {
-        return $this->getDependencyContainer()->createProductManager()->getConcreteProductIdBySku($sku);
+        return $this->getBusinessFactory()->createProductManager()->getConcreteProductIdBySku($sku);
     }
 
     /**
@@ -83,7 +83,7 @@ class ProductFacade extends AbstractFacade
      */
     public function getAbstractProductIdByConcreteSku($sku)
     {
-        return $this->getDependencyContainer()->createProductManager()->getAbstractProductIdByConcreteSku($sku);
+        return $this->getBusinessFactory()->createProductManager()->getAbstractProductIdByConcreteSku($sku);
     }
 
     /**
@@ -95,7 +95,7 @@ class ProductFacade extends AbstractFacade
      */
     public function getEffectiveTaxRateForConcreteProduct($sku)
     {
-        return $this->getDependencyContainer()->createProductManager()->getEffectiveTaxRateForConcreteProduct($sku);
+        return $this->getBusinessFactory()->createProductManager()->getEffectiveTaxRateForConcreteProduct($sku);
     }
 
     /**
@@ -105,7 +105,7 @@ class ProductFacade extends AbstractFacade
      */
     public function hasAttribute($attributeName)
     {
-        $attributeManager = $this->getDependencyContainer()->createAttributeManager();
+        $attributeManager = $this->getBusinessFactory()->createAttributeManager();
 
         return $attributeManager->hasAttribute($attributeName);
     }
@@ -117,7 +117,7 @@ class ProductFacade extends AbstractFacade
      */
     public function hasAttributeType($attributeType)
     {
-        $attributeManager = $this->getDependencyContainer()->createAttributeManager();
+        $attributeManager = $this->getBusinessFactory()->createAttributeManager();
 
         return $attributeManager->hasAttributeType($attributeType);
     }
@@ -133,7 +133,7 @@ class ProductFacade extends AbstractFacade
      */
     public function createAttributeType($name, $inputType, $fkParentAttributeType = null)
     {
-        $attributeManager = $this->getDependencyContainer()->createAttributeManager();
+        $attributeManager = $this->getBusinessFactory()->createAttributeManager();
 
         return $attributeManager->createAttributeType($name, $inputType, $fkParentAttributeType);
     }
@@ -150,7 +150,7 @@ class ProductFacade extends AbstractFacade
      */
     public function createAttribute($attributeName, $attributeType, $isEditable = true)
     {
-        $attributeManager = $this->getDependencyContainer()->createAttributeManager();
+        $attributeManager = $this->getBusinessFactory()->createAttributeManager();
 
         return $attributeManager->createAttribute($attributeName, $attributeType, $isEditable);
     }
@@ -162,7 +162,7 @@ class ProductFacade extends AbstractFacade
      */
     public function hasAbstractProduct($sku)
     {
-        $productManager = $this->getDependencyContainer()->createProductManager();
+        $productManager = $this->getBusinessFactory()->createProductManager();
 
         return $productManager->hasAbstractProduct($sku);
     }
@@ -174,7 +174,7 @@ class ProductFacade extends AbstractFacade
      */
     public function createAbstractProduct(AbstractProductTransfer $abstractProductTransfer)
     {
-        $productManager = $this->getDependencyContainer()->createProductManager();
+        $productManager = $this->getBusinessFactory()->createProductManager();
 
         return $productManager->createAbstractProduct($abstractProductTransfer);
     }
@@ -186,7 +186,7 @@ class ProductFacade extends AbstractFacade
      */
     public function hasConcreteProduct($sku)
     {
-        $productManager = $this->getDependencyContainer()->createProductManager();
+        $productManager = $this->getBusinessFactory()->createProductManager();
 
         return $productManager->hasConcreteProduct($sku);
     }
@@ -199,7 +199,7 @@ class ProductFacade extends AbstractFacade
      */
     public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idAbstractProduct)
     {
-        $productManager = $this->getDependencyContainer()->createProductManager();
+        $productManager = $this->getBusinessFactory()->createProductManager();
 
         return $productManager->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
     }
@@ -211,7 +211,7 @@ class ProductFacade extends AbstractFacade
      */
     public function touchProductActive($idAbstractProduct)
     {
-        $productManager = $this->getDependencyContainer()->createProductManager();
+        $productManager = $this->getBusinessFactory()->createProductManager();
 
         $productManager->touchProductActive($idAbstractProduct);
     }
@@ -229,7 +229,7 @@ class ProductFacade extends AbstractFacade
      */
     public function createProductUrl($sku, $url, LocaleTransfer $locale)
     {
-        return $this->getDependencyContainer()->createProductManager()->createProductUrl($sku, $url, $locale);
+        return $this->getBusinessFactory()->createProductManager()->createProductUrl($sku, $url, $locale);
     }
 
     /**
@@ -245,7 +245,7 @@ class ProductFacade extends AbstractFacade
      */
     public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale)
     {
-        return $this->getDependencyContainer()->createProductManager()->createAndTouchProductUrl($sku, $url, $locale);
+        return $this->getBusinessFactory()->createProductManager()->createAndTouchProductUrl($sku, $url, $locale);
     }
 
     /**
@@ -255,7 +255,7 @@ class ProductFacade extends AbstractFacade
      */
     public function install(MessengerInterface $messenger = null)
     {
-        $this->getDependencyContainer()->createInstaller($messenger)->install();
+        $this->getBusinessFactory()->createInstaller($messenger)->install();
     }
 
     /**
@@ -265,7 +265,7 @@ class ProductFacade extends AbstractFacade
      */
     public function getAbstractSkuFromConcreteProduct($sku)
     {
-        return $this->getDependencyContainer()->createProductManager()->getAbstractSkuFromConcreteProduct($sku);
+        return $this->getBusinessFactory()->createProductManager()->getAbstractSkuFromConcreteProduct($sku);
     }
 
     /**
@@ -275,7 +275,7 @@ class ProductFacade extends AbstractFacade
      */
     public function getConcreteProduct($concreteSku)
     {
-        return $this->getDependencyContainer()->createProductManager()->getConcreteProduct($concreteSku);
+        return $this->getBusinessFactory()->createProductManager()->getConcreteProduct($concreteSku);
     }
 
 }

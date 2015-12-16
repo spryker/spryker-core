@@ -19,7 +19,7 @@ use Generated\Shared\Transfer\MailRecipientTransfer;
 
 /**
  * @method PayolutionFacade getFacade()
- * @method PayolutionDependencyContainer getDependencyContainer()
+ * @method PayolutionDependencyContainer getCommunicationFactory()
  */
 class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
@@ -33,7 +33,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $config = $this->getDependencyContainer()->getConfig();
+        $config = $this->getCommunicationFactory()->getConfig();
         $mailTransfer = new MailTransfer();
 
         $mailTransfer->setTemplateName($config->getEmailTemplateName());
@@ -42,7 +42,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
         $this->setMailTransferFrom($mailTransfer, $config);
         $this->setMailTransferSubject($mailTransfer, $config);
 
-        $mailFacade = $this->getDependencyContainer()->getMailFacade();
+        $mailFacade = $this->getCommunicationFactory()->getMailFacade();
         $mailFacade->sendMail($mailTransfer);
 
         return [];
@@ -111,7 +111,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     protected function translate($keyName)
     {
-        $glossaryFacade = $this->getDependencyContainer()->getGlossaryFacade();
+        $glossaryFacade = $this->getCommunicationFactory()->getGlossaryFacade();
 
         if ($glossaryFacade->hasTranslation($keyName)) {
             return $glossaryFacade->translate($keyName);

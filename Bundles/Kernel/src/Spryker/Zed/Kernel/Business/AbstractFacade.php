@@ -6,9 +6,8 @@
 
 namespace Spryker\Zed\Kernel\Business;
 
-use Spryker\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
-use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
-use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -16,9 +15,9 @@ abstract class AbstractFacade implements FacadeInterface
 {
 
     /**
-     * @var DependencyContainerInterface
+     * @var BusinessFactoryInterface
      */
-    private $dependencyContainer;
+    private $businessFactory;
 
     /**
      * @var AbstractQueryContainer
@@ -31,13 +30,13 @@ abstract class AbstractFacade implements FacadeInterface
     private $container;
 
     /**
-     * @param AbstractBusinessDependencyContainer $businessDependencyContainer
+     * @param AbstractBusinessFactory $businessFactory
      *
      * @return self
      */
-    public function setDependencyContainer(AbstractBusinessDependencyContainer $businessDependencyContainer)
+    public function setBusinessFactory(AbstractBusinessFactory $businessFactory)
     {
-        $this->dependencyContainer = $businessDependencyContainer;
+        $this->businessFactory = $businessFactory;
 
         return $this;
     }
@@ -75,41 +74,41 @@ abstract class AbstractFacade implements FacadeInterface
     }
 
     /**
-     * @return DependencyContainerInterface
+     * @return BusinessFactoryInterface
      */
-    protected function getDependencyContainer()
+    protected function getBusinessFactory()
     {
-        if ($this->dependencyContainer === null) {
-            $this->dependencyContainer = $this->resolveDependencyContainer();
+        if ($this->businessFactory === null) {
+            $this->businessFactory = $this->resolveBusinessFactory();
         }
 
         if ($this->container !== null) {
-            $this->dependencyContainer->setContainer($this->container);
+            $this->businessFactory->setContainer($this->container);
         }
 
         if ($this->queryContainer !== null) {
-            $this->dependencyContainer->setQueryContainer($this->queryContainer);
+            $this->businessFactory->setQueryContainer($this->queryContainer);
         }
 
-        return $this->dependencyContainer;
+        return $this->businessFactory;
     }
 
     /**
-     * @throws DependencyContainerNotFoundException
+     * @throws FactoryNotFoundException
      *
-     * @return AbstractBusinessDependencyContainer
+     * @return AbstractBusinessFactory
      */
-    protected function resolveDependencyContainer()
+    protected function resolveBusinessFactory()
     {
-        return $this->getDependencyContainerResolver()->resolve($this);
+        return $this->getFactoryResolver()->resolve($this);
     }
 
     /**
-     * @return DependencyContainerResolver
+     * @return FactoryResolver
      */
-    protected function getDependencyContainerResolver()
+    protected function getFactoryResolver()
     {
-        return new DependencyContainerResolver();
+        return new FactoryResolver();
     }
 
 }

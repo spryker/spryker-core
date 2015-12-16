@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Shipment\Communication;
 
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
 use Spryker\Zed\Shipment\Communication\Table\MethodTable;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
@@ -17,7 +17,7 @@ use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 /**
  * @method ShipmentQueryContainer getQueryContainer()
  */
-class ShipmentDependencyContainer extends AbstractCommunicationDependencyContainer
+class ShipmentDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

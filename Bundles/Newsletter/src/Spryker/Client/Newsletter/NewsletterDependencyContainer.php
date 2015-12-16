@@ -7,11 +7,11 @@
 namespace Spryker\Client\Newsletter;
 
 use Spryker\Client\Newsletter\Zed\NewsletterStub;
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Newsletter\Zed\NewsletterStubInterface;
 use Spryker\Client\Newsletter\NewsletterDependencyProvider;
 
-class NewsletterDependencyContainer extends AbstractDependencyContainer
+class NewsletterDependencyContainer extends AbstractFactory
 {
 
     /**

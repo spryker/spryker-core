@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 
 /**
- * @method ApplicationDependencyContainer getDependencyContainer()
+ * @method ApplicationDependencyContainer getBusinessFactory()
  */
 class ApplicationFacade extends AbstractFacade
 {
@@ -23,7 +23,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function getCheckSteps(LoggerInterface $logger = null)
     {
-        return $this->getDependencyContainer()->createCheckSteps($logger);
+        return $this->getBusinessFactory()->createCheckSteps($logger);
     }
 
     /**
@@ -33,7 +33,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepCodeCeption(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->createCheckStepCodeCeption($logger)->run();
+        $this->getBusinessFactory()->createCheckStepCodeCeption($logger)->run();
     }
 
     /**
@@ -43,7 +43,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepDeleteDatabase(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->createCheckStepDeleteDatabase($logger)->run();
+        $this->getBusinessFactory()->createCheckStepDeleteDatabase($logger)->run();
     }
 
     /**
@@ -53,7 +53,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepDeleteGeneratedDirectory(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->createCheckStepDeleteGeneratedDirectory($logger)->run();
+        $this->getBusinessFactory()->createCheckStepDeleteGeneratedDirectory($logger)->run();
     }
 
     /**
@@ -63,7 +63,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepExportKeyValue(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->createCheckStepExportKeyValue($logger)->run();
+        $this->getBusinessFactory()->createCheckStepExportKeyValue($logger)->run();
     }
 
     /**
@@ -73,7 +73,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepExportSearch(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->createCheckStepExportSearch($logger)->run();
+        $this->getBusinessFactory()->createCheckStepExportSearch($logger)->run();
     }
 
     /**
@@ -83,7 +83,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepInstallDemoData(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->createCheckStepInstallDemoData($logger)->run();
+        $this->getBusinessFactory()->createCheckStepInstallDemoData($logger)->run();
     }
 
     /**
@@ -93,7 +93,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepSetupInstall(LoggerInterface $logger = null)
     {
-        $this->getDependencyContainer()->createCheckStepSetupInstall($logger)->run();
+        $this->getBusinessFactory()->createCheckStepSetupInstall($logger)->run();
     }
 
     /**
@@ -103,7 +103,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function buildNavigation($pathInfo)
     {
-        return $this->getDependencyContainer()->createNavigationBuilder()->build($pathInfo);
+        return $this->getBusinessFactory()->createNavigationBuilder()->build($pathInfo);
     }
 
     /**
@@ -111,7 +111,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function writeNavigationCache()
     {
-        $this->getDependencyContainer()->createNavigationCacheBuilder()->writeNavigationCache();
+        $this->getBusinessFactory()->createNavigationCacheBuilder()->writeNavigationCache();
     }
 
 }

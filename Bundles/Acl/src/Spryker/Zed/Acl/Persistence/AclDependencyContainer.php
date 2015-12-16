@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Acl\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Acl\AclDependencyProvider;
 use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
 use Orm\Zed\Acl\Persistence\SpyAclRoleQuery;
@@ -16,7 +16,7 @@ use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 
-class AclDependencyContainer extends AbstractPersistenceDependencyContainer
+class AclDependencyContainer extends AbstractPersistenceFactory
 {
 
     /**

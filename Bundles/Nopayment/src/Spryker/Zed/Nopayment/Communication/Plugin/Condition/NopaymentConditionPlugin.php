@@ -12,7 +12,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Nopayment\Communication\NopaymentDependencyContainer;
 
 /**
- * @method NopaymentDependencyContainer getDependencyContainer()
+ * @method NopaymentDependencyContainer getCommunicationFactory()
  */
 class NopaymentConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
@@ -24,7 +24,7 @@ class NopaymentConditionPlugin extends AbstractPlugin implements ConditionInterf
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        return $this->getDependencyContainer()->createFacade()->isPaid($orderItem);
+        return $this->getCommunicationFactory()->createFacade()->isPaid($orderItem);
     }
 
 }

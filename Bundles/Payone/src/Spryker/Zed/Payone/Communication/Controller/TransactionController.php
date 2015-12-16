@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @method PayoneFacade getFacade()
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneDependencyContainer getCommunicationFactory()
  */
 class TransactionController extends AbstractController
 {
@@ -98,10 +98,10 @@ class TransactionController extends AbstractController
             ->endUse()
             ->endUse()
             ->find();
-        $this->getDependencyContainer()->createOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
+        $this->getCommunicationFactory()->createOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
 
         if ($dataArray['txaction'] === PayoneConstants::PAYONE_TXACTION_APPOINTED) {
-            $this->getDependencyContainer()->createOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
+            $this->getCommunicationFactory()->createOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
         }
     }
 

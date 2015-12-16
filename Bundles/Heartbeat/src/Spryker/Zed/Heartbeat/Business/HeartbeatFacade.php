@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\HealthReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method HeartbeatDependencyContainer getDependencyContainer()
+ * @method HeartbeatDependencyContainer getBusinessFactory()
  */
 class HeartbeatFacade extends AbstractFacade
 {
@@ -20,7 +20,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function isSystemAlive()
     {
-        return $this->getDependencyContainer()->createDoctor()->doHealthCheck()->isPatientAlive();
+        return $this->getBusinessFactory()->createDoctor()->doHealthCheck()->isPatientAlive();
     }
 
     /**
@@ -28,7 +28,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function getReport()
     {
-        return $this->getDependencyContainer()->createDoctor()->doHealthCheck()->getReport();
+        return $this->getBusinessFactory()->createDoctor()->doHealthCheck()->getReport();
     }
 
     /**
@@ -36,7 +36,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function doPropelHealthCheck()
     {
-        return $this->getDependencyContainer()->createPropelHealthIndicator()->doHealthCheck();
+        return $this->getBusinessFactory()->createPropelHealthIndicator()->doHealthCheck();
     }
 
     /**
@@ -44,7 +44,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function doSearchHealthCheck()
     {
-        return $this->getDependencyContainer()->createSearchHealthIndicator()->doHealthCheck();
+        return $this->getBusinessFactory()->createSearchHealthIndicator()->doHealthCheck();
     }
 
     /**
@@ -52,7 +52,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function doSessionHealthCheck()
     {
-        return $this->getDependencyContainer()->createSessionHealthIndicator()->doHealthCheck();
+        return $this->getBusinessFactory()->createSessionHealthIndicator()->doHealthCheck();
     }
 
     /**
@@ -60,7 +60,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function doStorageHealthCheck()
     {
-        return $this->getDependencyContainer()->createStorageHealthIndicator()->doHealthCheck();
+        return $this->getBusinessFactory()->createStorageHealthIndicator()->doHealthCheck();
     }
 
 }

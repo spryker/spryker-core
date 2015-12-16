@@ -7,11 +7,11 @@
 namespace Spryker\Zed\Checkout\Business;
 
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflowInterface;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 
-class CheckoutDependencyContainer extends AbstractBusinessDependencyContainer
+class CheckoutDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Stock\Business;
 use Spryker\Zed\Stock\Business\Model\Writer;
 use Spryker\Zed\Stock\Business\Model\Reader;
 use Spryker\Zed\Stock\Business\Model\Calculator;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 use Spryker\Zed\Stock\Business\Model\ReaderInterface;
@@ -21,7 +21,7 @@ use Spryker\Zed\Stock\StockConfig;
 /**
  * @method StockConfig getConfig()
  */
-class StockDependencyContainer extends AbstractBusinessDependencyContainer
+class StockDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

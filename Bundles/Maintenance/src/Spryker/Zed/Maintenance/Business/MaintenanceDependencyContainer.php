@@ -10,7 +10,7 @@ use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Maintenance\Business\Dependency\BundleParser;
 use Spryker\Zed\Maintenance\Business\Dependency\Graph;
 use Spryker\Zed\Maintenance\Business\Dependency\Manager;
@@ -26,7 +26,7 @@ use Symfony\Component\Process\Process;
 /**
  * @method MaintenanceConfig getConfig()
  */
-class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
+class MaintenanceDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

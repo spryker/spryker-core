@@ -9,7 +9,7 @@ namespace Spryker\Zed\SequenceNumber\Business;
 use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumber;
 use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
 use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumberInterface;
 use Spryker\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainerInterface;
@@ -20,7 +20,7 @@ use Propel\Runtime\Propel;
  * @method SequenceNumberConfig getConfig()
  * @method SequenceNumberQueryContainerInterface getQueryContainer()
  */
-class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContainer
+class SequenceNumberDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

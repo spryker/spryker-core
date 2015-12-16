@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountDependencyContainer getCommunicationFactory()
  * @method DiscountFacade getFacade()
  */
 class VoucherController extends AbstractController
@@ -38,7 +38,7 @@ class VoucherController extends AbstractController
      */
     public function createSingleAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createVoucherForm();
+        $form = $this->getCommunicationFactory()->createVoucherForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -76,7 +76,7 @@ class VoucherController extends AbstractController
      */
     public function createMultipleAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createVoucherForm(true);
+        $form = $this->getCommunicationFactory()->createVoucherForm(true);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -131,13 +131,13 @@ class VoucherController extends AbstractController
         $idPool = $request->query->get(self::ID_POOL_PARAMETER);
         $batchValue = $request->query->get(self::BATCH_PARAMETER);
 
-        $pool = $this->getDependencyContainer()
+        $pool = $this->getCommunicationFactory()
             ->getVoucherPoolById($idPool);
 
-        $discount = $this->getDependencyContainer()
+        $discount = $this->getCommunicationFactory()
             ->getDiscountByIdDiscountVoucherPool($idPool);
 
-        $countVouchers = $this->getDependencyContainer()
+        $countVouchers = $this->getCommunicationFactory()
             ->getGeneratedVouchersCountByIdPool($pool->getIdDiscountVoucherPool());
 
         $generatedCodesTable = $this->getGeneratedCodesTable($request);
@@ -173,7 +173,7 @@ class VoucherController extends AbstractController
 
         $tableParameters = TableParameters::getTableParameters($request);
 
-        return $this->getDependencyContainer()->createDiscountVoucherCodesTable($tableParameters, $idPool, $batch);
+        return $this->getCommunicationFactory()->createDiscountVoucherCodesTable($tableParameters, $idPool, $batch);
     }
 
     /**
@@ -205,7 +205,7 @@ class VoucherController extends AbstractController
      */
     protected function getCurrentTimestampByStoreTimeZone()
     {
-        $store = $this->getDependencyContainer()->getStore();
+        $store = $this->getCommunicationFactory()->getStore();
         $now = new \DateTime('now', new \DateTimeZone($store->getTimezone()));
 
         return $now;
@@ -227,7 +227,7 @@ class VoucherController extends AbstractController
      */
     protected function generateCsvFromVouchers($idPool, $batchValue)
     {
-        $generatedVouchersQuery = $this->getDependencyContainer()
+        $generatedVouchersQuery = $this->getCommunicationFactory()
             ->getQueryForGeneratedVouchersByIdPool($idPool);
 
         if ($batchValue > 0) {

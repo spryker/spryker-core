@@ -5,14 +5,14 @@
 
 namespace Spryker\Zed\NewRelic\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Shared\NewRelic\Api;
 use Spryker\Zed\NewRelic\NewRelicConfig;
 
 /**
  * @method NewRelicConfig getConfig()
  */
-class NewRelicDependencyContainer extends AbstractCommunicationDependencyContainer
+class NewRelicDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

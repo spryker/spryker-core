@@ -8,11 +8,11 @@ namespace Spryker\Client\Cart;
 
 use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Cart\Session\CartSession;
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Cart\Zed\CartStubInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class CartDependencyContainer extends AbstractDependencyContainer
+class CartDependencyContainer extends AbstractFactory
 {
 
     /**

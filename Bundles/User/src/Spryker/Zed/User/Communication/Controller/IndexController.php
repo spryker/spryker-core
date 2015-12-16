@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 /**
- * @method UserDependencyContainer getDependencyContainer
+ * @method UserDependencyContainer getCommunicationFactory
  * @method UserFacade getFacade()
  * @method UserQueryContainer getQueryContainer()
  */
@@ -25,7 +25,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $usersTable = $this->getDependencyContainer()->createUserTable();
+        $usersTable = $this->getCommunicationFactory()->createUserTable();
 
         return [
             'users' => $usersTable->render(),
@@ -37,7 +37,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createUserTable();
+        $table = $this->getCommunicationFactory()->createUserTable();
 
         return $this->jsonResponse(
             $table->fetchData()

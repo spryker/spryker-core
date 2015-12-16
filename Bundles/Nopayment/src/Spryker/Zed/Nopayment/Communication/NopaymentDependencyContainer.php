@@ -6,11 +6,11 @@
 
 namespace Spryker\Zed\Nopayment\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainer;
 use Spryker\Zed\Nopayment\Business\NopaymentFacade;
 
-class NopaymentDependencyContainer extends AbstractCommunicationDependencyContainer
+class NopaymentDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

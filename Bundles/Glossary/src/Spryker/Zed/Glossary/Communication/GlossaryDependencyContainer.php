@@ -6,7 +6,7 @@
 namespace Spryker\Zed\Glossary\Communication;
 
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Spryker\Zed\Glossary\Communication\Table\TranslationTable;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
@@ -16,7 +16,7 @@ use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 /**
  * @method GlossaryQueryContainerInterface getQueryContainer()
  */
-class GlossaryDependencyContainer extends AbstractCommunicationDependencyContainer
+class GlossaryDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

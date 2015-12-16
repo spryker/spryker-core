@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Category\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Form\CategoryNodeForm;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method CategoryQueryContainer getQueryContainer()
  */
-class CategoryDependencyContainer extends AbstractCommunicationDependencyContainer
+class CategoryDependencyContainer extends AbstractCommunicationFactory
 {
 
     protected $currentLocale;

@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 /**
- * @method AclDependencyContainer getDependencyContainer()
+ * @method AclBusinessFactory getBusinessFactory()
  */
 class AclFacade extends AbstractFacade
 {
@@ -28,7 +28,7 @@ class AclFacade extends AbstractFacade
      */
     public function install()
     {
-        $this->getDependencyContainer()->createInstallerModel()->install();
+        $this->getBusinessFactory()->createInstallerModel()->install();
     }
 
     /**
@@ -39,7 +39,7 @@ class AclFacade extends AbstractFacade
      */
     public function addGroup($groupName, RolesTransfer $rolesTransfer)
     {
-        $groupTransfer = $this->getDependencyContainer()
+        $groupTransfer = $this->getBusinessFactory()
             ->createGroupModel()
             ->addGroup($groupName);
 
@@ -58,7 +58,7 @@ class AclFacade extends AbstractFacade
      */
     public function updateGroup(GroupTransfer $transfer, RolesTransfer $rolesTransfer)
     {
-        $groupTransfer = $this->getDependencyContainer()
+        $groupTransfer = $this->getBusinessFactory()
             ->createGroupModel()
             ->updateGroup($transfer);
 
@@ -76,7 +76,7 @@ class AclFacade extends AbstractFacade
      */
     public function getGroup($id)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createGroupModel()
             ->getGroupById($id);
     }
@@ -88,7 +88,7 @@ class AclFacade extends AbstractFacade
      */
     public function getGroupByName($name)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createGroupModel()
             ->getByName($name);
     }
@@ -98,7 +98,7 @@ class AclFacade extends AbstractFacade
      */
     public function getAllGroups()
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createGroupModel()
             ->getAllGroups();
     }
@@ -110,7 +110,7 @@ class AclFacade extends AbstractFacade
      */
     public function existsRoleByName($name)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRoleModel()
             ->hasRoleName($name);
     }
@@ -122,7 +122,7 @@ class AclFacade extends AbstractFacade
      */
     public function getRoleById($id)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRoleModel()
             ->getRoleById($id);
     }
@@ -134,7 +134,7 @@ class AclFacade extends AbstractFacade
      */
     public function getRoleByName($name)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRoleModel()
             ->getByName($name);
     }
@@ -146,7 +146,7 @@ class AclFacade extends AbstractFacade
      */
     public function addRole($name)
     {
-        return $this->getDependencyContainer()->createRoleModel()->addRole($name);
+        return $this->getBusinessFactory()->createRoleModel()->addRole($name);
     }
 
     /**
@@ -156,7 +156,7 @@ class AclFacade extends AbstractFacade
      */
     public function updateRole(RoleTransfer $roleTransfer)
     {
-        return $this->getDependencyContainer()->createRoleModel()->save($roleTransfer);
+        return $this->getBusinessFactory()->createRoleModel()->save($roleTransfer);
     }
 
     /**
@@ -166,7 +166,7 @@ class AclFacade extends AbstractFacade
      */
     public function getRule($id)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRuleModel()
             ->getRuleById($id);
     }
@@ -179,7 +179,7 @@ class AclFacade extends AbstractFacade
      */
     public function addUserToGroup($idUser, $idGroup)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createGroupModel()
             ->addUser($idGroup, $idUser);
     }
@@ -192,7 +192,7 @@ class AclFacade extends AbstractFacade
      */
     public function userHasGroupId($idUser, $idGroup)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createGroupModel()
             ->hasUser($idGroup, $idUser);
     }
@@ -204,7 +204,7 @@ class AclFacade extends AbstractFacade
      */
     public function hasGroupByName($name)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createGroupModel()
             ->hasGroupName($name);
     }
@@ -216,7 +216,7 @@ class AclFacade extends AbstractFacade
      */
     public function getUserGroup($idUser)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createGroupModel()
             ->getUserGroup($idUser);
     }
@@ -228,7 +228,7 @@ class AclFacade extends AbstractFacade
      */
     public function getUserGroups($idUser)
     {
-        return $this->getDependencyContainer()->createGroupModel()->getUserGroups($idUser);
+        return $this->getBusinessFactory()->createGroupModel()->getUserGroups($idUser);
     }
 
     /**
@@ -239,7 +239,7 @@ class AclFacade extends AbstractFacade
      */
     public function removeUserFromGroup($idUser, $idGroup)
     {
-        $this->getDependencyContainer()
+        $this->getBusinessFactory()
             ->createGroupModel()
             ->removeUser($idGroup, $idUser);
     }
@@ -251,7 +251,7 @@ class AclFacade extends AbstractFacade
      */
     public function addRule(RuleTransfer $ruleTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRuleModel()
             ->addRule($ruleTransfer);
     }
@@ -263,7 +263,7 @@ class AclFacade extends AbstractFacade
      */
     public function getGroupRoles($idGroup)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRoleModel()
             ->getGroupRoles($idGroup);
     }
@@ -275,7 +275,7 @@ class AclFacade extends AbstractFacade
      */
     public function getGroupRules($idGroup)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRuleModel()
             ->getRulesForGroupId($idGroup);
     }
@@ -287,7 +287,7 @@ class AclFacade extends AbstractFacade
      */
     public function getRoleRules($idRole)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRuleModel()
             ->getRoleRules($idRole);
     }
@@ -302,7 +302,7 @@ class AclFacade extends AbstractFacade
      */
     public function existsRoleRule($idAclRole, $bundle, $controller, $action, $type)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRuleModel()
             ->existsRoleRule($idAclRole, $bundle, $controller, $action, $type);
     }
@@ -314,7 +314,7 @@ class AclFacade extends AbstractFacade
      */
     public function getUserRoles($idUser)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRoleModel()
             ->getUserRoles($idUser);
     }
@@ -326,7 +326,7 @@ class AclFacade extends AbstractFacade
      */
     public function removeGroup($idGroup)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createGroupModel()
             ->removeGroupById($idGroup);
     }
@@ -338,7 +338,7 @@ class AclFacade extends AbstractFacade
      */
     public function removeRole($idRole)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRoleModel()
             ->removeRoleById($idRole);
     }
@@ -350,7 +350,7 @@ class AclFacade extends AbstractFacade
      */
     public function removeRule($idRule)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRuleModel()
             ->removeRuleById($idRule);
     }
@@ -363,7 +363,7 @@ class AclFacade extends AbstractFacade
      */
     public function addRoleToGroup($idRole, $idGroup)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createGroupModel()
             ->addRoleToGroup($idRole, $idGroup);
     }
@@ -376,7 +376,7 @@ class AclFacade extends AbstractFacade
      */
     public function addRolesToGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer)
     {
-        $groupModel = $this->getDependencyContainer()->createGroupModel();
+        $groupModel = $this->getBusinessFactory()->createGroupModel();
         $groupModel->removeRolesFromGroup($groupTransfer->getIdAclGroup());
 
         foreach ($rolesTransfer->getRoles() as $roleTransfer) {
@@ -396,7 +396,7 @@ class AclFacade extends AbstractFacade
      */
     public function checkAccess(UserTransfer $user, $bundle, $controller, $action)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRuleModel()
             ->isAllowed($user, $bundle, $controller, $action);
     }
@@ -410,7 +410,7 @@ class AclFacade extends AbstractFacade
      */
     public function isIgnorable($bundle, $controller, $action)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createRuleModel()
             ->isIgnorable($bundle, $controller, $action);
     }

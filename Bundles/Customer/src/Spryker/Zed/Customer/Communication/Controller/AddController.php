@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerDependencyContainer getCommunicationFactory()
  */
 class AddController extends AbstractController
 {
@@ -27,7 +27,7 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getDependencyContainer()
+        $form = $this->getCommunicationFactory()
             ->createCustomerForm(CustomerForm::ADD);
 
         $form->handleRequest($request);

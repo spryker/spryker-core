@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Url\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Url\Communication\Form\UrlForm;
 use Spryker\Zed\Url\Communication\Grid\TranslationGrid;
 use Spryker\Zed\Url\Communication\Grid\UrlGrid;
@@ -15,7 +15,7 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 /**
  * @method UrlQueryContainerInterface getQueryContainer()
  */
-class UrlDependencyContainer extends AbstractCommunicationDependencyContainer
+class UrlDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

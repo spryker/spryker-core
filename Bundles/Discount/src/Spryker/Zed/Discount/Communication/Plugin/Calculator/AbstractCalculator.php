@@ -12,7 +12,7 @@ use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 
 /**
- * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountDependencyContainer getCommunicationFactory()
  */
 abstract class AbstractCalculator extends AbstractDiscountPlugin implements DiscountCalculatorPluginInterface
 {

@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsDependencyContainer getDependencyContainer()
+ * @method CmsDependencyContainer getCommunicationFactory()
  * @method CmsQueryContainer getQueryContainer()
  * @method CmsFacade getFacade()
  */
@@ -208,7 +208,7 @@ class GlossaryController extends AbstractController
      */
     private function getLocaleFacade()
     {
-        return $this->getDependencyContainer()
+        return $this->getCommunicationFactory()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
     }
 
@@ -217,7 +217,7 @@ class GlossaryController extends AbstractController
      */
     private function getGlossaryFacade()
     {
-        return $this->getDependencyContainer()
+        return $this->getCommunicationFactory()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }
 
@@ -245,7 +245,7 @@ class GlossaryController extends AbstractController
     private function findPagePlaceholders(SpyCmsPage $pageUrl)
     {
         $pageUrlArray = $pageUrl->toArray();
-        $tempFile = $this->getDependencyContainer()
+        $tempFile = $this->getCommunicationFactory()
             ->getTemplateRealPath($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH]);
         $placeholders = $this->findTemplatePlaceholders($tempFile);
 
@@ -311,7 +311,7 @@ class GlossaryController extends AbstractController
         if (isset($glossaryMappingArray[$place])) {
             $idMapping = $glossaryMappingArray[$place];
         }
-        $form = $this->getDependencyContainer()
+        $form = $this->getCommunicationFactory()
             ->createCmsGlossaryForm($idPage, $idMapping, $place, $this->getFacade());
         $form->handleRequest();
 

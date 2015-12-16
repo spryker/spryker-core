@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
-use Spryker\Zed\Acl\Communication\AclDependencyContainer;
+use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method AclDependencyContainer getDependencyContainer()
+ * @method AclCommunicationFactory getCommunicationFactory()
  * @method AclFacade getFacade()
  */
 class GroupController extends AbstractController
@@ -34,7 +34,7 @@ class GroupController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createGroupTable();
+        $table = $this->getCommunicationFactory()->createGroupTable();
 
         return $this->viewResponse([
             'table' => $table->render(),
@@ -46,7 +46,7 @@ class GroupController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createGroupTable();
+        $table = $this->getCommunicationFactory()->createGroupTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -60,7 +60,7 @@ class GroupController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createGroupForm($request);
+        $form = $this->getCommunicationFactory()->createGroupForm($request);
         $form->setOptions([
             'validation_groups' => [GroupForm::VALIDATE_ADD],
         ]);
@@ -94,7 +94,7 @@ class GroupController extends AbstractController
     {
         $idAclGroup = $request->query->get(self::PARAMETER_ID_GROUP);
 
-        $form = $this->getDependencyContainer()->createGroupForm($request);
+        $form = $this->getCommunicationFactory()->createGroupForm($request);
         $form->setOptions([
             'validation_groups' => [GroupForm::VALIDATE_EDIT],
         ]);
@@ -117,7 +117,7 @@ class GroupController extends AbstractController
             return $this->redirectResponse('/acl/group/edit?' . self::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
         }
 
-        $usersTable = $this->getDependencyContainer()->createGroupUsersTable($idAclGroup);
+        $usersTable = $this->getCommunicationFactory()->createGroupUsersTable($idAclGroup);
 
         return $this->viewResponse([
             'form' => $form->createView(),
@@ -153,7 +153,7 @@ class GroupController extends AbstractController
     {
         $idGroup = $request->query->get(self::PARAMETER_ID_GROUP);
 
-        $usersTable = $this->getDependencyContainer()->createGroupUsersTable($idGroup);
+        $usersTable = $this->getCommunicationFactory()->createGroupUsersTable($idGroup);
 
         return $this->jsonResponse(
             $usersTable->fetchData()
@@ -191,7 +191,7 @@ class GroupController extends AbstractController
     {
         $idGroup = $request->get(self::PARAMETER_ID_GROUP);
 
-        $roles = $this->getDependencyContainer()->createGroupRoleListByGroupId($idGroup);
+        $roles = $this->getCommunicationFactory()->createGroupRoleListByGroupId($idGroup);
 
         return $this->jsonResponse($roles);
     }
@@ -203,7 +203,7 @@ class GroupController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $grid = $this->getDependencyContainer()->createGroupsGrid($request);
+        $grid = $this->getCommunicationFactory()->createGroupsGrid($request);
         $data = $grid->renderData();
 
         return $this->jsonResponse($data);
@@ -217,7 +217,7 @@ class GroupController extends AbstractController
     public function rulesAction(Request $request)
     {
         $idGroup = $request->get('id');
-        $grid = $this->getDependencyContainer()->createRulesetGrid($request, $idGroup);
+        $grid = $this->getCommunicationFactory()->createRulesetGrid($request, $idGroup);
 
         $data = $grid->renderData();
 

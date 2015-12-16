@@ -7,9 +7,9 @@
 namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\NewRelic\Api;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
-class ApplicationDependencyContainer extends AbstractCommunicationDependencyContainer
+class ApplicationDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

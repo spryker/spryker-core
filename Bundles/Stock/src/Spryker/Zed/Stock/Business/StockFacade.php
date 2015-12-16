@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeInterface;
 
 /**
- * @method StockDependencyContainer getDependencyContainer()
+ * @method StockDependencyContainer getBusinessFactory()
  */
 class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInterface, StockToSalesFacadeInterface
 {
@@ -25,7 +25,7 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      */
     public function isNeverOutOfStock($sku)
     {
-        return $this->getDependencyContainer()->getReaderModel()->isNeverOutOfStock($sku);
+        return $this->getBusinessFactory()->getReaderModel()->isNeverOutOfStock($sku);
     }
 
     /**
@@ -35,7 +35,7 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      */
     public function calculateStockForProduct($sku)
     {
-        return $this->getDependencyContainer()->getCalculatorModel()->calculateStockForProduct($sku);
+        return $this->getBusinessFactory()->getCalculatorModel()->calculateStockForProduct($sku);
     }
 
     /**
@@ -45,7 +45,7 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      */
     public function createStockType(TypeTransfer $stockTypeTransfer)
     {
-        return $this->getDependencyContainer()->getWriterModel()->createStockType($stockTypeTransfer);
+        return $this->getBusinessFactory()->getWriterModel()->createStockType($stockTypeTransfer);
     }
 
     /**
@@ -55,7 +55,7 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      */
     public function updateStockType(TypeTransfer $stockTypeTransfer)
     {
-        return $this->getDependencyContainer()->getWriterModel()->updateStockType($stockTypeTransfer);
+        return $this->getBusinessFactory()->getWriterModel()->updateStockType($stockTypeTransfer);
     }
 
     /**
@@ -65,7 +65,7 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      */
     public function createStockProduct(StockProductTransfer $transferStockProduct)
     {
-        return $this->getDependencyContainer()->getWriterModel()->createStockProduct($transferStockProduct);
+        return $this->getBusinessFactory()->getWriterModel()->createStockProduct($transferStockProduct);
     }
 
     /**
@@ -75,7 +75,7 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      */
     public function updateStockProduct(StockProductTransfer $stockProductTransfer)
     {
-        return $this->getDependencyContainer()->getWriterModel()->updateStockProduct($stockProductTransfer);
+        return $this->getBusinessFactory()->getWriterModel()->updateStockProduct($stockProductTransfer);
     }
 
     /**
@@ -87,7 +87,7 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      */
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1)
     {
-        $this->getDependencyContainer()->getWriterModel()->decrementStock($sku, $stockType, $decrementBy);
+        $this->getBusinessFactory()->getWriterModel()->decrementStock($sku, $stockType, $decrementBy);
     }
 
     /**
@@ -99,7 +99,7 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      */
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1)
     {
-        $this->getDependencyContainer()->getWriterModel()->incrementStock($sku, $stockType, $incrementBy);
+        $this->getBusinessFactory()->getWriterModel()->incrementStock($sku, $stockType, $incrementBy);
     }
 
     /**
@@ -110,7 +110,7 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      */
     public function hasStockProduct($sku, $stockType)
     {
-        return $this->getDependencyContainer()->getReaderModel()->hasStockProduct($sku, $stockType);
+        return $this->getBusinessFactory()->getReaderModel()->hasStockProduct($sku, $stockType);
     }
 
     /**
@@ -121,7 +121,7 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      */
     public function getIdStockProduct($sku, $stockType)
     {
-        return $this->getDependencyContainer()->getReaderModel()->getIdStockProduct($sku, $stockType);
+        return $this->getBusinessFactory()->getReaderModel()->getIdStockProduct($sku, $stockType);
     }
 
 }

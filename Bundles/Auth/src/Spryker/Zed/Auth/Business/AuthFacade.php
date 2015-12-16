@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\UserTransfer;
 
 /**
- * @method AuthDependencyContainer getDependencyContainer()
+ * @method AuthDependencyContainer getBusinessFactory()
  */
 class AuthFacade extends AbstractFacade
 {
@@ -23,7 +23,7 @@ class AuthFacade extends AbstractFacade
      */
     public function login($username, $password)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createAuthModel()
             ->authenticate($username, $password);
     }
@@ -33,7 +33,7 @@ class AuthFacade extends AbstractFacade
      */
     public function logout()
     {
-        $this->getDependencyContainer()
+        $this->getBusinessFactory()
             ->createAuthModel()
             ->logout();
     }
@@ -45,7 +45,7 @@ class AuthFacade extends AbstractFacade
      */
     public function isAuthenticated($token)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createAuthModel()
             ->isAuthorized($token);
     }
@@ -55,7 +55,7 @@ class AuthFacade extends AbstractFacade
      */
     public function hasCurrentUser()
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createAuthModel()
             ->hasCurrentUser();
     }
@@ -67,7 +67,7 @@ class AuthFacade extends AbstractFacade
      */
     public function getUserToken($user)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createAuthModel()
             ->generateToken($user);
     }
@@ -81,7 +81,7 @@ class AuthFacade extends AbstractFacade
      */
     public function isIgnorable($bundle, $controller, $action)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createAuthModel()
             ->isIgnorablePath($bundle, $controller, $action);
     }
@@ -93,7 +93,7 @@ class AuthFacade extends AbstractFacade
      */
     public function getSystemUser($hash)
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createAuthModel()
             ->getSystemUserByHash($hash);
     }
@@ -103,7 +103,7 @@ class AuthFacade extends AbstractFacade
      */
     public function getCurrentUserToken()
     {
-        return $this->getDependencyContainer()
+        return $this->getBusinessFactory()
             ->createAuthModel()
             ->getCurrentUserToken();
     }
@@ -115,7 +115,7 @@ class AuthFacade extends AbstractFacade
      */
     public function requestPasswordReset($email)
     {
-        return $this->getDependencyContainer()->createPasswordReset()->requestToken($email);
+        return $this->getBusinessFactory()->createPasswordReset()->requestToken($email);
     }
 
     /**
@@ -125,7 +125,7 @@ class AuthFacade extends AbstractFacade
      */
     public function isValidPasswordResetToken($token)
     {
-        return $this->getDependencyContainer()->createPasswordReset()->isValidToken($token);
+        return $this->getBusinessFactory()->createPasswordReset()->isValidToken($token);
     }
 
     /**
@@ -136,7 +136,7 @@ class AuthFacade extends AbstractFacade
      */
     public function resetPassword($token, $password)
     {
-        return $this->getDependencyContainer()->createPasswordReset()->resetPassword($token, $password);
+        return $this->getBusinessFactory()->createPasswordReset()->resetPassword($token, $password);
     }
 
 }

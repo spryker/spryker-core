@@ -16,7 +16,7 @@ use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
 
 /**
- * @method GlossaryDependencyContainer getDependencyContainer()
+ * @method GlossaryDependencyContainer getBusinessFactory()
  */
 class GlossaryFacade extends AbstractFacade
 {
@@ -30,7 +30,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function createKey($keyName)
     {
-        $keyManager = $this->getDependencyContainer()->createKeyManager();
+        $keyManager = $this->getBusinessFactory()->createKeyManager();
 
         return $keyManager->createKey($keyName);
     }
@@ -42,7 +42,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function hasKey($keyName)
     {
-        $keyManager = $this->getDependencyContainer()->createKeyManager();
+        $keyManager = $this->getBusinessFactory()->createKeyManager();
 
         return $keyManager->hasKey($keyName);
     }
@@ -54,7 +54,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function getKeyIdentifier($keyName)
     {
-        $keyManager = $this->getDependencyContainer()->createKeyManager();
+        $keyManager = $this->getBusinessFactory()->createKeyManager();
 
         return $keyManager->getKey($keyName)->getPrimaryKey();
     }
@@ -69,7 +69,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function updateKey($oldKeyName, $newKeyName)
     {
-        $keyManager = $this->getDependencyContainer()->createKeyManager();
+        $keyManager = $this->getBusinessFactory()->createKeyManager();
 
         return $keyManager->updateKey($oldKeyName, $newKeyName);
     }
@@ -81,7 +81,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function deleteKey($keyName)
     {
-        $keyManager = $this->getDependencyContainer()->createKeyManager();
+        $keyManager = $this->getBusinessFactory()->createKeyManager();
 
         return $keyManager->deleteKey($keyName);
     }
@@ -100,7 +100,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->createTranslation($keyName, $locale, $value, $isActive);
     }
@@ -118,7 +118,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function createTranslationForCurrentLocale($keyName, $value, $isActive = true)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->createTranslationForCurrentLocale($keyName, $value, $isActive);
     }
@@ -137,7 +137,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->createAndTouchTranslation($keyName, $locale, $value, $isActive);
     }
@@ -150,7 +150,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function hasTranslation($keyName, LocaleTransfer $locale = null)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->hasTranslation($keyName, $locale);
     }
@@ -165,7 +165,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function getTranslation($keyName, LocaleTransfer $locale)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->getTranslationByKeyName($keyName, $locale);
     }
@@ -182,7 +182,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function updateTranslation($keyName, $locale, $value, $isActive = true)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->updateTranslation($keyName, $locale, $value, $isActive);
     }
@@ -199,7 +199,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->updateAndTouchTranslation($keyName, $locale, $value, $isActive);
     }
@@ -211,7 +211,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }
@@ -227,7 +227,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function saveTranslation(TranslationTransfer $transferTranslation)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->saveTranslation($transferTranslation);
     }
@@ -243,7 +243,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function saveAndTouchTranslation(TranslationTransfer $transferTranslation)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->saveAndTouchTranslation($transferTranslation);
     }
@@ -256,7 +256,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function deleteTranslation($keyName, LocaleTransfer $locale)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->deleteTranslation($keyName, $locale);
     }
@@ -271,7 +271,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function translate($keyName, array $data = [])
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->translate($keyName, $data);
     }
@@ -286,7 +286,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function translateByKeyId($idKey, array $data = [])
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         return $translationManager->translateByKeyId($idKey, $data);
     }
@@ -298,7 +298,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function touchCurrentTranslationForKeyId($idKey)
     {
-        $translationManager = $this->getDependencyContainer()->createTranslationManager();
+        $translationManager = $this->getBusinessFactory()->createTranslationManager();
 
         $translationManager->touchCurrentTranslationForKeyId($idKey);
     }
@@ -310,7 +310,7 @@ class GlossaryFacade extends AbstractFacade
      */
     public function getOrCreateKey($keyName)
     {
-        $keyManager = $this->getDependencyContainer()->createKeyManager();
+        $keyManager = $this->getBusinessFactory()->createKeyManager();
 
         return $keyManager->getOrCreateKey($keyName);
     }

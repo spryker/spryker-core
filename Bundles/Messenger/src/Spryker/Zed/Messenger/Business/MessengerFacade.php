@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method MessengerDependencyContainer getDependencyContainer()
+ * @method MessengerDependencyContainer getBusinessFactory()
  */
 class MessengerFacade extends AbstractFacade
 {
@@ -22,7 +22,7 @@ class MessengerFacade extends AbstractFacade
      */
     public function addSuccessMessage(MessageTransfer $message)
     {
-        $this->getDependencyContainer()->createMessageTray()->addSuccessMessage($message);
+        $this->getBusinessFactory()->createMessageTray()->addSuccessMessage($message);
     }
 
     /**
@@ -32,7 +32,7 @@ class MessengerFacade extends AbstractFacade
      */
     public function addErrorMessage(MessageTransfer $message)
     {
-        $this->getDependencyContainer()->createMessageTray()->addErrorMessage($message);
+        $this->getBusinessFactory()->createMessageTray()->addErrorMessage($message);
     }
 
     /**
@@ -42,7 +42,7 @@ class MessengerFacade extends AbstractFacade
      */
     public function addInfoMessage(MessageTransfer $message)
     {
-        $this->getDependencyContainer()->createMessageTray()->addInfoMessage($message);
+        $this->getBusinessFactory()->createMessageTray()->addInfoMessage($message);
     }
 
     /**
@@ -50,7 +50,7 @@ class MessengerFacade extends AbstractFacade
      */
     public function getStoredMessages()
     {
-        return $this->getDependencyContainer()->createMessageTray()->getMessages();
+        return $this->getBusinessFactory()->createMessageTray()->getMessages();
     }
 
 }

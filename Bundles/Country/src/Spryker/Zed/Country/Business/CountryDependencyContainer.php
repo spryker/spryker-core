@@ -8,7 +8,7 @@ namespace Spryker\Zed\Country\Business;
 
 use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use Spryker\Zed\Country\Business\Internal\Install;
 use Spryker\Zed\Country\CountryConfig;
@@ -18,7 +18,7 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainer;
  * @method CountryConfig getConfig()
  * @method CountryQueryContainer getQueryContainer()
  */
-class CountryDependencyContainer extends AbstractBusinessDependencyContainer
+class CountryDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

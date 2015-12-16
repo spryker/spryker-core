@@ -6,12 +6,12 @@
 
 namespace Spryker\Client\Collector;
 
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder;
 use Spryker\Client\Collector\Matcher\UrlMatcher;
 use Spryker\Client\Storage\StorageClient;
 
-class CollectorDependencyContainer extends AbstractDependencyContainer
+class CollectorDependencyContainer extends AbstractFactory
 {
 
     /**

@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\ModelResult;
 use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
 
 /**
- * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountDependencyContainer getCommunicationFactory()
  */
 class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePluginInterface
 {
@@ -37,7 +37,7 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
         $validationErrors = [];
         $validVoucherCodes = [];
         foreach ($discountTransfer->getUsedCodes() as $voucherCode) {
-            $voucherValidation = $this->getDependencyContainer()->getDiscountFacade()->isVoucherUsable($voucherCode);
+            $voucherValidation = $this->getCommunicationFactory()->getDiscountFacade()->isVoucherUsable($voucherCode);
 
             if ($voucherValidation->isSuccess()) {
                 $validVoucherCodes[] = $voucherCode;

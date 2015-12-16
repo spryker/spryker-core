@@ -8,7 +8,7 @@ namespace Spryker\Zed\Customer\Communication;
 
 use Spryker\Zed\Customer\Communication\Form\AddressForm;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormInterface;
 /**
  * @method CustomerQueryContainerInterface getQueryContainer()
  */
-class CustomerDependencyContainer extends AbstractCommunicationDependencyContainer
+class CustomerDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

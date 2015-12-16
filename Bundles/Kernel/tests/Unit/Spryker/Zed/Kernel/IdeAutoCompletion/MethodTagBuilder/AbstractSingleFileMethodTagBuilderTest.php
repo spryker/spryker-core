@@ -22,13 +22,13 @@ class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $methodTagBuilder = new SingleFileMethodTagBuilder([
             SingleFileMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',
-            SingleFileMethodTagBuilder::OPTION_KEY_FILE_NAME_SUFFIX => 'DependencyContainer.php',
+            SingleFileMethodTagBuilder::OPTION_KEY_FILE_NAME_SUFFIX => 'CommunicationFactory.php',
             SingleFileMethodTagBuilder::OPTION_KEY_PROJECT_PATH_PATTERN => __DIR__ . '/Fixtures/src',
             SingleFileMethodTagBuilder::OPTION_KEY_VENDOR_PATH_PATTERN => __DIR__ . '/Fixtures/vendor/*/*/src',
         ]);
 
         $expectedMethodTag =
-            ' * @method \VendorNamespace\Application\Bundle\Communication\BundleDependencyContainer singleFileMethod()';
+            ' * @method \VendorNamespace\Application\Bundle\Communication\BundleCommunicationFactory singleFileMethod()';
 
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
         $this->assertContains($expectedMethodTag, $methodTags);

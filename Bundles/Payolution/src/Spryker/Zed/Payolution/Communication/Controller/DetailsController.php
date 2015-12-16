@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @method PayolutionDependencyContainer getDependencyContainer()
+ * @method PayolutionDependencyContainer getCommunicationFactory()
  * @method PayolutionQueryContainerInterface getQueryContainer()
  */
 class DetailsController extends AbstractController
@@ -30,8 +30,8 @@ class DetailsController extends AbstractController
     {
         $idPayment = (int) $request->get('id-payment');
         $paymentEntity = $this->getPaymentEntity($idPayment);
-        $requestLogTable = $this->getDependencyContainer()->createRequestLogTable($idPayment);
-        $statusLogTable = $this->getDependencyContainer()->createStatusLogTable($idPayment);
+        $requestLogTable = $this->getCommunicationFactory()->createRequestLogTable($idPayment);
+        $statusLogTable = $this->getCommunicationFactory()->createStatusLogTable($idPayment);
 
         return [
             'idPayment' => $idPayment,
@@ -65,7 +65,7 @@ class DetailsController extends AbstractController
     public function requestLogTableAction(Request $request)
     {
         $idPayment = (int) $request->get('id-payment');
-        $requestLogTable = $this->getDependencyContainer()->createRequestLogTable($idPayment);
+        $requestLogTable = $this->getCommunicationFactory()->createRequestLogTable($idPayment);
 
         return $this->jsonResponse($requestLogTable->fetchData());
     }
@@ -78,7 +78,7 @@ class DetailsController extends AbstractController
     public function statusLogTableAction(Request $request)
     {
         $idPayment = (int) $request->get('id-payment');
-        $statusLogTable = $this->getDependencyContainer()->createStatusLogTable($idPayment);
+        $statusLogTable = $this->getCommunicationFactory()->createStatusLogTable($idPayment);
 
         return $this->jsonResponse($statusLogTable->fetchData());
     }

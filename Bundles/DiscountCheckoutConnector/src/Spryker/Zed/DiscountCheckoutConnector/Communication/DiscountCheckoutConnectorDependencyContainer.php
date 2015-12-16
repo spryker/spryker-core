@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\DiscountCheckoutConnector\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
-class DiscountCheckoutConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
+class DiscountCheckoutConnectorDependencyContainer extends AbstractCommunicationFactory
 {
 }

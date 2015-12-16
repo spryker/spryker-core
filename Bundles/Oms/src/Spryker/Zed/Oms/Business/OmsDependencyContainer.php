@@ -19,7 +19,7 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\DummyInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface;
@@ -42,7 +42,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
  * @method OmsConfig getConfig()
  * @method OmsQueryContainerInterface getQueryContainer()
  */
-class OmsDependencyContainer extends AbstractBusinessDependencyContainer
+class OmsDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

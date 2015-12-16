@@ -6,13 +6,13 @@
 
 namespace Spryker\Client\ZedRequest;
 
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Config;
 use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
 use Spryker\Client\ZedRequest\ZedRequestDependencyProvider;
 
-class ZedRequestDependencyContainer extends AbstractDependencyContainer
+class ZedRequestDependencyContainer extends AbstractFactory
 {
 
     /**

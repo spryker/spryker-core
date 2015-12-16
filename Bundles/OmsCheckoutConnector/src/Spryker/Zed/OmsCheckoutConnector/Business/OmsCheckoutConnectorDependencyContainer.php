@@ -6,13 +6,13 @@
 
 namespace Spryker\Zed\OmsCheckoutConnector\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\OmsCheckoutConnector\OmsCheckoutConnectorConfig;
 
 /**
  * @method OmsCheckoutConnectorConfig getConfig()
  */
-class OmsCheckoutConnectorDependencyContainer extends AbstractBusinessDependencyContainer
+class OmsCheckoutConnectorDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

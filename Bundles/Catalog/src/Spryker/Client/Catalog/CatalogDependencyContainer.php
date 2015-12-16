@@ -21,11 +21,11 @@ use Elastica\Index;
 use Generated\Client\Ide\FactoryAutoCompletion\Catalog;
 use Spryker\Client\Catalog\CatalogDependencyProvider;
 use Spryker\Client\Catalog\Model\FacetConfig;
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class CatalogDependencyContainer extends AbstractDependencyContainer
+class CatalogDependencyContainer extends AbstractFactory
 {
 
     /**

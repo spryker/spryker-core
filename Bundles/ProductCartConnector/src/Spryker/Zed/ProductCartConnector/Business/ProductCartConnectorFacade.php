@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ProductCartConnectorDependencyContainer getDependencyContainer()
+ * @method ProductCartConnectorDependencyContainer getBusinessFactory()
  */
 class ProductCartConnectorFacade extends AbstractFacade
 {
@@ -22,7 +22,7 @@ class ProductCartConnectorFacade extends AbstractFacade
      */
     public function expandItems(ChangeTransfer $change)
     {
-        return $this->getDependencyContainer()->createProductManager()->expandItems($change);
+        return $this->getBusinessFactory()->createProductManager()->expandItems($change);
     }
 
 }

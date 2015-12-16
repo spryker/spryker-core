@@ -8,7 +8,7 @@ namespace Spryker\Zed\ProductOption\Business;
 
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionReader;
 use Spryker\Zed\ProductOption\Business\Model\DataImportWriter;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Spryker\Zed\ProductOption\Business\Model\DataImportWriterInterface;
@@ -17,7 +17,7 @@ use Spryker\Zed\ProductOption\Business\Model\ProductOptionReaderInterface;
 /**
  * @method ProductOptionConfig getConfig()
  */
-class ProductOptionDependencyContainer extends AbstractBusinessDependencyContainer
+class ProductOptionDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

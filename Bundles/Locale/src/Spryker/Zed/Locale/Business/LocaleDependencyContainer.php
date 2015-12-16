@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Locale\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller;
 use Spryker\Zed\Locale\Business\Manager\LocaleManager;
@@ -16,7 +16,7 @@ use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 /**
  * @method LocaleConfig getConfig()
  */
-class LocaleDependencyContainer extends AbstractBusinessDependencyContainer
+class LocaleDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

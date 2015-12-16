@@ -8,24 +8,22 @@ namespace Spryker\Zed\Kernel\Persistence;
 
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Zed\Kernel\Persistence\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 abstract class AbstractQueryContainer implements QueryContainerInterface
 {
 
-    const DEPENDENCY_CONTAINER = 'DependencyContainer';
     const PROPEL_CONNECTION = 'propel connection';
 
     /**
-     * @var DependencyContainerInterface
+     * @var PersistenceFactoryInterface
      */
-    private $dependencyContainer;
+    private $persistenceFactory;
 
     /**
      * @var Container
@@ -97,37 +95,37 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
-     * @return AbstractPersistenceDependencyContainer
+     * @return AbstractPersistenceFactory
      */
-    protected function getDependencyContainer()
+    protected function getPersistenceFactory()
     {
-        if ($this->dependencyContainer === null) {
-            $this->dependencyContainer = $this->resolveDependencyContainer();
+        if ($this->persistenceFactory === null) {
+            $this->persistenceFactory = $this->resolvePersistenceFactory();
         }
 
         if ($this->container !== null) {
-            $this->dependencyContainer->setContainer($this->container);
+            $this->persistenceFactory->setContainer($this->container);
         }
 
-        return $this->dependencyContainer;
+        return $this->persistenceFactory;
     }
 
     /**
      * @throws \Exception
      *
-     * @return AbstractPersistenceDependencyContainer
+     * @return AbstractPersistenceFactory
      */
-    protected function resolveDependencyContainer()
+    protected function resolvePersistenceFactory()
     {
-        return $this->getQueryContainerResolver()->resolve($this);
+        return $this->getFactoryResolver()->resolve($this);
     }
 
     /**
-     * @return DependencyContainerResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
      */
-    protected function getQueryContainerResolver()
+    protected function getFactoryResolver()
     {
-        return new DependencyContainerResolver();
+        return new FactoryResolver();
     }
 
     /**

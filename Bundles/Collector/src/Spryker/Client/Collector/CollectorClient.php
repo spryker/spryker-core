@@ -12,7 +12,7 @@ use Spryker\Client\Collector\Matcher\UrlMatcherInterface;
 /**
  * @todo Rename all YvesExport Bundles to PageExport or just Export.
  *
- * @method CollectorDependencyContainer getDependencyContainer()
+ * @method CollectorDependencyContainer getFactory()
  */
 class CollectorClient extends AbstractClient implements UrlMatcherInterface
 {
@@ -23,7 +23,7 @@ class CollectorClient extends AbstractClient implements UrlMatcherInterface
      */
     public function matchUrl($url, $localeName)
     {
-        return $this->getDependencyContainer()->createUrlMatcher()->matchUrl($url, $localeName);
+        return $this->getFactory()->createUrlMatcher()->matchUrl($url, $localeName);
     }
 
 }

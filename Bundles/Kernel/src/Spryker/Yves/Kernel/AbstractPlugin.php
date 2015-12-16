@@ -9,17 +9,16 @@ namespace Spryker\Yves\Kernel;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Spryker\Yves\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
-use Spryker\Yves\Kernel\DependencyContainer\DependencyContainerInterface;
-use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
+use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException;
+use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractPlugin
 {
 
     /**
-     * @var DependencyContainerInterface
+     * @var FactoryInterface
      */
-    private $dependencyContainer;
+    private $factory;
 
     /**
      * @var AbstractClient
@@ -27,33 +26,33 @@ abstract class AbstractPlugin
     private $client;
 
     /**
-     * @return DependencyContainerInterface
+     * @return FactoryInterface
      */
-    protected function getDependencyContainer()
+    protected function getFactory()
     {
-        if ($this->dependencyContainer === null) {
-            $this->dependencyContainer = $this->resolveDependencyContainer();
+        if ($this->factory === null) {
+            $this->factory = $this->resolveFactory();
         }
 
-        return $this->dependencyContainer;
+        return $this->factory;
     }
 
     /**
-     * @throws DependencyContainerNotFoundException
+     * @throws FactoryNotFoundException
      *
-     * @return AbstractDependencyContainer
+     * @return AbstractFactory
      */
-    protected function resolveDependencyContainer()
+    protected function resolveFactory()
     {
-        return $this->getDependencyContainerResolver()->resolve($this);
+        return $this->getFactoryResolver()->resolve($this);
     }
 
     /**
-     * @return DependencyContainerResolver
+     * @return FactoryResolver
      */
-    protected function getDependencyContainerResolver()
+    protected function getFactoryResolver()
     {
-        return new DependencyContainerResolver();
+        return new FactoryResolver();
     }
 
     /**

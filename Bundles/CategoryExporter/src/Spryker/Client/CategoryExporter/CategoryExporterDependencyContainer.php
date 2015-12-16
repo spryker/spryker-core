@@ -8,13 +8,13 @@ namespace Spryker\Client\CategoryExporter;
 
 use Spryker\Client\CategoryExporter\KeyBuilder\CategoryResourceKeyBuilder;
 use Spryker\Client\CategoryExporter\KeyBuilder\NavigationKeyBuilder as KeyBuilderNavigationKeyBuilder;
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\CategoryExporter\Builder\CategoryTreeBuilder;
 use Spryker\Client\CategoryExporter\Model\Navigation;
 use Spryker\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
-class CategoryExporterDependencyContainer extends AbstractDependencyContainer
+class CategoryExporterDependencyContainer extends AbstractFactory
 {
 
     /**

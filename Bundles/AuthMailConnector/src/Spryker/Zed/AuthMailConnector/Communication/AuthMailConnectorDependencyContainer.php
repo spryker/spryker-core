@@ -5,11 +5,11 @@
  */
 namespace Spryker\Zed\AuthMailConnector\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Mail\Business\MailFacade;
 use Spryker\Zed\AuthMailConnector\AuthMailConnectorDependencyProvider;
 
-class AuthMailConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
+class AuthMailConnectorDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

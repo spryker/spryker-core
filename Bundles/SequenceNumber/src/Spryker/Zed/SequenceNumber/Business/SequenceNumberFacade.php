@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method SequenceNumberDependencyContainer getDependencyContainer()
+ * @method SequenceNumberDependencyContainer getBusinessFactory()
  */
 class SequenceNumberFacade extends AbstractFacade
 {
@@ -22,7 +22,7 @@ class SequenceNumberFacade extends AbstractFacade
      */
     public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettings)
     {
-        $sequenceNumber = $this->getDependencyContainer()
+        $sequenceNumber = $this->getBusinessFactory()
             ->createSequenceNumber($sequenceNumberSettings);
 
         return $sequenceNumber->generate();

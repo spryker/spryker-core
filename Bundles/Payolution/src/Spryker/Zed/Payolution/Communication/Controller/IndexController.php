@@ -10,7 +10,7 @@ use Spryker\Zed\Payolution\Communication\PayolutionDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method PayolutionDependencyContainer getDependencyContainer()
+ * @method PayolutionDependencyContainer getCommunicationFactory()
  */
 class IndexController extends AbstractController
 {
@@ -20,7 +20,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createPaymentsTable();
+        $table = $this->getCommunicationFactory()->createPaymentsTable();
 
         return [
             'payments' => $table->render(),
@@ -32,7 +32,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createPaymentsTable();
+        $table = $this->getCommunicationFactory()->createPaymentsTable();
 
         return $this->jsonResponse($table->fetchData());
     }

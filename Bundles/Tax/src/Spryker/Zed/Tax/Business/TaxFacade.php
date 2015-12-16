@@ -16,7 +16,7 @@ use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 
 /**
- * @method TaxDependencyContainer getDependencyContainer()
+ * @method TaxDependencyContainer getBusinessFactory()
  */
 class TaxFacade extends AbstractFacade
 {
@@ -28,7 +28,7 @@ class TaxFacade extends AbstractFacade
      */
     public function getTaxRates()
     {
-        return $this->getDependencyContainer()->getReaderModel()->getTaxRates();
+        return $this->getBusinessFactory()->getReaderModel()->getTaxRates();
     }
 
     /**
@@ -41,7 +41,7 @@ class TaxFacade extends AbstractFacade
      */
     public function getTaxRate($id)
     {
-        return $this->getDependencyContainer()->getReaderModel()->getTaxRate($id);
+        return $this->getBusinessFactory()->getReaderModel()->getTaxRate($id);
     }
 
     /**
@@ -53,7 +53,7 @@ class TaxFacade extends AbstractFacade
      */
     public function taxRateExists($id)
     {
-        return $this->getDependencyContainer()->getReaderModel()->taxRateExists($id);
+        return $this->getBusinessFactory()->getReaderModel()->taxRateExists($id);
     }
 
     /**
@@ -63,7 +63,7 @@ class TaxFacade extends AbstractFacade
      */
     public function getTaxSets()
     {
-        return $this->getDependencyContainer()->getReaderModel()->getTaxSets();
+        return $this->getBusinessFactory()->getReaderModel()->getTaxSets();
     }
 
     /**
@@ -76,7 +76,7 @@ class TaxFacade extends AbstractFacade
      */
     public function getTaxSet($id)
     {
-        return $this->getDependencyContainer()->getReaderModel()->getTaxSet($id);
+        return $this->getBusinessFactory()->getReaderModel()->getTaxSet($id);
     }
 
     /**
@@ -88,7 +88,7 @@ class TaxFacade extends AbstractFacade
      */
     public function taxSetExists($id)
     {
-        return $this->getDependencyContainer()->getReaderModel()->taxSetExists($id);
+        return $this->getBusinessFactory()->getReaderModel()->taxSetExists($id);
     }
 
     /**
@@ -100,7 +100,7 @@ class TaxFacade extends AbstractFacade
      */
     public function createTaxRate(TaxRateTransfer $taxRate)
     {
-        return $this->getDependencyContainer()->getWriterModel()->createTaxRate($taxRate);
+        return $this->getBusinessFactory()->getWriterModel()->createTaxRate($taxRate);
     }
 
     /**
@@ -113,7 +113,7 @@ class TaxFacade extends AbstractFacade
      */
     public function updateTaxRate(TaxRateTransfer $taxRateTransfer)
     {
-        return $this->getDependencyContainer()->getWriterModel()->updateTaxRate($taxRateTransfer);
+        return $this->getBusinessFactory()->getWriterModel()->updateTaxRate($taxRateTransfer);
     }
 
     /**
@@ -127,7 +127,7 @@ class TaxFacade extends AbstractFacade
      */
     public function createTaxSet(TaxSetTransfer $taxSet)
     {
-        return $this->getDependencyContainer()->getWriterModel()->createTaxSet($taxSet);
+        return $this->getBusinessFactory()->getWriterModel()->createTaxSet($taxSet);
     }
 
     /**
@@ -141,7 +141,7 @@ class TaxFacade extends AbstractFacade
      */
     public function updateTaxSet(TaxSetTransfer $taxSetTransfer)
     {
-        return $this->getDependencyContainer()->getWriterModel()->updateTaxSet($taxSetTransfer);
+        return $this->getBusinessFactory()->getWriterModel()->updateTaxSet($taxSetTransfer);
     }
 
     /**
@@ -155,7 +155,7 @@ class TaxFacade extends AbstractFacade
      */
     public function addTaxRateToTaxSet($taxSetId, TaxRateTransfer $taxRateTransfer)
     {
-        return $this->getDependencyContainer()->getWriterModel()->addTaxRateToTaxSet($taxSetId, $taxRateTransfer);
+        return $this->getBusinessFactory()->getWriterModel()->addTaxRateToTaxSet($taxSetId, $taxRateTransfer);
     }
 
     /**
@@ -170,7 +170,7 @@ class TaxFacade extends AbstractFacade
      */
     public function removeTaxRateFromTaxSet($taxSetId, $taxRateId)
     {
-        return $this->getDependencyContainer()->getWriterModel()->removeTaxRateFromTaxSet($taxSetId, $taxRateId);
+        return $this->getBusinessFactory()->getWriterModel()->removeTaxRateFromTaxSet($taxSetId, $taxRateId);
     }
 
     /**
@@ -180,7 +180,7 @@ class TaxFacade extends AbstractFacade
      */
     public function deleteTaxRate($id)
     {
-        return $this->getDependencyContainer()->getWriterModel()->deleteTaxRate($id);
+        return $this->getBusinessFactory()->getWriterModel()->deleteTaxRate($id);
     }
 
     /**
@@ -190,7 +190,7 @@ class TaxFacade extends AbstractFacade
      */
     public function deleteTaxSet($id)
     {
-        return $this->getDependencyContainer()->getWriterModel()->deleteTaxSet($id);
+        return $this->getBusinessFactory()->getWriterModel()->deleteTaxSet($id);
     }
 
 }

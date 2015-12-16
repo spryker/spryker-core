@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method StorageFacade getFacade()
- * @method StorageDependencyContainer getDependencyContainer()
+ * @method StorageDependencyContainer getCommunicationFactory()
  */
 class MaintenanceController extends AbstractController
 {
@@ -42,7 +42,7 @@ class MaintenanceController extends AbstractController
      */
     public function listAction()
     {
-        $table = $this->getDependencyContainer()->createStorageTable();
+        $table = $this->getCommunicationFactory()->createStorageTable();
 
         return $this->viewResponse(['table' => $table->render()]);
     }
@@ -52,7 +52,7 @@ class MaintenanceController extends AbstractController
      */
     public function listAjaxAction()
     {
-        $table = $this->getDependencyContainer()->createStorageTable();
+        $table = $this->getCommunicationFactory()->createStorageTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -65,7 +65,7 @@ class MaintenanceController extends AbstractController
     public function dropTimestampsAction()
     {
         $timestamps = $this->getFacade()->getTimestamps();
-        $this->getDependencyContainer()->createCollectorFacade()->deleteStorageTimestamps(array_keys($timestamps));
+        $this->getCommunicationFactory()->createCollectorFacade()->deleteStorageTimestamps(array_keys($timestamps));
 
         return $this->redirectResponse(self::URL_STORAGE_MAINTENANCE);
     }

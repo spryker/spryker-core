@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountDependencyContainer getCommunicationFactory()
  * @method DiscountQueryContainer getQueryContainer()
  * @method DiscountFacade getFacade()
  */
@@ -30,7 +30,7 @@ class PoolController extends AbstractController
 
     public function createAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createVoucherCodesForm();
+        $form = $this->getCommunicationFactory()->createVoucherCodesForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -59,7 +59,7 @@ class PoolController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createVoucherCodesForm();
+        $form = $this->getCommunicationFactory()->createVoucherCodesForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -97,7 +97,7 @@ class PoolController extends AbstractController
      */
     public function categoriesAction()
     {
-        $table = $this->getDependencyContainer()->createPoolCategoriesTable();
+        $table = $this->getCommunicationFactory()->createPoolCategoriesTable();
 
         return [
             'categories' => $table->render(),
@@ -109,7 +109,7 @@ class PoolController extends AbstractController
      */
     public function categoriesTableAction()
     {
-        $table = $this->getDependencyContainer()->createPoolCategoriesTable();
+        $table = $this->getCommunicationFactory()->createPoolCategoriesTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -121,7 +121,7 @@ class PoolController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createVoucherPoolTable();
+        $table = $this->getCommunicationFactory()->createVoucherPoolTable();
 
         return [
             'categories' => $table->render(),
@@ -133,7 +133,7 @@ class PoolController extends AbstractController
      */
     public function poolTableAction()
     {
-        $table = $this->getDependencyContainer()->createVoucherPoolTable();
+        $table = $this->getCommunicationFactory()->createVoucherPoolTable();
 
         return $this->jsonResponse(
             $table->fetchData()

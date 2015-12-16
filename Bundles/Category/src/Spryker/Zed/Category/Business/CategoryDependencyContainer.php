@@ -23,13 +23,13 @@ use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
  * @method CategoryQueryContainer getQueryContainer()
  */
-class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
+class CategoryDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

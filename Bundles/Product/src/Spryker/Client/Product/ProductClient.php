@@ -9,7 +9,7 @@ namespace Spryker\Client\Product;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method ProductDependencyContainer getDependencyContainer()
+ * @method ProductDependencyContainer getFactory()
  */
 class ProductClient extends AbstractClient implements ProductClientInterface
 {
@@ -21,8 +21,8 @@ class ProductClient extends AbstractClient implements ProductClientInterface
      */
     public function getAbstractProductFromStorageByIdForCurrentLocale($idAbstractProduct)
     {
-        $locale = $this->getDependencyContainer()->getLocaleClient()->getCurrentLocale();
-        $productStorage = $this->getDependencyContainer()->createProductStorage($locale);
+        $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
+        $productStorage = $this->getFactory()->createProductStorage($locale);
         $product = $productStorage->getAbstractProductFromStorageById($idAbstractProduct);
 
         return $product;
@@ -36,7 +36,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
      */
     public function getAbstractProductFromStorageById($idAbstractProduct, $locale)
     {
-        $productStorage = $this->getDependencyContainer()->createProductStorage($locale);
+        $productStorage = $this->getFactory()->createProductStorage($locale);
         $product = $productStorage->getAbstractProductFromStorageById($idAbstractProduct);
 
         return $product;

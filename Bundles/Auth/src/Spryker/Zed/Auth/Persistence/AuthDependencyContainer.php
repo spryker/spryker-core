@@ -7,9 +7,9 @@
 namespace Spryker\Zed\Auth\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\AuthPersistence;
-use Spryker\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
-class AuthDependencyContainer extends AbstractPersistenceDependencyContainer
+class AuthDependencyContainer extends AbstractPersistenceFactory
 {
 
     /**

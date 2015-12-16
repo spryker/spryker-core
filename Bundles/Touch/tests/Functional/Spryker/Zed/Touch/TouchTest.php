@@ -45,7 +45,7 @@ class TouchTest extends AbstractFunctionalTest
         $dependencyProvider->provideBusinessLayerDependencies($container);
         $dependencyContainer = new TouchDependencyContainer();
         $dependencyContainer->setContainer($container);
-        $this->touchFacade->setDependencyContainer($dependencyContainer);
+        $this->touchFacade->setBusinessFactory($dependencyContainer);
         $this->touchQueryContainer = new TouchQueryContainer();
     }
 

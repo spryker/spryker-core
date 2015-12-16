@@ -5,7 +5,7 @@
  */
 namespace Spryker\Zed\Payolution\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Payolution\Communication\Table\Payments;
 use Spryker\Zed\Payolution\Communication\Table\RequestLog;
@@ -19,7 +19,7 @@ use Spryker\Zed\Mail\Business\MailFacade;
  * @method PayolutionQueryContainerInterface getQueryContainer()
  * @method PayolutionConfig getConfig()
  */
-class PayolutionDependencyContainer extends AbstractCommunicationDependencyContainer
+class PayolutionDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

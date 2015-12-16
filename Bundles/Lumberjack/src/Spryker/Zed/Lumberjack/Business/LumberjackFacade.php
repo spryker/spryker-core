@@ -10,7 +10,7 @@ use Spryker\Shared\Lumberjack\Model\EventInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method LumberjackDependencyContainer getDependencyContainer()
+ * @method LumberjackDependencyContainer getBusinessFactory()
  */
 class LumberjackFacade extends AbstractFacade
 {
@@ -22,7 +22,7 @@ class LumberjackFacade extends AbstractFacade
      */
     public function saveEvent(EventInterface $event)
     {
-        $this->getDependencyContainer()
+        $this->getBusinessFactory()
              ->createEventJournal()
              ->saveEvent($event);
     }

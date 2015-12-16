@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @method GlossaryFacade getFacade()
  * @method GlossaryQueryContainerInterface getQueryContainer()
- * @method GlossaryDependencyContainer getDependencyContainer()
+ * @method GlossaryDependencyContainer getCommunicationFactory()
  */
 class IndexController extends AbstractController
 {
@@ -24,10 +24,10 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $availableLocales = $this->getDependencyContainer()
+        $availableLocales = $this->getCommunicationFactory()
             ->createEnabledLocales();
 
-        $table = $this->getDependencyContainer()
+        $table = $this->getCommunicationFactory()
             ->createTranslationTable($availableLocales);
 
         return $this->viewResponse([
@@ -41,10 +41,10 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $availableLocales = $this->getDependencyContainer()
+        $availableLocales = $this->getCommunicationFactory()
             ->createEnabledLocales();
 
-        $table = $this->getDependencyContainer()
+        $table = $this->getCommunicationFactory()
             ->createTranslationTable($availableLocales);
 
         return $this->jsonResponse($table->fetchData());

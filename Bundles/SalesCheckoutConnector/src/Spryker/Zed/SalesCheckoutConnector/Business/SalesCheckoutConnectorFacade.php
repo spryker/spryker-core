@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method SalesCheckoutConnectorDependencyContainer getDependencyContainer()
+ * @method SalesCheckoutConnectorDependencyContainer getBusinessFactory()
  */
 class SalesCheckoutConnectorFacade extends AbstractFacade
 {
@@ -24,7 +24,7 @@ class SalesCheckoutConnectorFacade extends AbstractFacade
      */
     public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getDependencyContainer()->getSalesOrderSaver()->saveOrder($orderTransfer, $checkoutResponse);
+        $this->getBusinessFactory()->getSalesOrderSaver()->saveOrder($orderTransfer, $checkoutResponse);
     }
 
 }

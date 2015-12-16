@@ -8,14 +8,14 @@ namespace Spryker\Client\Product;
 
 use Spryker\Client\Product\KeyBuilder\ProductResourceKeyBuilder;
 use Spryker\Client\Product\Storage\ProductStorage;
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Product\ProductDependencyProvider;
 use Spryker\Client\Product\Storage\ProductStorageInterface;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Spryker\Client\Locale\LocaleClient;
 
-class ProductDependencyContainer extends AbstractDependencyContainer
+class ProductDependencyContainer extends AbstractFactory
 {
 
     /**

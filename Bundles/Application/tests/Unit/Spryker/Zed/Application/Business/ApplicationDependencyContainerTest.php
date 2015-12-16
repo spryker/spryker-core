@@ -21,7 +21,7 @@ class ApplicationDependencyContainerTest extends \PHPUnit_Framework_TestCase
     /**
      * @return ApplicationDependencyContainer
      */
-    private function getDependencyContainer()
+    private function getBusinessFactory()
     {
         return new ApplicationDependencyContainer();
     }
@@ -31,7 +31,7 @@ class ApplicationDependencyContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateNavigationBuilderShouldReturnFullyConfiguredInstance()
     {
-        $instance = $this->getDependencyContainer()->createNavigationBuilder();
+        $instance = $this->getBusinessFactory()->createNavigationBuilder();
 
         $this->assertInstanceOf('Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder', $instance);
     }

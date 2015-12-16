@@ -13,7 +13,7 @@ use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface;
 use Spryker\Zed\PriceCartConnector\Communication\PriceCartConnectorDependencyContainer;
 
 /**
- * @method PriceCartConnectorDependencyContainer getDependencyContainer()
+ * @method PriceCartConnectorDependencyContainer getCommunicationFactory()
  */
 class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
@@ -25,7 +25,7 @@ class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginIn
 
     public function __construct()
     {
-        $this->priceManager = $this->getDependencyContainer()->createFacade();
+        $this->priceManager = $this->getCommunicationFactory()->createFacade();
     }
 
     /**

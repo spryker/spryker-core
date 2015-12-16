@@ -20,7 +20,7 @@ use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
 /**
- * @method ProductCategoryDependencyContainer getDependencyContainer()
+ * @method ProductCategoryDependencyContainer getPersistenceFactory()
  */
 class ProductCategoryQueryContainer extends AbstractQueryContainer implements ProductCategoryQueryContainerInterface
 {
@@ -41,7 +41,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         $excludeDirectParent = true,
         $excludeRoot = true
     ) {
-        return $this->getDependencyContainer()
+        return $this->getPersistenceFactory()
             ->createProductCategoryPathQueryExpander($locale)
             ->expandQuery($query, $excludeDirectParent, $excludeRoot);
     }
@@ -51,7 +51,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      */
     protected function queryProductCategoryMappings()
     {
-        return $this->getDependencyContainer()->createProductCategoryQuery();
+        return $this->getPersistenceFactory()->createProductCategoryQuery();
     }
 
     /**
@@ -59,7 +59,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      */
     public function queryProductCategoryMappingsByCategoryId($idCategory)
     {
-        return $this->getDependencyContainer()
+        return $this->getPersistenceFactory()
             ->createProductCategoryQuery()
             ->filterByFkCategory($idCategory);
     }

@@ -16,7 +16,7 @@ use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollec
 use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
 use Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
 use Psr\Log\LoggerInterface;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Application\ApplicationConfig;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption;
@@ -40,7 +40,7 @@ use Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface;
 /**
  * @method ApplicationConfig getConfig()
  */
-class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
+class ApplicationDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

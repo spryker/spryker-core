@@ -10,7 +10,7 @@ use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Category\Business\CategoryFacade;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Cms\Business\CmsFacade; //TODO: https://spryker.atlassian.net/browse/CD-540
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
@@ -27,7 +27,7 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterfa
 /**
  * @method ProductCategoryQueryContainer getQueryContainer()
  */
-class ProductCategoryDependencyContainer extends AbstractCommunicationDependencyContainer
+class ProductCategoryDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

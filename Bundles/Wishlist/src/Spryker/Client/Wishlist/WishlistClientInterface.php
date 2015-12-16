@@ -8,7 +8,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 /**
- * @method WishlistDependencyContainer getDependencyContainer()
+ * @method WishlistDependencyContainer getFactory()
  */
 interface WishlistClientInterface
 {

@@ -6,13 +6,13 @@
 
 namespace Spryker\Zed\Setup\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Setup\SetupConfig;
 
 /**
  * @method SetupConfig getConfig()
  */
-class SetupDependencyContainer extends AbstractCommunicationDependencyContainer
+class SetupDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

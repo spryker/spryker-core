@@ -8,13 +8,13 @@ namespace Spryker\Zed\DiscountCheckoutConnector\Business;
 
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydrator;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydratorInterface;
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaverInterface;
 use Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorDependencyProvider;
 
-class DiscountCheckoutConnectorDependencyContainer extends AbstractBusinessDependencyContainer
+class DiscountCheckoutConnectorDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

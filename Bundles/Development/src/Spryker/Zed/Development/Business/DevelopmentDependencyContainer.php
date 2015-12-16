@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Development\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
@@ -15,7 +15,7 @@ use Spryker\Zed\Development\DevelopmentConfig;
 /**
  * @method DevelopmentConfig getConfig()
  */
-class DevelopmentDependencyContainer extends AbstractBusinessDependencyContainer
+class DevelopmentDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

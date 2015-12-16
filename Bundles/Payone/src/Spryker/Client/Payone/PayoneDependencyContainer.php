@@ -7,7 +7,7 @@
 namespace Spryker\Client\Payone;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Payone\ClientApi\Call\CreditCardCheck;
 use Spryker\Client\Payone\ClientApi\HashGenerator;
 use Spryker\Client\Payone\ClientApi\HashGeneratorInterface;
@@ -16,7 +16,7 @@ use Spryker\Client\Payone\ClientApi\Mode\ModeDetector;
 use Spryker\Shared\Payone\Dependency\HashInterface;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 
-class PayoneDependencyContainer extends AbstractDependencyContainer
+class PayoneDependencyContainer extends AbstractFactory
 {
 
     /**

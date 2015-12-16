@@ -6,10 +6,10 @@
 
 namespace Spryker\Zed\Locale\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 
-class LocaleDependencyContainer extends AbstractCommunicationDependencyContainer
+class LocaleDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

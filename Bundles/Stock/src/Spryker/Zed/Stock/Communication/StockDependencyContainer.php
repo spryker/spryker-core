@@ -12,10 +12,10 @@ use Spryker\Zed\Stock\Communication\Form\StockProductForm;
 use Spryker\Zed\Stock\Communication\Grid\StockGrid;
 use Spryker\Zed\Stock\Communication\Grid\StockProductGrid;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-class StockDependencyContainer extends AbstractCommunicationDependencyContainer
+class StockDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

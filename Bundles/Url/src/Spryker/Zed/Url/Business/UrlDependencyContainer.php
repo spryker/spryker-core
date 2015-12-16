@@ -6,14 +6,14 @@
 
 namespace Spryker\Zed\Url\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 use Spryker\Zed\Url\UrlDependencyProvider;
 
 /**
  * @method UrlQueryContainerInterface getQueryContainer()
  */
-class UrlDependencyContainer extends AbstractBusinessDependencyContainer
+class UrlDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

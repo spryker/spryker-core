@@ -20,13 +20,13 @@ use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler;
 use Spryker\Zed\Newsletter\NewsletterConfig;
 use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method NewsletterConfig getConfig()
  * @method NewsletterQueryContainer getQueryContainer()
  */
-class NewsletterDependencyContainer extends AbstractBusinessDependencyContainer
+class NewsletterDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

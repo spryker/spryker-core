@@ -13,7 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Generated\Shared\Transfer\OrderTransfer;
 
 /**
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneDependencyContainer getCommunicationFactory()
  */
 abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInterface
 {

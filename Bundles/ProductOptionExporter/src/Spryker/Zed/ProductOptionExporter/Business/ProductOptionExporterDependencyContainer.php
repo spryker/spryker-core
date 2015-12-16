@@ -7,11 +7,11 @@
 namespace Spryker\Zed\ProductOptionExporter\Business;
 
 use Spryker\Zed\ProductOptionExporter\Business\Model\ExportProcessor;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOptionExporter\Business\Model\ExportProcessorInterface;
 use Spryker\Zed\ProductOptionExporter\ProductOptionExporterDependencyProvider;
 
-class ProductOptionExporterDependencyContainer extends AbstractBusinessDependencyContainer
+class ProductOptionExporterDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

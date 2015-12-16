@@ -8,13 +8,13 @@ namespace Spryker\Zed\Propel\Communication;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * @method PropelConfig getConfig()
  */
-class PropelDependencyContainer extends AbstractCommunicationDependencyContainer
+class PropelDependencyContainer extends AbstractCommunicationFactory
 {
 
     const LOGGER_NAME = 'defaultLogger';

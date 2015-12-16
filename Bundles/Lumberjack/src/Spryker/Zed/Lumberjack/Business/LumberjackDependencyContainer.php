@@ -7,9 +7,9 @@
 namespace Spryker\Zed\Lumberjack\Business;
 
 use Spryker\Zed\Lumberjack\Business\Model\EventJournal;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
-class LumberjackDependencyContainer extends AbstractBusinessDependencyContainer
+class LumberjackDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

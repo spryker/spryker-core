@@ -41,7 +41,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
         parent::setUp();
 
         $this->customerCheckoutConnectorFacade = new CustomerCheckoutConnectorFacade();
-        $this->customerCheckoutConnectorFacade->setDependencyContainer(new CustomerCheckoutConnectorDependencyContainer());
+        $this->customerCheckoutConnectorFacade->setBusinessFactory(new CustomerCheckoutConnectorDependencyContainer());
 
         $container = new Container();
         $customerDependencyProvider = new CustomerDependencyProvider();
@@ -49,7 +49,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
 
         $customerFacade = new CustomerFacade();
         $customerFacade->setExternalDependencies($container);
-        $customerFacade->setDependencyContainer(new CustomerDependencyContainer());
+        $customerFacade->setBusinessFactory(new CustomerDependencyContainer());
 
         $container = new Container();
         $container[CustomerCheckoutConnectorDependencyProvider::FACADE_CUSTOMER] = $customerFacade;

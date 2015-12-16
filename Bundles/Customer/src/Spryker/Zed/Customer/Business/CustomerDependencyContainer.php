@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Customer\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\CustomerConfig;
@@ -20,7 +20,7 @@ use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 /**
  * @method CustomerConfig getConfig()
  */
-class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
+class CustomerDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

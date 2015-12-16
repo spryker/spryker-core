@@ -6,8 +6,8 @@
 
 namespace Spryker\Client\Session;
 
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 
-class SessionDependencyContainer extends AbstractDependencyContainer
+class SessionDependencyContainer extends AbstractFactory
 {
 }

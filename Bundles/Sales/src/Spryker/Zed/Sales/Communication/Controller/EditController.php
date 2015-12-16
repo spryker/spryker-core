@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Sales\Communication\SalesDependencyContainer;
 
 /**
- * @method SalesDependencyContainer getDependencyContainer()
+ * @method SalesDependencyContainer getCommunicationFactory()
  * @method SalesFacade getFacade()
  */
 class EditController extends AbstractController
@@ -24,7 +24,7 @@ class EditController extends AbstractController
     public function customerAction(Request $request)
     {
         $idOrder = $request->get('id-sales-order');
-        $form = $this->getDependencyContainer()
+        $form = $this->getCommunicationFactory()
             ->createCustomerForm($idOrder);
         $form->handleRequest();
 
@@ -52,7 +52,7 @@ class EditController extends AbstractController
         $idOrder = $request->get('id-sales-order');
         $idOrderAddress = $request->get('id-address');
 
-        $form = $this->getDependencyContainer()
+        $form = $this->getCommunicationFactory()
             ->createAddressForm($idOrderAddress);
         $form->handleRequest();
 

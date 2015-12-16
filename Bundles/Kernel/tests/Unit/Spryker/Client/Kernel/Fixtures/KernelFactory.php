@@ -2,8 +2,8 @@
 
 namespace Unit\Spryker\Client\Kernel\Fixtures;
 
-use Spryker\Client\Kernel\Factory;
+use Spryker\Client\Kernel\AbstractFactory;
 
-class KernelFactory extends Factory
+class KernelFactory extends AbstractFactory
 {
 }

@@ -9,7 +9,7 @@ namespace Spryker\Client\CategoryExporter;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method CategoryExporterDependencyContainer getDependencyContainer()
+ * @method CategoryExporterDependencyContainer getFactory()
  */
 class CategoryExporterClient extends AbstractClient
 {
@@ -21,7 +21,7 @@ class CategoryExporterClient extends AbstractClient
      */
     public function getNavigationCategories($locale)
     {
-        return $this->getDependencyContainer()->createNavigation()->getCategories($locale);
+        return $this->getFactory()->createNavigation()->getCategories($locale);
     }
 
     /**
@@ -32,7 +32,7 @@ class CategoryExporterClient extends AbstractClient
      */
     public function getTreeFromCategoryNode(array $categoryNode, $locale)
     {
-        return $this->getDependencyContainer()->createCategoryTreeBuilder()->createTreeFromCategoryNode($categoryNode, $locale);
+        return $this->getFactory()->createCategoryTreeBuilder()->createTreeFromCategoryNode($categoryNode, $locale);
     }
 
 }

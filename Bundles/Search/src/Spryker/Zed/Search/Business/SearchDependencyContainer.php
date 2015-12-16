@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Search\Business;
 
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 use Spryker\Zed\Search\Business\Model\Search;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
@@ -17,7 +17,7 @@ use Spryker\Zed\Search\SearchDependencyProvider;
 /**
  * @method SearchConfig getConfig()
  */
-class SearchDependencyContainer extends AbstractBusinessDependencyContainer
+class SearchDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

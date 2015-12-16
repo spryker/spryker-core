@@ -7,13 +7,13 @@
 namespace Spryker\Zed\Acl\Communication\Controller;
 
 use Spryker\Zed\Acl\Business\AclFacade;
-use Spryker\Zed\Acl\Communication\AclDependencyContainer;
+use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * @method AclDependencyContainer getDependencyContainer()
+ * @method AclCommunicationFactory getCommunicationFactory()
  * @method AclFacade getFacade()
  */
 class RulesetController extends AbstractController

@@ -6,11 +6,11 @@
 
 namespace Spryker\Zed\Nopayment\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Nopayment\Business\Nopayment\Paid;
 use Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainer;
 
-class NopaymentDependencyContainer extends AbstractBusinessDependencyContainer
+class NopaymentDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

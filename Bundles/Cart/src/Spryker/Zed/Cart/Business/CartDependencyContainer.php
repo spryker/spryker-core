@@ -14,7 +14,7 @@ use Spryker\Zed\Cart\Business\Operator\DecreaseOperator;
 use Spryker\Zed\Cart\Business\Operator\RemoveOperator;
 use Spryker\Zed\Cart\Business\Operator\IncreaseOperator;
 use Spryker\Zed\Cart\Business\Operator\AddOperator;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Cart\Business\Operator\OperatorInterface;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
@@ -25,7 +25,7 @@ use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 /**
  * @method CartConfig getConfig()
  */
-class CartDependencyContainer extends AbstractBusinessDependencyContainer
+class CartDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

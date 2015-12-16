@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @method ApplicationDependencyContainer getDependencyContainer()
+ * @method ApplicationDependencyContainer getFactory()
  */
 class ExceptionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -30,7 +30,7 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
      */
     public function register(Application $app)
     {
-        $app['controller.service.error'] = $this->getDependencyContainer()->createExceptionHandlerDispatcher();
+        $app['controller.service.error'] = $this->getFactory()->createExceptionHandlerDispatcher();
 
         $app['dispatcher'] = $app->share(
             $app->extend('dispatcher', function (EventDispatcherInterface $dispatcher) use ($app) {
@@ -71,7 +71,7 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
             $statusCode = $exception->getStatusCode();
         }
 
-        $exceptionHandlers = $this->getDependencyContainer()->createExceptionHandlers();
+        $exceptionHandlers = $this->getFactory()->createExceptionHandlers();
         if (!array_key_exists($statusCode, $exceptionHandlers)) {
             throw $exception;
         }

@@ -15,7 +15,7 @@ use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch;
 use Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface;
@@ -37,7 +37,7 @@ use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 /**
  * @method ProductSearchConfig getConfig()
  */
-class ProductSearchDependencyContainer extends AbstractBusinessDependencyContainer
+class ProductSearchDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

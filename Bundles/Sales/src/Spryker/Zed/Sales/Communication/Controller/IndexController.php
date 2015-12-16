@@ -11,7 +11,7 @@ use Spryker\Zed\Sales\Communication\SalesDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method SalesDependencyContainer getDependencyContainer()
+ * @method SalesDependencyContainer getCommunicationFactory()
  */
 class IndexController extends AbstractController
 {
@@ -21,7 +21,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createOrdersTable();
+        $table = $this->getCommunicationFactory()->createOrdersTable();
 
         return [
             'orders' => $table->render(),
@@ -33,7 +33,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createOrdersTable();
+        $table = $this->getCommunicationFactory()->createOrdersTable();
 
         return $this->jsonResponse(
             $table->fetchData()

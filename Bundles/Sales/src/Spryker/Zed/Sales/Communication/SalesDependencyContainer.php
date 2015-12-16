@@ -8,7 +8,7 @@ namespace Spryker\Zed\Sales\Communication;
 
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm\Collection;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -20,7 +20,7 @@ use Spryker\Zed\Sales\Communication\Form\AddressForm;
 /**
  * @method SalesQueryContainerInterface getQueryContainer()
  */
-class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
+class SalesDependencyContainer extends AbstractCommunicationFactory
 {
 
     /**

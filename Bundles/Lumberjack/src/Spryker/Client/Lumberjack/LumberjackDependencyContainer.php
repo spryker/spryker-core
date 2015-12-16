@@ -5,9 +5,9 @@
 
 namespace Spryker\Client\Lumberjack;
 
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 
-class LumberjackDependencyContainer extends AbstractDependencyContainer
+class LumberjackDependencyContainer extends AbstractFactory
 {
 
     /**

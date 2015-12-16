@@ -7,10 +7,10 @@
 namespace Spryker\Zed\Mail\Business;
 
 use Spryker\Shared\Library\Config;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Shared\Mail\MailConstants;
 
-class MailDependencyContainer extends AbstractBusinessDependencyContainer
+class MailDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

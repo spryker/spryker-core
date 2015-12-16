@@ -14,7 +14,7 @@ use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageE
 use Generated\Shared\Transfer\ProductOptionTransfer;
 
 /**
- * @method ProductOptionDependencyContainer getDependencyContainer()
+ * @method ProductOptionDependencyContainer getBusinessFactory()
  */
 class ProductOptionFacade extends AbstractFacade
 {
@@ -27,7 +27,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function getProductOption($idProductOptionValueUsage, $localeCode)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getProductOption($idProductOptionValueUsage, $localeCode);
+        return $this->getBusinessFactory()->getProductOptionReaderModel()->getProductOption($idProductOptionValueUsage, $localeCode);
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function getProductOptionsByIdProduct($idProduct, $localeCode)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getProductOptionsByIdProductAndIdLocale($idProduct, $localeCode);
+        return $this->getBusinessFactory()->getProductOptionReaderModel()->getProductOptionsByIdProductAndIdLocale($idProduct, $localeCode);
     }
 
     /**
@@ -50,7 +50,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function importProductOptionType($importKeyProductOptionType, array $localizedNames = [], $importKeyTaxSet = null)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionType($importKeyProductOptionType, $localizedNames, $importKeyTaxSet);
+        return $this->getBusinessFactory()->getDataImportWriterModel()->importProductOptionType($importKeyProductOptionType, $localizedNames, $importKeyTaxSet);
     }
 
     /**
@@ -65,7 +65,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function importProductOptionValue($importKeyProductOptionValue, $importKeyProductOptionType, array $localizedNames = [], $price = null)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionValue($importKeyProductOptionValue, $importKeyProductOptionType, $localizedNames, $price);
+        return $this->getBusinessFactory()->getDataImportWriterModel()->importProductOptionValue($importKeyProductOptionValue, $importKeyProductOptionType, $localizedNames, $price);
     }
 
     /**
@@ -80,7 +80,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional = false, $sequence = null)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional, $sequence);
+        return $this->getBusinessFactory()->getDataImportWriterModel()->importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional, $sequence);
     }
 
     /**
@@ -95,7 +95,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyProductOptionValue, $sequence = null)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyProductOptionValue, $sequence);
+        return $this->getBusinessFactory()->getDataImportWriterModel()->importProductOptionValueUsage($idProductOptionTypeUsage, $importKeyProductOptionValue, $sequence);
     }
 
     /**
@@ -108,7 +108,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
+        return $this->getBusinessFactory()->getDataImportWriterModel()->importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
     }
 
     /**
@@ -123,7 +123,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
+        return $this->getBusinessFactory()->getDataImportWriterModel()->importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
     }
 
     /**
@@ -140,7 +140,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function importPresetConfiguration($sku, array $importKeysOptionValues, $isDefault = false, $sequence = null)
     {
-        return $this->getDependencyContainer()->getDataImportWriterModel()->importPresetConfiguration($sku, $importKeysOptionValues, $isDefault, $sequence);
+        return $this->getBusinessFactory()->getDataImportWriterModel()->importPresetConfiguration($sku, $importKeysOptionValues, $isDefault, $sequence);
     }
 
     /**
@@ -151,7 +151,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function getTypeUsagesForConcreteProduct($idProduct, $idLocale)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getTypeUsagesForConcreteProduct($idProduct, $idLocale);
+        return $this->getBusinessFactory()->getProductOptionReaderModel()->getTypeUsagesForConcreteProduct($idProduct, $idLocale);
     }
 
     /**
@@ -162,7 +162,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function getValueUsagesForTypeUsage($idTypeUsage, $idLocale)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getValueUsagesForTypeUsage($idTypeUsage, $idLocale);
+        return $this->getBusinessFactory()->getProductOptionReaderModel()->getValueUsagesForTypeUsage($idTypeUsage, $idLocale);
     }
 
     /**
@@ -172,7 +172,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function getTypeExclusionsForTypeUsage($idTypeUsage)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getTypeExclusionsForTypeUsage($idTypeUsage);
+        return $this->getBusinessFactory()->getProductOptionReaderModel()->getTypeExclusionsForTypeUsage($idTypeUsage);
     }
 
     /**
@@ -182,7 +182,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function getValueConstraintsForValueUsage($idValueUsage)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getValueConstraintsForValueUsage($idValueUsage);
+        return $this->getBusinessFactory()->getProductOptionReaderModel()->getValueConstraintsForValueUsage($idValueUsage);
     }
 
     /**
@@ -193,7 +193,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function getValueConstraintsForValueUsageByOperator($idValueUsage, $operator)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getValueConstraintsForValueUsageByOperator($idValueUsage, $operator);
+        return $this->getBusinessFactory()->getProductOptionReaderModel()->getValueConstraintsForValueUsageByOperator($idValueUsage, $operator);
     }
 
     /**
@@ -203,7 +203,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function getConfigPresetsForConcreteProduct($idProduct)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getConfigPresetsForConcreteProduct($idProduct);
+        return $this->getBusinessFactory()->getProductOptionReaderModel()->getConfigPresetsForConcreteProduct($idProduct);
     }
 
     /**
@@ -213,7 +213,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function getValueUsagesForConfigPreset($idConfigPreset)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getValueUsagesForConfigPreset($idConfigPreset);
+        return $this->getBusinessFactory()->getProductOptionReaderModel()->getValueUsagesForConfigPreset($idConfigPreset);
     }
 
     /**
@@ -223,7 +223,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function getEffectiveTaxRateForTypeUsage($idTypeUsage)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getEffectiveTaxRateForTypeUsage($idTypeUsage);
+        return $this->getBusinessFactory()->getProductOptionReaderModel()->getEffectiveTaxRateForTypeUsage($idTypeUsage);
     }
 
     /**
@@ -231,7 +231,7 @@ class ProductOptionFacade extends AbstractFacade
      */
     public function flushBuffer()
     {
-        $this->getDependencyContainer()->getDataImportWriterModel()->flushBuffer();
+        $this->getBusinessFactory()->getDataImportWriterModel()->flushBuffer();
     }
 
 }

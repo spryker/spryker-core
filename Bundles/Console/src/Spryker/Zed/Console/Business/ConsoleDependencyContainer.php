@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Console\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Console\ConsoleConfig;
 use Spryker\Zed\Console\ConsoleDependencyProvider;
 use Symfony\Component\Console\Command\Command;
@@ -14,7 +14,7 @@ use Symfony\Component\Console\Command\Command;
 /**
  * @method ConsoleConfig getConfig()
  */
-class ConsoleDependencyContainer extends AbstractBusinessDependencyContainer
+class ConsoleDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

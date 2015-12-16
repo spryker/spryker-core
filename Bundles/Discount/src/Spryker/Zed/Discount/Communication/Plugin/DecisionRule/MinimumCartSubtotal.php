@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\ModelResult;
 use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
 
 /**
- * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountDependencyContainer getCommunicationFactory()
  */
 class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisionRulePluginInterface
 {
@@ -30,7 +30,7 @@ class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisi
     ) {
         $decisionRuleEntity = $this->getContext()[self::KEY_ENTITY];
 
-        return $this->getDependencyContainer()
+        return $this->getCommunicationFactory()
             ->getDiscountFacade()
             ->isMinimumCartSubtotalReached($container, $decisionRuleEntity);
     }

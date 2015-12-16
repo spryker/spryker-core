@@ -8,14 +8,14 @@ namespace Spryker\Zed\Installer\Business;
 
 use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Installer\InstallerConfig;
 use Spryker\Zed\Installer\InstallerDependencyProvider;
 
 /**
  * @method InstallerConfig getConfig()
  */
-class InstallerDependencyContainer extends AbstractBusinessDependencyContainer
+class InstallerDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

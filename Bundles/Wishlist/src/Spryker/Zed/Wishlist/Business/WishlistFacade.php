@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method WishlistDependencyContainer getDependencyContainer()
+ * @method WishlistDependencyContainer getBusinessFactory()
  */
 class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {
@@ -24,7 +24,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      */
     public function addItem(WishlistChangeTransfer $wishlistChange)
     {
-        return $this->getDependencyContainer()->createAddOperator($wishlistChange)->executeOperation();
+        return $this->getBusinessFactory()->createAddOperator($wishlistChange)->executeOperation();
     }
 
     /**
@@ -34,7 +34,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      */
     public function removeItem(WishlistChangeTransfer $wishlistChange)
     {
-        return $this->getDependencyContainer()->createRemoveOperator($wishlistChange)->executeOperation();
+        return $this->getBusinessFactory()->createRemoveOperator($wishlistChange)->executeOperation();
     }
 
     /**
@@ -44,7 +44,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      */
     public function decreaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
-        return $this->getDependencyContainer()->createDecreaseOperator($wishlistChange)->executeOperation();
+        return $this->getBusinessFactory()->createDecreaseOperator($wishlistChange)->executeOperation();
     }
 
     /**
@@ -54,7 +54,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      */
     public function increaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
-        return $this->getDependencyContainer()->createIncreaseOperator($wishlistChange)->executeOperation();
+        return $this->getBusinessFactory()->createIncreaseOperator($wishlistChange)->executeOperation();
     }
 
     /**
@@ -64,7 +64,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      */
     public function getCustomerWishlist(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()->createCustomer($customerTransfer)->getWishlist();
+        return $this->getBusinessFactory()->createCustomer($customerTransfer)->getWishlist();
     }
 
 }

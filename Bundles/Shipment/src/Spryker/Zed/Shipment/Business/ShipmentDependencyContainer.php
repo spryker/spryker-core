@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
@@ -15,7 +15,7 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 /**
  * @method ShipmentQueryContainerInterface getQueryContainer()
  */
-class ShipmentDependencyContainer extends AbstractBusinessDependencyContainer
+class ShipmentDependencyContainer extends AbstractBusinessFactory
 {
 
     /**

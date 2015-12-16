@@ -11,7 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method SetupDependencyContainer getDependencyContainer()
+ * @method SetupDependencyContainer getBusinessFactory()
  */
 class SetupFacade extends AbstractFacade
 {
@@ -23,7 +23,7 @@ class SetupFacade extends AbstractFacade
      */
     public function generateCronjobs(array $roles)
     {
-        return $this->getDependencyContainer()->createModelCronjobs()->generateCronjobs($roles);
+        return $this->getBusinessFactory()->createModelCronjobs()->generateCronjobs($roles);
     }
 
     /**
@@ -31,7 +31,7 @@ class SetupFacade extends AbstractFacade
      */
     public function enableJenkins()
     {
-        return $this->getDependencyContainer()->createModelCronjobs()->enableJenkins();
+        return $this->getBusinessFactory()->createModelCronjobs()->enableJenkins();
     }
 
     /**
@@ -39,7 +39,7 @@ class SetupFacade extends AbstractFacade
      */
     public function disableJenkins()
     {
-        return $this->getDependencyContainer()->createModelCronjobs()->disableJenkins();
+        return $this->getBusinessFactory()->createModelCronjobs()->disableJenkins();
     }
 
     /**
@@ -47,7 +47,7 @@ class SetupFacade extends AbstractFacade
      */
     public function removeGeneratedDirectory()
     {
-        $this->getDependencyContainer()->createModelGeneratedDirectoryRemover()->execute();
+        $this->getBusinessFactory()->createModelGeneratedDirectoryRemover()->execute();
     }
 
     /**
@@ -57,7 +57,7 @@ class SetupFacade extends AbstractFacade
      */
     public function getRepeatData(Request $request)
     {
-        return $this->getDependencyContainer()->createTransferObjectRepeater()
+        return $this->getBusinessFactory()->createTransferObjectRepeater()
             ->getRepeatData($request->query->get('mvc', null));
     }
 
@@ -66,7 +66,7 @@ class SetupFacade extends AbstractFacade
      */
     public function getConsoleCommands()
     {
-        return $this->getDependencyContainer()->getConsoleCommands();
+        return $this->getBusinessFactory()->getConsoleCommands();
     }
 
 }

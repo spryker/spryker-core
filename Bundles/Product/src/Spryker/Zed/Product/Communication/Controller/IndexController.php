@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method ProductFacade getFacade()
  * @method ProductQueryContainer getQueryContainer()
- * @method ProductDependencyContainer getDependencyContainer()
+ * @method ProductDependencyContainer getCommunicationFactory()
  */
 class IndexController extends AbstractController
 {
@@ -30,7 +30,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createProductTable();
+        $table = $this->getCommunicationFactory()->createProductTable();
 
         return [
             'products' => $table->render(),
@@ -42,7 +42,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createProductTable();
+        $table = $this->getCommunicationFactory()->createProductTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -140,7 +140,7 @@ class IndexController extends AbstractController
     {
         $concreteProducts = [];
         foreach ($concreteProductsCollection as $concreteProduct) {
-            $productOptions = $this->getDependencyContainer()
+            $productOptions = $this->getCommunicationFactory()
                 ->createProductOptionsFacade()
                 ->getProductOptionsByIdProduct(
                     $concreteProduct->getIdProduct(),
@@ -167,7 +167,7 @@ class IndexController extends AbstractController
      */
     protected function getProductCategories(SpyAbstractProduct $abstractProduct, $idLocale)
     {
-        $productCategoryEntityList = $this->getDependencyContainer()
+        $productCategoryEntityList = $this->getCommunicationFactory()
             ->createProductCategoryQueryContainer()
             ->queryLocalizedProductCategoryMappingByIdProduct($abstractProduct->getIdAbstractProduct())
             ->find();
@@ -193,7 +193,7 @@ class IndexController extends AbstractController
      */
     protected function getCurrentLocale()
     {
-        return $this->getDependencyContainer()
+        return $this->getCommunicationFactory()
             ->createLocaleFacade()
             ->getCurrentLocale();
     }

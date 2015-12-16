@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Spryker\Zed\Url\Communication\UrlDependencyContainer;
 
 /**
- * @method UrlDependencyContainer getDependencyContainer
+ * @method UrlDependencyContainer getCommunicationFactory
  */
 class IndexController extends AbstractController
 {
@@ -33,7 +33,7 @@ class IndexController extends AbstractController
      */
     public function gridAction(Request $request)
     {
-        $grid = $this->getDependencyContainer()->getUrlKeyTranslationGrid($request);
+        $grid = $this->getCommunicationFactory()->getUrlKeyTranslationGrid($request);
 
         return $this->jsonResponse($grid->renderData());
     }

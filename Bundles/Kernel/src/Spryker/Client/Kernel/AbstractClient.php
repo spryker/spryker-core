@@ -6,9 +6,8 @@
 
 namespace Spryker\Client\Kernel;
 
-use Spryker\Client\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
-use Spryker\Client\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
-use Spryker\Client\Kernel\DependencyContainer\DependencyContainerInterface;
+use Spryker\Client\Kernel\ClassResolver\Factory\FactoryNotFoundException;
+use Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Client\ZedRequest\Stub\BaseStub;
 use Spryker\Shared\ZedRequest\Client\Message;
 
@@ -16,9 +15,9 @@ abstract class AbstractClient
 {
 
     /**
-     * @var DependencyContainerInterface
+     * @var FactoryInterface
      */
-    private $dependencyContainer;
+    private $factory;
 
     /**
      * @var Container
@@ -38,37 +37,37 @@ abstract class AbstractClient
     }
 
     /**
-     * @return DependencyContainerInterface
+     * @return FactoryInterface
      */
-    protected function getDependencyContainer()
+    protected function getFactory()
     {
-        if ($this->dependencyContainer === null) {
-            $this->dependencyContainer = $this->resolveDependencyContainer();
+        if ($this->factory === null) {
+            $this->factory = $this->resolveFactory();
         }
 
         if ($this->container !== null) {
-            $this->dependencyContainer->setContainer($this->container);
+            $this->factory->setContainer($this->container);
         }
 
-        return $this->dependencyContainer;
+        return $this->factory;
     }
 
     /**
-     * @throws DependencyContainerNotFoundException
+     * @throws FactoryNotFoundException
      *
-     * @return DependencyContainerInterface
+     * @return FactoryInterface
      */
-    protected function resolveDependencyContainer()
+    protected function resolveFactory()
     {
-        return $this->getDependencyContainerResolver()->resolve($this);
+        return $this->getFactoryResolver()->resolve($this);
     }
 
     /**
-     * @return DependencyContainerResolver
+     * @return FactoryResolver
      */
-    protected function getDependencyContainerResolver()
+    protected function getFactoryResolver()
     {
-        return new DependencyContainerResolver();
+        return new FactoryResolver();
     }
 
     /**
@@ -76,14 +75,14 @@ abstract class AbstractClient
      */
     protected function getZedStub()
     {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (!method_exists($dependencyContainer, 'createZedStub')) {
+        $factory = $this->getFactory();
+        if (!method_exists($factory, 'createZedStub')) {
             throw new \BadMethodCallException(
-                sprintf('createZedStub method is not implemented in "%s".', get_class($dependencyContainer))
+                sprintf('createZedStub method is not implemented in "%s".', get_class($factory))
             );
         }
 
-        return $this->getDependencyContainer()->createZedStub();
+        return $this->getFactory()->createZedStub();
     }
 
     /**

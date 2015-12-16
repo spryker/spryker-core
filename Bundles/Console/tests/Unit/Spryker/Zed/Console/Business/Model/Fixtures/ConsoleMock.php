@@ -7,7 +7,7 @@
 namespace Unit\Spryker\Zed\Console\Business\Model\Fixtures;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\Communication\AbstractDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Console\Business\Model\Console;
 
@@ -15,11 +15,11 @@ class ConsoleMock extends Console
 {
 
     /**
-     * @return AbstractDependencyContainer
+     * @return AbstractCommunicationFactory
      */
-    public function getDependencyContainer()
+    public function getCommunicationFactory()
     {
-        return parent::getDependencyContainer();
+        return parent::getCommunicationFactory();
     }
 
     /**

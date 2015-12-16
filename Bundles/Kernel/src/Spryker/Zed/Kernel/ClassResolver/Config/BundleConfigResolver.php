@@ -8,7 +8,6 @@ namespace Spryker\Zed\Kernel\ClassResolver\Config;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
-use Spryker\Zed\Kernel\ClassResolver\DependencyContainer\BundleConfigNotFoundException;
 
 class BundleConfigResolver extends AbstractClassResolver
 {
