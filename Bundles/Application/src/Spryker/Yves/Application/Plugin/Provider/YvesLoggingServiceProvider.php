@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @method ApplicationDependencyContainer getDependencyContainer()
+ * @deprecated the functions in this class are replaced by EventJournalServiceProvider and NewRelicServiceProvider
  */
 class YvesLoggingServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
