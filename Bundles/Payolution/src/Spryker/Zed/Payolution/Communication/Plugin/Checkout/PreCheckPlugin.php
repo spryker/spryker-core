@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
-use Spryker\Shared\Payolution\PayolutionApiConstants;
+use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Payolution\Business\PayolutionFacade;
 
@@ -53,9 +53,9 @@ class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionI
         PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        if (PayolutionApiConstants::REASON_CODE_SUCCESS !== $payolutionTransactionResponseTransfer->getProcessingReasonCode()
-            || PayolutionApiConstants::STATUS_CODE_SUCCESS !== $payolutionTransactionResponseTransfer->getProcessingStatusCode()
-            || PayolutionApiConstants::PAYMENT_CODE_PRE_CHECK !== $payolutionTransactionResponseTransfer->getPaymentCode()
+        if (PayolutionConstants::REASON_CODE_SUCCESS !== $payolutionTransactionResponseTransfer->getProcessingReasonCode()
+            || PayolutionConstants::STATUS_CODE_SUCCESS !== $payolutionTransactionResponseTransfer->getProcessingStatusCode()
+            || PayolutionConstants::PAYMENT_CODE_PRE_CHECK !== $payolutionTransactionResponseTransfer->getPaymentCode()
         ) {
             $errorCode = (int) preg_replace('/[^\d]+/', '', $payolutionTransactionResponseTransfer->getProcessingCode());
             $error = new CheckoutErrorTransfer();

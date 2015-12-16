@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Payolution;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Shared\Payolution\PayolutionConfigConstants;
+use Spryker\Shared\Payolution\PayolutionConstants;
 
 class PayolutionConfig extends AbstractBundleConfig
 {
@@ -17,7 +17,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getTransactionGatewayUrl()
     {
-        return $this->get(PayolutionConfigConstants::TRANSACTION_GATEWAY_URL);
+        return $this->get(PayolutionConstants::TRANSACTION_GATEWAY_URL);
     }
 
     /**
@@ -25,7 +25,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getCalculationGatewayUrl()
     {
-        return $this->get(PayolutionConfigConstants::CALCULATION_GATEWAY_URL);
+        return $this->get(PayolutionConstants::CALCULATION_GATEWAY_URL);
     }
 
     /**
@@ -33,7 +33,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getTransactionSecuritySender()
     {
-        return $this->get(PayolutionConfigConstants::TRANSACTION_SECURITY_SENDER);
+        return $this->get(PayolutionConstants::TRANSACTION_SECURITY_SENDER);
     }
 
     /**
@@ -41,7 +41,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getTransactionUserLogin()
     {
-        return $this->get(PayolutionConfigConstants::TRANSACTION_USER_LOGIN);
+        return $this->get(PayolutionConstants::TRANSACTION_USER_LOGIN);
     }
 
     /**
@@ -49,7 +49,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getTransactionUserPassword()
     {
-        return $this->get(PayolutionConfigConstants::TRANSACTION_USER_PASSWORD);
+        return $this->get(PayolutionConstants::TRANSACTION_USER_PASSWORD);
     }
 
     /**
@@ -57,7 +57,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getCalculationSender()
     {
-        return $this->get(PayolutionConfigConstants::CALCULATION_SENDER);
+        return $this->get(PayolutionConstants::CALCULATION_SENDER);
     }
 
     /**
@@ -65,7 +65,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getCalculationUserLogin()
     {
-        return $this->get(PayolutionConfigConstants::CALCULATION_USER_LOGIN);
+        return $this->get(PayolutionConstants::CALCULATION_USER_LOGIN);
     }
 
     /**
@@ -73,7 +73,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getCalculationUserPassword()
     {
-        return $this->get(PayolutionConfigConstants::CALCULATION_USER_PASSWORD);
+        return $this->get(PayolutionConstants::CALCULATION_USER_PASSWORD);
     }
 
     /**
@@ -81,7 +81,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getTransactionMode()
     {
-        return $this->get(PayolutionConfigConstants::TRANSACTION_MODE);
+        return $this->get(PayolutionConstants::TRANSACTION_MODE);
     }
 
     /**
@@ -89,7 +89,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getCalculationMode()
     {
-        return $this->get(PayolutionConfigConstants::CALCULATION_MODE);
+        return $this->get(PayolutionConstants::CALCULATION_MODE);
     }
 
     /**
@@ -97,7 +97,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getTransactionChannelInvoice()
     {
-        return $this->get(PayolutionConfigConstants::TRANSACTION_CHANNEL_INVOICE);
+        return $this->get(PayolutionConstants::TRANSACTION_CHANNEL_INVOICE);
     }
 
     /**
@@ -105,7 +105,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getTransactionChannelInstallment()
     {
-        return $this->get(PayolutionConfigConstants::TRANSACTION_CHANNEL_INSTALLMENT);
+        return $this->get(PayolutionConstants::TRANSACTION_CHANNEL_INSTALLMENT);
     }
 
     /**
@@ -113,7 +113,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getTransactionChannelPreCheck()
     {
-        return $this->get(PayolutionConfigConstants::TRANSACTION_CHANNEL_PRE_CHECK);
+        return $this->get(PayolutionConstants::TRANSACTION_CHANNEL_PRE_CHECK);
     }
 
     /**
@@ -121,7 +121,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getCalculationChannel()
     {
-        return $this->get(PayolutionConfigConstants::CALCULATION_CHANNEL);
+        return $this->get(PayolutionConstants::CALCULATION_CHANNEL);
     }
 
     /**
@@ -129,7 +129,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getMinOrderGrandTotalInvoice()
     {
-        return $this->get(PayolutionConfigConstants::MIN_ORDER_GRAND_TOTAL_INVOICE);
+        return $this->get(PayolutionConstants::MIN_ORDER_GRAND_TOTAL_INVOICE);
     }
 
     /**
@@ -137,7 +137,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getMaxOrderGrandTotalInvoice()
     {
-        return $this->get(PayolutionConfigConstants::MAX_ORDER_GRAND_TOTAL_INVOICE);
+        return $this->get(PayolutionConstants::MAX_ORDER_GRAND_TOTAL_INVOICE);
     }
 
     /**
@@ -145,7 +145,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getMinOrderGrandTotalInstallment()
     {
-        return $this->get(PayolutionConfigConstants::MIN_ORDER_GRAND_TOTAL_INSTALLMENT);
+        return $this->get(PayolutionConstants::MIN_ORDER_GRAND_TOTAL_INSTALLMENT);
     }
 
     /**
@@ -153,7 +153,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getMaxOrderGrandTotalInstallment()
     {
-        return $this->get(PayolutionConfigConstants::MAX_ORDER_GRAND_TOTAL_INSTALLMENT);
+        return $this->get(PayolutionConstants::MAX_ORDER_GRAND_TOTAL_INSTALLMENT);
     }
 
     /**
@@ -161,7 +161,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getPayolutionBccEmail()
     {
-        return $this->get(PayolutionConfigConstants::PAYOLUTION_BCC_EMAIL);
+        return $this->get(PayolutionConstants::PAYOLUTION_BCC_EMAIL);
     }
 
     /**
@@ -169,7 +169,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getEmailFromName()
     {
-        return $this->get(PayolutionConfigConstants::EMAIL_FROM_NAME);
+        return $this->get(PayolutionConstants::EMAIL_FROM_NAME);
     }
 
     /**
@@ -177,7 +177,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getEmailFromAddress()
     {
-        return $this->get(PayolutionConfigConstants::EMAIL_FROM_ADDRESS);
+        return $this->get(PayolutionConstants::EMAIL_FROM_ADDRESS);
     }
 
     /**
@@ -185,7 +185,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getEmailTemplateName()
     {
-        return $this->get(PayolutionConfigConstants::EMAIL_TEMPLATE_NAME);
+        return $this->get(PayolutionConstants::EMAIL_TEMPLATE_NAME);
     }
 
     /**
@@ -193,7 +193,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getEmailSubject()
     {
-        return $this->get(PayolutionConfigConstants::EMAIL_SUBJECT);
+        return $this->get(PayolutionConstants::EMAIL_SUBJECT);
     }
 
     /**
@@ -201,7 +201,7 @@ class PayolutionConfig extends AbstractBundleConfig
      */
     public function getWebshopUrl()
     {
-        return $this->get(PayolutionConfigConstants::WEBSHOP_URL);
+        return $this->get(PayolutionConstants::WEBSHOP_URL);
     }
 
 }

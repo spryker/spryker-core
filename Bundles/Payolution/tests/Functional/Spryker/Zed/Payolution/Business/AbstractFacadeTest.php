@@ -13,7 +13,7 @@ use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use Spryker\Shared\Payolution\PayolutionApiConstants;
+use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
 use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
@@ -110,7 +110,7 @@ class AbstractFacadeTest extends Test
     {
         $this->paymentEntity = (new SpyPaymentPayolution())
             ->setFkSalesOrder($this->getOrderEntity()->getIdSalesOrder())
-            ->setAccountBrand(PayolutionApiConstants::BRAND_INVOICE)
+            ->setAccountBrand(PayolutionConstants::BRAND_INVOICE)
             ->setClientIp('127.0.0.1')
             ->setFirstName('Jane')
             ->setLastName('Doe')

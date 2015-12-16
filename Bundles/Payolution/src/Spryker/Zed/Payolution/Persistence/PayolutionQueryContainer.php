@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
-use Spryker\Shared\Payolution\PayolutionApiConstants;
+use Spryker\Shared\Payolution\PayolutionConstants;
 
 class PayolutionQueryContainer extends AbstractQueryContainer implements PayolutionQueryContainerInterface
 {
@@ -66,7 +66,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
         return $this
             ->queryTransactionStatusLog()
             ->filterByFkPaymentPayolution($idPayment)
-            ->filterByProcessingCode(PayolutionApiConstants::SUCCESSFUL_PRE_AUTHORIZATION_PROCESSING_CODE);
+            ->filterByProcessingCode(PayolutionConstants::SUCCESSFUL_PRE_AUTHORIZATION_PROCESSING_CODE);
     }
 
     /**

@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
-use Spryker\Shared\Payolution\PayolutionApiConstants;
+use Spryker\Shared\Payolution\PayolutionConstants;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
@@ -118,7 +118,7 @@ class SaverTest extends Test
             ->setGender(SpyPaymentPayolutionTableMap::COL_GENDER_MALE)
             ->setDateOfBirth('1970-01-02')
             ->setClientIp('127.0.0.1')
-            ->setAccountBrand(PayolutionApiConstants::BRAND_INVOICE)
+            ->setAccountBrand(PayolutionConstants::BRAND_INVOICE)
             ->setLanguageIso2Code('de')
             ->setCurrencyIso3Code('EUR')
             ->setAddress($paymentAddressTransfer);
