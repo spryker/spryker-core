@@ -10,15 +10,25 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Container;
 
+use Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\ItemGrossAmountsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\ProductOptionGrossSumCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\RemoveAllExpensesCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin;
+use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\RemoveAllCalculatedDiscountsCalculatorPlugin;
+use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\GrandTotalWithDiscountsCalculatorPlugin;
+
 class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const CALCULATOR_STACK = 'calculator stack';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -30,34 +40,31 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return CalculatorPluginInterface[]
+     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
      */
     protected function getCalculatorStack(Container $container)
     {
         return [
             #Remove calculated values, start with clean state.
-            $container->getLocator()->calculation()->pluginRemoveTotalsCalculatorPlugin(),
-            $container->getLocator()->calculation()->pluginRemoveAllExpensesCalculatorPlugin(),
-            $container->getLocator()->discountCalculationConnector()->pluginRemoveAllCalculatedDiscountsCalculatorPlugin(),
+            new RemoveTotalsCalculatorPlugin(),
+            new RemoveAllExpensesCalculatorPlugin(),
+            new RemoveAllCalculatedDiscountsCalculatorPlugin(),
 
             #Item calculators
-            $container->getLocator()->calculation()->pluginProductOptionGrossSumCalculatorPlugin(),
-            $container->getLocator()->calculation()->pluginItemGrossAmountsCalculatorPlugin(),
+            new ProductOptionGrossSumCalculatorPlugin(),
+            new ItemGrossAmountsCalculatorPlugin(),
 
             #SubTotal
-            $container->getLocator()->calculation()->pluginSubtotalTotalsCalculatorPlugin(),
+            new SubtotalTotalsCalculatorPlugin(),
 
             #Expenses (e.g. shipping)
-            $container->getLocator()->calculation()->pluginExpenseTotalsCalculatorPlugin(),
+            new ExpenseTotalsCalculatorPlugin(),
 
             #GrandTotal
-            $container->getLocator()->calculation()->pluginGrandTotalTotalsCalculatorPlugin(),
-
-            #TaxTotal
-            $container->getLocator()->tax()->pluginTaxTotalsCalculatorPlugin(),
-
+            new GrandTotalTotalsCalculatorPlugin(),
+            new GrandTotalWithDiscountsCalculatorPlugin(),
         ];
     }
 

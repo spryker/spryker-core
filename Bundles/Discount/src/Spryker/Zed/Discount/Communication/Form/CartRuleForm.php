@@ -5,9 +5,9 @@ namespace Spryker\Zed\Discount\Communication\Form;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\FormBuilderInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
 class CartRuleForm extends AbstractRuleForm
 {
@@ -178,5 +178,4 @@ class CartRuleForm extends AbstractRuleForm
     {
         return 'cart_rule';
     }
-
 }

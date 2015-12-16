@@ -10,6 +10,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 use Spryker\Zed\Tax\TaxConfig;
+use Spryker\Zed\Tax\Business\Model\TaxReaderInterface;
+use Spryker\Zed\Tax\Business\Model\TaxWriterInterface;
+use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
 use Spryker\Zed\Tax\Business\Model\TaxWriter;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
@@ -23,7 +26,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Tax\Business\Model\TaxReaderInterface
+     * @return TaxReaderInterface
      */
     public function createReaderModel()
     {
@@ -33,7 +36,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Business\Model\TaxWriterInterface
+     * @return TaxWriterInterface
      */
     public function createWriterModel()
     {
@@ -56,7 +59,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
      */
     public function createTaxCalculator()
     {
-        return $this->getFactory()->createModelTaxCalculation($this->createPriceCalculationHelper());
+        return new TaxCalculation($this->createPriceCalculationHelper());
     }
 
     /**
@@ -64,6 +67,6 @@ class TaxBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPriceCalculationHelper()
     {
-        return $this->getFactory()->createModelPriceCalculationHelper();
+        return new PriceCalculationHelper();
     }
 }

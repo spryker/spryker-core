@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -311,11 +313,11 @@ class VoucherEngineTest extends Test
     protected function getCalculator(array $collectorPlugins = [], array $calculatorPlugins = [])
     {
         $locator = Locator::getInstance();
-        $calculatorPlugins[DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE] = $locator->discount()->pluginCalculatorPercentage();
-        $collectorPlugins[DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM] = $locator->discount()->pluginCollectorItem();
+        $calculatorPlugins[DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE] = new Percentage();
+        $collectorPlugins[DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM] = new Item();
 
         $collectorResolver = new CollectorResolver($collectorPlugins);
-        $messengerFacade = $locator->Messenger()->facade();
+        $messengerFacade = $locator->messenger()->facade();
         $calculator = new Calculator($collectorResolver, $messengerFacade, $calculatorPlugins);
 
         return $calculator;

@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\Cart\Business;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
@@ -78,7 +79,7 @@ class Operation
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->addItems($expandedCartChangeTransfer);
         $quoteTransfer = $this->getGroupedCartItems($quoteTransfer);
-        $this->messengerFacade->addSuccessMessage(self::ADD_ITEMS_SUCCESS);
+        $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::ADD_ITEMS_SUCCESS));
 
         return $this->recalculate($quoteTransfer);
     }
@@ -93,7 +94,7 @@ class Operation
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->increaseItems($expandedCartChangeTransfer);
         $quoteTransfer = $this->getGroupedCartItems($quoteTransfer);
-        $this->messengerFacade->addSuccessMessage(self::INCREASE_ITEMS_SUCCESS);
+        $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::INCREASE_ITEMS_SUCCESS));
 
         return $this->recalculate($quoteTransfer);
     }
@@ -107,7 +108,7 @@ class Operation
     {
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->decreaseItems($expandedCartChangeTransfer);
-        $this->messengerFacade->addSuccessMessage(self::DECREASE_ITEMS_SUCCESS);
+        $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::DECREASE_ITEMS_SUCCESS));
 
         return $this->recalculate($quoteTransfer);
     }
@@ -121,7 +122,7 @@ class Operation
     {
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->removeItems($expandedCartChangeTransfer);
-        $this->messengerFacade->addSuccessMessage(self::REMOVE_ITEMS_SUCCESS);
+        $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::REMOVE_ITEMS_SUCCESS));
 
         return $this->recalculate($quoteTransfer);
     }
@@ -138,6 +139,20 @@ class Operation
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessengerMessageTransfer($message)
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($message);
+        $messageTransfer->setParameters([]);
+
+        return $messageTransfer;
     }
 
     /**

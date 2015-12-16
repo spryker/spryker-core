@@ -10,9 +10,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
-use SprykerEngine\Zed\Kernel\Locator;
+use Spryker\Zed\Kernel\Locator;
 
 /**
  * @group SubtotalTest
@@ -66,7 +66,7 @@ class SubtotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getQuoteTransferWithFixtureData()
     {
@@ -77,7 +77,7 @@ class SubtotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
@@ -87,7 +87,7 @@ class SubtotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return AbstractLocatorLocator|AutoCompletion
+     * @return \Spryker\Shared\Kernel\AbstractLocatorLocator|\Generated\Zed\Ide\AutoCompletion
      */
     protected function getLocator()
     {

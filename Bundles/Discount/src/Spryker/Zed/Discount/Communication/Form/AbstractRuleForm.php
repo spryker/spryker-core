@@ -2,7 +2,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
@@ -14,24 +14,24 @@ abstract class AbstractRuleForm extends AbstractForm
     const DECISION_COLLECTOR_PREFIX = 'PLUGIN_COLLECTOR_';
 
     /**
-     * @var DiscountCalculatorPluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     protected $availableCalculatorPlugins;
 
     /**
-     * @var DiscountCollectorPluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
      */
     protected $availableCollectorPlugins;
 
     /**
-     * @var DiscountDecisionRulePluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
     protected $availableDecisionRulePlugins;
 
     /**
-     * @param DiscountCalculatorPluginInterface[] $availableCalculatorPlugins
-     * @param DiscountCollectorPluginInterface[] $availableCollectorPlugins
-     * @param DiscountDecisionRulePluginInterface[] $availableDecisionRulePlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $availableCalculatorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $availableCollectorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $availableDecisionRulePlugins
      */
     public function __construct(
         array $availableCalculatorPlugins,

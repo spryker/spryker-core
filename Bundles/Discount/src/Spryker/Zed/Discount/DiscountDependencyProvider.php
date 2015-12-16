@@ -7,12 +7,20 @@
 namespace Spryker\Zed\Discount;
 
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
+use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\OrderExpense;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
+use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
 
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -104,8 +112,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     public function getAvailableDecisionRulePlugins(Container $container)
     {
         return [
-            self::PLUGIN_DECISION_RULE_VOUCHER => $container->getLocator()->discount()->pluginDecisionRuleVoucher(),
-            self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => $container->getLocator()->discount()->pluginDecisionRuleMinimumCartSubtotal(),
+            self::PLUGIN_DECISION_RULE_VOUCHER => new Voucher(),
+            self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new MinimumCartSubtotal(),
         ];
     }
 
@@ -115,8 +123,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     public function getAvailableCalculatorPlugins(Container $container)
     {
         return [
-            self::PLUGIN_CALCULATOR_PERCENTAGE => $container->getLocator()->discount()->pluginCalculatorPercentage(),
-            self::PLUGIN_CALCULATOR_FIXED => $container->getLocator()->discount()->pluginCalculatorFixed(),
+            self::PLUGIN_CALCULATOR_PERCENTAGE => new Percentage(),
+            self::PLUGIN_CALCULATOR_FIXED => new Fixed(),
         ];
     }
 
@@ -126,11 +134,10 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     public function getAvailableCollectorPlugins(Container $container)
     {
         return [
-            self::PLUGIN_COLLECTOR_ITEM => $container->getLocator()->discount()->pluginCollectorItem(),
-            self::PLUGIN_COLLECTOR_ORDER_EXPENSE => $container->getLocator()->discount()->pluginCollectorOrderExpense(),
-            self::PLUGIN_COLLECTOR_ITEM_EXPENSE => $container->getLocator()->discount()->pluginCollectorItemExpense(),
-            self::PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION => $container->getLocator()->discount()->pluginCollectorItemProductOption(),
-            self::PLUGIN_COLLECTOR_AGGREGATE => $container->getLocator()->discount()->pluginCollectorAggregate(),
+            self::PLUGIN_COLLECTOR_ITEM => new Item(),
+            self::PLUGIN_COLLECTOR_ORDER_EXPENSE => new OrderExpense(),
+            self::PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION => new ItemProductOption(),
+            self::PLUGIN_COLLECTOR_AGGREGATE => new Aggregate(),
         ];
     }
 

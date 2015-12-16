@@ -302,7 +302,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
      */
     private function getSessionMock()
     {
-        $sessionMock = $this->getMock('SprykerFeature\Client\Cart\Service\Session\QuoteSessionInterface', [
+        $sessionMock = $this->getMock('Spryker\Client\Cart\Session\QuoteSessionInterface', [
             'getQuote',
             'setQuote',
             'getItemCount',

@@ -33,7 +33,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createStackExecutor()
     {
-        return $this->getFactory()->createModelStackExecutor($this->getProvidedCalculatorStack());
+        return new StackExecutor($this->getProvidedCalculatorStack());
     }
 
     /**
@@ -49,7 +49,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createExpenseGrossSumAmount()
     {
-        return $this->getFactory()->createModelCalculatorExpenseGrossSumAmountCalculator();
+        return new ExpenseGrossSumAmountCalculator();
     }
 
     /**
@@ -57,7 +57,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createExpenseTotalsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorExpenseTotalsCalculator();
+        return new ExpenseTotalsCalculator();
     }
 
     /**
@@ -65,7 +65,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createGrandTotalsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorGrandTotalTotalsCalculator();
+        return new GrandTotalTotalsCalculator();
     }
 
     /**
@@ -73,7 +73,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createItemGrossSumCalculator()
     {
-        return $this->getFactory()->createModelCalculatorItemGrossAmountsCalculator();
+        return new ItemGrossAmountsCalculator();
     }
 
     /**
@@ -81,7 +81,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createOptionGrossSumCalculator()
     {
-        return $this->getFactory()->createModelCalculatorProductOptionGrossSumCalculator();
+        return new ProductOptionGrossSumCalculator();
     }
 
     /**
@@ -89,7 +89,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function getRemoveAllExpensesCalculator()
     {
-        return $this->getFactory()->createModelCalculatorRemoveAllExpensesCalculator();
+        return new RemoveAllExpensesCalculator();
     }
 
     /**
@@ -97,7 +97,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createRemoveTotalsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorRemoveTotalsCalculator();
+        return new RemoveTotalsCalculator();
     }
 
     /**
@@ -105,7 +105,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createSubtotalTotalsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorSubtotalTotalsCalculator();
+        return new SubtotalTotalsCalculator();
     }
 
 }

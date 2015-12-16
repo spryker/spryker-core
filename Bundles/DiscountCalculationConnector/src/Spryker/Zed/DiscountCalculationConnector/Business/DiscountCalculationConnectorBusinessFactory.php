@@ -29,7 +29,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
      */
     public function getGrandTotalWithDiscountsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorGrandTotalWithDiscountsCalculator();
+        return new GrandTotalWithDiscountsCalculator();
     }
 
     /**

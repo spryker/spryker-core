@@ -8,6 +8,7 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator;
 
 class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
@@ -87,7 +88,7 @@ class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testWhenItemQuantityIsNotPresentShouldThrowAssertException()
     {
-        $this->setExpectedException('SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException');
+        $this->setExpectedException(RequiredTransferPropertyException::class);
 
         $itemGrossAmountsCalculator = $this->createItemGrossAmountsCalculator();
 
@@ -100,7 +101,7 @@ class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testWhenItemUnitPriceIsNotPresentShouldThrowAssertException()
     {
-        $this->setExpectedException('SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException');
+        $this->setExpectedException(RequiredTransferPropertyException::class);
 
         $itemGrossAmountsCalculator = $this->createItemGrossAmountsCalculator();
 
