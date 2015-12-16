@@ -82,10 +82,16 @@ abstract class AbstractPaymentMethod
             ApiConstants::SECURITY_SENDER => $this->getConfig()->getTransactionSecuritySender(),
             ApiConstants::USER_LOGIN => $this->getConfig()->getTransactionUserLogin(),
             ApiConstants::USER_PWD => $this->getConfig()->getTransactionUserPassword(),
-            ApiConstants::PRESENTATION_AMOUNT => $grandTotal / 100,
+            ApiConstants::PRESENTATION_AMOUNT => $this->convertCentsToDecimal($grandTotal),
             ApiConstants::PRESENTATION_USAGE => $idOrder,
             ApiConstants::PRESENTATION_CURRENCY => $currency,
-            ApiConstants::IDENTIFICATION_TRANSACTIONID => uniqid('tran_'),
+            ApiConstants::IDENTIFICATION_TRANSACTIONID => $idOrder,
+            ApiConstants::CRITERION_REQUEST_SYSTEM_VENDOR => ApiConstants::CRITERION_REQUEST_SYSTEM_VENDOR_VALUE,
+            ApiConstants::CRITERION_REQUEST_SYSTEM_VERSION => ApiConstants::CRITERION_REQUEST_SYSTEM_VERSION_VALUE,
+            ApiConstants::CRITERION_REQUEST_SYSTEM_TYPE => ApiConstants::CRITERION_REQUEST_SYSTEM_TYPE_VALUE,
+            ApiConstants::CRITERION_MODULE_NAME => ApiConstants::CRITERION_MODULE_NAME_VALUE,
+            ApiConstants::CRITERION_MODULE_VERSION => ApiConstants::CRITERION_MODULE_VERSION_VALUE,
+            ApiConstants::CRITERION_WEBSHOP_URL => $this->getConfig()->getWebshopUrl(),
         ];
     }
 

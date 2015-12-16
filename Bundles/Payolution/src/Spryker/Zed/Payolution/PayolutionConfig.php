@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Payolution;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Payolution\PayolutionConstants;
 
@@ -159,9 +160,9 @@ class PayolutionConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getAnalysisCriteriaPropertyName()
+    public function getPayolutionBccEmail()
     {
-        return $this->get(PayolutionConstants::ANALYSIS_CRITERIA);
+        return $this->get(PayolutionConstants::PAYOLUTION_BCC_EMAIL);
     }
 
     /**
@@ -194,6 +195,14 @@ class PayolutionConfig extends AbstractBundleConfig
     public function getEmailSubject()
     {
         return $this->get(PayolutionConstants::EMAIL_SUBJECT);
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebshopUrl()
+    {
+        return $this->get(ApplicationConstants::HOST_YVES);
     }
 
 }

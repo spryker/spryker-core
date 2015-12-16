@@ -38,6 +38,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
 
         $mailTransfer->setTemplateName($config->getEmailTemplateName());
         $this->addMailRecipient($mailTransfer, $orderEntity->getEmail());
+        $this->addMailRecipient($mailTransfer, $this->getPayolutionBccEmail($config));
         $this->setMailTransferFrom($mailTransfer, $config);
         $this->setMailTransferSubject($mailTransfer, $config);
 
@@ -45,6 +46,16 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
         $mailFacade->sendMail($mailTransfer);
 
         return [];
+    }
+
+    /**
+     * @param PayolutionConfig $config
+     *
+     * @return string
+     */
+    protected function getPayolutionBccEmail(PayolutionConfig $config)
+    {
+        return $config->getPayolutionBccEmail();
     }
 
     /**
