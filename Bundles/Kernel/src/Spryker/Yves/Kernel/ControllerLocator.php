@@ -9,7 +9,6 @@ namespace Spryker\Yves\Kernel;
 use Spryker\Shared\Kernel\ClassMapFactory;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Shared\Kernel\Communication\ControllerLocatorInterface;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 class ControllerLocator implements ControllerLocatorInterface
 {
@@ -38,19 +37,15 @@ class ControllerLocator implements ControllerLocatorInterface
     }
 
     /**
-     * @param \Pimple $application
-     * @param LocatorLocatorInterface $locator
-     *
      * @return object
      */
-    public function locate(\Pimple $application, LocatorLocatorInterface $locator)
+    public function locate()
     {
         $resolvedController = ClassMapFactory::getInstance()->create(
             $this->application,
             $this->bundleControllerAction->getBundle(),
             'Controller' . $this->bundleControllerAction->getController() . 'Controller',
-            $this->layer,
-            [$application]
+            $this->layer
         );
 
         return $resolvedController;

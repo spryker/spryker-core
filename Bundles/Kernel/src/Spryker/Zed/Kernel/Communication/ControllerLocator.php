@@ -6,14 +6,10 @@
 
 namespace Spryker\Zed\Kernel\Communication;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Shared\Kernel\Communication\ControllerLocatorInterface;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Kernel\ClassNamePattern;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Shared\Kernel\ClassMapFactory;
-use Spryker\Shared\Library\Log;
 
 class ControllerLocator implements ControllerLocatorInterface
 {
@@ -37,11 +33,6 @@ class ControllerLocator implements ControllerLocatorInterface
      * @var string
      */
     private $controllerPattern;
-
-    /**
-     * @var string
-     */
-    private $widgetControllerPattern;
 
     /**
      * @param BundleControllerActionInterface $bundleControllerAction
@@ -73,17 +64,12 @@ class ControllerLocator implements ControllerLocatorInterface
     }
 
     /**
-     * @TODO remove ClassMapFactory usage
-     *
-     * @param \Pimple $application
-     * @param LocatorLocatorInterface $locator
-     *
      * @return object
      */
-    public function locate(\Pimple $application, LocatorLocatorInterface $locator)
+    public function locate()
     {
         $resolvedController = ClassMapFactory::getInstance()->create(
-            'Zed', $this->bundle, 'Controller' . $this->controller . 'Controller', 'Communication', [$application]
+            'Zed', $this->bundle, 'Controller' . $this->controller . 'Controller', 'Communication'
         );
 
         return $resolvedController;

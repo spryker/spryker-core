@@ -86,15 +86,10 @@ class MvcRouter implements RouterInterface
         $bundleControllerAction = new BundleControllerAction($request);
         $controllerLocator = new ControllerLocator($bundleControllerAction);
 
-        if (!$controllerLocator->canLocate()) {
-            throw new ResourceNotFoundException();
-        }
-
         $routeNameResolver = new RouteNameResolver($request);
 
         $service = (new ControllerServiceBuilder())->createServiceForController(
             $this->app,
-            Locator::getInstance(),
             $bundleControllerAction,
             $controllerLocator,
             $routeNameResolver

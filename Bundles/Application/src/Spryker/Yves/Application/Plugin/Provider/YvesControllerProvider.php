@@ -108,7 +108,6 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
 
         $service = (new ControllerServiceBuilder())->createServiceForController(
             $this->app,
-            Locator::getInstance(),
             $bundleControllerAction,
             $controllerResolver,
             $routeResolver

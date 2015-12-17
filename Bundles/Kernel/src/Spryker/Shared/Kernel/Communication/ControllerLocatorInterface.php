@@ -6,18 +6,13 @@
 
 namespace Spryker\Shared\Kernel\Communication;
 
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
-
 interface ControllerLocatorInterface
 {
 
     /**
-     * @param \Pimple $application
-     * @param LocatorLocatorInterface $locator
-     *
      * @return object
      */
-    public function locate(\Pimple $application, LocatorLocatorInterface $locator);
+    public function locate();
 
     /**
      * @return bool
