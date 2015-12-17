@@ -9,7 +9,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\EventJournal\Model\EventInterface;
 
 /**
- * @method EventJournalDependencyContainer getDependencyContainer()
+ * @method EventJournalFactory getFactory()
  */
 class EventJournalClient extends AbstractClient implements EventJournalClientInterface
 {
@@ -21,7 +21,7 @@ class EventJournalClient extends AbstractClient implements EventJournalClientInt
      */
     public function saveEvent(EventInterface $event)
     {
-        $this->getDependencyContainer()->createEventJournal()->saveEvent($event);
+        $this->getFactory()->createEventJournal()->saveEvent($event);
     }
 
 }

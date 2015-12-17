@@ -5,9 +5,9 @@
 
 namespace Spryker\Client\EventJournal;
 
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 
-class EventJournalDependencyContainer extends AbstractDependencyContainer
+class EventJournalFactory extends  AbstractFactory
 {
 
     /**
