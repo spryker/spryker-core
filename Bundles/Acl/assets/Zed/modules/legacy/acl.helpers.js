@@ -2,26 +2,6 @@
 
 var memoize = new GroupModalMemoization();
 
-function spinnerCreate(elementId){
-    var container = $('<div/>', {
-        class: 'sk-spinner sk-spinner-circle'
-    });
-    for (var I = 1; I<=12; I++) {
-        var circle = $('<div>', {
-            class: 'sk-circle sk-circle' + I
-        }).appendTo(container);
-    }
-    $(elementId).html(container);
-}
-
-function spinnerClear(){
-    $('.group-spinner-container').html('');
-}
-
-
-/**
- * @param int idGroup
- */
 SprykerAjax.prototype.getRolesForGroup = function(idGroup) {
     var options = {
         'id-group': idGroup
@@ -53,10 +33,6 @@ SprykerAjax.prototype.removeUserFromGroup = function(options){
     this.setUrl('/acl/group/remove-user-from-group').ajaxSubmit(ajaxOptions, 'removeUserRowFromGroupTable');
 };
 
-/*
- * @param ajaxResponse
- * @returns string
- */
 SprykerAjaxCallbacks.prototype.displayGroupRoles = function(ajaxResponse){
     if (ajaxResponse.code == this.codeSuccess) {
         if (ajaxResponse.data.length > 0) {
@@ -85,4 +61,62 @@ SprykerAjaxCallbacks.prototype.removeUserRowFromGroupTable = function(ajaxRespon
 
     var spyAlert = new SprykerAlert();
     spyAlert.error(ajaxResponse.message);
+};
+
+module.exports = {
+    spinnerCreate: function(elementId){
+        var container = $('<div/>', {
+            class: 'sk-spinner sk-spinner-circle'
+        });
+        for (var I = 1; I<=12; I++) {
+            var circle = $('<div>', {
+                class: 'sk-circle sk-circle' + I
+            }).appendTo(container);
+        }
+        $(elementId).html(container);
+    },
+    spinnerClear: function(){
+        $('.group-spinner-container').html('');
+    },
+    GroupModalMemoization: function(){
+        var self = this;
+
+        var cached = {};
+
+        self.hasMember = function(memberId){
+            return !!cached[memberId];
+        };
+
+        self.saveMember = function(memberId, data){
+            cached[memberId] = data;
+        };
+
+        self.getMember = function(memberId){
+            return cached[memberId];
+        };
+    },
+    GroupModal: function(elementId) {
+        var self = this;
+        self.content = null;
+
+        self.init = function(){
+            self.content = $('<ul/>', {
+                id: 'group-body-list'
+            });
+        };
+
+        self.addGroupRoleElement = function(role){
+            $('<li/>', {
+                class: 'role-item',
+                text: role.Name
+            }).appendTo(self.content);
+        };
+
+        self.showModal = function(){
+            var modalAlert = new SprykerAlert();
+            modalAlert.custom(self.content, 'Roles in Group');
+        };
+
+        self.init();
+    }
 };

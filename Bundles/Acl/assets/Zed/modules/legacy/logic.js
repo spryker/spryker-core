@@ -1,6 +1,7 @@
 'use strict';
 
-
+require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
+require('./acl.helpers.js');
 
 $(document).ready(function() {
     var spyAj = new SprykerAjax();
