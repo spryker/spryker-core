@@ -196,7 +196,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      */
     public function calculateTaxTotals(QuoteTransfer $quoteTransfer)
     {
-        $this->getDependencyContainer()->createTaxCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()->createTaxCalculator()->recalculate($quoteTransfer);
     }
 
 }

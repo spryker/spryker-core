@@ -255,7 +255,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    private function getDependencyContainerMock(
+    private function getFactoryMock(
         QuoteSessionInterface $cartSession = null,
         CartStubInterface $cartStub = null
     ) {
