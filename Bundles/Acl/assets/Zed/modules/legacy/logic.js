@@ -1,3 +1,10 @@
+/**
+ *
+ * Spryker alert message manager
+ * @copyright: Spryker Systems GmbH
+ *
+ */
+
 'use strict';
 
 require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
