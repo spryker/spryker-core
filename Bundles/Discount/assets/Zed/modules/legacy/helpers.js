@@ -7,7 +7,11 @@
 
 'use strict';
 
-SprykerAjax.prototype.loadDecisionRulesOptions = function(element, mainFormName){
+require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
+var SprykerAlert = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAlert');
+var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
+
+SprykerAjax.loadDecisionRulesOptions = function(element, mainFormName){
     var elementsCount = $('#rules-container > .col-md-6').length;
     var nextElementIndex = elementsCount + 1;
     var options = {
@@ -23,7 +27,7 @@ SprykerAjax.prototype.loadDecisionRulesOptions = function(element, mainFormName)
     );
 };
 
-SprykerAjax.prototype.loadCollectorPlugins = function(element, mainFormName){
+SprykerAjax.loadCollectorPlugins = function(element, mainFormName){
     var elementsCount = $('#collector-container > .col-md-6').length;
     var nextElementIndex = elementsCount + 1;
     var options = {
@@ -42,12 +46,10 @@ SprykerAjax.prototype.loadCollectorPlugins = function(element, mainFormName){
 module.exports = {
     loadCartRulesForm: function(element, mainFormName){
         element.children('i').removeClass('hidden');
-        var sprykerAjax = new SprykerAjax();
-        sprykerAjax.loadDecisionRulesOptions(element, mainFormName);
+        SprykerAjax.loadDecisionRulesOptions(element, mainFormName);
     },
     loadCollectorPluginForm: function(element, mainFormName){
         element.children('i').removeClass('hidden');
-        var sprykerAjax = new SprykerAjax();
-        sprykerAjax.loadCollectorPlugins(element, mainFormName);
+        SprykerAjax.loadCollectorPlugins(element, mainFormName);
     }
 };
