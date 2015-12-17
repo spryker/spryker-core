@@ -53,11 +53,26 @@ abstract class AbstractController
 
     /**
      * @param Application $application
+     *
+     * @return $this
      */
-    public function __construct(Application $application)
+    public function setApplication(Application $application)
     {
         $this->application = $application;
-        $this->flashBag = $application['request']->getSession()->getFlashBag();
+
+        return $this;
+    }
+
+    /**
+     * @return FlashBagInterface
+     */
+    protected function getFlashBag()
+    {
+        if ($this->flashBag === null) {
+            $this->flashBag = $this->getApplication()['request']->getSession()->getFlashBag();
+        }
+
+        return $this->flashBag;
     }
 
     /**
@@ -85,7 +100,7 @@ abstract class AbstractController
      */
     protected function getLocale()
     {
-        return $this->application['locale'];
+        return $this->getApplication()['locale'];
     }
 
     /**
@@ -128,7 +143,6 @@ abstract class AbstractController
      */
     protected function addMessagesFromZedResponse($transferResponse)
     {
-        //$this->getMessenger()->addMessagesFromResponse($transferResponse);
     }
 
     /**
@@ -177,11 +191,13 @@ abstract class AbstractController
      * @param string $key
      * @param string $value
      *
-     * @return void
+     * @return self
      */
     protected function addToFlashBag($key, $value)
     {
-        $this->flashBag->add($key, $value);
+        $this->getFlashBag()->add($key, $value);
+
+        return $this;
     }
 
     /**
@@ -233,7 +249,7 @@ abstract class AbstractController
      */
     protected function getSecurityError(Request $request)
     {
-        return $this->application['security.last_error']($request);
+        return $this->getApplication()['security.last_error']($request);
     }
 
     /**
@@ -297,7 +313,7 @@ abstract class AbstractController
      */
     protected function renderView($viewPath, array $parameters = [])
     {
-        return $this->application->render($viewPath, $parameters);
+        return $this->getApplication()->render($viewPath, $parameters);
     }
 
     /**
