@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerCommunicationFactory getCommunicationFactory()
+ * @method CustomerCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
@@ -23,7 +23,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getCommunicationFactory()
+        $table = $this->getFactory()
             ->createCustomerTable();
 
         return $this->viewResponse([
@@ -36,7 +36,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getCommunicationFactory()
+        $table = $this->getFactory()
             ->createCustomerTable();
 
         return $this->jsonResponse($table->fetchData());

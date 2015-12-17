@@ -10,7 +10,7 @@ use Spryker\Zed\AvailabilityCheckoutConnector\Dependency\Facade\AvailabilityToCh
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method AvailabilityBusinessFactory getBusinessFactory()
+ * @method AvailabilityBusinessFactory getFactory()
  */
 class AvailabilityFacade extends AbstractFacade implements AvailabilityToCheckoutConnectorFacadeInterface
 {
@@ -23,7 +23,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityToCheckou
      */
     public function isProductSellable($sku, $quantity)
     {
-        return $this->getBusinessFactory()->getSellableModel()->isProductSellable($sku, $quantity);
+        return $this->getFactory()->getSellableModel()->isProductSellable($sku, $quantity);
     }
 
     /**
@@ -33,7 +33,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityToCheckou
      */
     public function calculateStockForProduct($sku)
     {
-        return $this->getBusinessFactory()->getSellableModel()->calculateStockForProduct($sku);
+        return $this->getFactory()->getSellableModel()->calculateStockForProduct($sku);
     }
 
 }

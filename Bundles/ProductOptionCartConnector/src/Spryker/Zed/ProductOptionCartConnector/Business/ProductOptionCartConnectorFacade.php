@@ -9,7 +9,7 @@ use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ProductOptionCartConnectorBusinessFactory getBusinessFactory()
+ * @method ProductOptionCartConnectorBusinessFactory getFactory()
  */
 class ProductOptionCartConnectorFacade extends AbstractFacade
 {
@@ -21,7 +21,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade
      */
     public function expandProductOptions(ChangeTransfer $change)
     {
-        return $this->getBusinessFactory()->createProductOptionManager()->expandProductOptions($change);
+        return $this->getFactory()->createProductOptionManager()->expandProductOptions($change);
     }
 
     /**
@@ -31,7 +31,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade
      */
     public function expandGroupKey(ChangeTransfer $change)
     {
-        return $this->getBusinessFactory()->createGroupKeyExpander()->expand($change);
+        return $this->getFactory()->createGroupKeyExpander()->expand($change);
     }
 
 }

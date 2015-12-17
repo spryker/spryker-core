@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method ProductCategoryFacade getFacade()
- * @method ProductCategoryCommunicationFactory getCommunicationFactory()
+ * @method ProductCategoryCommunicationFactory getFactory()
  * @method ProductCategoryQueryContainer getQueryContainer()
  */
 class AddController extends AbstractController
@@ -34,12 +34,12 @@ class AddController extends AbstractController
     {
         $idParentNode = $request->get(ProductCategoryConfig::PARAM_ID_PARENT_NODE);
 
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCategoryFormAdd($idParentNode);
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $localeTransfer = $this->getCommunicationFactory()
+            $localeTransfer = $this->getFactory()
                 ->createCurrentLocale();
 
             $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
@@ -67,10 +67,10 @@ class AddController extends AbstractController
     public function productCategoryTableAction(Request $request)
     {
         $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
-        $locale = $this->getCommunicationFactory()
+        $locale = $this->getFactory()
             ->createCurrentLocale();
 
-        $productCategoryTable = $this->getCommunicationFactory()
+        $productCategoryTable = $this->getFactory()
             ->createProductCategoryTable($locale, $idCategory);
 
         return $this->jsonResponse(
@@ -86,10 +86,10 @@ class AddController extends AbstractController
     public function productTableAction(Request $request)
     {
         $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
-        $locale = $this->getCommunicationFactory()
+        $locale = $this->getFactory()
             ->createCurrentLocale();
 
-        $productTable = $this->getCommunicationFactory()
+        $productTable = $this->getFactory()
             ->createProductTable($locale, $idCategory);
 
         return $this->jsonResponse(

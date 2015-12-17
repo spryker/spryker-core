@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * @method GitBusinessFactory getBusinessFactory()
+ * @method GitBusinessFactory getFactory()
  */
 class GitFacade extends AbstractFacade
 {
@@ -20,7 +20,7 @@ class GitFacade extends AbstractFacade
      */
     public function getConsoleCommands()
     {
-        return $this->getBusinessFactory()->getConsoleCommands();
+        return $this->getFactory()->getConsoleCommands();
     }
 
 }

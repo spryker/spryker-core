@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * @method ConsoleBusinessFactory getBusinessFactory()
+ * @method ConsoleBusinessFactory getFactory()
  */
 class ConsoleFacade extends AbstractFacade
 {
@@ -20,7 +20,7 @@ class ConsoleFacade extends AbstractFacade
      */
     public function getConsoleCommands()
     {
-        return $this->getBusinessFactory()->getConsoleCommands();
+        return $this->getFactory()->getConsoleCommands();
     }
 
 }

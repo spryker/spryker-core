@@ -16,9 +16,9 @@ class Foo extends AbstractPlugin
     /**
      * @return CommunicationFactoryInterface
      */
-    public function getCommunicationFactory()
+    public function getFactory()
     {
-        return parent::getCommunicationFactory();
+        return parent::getFactory();
     }
 
     /**

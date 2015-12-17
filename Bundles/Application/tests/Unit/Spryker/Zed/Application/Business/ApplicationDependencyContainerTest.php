@@ -21,7 +21,7 @@ class ApplicationBusinessFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @return ApplicationBusinessFactory
      */
-    private function getBusinessFactory()
+    private function getFactory()
     {
         return new ApplicationBusinessFactory();
     }
@@ -31,7 +31,7 @@ class ApplicationBusinessFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateNavigationBuilderShouldReturnFullyConfiguredInstance()
     {
-        $instance = $this->getBusinessFactory()->createNavigationBuilder();
+        $instance = $this->getFactory()->createNavigationBuilder();
 
         $this->assertInstanceOf('Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder', $instance);
     }

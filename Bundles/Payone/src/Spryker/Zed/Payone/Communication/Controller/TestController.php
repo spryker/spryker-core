@@ -25,7 +25,7 @@ use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 /**
  * @method PayoneFacade getFacade()
  * @method PayoneQueryContainerInterface getQueryContainer()
- * @method PayoneCommunicationFactory getCommunicationFactory()
+ * @method PayoneCommunicationFactory getFactory()
  */
 class TestController extends AbstractController
 {

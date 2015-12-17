@@ -19,7 +19,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsCommunicationFactory getCommunicationFactory()
+ * @method CmsCommunicationFactory getFactory()
  * @method CmsFacade getFacade()
  */
 class RedirectController extends AbstractController
@@ -32,7 +32,7 @@ class RedirectController extends AbstractController
      */
     public function indexAction()
     {
-        $redirectTable = $this->getCommunicationFactory()
+        $redirectTable = $this->getFactory()
             ->createCmsRedirectTable();
 
         return [
@@ -45,7 +45,7 @@ class RedirectController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getCommunicationFactory()
+        $table = $this->getFactory()
             ->createCmsRedirectTable();
 
         return $this->jsonResponse($table->fetchData());
@@ -56,7 +56,7 @@ class RedirectController extends AbstractController
      */
     public function addAction()
     {
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCmsRedirectForm('add');
 
         $form->handleRequest();
@@ -88,7 +88,7 @@ class RedirectController extends AbstractController
     {
         $idUrl = $request->get(CmsRedirectTable::REQUEST_ID_URL);
 
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCmsRedirectForm('update', $idUrl);
 
         $form->handleRequest();
@@ -122,7 +122,7 @@ class RedirectController extends AbstractController
      */
     private function getUrlFacade()
     {
-        return $this->getCommunicationFactory()
+        return $this->getFactory()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
     }
 
@@ -131,7 +131,7 @@ class RedirectController extends AbstractController
      */
     private function getLocaleFacade()
     {
-        return $this->getCommunicationFactory()
+        return $this->getFactory()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
     }
 

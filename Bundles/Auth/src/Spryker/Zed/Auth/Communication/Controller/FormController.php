@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AuthCommunicationFactory getCommunicationFactory()
+ * @method AuthCommunicationFactory getFactory()
  */
 class FormController extends AbstractController
 {
@@ -24,7 +24,7 @@ class FormController extends AbstractController
      */
     public function loginForm(Request $request)
     {
-        $form = $this->getCommunicationFactory()->createLoginForm($request);
+        $form = $this->getFactory()->createLoginForm($request);
 
         return $this->viewResponse([
             'form' => json_encode($form->toArray()),

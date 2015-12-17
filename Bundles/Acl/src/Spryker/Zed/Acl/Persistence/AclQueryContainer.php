@@ -27,7 +27,7 @@ use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 
 /**
- * @method AclPersistenceFactory getPersistenceFactory()
+ * @method AclPersistenceFactory getFactory()
  */
 class AclQueryContainer extends AbstractQueryContainer
 {
@@ -76,7 +76,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryGroup()
     {
-        return $this->getPersistenceFactory()->createGroupQuery();
+        return $this->getFactory()->createGroupQuery();
     }
 
     /**
@@ -84,7 +84,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryRole()
     {
-        return $this->getPersistenceFactory()->createRoleQuery();
+        return $this->getFactory()->createRoleQuery();
     }
 
     /**
@@ -94,7 +94,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryRoleById($id)
     {
-        $query = $this->getPersistenceFactory()->createRoleQuery();
+        $query = $this->getFactory()->createRoleQuery();
 
         $query->filterByIdAclRole($id);
 
@@ -108,7 +108,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryRoleHasGroup($idRole)
     {
-        $query = $this->getPersistenceFactory()->createGroupHasRoleQuery();
+        $query = $this->getFactory()->createGroupHasRoleQuery();
         $query->filterByFkAclRole($idRole);
 
         return $query;
@@ -121,7 +121,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryRoleByName($name)
     {
-        $query = $this->getPersistenceFactory()->createRoleQuery();
+        $query = $this->getFactory()->createRoleQuery();
 
         $query->filterByName($name);
 
@@ -136,7 +136,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryGroupHasRoleById($idGroup, $idRole)
     {
-        $query = $this->getPersistenceFactory()->createGroupHasRoleQuery();
+        $query = $this->getFactory()->createGroupHasRoleQuery();
 
         $query->filterByFkAclGroup($idGroup)
             ->filterByFkAclRole($idRole);
@@ -152,7 +152,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryUserHasGroupById($idGroup, $idUser)
     {
-        $query = $this->getPersistenceFactory()->createUserHasRoleQuery();
+        $query = $this->getFactory()->createUserHasRoleQuery();
 
         $query->filterByFkAclGroup($idGroup)
               ->filterByFkUser($idUser);
@@ -167,7 +167,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryGroupUsers($idGroup)
     {
-        $query = $this->getPersistenceFactory()->createUserQuery();
+        $query = $this->getFactory()->createUserQuery();
 
         $join = new Join();
 
@@ -194,7 +194,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryGroupRoles($idGroup)
     {
-        $query = $this->getPersistenceFactory()->createRoleQuery();
+        $query = $this->getFactory()->createRoleQuery();
 
         $query->useSpyAclGroupsHasRolesQuery()
             ->filterByFkAclGroup($idGroup)
@@ -210,7 +210,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryRuleById($id)
     {
-        $query = $this->getPersistenceFactory()->createRuleQuery();
+        $query = $this->getFactory()->createRuleQuery();
 
         $query->filterByIdAclRule($id);
 
@@ -224,7 +224,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryRuleByRoleId($roleId)
     {
-        $query = $this->getPersistenceFactory()->createRuleQuery();
+        $query = $this->getFactory()->createRuleQuery();
         $query->filterByFkAclRole($roleId);
 
         return $query;
@@ -237,7 +237,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryGroupRules(ObjectCollection $relationshipCollection)
     {
-        $query = $this->getPersistenceFactory()->createRuleQuery();
+        $query = $this->getFactory()->createRuleQuery();
         $query->useAclRoleQuery()->filterBySpyAclGroupsHasRoles($relationshipCollection)->endUse();
 
         return $query;
@@ -250,7 +250,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryGroupHasRole($idGroup)
     {
-        $query = $this->getPersistenceFactory()->createGroupHasRoleQuery();
+        $query = $this->getFactory()->createGroupHasRoleQuery();
         $query->filterByFkAclGroup($idGroup);
 
         return $query;
@@ -270,7 +270,7 @@ class AclQueryContainer extends AbstractQueryContainer
         $controller = AclConfig::VALIDATOR_WILDCARD,
         $action = AclConfig::VALIDATOR_WILDCARD
     ) {
-        $query = $this->getPersistenceFactory()->createRuleQuery();
+        $query = $this->getFactory()->createRuleQuery();
 
         if ($bundle !== AclConfig::VALIDATOR_WILDCARD) {
             $query->filterByBundle($bundle);
@@ -307,7 +307,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryRuleByPathAndRole($idAclRole, $bundle, $controller, $action, $type)
     {
-        $query = $this->getPersistenceFactory()->createRuleQuery();
+        $query = $this->getFactory()->createRuleQuery();
         $query->filterByFkAclRole($idAclRole, Criteria::EQUAL)
             ->filterByBundle($bundle, Criteria::EQUAL)
             ->filterByController($controller, Criteria::EQUAL)
@@ -324,7 +324,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryUserGroupByIdUser($idUser)
     {
-        $query = $this->getPersistenceFactory()->createGroupQuery();
+        $query = $this->getFactory()->createGroupQuery();
         $query->useSpyAclUserHasGroupQuery()
             ->filterByFkUser($idUser)
             ->endUse();
@@ -337,7 +337,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryUsersWithGroup()
     {
-        $query = $this->getPersistenceFactory()->createUserQuery();
+        $query = $this->getFactory()->createUserQuery();
 
         $query->addJoin(
             SpyUserTableMap::COL_ID_USER,
@@ -364,7 +364,7 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryRulesFromGroup($idGroup)
     {
-        $query = $this->getPersistenceFactory()->createRoleQuery();
+        $query = $this->getFactory()->createRoleQuery();
         $query->joinAclRule();
         $query->leftJoinSpyAclGroupsHasRoles();
 

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method RefundCommunicationFactory getCommunicationFactory()
+ * @method RefundCommunicationFactory getFactory()
  * @method RefundQueryContainer getQueryContainer()
  * @method RefundFacade getFacade()
  */
@@ -30,7 +30,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getCommunicationFactory()->createRefundTable();
+        $table = $this->getFactory()->createRefundTable();
 
         return $this->viewResponse(['refunds' => $table->render()]);
     }
@@ -40,7 +40,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getCommunicationFactory()->createRefundTable();
+        $table = $this->getFactory()->createRefundTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -68,12 +68,12 @@ class IndexController extends AbstractController
 
         $expenses = $this->getFacade()->getRefundableExpenses($idOrder);
 
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createRefundForm($orderTransfer);
 
         $form->handleRequest();
 
-        $isPaymentDataRequired = $this->getCommunicationFactory()
+        $isPaymentDataRequired = $this->getFactory()
             ->getConfig()
             ->getPaymentDataPlugin()
             ->isPaymentDataRequired($orderTransfer);
@@ -83,7 +83,7 @@ class IndexController extends AbstractController
 
             if ($isPaymentDataRequired) {
                 $paymentDataTransfer = (new PaymentDataTransfer())->fromArray($formData, true);
-                $this->getCommunicationFactory()->getConfig()->getPaymentDataPlugin()
+                $this->getFactory()->getConfig()->getPaymentDataPlugin()
                     ->updatePaymentDetail($paymentDataTransfer, $idOrder);
             }
 

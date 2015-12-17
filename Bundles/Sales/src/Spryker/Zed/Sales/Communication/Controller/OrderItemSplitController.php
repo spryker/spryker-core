@@ -12,7 +12,7 @@ use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 
 /**
- * @method SalesCommunicationFactory getCommunicationFactory()
+ * @method SalesCommunicationFactory getFactory()
  * @method SalesFacade getFacade()
  */
 class OrderItemSplitController extends AbstractController
@@ -26,7 +26,7 @@ class OrderItemSplitController extends AbstractController
      */
     public function splitAction()
     {
-        $orderItemForm = $orderItemSplitForm = $this->getCommunicationFactory()->getOrderItemSplitForm();
+        $orderItemForm = $orderItemSplitForm = $this->getFactory()->getOrderItemSplitForm();
         $orderItemForm->handleRequest();
         $data = $orderItemForm->getData();
 

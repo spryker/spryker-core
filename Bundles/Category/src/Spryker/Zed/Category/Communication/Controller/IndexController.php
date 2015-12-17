@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method CategoryFacade getFacade()
- * @method CategoryCommunicationFactory getCommunicationFactory()
+ * @method CategoryCommunicationFactory getFactory()
  * @method CategoryQueryContainer getQueryContainer()
  */
 class IndexController extends AbstractController
@@ -31,7 +31,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $rootCategories = $this->getCommunicationFactory()
+        $rootCategories = $this->getFactory()
             ->createRootNodeTable();
 
         return $this->viewResponse([
@@ -44,7 +44,7 @@ class IndexController extends AbstractController
      */
     public function rootNodeTableAction()
     {
-        $table = $this->getCommunicationFactory()
+        $table = $this->getFactory()
             ->createRootNodeTable();
 
         return $this->jsonResponse(
@@ -81,7 +81,7 @@ class IndexController extends AbstractController
 
         $idCategory = $this->getFacade()->getCategoryNodeIdentifier(
             trim($categoryName),
-            $this->getCommunicationFactory()->createCurrentLocale()
+            $this->getFactory()->createCurrentLocale()
         );
 
         $children = $this->getCategoryChildrenByIdCategory($idCategory);
@@ -103,7 +103,7 @@ class IndexController extends AbstractController
         $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
 
         /** @var CategoryAttributeTable $table */
-        $table = $this->getCommunicationFactory()
+        $table = $this->getFactory()
             ->createCategoryAttributeTable($idCategory);
 
         $tableData = $this->getTableArrayFormat($table);
@@ -120,7 +120,7 @@ class IndexController extends AbstractController
     {
         $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
 
-        $table = $this->getCommunicationFactory()
+        $table = $this->getFactory()
             ->createUrlTable($idCategory);
 
         $tableData = $this->getTableArrayFormat($table);
@@ -166,7 +166,7 @@ class IndexController extends AbstractController
         return $this->getFacade()
             ->getTreeNodeChildrenByIdCategoryAndLocale(
                 $idCategory,
-                $this->getCommunicationFactory()->createCurrentLocale()
+                $this->getFactory()->createCurrentLocale()
             );
     }
 

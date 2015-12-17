@@ -15,7 +15,7 @@ use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AuthCommunicationFactory getCommunicationFactory()
+ * @method AuthCommunicationFactory getFactory()
  * @method AuthFacade getFacade()
  */
 class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -37,7 +37,7 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
      */
     public function boot(Application $app)
     {
-        $bundleSettings = $this->getCommunicationFactory()->getConfig();
+        $bundleSettings = $this->getFactory()->getConfig();
         $facadeAuth = $this->getFacade();
 
         $app->before(function (Request $request) use ($app, $facadeAuth, $bundleSettings) {

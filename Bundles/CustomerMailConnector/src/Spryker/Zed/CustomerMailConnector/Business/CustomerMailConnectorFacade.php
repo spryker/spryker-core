@@ -9,7 +9,7 @@ namespace Spryker\Zed\CustomerMailConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CustomerMailConnectorBusinessFactory getBusinessFactory()
+ * @method CustomerMailConnectorBusinessFactory getFactory()
  */
 class CustomerMailConnectorFacade extends AbstractFacade
 {
@@ -22,7 +22,7 @@ class CustomerMailConnectorFacade extends AbstractFacade
      */
     public function sendRegistrationToken($email, $token)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createRegistrationTokenSender()
             ->send($email, $token);
     }
@@ -35,7 +35,7 @@ class CustomerMailConnectorFacade extends AbstractFacade
      */
     public function sendPasswordRestoreToken($email, $token)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createPasswordRestoreTokenSender()
             ->send($email, $token);
     }
@@ -47,7 +47,7 @@ class CustomerMailConnectorFacade extends AbstractFacade
      */
     public function sendPasswordRestoredConfirmation($email)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createPasswordRestoredConfirmationSender()
             ->send($email);
     }

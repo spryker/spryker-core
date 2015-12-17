@@ -33,7 +33,7 @@ class IndexController extends AbstractController
      */
     public function gridAction(Request $request)
     {
-        $grid = $this->getCommunicationFactory()->getUrlKeyTranslationGrid($request);
+        $grid = $this->getFactory()->getUrlKeyTranslationGrid($request);
 
         return $this->jsonResponse($grid->renderData());
     }

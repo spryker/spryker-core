@@ -14,7 +14,7 @@ use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method CollectorBusinessFactory getBusinessFactory()
+ * @method CollectorBusinessFactory getFactory()
  */
 class CollectorFacade extends AbstractFacade
 {
@@ -27,7 +27,7 @@ class CollectorFacade extends AbstractFacade
      */
     public function exportKeyValueForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
-        $exporter = $this->getBusinessFactory()->createYvesKeyValueExporter();
+        $exporter = $this->getFactory()->createYvesKeyValueExporter();
 
         return $exporter->exportForLocale($locale, $output);
     }
@@ -39,7 +39,7 @@ class CollectorFacade extends AbstractFacade
      */
     public function exportSearchForLocale(LocaleTransfer $locale)
     {
-        $exporter = $this->getBusinessFactory()->getYvesSearchExporter();
+        $exporter = $this->getFactory()->getYvesSearchExporter();
 
         return $exporter->exportForLocale($locale);
     }
@@ -51,7 +51,7 @@ class CollectorFacade extends AbstractFacade
      */
     public function updateSearchForLocale(LocaleTransfer $locale)
     {
-        $exporter = $this->getBusinessFactory()->getYvesSearchUpdateExporter();
+        $exporter = $this->getFactory()->getYvesSearchUpdateExporter();
 
         return $exporter->exportForLocale($locale);
     }
@@ -63,7 +63,7 @@ class CollectorFacade extends AbstractFacade
      */
     public function install(MessengerInterface $messenger)
     {
-        $this->getBusinessFactory()->createInstaller($messenger)->install();
+        $this->getFactory()->createInstaller($messenger)->install();
     }
 
     /**
@@ -71,7 +71,7 @@ class CollectorFacade extends AbstractFacade
      */
     public function getSearchIndexName()
     {
-        return $this->getBusinessFactory()->getConfig()->getSearchIndexName();
+        return $this->getFactory()->getConfig()->getSearchIndexName();
     }
 
     /**
@@ -79,7 +79,7 @@ class CollectorFacade extends AbstractFacade
      */
     public function getSearchDocumentType()
     {
-        return $this->getBusinessFactory()->getConfig()->getSearchDocumentType();
+        return $this->getFactory()->getConfig()->getSearchDocumentType();
     }
 
     /**
@@ -89,7 +89,7 @@ class CollectorFacade extends AbstractFacade
      */
     public function deleteSearchTimestamps(array $keys = [])
     {
-        return $this->getBusinessFactory()->createSearchMarker()->deleteTimestamps($keys);
+        return $this->getFactory()->createSearchMarker()->deleteTimestamps($keys);
     }
 
     /**
@@ -99,7 +99,7 @@ class CollectorFacade extends AbstractFacade
      */
     public function deleteStorageTimestamps(array $keys = [])
     {
-        return $this->getBusinessFactory()->createKeyValueMarker()->deleteTimestamps($keys);
+        return $this->getFactory()->createKeyValueMarker()->deleteTimestamps($keys);
     }
 
 }

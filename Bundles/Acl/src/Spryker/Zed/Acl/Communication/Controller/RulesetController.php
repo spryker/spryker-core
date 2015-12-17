@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * @method AclCommunicationFactory getCommunicationFactory()
+ * @method AclCommunicationFactory getFactory()
  * @method AclFacade getFacade()
  */
 class RulesetController extends AbstractController

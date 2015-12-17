@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerCommunicationFactory getCommunicationFactory()
+ * @method CustomerCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

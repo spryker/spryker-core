@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CategoryBusinessFactory getBusinessFactory()
+ * @method CategoryBusinessFactory getFactory()
  */
 class CategoryFacade extends AbstractFacade
 {
@@ -25,7 +25,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function hasCategoryNode($categoryName, LocaleTransfer $locale)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTreeReader()
             ->hasCategoryNode($categoryName, $locale);
     }
@@ -37,11 +37,11 @@ class CategoryFacade extends AbstractFacade
      */
     public function getNodeById($idNode)
     {
-        $nodeEntity = $this->getBusinessFactory()
+        $nodeEntity = $this->getFactory()
             ->createCategoryTreeReader()
             ->getNodeById($idNode);
 
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNode($nodeEntity);
     }
@@ -54,7 +54,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $locale)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTreeReader()
             ->getCategoryNodeIdentifier($categoryName, $locale);
     }
@@ -67,7 +67,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function getCategoryIdentifier($categoryName, LocaleTransfer $locale)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTreeReader()
             ->getCategoryIdentifier($categoryName, $locale);
     }
@@ -79,11 +79,11 @@ class CategoryFacade extends AbstractFacade
      */
     public function getAllNodesByIdCategory($idCategory)
     {
-        $nodeEntities = $this->getBusinessFactory()
+        $nodeEntities = $this->getFactory()
             ->createCategoryTreeReader()
             ->getAllNodesByIdCategory($idCategory);
 
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
@@ -95,11 +95,11 @@ class CategoryFacade extends AbstractFacade
      */
     public function getMainNodesByIdCategory($idCategory)
     {
-        $nodeEntities = $this->getBusinessFactory()
+        $nodeEntities = $this->getFactory()
             ->createCategoryTreeReader()
             ->getMainNodesByIdCategory($idCategory);
 
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
@@ -111,11 +111,11 @@ class CategoryFacade extends AbstractFacade
      */
     public function getNotMainNodesByIdCategory($idCategory)
     {
-        $nodeEntities = $this->getBusinessFactory()
+        $nodeEntities = $this->getFactory()
             ->createCategoryTreeReader()
             ->getNotMainNodesByIdCategory($idCategory);
 
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
@@ -128,7 +128,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function createCategory(CategoryTransfer $category, LocaleTransfer $locale)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryWriter()
             ->create($category, $locale);
     }
@@ -141,7 +141,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function updateCategory(CategoryTransfer $category, LocaleTransfer $locale)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createCategoryWriter()
             ->update($category, $locale);
     }
@@ -154,7 +154,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function addCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createCategoryWriter()
             ->addCategoryAttribute($category, $locale);
     }
@@ -166,7 +166,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function deleteCategory($idCategory)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createCategoryWriter()
             ->delete($idCategory);
     }
@@ -180,7 +180,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function createCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale, $createUrlPath = true)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTreeWriter()
             ->createCategoryNode($categoryNode, $locale, $createUrlPath);
     }
@@ -193,7 +193,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function updateCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createCategoryTreeWriter()
             ->updateNode($categoryNode, $locale);
     }
@@ -207,7 +207,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTreeWriter()
             ->deleteNode($idNode, $locale, $deleteChildren);
     }
@@ -217,7 +217,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function renderCategoryTreeVisual()
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTreeRenderer()
             ->render();
     }
@@ -227,11 +227,11 @@ class CategoryFacade extends AbstractFacade
      */
     public function getRootNodes()
     {
-        $rootNodes = $this->getBusinessFactory()
+        $rootNodes = $this->getFactory()
             ->createCategoryTreeReader()
             ->getRootNodes();
 
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($rootNodes);
     }
@@ -244,7 +244,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function getTree($idCategory, LocaleTransfer $locale)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTreeReader()
             ->getTree($idCategory, $locale);
     }
@@ -257,7 +257,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function getChildren($idNode, LocaleTransfer $locale)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTreeReader()
             ->getChildren($idNode, $locale);
     }
@@ -271,7 +271,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function getParents($idNode, LocaleTransfer $locale, $excludeStartNode = true)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTreeReader()
             ->getParents($idNode, $locale, $excludeStartNode);
     }
@@ -284,7 +284,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $locale)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCategoryTreeReader()
             ->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $locale);
     }
@@ -294,7 +294,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function rebuildClosureTable()
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createCategoryTreeWriter()
             ->rebuildClosureTable();
     }
@@ -306,7 +306,7 @@ class CategoryFacade extends AbstractFacade
      */
     public function generatePath(array $pathTokens)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createUrlPathGenerator()
             ->generate($pathTokens);
     }

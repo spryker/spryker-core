@@ -15,7 +15,7 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         /** @var CountryTable $table */
-        $table = $this->getCommunicationFactory()->createCountryTable();
+        $table = $this->getFactory()->createCountryTable();
 
         return $this->viewResponse([
             'countryTable' => $table->render(),
@@ -27,7 +27,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getCommunicationFactory()->createCountryTable();
+        $table = $this->getFactory()->createCountryTable();
 
         return $this->jsonResponse(
             $table->fetchData()

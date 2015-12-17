@@ -12,7 +12,7 @@ use Spryker\Zed\Maintenance\Communication\MaintenanceCommunicationFactory;
 
 /**
  * @method MaintenanceFacade getFacade()
- * @method MaintenanceCommunicationFactory getCommunicationFactory()
+ * @method MaintenanceCommunicationFactory getFactory()
  */
 class PhpinfoController extends AbstractController
 {

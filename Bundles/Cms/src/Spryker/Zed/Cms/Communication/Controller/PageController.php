@@ -17,7 +17,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsCommunicationFactory getCommunicationFactory()
+ * @method CmsCommunicationFactory getFactory()
  * @method CmsFacade getFacade()
  */
 class PageController extends AbstractController
@@ -31,7 +31,7 @@ class PageController extends AbstractController
      */
     public function indexAction()
     {
-        $pageTable = $this->getCommunicationFactory()
+        $pageTable = $this->getFactory()
             ->createCmsPageTable();
 
         return [
@@ -44,7 +44,7 @@ class PageController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getCommunicationFactory()
+        $table = $this->getFactory()
             ->createCmsPageTable();
 
         return $this->jsonResponse($table->fetchData());
@@ -55,7 +55,7 @@ class PageController extends AbstractController
      */
     public function addAction()
     {
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCmsPageForm('add');
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
@@ -88,7 +88,7 @@ class PageController extends AbstractController
     {
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCmsPageForm('update', $idPage);
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
@@ -124,7 +124,7 @@ class PageController extends AbstractController
      */
     private function getUrlFacade()
     {
-        return $this->getCommunicationFactory()
+        return $this->getFactory()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
     }
 

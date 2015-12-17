@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerCommunicationFactory getCommunicationFactory()
+ * @method CustomerCommunicationFactory getFactory()
  */
 class ProfileController extends AbstractController
 {
@@ -44,7 +44,7 @@ class ProfileController extends AbstractController
 
         $this->setMenuHighlight($customerUri);
 
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCustomerForm($request);
 
         $customerTransfer = new CustomerTransfer();
@@ -118,7 +118,7 @@ class ProfileController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCustomerForm($request);
 
         if ($form->isValid() === true) {
@@ -138,7 +138,7 @@ class ProfileController extends AbstractController
      */
     public function addressesAction(Request $request)
     {
-        $grid = $this->getCommunicationFactory()
+        $grid = $this->getFactory()
             ->createAddressGrid($request);
 
         return $this->jsonResponse($grid->renderData());
@@ -151,7 +151,7 @@ class ProfileController extends AbstractController
      */
     public function addressAction(Request $request)
     {
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createAddressForm($request);
 
         if ($form->isValid() === true) {

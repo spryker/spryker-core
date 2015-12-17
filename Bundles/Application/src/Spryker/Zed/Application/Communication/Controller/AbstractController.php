@@ -92,7 +92,7 @@ abstract class AbstractController
     /**
      * @return CommunicationFactoryInterface
      */
-    protected function getCommunicationFactory()
+    protected function getFactory()
     {
         if ($this->communicationFactory === null) {
             $this->communicationFactory = $this->resolveCommunicationFactory();

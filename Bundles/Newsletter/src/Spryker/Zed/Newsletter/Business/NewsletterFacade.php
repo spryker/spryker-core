@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method NewsletterBusinessFactory getBusinessFactory()
+ * @method NewsletterBusinessFactory getFactory()
  */
 class NewsletterFacade extends AbstractFacade
 {
@@ -25,9 +25,9 @@ class NewsletterFacade extends AbstractFacade
      */
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
-        $optInHandler = $this->getBusinessFactory()->createSingleOptInHandler();
+        $optInHandler = $this->getFactory()->createSingleOptInHandler();
 
-        $subscriptionResponse = $this->getBusinessFactory()
+        $subscriptionResponse = $this->getFactory()
             ->createSubscriptionRequestHandler()
             ->processNewsletterSubscriptions($newsletterSubscriptionRequest, $optInHandler);
 
@@ -41,9 +41,9 @@ class NewsletterFacade extends AbstractFacade
      */
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
-        $optInHandler = $this->getBusinessFactory()->createDoubleOptInHandler();
+        $optInHandler = $this->getFactory()->createDoubleOptInHandler();
 
-        $subscriptionResponse = $this->getBusinessFactory()
+        $subscriptionResponse = $this->getFactory()
             ->createSubscriptionRequestHandler()
             ->processNewsletterSubscriptions($newsletterSubscriptionRequest, $optInHandler);
 
@@ -57,7 +57,7 @@ class NewsletterFacade extends AbstractFacade
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createDoubleOptInHandler()
             ->approveSubscriberByKey($newsletterSubscriber);
     }
@@ -69,7 +69,7 @@ class NewsletterFacade extends AbstractFacade
      */
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {
-        $subscriptionResponse = $this->getBusinessFactory()
+        $subscriptionResponse = $this->getFactory()
             ->createSubscriptionRequestHandler()
             ->checkNewsletterSubscriptions($newsletterUnsubscriptionRequest);
 
@@ -83,7 +83,7 @@ class NewsletterFacade extends AbstractFacade
      */
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {
-        $subscriptionResponse = $this->getBusinessFactory()
+        $subscriptionResponse = $this->getFactory()
             ->createSubscriptionRequestHandler()
             ->processNewsletterUnsubscriptions($newsletterUnsubscriptionRequest);
 
@@ -97,7 +97,7 @@ class NewsletterFacade extends AbstractFacade
      */
     public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createSubscriptionRequestHandler()
             ->assignCustomerToExistingSubscriber($newsletterSubscriber);
     }

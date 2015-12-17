@@ -20,7 +20,7 @@ use Spryker\Zed\Acl\Communication\Form\RoleForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * @method AclCommunicationFactory getCommunicationFactory()
+ * @method AclCommunicationFactory getFactory()
  * @method AclFacade getFacade()
  * @method AclQueryContainer getQueryContainer()
  */
@@ -35,7 +35,7 @@ class RoleController extends AbstractController
      */
     public function indexAction()
     {
-        $roleTable = $this->getCommunicationFactory()->createRoleTable();
+        $roleTable = $this->getFactory()->createRoleTable();
 
         return [
             'roleTable' => $roleTable->render(),
@@ -47,7 +47,7 @@ class RoleController extends AbstractController
      */
     public function tableAction()
     {
-        $roleTable = $this->getCommunicationFactory()->createRoleTable();
+        $roleTable = $this->getFactory()->createRoleTable();
 
         return $this->jsonResponse(
             $roleTable->fetchData()
@@ -59,7 +59,7 @@ class RoleController extends AbstractController
      */
     public function createAction()
     {
-        $ruleForm = $this->getCommunicationFactory()->createRoleForm();
+        $ruleForm = $this->getFactory()->createRoleForm();
         $ruleForm->handleRequest();
 
         if ($ruleForm->isValid()) {
@@ -120,7 +120,7 @@ class RoleController extends AbstractController
     public function rulesetTableAction(Request $request)
     {
         $idRole = $request->get('id-role');
-        $rulesetTable = $this->getCommunicationFactory()->createRulesetTable($idRole);
+        $rulesetTable = $this->getFactory()->createRulesetTable($idRole);
 
         return $this->jsonResponse(
             $rulesetTable->fetchData()
@@ -144,17 +144,17 @@ class RoleController extends AbstractController
 
         $roleTransfer = $this->getFacade()->getRoleById($idRole);
 
-        $roleForm = $this->getCommunicationFactory()->createRoleForm();
+        $roleForm = $this->getFactory()->createRoleForm();
         $this->handleRoleForm($roleForm, $roleTransfer);
 
-        $rulesetForm = $this->getCommunicationFactory()->createRulesetForm();
+        $rulesetForm = $this->getFactory()->createRulesetForm();
         $this->handleRulesetForm($rulesetForm, $idRole);
 
         if ($rulesetForm->isSubmitted() && $rulesetForm->isValid()) {
             return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idRole));
         }
 
-        $rulesetTable = $this->getCommunicationFactory()->createRulesetTable($idRole);
+        $rulesetTable = $this->getFactory()->createRulesetTable($idRole);
 
         return [
             'roleForm' => $roleForm->createView(),

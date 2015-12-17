@@ -10,7 +10,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 
 /**
- * @method AclCommunicationFactory getCommunicationFactory()
+ * @method AclCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {

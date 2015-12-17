@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method MaintenanceBusinessFactory getBusinessFactory()
+ * @method MaintenanceBusinessFactory getFactory()
  */
 class MaintenanceFacade extends AbstractFacade
 {
@@ -20,7 +20,7 @@ class MaintenanceFacade extends AbstractFacade
      */
     public function getInstalledPackages()
     {
-        return $this->getBusinessFactory()->createPackageCollector()->getInstalledPackages();
+        return $this->getFactory()->createPackageCollector()->getInstalledPackages();
     }
 
     /**
@@ -30,7 +30,7 @@ class MaintenanceFacade extends AbstractFacade
      */
     public function writeInstalledPackagesToMarkDownFile(InstalledPackagesTransfer $installedPackages)
     {
-        $this->getBusinessFactory()->createMarkDownWriter($installedPackages)->write();
+        $this->getFactory()->createMarkDownWriter($installedPackages)->write();
     }
 
     /**
@@ -40,7 +40,7 @@ class MaintenanceFacade extends AbstractFacade
      */
     public function showOutgoingDependenciesForBundle($bundleName)
     {
-        return $this->getBusinessFactory()->createDependencyBundleParser()->parseOutgoingDependencies($bundleName);
+        return $this->getFactory()->createDependencyBundleParser()->parseOutgoingDependencies($bundleName);
     }
 
     /**
@@ -50,12 +50,12 @@ class MaintenanceFacade extends AbstractFacade
      */
     public function showIncomingDependenciesForBundle($bundleName)
     {
-        return $this->getBusinessFactory()->createDependencyManager()->parseIncomingDependencies($bundleName);
+        return $this->getFactory()->createDependencyManager()->parseIncomingDependencies($bundleName);
     }
 
     public function drawDependencyGraph($bundleName)
     {
-        return $this->getBusinessFactory()->createDependencyGraph()->draw($bundleName);
+        return $this->getFactory()->createDependencyGraph()->draw($bundleName);
     }
 
     /**
@@ -65,7 +65,7 @@ class MaintenanceFacade extends AbstractFacade
      */
     public function cleanPropelMigration()
     {
-        return $this->getBusinessFactory()->createPropelMigrationCleaner()->clean();
+        return $this->getFactory()->createPropelMigrationCleaner()->clean();
     }
 
     /**
@@ -73,7 +73,7 @@ class MaintenanceFacade extends AbstractFacade
      */
     public function getAllBundles()
     {
-        return $this->getBusinessFactory()->createDependencyManager()->collectAllBundles();
+        return $this->getFactory()->createDependencyManager()->collectAllBundles();
     }
 
 }

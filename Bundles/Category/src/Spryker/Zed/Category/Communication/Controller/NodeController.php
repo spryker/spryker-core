@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method CategoryFacade getFacade()
- * @method CategoryCommunicationFactory getCommunicationFactory()
+ * @method CategoryCommunicationFactory getFactory()
  * @method CategoryQueryContainer getQueryContainer()
  */
 class NodeController extends AbstractController
@@ -33,10 +33,10 @@ class NodeController extends AbstractController
     {
         $idCategoryNode = $request->get(CategoryConfig::PARAM_ID_NODE);
 
-        $locale = $this->getCommunicationFactory()
+        $locale = $this->getFactory()
             ->createCurrentLocale();
 
-        $nodeList = $this->getCommunicationFactory()
+        $nodeList = $this->getFactory()
             ->createCategoryQueryContainer()
             ->getCategoryNodesWithOrder($idCategoryNode, $locale->getIdLocale())
             ->find();
@@ -64,7 +64,7 @@ class NodeController extends AbstractController
      */
     public function reorderAction(Request $request)
     {
-        $locale = $this->getCommunicationFactory()
+        $locale = $this->getFactory()
             ->createCurrentLocale();
 
         $categoryNodesToReorder = (array) json_decode($request->request->get('nodes'), true);
@@ -73,7 +73,7 @@ class NodeController extends AbstractController
         foreach ($categoryNodesToReorder as $index => $nodeData) {
             $idNode = $nodeData['id'];
 
-            $nodeEntity = $this->getCommunicationFactory()
+            $nodeEntity = $this->getFactory()
                 ->createCategoryQueryContainer()
                 ->queryNodeById($idNode)
                 ->findOne();
@@ -83,7 +83,7 @@ class NodeController extends AbstractController
 
             $nodeTransfer->setNodeOrder($order);
 
-            $this->getCommunicationFactory()
+            $this->getFactory()
                 ->createCategoryFacade()
                 ->updateCategoryNode($nodeTransfer, $locale);
 

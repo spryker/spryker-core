@@ -21,7 +21,7 @@ class SetupBusinessFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @return SetupBusinessFactory
      */
-    private function getBusinessFactory()
+    private function getFactory()
     {
         return new SetupBusinessFactory();
     }
@@ -31,7 +31,7 @@ class SetupBusinessFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateModelCronjobsShouldReturnFullyConfiguredInstance()
     {
-        $instance = $this->getBusinessFactory()->createModelCronjobs();
+        $instance = $this->getFactory()->createModelCronjobs();
 
         $this->assertInstanceOf('Spryker\Zed\Setup\Business\Model\Cronjobs', $instance);
     }
@@ -41,7 +41,7 @@ class SetupBusinessFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateModelGeneratedDirectoryRemoverShouldReturnFullyConfiguredInstance()
     {
-        $instance = $this->getBusinessFactory()->createModelGeneratedDirectoryRemover();
+        $instance = $this->getFactory()->createModelGeneratedDirectoryRemover();
 
         $this->assertInstanceOf('Spryker\Zed\Setup\Business\Model\DirectoryRemover', $instance);
     }

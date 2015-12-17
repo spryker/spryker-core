@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method PriceCommunicationFactory getCommunicationFactory()
+ * @method PriceCommunicationFactory getFactory()
  * @method PriceFacade getFacade()
  */
 class PriceFormController extends AbstractController
@@ -27,7 +27,7 @@ class PriceFormController extends AbstractController
      */
     public function priceAction(Request $request)
     {
-        $form = $this->getCommunicationFactory()->getPriceForm($request);
+        $form = $this->getFactory()->getPriceForm($request);
 
         if ($form->isValid()) {
             $transferPriceProduct = new PriceProductTransfer();
@@ -50,7 +50,7 @@ class PriceFormController extends AbstractController
      */
     public function priceTypeAction(Request $request)
     {
-        $form = $this->getCommunicationFactory()->getPriceTypeForm($request);
+        $form = $this->getFactory()->getPriceTypeForm($request);
 
         if ($form->isValid()) {
             $data = $form->getRequestData();

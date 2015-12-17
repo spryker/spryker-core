@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
 
 /**
- * @method InstallerBusinessFactory getBusinessFactory()
+ * @method InstallerBusinessFactory getFactory()
  */
 class InstallerFacade extends AbstractFacade
 {
@@ -21,7 +21,7 @@ class InstallerFacade extends AbstractFacade
      */
     public function getInstallers()
     {
-        return $this->getBusinessFactory()->getInstallers();
+        return $this->getFactory()->getInstallers();
     }
 
     /**
@@ -29,7 +29,7 @@ class InstallerFacade extends AbstractFacade
      */
     public function getDemoDataInstallers()
     {
-        return $this->getBusinessFactory()->getDemoDataInstallers();
+        return $this->getFactory()->getDemoDataInstallers();
     }
 
     /**
@@ -37,7 +37,7 @@ class InstallerFacade extends AbstractFacade
      */
     public function getGlossaryInstaller()
     {
-        return $this->getBusinessFactory()->getGlossaryInstaller();
+        return $this->getFactory()->getGlossaryInstaller();
     }
 
 }

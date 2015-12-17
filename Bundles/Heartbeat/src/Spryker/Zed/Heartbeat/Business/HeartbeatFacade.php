@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\HealthReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method HeartbeatBusinessFactory getBusinessFactory()
+ * @method HeartbeatBusinessFactory getFactory()
  */
 class HeartbeatFacade extends AbstractFacade
 {
@@ -20,7 +20,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function isSystemAlive()
     {
-        return $this->getBusinessFactory()->createDoctor()->doHealthCheck()->isPatientAlive();
+        return $this->getFactory()->createDoctor()->doHealthCheck()->isPatientAlive();
     }
 
     /**
@@ -28,7 +28,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function getReport()
     {
-        return $this->getBusinessFactory()->createDoctor()->doHealthCheck()->getReport();
+        return $this->getFactory()->createDoctor()->doHealthCheck()->getReport();
     }
 
     /**
@@ -36,7 +36,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function doPropelHealthCheck()
     {
-        return $this->getBusinessFactory()->createPropelHealthIndicator()->doHealthCheck();
+        return $this->getFactory()->createPropelHealthIndicator()->doHealthCheck();
     }
 
     /**
@@ -44,7 +44,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function doSearchHealthCheck()
     {
-        return $this->getBusinessFactory()->createSearchHealthIndicator()->doHealthCheck();
+        return $this->getFactory()->createSearchHealthIndicator()->doHealthCheck();
     }
 
     /**
@@ -52,7 +52,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function doSessionHealthCheck()
     {
-        return $this->getBusinessFactory()->createSessionHealthIndicator()->doHealthCheck();
+        return $this->getFactory()->createSessionHealthIndicator()->doHealthCheck();
     }
 
     /**
@@ -60,7 +60,7 @@ class HeartbeatFacade extends AbstractFacade
      */
     public function doStorageHealthCheck()
     {
-        return $this->getBusinessFactory()->createStorageHealthIndicator()->doHealthCheck();
+        return $this->getFactory()->createStorageHealthIndicator()->doHealthCheck();
     }
 
 }

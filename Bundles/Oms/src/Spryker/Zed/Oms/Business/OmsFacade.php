@@ -20,7 +20,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 
 /**
- * @method OmsBusinessFactory getBusinessFactory()
+ * @method OmsBusinessFactory getFactory()
  */
 class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterface
 {
@@ -32,7 +32,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getManualEvents($idOrderItem)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->getManualEvents($idOrderItem);
     }
@@ -45,7 +45,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function isOrderFlagged($idOrder, $flag)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->isOrderFlagged($idOrder, $flag);
     }
@@ -58,7 +58,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function isOrderFlaggedAll($idOrder, $flag)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->isOrderFlaggedAll($idOrder, $flag);
     }
@@ -74,7 +74,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         assert(is_string($eventId));
 
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineOrderStateMachine()
             ->triggerEventForOrderItems($eventId, $orderItemIds, $data);
     }
@@ -87,7 +87,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function triggerEventForNewOrderItems(array $orderItemIds, array $data = [])
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineOrderStateMachine()
             ->triggerEventForNewOrderItems($orderItemIds, $data);
     }
@@ -101,7 +101,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = [])
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineOrderStateMachine()
             ->triggerEventForOneOrderItem($eventId, $orderItemId, $data);
     }
@@ -111,7 +111,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getProcesses()
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->getProcesses();
     }
@@ -121,7 +121,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getProcessList()
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->getConfig()
             ->getActiveProcesses();
     }
@@ -133,7 +133,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function checkConditions(array $logContext = [])
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineOrderStateMachine($logContext)
             ->checkConditions();
     }
@@ -145,10 +145,10 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function checkTimeouts(array $logContext = [])
     {
-        $orderStateMachine = $this->getBusinessFactory()
+        $orderStateMachine = $this->getFactory()
             ->createOrderStateMachineOrderStateMachine($logContext);
 
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineTimeout()
             ->checkTimeouts($orderStateMachine);
     }
@@ -163,7 +163,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function drawProcess($processName, $highlightState = null, $format = null, $fontSize = null)
     {
-        $process = $this->getBusinessFactory()
+        $process = $this->getFactory()
             ->createOrderStateMachineBuilder()
             ->createProcess($processName);
 
@@ -179,7 +179,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getProcess($processName)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineBuilder()
             ->createProcess($processName);
     }
@@ -191,7 +191,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getDummy()
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createModelDummy();
     }
 
@@ -202,7 +202,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getGroupedManuallyExecutableEvents(SpySalesOrder $order)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->getGroupedManuallyExecutableEvents($order);
     }
@@ -215,7 +215,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->getItemsWithFlag($order, $flag);
     }
@@ -228,7 +228,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->getItemsWithoutFlag($order, $flag);
     }
@@ -242,7 +242,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getLogForOrder(SpySalesOrder $order, array $logContext = [])
     {
         // FIXME Ticket core-119
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createUtilTransitionLog($logContext)
             ->getLogForOrder($order);
     }
@@ -254,7 +254,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getReservedOrderItemsForSku($sku)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->getReservedOrderItemsForSku($sku);
     }
@@ -266,7 +266,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function countReservedOrderItemsForSku($sku)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->countReservedOrderItemsForSku($sku);
     }
@@ -278,7 +278,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getStateEntity($stateName)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachinePersistenceManager()
             ->getStateEntity($stateName);
     }
@@ -290,7 +290,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getProcessEntity($processName)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachinePersistenceManager()
             ->getProcessEntity($processName);
     }
@@ -300,7 +300,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getInitialStateEntity()
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachinePersistenceManager()
             ->getInitialStateEntity();
     }
@@ -312,7 +312,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function selectProcess(OrderTransfer $transferOrder)
     {
-        return $this->getBusinessFactory()->createProcessSelector()
+        return $this->getFactory()->createProcessSelector()
             ->selectProcess($transferOrder);
     }
 
@@ -323,7 +323,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getStateDisplayName(SpySalesOrderItem $orderItem)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->getStateDisplayName($orderItem);
     }
@@ -341,7 +341,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
         assert(is_string($eventId));
         $orderItemsArray = $orderItems->getData();
 
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineOrderStateMachine($logContext)
             ->triggerEvent($eventId, $orderItemsArray, $data);
     }
@@ -357,7 +357,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         $orderItemsArray = $orderItems->getData();
 
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineOrderStateMachine($logContext)
             ->triggerEventForNewItem($orderItemsArray, $data);
     }
@@ -374,7 +374,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         $orderItemsArray = [$orderItem];
 
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createOrderStateMachineOrderStateMachine($logContext)
             ->triggerEvent($eventId, $orderItemsArray, $data);
     }
@@ -384,7 +384,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      */
     public function getOrderItemMatrix()
     {
-        return $this->getBusinessFactory()->createUtilOrderItemMatrix()->getMatrix();
+        return $this->getFactory()->createUtilOrderItemMatrix()->getMatrix();
     }
 
 }

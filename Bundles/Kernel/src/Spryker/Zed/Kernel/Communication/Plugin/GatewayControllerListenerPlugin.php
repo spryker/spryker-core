@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Spryker\Zed\Messenger\MessengerConfig;
 
 /**
- * @method KernelCommunicationFactory getCommunicationFactory()
+ * @method KernelCommunicationFactory getFactory()
  */
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
@@ -129,7 +129,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      */
     protected function setMessengerMessages(Response $response)
     {
-        $MessengerFacade = $this->getCommunicationFactory()->createMessengerFacade();
+        $MessengerFacade = $this->getFactory()->createMessengerFacade();
 
         $MessengerTransfer = $MessengerFacade->getStoredMessages();
         if ($MessengerTransfer === null) {

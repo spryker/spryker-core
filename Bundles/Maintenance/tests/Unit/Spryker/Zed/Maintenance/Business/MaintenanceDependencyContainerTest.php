@@ -22,7 +22,7 @@ class MaintenanceBusinessFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @return MaintenanceBusinessFactory
      */
-    private function getBusinessFactory()
+    private function getFactory()
     {
         return new MaintenanceBusinessFactory();
     }
@@ -34,7 +34,7 @@ class MaintenanceBusinessFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface',
-            $this->getBusinessFactory()->createPackageCollector()
+            $this->getFactory()->createPackageCollector()
         );
     }
 
@@ -45,7 +45,7 @@ class MaintenanceBusinessFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter',
-            $this->getBusinessFactory()->createMarkDownWriter(new InstalledPackagesTransfer())
+            $this->getFactory()->createMarkDownWriter(new InstalledPackagesTransfer())
         );
     }
 

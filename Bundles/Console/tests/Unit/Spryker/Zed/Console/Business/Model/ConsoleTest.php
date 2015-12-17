@@ -23,7 +23,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $console->setCommunicationFactory($this->getCommunicationFactoryMock());
 
         $this->assertInstanceOf('Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
-            $console->getCommunicationFactory()
+            $console->getFactory()
         );
     }
 

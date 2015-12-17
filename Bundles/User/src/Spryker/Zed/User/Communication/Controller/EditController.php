@@ -20,7 +20,7 @@ use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 
 /**
  * @method UserFacade getFacade()
- * @method UserCommunicationFactory getCommunicationFactory()
+ * @method UserCommunicationFactory getFactory()
  * @method UserQueryContainer getQueryContainer()
  */
 class EditController extends AbstractController
@@ -33,7 +33,7 @@ class EditController extends AbstractController
      */
     public function createAction()
     {
-        $userForm = $this->getCommunicationFactory()->createUserForm();
+        $userForm = $this->getFactory()->createUserForm();
         $userForm->handleRequest();
 
         if ($userForm->isValid()) {
@@ -77,7 +77,7 @@ class EditController extends AbstractController
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
-        $userForm = $this->getCommunicationFactory()->createUpdateUserForm($idUser);
+        $userForm = $this->getFactory()->createUpdateUserForm($idUser);
         $userForm->handleRequest();
 
         if ($userForm->isValid()) {
@@ -185,7 +185,7 @@ class EditController extends AbstractController
     public function passwordResetAction()
     {
         $currentUserTransfer = $this->getFacade()->getCurrentUser();
-        $resetPasswordForm = $this->getCommunicationFactory()->createResetPasswordForm();
+        $resetPasswordForm = $this->getFactory()->createResetPasswordForm();
         $resetPasswordForm->handleRequest();
 
         if ($resetPasswordForm->isValid()) {
@@ -217,7 +217,7 @@ class EditController extends AbstractController
             return false;
         }
 
-        $aclFacade = $this->getCommunicationFactory()->createAclFacade();
+        $aclFacade = $this->getFactory()->createAclFacade();
         foreach ($formData[UserForm::GROUP] as $idGroup) {
             $aclFacade->addUserToGroup($userTransfer->getIdUser(), $idGroup);
         }
@@ -232,7 +232,7 @@ class EditController extends AbstractController
      */
     protected function deleteAclGroups($idUser)
     {
-        $aclFacade = $this->getCommunicationFactory()->createAclFacade();
+        $aclFacade = $this->getFactory()->createAclFacade();
         $userAclGroups = $aclFacade->getUserGroups($idUser);
         foreach ($userAclGroups->getGroups() as $aclGroupTransfer) {
             $aclFacade->removeUserFromGroup($idUser, $aclGroupTransfer->getIdAclGroup());

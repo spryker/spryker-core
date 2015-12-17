@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method SetupCommunicationFactory getCommunicationFactory()
+ * @method SetupCommunicationFactory getFactory()
  */
 class InstallConsole extends Console
 {
@@ -39,7 +39,7 @@ class InstallConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $setupInstallCommandNames = $this->getCommunicationFactory()->createSetupInstallCommandNames();
+        $setupInstallCommandNames = $this->getFactory()->createSetupInstallCommandNames();
 
         foreach ($setupInstallCommandNames as $key => $value) {
             if (is_array($value)) {

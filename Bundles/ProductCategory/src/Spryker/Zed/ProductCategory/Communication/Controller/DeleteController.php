@@ -16,7 +16,7 @@ use Symfony\Component\Form\Form;
 
 /**
  * @method ProductCategoryFacade getFacade()
- * @method ProductCategoryCommunicationFactory getCommunicationFactory()
+ * @method ProductCategoryCommunicationFactory getFactory()
  * @method ProductCategoryQueryContainer getQueryContainer()
  */
 class DeleteController extends EditController
@@ -37,13 +37,13 @@ class DeleteController extends EditController
             return new RedirectResponse('/category');
         }
 
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCategoryFormDelete($idCategory)
             ->handleRequest();
 
         if ($form->isValid()) {
             $data = $form->getData();
-            $localeTransfer = $this->getCommunicationFactory()
+            $localeTransfer = $this->getFactory()
                 ->createCurrentLocale();
             $this->getFacade()->deleteCategory(
                 $data['id_category_node'],
@@ -65,7 +65,7 @@ class DeleteController extends EditController
      */
     protected function categoryExists($idCategory)
     {
-        $categoryCount = $this->getCommunicationFactory()
+        $categoryCount = $this->getFactory()
             ->createCategoryQueryContainer()
             ->queryCategoryById($idCategory)
             ->count();
@@ -85,18 +85,18 @@ class DeleteController extends EditController
      */
     protected function getViewData($idCategory, Form $form)
     {
-        $locale = $this->getCommunicationFactory()
+        $locale = $this->getFactory()
             ->createCurrentLocale();
 
-        $categoryEntity = $this->getCommunicationFactory()
+        $categoryEntity = $this->getFactory()
             ->createCategoryQueryContainer()
             ->queryCategoryById($idCategory)
             ->findOne();
 
-        $productCategoryTable = $this->getCommunicationFactory()
+        $productCategoryTable = $this->getFactory()
             ->createProductCategoryTable($locale, $idCategory);
 
-        $productTable = $this->getCommunicationFactory()
+        $productTable = $this->getFactory()
             ->createProductTable($locale, $idCategory);
 
         return [

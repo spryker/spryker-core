@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Cache\CacheConfig;
 
 /**
- * @method CacheBusinessFactory getBusinessFactory()
+ * @method CacheBusinessFactory getFactory()
  * @method CacheConfig getConfig()
  */
 class CacheFacade extends AbstractFacade
@@ -21,7 +21,7 @@ class CacheFacade extends AbstractFacade
      */
     public function deleteAllFiles()
     {
-        return $this->getBusinessFactory()->createCacheDelete()->deleteAllFiles();
+        return $this->getFactory()->createCacheDelete()->deleteAllFiles();
     }
 
 }

@@ -22,7 +22,7 @@ class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @return TransferBusinessFactory
      */
-    private function getBusinessFactory()
+    private function getFactory()
     {
         return new TransferBusinessFactory();
     }
@@ -40,7 +40,7 @@ class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateTransferGeneratorShouldReturnFullyConfiguredInstance()
     {
-        $transferGenerator = $this->getBusinessFactory()->createTransferGenerator(
+        $transferGenerator = $this->getFactory()->createTransferGenerator(
             $this->getMessenger()
         );
 
@@ -52,7 +52,7 @@ class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateTransferCleanerShouldReturnFullyConfiguredInstance()
     {
-        $transferCleaner = $this->getBusinessFactory()->createTransferCleaner();
+        $transferCleaner = $this->getFactory()->createTransferCleaner();
 
         $this->assertInstanceOf('Spryker\Zed\Transfer\Business\Model\TransferCleaner', $transferCleaner);
     }

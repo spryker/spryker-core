@@ -9,14 +9,14 @@ namespace Spryker\Zed\Storage\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method StorageBusinessFactory getBusinessFactory()
+ * @method StorageBusinessFactory getFactory()
  */
 class StorageFacade extends AbstractFacade
 {
 
     public function get($key)
     {
-        return $this->getBusinessFactory()->createStorage()->get($key);
+        return $this->getFactory()->createStorage()->get($key);
     }
 
     /**
@@ -24,7 +24,7 @@ class StorageFacade extends AbstractFacade
      */
     public function getTotalCount()
     {
-        return $this->getBusinessFactory()->createStorage()->getTotalCount();
+        return $this->getFactory()->createStorage()->getTotalCount();
     }
 
     /**
@@ -32,7 +32,7 @@ class StorageFacade extends AbstractFacade
      */
     public function getTimestamps()
     {
-        return $this->getBusinessFactory()->createStorage()->getTimestamps();
+        return $this->getFactory()->createStorage()->getTimestamps();
     }
 
     /**
@@ -40,7 +40,7 @@ class StorageFacade extends AbstractFacade
      */
     public function deleteAll()
     {
-        return $this->getBusinessFactory()->createStorage()->deleteAll();
+        return $this->getFactory()->createStorage()->deleteAll();
     }
 
     /**
@@ -50,7 +50,7 @@ class StorageFacade extends AbstractFacade
      */
     public function deleteMulti(array $keys)
     {
-        $this->getBusinessFactory()->createStorage()->deleteMulti($keys);
+        $this->getFactory()->createStorage()->deleteMulti($keys);
     }
 
 }

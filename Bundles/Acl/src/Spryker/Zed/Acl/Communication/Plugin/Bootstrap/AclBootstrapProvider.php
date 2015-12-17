@@ -14,7 +14,7 @@ use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AclCommunicationFactory getCommunicationFactory()
+ * @method AclCommunicationFactory getFactory()
  * @method AclFacade getFacade()
  */
 class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -37,8 +37,8 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
     public function boot(Application $app)
     {
         $facadeAcl = $this->getFacade();
-        $facadeUser = $this->getCommunicationFactory()->createUserFacade();
-        $config = $this->getCommunicationFactory()->getConfig();
+        $facadeUser = $this->getFactory()->createUserFacade();
+        $config = $this->getFactory()->getConfig();
 
         $app->before(function (Request $request) use ($app, $facadeAcl, $facadeUser, $config) {
             $bundle = $request->attributes->get('module');

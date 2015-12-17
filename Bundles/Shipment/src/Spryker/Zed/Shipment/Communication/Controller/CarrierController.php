@@ -13,7 +13,7 @@ use Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method ShipmentCommunicationFactory getCommunicationFactory()
+ * @method ShipmentCommunicationFactory getFactory()
  * @method ShipmentFacade getFacade()
  */
 class CarrierController extends AbstractController
@@ -24,7 +24,7 @@ class CarrierController extends AbstractController
      */
     public function addAction()
     {
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCarrierForm();
         $form->handleRequest();
 

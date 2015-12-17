@@ -14,7 +14,7 @@ class KernelQueryContainer extends AbstractQueryContainer
 
     public function getDepCon()
     {
-        return $this->getPersistenceFactory();
+        return $this->getFactory();
     }
 
 }

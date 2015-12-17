@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Spryker\Zed\Auth\Business\AuthFacade;
 
 /**
- * @method AuthCommunicationFactory getCommunicationFactory()
+ * @method AuthCommunicationFactory getFactory()
  * @method AuthFacade getFacade()
  */
 class LogoutController extends AbstractController

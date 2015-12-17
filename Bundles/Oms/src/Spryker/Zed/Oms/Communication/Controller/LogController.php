@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method OmsFacade getFacade()
  * @method OmsQueryContainerInterface getQueryContainer()
- * @method OmsCommunicationFactory getCommunicationFactory()
+ * @method OmsCommunicationFactory getFactory()
  */
 class LogController extends AbstractController
 {
@@ -28,7 +28,7 @@ class LogController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $transitionLogTable = $this->getCommunicationFactory()->createTransitionLogTable();
+        $transitionLogTable = $this->getFactory()->createTransitionLogTable();
 
         return $this->viewResponse(['transitionLogTable' => $transitionLogTable->render()]);
     }
@@ -40,7 +40,7 @@ class LogController extends AbstractController
          */
     public function tableAjaxAction(Request $request)
     {
-        $transitionLogTable = $this->getCommunicationFactory()->createTransitionLogTable();
+        $transitionLogTable = $this->getFactory()->createTransitionLogTable();
 
         return $this->jsonResponse($transitionLogTable->fetchData());
     }

@@ -24,7 +24,7 @@ class SearchFacade extends AbstractFacade
      */
     public function install(MessengerInterface $messenger)
     {
-        $this->getBusinessFactory()->createSearchInstaller($messenger)->install();
+        $this->getFactory()->createSearchInstaller($messenger)->install();
     }
 
     /**
@@ -32,7 +32,7 @@ class SearchFacade extends AbstractFacade
      */
     public function getTotalCount()
     {
-        return $this->getBusinessFactory()->createSearch()->getTotalCount();
+        return $this->getFactory()->createSearch()->getTotalCount();
     }
 
     /**
@@ -40,7 +40,7 @@ class SearchFacade extends AbstractFacade
      */
     public function getMetaData()
     {
-        return $this->getBusinessFactory()->createSearch()->getMetaData();
+        return $this->getFactory()->createSearch()->getMetaData();
     }
 
     /**
@@ -48,7 +48,7 @@ class SearchFacade extends AbstractFacade
      */
     public function delete()
     {
-        return $this->getBusinessFactory()->createSearch()->delete();
+        return $this->getFactory()->createSearch()->delete();
     }
 
     /**
@@ -59,7 +59,7 @@ class SearchFacade extends AbstractFacade
      */
     public function getDocument($key, $type)
     {
-        return $this->getBusinessFactory()->createSearch()->getDocument($key, $type);
+        return $this->getFactory()->createSearch()->getDocument($key, $type);
     }
 
 }

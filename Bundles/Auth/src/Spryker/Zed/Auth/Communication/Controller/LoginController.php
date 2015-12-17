@@ -13,7 +13,7 @@ use Spryker\Zed\Auth\Communication\Form\LoginForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AuthCommunicationFactory getCommunicationFactory()
+ * @method AuthCommunicationFactory getFactory()
  * @method AuthFacade getFacade()
  */
 class LoginController extends AbstractController
@@ -26,7 +26,7 @@ class LoginController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getCommunicationFactory()->createLoginForm();
+        $form = $this->getFactory()->createLoginForm();
         $form->handleRequest();
 
         if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {

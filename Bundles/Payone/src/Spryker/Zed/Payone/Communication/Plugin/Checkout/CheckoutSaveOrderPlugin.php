@@ -14,7 +14,7 @@ use Spryker\Zed\Payone\Business\PayoneFacade;
 use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 
 /**
- * @method PayoneCommunicationFactory getCommunicationFactory()
+ * @method PayoneCommunicationFactory getFactory()
  * @method PayoneFacade getFacade()
  */
 class CheckoutSaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface

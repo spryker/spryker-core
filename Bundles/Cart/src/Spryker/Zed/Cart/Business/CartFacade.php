@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Cart\Business\Model\CalculableContainer;
 
 /**
- * @method CartBusinessFactory getBusinessFactory()
+ * @method CartBusinessFactory getFactory()
  */
 class CartFacade extends AbstractFacade
 {
@@ -24,7 +24,7 @@ class CartFacade extends AbstractFacade
      */
     public function addToCart(ChangeTransfer $cartChange)
     {
-        $addOperator = $this->getBusinessFactory()->createAddOperator();
+        $addOperator = $this->getFactory()->createAddOperator();
 
         return $addOperator->executeOperation($cartChange);
     }
@@ -36,7 +36,7 @@ class CartFacade extends AbstractFacade
      */
     public function increaseQuantity(ChangeTransfer $cartChange)
     {
-        $increaseOperator = $this->getBusinessFactory()->createIncreaseOperator();
+        $increaseOperator = $this->getFactory()->createIncreaseOperator();
 
         return $increaseOperator->executeOperation($cartChange);
     }
@@ -48,7 +48,7 @@ class CartFacade extends AbstractFacade
      */
     public function removeFromCart(ChangeTransfer $cartChange)
     {
-        $removeOperator = $this->getBusinessFactory()->createRemoveOperator();
+        $removeOperator = $this->getFactory()->createRemoveOperator();
 
         return $removeOperator->executeOperation($cartChange);
     }
@@ -60,7 +60,7 @@ class CartFacade extends AbstractFacade
      */
     public function decreaseQuantity(ChangeTransfer $cartChange)
     {
-        $decreaseOperator = $this->getBusinessFactory()->createDecreaseOperator();
+        $decreaseOperator = $this->getFactory()->createDecreaseOperator();
 
         return $decreaseOperator->executeOperation($cartChange);
     }
@@ -74,7 +74,7 @@ class CartFacade extends AbstractFacade
      */
     public function recalculate(CartTransfer $cart)
     {
-        $calculator = $this->getBusinessFactory()->createCartCalculator();
+        $calculator = $this->getFactory()->createCartCalculator();
         $calculableContainer = $calculator->recalculate(new CalculableContainer($cart));
 
         return $calculableContainer->getCalculableObject();
@@ -87,7 +87,7 @@ class CartFacade extends AbstractFacade
      */
     public function addCouponCode(ChangeTransfer $cartChange)
     {
-        $addCouponCodeOperator = $this->getBusinessFactory()->createCouponCodeAddOperator();
+        $addCouponCodeOperator = $this->getFactory()->createCouponCodeAddOperator();
 
         return $addCouponCodeOperator->executeOperation($cartChange);
     }
@@ -99,7 +99,7 @@ class CartFacade extends AbstractFacade
      */
     public function removeCouponCode(ChangeTransfer $cartChange)
     {
-        $removeCouponCodeOperator = $this->getBusinessFactory()->createCouponCodeRemoveOperator();
+        $removeCouponCodeOperator = $this->getFactory()->createCouponCodeRemoveOperator();
 
         return $removeCouponCodeOperator->executeOperation($cartChange);
     }
@@ -111,7 +111,7 @@ class CartFacade extends AbstractFacade
      */
     public function clearCouponCodes(ChangeTransfer $cartChange)
     {
-        $clearCouponCodesOperator = $this->getBusinessFactory()->createCouponCodeClearOperator();
+        $clearCouponCodesOperator = $this->getFactory()->createCouponCodeClearOperator();
 
         return $clearCouponCodesOperator->executeOperation($cartChange);
     }

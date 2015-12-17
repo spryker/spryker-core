@@ -28,7 +28,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 /**
- * @method DiscountBusinessFactory getBusinessFactory()
+ * @method DiscountBusinessFactory getFactory()
  */
 class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 {
@@ -40,7 +40,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function calculateDiscounts(CalculableInterface $container)
     {
-        return $this->getBusinessFactory()->createDiscount($container)->calculate();
+        return $this->getFactory()->createDiscount($container)->calculate();
     }
 
     /**
@@ -50,7 +50,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function isVoucherUsable($code)
     {
-        return $this->getBusinessFactory()->getDecisionRuleVoucher()->isUsable($code);
+        return $this->getFactory()->getDecisionRuleVoucher()->isUsable($code);
     }
 
     /**
@@ -61,7 +61,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function isMinimumCartSubtotalReached(CalculableInterface $container, DecisionRule $decisionRule)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->getDecisionRuleMinimumCartSubtotal()
             ->isMinimumCartSubtotalReached($container, $decisionRule);
     }
@@ -74,7 +74,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function calculatePercentage(array $discountableObjects, $percentage)
     {
-        return $this->getBusinessFactory()->createCalculatorPercentage()->calculate($discountableObjects, $percentage);
+        return $this->getFactory()->createCalculatorPercentage()->calculate($discountableObjects, $percentage);
     }
 
     /**
@@ -85,7 +85,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function calculateFixed(array $discountableObjects, $amount)
     {
-        return $this->getBusinessFactory()->createCalculatorFixed()->calculate($discountableObjects, $amount);
+        return $this->getFactory()->createCalculatorFixed()->calculate($discountableObjects, $amount);
     }
 
     /**
@@ -96,7 +96,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function distributeAmount(array $discountableObjects, DiscountTransfer $discountTransfer)
     {
-        $this->getBusinessFactory()->createDistributor()->distribute($discountableObjects, $discountTransfer);
+        $this->getFactory()->createDistributor()->distribute($discountableObjects, $discountTransfer);
     }
 
     /**
@@ -106,7 +106,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function createVoucherCodes(VoucherTransfer $voucherTransfer)
     {
-        return $this->getBusinessFactory()->createVoucherEngine()->createVoucherCodes($voucherTransfer);
+        return $this->getFactory()->createVoucherEngine()->createVoucherCodes($voucherTransfer);
     }
 
     /**
@@ -116,7 +116,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function createVoucherCode(VoucherTransfer $voucherTransfer)
     {
-        return $this->getBusinessFactory()->createVoucherEngine()->createVoucherCode($voucherTransfer);
+        return $this->getFactory()->createVoucherEngine()->createVoucherCode($voucherTransfer);
     }
 
     /**
@@ -126,7 +126,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
     {
-        return $this->getBusinessFactory()->createVoucherCodesWriter()->saveVoucherCode($voucherCodesTransfer);
+        return $this->getFactory()->createVoucherCodesWriter()->saveVoucherCode($voucherCodesTransfer);
     }
 
     /**
@@ -134,7 +134,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function getDecisionRulePluginNames()
     {
-        return $this->getBusinessFactory()->getConfig()->getDecisionRulePluginNames();
+        return $this->getFactory()->getConfig()->getDecisionRulePluginNames();
     }
 
     /**
@@ -144,7 +144,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function createDiscount(DiscountTransfer $discountTransfer)
     {
-        return $this->getBusinessFactory()->createDiscountWriter()->create($discountTransfer);
+        return $this->getFactory()->createDiscountWriter()->create($discountTransfer);
     }
 
     /**
@@ -154,7 +154,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function updateDiscount(DiscountTransfer $discountTransfer)
     {
-        return $this->getBusinessFactory()->createDiscountWriter()->update($discountTransfer);
+        return $this->getFactory()->createDiscountWriter()->update($discountTransfer);
     }
 
     /**
@@ -162,7 +162,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function getVoucherPoolCategories()
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createVoucherPoolCategory()
             ->getAvailableVoucherPoolCategories();
     }
@@ -174,7 +174,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
     {
-        return $this->getBusinessFactory()->createDiscountDecisionRuleWriter()->saveDiscountDecisionRule($decisionRuleTransfer);
+        return $this->getFactory()->createDiscountDecisionRuleWriter()->saveDiscountDecisionRule($decisionRuleTransfer);
     }
 
     /**
@@ -184,7 +184,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function saveCartRules(CartRuleTransfer $cartRuleFormTransfer)
     {
-        return $this->getBusinessFactory()->createCartRule()->saveCartRule($cartRuleFormTransfer);
+        return $this->getFactory()->createCartRule()->saveCartRule($cartRuleFormTransfer);
     }
 
     /**
@@ -194,7 +194,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function createDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
-        return $this->getBusinessFactory()->createDiscountDecisionRuleWriter()->create($discountDecisionRuleTransfer);
+        return $this->getFactory()->createDiscountDecisionRuleWriter()->create($discountDecisionRuleTransfer);
     }
 
     /**
@@ -204,7 +204,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function getCurrentCartRulesDetailsByIdDiscount($idDiscount)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createCartRule()
             ->getCurrentCartRulesDetailsByIdDiscount($idDiscount);
     }
@@ -216,7 +216,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function updateDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
-        return $this->getBusinessFactory()->createDiscountDecisionRuleWriter()->update($discountDecisionRuleTransfer);
+        return $this->getFactory()->createDiscountDecisionRuleWriter()->update($discountDecisionRuleTransfer);
     }
 
     /**
@@ -226,7 +226,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function createDiscountVoucher(VoucherTransfer $discountVoucherTransfer)
     {
-        return $this->getBusinessFactory()->createDiscountVoucherWriter()->create($discountVoucherTransfer);
+        return $this->getFactory()->createDiscountVoucherWriter()->create($discountVoucherTransfer);
     }
 
     /**
@@ -236,7 +236,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function updateDiscountVoucher(VoucherTransfer $discountVoucherTransfer)
     {
-        return $this->getBusinessFactory()->createDiscountVoucherWriter()->update($discountVoucherTransfer);
+        return $this->getFactory()->createDiscountVoucherWriter()->update($discountVoucherTransfer);
     }
 
     /**
@@ -246,7 +246,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function createDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer)
     {
-        return $this->getBusinessFactory()->createDiscountVoucherPoolWriter()->create($discountVoucherPoolTransfer);
+        return $this->getFactory()->createDiscountVoucherPoolWriter()->create($discountVoucherPoolTransfer);
     }
 
     /**
@@ -256,7 +256,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function updateDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer)
     {
-        return $this->getBusinessFactory()->createDiscountVoucherPoolWriter()->update($discountVoucherPoolTransfer);
+        return $this->getFactory()->createDiscountVoucherPoolWriter()->update($discountVoucherPoolTransfer);
     }
 
     /**
@@ -266,7 +266,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function createDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
-        return $this->getBusinessFactory()->createDiscountVoucherPoolCategoryWriter()
+        return $this->getFactory()->createDiscountVoucherPoolCategoryWriter()
             ->create($discountVoucherPoolCategoryTransfer);
     }
 
@@ -277,7 +277,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function updateDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
-        return $this->getBusinessFactory()->createDiscountVoucherPoolCategoryWriter()
+        return $this->getFactory()->createDiscountVoucherPoolCategoryWriter()
             ->update($discountVoucherPoolCategoryTransfer);
     }
 
@@ -288,7 +288,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function getOrCreateDiscountVoucherPoolCategoryByName($poolCategoryName)
     {
-        return $this->getBusinessFactory()->createDiscountVoucherPoolCategoryWriter()
+        return $this->getFactory()->createDiscountVoucherPoolCategoryWriter()
             ->getOrCreateByName($poolCategoryName);
     }
 
@@ -299,7 +299,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function getCalculatorPluginByName($pluginName)
     {
-        return $this->getBusinessFactory()->getConfig()->getCalculatorPluginByName($pluginName);
+        return $this->getFactory()->getConfig()->getCalculatorPluginByName($pluginName);
     }
 
     /**
@@ -312,7 +312,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         CalculableInterface $container,
         DiscountCollectorTransfer $discountCollectorTransfer
     ) {
-        return $this->getBusinessFactory()->createItemCollector()->collect($container, $discountCollectorTransfer);
+        return $this->getFactory()->createItemCollector()->collect($container, $discountCollectorTransfer);
     }
 
     /**
@@ -325,7 +325,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         CalculableInterface $container,
         DiscountCollectorTransfer $discountCollectorTransfer
     ) {
-        return $this->getBusinessFactory()->createItemExpenseCollector()
+        return $this->getFactory()->createItemExpenseCollector()
             ->collect($container, $discountCollectorTransfer);
     }
 
@@ -339,7 +339,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         CalculableInterface $container,
         DiscountCollectorTransfer $discountCollectorTransfer
     ) {
-        return $this->getBusinessFactory()->createOrderExpenseCollector()
+        return $this->getFactory()->createOrderExpenseCollector()
             ->collect($container, $discountCollectorTransfer);
     }
 
@@ -353,7 +353,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         CalculableInterface $container,
         DiscountCollectorTransfer $discountCollectorTransfer
     ) {
-        return $this->getBusinessFactory()->createItemProductOptionCollector()
+        return $this->getFactory()->createItemProductOptionCollector()
             ->collect($container, $discountCollectorTransfer);
     }
 
@@ -367,7 +367,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         CalculableInterface $container,
         DiscountCollectorTransfer $discountCollectorTransfer
     ) {
-        return $this->getBusinessFactory()->createAggregateCollector()
+        return $this->getFactory()->createAggregateCollector()
             ->collect($container, $discountCollectorTransfer);
     }
 
@@ -376,7 +376,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function getDiscountCollectors()
     {
-        return array_keys($this->getBusinessFactory()->createAvailableCollectorPlugins());
+        return array_keys($this->getFactory()->createAvailableCollectorPlugins());
     }
 
     /**
@@ -384,7 +384,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function getDiscountCalculators()
     {
-        return array_keys($this->getBusinessFactory()->createAvailableCalculatorPlugins());
+        return array_keys($this->getFactory()->createAvailableCalculatorPlugins());
     }
 
     /**
@@ -394,7 +394,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function releaseUsedVoucherCodes(array $codes)
     {
-        return $this->getBusinessFactory()->createVoucherCode()->releaseUsedCodes($codes);
+        return $this->getFactory()->createVoucherCode()->releaseUsedCodes($codes);
     }
 
     /**
@@ -404,7 +404,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      */
     public function useVoucherCodes(array $codes)
     {
-        return $this->getBusinessFactory()->createVoucherCode()->useCodes($codes);
+        return $this->getFactory()->createVoucherCode()->useCodes($codes);
     }
 
 }

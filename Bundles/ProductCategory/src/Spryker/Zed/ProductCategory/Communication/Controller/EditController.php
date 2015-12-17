@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method ProductCategoryFacade getFacade()
- * @method ProductCategoryCommunicationFactory getCommunicationFactory()
+ * @method ProductCategoryCommunicationFactory getFactory()
  * @method ProductCategoryQueryContainer getQueryContainer()
  */
 class EditController extends AddController
@@ -36,7 +36,7 @@ class EditController extends AddController
     {
         $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
 
-        $currentCategory = $this->getCommunicationFactory()
+        $currentCategory = $this->getFactory()
             ->createCategoryQueryContainer()
             ->queryCategoryById($idCategory)
             ->findOne();
@@ -47,16 +47,16 @@ class EditController extends AddController
             return new RedirectResponse('/category');
         }
 
-        $locale = $this->getCommunicationFactory()
+        $locale = $this->getFactory()
             ->createCurrentLocale();
 
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCategoryFormEdit($idCategory);
 
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $connection = $this->getCommunicationFactory()
+            $connection = $this->getFactory()
                 ->createPropelConnection();
 
             $connection->beginTransaction();
@@ -95,10 +95,10 @@ class EditController extends AddController
             return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
         }
 
-        $productCategories = $this->getCommunicationFactory()
+        $productCategories = $this->getFactory()
             ->createProductCategoryTable($locale, $idCategory);
 
-        $products = $this->getCommunicationFactory()
+        $products = $this->getFactory()
             ->createProductTable($locale, $idCategory);
 
         return $this->viewResponse([
@@ -124,7 +124,7 @@ class EditController extends AddController
         if ($existingCategoryNode) {
             $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
 
-            $this->getCommunicationFactory()
+            $this->getFactory()
                 ->createCategoryFacade()
                 ->updateCategoryNode($categoryNodeTransfer, $locale);
         } else {
@@ -133,7 +133,7 @@ class EditController extends AddController
 
             $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($newData);
 
-            $this->getCommunicationFactory()
+            $this->getFactory()
                 ->createCategoryFacade()
                 ->createCategoryNode($categoryNodeTransfer, $locale);
         }
@@ -151,13 +151,13 @@ class EditController extends AddController
         LocaleTransfer $locale,
         array $parentIdList
     ) {
-        $existingParents = $this->getCommunicationFactory()
+        $existingParents = $this->getFactory()
             ->createCategoryFacade()
             ->getNotMainNodesByIdCategory($categoryTransfer->getIdCategory());
 
         foreach ($existingParents as $parent) {
             if (!array_key_exists($parent->getFkParentCategoryNode(), $parentIdList)) {
-                $this->getCommunicationFactory()
+                $this->getFactory()
                     ->createCategoryFacade()
                     ->deleteNode($parent->getIdCategoryNode(), $locale);
             }
@@ -183,13 +183,13 @@ class EditController extends AddController
         }
 
         if (!empty($removeProductMappingCollection)) {
-            $this->getCommunicationFactory()
+            $this->getFactory()
                 ->createProductCategoryFacade()
                 ->removeProductCategoryMappings($categoryTransfer->getIdCategory(), $removeProductMappingCollection);
         }
 
         if (!empty($addProductsMappingCollection)) {
-            $this->getCommunicationFactory()
+            $this->getFactory()
                 ->createProductCategoryFacade()
                 ->createProductCategoryMappings($categoryTransfer->getIdCategory(), $addProductsMappingCollection);
         }
@@ -203,7 +203,7 @@ class EditController extends AddController
      */
     protected function updateProductOrder(CategoryTransfer $categoryTransfer, array $productOrder)
     {
-        $this->getCommunicationFactory()
+        $this->getFactory()
             ->createProductCategoryFacade()
             ->updateProductMappingsOrder($categoryTransfer->getIdCategory(), $productOrder);
     }
@@ -216,7 +216,7 @@ class EditController extends AddController
      */
     protected function updateProductCategoryPreconfig(CategoryTransfer $categoryTransfer, array $productPreconfig)
     {
-        $this->getCommunicationFactory()
+        $this->getFactory()
             ->createProductCategoryFacade()
             ->updateProductCategoryPreConfig($categoryTransfer->getIdCategory(), $productPreconfig);
     }
@@ -231,7 +231,7 @@ class EditController extends AddController
     {
         $currentCategoryTransfer = $this->createCategoryTransferFromData($data);
 
-        $this->getCommunicationFactory()
+        $this->getFactory()
             ->createCategoryFacade()
             ->updateCategory($currentCategoryTransfer, $locale);
 
@@ -251,7 +251,7 @@ class EditController extends AddController
         $currentCategoryNodeTransfer->setIsMain(true);
 
         /* @var SpyCategoryNode $currentCategoryNode */
-        $existingCategoryNode = $this->getCommunicationFactory()
+        $existingCategoryNode = $this->getFactory()
             ->createCategoryQueryContainer()
             ->queryNodeById($currentCategoryNodeTransfer->getIdCategoryNode())
             ->findOne();
@@ -274,7 +274,7 @@ class EditController extends AddController
 
         $nodeTransfer->setIsMain(false);
 
-        $existingCategoryNode = $this->getCommunicationFactory()
+        $existingCategoryNode = $this->getFactory()
             ->createCategoryQueryContainer()
             ->queryNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $nodeTransfer->getFkParentCategoryNode())
             ->findOne();
@@ -314,12 +314,12 @@ class EditController extends AddController
     protected function getPathDataForView(SpyCategory $category, SpyCategoryNode $node, LocaleTransfer $locale)
     {
         $path = [];
-        $pathTokens = $this->getCommunicationFactory()
+        $pathTokens = $this->getFactory()
             ->createCategoryQueryContainer()
             ->queryPath($node->getIdCategoryNode(), $locale->getIdLocale(), true, false)
             ->find();
 
-        $path['url'] = $this->getCommunicationFactory()
+        $path['url'] = $this->getFactory()
             ->createCategoryFacade()
             ->generatePath($pathTokens);
 
@@ -365,7 +365,7 @@ class EditController extends AddController
      */
     protected function getProductDataForView(SpyCategory $category, SpyCategoryNode $node, LocaleTransfer $locale)
     {
-        $productCategoryList = $this->getCommunicationFactory()
+        $productCategoryList = $this->getFactory()
             ->createProductCategoryQueryContainer()
             ->queryProductsByCategoryId($node->getFkCategory(), $locale)
             ->find();
@@ -416,7 +416,7 @@ class EditController extends AddController
     protected function getBlockDataForView(SpyCategory $category, SpyCategoryNode $node)
     {
         $blockList = [];
-        $blocks = $this->getCommunicationFactory()
+        $blocks = $this->getFactory()
             ->createCmsFacade()
             ->getCmsBlocksByIdCategoryNode($node->getIdCategoryNode());
 
@@ -441,7 +441,7 @@ class EditController extends AddController
      */
     protected function getCategoryChildren($idCategoryNode, LocaleTransfer $locale)
     {
-        return $this->getCommunicationFactory()
+        return $this->getFactory()
             ->createCategoryQueryContainer()
             ->queryChildren($idCategoryNode, $locale->getIdLocale(), false, false)
             ->find();

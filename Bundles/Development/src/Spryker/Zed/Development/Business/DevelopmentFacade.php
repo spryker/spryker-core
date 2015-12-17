@@ -9,7 +9,7 @@ namespace Spryker\Zed\Development\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method DevelopmentBusinessFactory getBusinessFactory()
+ * @method DevelopmentBusinessFactory getFactory()
  */
 class DevelopmentFacade extends AbstractFacade
 {
@@ -22,7 +22,7 @@ class DevelopmentFacade extends AbstractFacade
      */
     public function fixCodeStyle($bundle = null, array $options = [])
     {
-        $this->getBusinessFactory()->createCodeStyleFixer()->fixCodeStyle($bundle, $options);
+        $this->getFactory()->createCodeStyleFixer()->fixCodeStyle($bundle, $options);
     }
 
     /**
@@ -33,7 +33,7 @@ class DevelopmentFacade extends AbstractFacade
      */
     public function checkCodeStyle($bundle = null, array $options = [])
     {
-        $this->getBusinessFactory()->createCodeStyleSniffer()->checkCodeStyle($bundle, $options);
+        $this->getFactory()->createCodeStyleSniffer()->checkCodeStyle($bundle, $options);
     }
 
     /**
@@ -44,7 +44,7 @@ class DevelopmentFacade extends AbstractFacade
      */
     public function runTest($bundle, array $options = [])
     {
-        $this->getBusinessFactory()->createCodeTester()->runTest($bundle, $options);
+        $this->getFactory()->createCodeTester()->runTest($bundle, $options);
     }
 
 }

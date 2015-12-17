@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsCommunicationFactory getCommunicationFactory()
+ * @method CmsCommunicationFactory getFactory()
  * @method CmsFacade getFacade()
  * @method CmsQueryContainer getQueryContainer()
  */
@@ -37,7 +37,7 @@ class BlockController extends AbstractController
      */
     public function indexAction()
     {
-        $blockTable = $this->getCommunicationFactory()
+        $blockTable = $this->getFactory()
             ->createCmsBlockTable($this->getCurrentIdLocale());
 
         return [
@@ -50,7 +50,7 @@ class BlockController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getCommunicationFactory()
+        $table = $this->getFactory()
             ->createCmsBlockTable($this->getCurrentIdLocale());
 
         return $this->jsonResponse($table->fetchData());
@@ -61,7 +61,7 @@ class BlockController extends AbstractController
      */
     public function addAction()
     {
-        $form = $this->getCommunicationFactory()->createCmsBlockForm('add');
+        $form = $this->getFactory()->createCmsBlockForm('add');
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $form->handleRequest();
@@ -92,7 +92,7 @@ class BlockController extends AbstractController
     {
         $idBlock = $request->get(CmsBlockTable::REQUEST_ID_BLOCK);
 
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCmsBlockForm('update', $idBlock);
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
@@ -167,7 +167,7 @@ class BlockController extends AbstractController
      */
     private function getLocaleFacade()
     {
-        return $this->getCommunicationFactory()->getLocaleFacade();
+        return $this->getFactory()->getLocaleFacade();
     }
 
     /**

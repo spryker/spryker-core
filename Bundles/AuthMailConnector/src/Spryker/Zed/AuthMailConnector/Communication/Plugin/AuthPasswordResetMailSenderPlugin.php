@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\AuthMailConnector\Communication\AuthMailConnectorCommunicationFactory;
 
 /**
- * @method AuthMailConnectorCommunicationFactory getCommunicationFactory()
+ * @method AuthMailConnectorCommunicationFactory getFactory()
  */
 class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPasswordResetSenderInterface
 {
@@ -42,7 +42,7 @@ class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPa
             'reset_password_token' => $token,
         ]);
 
-        $this->getCommunicationFactory()
+        $this->getFactory()
             ->createMailFacade()
             ->sendMail($mailTransfer);
     }

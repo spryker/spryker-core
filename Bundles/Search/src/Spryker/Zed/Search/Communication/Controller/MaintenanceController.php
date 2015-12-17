@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method SearchFacade getFacade()
- * @method SearchCommunicationFactory getCommunicationFactory()
+ * @method SearchCommunicationFactory getFactory()
  */
 class MaintenanceController extends AbstractController
 {
@@ -39,7 +39,7 @@ class MaintenanceController extends AbstractController
      */
     public function dropTimestampsAction()
     {
-        $this->getCommunicationFactory()->createCollectorFacade()->deleteSearchTimestamps();
+        $this->getFactory()->createCollectorFacade()->deleteSearchTimestamps();
 
         return $this->redirectResponse(self::URL_SEARCH_MAINTENANCE);
     }
@@ -49,7 +49,7 @@ class MaintenanceController extends AbstractController
      */
     public function listAction()
     {
-        $table = $this->getCommunicationFactory()->createSearchTable();
+        $table = $this->getFactory()->createSearchTable();
 
         return $this->viewResponse(['searchTable' => $table->render()]);
     }
@@ -59,7 +59,7 @@ class MaintenanceController extends AbstractController
      */
     public function listAjaxAction()
     {
-        $table = $this->getCommunicationFactory()->createSearchTable();
+        $table = $this->getFactory()->createSearchTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -87,7 +87,7 @@ class MaintenanceController extends AbstractController
     {
         $key = $request->get('key');
 
-        $type = $this->getCommunicationFactory()->getConfig()->getElasticaDocumentType();
+        $type = $this->getFactory()->getConfig()->getElasticaDocumentType();
         $document = $this->getFacade()->getDocument($key, $type);
 
         return $this->viewResponse([

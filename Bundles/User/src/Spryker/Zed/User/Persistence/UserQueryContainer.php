@@ -11,7 +11,7 @@ use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 
 /**
- * @method UserPersistenceFactory getPersistenceFactory()
+ * @method UserPersistenceFactory getFactory()
  */
 class UserQueryContainer extends AbstractQueryContainer
 {
@@ -23,7 +23,7 @@ class UserQueryContainer extends AbstractQueryContainer
      */
     public function queryUserByUsername($username)
     {
-        $query = $this->getPersistenceFactory()->createUserQuery();
+        $query = $this->getFactory()->createUserQuery();
         $query->filterByUsername($username);
 
         return $query;
@@ -36,7 +36,7 @@ class UserQueryContainer extends AbstractQueryContainer
      */
     public function queryUserById($id)
     {
-        $query = $this->getPersistenceFactory()->createUserQuery();
+        $query = $this->getFactory()->createUserQuery();
         $query->filterByIdUser($id);
 
         return $query;
@@ -47,7 +47,7 @@ class UserQueryContainer extends AbstractQueryContainer
      */
     public function queryUsers()
     {
-        $query = $this->getPersistenceFactory()->createUserQuery();
+        $query = $this->getFactory()->createUserQuery();
         $query->filterByStatus([SpyUserTableMap::COL_STATUS_ACTIVE, SpyUserTableMap::COL_STATUS_BLOCKED]);
 
         return $query;
@@ -58,7 +58,7 @@ class UserQueryContainer extends AbstractQueryContainer
      */
     public function queryUser()
     {
-        return $this->getPersistenceFactory()->createUserQuery();
+        return $this->getFactory()->createUserQuery();
     }
 
 }

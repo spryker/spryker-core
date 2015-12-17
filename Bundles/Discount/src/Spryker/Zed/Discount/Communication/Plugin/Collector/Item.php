@@ -13,7 +13,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 
 /**
- * @method DiscountCommunicationFactory getCommunicationFactory()
+ * @method DiscountCommunicationFactory getFactory()
  */
 class Item extends AbstractDiscountPlugin implements DiscountCollectorPluginInterface
 {
@@ -30,7 +30,7 @@ class Item extends AbstractDiscountPlugin implements DiscountCollectorPluginInte
         CalculableInterface $container,
         DiscountCollectorTransfer $discountCollectorTransfer
     ) {
-        return $this->getCommunicationFactory()->getDiscountFacade()
+        return $this->getFactory()->getDiscountFacade()
             ->getDiscountableItems($container, $discountCollectorTransfer);
     }
 

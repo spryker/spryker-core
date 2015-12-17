@@ -11,7 +11,7 @@ use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Checkout\Business\Calculation\CalculableContainer;
 
 /**
- * @method CalculationCheckoutConnectorBusinessFactory getBusinessFactory()
+ * @method CalculationCheckoutConnectorBusinessFactory getFactory()
  */
 class CalculationCheckoutConnectorFacade extends AbstractFacade
 {
@@ -25,7 +25,7 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade
     public function checkCartAmountCorrect(CheckoutRequestTransfer $request, CheckoutResponseTransfer $response)
     {
         $cart = $request->getCart();
-        $calculationFacade = $this->getBusinessFactory()->getCalculationFacade();
+        $calculationFacade = $this->getFactory()->getCalculationFacade();
 
         $totalsBefore = $cart->getTotals()->getGrandTotalWithDiscounts();
         $calculationFacade->recalculate($cart);
@@ -48,7 +48,7 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade
      */
     public function recalculate(CalculableContainer $calculableContainer)
     {
-        return $this->getBusinessFactory()->getCalculationFacade()->recalculate($calculableContainer);
+        return $this->getFactory()->getCalculationFacade()->recalculate($calculableContainer);
     }
 
 }

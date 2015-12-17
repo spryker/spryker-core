@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method NewRelicCommunicationFactory getCommunicationFactory()
+ * @method NewRelicCommunicationFactory getFactory()
  */
 class RecordDeploymentConsole extends Console
 {
@@ -93,7 +93,7 @@ class RecordDeploymentConsole extends Console
         $arguments = $input->getArguments();
         unset($arguments['command']);
 
-        $newRelicApi = $this->getCommunicationFactory()->createNewRelicApi();
+        $newRelicApi = $this->getFactory()->createNewRelicApi();
         $newRelicApi->recordDeployment($arguments);
 
         return 0;

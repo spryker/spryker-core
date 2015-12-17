@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CustomerCheckoutConnectorBusinessFactory getBusinessFactory()
+ * @method CustomerCheckoutConnectorBusinessFactory getFactory()
  */
 class CustomerCheckoutConnectorFacade extends AbstractFacade
 {
@@ -25,7 +25,7 @@ class CustomerCheckoutConnectorFacade extends AbstractFacade
      */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {
-        $this->getBusinessFactory()->createCustomerOrderHydrator()->hydrateOrderTransfer($order, $request);
+        $this->getFactory()->createCustomerOrderHydrator()->hydrateOrderTransfer($order, $request);
     }
 
     /**
@@ -36,7 +36,7 @@ class CustomerCheckoutConnectorFacade extends AbstractFacade
      */
     public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getBusinessFactory()->createCustomerOrderSaver()->saveOrder($orderTransfer, $checkoutResponse);
+        $this->getFactory()->createCustomerOrderSaver()->saveOrder($orderTransfer, $checkoutResponse);
     }
 
     /**
@@ -47,7 +47,7 @@ class CustomerCheckoutConnectorFacade extends AbstractFacade
      */
     public function checkPreConditions(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getBusinessFactory()->createPreConditionChecker()->checkPreConditions($checkoutRequest, $checkoutResponse);
+        $this->getFactory()->createPreConditionChecker()->checkPreConditions($checkoutRequest, $checkoutResponse);
     }
 
 }

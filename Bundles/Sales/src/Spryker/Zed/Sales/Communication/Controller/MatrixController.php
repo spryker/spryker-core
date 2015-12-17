@@ -10,7 +10,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 
 /**
- * @method SalesCommunicationFactory getCommunicationFactory()
+ * @method SalesCommunicationFactory getFactory()
  */
 class MatrixController extends AbstractController
 {
@@ -20,7 +20,7 @@ class MatrixController extends AbstractController
      */
     public function indexAction()
     {
-        $matrix = $this->getCommunicationFactory()->getOmsFacade()->getOrderItemMatrix();
+        $matrix = $this->getFactory()->getOmsFacade()->getOrderItemMatrix();
 
         return [
             'matrix' => $matrix,

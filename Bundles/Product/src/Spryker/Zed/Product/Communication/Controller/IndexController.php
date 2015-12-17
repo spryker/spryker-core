@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method ProductFacade getFacade()
  * @method ProductQueryContainer getQueryContainer()
- * @method ProductCommunicationFactory getCommunicationFactory()
+ * @method ProductCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
@@ -30,7 +30,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getCommunicationFactory()->createProductTable();
+        $table = $this->getFactory()->createProductTable();
 
         return [
             'products' => $table->render(),
@@ -42,7 +42,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getCommunicationFactory()->createProductTable();
+        $table = $this->getFactory()->createProductTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -140,7 +140,7 @@ class IndexController extends AbstractController
     {
         $concreteProducts = [];
         foreach ($concreteProductsCollection as $concreteProduct) {
-            $productOptions = $this->getCommunicationFactory()
+            $productOptions = $this->getFactory()
                 ->createProductOptionsFacade()
                 ->getProductOptionsByIdProduct(
                     $concreteProduct->getIdProduct(),
@@ -167,7 +167,7 @@ class IndexController extends AbstractController
      */
     protected function getProductCategories(SpyAbstractProduct $abstractProduct, $idLocale)
     {
-        $productCategoryEntityList = $this->getCommunicationFactory()
+        $productCategoryEntityList = $this->getFactory()
             ->createProductCategoryQueryContainer()
             ->queryLocalizedProductCategoryMappingByIdProduct($abstractProduct->getIdAbstractProduct())
             ->find();
@@ -193,7 +193,7 @@ class IndexController extends AbstractController
      */
     protected function getCurrentLocale()
     {
-        return $this->getCommunicationFactory()
+        return $this->getFactory()
             ->createLocaleFacade()
             ->getCurrentLocale();
     }

@@ -16,7 +16,7 @@ use Spryker\Zed\Sales\Business\SalesFacade;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @method SalesCommunicationFactory getCommunicationFactory()
+ * @method SalesCommunicationFactory getFactory()
  * @method SalesFacade getFacade()
  * @method SalesQueryContainerInterface getQueryContainer()
  */
@@ -51,7 +51,7 @@ class DetailsController extends AbstractController
             $orderItem->resetPartialStateHistories(false);
         }
 
-        $orderItemSplitFormCollection = $this->getCommunicationFactory()->getOrderItemSplitFormCollection($orderItems);
+        $orderItemSplitFormCollection = $this->getFactory()->getOrderItemSplitFormCollection($orderItems);
 
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
         $allEvents = $this->groupEvents($events);
@@ -73,9 +73,9 @@ class DetailsController extends AbstractController
 
         $refunds = $this->getFacade()->getRefunds($idOrder);
 
-        $itemsInProgress = $this->getCommunicationFactory()->getOmsFacade()->getItemsWithFlag($orderEntity, 'in progress');
-        $itemsPaid = $this->getCommunicationFactory()->getOmsFacade()->getItemsWithFlag($orderEntity, 'paid');
-        $itemsCancelled = $this->getCommunicationFactory()->getOmsFacade()->getItemsWithFlag($orderEntity, 'cancelled');
+        $itemsInProgress = $this->getFactory()->getOmsFacade()->getItemsWithFlag($orderEntity, 'in progress');
+        $itemsPaid = $this->getFactory()->getOmsFacade()->getItemsWithFlag($orderEntity, 'paid');
+        $itemsCancelled = $this->getFactory()->getOmsFacade()->getItemsWithFlag($orderEntity, 'cancelled');
 
         return [
             'idOrder' => $idOrder,

@@ -12,7 +12,7 @@ use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 /**
- * @method PriceCartConnectorBusinessFactory getBusinessFactory()
+ * @method PriceCartConnectorBusinessFactory getFactory()
  * @method PriceCartConnectorConfig getConfig()
  */
 class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory

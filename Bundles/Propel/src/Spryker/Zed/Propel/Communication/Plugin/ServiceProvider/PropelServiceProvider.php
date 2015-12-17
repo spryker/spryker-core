@@ -17,7 +17,7 @@ use Spryker\Zed\Propel\Communication\PropelCommunicationFactory;
 use Spryker\Shared\Application\ApplicationConstants;
 
 /**
- * @method PropelCommunicationFactory getCommunicationFactory()
+ * @method PropelCommunicationFactory getFactory()
  */
 class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -108,7 +108,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     private function addLogger(StandardServiceContainer $serviceContainer)
     {
-        $loggerCollection = $this->getCommunicationFactory()->createLogger();
+        $loggerCollection = $this->getFactory()->createLogger();
 
         foreach ($loggerCollection as $logger) {
             $serviceContainer->setLogger($logger->getName(), $logger);

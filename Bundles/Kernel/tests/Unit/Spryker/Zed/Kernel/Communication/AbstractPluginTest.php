@@ -45,7 +45,7 @@ class AbstractPluginTest extends AbstractUnitTest
         $pluginMock = $this->getPluginMock(['getFactoryResolver']);
         $pluginMock->method('getFactoryResolver')->willReturn($communicationFactoryResolverMock);
 
-        $pluginMock->getCommunicationFactory();
+        $pluginMock->getFactory();
     }
 
     /**
@@ -60,7 +60,7 @@ class AbstractPluginTest extends AbstractUnitTest
         $communicationFactoryProperty->setAccessible(true);
         $communicationFactoryProperty->setValue($plugin, $this->getMock(AbstractCommunicationFactory::class, null, [], '', false));
 
-        $communicationFactory = $plugin->getCommunicationFactory();
+        $communicationFactory = $plugin->getFactory();
 
         $this->assertInstanceOf(AbstractCommunicationFactory::class, $communicationFactory);
     }

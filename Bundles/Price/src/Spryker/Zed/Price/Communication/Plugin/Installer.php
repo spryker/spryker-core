@@ -11,7 +11,7 @@ use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\Price\Communication\PriceCommunicationFactory;
 
 /**
- * @method PriceCommunicationFactory getCommunicationFactory()
+ * @method PriceCommunicationFactory getFactory()
  * @method PriceFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin

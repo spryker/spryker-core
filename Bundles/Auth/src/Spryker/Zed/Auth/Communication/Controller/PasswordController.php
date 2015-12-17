@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
 
 /**
- * @method AuthCommunicationFactory getCommunicationFactory()
+ * @method AuthCommunicationFactory getFactory()
  * @method AuthFacade getFacade()
  * @method AuthQueryContainer getQueryContainer()
  */
@@ -32,7 +32,7 @@ class PasswordController extends AbstractController
      */
     public function resetRequestAction(Request $request)
     {
-        $resetRequestForm = $this->getCommunicationFactory()->createResetPasswordRequestForm();
+        $resetRequestForm = $this->getFactory()->createResetPasswordRequestForm();
         $resetRequestForm->handleRequest();
 
         if ($request->isMethod(Request::METHOD_POST) && $resetRequestForm->isValid()) {
@@ -67,7 +67,7 @@ class PasswordController extends AbstractController
             return $this->redirectResponse(self::RESET_REDIRECT_URL);
         }
 
-        $resetPasswordForm = $this->getCommunicationFactory()->createResetPasswordForm();
+        $resetPasswordForm = $this->getFactory()->createResetPasswordForm();
         $resetPasswordForm->handleRequest();
 
         if ($request->isMethod(Request::METHOD_POST) && $resetPasswordForm->isValid()) {

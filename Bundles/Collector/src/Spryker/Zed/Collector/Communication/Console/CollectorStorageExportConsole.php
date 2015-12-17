@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method CollectorCommunicationFactory getCommunicationFactory()
+ * @method CollectorCommunicationFactory getFactory()
  * @method CollectorFacade getFacade()
  */
 class CollectorStorageExportConsole extends AbstractCollectorConsole
@@ -40,7 +40,7 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $locale = $this->getCommunicationFactory()->createLocaleFacade()->getCurrentLocale();
+        $locale = $this->getFactory()->createLocaleFacade()->getCurrentLocale();
         $exportResults = $this->getFacade()->exportKeyValueForLocale($locale, $output);
 
         $this->info($this->buildSummary($exportResults));

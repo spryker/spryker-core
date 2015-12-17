@@ -97,7 +97,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     /**
      * @return AbstractPersistenceFactory
      */
-    protected function getPersistenceFactory()
+    protected function getFactory()
     {
         if ($this->persistenceFactory === null) {
             $this->persistenceFactory = $this->resolvePersistenceFactory();

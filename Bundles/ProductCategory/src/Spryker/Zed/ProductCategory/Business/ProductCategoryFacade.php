@@ -20,7 +20,7 @@ use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsE
 /**
  * @property ProductCategoryBusinessFactory $businessFactory
  *
- * @method ProductCategoryBusinessFactory getBusinessFactory()
+ * @method ProductCategoryBusinessFactory getFactory()
  * @method ProductCategoryManager createProductManager()
  */
 class ProductCategoryFacade extends AbstractFacade
@@ -40,7 +40,7 @@ class ProductCategoryFacade extends AbstractFacade
      */
     public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createProductCategoryManager()
             ->createProductCategoryMapping($sku, $categoryName, $locale);
     }
@@ -54,7 +54,7 @@ class ProductCategoryFacade extends AbstractFacade
      */
     public function hasProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createProductCategoryManager()
             ->hasProductCategoryMapping($sku, $categoryName, $locale);
     }
@@ -66,11 +66,11 @@ class ProductCategoryFacade extends AbstractFacade
      */
     public function getCategoriesByAbstractProduct(AbstractProductTransfer $abstractProductTransfer)
     {
-        $entities = $this->getBusinessFactory()
+        $entities = $this->getFactory()
             ->createProductCategoryManager()
             ->getCategoriesByAbstractProduct($abstractProductTransfer);
 
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createProductCategoryTransferGenerator()
             ->convertProductCategoryCollection($entities);
     }
@@ -85,7 +85,7 @@ class ProductCategoryFacade extends AbstractFacade
      */
     public function createProductCategoryMappings($idCategory, array $productIdsToAssign)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createProductCategoryManager()
             ->createProductCategoryMappings($idCategory, $productIdsToAssign);
     }
@@ -98,7 +98,7 @@ class ProductCategoryFacade extends AbstractFacade
      */
     public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createProductCategoryManager()
             ->removeProductCategoryMappings($idCategory, $productIdsToUnAssign);
     }
@@ -113,7 +113,7 @@ class ProductCategoryFacade extends AbstractFacade
      */
     public function updateProductMappingsOrder($idCategory, array $productOrderList)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createProductCategoryManager()
             ->updateProductMappingsOrder($idCategory, $productOrderList);
     }
@@ -126,7 +126,7 @@ class ProductCategoryFacade extends AbstractFacade
      */
     public function updateProductCategoryPreConfig($idCategory, array $productPreConfig)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createProductCategoryManager()
             ->updateProductMappingsPreConfig($idCategory, $productPreConfig);
     }
@@ -139,7 +139,7 @@ class ProductCategoryFacade extends AbstractFacade
      */
     public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createProductCategoryManager()
             ->deleteCategoryRecursive($idCategory, $locale);
     }
@@ -153,7 +153,7 @@ class ProductCategoryFacade extends AbstractFacade
      */
     public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createProductCategoryManager()
             ->moveCategoryChildrenAndDeleteNode($sourceNode, $destinationNode, $locale);
     }
@@ -167,7 +167,7 @@ class ProductCategoryFacade extends AbstractFacade
      */
     public function addCategory(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        return $this->getBusinessFactory()
+        return $this->getFactory()
             ->createProductCategoryManager()
             ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
     }
@@ -182,7 +182,7 @@ class ProductCategoryFacade extends AbstractFacade
      */
     public function deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, LocaleTransfer $localeTransfer)
     {
-        $this->getBusinessFactory()
+        $this->getFactory()
             ->createProductCategoryManager()
             ->deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, $localeTransfer);
     }

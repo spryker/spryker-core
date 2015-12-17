@@ -12,7 +12,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method UrlCommunicationFactory getCommunicationFactory()
+ * @method UrlCommunicationFactory getFactory()
  */
 class FormController extends AbstractController
 {
@@ -24,7 +24,7 @@ class FormController extends AbstractController
      */
     public function addAction()
     {
-        $form = $this->getCommunicationFactory()->getUrlForm();
+        $form = $this->getFactory()->getUrlForm();
         $form->init();
 
         if ($form->isValid()) {
@@ -47,7 +47,7 @@ class FormController extends AbstractController
      */
     public function demoAction()
     {
-        $form = $this->getCommunicationFactory()->getDemoForm();
+        $form = $this->getFactory()->getDemoForm();
         $form->init();
 
         return $this->jsonResponse($form->renderData());

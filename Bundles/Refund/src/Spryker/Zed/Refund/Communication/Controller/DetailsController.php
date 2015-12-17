@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @method RefundCommunicationFactory getCommunicationFactory()
+ * @method RefundCommunicationFactory getFactory()
  * @method RefundFacade getFacade()
  * @method RefundQueryContainer getQueryContainer()
  */
@@ -38,12 +38,12 @@ class DetailsController extends AbstractController
             throw new NotFoundHttpException('Record not found');
         }
 
-        $orderItems = $this->getCommunicationFactory()->getSalesQueryContainer()
+        $orderItems = $this->getFactory()->getSalesQueryContainer()
             ->querySalesOrderItem()
             ->filterByFkRefund($idRefund)
             ->find();
 
-        $expenses = $this->getCommunicationFactory()->getSalesQueryContainer()
+        $expenses = $this->getFactory()->getSalesQueryContainer()
             ->querySalesExpense()
             ->filterByFkRefund($idRefund)
             ->find();

@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
- * @method NopaymentBusinessFactory getBusinessFactory()
+ * @method NopaymentBusinessFactory getFactory()
  */
 class NopaymentFacade extends AbstractFacade
 {
@@ -22,7 +22,7 @@ class NopaymentFacade extends AbstractFacade
      */
     public function setAsPaid(array $orderItems)
     {
-        return $this->getBusinessFactory()->createNopaymentPaid()->setAsPaid($orderItems);
+        return $this->getFactory()->createNopaymentPaid()->setAsPaid($orderItems);
     }
 
     /**
@@ -32,7 +32,7 @@ class NopaymentFacade extends AbstractFacade
      */
     public function isPaid(SpySalesOrderItem $orderItem)
     {
-        return $this->getBusinessFactory()->createNopaymentPaid()->isPaid($orderItem);
+        return $this->getFactory()->createNopaymentPaid()->isPaid($orderItem);
     }
 
 }

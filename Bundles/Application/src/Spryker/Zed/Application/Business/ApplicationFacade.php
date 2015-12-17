@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 
 /**
- * @method ApplicationBusinessFactory getBusinessFactory()
+ * @method ApplicationBusinessFactory getFactory()
  */
 class ApplicationFacade extends AbstractFacade
 {
@@ -23,7 +23,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function getCheckSteps(LoggerInterface $logger = null)
     {
-        return $this->getBusinessFactory()->createCheckSteps($logger);
+        return $this->getFactory()->createCheckSteps($logger);
     }
 
     /**
@@ -33,7 +33,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepCodeCeption(LoggerInterface $logger = null)
     {
-        $this->getBusinessFactory()->createCheckStepCodeCeption($logger)->run();
+        $this->getFactory()->createCheckStepCodeCeption($logger)->run();
     }
 
     /**
@@ -43,7 +43,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepDeleteDatabase(LoggerInterface $logger = null)
     {
-        $this->getBusinessFactory()->createCheckStepDeleteDatabase($logger)->run();
+        $this->getFactory()->createCheckStepDeleteDatabase($logger)->run();
     }
 
     /**
@@ -53,7 +53,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepDeleteGeneratedDirectory(LoggerInterface $logger = null)
     {
-        $this->getBusinessFactory()->createCheckStepDeleteGeneratedDirectory($logger)->run();
+        $this->getFactory()->createCheckStepDeleteGeneratedDirectory($logger)->run();
     }
 
     /**
@@ -63,7 +63,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepExportKeyValue(LoggerInterface $logger = null)
     {
-        $this->getBusinessFactory()->createCheckStepExportKeyValue($logger)->run();
+        $this->getFactory()->createCheckStepExportKeyValue($logger)->run();
     }
 
     /**
@@ -73,7 +73,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepExportSearch(LoggerInterface $logger = null)
     {
-        $this->getBusinessFactory()->createCheckStepExportSearch($logger)->run();
+        $this->getFactory()->createCheckStepExportSearch($logger)->run();
     }
 
     /**
@@ -83,7 +83,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepInstallDemoData(LoggerInterface $logger = null)
     {
-        $this->getBusinessFactory()->createCheckStepInstallDemoData($logger)->run();
+        $this->getFactory()->createCheckStepInstallDemoData($logger)->run();
     }
 
     /**
@@ -93,7 +93,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function runCheckStepSetupInstall(LoggerInterface $logger = null)
     {
-        $this->getBusinessFactory()->createCheckStepSetupInstall($logger)->run();
+        $this->getFactory()->createCheckStepSetupInstall($logger)->run();
     }
 
     /**
@@ -103,7 +103,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function buildNavigation($pathInfo)
     {
-        return $this->getBusinessFactory()->createNavigationBuilder()->build($pathInfo);
+        return $this->getFactory()->createNavigationBuilder()->build($pathInfo);
     }
 
     /**
@@ -111,7 +111,7 @@ class ApplicationFacade extends AbstractFacade
      */
     public function writeNavigationCache()
     {
-        $this->getBusinessFactory()->createNavigationCacheBuilder()->writeNavigationCache();
+        $this->getFactory()->createNavigationCacheBuilder()->writeNavigationCache();
     }
 
 }

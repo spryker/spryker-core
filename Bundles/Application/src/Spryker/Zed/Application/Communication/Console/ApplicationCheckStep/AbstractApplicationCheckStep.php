@@ -65,16 +65,16 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
      */
     public function setExternalDependencies(Container $container)
     {
-        $communicationFactory = $this->getCommunicationFactory();
+        $communicationFactory = $this->getFactory();
         if (isset($communicationFactory)) {
-            $this->getCommunicationFactory()->setContainer($container);
+            $this->getFactory()->setContainer($container);
         }
     }
 
     /**
      * @return AbstractCommunicationFactory
      */
-    protected function getCommunicationFactory()
+    protected function getFactory()
     {
         return $this->communicationFactory;
     }

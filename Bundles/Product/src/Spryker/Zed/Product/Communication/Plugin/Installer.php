@@ -11,7 +11,7 @@ use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Communication\ProductCommunicationFactory;
 
 /**
- * @method ProductCommunicationFactory getCommunicationFactory()
+ * @method ProductCommunicationFactory getFactory()
  * @method ProductFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin

@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method GlossaryCommunicationFactory getCommunicationFactory()
+ * @method GlossaryCommunicationFactory getFactory()
  * @method GlossaryFacade getFacade()
  * @method GlossaryQueryContainer getQueryContainer()
  */

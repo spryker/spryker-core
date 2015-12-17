@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method MessengerBusinessFactory getBusinessFactory()
+ * @method MessengerBusinessFactory getFactory()
  */
 class MessengerFacade extends AbstractFacade
 {
@@ -22,7 +22,7 @@ class MessengerFacade extends AbstractFacade
      */
     public function addSuccessMessage(MessageTransfer $message)
     {
-        $this->getBusinessFactory()->createMessageTray()->addSuccessMessage($message);
+        $this->getFactory()->createMessageTray()->addSuccessMessage($message);
     }
 
     /**
@@ -32,7 +32,7 @@ class MessengerFacade extends AbstractFacade
      */
     public function addErrorMessage(MessageTransfer $message)
     {
-        $this->getBusinessFactory()->createMessageTray()->addErrorMessage($message);
+        $this->getFactory()->createMessageTray()->addErrorMessage($message);
     }
 
     /**
@@ -42,7 +42,7 @@ class MessengerFacade extends AbstractFacade
      */
     public function addInfoMessage(MessageTransfer $message)
     {
-        $this->getBusinessFactory()->createMessageTray()->addInfoMessage($message);
+        $this->getFactory()->createMessageTray()->addInfoMessage($message);
     }
 
     /**
@@ -50,7 +50,7 @@ class MessengerFacade extends AbstractFacade
      */
     public function getStoredMessages()
     {
-        return $this->getBusinessFactory()->createMessageTray()->getMessages();
+        return $this->getFactory()->createMessageTray()->getMessages();
     }
 
 }

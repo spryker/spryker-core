@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerCommunicationFactory getCommunicationFactory()
+ * @method CustomerCommunicationFactory getFactory()
  */
 class AddController extends AbstractController
 {
@@ -27,7 +27,7 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getCommunicationFactory()
+        $form = $this->getFactory()
             ->createCustomerForm(CustomerForm::ADD);
 
         $form->handleRequest($request);

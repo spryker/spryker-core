@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method StockCommunicationFactory getCommunicationFactory()
+ * @method StockCommunicationFactory getFactory()
  */
 class GridController extends AbstractController
 {
@@ -24,7 +24,7 @@ class GridController extends AbstractController
      */
     public function stockAction(Request $request)
     {
-        $grid = $this->getCommunicationFactory()->getStockGrid($request);
+        $grid = $this->getFactory()->getStockGrid($request);
 
         return $this->jsonResponse($grid->renderData());
     }
@@ -36,7 +36,7 @@ class GridController extends AbstractController
      */
     public function stockProductAction(Request $request)
     {
-        $grid = $this->getCommunicationFactory()->getStockProductGrid($request);
+        $grid = $this->getFactory()->getStockProductGrid($request);
 
         return $this->jsonResponse($grid->renderData());
     }

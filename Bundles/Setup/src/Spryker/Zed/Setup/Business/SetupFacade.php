@@ -11,7 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method SetupBusinessFactory getBusinessFactory()
+ * @method SetupBusinessFactory getFactory()
  */
 class SetupFacade extends AbstractFacade
 {
@@ -23,7 +23,7 @@ class SetupFacade extends AbstractFacade
      */
     public function generateCronjobs(array $roles)
     {
-        return $this->getBusinessFactory()->createModelCronjobs()->generateCronjobs($roles);
+        return $this->getFactory()->createModelCronjobs()->generateCronjobs($roles);
     }
 
     /**
@@ -31,7 +31,7 @@ class SetupFacade extends AbstractFacade
      */
     public function enableJenkins()
     {
-        return $this->getBusinessFactory()->createModelCronjobs()->enableJenkins();
+        return $this->getFactory()->createModelCronjobs()->enableJenkins();
     }
 
     /**
@@ -39,7 +39,7 @@ class SetupFacade extends AbstractFacade
      */
     public function disableJenkins()
     {
-        return $this->getBusinessFactory()->createModelCronjobs()->disableJenkins();
+        return $this->getFactory()->createModelCronjobs()->disableJenkins();
     }
 
     /**
@@ -47,7 +47,7 @@ class SetupFacade extends AbstractFacade
      */
     public function removeGeneratedDirectory()
     {
-        $this->getBusinessFactory()->createModelGeneratedDirectoryRemover()->execute();
+        $this->getFactory()->createModelGeneratedDirectoryRemover()->execute();
     }
 
     /**
@@ -57,7 +57,7 @@ class SetupFacade extends AbstractFacade
      */
     public function getRepeatData(Request $request)
     {
-        return $this->getBusinessFactory()->createTransferObjectRepeater()
+        return $this->getFactory()->createTransferObjectRepeater()
             ->getRepeatData($request->query->get('mvc', null));
     }
 
@@ -66,7 +66,7 @@ class SetupFacade extends AbstractFacade
      */
     public function getConsoleCommands()
     {
-        return $this->getBusinessFactory()->getConsoleCommands();
+        return $this->getFactory()->getConsoleCommands();
     }
 
 }

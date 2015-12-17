@@ -13,7 +13,7 @@ class CountryController extends AbstractController
 
     public function indexAction()
     {
-        $form = $this->getCommunicationFactory()->createCountryForm()->init();
+        $form = $this->getFactory()->createCountryForm()->init();
         $form->handleRequest();
 
         if ($form->isValid()) {

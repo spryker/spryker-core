@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CheckoutBusinessFactory getBusinessFactory()
+ * @method CheckoutBusinessFactory getFactory()
  */
 class CheckoutFacade extends AbstractFacade
 {
@@ -24,7 +24,7 @@ class CheckoutFacade extends AbstractFacade
     public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
     {
         return $this
-            ->getBusinessFactory()
+            ->getFactory()
             ->createCheckoutWorkflow()
             ->requestCheckout($checkoutRequest);
     }

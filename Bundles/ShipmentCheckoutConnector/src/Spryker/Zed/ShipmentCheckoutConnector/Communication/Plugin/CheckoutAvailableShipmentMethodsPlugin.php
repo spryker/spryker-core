@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ShipmentCheckoutConnector\Communication\ShipmentCheckoutConnectorCommunicationFactory;
 
 /**
- * @method ShipmentCheckoutConnectorCommunicationFactory getCommunicationFactory()
+ * @method ShipmentCheckoutConnectorCommunicationFactory getFactory()
  */
 class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
 {
@@ -23,7 +23,7 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
-        return $this->getCommunicationFactory()->createShipmentFacade()->getAvailableMethods($shipmentMethodAvailabilityTransfer);
+        return $this->getFactory()->createShipmentFacade()->getAvailableMethods($shipmentMethodAvailabilityTransfer);
     }
 
 }

@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 
 /**
- * @method ItemGrouperWishlistConnectorBusinessFactory getBusinessFactory()
+ * @method ItemGrouperWishlistConnectorBusinessFactory getFactory()
  */
 class ItemGrouperWishlistConnectorFacade extends AbstractFacade
 {
@@ -22,7 +22,7 @@ class ItemGrouperWishlistConnectorFacade extends AbstractFacade
      */
     public function groupOrderItems(GroupableContainerTransfer $items)
     {
-        return $this->getBusinessFactory()->createItemGrouperFacade()->groupItemsByKey($items);
+        return $this->getFactory()->createItemGrouperFacade()->groupItemsByKey($items);
     }
 
 }

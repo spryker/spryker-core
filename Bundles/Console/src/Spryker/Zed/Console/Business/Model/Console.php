@@ -105,7 +105,7 @@ class Console extends SymfonyCommand
     /**
      * @return AbstractCommunicationFactory
      */
-    protected function getCommunicationFactory()
+    protected function getFactory()
     {
         if ($this->communicationFactory === null) {
             $this->communicationFactory = $this->resolveCommunicationFactory();

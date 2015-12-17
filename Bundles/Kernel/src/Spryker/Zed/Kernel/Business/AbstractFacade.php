@@ -76,7 +76,7 @@ abstract class AbstractFacade implements FacadeInterface
     /**
      * @return BusinessFactoryInterface
      */
-    protected function getBusinessFactory()
+    protected function getFactory()
     {
         if ($this->businessFactory === null) {
             $this->businessFactory = $this->resolveBusinessFactory();

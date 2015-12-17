@@ -11,7 +11,7 @@ use Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 
 /**
- * @method GlossaryCommunicationFactory getCommunicationFactory()
+ * @method GlossaryCommunicationFactory getFactory()
  * @method GlossaryFacade getFacade()
  */
 class EditController extends AbstractController
@@ -24,10 +24,10 @@ class EditController extends AbstractController
      */
     public function indexAction()
     {
-        $availableLocales = $this->getCommunicationFactory()
+        $availableLocales = $this->getFactory()
             ->createEnabledLocales();
 
-        $glossaryForm = $this->getCommunicationFactory()
+        $glossaryForm = $this->getFactory()
             ->createTranslationForm($availableLocales, self::FORM_UPDATE_TYPE);
 
         $glossaryForm->handleRequest();

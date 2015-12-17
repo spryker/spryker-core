@@ -17,9 +17,9 @@ class ConsoleMock extends Console
     /**
      * @return AbstractCommunicationFactory
      */
-    public function getCommunicationFactory()
+    public function getFactory()
     {
-        return parent::getCommunicationFactory();
+        return parent::getFactory();
     }
 
     /**

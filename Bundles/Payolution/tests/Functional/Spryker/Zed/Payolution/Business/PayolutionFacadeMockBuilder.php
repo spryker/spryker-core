@@ -37,14 +37,14 @@ class PayolutionFacadeMockBuilder
         $queryContainer = new PayolutionQueryContainer();
         $businessFactoryMock->setQueryContainer($queryContainer);
 
-        // Mock the facade to override getBusinessFactory() and have it return out
+        // Mock the facade to override getFactory() and have it return out
         // previously created mock.
         $facade = $testCase->getMock(
             'Spryker\Zed\Payolution\Business\PayolutionFacade',
-            ['getBusinessFactory']
+            ['getFactory']
         );
         $facade->expects($testCase->any())
-            ->method('getBusinessFactory')
+            ->method('getFactory')
             ->will($testCase->returnValue($businessFactoryMock));
 
         return $facade;

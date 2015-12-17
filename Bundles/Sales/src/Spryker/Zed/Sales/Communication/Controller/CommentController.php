@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method SalesCommunicationFactory getCommunicationFactory()
+ * @method SalesCommunicationFactory getFactory()
  */
 class CommentController extends AbstractController
 {
@@ -27,7 +27,7 @@ class CommentController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $form = $this->getCommunicationFactory()->getCommentForm();
+        $form = $this->getFactory()->getCommentForm();
 
         if ($form->isValid()) {
             $facade = $this->getFacade();

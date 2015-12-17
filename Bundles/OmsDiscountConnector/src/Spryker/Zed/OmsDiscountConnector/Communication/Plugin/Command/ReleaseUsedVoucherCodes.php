@@ -13,7 +13,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\AbstractCommand;
 use Spryker\Zed\OmsDiscountConnector\Communication\OmsDiscountConnectorCommunicationFactory;
 
 /**
- * @method OmsDiscountConnectorCommunicationFactory getCommunicationFactory()
+ * @method OmsDiscountConnectorCommunicationFactory getFactory()
  */
 class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderInterface
 {
@@ -33,7 +33,7 @@ class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderI
             return [];
         }
 
-        $this->getCommunicationFactory()->createDiscountFacade()->releaseUsedVoucherCodes($voucherCodes);
+        $this->getFactory()->createDiscountFacade()->releaseUsedVoucherCodes($voucherCodes);
     }
 
     /**

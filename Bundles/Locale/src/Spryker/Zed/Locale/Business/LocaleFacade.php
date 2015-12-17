@@ -14,7 +14,7 @@ use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 /**
- * @method LocaleBusinessFactory getBusinessFactory()
+ * @method LocaleBusinessFactory getFactory()
  */
 class LocaleFacade extends AbstractFacade
 {
@@ -26,7 +26,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function hasLocale($localeName)
     {
-        $localeManager = $this->getBusinessFactory()->getLocaleManager();
+        $localeManager = $this->getFactory()->getLocaleManager();
 
         return $localeManager->hasLocale($localeName);
     }
@@ -40,7 +40,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function getLocale($localeName)
     {
-        $localeManager = $this->getBusinessFactory()->getLocaleManager();
+        $localeManager = $this->getFactory()->getLocaleManager();
 
         return $localeManager->getLocale($localeName);
     }
@@ -87,7 +87,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function createLocale($localeName)
     {
-        $localeManager = $this->getBusinessFactory()->getLocaleManager();
+        $localeManager = $this->getFactory()->getLocaleManager();
 
         return $localeManager->createLocale($localeName);
     }
@@ -99,7 +99,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function deleteLocale($localeName)
     {
-        $localeManager = $this->getBusinessFactory()->getLocaleManager();
+        $localeManager = $this->getFactory()->getLocaleManager();
         $localeManager->deleteLocale($localeName);
     }
 
@@ -110,7 +110,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function install(MessengerInterface $messenger)
     {
-        $this->getBusinessFactory()->getInstaller($messenger)->install();
+        $this->getFactory()->getInstaller($messenger)->install();
     }
 
 }

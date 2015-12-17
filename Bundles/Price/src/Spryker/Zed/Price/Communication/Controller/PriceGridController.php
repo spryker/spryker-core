@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method PriceCommunicationFactory getCommunicationFactory()
+ * @method PriceCommunicationFactory getFactory()
  */
 class PriceGridController extends AbstractController
 {
@@ -24,7 +24,7 @@ class PriceGridController extends AbstractController
      */
     public function priceAction(Request $request)
     {
-        $grid = $this->getCommunicationFactory()->getPriceGrid($request);
+        $grid = $this->getFactory()->getPriceGrid($request);
         $data = $grid->toArray();
         $data['rows'] = $this->orderData($data['rows']);
 
@@ -38,7 +38,7 @@ class PriceGridController extends AbstractController
      */
     public function priceTypeAction(Request $request)
     {
-        $grid = $this->getCommunicationFactory()->getPriceTypeGrid($request);
+        $grid = $this->getFactory()->getPriceTypeGrid($request);
 
         return $this->jsonResponse($grid->toArray());
     }

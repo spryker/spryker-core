@@ -25,7 +25,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $usersTable = $this->getCommunicationFactory()->createUserTable();
+        $usersTable = $this->getFactory()->createUserTable();
 
         return [
             'users' => $usersTable->render(),
@@ -37,7 +37,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getCommunicationFactory()->createUserTable();
+        $table = $this->getFactory()->createUserTable();
 
         return $this->jsonResponse(
             $table->fetchData()

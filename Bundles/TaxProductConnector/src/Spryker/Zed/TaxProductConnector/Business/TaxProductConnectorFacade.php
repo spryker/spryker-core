@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
 
 /**
- * @method TaxProductConnectorBusinessFactory getBusinessFactory()
+ * @method TaxProductConnectorBusinessFactory getFactory()
  */
 class TaxProductConnectorFacade extends AbstractFacade
 {
@@ -20,7 +20,7 @@ class TaxProductConnectorFacade extends AbstractFacade
      */
     public function getTaxChangeTouchPlugin()
     {
-        return $this->getBusinessFactory()->getTaxChangeTouchPlugin();
+        return $this->getFactory()->getTaxChangeTouchPlugin();
     }
 
 }
