@@ -35,10 +35,11 @@ module.exports = new function() {
         return self;
     };
 
-    self.ajaxSubmit = function(options, callbackFunction, parameters) {
+    self.ajaxSubmit = function(options, callbackFunction, parameters, isGet=false) {
+        var callType = (!!isGet) ? 'get' : 'post';
         return $.ajax({
             url: this.url,
-            type: 'post',
+            type: callType,
             dataType: this.dataType,
             data: options
         })
