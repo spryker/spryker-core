@@ -9,7 +9,7 @@ namespace Spryker\Client\Payone;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneFactory getFactory()
  */
 class PayoneStub extends AbstractClient
 {

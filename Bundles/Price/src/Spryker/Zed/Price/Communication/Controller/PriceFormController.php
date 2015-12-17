@@ -9,12 +9,12 @@ namespace Spryker\Zed\Price\Communication\Controller;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Price\Business\PriceFacade;
-use Spryker\Zed\Price\Communication\PriceDependencyContainer;
+use Spryker\Zed\Price\Communication\PriceCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method PriceDependencyContainer getDependencyContainer()
+ * @method PriceCommunicationFactory getFactory()
  * @method PriceFacade getFacade()
  */
 class PriceFormController extends AbstractController
@@ -27,7 +27,7 @@ class PriceFormController extends AbstractController
      */
     public function priceAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->getPriceForm($request);
+        $form = $this->getFactory()->getPriceForm($request);
 
         if ($form->isValid()) {
             $transferPriceProduct = new PriceProductTransfer();
@@ -50,7 +50,7 @@ class PriceFormController extends AbstractController
      */
     public function priceTypeAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->getPriceTypeForm($request);
+        $form = $this->getFactory()->getPriceTypeForm($request);
 
         if ($form->isValid()) {
             $data = $form->getRequestData();

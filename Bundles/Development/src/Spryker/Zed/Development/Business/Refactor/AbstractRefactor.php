@@ -124,14 +124,17 @@ abstract class AbstractRefactor implements RefactorInterface
      */
     protected function getSrcDirectoryPosition(array $pathParts)
     {
-        if (!in_array('src', array_values($pathParts))) {
-            throw new RefactorException(
-                sprintf(self::ERROR_MESSAGE_CANT_FIND_SRC_POSITION, implode(DIRECTORY_SEPARATOR, $pathParts))
-            );
+        if (in_array('src', array_values($pathParts))) {
+            return array_search('src', array_values($pathParts));
         }
-        $srcPosition = array_search('src', array_values($pathParts));
 
-        return $srcPosition;
+        if (in_array('tests', array_values($pathParts))) {
+            return array_search('tests', array_values($pathParts)) + 1;
+        }
+
+        throw new RefactorException(
+            sprintf(self::ERROR_MESSAGE_CANT_FIND_SRC_POSITION, implode(DIRECTORY_SEPARATOR, $pathParts))
+        );
     }
 
     /**
@@ -154,13 +157,13 @@ abstract class AbstractRefactor implements RefactorInterface
     }
 
     /**
-     * @param SplFileInfo $dependencyContainer
+     * @param SplFileInfo $file
      *
      * @return bool
      */
-    protected function isProject(SplFileInfo $dependencyContainer)
+    protected function isProject(SplFileInfo $file)
     {
-        if ($this->getNamespaceFromFileInfo($dependencyContainer) === self::NAMESPACE_PROJECT) {
+        if ($this->getNamespaceFromFileInfo($file) === self::NAMESPACE_PROJECT) {
             return true;
         }
 

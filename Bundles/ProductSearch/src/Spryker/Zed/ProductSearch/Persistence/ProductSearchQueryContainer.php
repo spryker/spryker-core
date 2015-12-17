@@ -17,7 +17,7 @@ use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributesOperationTab
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery;
 
 /**
- * @method ProductSearchDependencyContainer getDependencyContainer()
+ * @method ProductSearchPersistenceFactory getFactory()
  */
 class ProductSearchQueryContainer extends AbstractQueryContainer implements ProductSearchQueryContainerInterface
 {
@@ -96,7 +96,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
-        $productSearchQueryExpander = $this->getDependencyContainer()->createProductSearchQueryExpander();
+        $productSearchQueryExpander = $this->getFactory()->createProductSearchQueryExpander();
 
         return $productSearchQueryExpander->expandProductQuery($expandableQuery, $locale);
     }

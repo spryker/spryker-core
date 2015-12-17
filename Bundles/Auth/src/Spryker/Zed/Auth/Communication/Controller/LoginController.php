@@ -8,12 +8,12 @@ namespace Spryker\Zed\Auth\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Auth\Business\AuthFacade;
-use Spryker\Zed\Auth\Communication\AuthDependencyContainer;
+use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Spryker\Zed\Auth\Communication\Form\LoginForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AuthDependencyContainer getDependencyContainer()
+ * @method AuthCommunicationFactory getFactory()
  * @method AuthFacade getFacade()
  */
 class LoginController extends AbstractController
@@ -26,7 +26,7 @@ class LoginController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createLoginForm();
+        $form = $this->getFactory()->createLoginForm();
         $form->handleRequest();
 
         if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {

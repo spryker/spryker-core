@@ -7,12 +7,12 @@
 namespace Spryker\Zed\Url\Communication\Controller;
 
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Url\Communication\UrlDependencyContainer;
+use Spryker\Zed\Url\Communication\UrlCommunicationFactory;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method UrlDependencyContainer getDependencyContainer()
+ * @method UrlCommunicationFactory getFactory()
  */
 class FormController extends AbstractController
 {
@@ -24,7 +24,7 @@ class FormController extends AbstractController
      */
     public function addAction()
     {
-        $form = $this->getDependencyContainer()->getUrlForm();
+        $form = $this->getFactory()->getUrlForm();
         $form->init();
 
         if ($form->isValid()) {
@@ -47,7 +47,7 @@ class FormController extends AbstractController
      */
     public function demoAction()
     {
-        $form = $this->getDependencyContainer()->getDemoForm();
+        $form = $this->getFactory()->getDemoForm();
         $form->init();
 
         return $this->jsonResponse($form->renderData());

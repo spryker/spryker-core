@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 /**
- * @method DiscountCalculationConnectorDependencyContainer getDependencyContainer()
+ * @method DiscountCalculationConnectorBusinessFactory getFactory()
  */
 class DiscountCalculationConnectorFacade extends AbstractFacade
 {
@@ -27,7 +27,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
         CalculableInterface $discountableContainer,
         \ArrayObject $discountableContainers
     ) {
-        $calculator = $this->getDependencyContainer()->getDiscountTotalsCalculator();
+        $calculator = $this->getFactory()->getDiscountTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $discountableContainer, $discountableContainers);
     }
 
@@ -43,7 +43,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
         CalculableInterface $container,
         \ArrayObject $items
     ) {
-        $calculator = $this->getDependencyContainer()->getGrandTotalWithDiscountsTotalsCalculator();
+        $calculator = $this->getFactory()->getGrandTotalWithDiscountsTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $container, $items);
     }
 
@@ -54,7 +54,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
      */
     public function recalculateRemoveAllCalculatedDiscounts(CalculableInterface $container)
     {
-        $calculator = $this->getDependencyContainer()->getRemoveAllCalculatedDiscountsCalculator();
+        $calculator = $this->getFactory()->getRemoveAllCalculatedDiscountsCalculator();
         $calculator->recalculate($container);
     }
 

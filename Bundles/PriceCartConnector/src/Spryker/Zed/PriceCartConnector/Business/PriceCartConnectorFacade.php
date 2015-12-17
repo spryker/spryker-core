@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method PriceCartConnectorDependencyContainer getDependencyContainer()
+ * @method PriceCartConnectorBusinessFactory getFactory()
  */
 class PriceCartConnectorFacade extends AbstractFacade
 {
@@ -23,7 +23,7 @@ class PriceCartConnectorFacade extends AbstractFacade
      */
     public function addGrossPriceToItems(ChangeTransfer $change, $grossPriceType = null)
     {
-        return $this->getDependencyContainer()->createPriceManager($grossPriceType)->addGrossPriceToItems($change);
+        return $this->getFactory()->createPriceManager($grossPriceType)->addGrossPriceToItems($change);
     }
 
 }

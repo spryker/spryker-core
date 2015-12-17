@@ -7,10 +7,10 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Symfony\Component\HttpFoundation\Request;
-use Spryker\Zed\Sales\Communication\SalesDependencyContainer;
+use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 
 /**
- * @method SalesDependencyContainer getDependencyContainer()
+ * @method SalesCommunicationFactory getFactory()
  * @method SalesFacade getFacade()
  */
 class EditController extends AbstractController
@@ -24,7 +24,7 @@ class EditController extends AbstractController
     public function customerAction(Request $request)
     {
         $idOrder = $request->get('id-sales-order');
-        $form = $this->getDependencyContainer()
+        $form = $this->getFactory()
             ->createCustomerForm($idOrder);
         $form->handleRequest();
 
@@ -52,7 +52,7 @@ class EditController extends AbstractController
         $idOrder = $request->get('id-sales-order');
         $idOrderAddress = $request->get('id-address');
 
-        $form = $this->getDependencyContainer()
+        $form = $this->getFactory()
             ->createAddressForm($idOrderAddress);
         $form->handleRequest();
 

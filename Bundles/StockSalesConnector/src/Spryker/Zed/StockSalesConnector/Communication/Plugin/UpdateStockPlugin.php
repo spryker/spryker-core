@@ -8,10 +8,10 @@ namespace Spryker\Zed\StockSalesConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\StockProductTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\StockSalesConnector\Business\StockSalesConnectorDependencyContainer;
+use Spryker\Zed\StockSalesConnector\Business\StockSalesConnectorCommunicationFactory;
 
 /**
- * @method StockSalesConnectorDependencyContainer getDependencyContainer()
+ * @method StockSalesConnectorCommunicationFactory getFactory()
  */
 class UpdateStockPlugin extends AbstractPlugin
 {
@@ -27,7 +27,7 @@ class UpdateStockPlugin extends AbstractPlugin
      */
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1)
     {
-        $this->getDependencyContainer()->getStockFacade()->incrementStockProduct($sku, $stockType, $incrementBy);
+        $this->getFactory()->getStockFacade()->incrementStockProduct($sku, $stockType, $incrementBy);
     }
 
     /**
@@ -39,7 +39,7 @@ class UpdateStockPlugin extends AbstractPlugin
      */
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1)
     {
-        $this->getDependencyContainer()->getStockFacade()->decrementStockProduct($sku, $stockType, $decrementBy);
+        $this->getFactory()->getStockFacade()->decrementStockProduct($sku, $stockType, $decrementBy);
     }
 
     /**
@@ -49,7 +49,7 @@ class UpdateStockPlugin extends AbstractPlugin
      */
     public function updateStockProduct(StockProductTransfer $transferStockProduct)
     {
-        return $this->getDependencyContainer()->getStockFacade()->updateStockProduct($transferStockProduct);
+        return $this->getFactory()->getStockFacade()->updateStockProduct($transferStockProduct);
     }
 
 }

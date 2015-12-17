@@ -10,7 +10,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerPersistenceFactory getFactory()
  */
 class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQueryContainerInterface
 {
@@ -20,7 +20,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomerByEmail($email)
     {
-        $query = $this->getDependencyContainer()->createSpyCustomerQuery();
+        $query = $this->getFactory()->createSpyCustomerQuery();
         $query->filterByEmail($email);
 
         return $query;
@@ -31,7 +31,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomerByEmailApartFromIdCustomer($email, $exceptIdCustomer)
     {
-        $query = $this->getDependencyContainer()->createSpyCustomerQuery();
+        $query = $this->getFactory()->createSpyCustomerQuery();
         $query
             ->filterByEmail($email)
             ->filterByIdCustomer($exceptIdCustomer, Criteria::NOT_EQUAL);
@@ -44,7 +44,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomerById($id)
     {
-        $query = $this->getDependencyContainer()->createSpyCustomerQuery();
+        $query = $this->getFactory()->createSpyCustomerQuery();
         $query->filterByIdCustomer($id);
 
         return $query;
@@ -55,7 +55,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomerByRegistrationKey($token)
     {
-        $query = $this->getDependencyContainer()->createSpyCustomerQuery();
+        $query = $this->getFactory()->createSpyCustomerQuery();
         $query->filterByRegistrationKey($token);
 
         return $query;
@@ -66,7 +66,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomerByRestorePasswordKey($token)
     {
-        $query = $this->getDependencyContainer()->createSpyCustomerQuery();
+        $query = $this->getFactory()->createSpyCustomerQuery();
         $query->filterByRestorePasswordKey($token);
 
         return $query;
@@ -79,7 +79,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     {
         $customer = $this->queryCustomerByEmail($email)->findOne();
 
-        $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();
+        $query = $this->getFactory()->createSpyCustomerAddressQuery();
         $query->filterByIdCustomerAddress($idAddress);
         $query->filterByCustomer($customer);
 
@@ -92,7 +92,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     public function queryAddressByIdCustomer($idCustomer)
     {
         return $this
-            ->getDependencyContainer()
+            ->getFactory()
             ->createSpyCustomerAddressQuery()
             ->filterByFkCustomer($idCustomer);
     }
@@ -102,7 +102,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryAddress($idAddress)
     {
-        $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();
+        $query = $this->getFactory()->createSpyCustomerAddressQuery();
         $query->joinWithCountry();
         $query->filterByIdCustomerAddress($idAddress);
 
@@ -116,7 +116,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     {
         $customer = $this->queryCustomerByEmail($email)->findOne();
 
-        $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();
+        $query = $this->getFactory()->createSpyCustomerAddressQuery();
         $query->filterByCustomer($customer);
 
         return $query;
@@ -127,7 +127,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryAddresses()
     {
-        $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();
+        $query = $this->getFactory()->createSpyCustomerAddressQuery();
 
         return $query;
     }
@@ -137,7 +137,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      */
     public function queryCustomers()
     {
-        $query = $this->getDependencyContainer()->createSpyCustomerQuery();
+        $query = $this->getFactory()->createSpyCustomerQuery();
 
         return $query;
     }

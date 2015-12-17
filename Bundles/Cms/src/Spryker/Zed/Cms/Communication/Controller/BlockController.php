@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\CmsFacade;
-use Spryker\Zed\Cms\Communication\CmsDependencyContainer;
+use Spryker\Zed\Cms\Communication\CmsCommunicationFactory;
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsDependencyContainer getDependencyContainer()
+ * @method CmsCommunicationFactory getFactory()
  * @method CmsFacade getFacade()
  * @method CmsQueryContainer getQueryContainer()
  */
@@ -37,7 +37,7 @@ class BlockController extends AbstractController
      */
     public function indexAction()
     {
-        $blockTable = $this->getDependencyContainer()
+        $blockTable = $this->getFactory()
             ->createCmsBlockTable($this->getCurrentIdLocale());
 
         return [
@@ -50,7 +50,7 @@ class BlockController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()
+        $table = $this->getFactory()
             ->createCmsBlockTable($this->getCurrentIdLocale());
 
         return $this->jsonResponse($table->fetchData());
@@ -61,7 +61,7 @@ class BlockController extends AbstractController
      */
     public function addAction()
     {
-        $form = $this->getDependencyContainer()->createCmsBlockForm('add');
+        $form = $this->getFactory()->createCmsBlockForm('add');
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $form->handleRequest();
@@ -92,7 +92,7 @@ class BlockController extends AbstractController
     {
         $idBlock = $request->get(CmsBlockTable::REQUEST_ID_BLOCK);
 
-        $form = $this->getDependencyContainer()
+        $form = $this->getFactory()
             ->createCmsBlockForm('update', $idBlock);
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
@@ -167,7 +167,7 @@ class BlockController extends AbstractController
      */
     private function getLocaleFacade()
     {
-        return $this->getDependencyContainer()->getLocaleFacade();
+        return $this->getFactory()->getLocaleFacade();
     }
 
     /**

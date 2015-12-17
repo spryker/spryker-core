@@ -7,24 +7,24 @@
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
-use Spryker\Zed\Transfer\Business\TransferDependencyContainer;
+use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
 
 /**
  * @group Spryker
  * @group Zed
  * @group Transfer
  * @group Business
- * @group TransferDependencyContainer
+ * @group TransferBusinessFactory
  */
-class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
+class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return TransferDependencyContainer
+     * @return TransferBusinessFactory
      */
-    private function getDependencyContainer()
+    private function getFactory()
     {
-        return new TransferDependencyContainer();
+        return new TransferBusinessFactory();
     }
 
     /**
@@ -40,7 +40,7 @@ class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateTransferGeneratorShouldReturnFullyConfiguredInstance()
     {
-        $transferGenerator = $this->getDependencyContainer()->createTransferGenerator(
+        $transferGenerator = $this->getFactory()->createTransferGenerator(
             $this->getMessenger()
         );
 
@@ -52,7 +52,7 @@ class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateTransferCleanerShouldReturnFullyConfiguredInstance()
     {
-        $transferCleaner = $this->getDependencyContainer()->createTransferCleaner();
+        $transferCleaner = $this->getFactory()->createTransferCleaner();
 
         $this->assertInstanceOf('Spryker\Zed\Transfer\Business\Model\TransferCleaner', $transferCleaner);
     }

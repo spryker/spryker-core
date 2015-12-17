@@ -11,12 +11,12 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\CategoryFacade;
-use Spryker\Zed\Category\Communication\CategoryDependencyContainer;
+use Spryker\Zed\Category\Communication\CategoryCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CategoryDependencyContainer getDependencyContainer()
+ * @method CategoryCommunicationFactory getFactory()
  * @method CategoryFacade getFacade()
  */
 class FormController extends AbstractController
@@ -29,7 +29,7 @@ class FormController extends AbstractController
      */
     public function categoryAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createCategoryForm($request);
+        $form = $this->getFactory()->createCategoryForm($request);
 
         $form->init();
 
@@ -55,7 +55,7 @@ class FormController extends AbstractController
      */
     public function categoryNodeAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createCategoryNodeForm($request);
+        $form = $this->getFactory()->createCategoryNodeForm($request);
 
         $form->init();
 
@@ -79,7 +79,7 @@ class FormController extends AbstractController
      */
     protected function getLocale()
     {
-        return $this->getDependencyContainer()->getCurrentLocale();
+        return $this->getFactory()->getCurrentLocale();
     }
 
 }

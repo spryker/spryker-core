@@ -7,10 +7,10 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\Communication\SalesDependencyContainer;
+use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 
 /**
- * @method SalesDependencyContainer getDependencyContainer()
+ * @method SalesCommunicationFactory getFactory()
  */
 class MatrixController extends AbstractController
 {
@@ -20,7 +20,7 @@ class MatrixController extends AbstractController
      */
     public function indexAction()
     {
-        $matrix = $this->getDependencyContainer()->getOmsFacade()->getOrderItemMatrix();
+        $matrix = $this->getFactory()->getOmsFacade()->getOrderItemMatrix();
 
         return [
             'matrix' => $matrix,

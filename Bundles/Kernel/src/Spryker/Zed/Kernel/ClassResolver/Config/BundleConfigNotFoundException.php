@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Kernel\ClassResolver\DependencyContainer;
+namespace Spryker\Zed\Kernel\ClassResolver\Config;
 
 use Spryker\Shared\Config;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;

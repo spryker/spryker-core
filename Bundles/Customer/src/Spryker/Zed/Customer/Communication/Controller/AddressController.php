@@ -9,14 +9,14 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Customer\Business\CustomerFacade;
-use Spryker\Zed\Customer\Communication\CustomerDependencyContainer;
+use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Spryker\Zed\Customer\CustomerConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerCommunicationFactory getFactory()
  */
 class AddressController extends AbstractController
 {
@@ -30,7 +30,7 @@ class AddressController extends AbstractController
     {
         $idCustomer = $request->get(CustomerConfig::PARAM_ID_CUSTOMER);
 
-        $table = $this->getDependencyContainer()
+        $table = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
 
         return $this->viewResponse([
@@ -46,7 +46,7 @@ class AddressController extends AbstractController
     {
         $idCustomer = $request->get(CustomerConfig::PARAM_ID_CUSTOMER);
 
-        $table = $this->getDependencyContainer()
+        $table = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
 
         return $this->jsonResponse($table->fetchData());
@@ -105,7 +105,7 @@ class AddressController extends AbstractController
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
-        $addressForm = $this->getDependencyContainer()->createAddressForm();
+        $addressForm = $this->getFactory()->createAddressForm();
         $addressForm->handleRequest($request);
 
         if ($addressForm->isValid()) {
@@ -135,7 +135,7 @@ class AddressController extends AbstractController
     {
         $idCustomer = $request->query->getInt(CustomerConfig::PARAM_ID_CUSTOMER);
 
-        $addressForm = $this->getDependencyContainer()->createAddressForm();
+        $addressForm = $this->getFactory()->createAddressForm();
         $addressForm->handleRequest($request);
 
         if ($addressForm->isValid()) {

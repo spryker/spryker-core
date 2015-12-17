@@ -12,14 +12,14 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\CmsDependencyProvider;
-use Spryker\Zed\Cms\Communication\CmsDependencyContainer;
+use Spryker\Zed\Cms\Communication\CmsCommunicationFactory;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
 use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsDependencyContainer getDependencyContainer()
+ * @method CmsCommunicationFactory getFactory()
  * @method CmsFacade getFacade()
  */
 class RedirectController extends AbstractController
@@ -32,7 +32,7 @@ class RedirectController extends AbstractController
      */
     public function indexAction()
     {
-        $redirectTable = $this->getDependencyContainer()
+        $redirectTable = $this->getFactory()
             ->createCmsRedirectTable();
 
         return [
@@ -45,7 +45,7 @@ class RedirectController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()
+        $table = $this->getFactory()
             ->createCmsRedirectTable();
 
         return $this->jsonResponse($table->fetchData());
@@ -56,7 +56,7 @@ class RedirectController extends AbstractController
      */
     public function addAction()
     {
-        $form = $this->getDependencyContainer()
+        $form = $this->getFactory()
             ->createCmsRedirectForm('add');
 
         $form->handleRequest();
@@ -88,7 +88,7 @@ class RedirectController extends AbstractController
     {
         $idUrl = $request->get(CmsRedirectTable::REQUEST_ID_URL);
 
-        $form = $this->getDependencyContainer()
+        $form = $this->getFactory()
             ->createCmsRedirectForm('update', $idUrl);
 
         $form->handleRequest();
@@ -122,7 +122,7 @@ class RedirectController extends AbstractController
      */
     private function getUrlFacade()
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
     }
 
@@ -131,7 +131,7 @@ class RedirectController extends AbstractController
      */
     private function getLocaleFacade()
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
     }
 

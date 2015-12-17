@@ -11,10 +11,10 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\Nopayment\Communication\NopaymentDependencyContainer;
+use Spryker\Zed\Nopayment\Communication\NopaymentCommunicationFactory;
 
 /**
- * @method NopaymentDependencyContainer getDependencyContainer()
+ * @method NopaymentCommunicationFactory getFactory()
  */
 class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
@@ -28,7 +28,7 @@ class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInt
      */
     public function run(array $orderItems, SpySalesOrder $order, ReadOnlyArrayObject $data)
     {
-        return $this->getDependencyContainer()->createFacade()->setAsPaid($orderItems);
+        return $this->getFactory()->createFacade()->setAsPaid($orderItems);
     }
 
 }

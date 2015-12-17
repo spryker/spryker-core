@@ -9,13 +9,13 @@ namespace Spryker\Zed\Stock\Communication\Controller;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Stock\Communication\StockDependencyContainer;
+use Spryker\Zed\Stock\Communication\StockCommunicationFactory;
 use Spryker\Zed\Stock\Business\StockFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method StockDependencyContainer getDependencyContainer()
+ * @method StockCommunicationFactory getFactory()
  * @method StockFacade getFacade()
  */
 class FormController extends AbstractController
@@ -28,7 +28,7 @@ class FormController extends AbstractController
      */
     public function stockAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->getStockForm($request);
+        $form = $this->getFactory()->getStockForm($request);
 
         if ($form->isValid()) {
             $stockTypeTransfer = new TypeTransfer();
@@ -52,7 +52,7 @@ class FormController extends AbstractController
      */
     public function stockProductAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->getStockProductForm($request);
+        $form = $this->getFactory()->getStockProductForm($request);
 
         if ($form->isValid()) {
             $stockProduct = new StockProductTransfer();

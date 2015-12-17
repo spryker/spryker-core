@@ -7,7 +7,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 
 /**
- * @method QueueDependencyContainer getDependencyContainer()
+ * @method QueueBusinessFactory getFactory()
  */
 class QueueFacade extends AbstractFacade
 {
@@ -20,7 +20,7 @@ class QueueFacade extends AbstractFacade
      */
     public function publishMessage($queueName, QueueMessageTransfer $queueMessage)
     {
-        $this->getDependencyContainer()
+        $this->getFactory()
             ->createQueueConnection()
             ->publish($queueName, $queueMessage);
     }
@@ -39,7 +39,7 @@ class QueueFacade extends AbstractFacade
         $timeout = 10,
         $fetchSize = 10
     ) {
-        $this->getDependencyContainer()
+        $this->getFactory()
             ->createTaskWorker($queueName, $messenger)
             ->work($timeout, $fetchSize);
     }

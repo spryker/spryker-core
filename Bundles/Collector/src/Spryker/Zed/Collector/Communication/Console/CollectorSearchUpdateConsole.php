@@ -7,12 +7,12 @@
 namespace Spryker\Zed\Collector\Communication\Console;
 
 use Spryker\Zed\Collector\Business\CollectorFacade;
-use Spryker\Zed\Collector\Communication\CollectorDependencyContainer;
+use Spryker\Zed\Collector\Communication\CollectorCommunicationFactory;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method CollectorDependencyContainer getDependencyContainer()
+ * @method CollectorCommunicationFactory getFactory()
  * @method CollectorFacade getFacade()
  */
 class CollectorSearchUpdateConsole extends AbstractCollectorConsole
@@ -40,7 +40,7 @@ class CollectorSearchUpdateConsole extends AbstractCollectorConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $locale = $this->getDependencyContainer()->createLocaleFacade()->getCurrentLocale();
+        $locale = $this->getFactory()->createLocaleFacade()->getCurrentLocale();
         $exportResults = $this->getFacade()->updateSearchForLocale($locale);
 
         $this->info($this->buildSummary($exportResults));

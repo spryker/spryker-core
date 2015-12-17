@@ -12,13 +12,13 @@ use Generated\Shared\Transfer\RefundOrderItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Refund\Business\RefundFacade;
-use Spryker\Zed\Refund\Communication\RefundDependencyContainer;
+use Spryker\Zed\Refund\Communication\RefundCommunicationFactory;
 use Spryker\Zed\Refund\Persistence\RefundQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method RefundDependencyContainer getDependencyContainer()
+ * @method RefundCommunicationFactory getFactory()
  * @method RefundQueryContainer getQueryContainer()
  * @method RefundFacade getFacade()
  */
@@ -30,7 +30,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createRefundTable();
+        $table = $this->getFactory()->createRefundTable();
 
         return $this->viewResponse(['refunds' => $table->render()]);
     }
@@ -40,7 +40,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createRefundTable();
+        $table = $this->getFactory()->createRefundTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -68,12 +68,12 @@ class IndexController extends AbstractController
 
         $expenses = $this->getFacade()->getRefundableExpenses($idOrder);
 
-        $form = $this->getDependencyContainer()
+        $form = $this->getFactory()
             ->createRefundForm($orderTransfer);
 
         $form->handleRequest();
 
-        $isPaymentDataRequired = $this->getDependencyContainer()
+        $isPaymentDataRequired = $this->getFactory()
             ->getConfig()
             ->getPaymentDataPlugin()
             ->isPaymentDataRequired($orderTransfer);
@@ -83,7 +83,7 @@ class IndexController extends AbstractController
 
             if ($isPaymentDataRequired) {
                 $paymentDataTransfer = (new PaymentDataTransfer())->fromArray($formData, true);
-                $this->getDependencyContainer()->getConfig()->getPaymentDataPlugin()
+                $this->getFactory()->getConfig()->getPaymentDataPlugin()
                     ->updatePaymentDetail($paymentDataTransfer, $idOrder);
             }
 

@@ -10,10 +10,10 @@ use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface;
-use Spryker\Zed\PriceCartConnector\Communication\PriceCartConnectorDependencyContainer;
+use Spryker\Zed\PriceCartConnector\Communication\PriceCartConnectorCommunicationFactory;
 
 /**
- * @method PriceCartConnectorDependencyContainer getDependencyContainer()
+ * @method PriceCartConnectorCommunicationFactory getFactory()
  */
 class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
@@ -25,7 +25,7 @@ class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginIn
 
     public function __construct()
     {
-        $this->priceManager = $this->getDependencyContainer()->createFacade();
+        $this->priceManager = $this->getFactory()->createFacade();
     }
 
     /**

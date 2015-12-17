@@ -7,11 +7,11 @@ namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Glossary\Communication\GlossaryDependencyContainer;
+use Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 
 /**
- * @method GlossaryDependencyContainer getDependencyContainer()
+ * @method GlossaryCommunicationFactory getFactory()
  * @method GlossaryFacade getFacade()
  */
 class EditController extends AbstractController
@@ -24,10 +24,10 @@ class EditController extends AbstractController
      */
     public function indexAction()
     {
-        $availableLocales = $this->getDependencyContainer()
+        $availableLocales = $this->getFactory()
             ->createEnabledLocales();
 
-        $glossaryForm = $this->getDependencyContainer()
+        $glossaryForm = $this->getFactory()
             ->createTranslationForm($availableLocales, self::FORM_UPDATE_TYPE);
 
         $glossaryForm->handleRequest();

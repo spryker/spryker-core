@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ProductOptionCheckoutConnectorDependencyContainer getDependencyContainer()
+ * @method ProductOptionCheckoutConnectorBusinessFactory getFactory()
  */
 class ProductOptionCheckoutConnectorFacade extends AbstractFacade
 {
@@ -21,7 +21,7 @@ class ProductOptionCheckoutConnectorFacade extends AbstractFacade
      */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {
-        $this->getDependencyContainer()->createProductOptionOrderHydrator()->hydrateOrderTransfer($order, $request);
+        $this->getFactory()->createProductOptionOrderHydrator()->hydrateOrderTransfer($order, $request);
     }
 
 }

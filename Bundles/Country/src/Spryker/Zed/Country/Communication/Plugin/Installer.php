@@ -7,10 +7,10 @@
 namespace Spryker\Zed\Country\Communication\Plugin;
 
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
-use Spryker\Zed\Country\Communication\CountryDependencyContainer;
+use Spryker\Zed\Country\Communication\CountryCommunicationFactory;
 
 /**
- * @method CountryDependencyContainer getDependencyContainer()
+ * @method CountryCommunicationFactory getFactory()
  */
 class Installer extends AbstractInstallerPlugin
 {
@@ -20,7 +20,7 @@ class Installer extends AbstractInstallerPlugin
      */
     public function install()
     {
-        $this->getDependencyContainer()->getInstallerFacade()->install($this->messenger);
+        $this->getFactory()->getInstallerFacade()->install($this->messenger);
     }
 
 }

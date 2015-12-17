@@ -7,14 +7,14 @@ namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Glossary\Communication\GlossaryDependencyContainer;
+use Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method GlossaryFacade getFacade()
  * @method GlossaryQueryContainerInterface getQueryContainer()
- * @method GlossaryDependencyContainer getDependencyContainer()
+ * @method GlossaryCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
@@ -24,10 +24,10 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $availableLocales = $this->getDependencyContainer()
+        $availableLocales = $this->getFactory()
             ->createEnabledLocales();
 
-        $table = $this->getDependencyContainer()
+        $table = $this->getFactory()
             ->createTranslationTable($availableLocales);
 
         return $this->viewResponse([
@@ -41,10 +41,10 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $availableLocales = $this->getDependencyContainer()
+        $availableLocales = $this->getFactory()
             ->createEnabledLocales();
 
-        $table = $this->getDependencyContainer()
+        $table = $this->getFactory()
             ->createTranslationTable($availableLocales);
 
         return $this->jsonResponse($table->fetchData());

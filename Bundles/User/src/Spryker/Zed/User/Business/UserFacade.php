@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\UserTransfer;
 use Generated\Shared\Transfer\CollectionTransfer;
 
 /**
- * @method UserDependencyContainer getDependencyContainer()
+ * @method UserBusinessFactory getFactory()
  */
 class UserFacade extends AbstractFacade
 {
@@ -21,7 +21,7 @@ class UserFacade extends AbstractFacade
      */
     public function install()
     {
-        $this->getDependencyContainer()
+        $this->getFactory()
             ->getInstallerModel()
             ->install();
     }
@@ -33,7 +33,7 @@ class UserFacade extends AbstractFacade
      */
     public function hasUserByUsername($username)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->hasUserByUsername($username);
     }
@@ -45,7 +45,7 @@ class UserFacade extends AbstractFacade
      */
     public function getUserByUsername($username)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->getUserByUsername($username);
     }
@@ -57,7 +57,7 @@ class UserFacade extends AbstractFacade
      */
     public function getUserById($idUser)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->getUserById($idUser);
     }
@@ -72,7 +72,7 @@ class UserFacade extends AbstractFacade
      */
     public function addUser($firstName, $lastName, $username, $password)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->addUser($firstName, $lastName, $username, $password);
     }
@@ -86,7 +86,7 @@ class UserFacade extends AbstractFacade
      */
     public function updateUser(UserTransfer $user)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->save($user);
     }
@@ -98,7 +98,7 @@ class UserFacade extends AbstractFacade
      */
     public function setCurrentUser(UserTransfer $user)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->setCurrentUser($user);
     }
@@ -108,7 +108,7 @@ class UserFacade extends AbstractFacade
      */
     public function getCurrentUser()
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->getCurrentUser();
     }
@@ -118,7 +118,7 @@ class UserFacade extends AbstractFacade
      */
     public function hasCurrentUser()
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->hasCurrentUser();
     }
@@ -131,7 +131,7 @@ class UserFacade extends AbstractFacade
      */
     public function isValidPassword($password, $hash)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->validatePassword($password, $hash);
     }
@@ -143,7 +143,7 @@ class UserFacade extends AbstractFacade
      */
     public function isSystemUser(UserTransfer $user)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->isSystemUser($user);
     }
@@ -153,7 +153,7 @@ class UserFacade extends AbstractFacade
      */
     public function getSystemUsers()
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->getSystemUsers();
     }
@@ -163,7 +163,7 @@ class UserFacade extends AbstractFacade
      */
     public function getUsers()
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->getUsers();
     }
@@ -175,7 +175,7 @@ class UserFacade extends AbstractFacade
      */
     public function removeUser($idUser)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->getUserModel()
             ->removeUser($idUser);
     }
@@ -187,7 +187,7 @@ class UserFacade extends AbstractFacade
      */
     public function activateUser($idUser)
     {
-        return $this->getDependencyContainer()->getUserModel()->activateUser($idUser);
+        return $this->getFactory()->getUserModel()->activateUser($idUser);
     }
 
     /**
@@ -197,7 +197,7 @@ class UserFacade extends AbstractFacade
      */
     public function deactivateUser($idUser)
     {
-        return $this->getDependencyContainer()->getUserModel()->deactivateUser($idUser);
+        return $this->getFactory()->getUserModel()->deactivateUser($idUser);
     }
 
 }

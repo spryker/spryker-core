@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Payolution\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Payolution\Communication\PayolutionDependencyContainer;
+use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @method PayolutionDependencyContainer getDependencyContainer()
+ * @method PayolutionCommunicationFactory getFactory()
  * @method PayolutionQueryContainerInterface getQueryContainer()
  */
 class DetailsController extends AbstractController
@@ -30,8 +30,8 @@ class DetailsController extends AbstractController
     {
         $idPayment = (int) $request->get('id-payment');
         $paymentEntity = $this->getPaymentEntity($idPayment);
-        $requestLogTable = $this->getDependencyContainer()->createRequestLogTable($idPayment);
-        $statusLogTable = $this->getDependencyContainer()->createStatusLogTable($idPayment);
+        $requestLogTable = $this->getFactory()->createRequestLogTable($idPayment);
+        $statusLogTable = $this->getFactory()->createStatusLogTable($idPayment);
 
         return [
             'idPayment' => $idPayment,
@@ -65,7 +65,7 @@ class DetailsController extends AbstractController
     public function requestLogTableAction(Request $request)
     {
         $idPayment = (int) $request->get('id-payment');
-        $requestLogTable = $this->getDependencyContainer()->createRequestLogTable($idPayment);
+        $requestLogTable = $this->getFactory()->createRequestLogTable($idPayment);
 
         return $this->jsonResponse($requestLogTable->fetchData());
     }
@@ -78,7 +78,7 @@ class DetailsController extends AbstractController
     public function statusLogTableAction(Request $request)
     {
         $idPayment = (int) $request->get('id-payment');
-        $statusLogTable = $this->getDependencyContainer()->createStatusLogTable($idPayment);
+        $statusLogTable = $this->getFactory()->createStatusLogTable($idPayment);
 
         return $this->jsonResponse($statusLogTable->fetchData());
     }

@@ -7,7 +7,7 @@
 namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use Spryker\Zed\Payolution\Business\PayolutionDependencyContainer;
+use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
 use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
@@ -23,29 +23,29 @@ class PayolutionFacadeMockBuilder
     public static function build(AdapterInterface $adapter, \PHPUnit_Framework_TestCase $testCase)
     {
 
-        // Mock dependency container to override return value of createExecutionAdapter to
+        // Mock business factory to override return value of createExecutionAdapter to
         // place a mocked adapter that doesn't establish an actual connection.
-        $dependencyContainerMock = self::getDependencyContainerMock($testCase);
-        $dependencyContainerMock->setConfig(new PayolutionConfig());
-        $dependencyContainerMock
+        $businessFactoryMock = self::getBusinessFactoryMock($testCase);
+        $businessFactoryMock->setConfig(new PayolutionConfig());
+        $businessFactoryMock
             ->expects($testCase->any())
             ->method('createAdapter')
             ->will($testCase->returnValue($adapter));
 
-        // Dependency container always requires a valid query container. Since we're creating
+        // Business factory always requires a valid query container. Since we're creating
         // functional/integration tests there's no need to mock the database layer.
         $queryContainer = new PayolutionQueryContainer();
-        $dependencyContainerMock->setQueryContainer($queryContainer);
+        $businessFactoryMock->setQueryContainer($queryContainer);
 
-        // Mock the facade to override getDependencyContainer() and have it return out
+        // Mock the facade to override getFactory() and have it return out
         // previously created mock.
         $facade = $testCase->getMock(
             'Spryker\Zed\Payolution\Business\PayolutionFacade',
-            ['getDependencyContainer']
+            ['getFactory']
         );
         $facade->expects($testCase->any())
-            ->method('getDependencyContainer')
-            ->will($testCase->returnValue($dependencyContainerMock));
+            ->method('getFactory')
+            ->will($testCase->returnValue($businessFactoryMock));
 
         return $facade;
     }
@@ -53,16 +53,16 @@ class PayolutionFacadeMockBuilder
     /**
      * @param \PHPUnit_Framework_TestCase $testCase
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|PayolutionDependencyContainer
+     * @return \PHPUnit_Framework_MockObject_MockObject|PayolutionBusinessFactory
      */
-    protected static function getDependencyContainerMock(\PHPUnit_Framework_TestCase $testCase)
+    protected static function getBusinessFactoryMock(\PHPUnit_Framework_TestCase $testCase)
     {
-        $dependencyContainerMock = $testCase->getMock(
-            'Spryker\Zed\Payolution\Business\PayolutionDependencyContainer',
+        $businessFactoryMock = $testCase->getMock(
+            'Spryker\Zed\Payolution\Business\PayolutionBusinessFactory',
             ['createAdapter']
         );
 
-        return $dependencyContainerMock;
+        return $businessFactoryMock;
     }
 
 }

@@ -8,11 +8,11 @@ namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Payone\Business\PayoneFacade;
-use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
+use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 
 /**
  * @method PayoneFacade getFacade()
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneCommunicationFactory getFactory()
  */
 class RefundIsApprovedPlugin extends AbstractPlugin
 {

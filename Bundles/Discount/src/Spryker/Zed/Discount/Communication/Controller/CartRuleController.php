@@ -5,13 +5,13 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountCommunicationFactory getFactory()
  * @method DiscountFacade getFacade()
  * @method DiscountQueryContainer getQueryContainer()
  */
@@ -26,7 +26,7 @@ class CartRuleController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createDiscountsTable();
+        $table = $this->getFactory()->createDiscountsTable();
 
         return [
             'discounts' => $table->render(),
@@ -38,7 +38,7 @@ class CartRuleController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createDiscountsTable();
+        $table = $this->getFactory()->createDiscountsTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -54,7 +54,7 @@ class CartRuleController extends AbstractController
     {
         $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
 
-        $form = $this->getDependencyContainer()->createDecisionRuleForm();
+        $form = $this->getFactory()->createDecisionRuleForm();
         $form->handleRequest($request);
 
         return [
@@ -72,7 +72,7 @@ class CartRuleController extends AbstractController
     {
         $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
 
-        $form = $this->getDependencyContainer()->createCollectorPluginForm();
+        $form = $this->getFactory()->createCollectorPluginForm();
         $form->handleRequest($request);
 
         return [
@@ -88,7 +88,7 @@ class CartRuleController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createCartRuleForm($this->getFacade());
+        $form = $this->getFactory()->createCartRuleForm($this->getFacade());
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -112,7 +112,7 @@ class CartRuleController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createCartRuleForm();
+        $form = $this->getFactory()->createCartRuleForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {

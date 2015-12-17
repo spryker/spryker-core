@@ -6,24 +6,24 @@
 
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
-use Spryker\Zed\Application\Business\ApplicationDependencyContainer;
+use Spryker\Zed\Application\Business\ApplicationBusinessFactory;
 
 /**
  * @group Spryker
  * @group Zed
  * @group ApplicationFacade
  * @group Business
- * @group ApplicationFacadeDependencyContainer
+ * @group ApplicationFacadeBusinessFactory
  */
-class ApplicationDependencyContainerTest extends \PHPUnit_Framework_TestCase
+class ApplicationBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return ApplicationDependencyContainer
+     * @return ApplicationBusinessFactory
      */
-    private function getDependencyContainer()
+    private function getFactory()
     {
-        return new ApplicationDependencyContainer();
+        return new ApplicationBusinessFactory();
     }
 
     /**
@@ -31,7 +31,7 @@ class ApplicationDependencyContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateNavigationBuilderShouldReturnFullyConfiguredInstance()
     {
-        $instance = $this->getDependencyContainer()->createNavigationBuilder();
+        $instance = $this->getFactory()->createNavigationBuilder();
 
         $this->assertInstanceOf('Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder', $instance);
     }

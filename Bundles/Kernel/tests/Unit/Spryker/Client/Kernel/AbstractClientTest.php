@@ -2,8 +2,6 @@
 
 namespace Unit\Spryker\Client\Kernel;
 
-use Spryker\Zed\Kernel\Locator;
-use Unit\Spryker\Client\Kernel\Fixtures\KernelFactory;
 use Unit\Spryker\Client\Kernel\Fixtures\KernelClient;
 
 /**
@@ -20,7 +18,7 @@ class AbstractClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testAbstractStubMustBeConstructable()
     {
-        $abstractStub = new KernelClient(new KernelFactory('Kernel'), Locator::getInstance());
+        $abstractStub = new KernelClient();
 
         $this->assertInstanceOf('Unit\Spryker\Client\Kernel\Fixtures\KernelClient', $abstractStub);
     }

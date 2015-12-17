@@ -8,11 +8,11 @@ namespace Spryker\Zed\DiscountCalculationConnector\Communication\Plugin;
 
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
-use Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorDependencyContainer;
+use Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method DiscountCalculationConnectorDependencyContainer getDependencyContainer()
+ * @method DiscountCalculationConnectorCommunicationFactory getFactory()
  */
 class DiscountCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
@@ -24,7 +24,7 @@ class DiscountCalculatorPlugin extends AbstractPlugin implements CalculatorPlugi
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {
-        return $this->getDependencyContainer()->getDiscountFacade()->calculateDiscounts($calculableContainer);
+        return $this->getFactory()->getDiscountFacade()->calculateDiscounts($calculableContainer);
     }
 
 }

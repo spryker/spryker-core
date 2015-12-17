@@ -11,10 +11,10 @@ use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\Communication\DiscountDependencyContainer;
+use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 
 /**
- * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountCommunicationFactory getFactory()
  */
 class ItemExpense extends AbstractDiscountPlugin implements DiscountCollectorPluginInterface
 {
@@ -31,7 +31,7 @@ class ItemExpense extends AbstractDiscountPlugin implements DiscountCollectorPlu
         CalculableInterface $container,
         DiscountCollectorTransfer $discountCollectorTransfer
     ) {
-        return $this->getDependencyContainer()->getDiscountFacade()
+        return $this->getFactory()->getDiscountFacade()
             ->getDiscountableItemExpenses($container, $discountCollectorTransfer);
     }
 

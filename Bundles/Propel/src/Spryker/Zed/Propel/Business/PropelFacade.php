@@ -9,7 +9,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * @method PropelDependencyContainer getDependencyContainer()
+ * @method PropelBusinessFactory getFactory()
  */
 class PropelFacade extends AbstractFacade
 {
@@ -19,7 +19,7 @@ class PropelFacade extends AbstractFacade
      */
     public function cleanPropelSchemaDirectory()
     {
-        $this->getDependencyContainer()->createDirectoryRemover()->execute();
+        $this->getFactory()->createDirectoryRemover()->execute();
     }
 
     /**
@@ -27,7 +27,7 @@ class PropelFacade extends AbstractFacade
      */
     public function copySchemaFilesToTargetDirectory()
     {
-        $this->getDependencyContainer()->createModelSchema()->copy();
+        $this->getFactory()->createModelSchema()->copy();
     }
 
     /**
@@ -35,7 +35,7 @@ class PropelFacade extends AbstractFacade
      */
     public function adjustPropelSchemaFilesForPostgresql()
     {
-        $this->getDependencyContainer()->createPostgresqlCompatibilityAdjuster()->adjustSchemaFiles();
+        $this->getFactory()->createPostgresqlCompatibilityAdjuster()->adjustSchemaFiles();
     }
 
     /**
@@ -43,7 +43,7 @@ class PropelFacade extends AbstractFacade
      */
     public function adjustPostgresqlFunctions()
     {
-        $this->getDependencyContainer()->createPostgresqlCompatibilityAdjuster()->addMissingFunctions();
+        $this->getFactory()->createPostgresqlCompatibilityAdjuster()->addMissingFunctions();
     }
 
     /**
@@ -51,7 +51,7 @@ class PropelFacade extends AbstractFacade
      */
     public function getConsoleCommands()
     {
-        return $this->getDependencyContainer()->getConsoleCommands();
+        return $this->getFactory()->getConsoleCommands();
     }
 
 }

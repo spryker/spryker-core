@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\Spryker\Zed\Development\Business\CodeStyleSniffer\Spryker\Sniffs\DependencyContainer;
+namespace Unit\Spryker\Zed\Development\Business\CodeStyleSniffer\Spryker\Sniffs\BusinessFactory;
 
-use Spryker\Sniffs\DependencyContainer\OneNewPerMethodSniff;
+use Spryker\Sniffs\Factory\OneNewPerMethodSniff;
 
 /**
  * @group Spryker
@@ -33,7 +33,7 @@ class OneNewPerMethodSniffTest extends \PHPUnit_Framework_TestCase
     {
         $fixtureDirectory = $this->getFixtureDirectory();
 
-        return $fixtureDirectory . '/InValidDependencyContainer.php';
+        return $fixtureDirectory . '/InValidFactory.php';
     }
 
     /**

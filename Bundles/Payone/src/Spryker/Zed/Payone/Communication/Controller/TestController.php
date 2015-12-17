@@ -20,12 +20,12 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Payone\Business\PayoneFacade;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
+use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 
 /**
  * @method PayoneFacade getFacade()
  * @method PayoneQueryContainerInterface getQueryContainer()
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneCommunicationFactory getFactory()
  */
 class TestController extends AbstractController
 {

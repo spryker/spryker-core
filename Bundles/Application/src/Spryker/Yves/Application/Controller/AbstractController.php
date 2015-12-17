@@ -10,11 +10,11 @@ use Generated\Yves\Ide\AutoCompletion;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Yves\Application\Application;
-use Spryker\Yves\Kernel\AbstractDependencyContainer;
+use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Spryker\Yves\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
-use Spryker\Yves\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException;
+use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Locator;
 use Spryker\Yves\Library\Session\TransferSession;
 use Symfony\Component\Form\FormInterface;
@@ -37,9 +37,9 @@ abstract class AbstractController
     private $app;
 
     /**
-     * @var AbstractDependencyContainer
+     * @var AbstractFactory
      */
-    private $dependencyContainer;
+    private $factory;
 
     /**
      * @var FlashBagInterface
@@ -363,33 +363,33 @@ abstract class AbstractController
     }
 
     /**
-     * @return AbstractDependencyContainer
+     * @return AbstractFactory
      */
-    protected function getDependencyContainer()
+    protected function getFactory()
     {
-        if ($this->dependencyContainer === null) {
-            $this->dependencyContainer = $this->resolveDependencyContainer();
+        if ($this->factory === null) {
+            $this->factory = $this->resolveFactory();
         }
 
-        return $this->dependencyContainer;
+        return $this->factory;
     }
 
     /**
-     * @throws DependencyContainerNotFoundException
+     * @throws FactoryNotFoundException
      *
-     * @return AbstractDependencyContainer
+     * @return AbstractFactory
      */
-    protected function resolveDependencyContainer()
+    protected function resolveFactory()
     {
-        return $this->getDependencyContainerResolver()->resolve($this);
+        return $this->getFactoryResolver()->resolve($this);
     }
 
     /**
-     * @return DependencyContainerResolver
+     * @return FactoryResolver
      */
-    protected function getDependencyContainerResolver()
+    protected function getFactoryResolver()
     {
-        return new DependencyContainerResolver();
+        return new FactoryResolver();
     }
 
 }

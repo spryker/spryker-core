@@ -14,11 +14,11 @@ use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Payone\Business\PayoneFacade;
-use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
+use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneCommunicationFactory getFactory()
  * @method PayoneFacade getFacade()
  */
 class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
@@ -38,7 +38,7 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($orderEntity->toArray(), true);
 
-        $amount = $this->getDependencyContainer()
+        $amount = $this->getFactory()
             ->createRefundFacade()
             ->calculateRefundableAmount($orderTransfer);
         $refundTransfer->setAmount($amount * -1);
@@ -51,7 +51,7 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
         $refundTransfer->setPayment($payonePaymentTransfer);
         $refundTransfer->setUseCustomerdata(PayoneApiConstants::USE_CUSTOMER_DATA_YES);
 
-        $narrativeText = $this->getDependencyContainer()->getConfig()->getNarrativeText($orderItems, $orderEntity, $data);
+        $narrativeText = $this->getFactory()->getConfig()->getNarrativeText($orderItems, $orderEntity, $data);
         $refundTransfer->setNarrativeText($narrativeText);
 
         $this->getFacade()->refundPayment($refundTransfer);

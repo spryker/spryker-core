@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerBusinessFactory getFactory()
  */
 class CustomerFacade extends AbstractFacade
 {
@@ -25,7 +25,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function hasEmail($email)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createCustomer()
             ->hasEmail($email);
     }
@@ -37,7 +37,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function registerCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createCustomer()
             ->register($customerTransfer);
     }
@@ -49,7 +49,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createCustomer()
             ->confirmRegistration($customerTransfer);
     }
@@ -61,7 +61,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createCustomer()
             ->forgotPassword($customerTransfer);
     }
@@ -73,7 +73,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createCustomer()
             ->restorePassword($customerTransfer);
     }
@@ -85,7 +85,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function deleteCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createCustomer()
             ->delete($customerTransfer);
     }
@@ -97,7 +97,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function getCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createCustomer()
             ->get($customerTransfer);
     }
@@ -109,7 +109,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function updateCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createCustomer()
             ->update($customerTransfer);
     }
@@ -121,7 +121,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function updateCustomerPassword(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createCustomer()
             ->updatePassword($customerTransfer);
     }
@@ -133,7 +133,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function getAddress(AddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->getAddress($addressTransfer);
     }
@@ -145,7 +145,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function getAddresses(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->getAddresses($customerTransfer);
     }
@@ -157,7 +157,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function updateAddress(AddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->updateAddress($addressTransfer);
     }
@@ -169,7 +169,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->updateAddressAndCustomerDefaultAddresses($addressTransfer);
     }
@@ -181,7 +181,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer);
     }
@@ -193,7 +193,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function createAddress(AddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->createAddress($addressTransfer);
     }
@@ -205,7 +205,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->setDefaultBillingAddress($addressTransfer);
     }
@@ -217,7 +217,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function setDefaultShippingAddress(AddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->setDefaultShippingAddress($addressTransfer);
     }
@@ -229,7 +229,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function renderAddress(AddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->getFormattedAddressString($addressTransfer);
     }
@@ -241,7 +241,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->getDefaultShippingAddress($customerTransfer);
     }
@@ -253,7 +253,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->getDefaultBillingAddress($customerTransfer);
     }
@@ -265,7 +265,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function deleteAddress(AddressTransfer $addressTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createAddress()
             ->deleteAddress($addressTransfer);
     }
@@ -277,7 +277,7 @@ class CustomerFacade extends AbstractFacade
      */
     public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createCustomer()
             ->tryAuthorizeCustomerByEmailAndPassword($customerTransfer);
     }

@@ -6,11 +6,11 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Communication\Plugin;
 
-use Spryker\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnectorDependencyContainer as DependencyContainer;
+use Spryker\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnectorCommunicationFactory as CommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method DependencyContainer getDependencyContainer()
+ * @method CommunicationFactory getFactory()
  */
 class CheckAvailabilityPlugin extends AbstractPlugin
 {
@@ -23,7 +23,7 @@ class CheckAvailabilityPlugin extends AbstractPlugin
      */
     public function isProductSellable($sku, $quantity)
     {
-        return $this->getDependencyContainer()->getAvailabilityFacade()->isProductSellable($sku, $quantity);
+        return $this->getFactory()->getAvailabilityFacade()->isProductSellable($sku, $quantity);
     }
 
     /**
@@ -33,7 +33,7 @@ class CheckAvailabilityPlugin extends AbstractPlugin
      */
     public function calculateStockForProduct($sku)
     {
-        return $this->getDependencyContainer()->getAvailabilityFacade()->calculateStockForProduct($sku);
+        return $this->getFactory()->getAvailabilityFacade()->calculateStockForProduct($sku);
     }
 
 }

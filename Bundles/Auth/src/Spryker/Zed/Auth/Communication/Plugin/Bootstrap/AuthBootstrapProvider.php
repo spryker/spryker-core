@@ -11,11 +11,11 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\AuthFacade;
-use Spryker\Zed\Auth\Communication\AuthDependencyContainer;
+use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AuthDependencyContainer getDependencyContainer()
+ * @method AuthCommunicationFactory getFactory()
  * @method AuthFacade getFacade()
  */
 class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -37,7 +37,7 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
      */
     public function boot(Application $app)
     {
-        $bundleSettings = $this->getDependencyContainer()->getConfig();
+        $bundleSettings = $this->getFactory()->getConfig();
         $facadeAuth = $this->getFacade();
 
         $app->before(function (Request $request) use ($app, $facadeAuth, $bundleSettings) {

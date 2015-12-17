@@ -11,14 +11,14 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
-use Spryker\Zed\Customer\Communication\CustomerDependencyContainer;
+use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method CustomerFacade getFacade()
- * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerCommunicationFactory getFactory()
  */
 class ProfileController extends AbstractController
 {
@@ -44,7 +44,7 @@ class ProfileController extends AbstractController
 
         $this->setMenuHighlight($customerUri);
 
-        $form = $this->getDependencyContainer()
+        $form = $this->getFactory()
             ->createCustomerForm($request);
 
         $customerTransfer = new CustomerTransfer();
@@ -118,7 +118,7 @@ class ProfileController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $form = $this->getDependencyContainer()
+        $form = $this->getFactory()
             ->createCustomerForm($request);
 
         if ($form->isValid() === true) {
@@ -138,7 +138,7 @@ class ProfileController extends AbstractController
      */
     public function addressesAction(Request $request)
     {
-        $grid = $this->getDependencyContainer()
+        $grid = $this->getFactory()
             ->createAddressGrid($request);
 
         return $this->jsonResponse($grid->renderData());
@@ -151,7 +151,7 @@ class ProfileController extends AbstractController
      */
     public function addressAction(Request $request)
     {
-        $form = $this->getDependencyContainer()
+        $form = $this->getFactory()
             ->createAddressForm($request);
 
         if ($form->isValid() === true) {

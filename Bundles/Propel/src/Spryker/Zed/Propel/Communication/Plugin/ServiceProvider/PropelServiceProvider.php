@@ -13,11 +13,11 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Config;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Propel\Communication\PropelDependencyContainer;
+use Spryker\Zed\Propel\Communication\PropelCommunicationFactory;
 use Spryker\Shared\Application\ApplicationConstants;
 
 /**
- * @method PropelDependencyContainer getDependencyContainer()
+ * @method PropelCommunicationFactory getFactory()
  */
 class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -108,7 +108,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     private function addLogger(StandardServiceContainer $serviceContainer)
     {
-        $loggerCollection = $this->getDependencyContainer()->createLogger();
+        $loggerCollection = $this->getFactory()->createLogger();
 
         foreach ($loggerCollection as $logger) {
             $serviceContainer->setLogger($logger->getName(), $logger);

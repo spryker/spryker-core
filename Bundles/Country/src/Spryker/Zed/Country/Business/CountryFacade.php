@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 
 /**
- * @method CountryDependencyContainer getDependencyContainer()
+ * @method CountryBusinessFactory getFactory()
  */
 class CountryFacade extends AbstractFacade
 {
@@ -24,7 +24,7 @@ class CountryFacade extends AbstractFacade
      */
     public function install(LoggerInterface $messenger)
     {
-        $this->getDependencyContainer()->createInstaller($messenger)->install();
+        $this->getFactory()->createInstaller($messenger)->install();
     }
 
     /**
@@ -34,7 +34,7 @@ class CountryFacade extends AbstractFacade
      */
     public function getIdCountryByIso2Code($iso2Code)
     {
-        return $this->getDependencyContainer()->createCountryManager()->getIdCountryByIso2Code($iso2Code);
+        return $this->getFactory()->createCountryManager()->getIdCountryByIso2Code($iso2Code);
     }
 
     /**
@@ -42,7 +42,7 @@ class CountryFacade extends AbstractFacade
      */
     public function getAvailableCountries()
     {
-        $countries = $this->getDependencyContainer()
+        $countries = $this->getFactory()
             ->createCountryManager()
             ->getCountryCollection();
 
@@ -56,7 +56,7 @@ class CountryFacade extends AbstractFacade
      */
     public function getPreferedCountryByName($countryName)
     {
-        $countryTransfer = $this->getDependencyContainer()
+        $countryTransfer = $this->getFactory()
             ->createCountryManager()
             ->getPreferedCountryByName($countryName);
 

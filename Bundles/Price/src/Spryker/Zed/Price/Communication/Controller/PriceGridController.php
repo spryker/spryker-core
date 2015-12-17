@@ -7,12 +7,12 @@
 namespace Spryker\Zed\Price\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Price\Communication\PriceDependencyContainer;
+use Spryker\Zed\Price\Communication\PriceCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method PriceDependencyContainer getDependencyContainer()
+ * @method PriceCommunicationFactory getFactory()
  */
 class PriceGridController extends AbstractController
 {
@@ -24,7 +24,7 @@ class PriceGridController extends AbstractController
      */
     public function priceAction(Request $request)
     {
-        $grid = $this->getDependencyContainer()->getPriceGrid($request);
+        $grid = $this->getFactory()->getPriceGrid($request);
         $data = $grid->toArray();
         $data['rows'] = $this->orderData($data['rows']);
 
@@ -38,7 +38,7 @@ class PriceGridController extends AbstractController
      */
     public function priceTypeAction(Request $request)
     {
-        $grid = $this->getDependencyContainer()->getPriceTypeGrid($request);
+        $grid = $this->getFactory()->getPriceTypeGrid($request);
 
         return $this->jsonResponse($grid->toArray());
     }
@@ -53,24 +53,12 @@ class PriceGridController extends AbstractController
         foreach ($data as $index => $row) {
             if ($row['sku_product_concrete'] !== null) {
                 $data[$index]['sku_product'] = $row['sku_product_concrete'];
-                $data[$index]['/**
- * @method PriceDependencyContainer getDependencyContainer()
- */
-abstract'] = false;
+                $data[$index]['abstract'] = false;
             } else {
-                $data[$index]['sku_product'] = $row['sku_product_/**
- * @method PriceDependencyContainer getDependencyContainer()
- */
-abstract'];
-                $data[$index]['/**
- * @method PriceDependencyContainer getDependencyContainer()
- */
-abstract'] = true;
+                $data[$index]['sku_product'] = $row['sku_product_abstract'];
+                $data[$index]['abstract'] = true;
             }
-            unset($data[$index]['sku_product_/**
- * @method PriceDependencyContainer getDependencyContainer()
- */
-abstract']);
+            unset($data[$index]['sku_product_abstract']);
             unset($data[$index]['sku_product_concrete']);
         }
 

@@ -8,14 +8,14 @@ namespace Spryker\Zed\Search\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Search\Business\SearchFacade;
-use Spryker\Zed\Search\Communication\SearchDependencyContainer;
+use Spryker\Zed\Search\Communication\SearchCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method SearchFacade getFacade()
- * @method SearchDependencyContainer getDependencyContainer()
+ * @method SearchCommunicationFactory getFactory()
  */
 class MaintenanceController extends AbstractController
 {
@@ -39,7 +39,7 @@ class MaintenanceController extends AbstractController
      */
     public function dropTimestampsAction()
     {
-        $this->getDependencyContainer()->createCollectorFacade()->deleteSearchTimestamps();
+        $this->getFactory()->createCollectorFacade()->deleteSearchTimestamps();
 
         return $this->redirectResponse(self::URL_SEARCH_MAINTENANCE);
     }
@@ -49,7 +49,7 @@ class MaintenanceController extends AbstractController
      */
     public function listAction()
     {
-        $table = $this->getDependencyContainer()->createSearchTable();
+        $table = $this->getFactory()->createSearchTable();
 
         return $this->viewResponse(['searchTable' => $table->render()]);
     }
@@ -59,7 +59,7 @@ class MaintenanceController extends AbstractController
      */
     public function listAjaxAction()
     {
-        $table = $this->getDependencyContainer()->createSearchTable();
+        $table = $this->getFactory()->createSearchTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -87,7 +87,7 @@ class MaintenanceController extends AbstractController
     {
         $key = $request->get('key');
 
-        $type = $this->getDependencyContainer()->getConfig()->getElasticaDocumentType();
+        $type = $this->getFactory()->getConfig()->getElasticaDocumentType();
         $document = $this->getFacade()->getDocument($key, $type);
 
         return $this->viewResponse([

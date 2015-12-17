@@ -9,13 +9,13 @@ namespace Spryker\Zed\Shipment\Communication\Controller;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
-use Spryker\Zed\Shipment\Communication\ShipmentDependencyContainer;
+use Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method ShipmentDependencyContainer getDependencyContainer()
+ * @method ShipmentCommunicationFactory getFactory()
  * @method ShipmentFacade getFacade()
  */
 class MethodController extends AbstractController
@@ -28,7 +28,7 @@ class MethodController extends AbstractController
      */
     public function addAction()
     {
-        $form = $this->getDependencyContainer()
+        $form = $this->getFactory()
             ->createMethodForm();
         $form->handleRequest();
 
@@ -59,7 +59,7 @@ class MethodController extends AbstractController
         $idMethod = $request->query->get(self::ID_METHOD_PARAMETER);
 
         if ($this->getFacade()->hasMethod($idMethod)) {
-            $form = $this->getDependencyContainer()
+            $form = $this->getFactory()
                 ->createMethodForm($idMethod);
             $form->handleRequest();
 

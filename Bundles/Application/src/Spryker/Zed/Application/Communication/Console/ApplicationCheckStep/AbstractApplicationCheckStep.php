@@ -8,10 +8,10 @@ namespace Spryker\Zed\Application\Communication\Console\ApplicationCheckStep;
 
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Application\Communication\ApplicationDependencyContainer;
+use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -28,9 +28,9 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     protected $facade;
 
     /**
-     * @var ApplicationDependencyContainer
+     * @var ApplicationCommunicationFactory
      */
-    protected $dependencyContainer;
+    protected $communicationFactory;
 
     /**
      * Logs with an arbitrary level.
@@ -49,13 +49,13 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     /**
-     * @param AbstractCommunicationDependencyContainer $dependencyContainer
+     * @param AbstractCommunicationFactory $communicationFactory
      *
      * @return void
      */
-    public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
+    public function setCommunicationFactory(AbstractCommunicationFactory $communicationFactory)
     {
-        $this->dependencyContainer = $dependencyContainer;
+        $this->communicationFactory = $communicationFactory;
     }
 
     /**
@@ -65,18 +65,18 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
      */
     public function setExternalDependencies(Container $container)
     {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setContainer($container);
+        $communicationFactory = $this->getFactory();
+        if (isset($communicationFactory)) {
+            $this->getFactory()->setContainer($container);
         }
     }
 
     /**
-     * @return AbstractCommunicationDependencyContainer
+     * @return AbstractCommunicationFactory
      */
-    protected function getDependencyContainer()
+    protected function getFactory()
     {
-        return $this->dependencyContainer;
+        return $this->communicationFactory;
     }
 
     /**

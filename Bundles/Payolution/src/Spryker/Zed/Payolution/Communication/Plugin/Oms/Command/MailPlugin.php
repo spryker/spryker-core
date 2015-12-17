@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Payolution\Business\PayolutionFacade;
-use Spryker\Zed\Payolution\Communication\PayolutionDependencyContainer;
+use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -19,7 +19,7 @@ use Generated\Shared\Transfer\MailRecipientTransfer;
 
 /**
  * @method PayolutionFacade getFacade()
- * @method PayolutionDependencyContainer getDependencyContainer()
+ * @method PayolutionCommunicationFactory getFactory()
  */
 class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
@@ -33,7 +33,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $config = $this->getDependencyContainer()->getConfig();
+        $config = $this->getFactory()->getConfig();
         $mailTransfer = new MailTransfer();
 
         $mailTransfer->setTemplateName($config->getEmailTemplateName());
@@ -42,7 +42,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
         $this->setMailTransferFrom($mailTransfer, $config);
         $this->setMailTransferSubject($mailTransfer, $config);
 
-        $mailFacade = $this->getDependencyContainer()->getMailFacade();
+        $mailFacade = $this->getFactory()->getMailFacade();
         $mailFacade->sendMail($mailTransfer);
 
         return [];
@@ -111,7 +111,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     protected function translate($keyName)
     {
-        $glossaryFacade = $this->getDependencyContainer()->getGlossaryFacade();
+        $glossaryFacade = $this->getFactory()->getGlossaryFacade();
 
         if ($glossaryFacade->hasTranslation($keyName)) {
             return $glossaryFacade->translate($keyName);

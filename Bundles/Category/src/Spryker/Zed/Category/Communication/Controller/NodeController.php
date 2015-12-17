@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Category\CategoryConfig;
-use Spryker\Zed\Category\Communication\CategoryDependencyContainer;
+use Spryker\Zed\Category\Communication\CategoryCommunicationFactory;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method CategoryFacade getFacade()
- * @method CategoryDependencyContainer getDependencyContainer()
+ * @method CategoryCommunicationFactory getFactory()
  * @method CategoryQueryContainer getQueryContainer()
  */
 class NodeController extends AbstractController
@@ -33,10 +33,10 @@ class NodeController extends AbstractController
     {
         $idCategoryNode = $request->get(CategoryConfig::PARAM_ID_NODE);
 
-        $locale = $this->getDependencyContainer()
+        $locale = $this->getFactory()
             ->createCurrentLocale();
 
-        $nodeList = $this->getDependencyContainer()
+        $nodeList = $this->getFactory()
             ->createCategoryQueryContainer()
             ->getCategoryNodesWithOrder($idCategoryNode, $locale->getIdLocale())
             ->find();
@@ -64,7 +64,7 @@ class NodeController extends AbstractController
      */
     public function reorderAction(Request $request)
     {
-        $locale = $this->getDependencyContainer()
+        $locale = $this->getFactory()
             ->createCurrentLocale();
 
         $categoryNodesToReorder = (array) json_decode($request->request->get('nodes'), true);
@@ -73,7 +73,7 @@ class NodeController extends AbstractController
         foreach ($categoryNodesToReorder as $index => $nodeData) {
             $idNode = $nodeData['id'];
 
-            $nodeEntity = $this->getDependencyContainer()
+            $nodeEntity = $this->getFactory()
                 ->createCategoryQueryContainer()
                 ->queryNodeById($idNode)
                 ->findOne();
@@ -83,7 +83,7 @@ class NodeController extends AbstractController
 
             $nodeTransfer->setNodeOrder($order);
 
-            $this->getDependencyContainer()
+            $this->getFactory()
                 ->createCategoryFacade()
                 ->updateCategoryNode($nodeTransfer, $locale);
 

@@ -11,14 +11,14 @@ use Spryker\Shared\Payone\PayoneConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use Spryker\Zed\Payone\Business\PayoneFacade;
-use Spryker\Zed\Payone\Communication\PayoneDependencyContainer;
+use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @method PayoneFacade getFacade()
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneCommunicationFactory getFactory()
  */
 class TransactionController extends AbstractController
 {
@@ -98,10 +98,10 @@ class TransactionController extends AbstractController
             ->endUse()
             ->endUse()
             ->find();
-        $this->getDependencyContainer()->createOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
+        $this->getFactory()->createOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
 
         if ($dataArray['txaction'] === PayoneConstants::PAYONE_TXACTION_APPOINTED) {
-            $this->getDependencyContainer()->createOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
+            $this->getFactory()->createOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
         }
     }
 

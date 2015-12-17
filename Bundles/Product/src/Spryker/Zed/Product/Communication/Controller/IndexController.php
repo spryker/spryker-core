@@ -6,7 +6,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Product\Business\ProductFacade;
-use Spryker\Zed\Product\Communication\ProductDependencyContainer;
+use Spryker\Zed\Product\Communication\ProductCommunicationFactory;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method ProductFacade getFacade()
  * @method ProductQueryContainer getQueryContainer()
- * @method ProductDependencyContainer getDependencyContainer()
+ * @method ProductCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
@@ -30,7 +30,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createProductTable();
+        $table = $this->getFactory()->createProductTable();
 
         return [
             'products' => $table->render(),
@@ -42,7 +42,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createProductTable();
+        $table = $this->getFactory()->createProductTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -140,7 +140,7 @@ class IndexController extends AbstractController
     {
         $concreteProducts = [];
         foreach ($concreteProductsCollection as $concreteProduct) {
-            $productOptions = $this->getDependencyContainer()
+            $productOptions = $this->getFactory()
                 ->createProductOptionsFacade()
                 ->getProductOptionsByIdProduct(
                     $concreteProduct->getIdProduct(),
@@ -167,7 +167,7 @@ class IndexController extends AbstractController
      */
     protected function getProductCategories(SpyAbstractProduct $abstractProduct, $idLocale)
     {
-        $productCategoryEntityList = $this->getDependencyContainer()
+        $productCategoryEntityList = $this->getFactory()
             ->createProductCategoryQueryContainer()
             ->queryLocalizedProductCategoryMappingByIdProduct($abstractProduct->getIdAbstractProduct())
             ->find();
@@ -193,7 +193,7 @@ class IndexController extends AbstractController
      */
     protected function getCurrentLocale()
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createLocaleFacade()
             ->getCurrentLocale();
     }

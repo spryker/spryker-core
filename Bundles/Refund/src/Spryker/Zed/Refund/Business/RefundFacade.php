@@ -9,14 +9,14 @@ namespace Spryker\Zed\Refund\Business;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Refund\Business\RefundDependencyContainer as SprykerRefundDependencyContainer;
+use Spryker\Zed\Refund\Business\RefundBusinessFactory as SprykerRefundBusinessFactory;
 use Orm\Zed\Refund\Persistence\SpyRefund;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 
 /**
- * @method SprykerRefundDependencyContainer getDependencyContainer()
+ * @method SprykerRefundBusinessFactory getFactory()
  */
 class RefundFacade extends AbstractFacade
 {
@@ -28,7 +28,7 @@ class RefundFacade extends AbstractFacade
      */
     public function calculateRefundableAmount(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createRefundManager()
             ->calculateRefundableAmount($orderTransfer);
     }
@@ -40,7 +40,7 @@ class RefundFacade extends AbstractFacade
      */
     public function getRefundsByIdSalesOrder($idSalesOrder)
     {
-        $refundQueryContainer = $this->getDependencyContainer()->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_REFUND);
+        $refundQueryContainer = $this->getFactory()->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_REFUND);
 
         $refunds = $refundQueryContainer->queryRefundsByIdSalesOrder($idSalesOrder)->find();
 
@@ -60,7 +60,7 @@ class RefundFacade extends AbstractFacade
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createSalesFacade()
             ->getOrderByIdSalesOrder($idSalesOrder);
     }
@@ -72,7 +72,7 @@ class RefundFacade extends AbstractFacade
      */
     public function saveRefund(RefundTransfer $refundTransfer)
     {
-        return $this->getDependencyContainer()
+        return $this->getFactory()
             ->createRefundModel()
             ->saveRefund($refundTransfer);
     }
@@ -84,7 +84,7 @@ class RefundFacade extends AbstractFacade
      */
     public function getRefundableItems($idOrder)
     {
-        return $this->getDependencyContainer()->createRefundModel()->getRefundableItems($idOrder);
+        return $this->getFactory()->createRefundModel()->getRefundableItems($idOrder);
     }
 
     /**
@@ -94,7 +94,7 @@ class RefundFacade extends AbstractFacade
      */
     public function getRefundableExpenses($idOrder)
     {
-        return $this->getDependencyContainer()->createRefundModel()->getRefundableExpenses($idOrder);
+        return $this->getFactory()->createRefundModel()->getRefundableExpenses($idOrder);
     }
 
 }

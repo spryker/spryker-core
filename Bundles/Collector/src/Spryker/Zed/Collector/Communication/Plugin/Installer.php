@@ -6,11 +6,11 @@
 
 namespace Spryker\Zed\Collector\Communication\Plugin;
 
-use Spryker\Zed\Collector\Communication\CollectorDependencyContainer;
+use Spryker\Zed\Collector\Communication\CollectorCommunicationFactory;
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 /**
- * @method CollectorDependencyContainer getDependencyContainer()
+ * @method CollectorCommunicationFactory getFactory()
  */
 class Installer extends AbstractInstallerPlugin
 {
@@ -20,7 +20,7 @@ class Installer extends AbstractInstallerPlugin
      */
     public function install()
     {
-        $this->getDependencyContainer()->getInstallerFacade()->install($this->messenger);
+        $this->getFactory()->getInstallerFacade()->install($this->messenger);
     }
 
 }

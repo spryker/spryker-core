@@ -8,14 +8,14 @@ namespace Spryker\Zed\Storage\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Storage\Business\StorageFacade;
-use Spryker\Zed\Storage\Communication\StorageDependencyContainer;
+use Spryker\Zed\Storage\Communication\StorageCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method StorageFacade getFacade()
- * @method StorageDependencyContainer getDependencyContainer()
+ * @method StorageCommunicationFactory getFactory()
  */
 class MaintenanceController extends AbstractController
 {
@@ -42,7 +42,7 @@ class MaintenanceController extends AbstractController
      */
     public function listAction()
     {
-        $table = $this->getDependencyContainer()->createStorageTable();
+        $table = $this->getFactory()->createStorageTable();
 
         return $this->viewResponse(['table' => $table->render()]);
     }
@@ -52,7 +52,7 @@ class MaintenanceController extends AbstractController
      */
     public function listAjaxAction()
     {
-        $table = $this->getDependencyContainer()->createStorageTable();
+        $table = $this->getFactory()->createStorageTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -65,7 +65,7 @@ class MaintenanceController extends AbstractController
     public function dropTimestampsAction()
     {
         $timestamps = $this->getFacade()->getTimestamps();
-        $this->getDependencyContainer()->createCollectorFacade()->deleteStorageTimestamps(array_keys($timestamps));
+        $this->getFactory()->createCollectorFacade()->deleteStorageTimestamps(array_keys($timestamps));
 
         return $this->redirectResponse(self::URL_STORAGE_MAINTENANCE);
     }

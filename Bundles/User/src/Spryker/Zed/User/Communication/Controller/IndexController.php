@@ -8,12 +8,12 @@ namespace Spryker\Zed\User\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\User\Business\UserFacade;
-use Spryker\Zed\User\Communication\UserDependencyContainer;
+use Spryker\Zed\User\Communication\UserCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 /**
- * @method UserDependencyContainer getDependencyContainer
+ * @method UserCommunicationFactory getCommunicationFactory
  * @method UserFacade getFacade()
  * @method UserQueryContainer getQueryContainer()
  */
@@ -25,7 +25,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $usersTable = $this->getDependencyContainer()->createUserTable();
+        $usersTable = $this->getFactory()->createUserTable();
 
         return [
             'users' => $usersTable->render(),
@@ -37,7 +37,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createUserTable();
+        $table = $this->getFactory()->createUserTable();
 
         return $this->jsonResponse(
             $table->fetchData()

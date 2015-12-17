@@ -6,12 +6,12 @@
 
 namespace Spryker\Zed\Customer\Communication\Plugin;
 
-use Spryker\Zed\Customer\Communication\CustomerDependencyContainer;
+use Spryker\Zed\Customer\Communication\CustomerPluginFactory;
 use Spryker\Zed\Installer\Business\Model\InstallerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method CustomerDependencyContainer getDependencyContainer()
+ * @method CustomerPluginFactory getFactory()
  */
 class Installer extends AbstractPlugin implements InstallerInterface
 {
@@ -21,7 +21,7 @@ class Installer extends AbstractPlugin implements InstallerInterface
      */
     public function install()
     {
-        $this->getDependencyContainer()->createInstaller()->install();
+        $this->getFactory()->createInstaller()->install();
     }
 
 }
