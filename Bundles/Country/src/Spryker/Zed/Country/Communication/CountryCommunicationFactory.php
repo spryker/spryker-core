@@ -17,14 +17,6 @@ class CountryCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return CountryFacade
-     */
-    public function getInstallerFacade()
-    {
-        return $this->getLocator()->country()->facade();
-    }
-
-    /**
      * @return CountryTable
      */
     public function createCountryTable()

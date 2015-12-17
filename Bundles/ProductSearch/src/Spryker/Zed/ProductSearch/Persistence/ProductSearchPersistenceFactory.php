@@ -7,8 +7,12 @@
 namespace Spryker\Zed\ProductSearch\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
+/**
+ * @method ProductQueryContainer getQueryContainer()
+ */
 class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
 {
 
@@ -27,7 +31,7 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
      */
     protected function createProductQueryContainer()
     {
-        return $this->getLocator()->product()->queryContainer();
+        return $this->getQueryContainer();
     }
 
 }

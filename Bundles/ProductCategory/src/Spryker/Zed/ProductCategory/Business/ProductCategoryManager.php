@@ -10,10 +10,8 @@ use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
@@ -61,11 +59,6 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $cmsFacade;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var ConnectionInterface
      */
     protected $connection;
@@ -77,7 +70,6 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param ProductCategoryToCategoryInterface $categoryFacade
      * @param ProductCategoryToTouchInterface $touchFacade
      * @param ProductCategoryToCmsInterface $cmsFacade
-     * @param LocatorLocatorInterface $locator
      * @param ConnectionInterface $connection
      */
     public function __construct(
@@ -87,7 +79,6 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         ProductCategoryToCategoryInterface $categoryFacade,
         ProductCategoryToTouchInterface $touchFacade,
         ProductCategoryToCmsInterface $cmsFacade,
-        LocatorLocatorInterface $locator,
         ConnectionInterface $connection
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
@@ -96,7 +87,6 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         $this->categoryFacade = $categoryFacade;
         $this->touchFacade = $touchFacade;
         $this->cmsFacade = $cmsFacade;
-        $this->locator = $locator;
         $this->connection = $connection;
     }
 

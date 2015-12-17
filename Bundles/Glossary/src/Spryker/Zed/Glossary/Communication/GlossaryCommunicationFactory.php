@@ -28,16 +28,6 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return GlossaryFacade
-     */
-    public function createGlossaryFacade()
-    {
-        return $this->getLocator()
-            ->glossary()
-            ->facade();
-    }
-
-    /**
      * @return array
      */
     public function createEnabledLocales()
@@ -51,9 +41,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createQueryContainer()
     {
-        return $this->getLocator()
-            ->glossary()
-            ->queryContainer();
+        return $this->getQueryContainer();
     }
 
     /**

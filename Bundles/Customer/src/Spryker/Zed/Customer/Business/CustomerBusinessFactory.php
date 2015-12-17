@@ -28,9 +28,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createQueryContainer()
     {
-        return $this->getLocator()
-            ->customer()
-            ->queryContainer();
+        return $this->getQueryContainer();
     }
 
     /**

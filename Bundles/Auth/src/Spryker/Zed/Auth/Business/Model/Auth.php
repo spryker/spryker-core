@@ -13,18 +13,13 @@ use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\AuthBusinessFactory;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Exception\UserNotLoggedException;
+use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Business\UserFacade;
 use Generated\Shared\Transfer\UserTransfer;
 
 class Auth implements AuthInterface
 {
-
-    /**
-     * @var AutoCompletion
-     * @var LocatorLocatorInterface
-     */
-    protected $locator;
 
     /**
      * @var SessionClientInterface
@@ -42,25 +37,30 @@ class Auth implements AuthInterface
     protected $businessFactory;
 
     /**
-     * @todo cleanup dependencies
-     *
-     * @param LocatorLocatorInterface $locator
+     * @var AuthConfig
+     */
+    protected $authConfig;
+
+    /**
+     * @var StaticToken
+     */
+    protected $staticToken;
+
+    /**
      * @param SessionClientInterface $session
-     * @param UserFacade $userFacade
-     * @param AuthConfig $settings
+     * @param AuthToUserBridge $userBridge
+     * @param AuthConfig $authConfig
      * @param StaticToken $staticToken
      */
     public function __construct(
-        LocatorLocatorInterface $locator,
         SessionClientInterface $session,
-        UserFacade $userFacade,
-        AuthConfig $settings,
+        AuthToUserBridge $userBridge,
+        AuthConfig $authConfig,
         StaticToken $staticToken
     ) {
-        $this->locator = $locator;
         $this->session = $session;
-        $this->userFacade = $userFacade;
-        $this->bundleSettings = $settings;
+        $this->userFacade = $userBridge;
+        $this->authConfig = $authConfig;
         $this->staticToken = $staticToken;
     }
 
@@ -223,7 +223,7 @@ class Auth implements AuthInterface
      */
     public function hasSystemUserByHash($hash)
     {
-        $credentials = $this->bundleSettings->getUsersCredentials();
+        $credentials = $this->authConfig->getUsersCredentials();
         $token = $this->staticToken;
         foreach ($credentials as $username => $credential) {
             $token->setRawToken($credential['token']);
@@ -246,7 +246,7 @@ class Auth implements AuthInterface
     {
         $user = new UserTransfer();
 
-        $credentials = $this->bundleSettings->getUsersCredentials();
+        $credentials = $this->authConfig->getUsersCredentials();
         $token = $this->staticToken;
         foreach ($credentials as $username => $credential) {
             $token->setRawToken($credential['token']);
@@ -316,7 +316,7 @@ class Auth implements AuthInterface
      */
     public function isIgnorablePath($bundle, $controller, $action)
     {
-        $ignorable = $this->bundleSettings->getIgnorable();
+        $ignorable = $this->authConfig->getIgnorable();
         foreach ($ignorable as $ignore) {
             if (($bundle === $ignore['bundle'] || $ignore['bundle'] === AuthConfig::AUTHORIZATION_WILDCARD) &&
                 ($controller === $ignore['controller'] || $ignore['controller'] === AuthConfig::AUTHORIZATION_WILDCARD) &&

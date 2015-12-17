@@ -24,11 +24,6 @@ class Writer implements WriterInterface
     const ENTITY_NOT_FOUND = 'entity not found';
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var PriceQueryContainer
      */
     protected $queryContainer;
@@ -49,20 +44,17 @@ class Writer implements WriterInterface
     protected $priceSettings;
 
     /**
-     * @param LocatorLocatorInterface $locator
      * @param PriceQueryContainer $queryContainer
      * @param ReaderInterface $reader
      * @param PriceToTouchInterface $touchFacade
      * @param PriceConfig $priceSettings
      */
     public function __construct(
-        LocatorLocatorInterface $locator,
         PriceQueryContainer $queryContainer,
         ReaderInterface $reader,
         PriceToTouchInterface $touchFacade,
         PriceConfig $priceSettings
     ) {
-        $this->locator = $locator;
         $this->queryContainer = $queryContainer;
         $this->reader = $reader;
         $this->touchFacade = $touchFacade;

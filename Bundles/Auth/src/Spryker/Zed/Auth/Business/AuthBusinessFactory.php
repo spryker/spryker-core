@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Auth\Business;
 
+use Spryker\Client\Session\SessionClientInterface;
+use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
@@ -13,6 +15,7 @@ use Spryker\Zed\Auth\Business\Model\Auth;
 use Spryker\Zed\Auth\Business\Model\PasswordReset;
 use Spryker\Zed\Auth\AuthDependencyProvider;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
+use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
 /**
  * @method AuthConfig getConfig()
@@ -26,14 +29,32 @@ class AuthBusinessFactory extends AbstractBusinessFactory
      */
     public function createAuthModel()
     {
-        //@todo refactor those messy dependencies.
         return new Auth(
-            $this->getLocator(),
-            $this->getLocator()->session()->client(),
-            $this->getLocator()->user()->facade(),
+            $this->getSessionClient(),
+            $this->getUserFacade(),
             $this->getConfig(),
             $this->createStaticTokenClient()
         );
+    }
+
+    /**
+     * @throws ContainerKeyNotFoundException
+     *
+     * @return SessionClientInterface
+     */
+    protected function getSessionClient()
+    {
+        return $this->getProvidedDependency(AuthDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @throws ContainerKeyNotFoundException
+     *
+     * @return AuthToUserBridge
+     */
+    protected function getUserFacade()
+    {
+        return $this->getProvidedDependency(AuthDependencyProvider::FACADE_USER);
     }
 
     /**
@@ -51,7 +72,7 @@ class AuthBusinessFactory extends AbstractBusinessFactory
     {
         $passwordReset = new PasswordReset(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(AuthDependencyProvider::FACADE_USER),
+            $this->getUserFacade(),
             $this->getConfig()
         );
 

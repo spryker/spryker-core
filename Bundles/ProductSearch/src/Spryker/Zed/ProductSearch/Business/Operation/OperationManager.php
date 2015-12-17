@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Operation;
 
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperation;
 
@@ -20,16 +18,12 @@ class OperationManager implements OperationManagerInterface
     protected $productSearchQueryContainer;
 
     /**
-     * @var AutoCompletion
+     * @param ProductSearchQueryContainerInterface $productSearchQueryContainer
      */
-    protected $locator;
-
     public function __construct(
-        ProductSearchQueryContainerInterface $productSearchQueryContainer,
-        LocatorLocatorInterface $locator
+        ProductSearchQueryContainerInterface $productSearchQueryContainer
     ) {
         $this->productSearchQueryContainer = $productSearchQueryContainer;
-        $this->locator = $locator;
     }
 
     /**

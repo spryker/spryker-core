@@ -124,6 +124,8 @@ class CodeStyleSniffer
         $command = $options[self::OPTION_FIX] ? 'phpcbf' : 'phpcs';
         $command = 'vendor/bin/' . $command . ' ' . $pathToFiles . $config;
 
+
+        echo $command . PHP_EOL;
         if (!empty($options[self::OPTION_DRY_RUN])) {
             echo $command;
 

@@ -11,10 +11,11 @@ use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller;
 use Spryker\Zed\Locale\Business\Manager\LocaleManager;
 use Spryker\Zed\Locale\LocaleConfig;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 
 /**
  * @method LocaleConfig getConfig()
+ * @method LocaleQueryContainer getQueryContainer()
  */
 class LocaleBusinessFactory extends AbstractBusinessFactory
 {
@@ -26,8 +27,7 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     {
         return new LocaleManager(
             $this->getQueryContainer(),
-            $this->createTransferGenerator(),
-            $this->getLocator()
+            $this->createTransferGenerator()
         );
     }
 
@@ -37,14 +37,6 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     protected function createTransferGenerator()
     {
         return new TransferGenerator();
-    }
-
-    /**
-     * @return LocaleQueryContainerInterface
-     */
-    protected function getQueryContainer()
-    {
-        return $this->getLocator()->locale()->queryContainer();
     }
 
     /**

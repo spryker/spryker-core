@@ -31,7 +31,6 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryFacade(),
             $this->createTouchFacade(),
             $this->createCmsFacade(),
-            $this->getLocator(),
             $this->getProvidedDependency(ProductCategoryDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }

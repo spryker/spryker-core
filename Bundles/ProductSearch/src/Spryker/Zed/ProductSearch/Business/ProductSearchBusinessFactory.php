@@ -111,8 +111,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     protected function createOperationManager()
     {
         return new OperationManager(
-            $this->createProductSearchQueryContainer(),
-            $this->getLocator()
+            $this->createProductSearchQueryContainer()
         );
     }
 
@@ -121,15 +120,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductSearchQueryContainer()
     {
-        return $this->getLocator()->productSearch()->queryContainer();
-    }
-
-    /**
-     * @return ProductFacade
-     */
-    protected function createProductFacade()
-    {
-        return $this->getLocator()->product()->facade();
+        return $this->getQueryContainer();
     }
 
     /**
