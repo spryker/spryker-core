@@ -1,29 +1,45 @@
+/**
+ *
+ * Spryker alert message manager
+ * @copyright: Spryker Systems GmbH
+ *
+ */
+
 'use strict';
 
 window.serializedList = {};
+
+var $ = require('jquery');
+window.$ = $;
+window.jQuery = $;
+
+require('static/assets/Zed/bundles/Gui/js/plugins/nestable/jquery.nestable');
+
+var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
+var categoryHelper = require('./category.helpers.js');
+
 $(document).ready(function() {
-    var sprykerAjax = new SprykerAjax();
     var triggeredFirstEvent = false;
 
     $('#root-node-table').on('click', 'tbody.tr', function(){
-        showLoaderBar();
+        categoryHelper.showLoaderBar();
         var idCategoryNode = $(this).children('td:first').text();
-        sprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
+        SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
     });
 
     $('#category-node-tree').on('click', '.category-tree', function(event){
         event.preventDefault();
-        showLoaderBar();
+        categoryHelper.showLoaderBar();
         var idCategoryNode = $(this).attr('id').replace('node-', '');
-        sprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
+        SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
     });
 
     $('.gui-table-data-category').dataTable({
         "createdRow": function(row, data, index){
             if (triggeredFirstEvent === false) {
-                showLoaderBar();
+                categoryHelper.showLoaderBar();
                 var idCategoryNode = data[0];
-                sprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
+                SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
                 triggeredFirstEvent = true;
             }
         }
@@ -40,7 +56,6 @@ $(document).ready(function() {
     }).on('change', updateOutput);
 
     $('.save-categories-order').click(function(){
-        sprykerAjax.updateCategoryNodesOrder(serializedList);
+        SprykerAjax.updateCategoryNodesOrder(serializedList);
     });
-
 });

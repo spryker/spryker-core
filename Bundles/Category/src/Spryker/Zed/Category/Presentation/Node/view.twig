@@ -33,3 +33,8 @@
     {% endembed %}
 
 {% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/scripts/spryker-zed-category-main.js"></script>
+{% endblock %}

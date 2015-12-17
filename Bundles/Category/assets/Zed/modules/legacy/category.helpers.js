@@ -1,14 +1,23 @@
+/**
+ *
+ * Spryker alert message manager
+ * @copyright: Spryker Systems GmbH
+ *
+ */
+
 'use strict';
 
-function showLoaderBar(){
+var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
+
+var showLoaderBar = function(){
     $('#category-loader').removeClass('hidden');
-}
+};
 
-function closeLoaderBar(){
+var closeLoaderBar = function(){
     $('#category-loader').addClass('hidden');
-}
+};
 
-SprykerAjax.prototype.getCategoryTreeByIdCategoryNode = function(idCategoryNode) {
+SprykerAjax.getCategoryTreeByIdCategoryNode = function(idCategoryNode) {
     var options = {
         'id-category-node': idCategoryNode
     };
@@ -18,7 +27,7 @@ SprykerAjax.prototype.getCategoryTreeByIdCategoryNode = function(idCategoryNode)
         .ajaxSubmit(options, 'displayCategoryNodesTree');
 };
 
-SprykerAjax.prototype.updateCategoryNodesOrder = function(serializedCategoryNodes){
+SprykerAjax.updateCategoryNodesOrder = function(serializedCategoryNodes){
     showLoaderBar();
     this.setUrl('/category/node/reorder').ajaxSubmit({
         'nodes': serializedCategoryNodes
@@ -29,13 +38,13 @@ SprykerAjax.prototype.updateCategoryNodesOrder = function(serializedCategoryNode
  * @param ajaxResponse
  * @returns string
  */
-SprykerAjaxCallbacks.prototype.displayCategoryNodesTree = function(ajaxResponse){
+SprykerAjaxCallbacks.displayCategoryNodesTree = function(ajaxResponse){
     $('#category-node-tree').removeClass('hidden');
     $('#categories-list').html(ajaxResponse);
     closeLoaderBar();
 };
 
-SprykerAjaxCallbacks.prototype.updateCategoryNodesOrder = function(ajaxResponse){
+SprykerAjaxCallbacks.updateCategoryNodesOrder = function(ajaxResponse){
     closeLoaderBar();
     if (ajaxResponse.code === this.codeSuccess) {
         swal({
@@ -51,4 +60,9 @@ SprykerAjaxCallbacks.prototype.updateCategoryNodesOrder = function(ajaxResponse)
         text: ajaxResponse.message,
         type: "error"
     });
+};
+
+module.exports = {
+    showLoaderBar: showLoaderBar,
+    closeLoaderBar: closeLoaderBar
 };
