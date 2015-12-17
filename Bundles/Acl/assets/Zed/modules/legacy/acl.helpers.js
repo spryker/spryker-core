@@ -1,14 +1,75 @@
 'use strict';
 
+require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
+var SprykerAlert = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAlert');
+var SprykerAjaxCallbacks = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjaxCallbacks');
+
 var memoize = new GroupModalMemoization();
 
-SprykerAjax.prototype.getRolesForGroup = function(idGroup) {
+function spinnerCreate(elementId){
+    var container = $('<div/>', {
+        class: 'sk-spinner sk-spinner-circle'
+    });
+    for (var I = 1; I<=12; I++) {
+        var circle = $('<div>', {
+            class: 'sk-circle sk-circle' + I
+        }).appendTo(container);
+    }
+    $(elementId).html(container);
+}
+
+function spinnerClear(){
+    $('.group-spinner-container').html('');
+}
+
+function GroupModalMemoization(){
+    var self = this;
+
+    var cached = {};
+
+    self.hasMember = function(memberId){
+        return !!cached[memberId];
+    };
+
+    self.saveMember = function(memberId, data){
+        cached[memberId] = data;
+    };
+
+    self.getMember = function(memberId){
+        return cached[memberId];
+    };
+}
+
+function GroupModal(elementId) {
+    var self = this;
+    self.content = null;
+
+    self.init = function(){
+        self.content = $('<ul/>', {
+            id: 'group-body-list'
+        });
+    };
+
+    self.addGroupRoleElement = function(role){
+        $('<li/>', {
+            class: 'role-item',
+            text: role.Name
+        }).appendTo(self.content);
+    };
+
+    self.showModal = function(){
+        SprykerAlert.custom(self.content, 'Roles in Group');
+    };
+
+    self.init();
+}
+
+SprykerAjax.getRolesForGroup = function(idGroup) {
     var options = {
         'id-group': idGroup
     };
     if (memoize.hasMember(idGroup)) {
-        var ajaxCallbacks = new SprykerAjaxCallbacks();
-        ajaxCallbacks.displayGroupRoles(memoize.getMember(idGroup));
+        SprykerAjaxCallbacks.displayGroupRoles(memoize.getMember(idGroup));
     } else {
         spinnerCreate('#group-spinner-' + idGroup);
         this
@@ -17,7 +78,7 @@ SprykerAjax.prototype.getRolesForGroup = function(idGroup) {
     }
 };
 
-SprykerAjax.prototype.removeUserFromGroup = function(options){
+SprykerAjax.removeUserFromGroup = function(options){
     var ajaxOptions = {
         "id-group": parseInt(options.idGroup),
         "id-user": parseInt(options.idUser)
@@ -26,14 +87,13 @@ SprykerAjax.prototype.removeUserFromGroup = function(options){
         return false;
     }
     if (ajaxOptions.idGroup < 1 || ajaxOptions.idUser < 1) {
-        var spyAlert = new SprykerAlert();
-        spyAlert.error('User Id and Group Id cannot be null');
+        SprykerAlert.error('User Id and Group Id cannot be null');
         return false;
     }
     this.setUrl('/acl/group/remove-user-from-group').ajaxSubmit(ajaxOptions, 'removeUserRowFromGroupTable');
 };
 
-SprykerAjaxCallbacks.prototype.displayGroupRoles = function(ajaxResponse){
+SprykerAjaxCallbacks.displayGroupRoles = function(ajaxResponse){
     if (ajaxResponse.code == this.codeSuccess) {
         if (ajaxResponse.data.length > 0) {
             var groupModal = new GroupModal('#modal-body');
@@ -49,7 +109,7 @@ SprykerAjaxCallbacks.prototype.displayGroupRoles = function(ajaxResponse){
     spinnerClear();
 };
 
-SprykerAjaxCallbacks.prototype.removeUserRowFromGroupTable = function(ajaxResponse){
+SprykerAjaxCallbacks.removeUserRowFromGroupTable = function(ajaxResponse){
     if (ajaxResponse.code == this.codeSuccess) {
         var tableRow = $('#row-' + ajaxResponse['id-user'] + '-' + ajaxResponse['id-group']).closest('tr');
         tableRow.addClass('removed-group-user');
@@ -59,64 +119,5 @@ SprykerAjaxCallbacks.prototype.removeUserRowFromGroupTable = function(ajaxRespon
         return false;
     }
 
-    var spyAlert = new SprykerAlert();
-    spyAlert.error(ajaxResponse.message);
-};
-
-module.exports = {
-    spinnerCreate: function(elementId){
-        var container = $('<div/>', {
-            class: 'sk-spinner sk-spinner-circle'
-        });
-        for (var I = 1; I<=12; I++) {
-            var circle = $('<div>', {
-                class: 'sk-circle sk-circle' + I
-            }).appendTo(container);
-        }
-        $(elementId).html(container);
-    },
-    spinnerClear: function(){
-        $('.group-spinner-container').html('');
-    },
-    GroupModalMemoization: function(){
-        var self = this;
-
-        var cached = {};
-
-        self.hasMember = function(memberId){
-            return !!cached[memberId];
-        };
-
-        self.saveMember = function(memberId, data){
-            cached[memberId] = data;
-        };
-
-        self.getMember = function(memberId){
-            return cached[memberId];
-        };
-    },
-    GroupModal: function(elementId) {
-        var self = this;
-        self.content = null;
-
-        self.init = function(){
-            self.content = $('<ul/>', {
-                id: 'group-body-list'
-            });
-        };
-
-        self.addGroupRoleElement = function(role){
-            $('<li/>', {
-                class: 'role-item',
-                text: role.Name
-            }).appendTo(self.content);
-        };
-
-        self.showModal = function(){
-            var modalAlert = new SprykerAlert();
-            modalAlert.custom(self.content, 'Roles in Group');
-        };
-
-        self.init();
-    }
+    SprykerAlert.error(ajaxResponse.message);
 };

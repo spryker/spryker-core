@@ -7,16 +7,11 @@
 
 'use strict';
 
-module.exports = function SprykerAjaxCallbacks() {
+module.exports = new function() {
     var self = this;
 
     /* HTML success code */
     self.codeSuccess = 200;
-
-    /**
-     * @type {SprykerAjax}
-     */
-    self.spyAj = new SprykerAjax();
 
     /**
      * Response:

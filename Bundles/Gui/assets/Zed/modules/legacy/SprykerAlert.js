@@ -7,7 +7,7 @@
 
 'use strict';
 
-module.exports = function SprykerAlert() {
+module.exports = new function() {
     var self = this;
     self.init = function(){
         self.clean();

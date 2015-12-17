@@ -7,13 +7,9 @@
 
 'use strict';
 
-$(document).ready(function() {
-    /**
-     * Spryker Ajax Calls Container
-     * @type {SprykerAjax}
-     */
-    var spyAj = new SprykerAjax();
+var SprykerAjax = require('./legacy/SprykerAjax');
 
+$(document).ready(function() {
     /** Draw data tables */
     $('.gui-table-data').dataTable();
 

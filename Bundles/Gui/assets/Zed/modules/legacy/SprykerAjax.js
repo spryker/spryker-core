@@ -7,7 +7,9 @@
 
 'use strict';
 
-module.exports = function SprykerAjax() {
+var SprykerAjaxCallbacks = require('./SprykerAjaxCallbacks');
+
+module.exports = new function() {
     var self = this;
 
     /** if ajax url is null, the action will be in the same page */
@@ -33,14 +35,8 @@ module.exports = function SprykerAjax() {
         return self;
     };
 
-    /**
-     * makes Ajax call and then call a callback function with the response as parameter
-     *
-     * @param json object options
-     * @param callbackFunction
-     */
     self.ajaxSubmit = function(options, callbackFunction, parameters) {
-        $.ajax({
+        return $.ajax({
             url: this.url,
             type: 'post',
             dataType: this.dataType,
@@ -50,8 +46,7 @@ module.exports = function SprykerAjax() {
             if (typeof callbackFunction === 'function') {
                 return callbackFunction(response, parameters);
             } else if (typeof callbackFunction === 'string') {
-                var call = new SprykerAjaxCallbacks();
-                return call[callbackFunction](response, parameters);
+                return SprykerAjaxCallbacks[callbackFunction](response, parameters);
             } else {
                 return response;
             }
