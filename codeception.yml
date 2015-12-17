@@ -46,7 +46,6 @@ include:
  - Bundles/ProductOptionExporter
  - Bundles/ProductSearch
  - Bundles/Propel
- - Bundles/Queue
  - Bundles/Sales
  - Bundles/SequenceNumber
  - Bundles/Session
