@@ -75,20 +75,4 @@ class PriceCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return PriceQueryContainer
-     */
-    public function getQueryContainer()
-    {
-        return $this->getLocator()->price()->queryContainer();
-    }
-
-    /**
-     * @return PriceFacade
-     */
-    public function getInstallerFacade()
-    {
-        return $this->getLocator()->price()->facade();
-    }
-
 }

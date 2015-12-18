@@ -7,8 +7,6 @@
 namespace Spryker\Shared\Sales\Code;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Zed\Kernel\Locator;
 
 /**
  * @TODO Validate cross-bundle Dependencies
@@ -18,19 +16,6 @@ abstract class AbstractItemGrouper
 
     const GROUP_KEY_SKU = 'Sku';
     const GROUP_KEY_UNIQUE_IDENTIFIER = 'UniqueIdentifier';
-
-    /**
-     * @var LocatorLocatorInterface
-     */
-    protected $locator;
-
-    /**
-     * @param LocatorLocatorInterface $locator
-     */
-    public function __construct(LocatorLocatorInterface $locator)
-    {
-        $this->locator = $locator;
-    }
 
     /**
      * @param OrderItemCollection $items

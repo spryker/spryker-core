@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Kernel\Persistence\QueryContainerLocator;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\Newsletter\Business\NewsletterFacade;
@@ -221,7 +220,6 @@ class NewsletterFacadeTest extends Test
      */
     protected function setNewsletterFacade()
     {
-        $locator = Locator::getInstance();
         $container = new Container();
 
         $container[QueryContainerLocator::PROPEL_CONNECTION] = (new Connection())->get();

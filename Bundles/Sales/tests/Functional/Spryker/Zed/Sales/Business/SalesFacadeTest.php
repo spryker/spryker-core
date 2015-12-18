@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Locator;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Spryker\Zed\Oms\OmsConfig;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
@@ -48,7 +47,6 @@ class SalesFacadeTest extends Test
     protected function setUp()
     {
         parent::setUp();
-        $locator = Locator::getInstance();
 
         $countryFacadeMock = $this->getMock('Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface', ['getIdCountryByIso2Code']);
         $countryFacadeMock->method('getIdCountryByIso2Code')

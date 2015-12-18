@@ -10,9 +10,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\AbstractLocatorLocator;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
@@ -44,7 +41,7 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         $option->setGrossPrice(self::ITEM_OPTION_1000);
         $item->addProductOption($option);
 
-        $calculator = new ProductOptionPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ProductOptionPriceToPayCalculator();
         $calculator->recalculate($order);
 
         $items = $this->getItems($order);
@@ -74,7 +71,7 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
         $option->addDiscount($discount);
 
-        $calculator = new ProductOptionPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ProductOptionPriceToPayCalculator();
         $calculator->recalculate($order);
 
         $items = $this->getItems($order);
@@ -111,7 +108,7 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         $discount->setAmount(self::ITEM_SALESRULE_DISCOUNT_AMOUNT);
         $option->addDiscount($discount);
 
-        $calculator = new ProductOptionPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ProductOptionPriceToPayCalculator();
         $calculator->recalculate($order);
 
         $items = $this->getItems($order);
@@ -150,7 +147,7 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
         $order->getCalculableObject()->addItem($item);
         $order->getCalculableObject()->addItem(clone $item);
 
-        $calculator = new ProductOptionPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ProductOptionPriceToPayCalculator();
         $calculator->recalculate($order);
 
         $items = $this->getItems($order);
@@ -203,17 +200,9 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return AbstractLocatorLocator|Locator|AutoCompletion
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
-    }
-
-    /**
-     * @param CalculableInterface $order
+     * @param CalculableInterface $calculableContainer
      *
-     * @return ItemInterface[]
+     * @return ItemTransfer[]
      */
     protected function getItems(CalculableInterface $calculableContainer)
     {

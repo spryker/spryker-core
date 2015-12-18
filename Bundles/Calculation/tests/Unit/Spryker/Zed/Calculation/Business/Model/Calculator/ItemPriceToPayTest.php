@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ItemPriceToPayCalculator;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -37,7 +36,7 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
         $order->getCalculableObject()->addItem($item);
 
-        $calculator = new ItemPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ItemPriceToPayCalculator();
         $calculator->recalculate($order);
 
         foreach ($order->getCalculableObject()->getItems() as $item) {
@@ -61,7 +60,7 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
         $item->addDiscount($discount);
 
         $order->getCalculableObject()->addItem($item);
-        $calculator = new ItemPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ItemPriceToPayCalculator();
         $calculator->recalculate($order);
 
         foreach ($order->getCalculableObject()->getItems() as $item) {
@@ -89,7 +88,7 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
         $item->addDiscount($discount);
 
         $order->getCalculableObject()->addItem($item);
-        $calculator = new ItemPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ItemPriceToPayCalculator();
         $calculator->recalculate($order);
 
         foreach ($order->getCalculableObject()->getItems() as $item) {
@@ -121,7 +120,7 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
 
         $order->getCalculableObject()->addItem($item);
         $order->getCalculableObject()->addItem(clone $item);
-        $calculator = new ItemPriceToPayCalculator(Locator::getInstance());
+        $calculator = new ItemPriceToPayCalculator();
         $calculator->recalculate($order);
 
         foreach ($order->getCalculableObject()->getItems() as $item) {

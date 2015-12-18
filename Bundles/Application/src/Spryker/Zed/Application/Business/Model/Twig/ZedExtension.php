@@ -21,8 +21,6 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Grid;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPrice;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ConfirmDialog;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Button;
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Zed\Kernel\Locator;
 
 class ZedExtension extends \Twig_Extension
 {
@@ -71,14 +69,6 @@ class ZedExtension extends \Twig_Extension
         ];
 
         return $functions;
-    }
-
-    /**
-     * @return AutoCompletion
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
     }
 
 }

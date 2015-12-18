@@ -7,9 +7,7 @@
 namespace Spryker\Shared\Gui\Form;
 
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;

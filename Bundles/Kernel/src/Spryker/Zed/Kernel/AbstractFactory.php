@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Kernel;
 
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
@@ -33,16 +31,6 @@ abstract class AbstractFactory
      * @var AbstractQueryContainer
      */
     private $queryContainer;
-
-    /**
-     * @deprecated Will be removed soon. Use DependencyProvider instead
-     *
-     * @return AutoCompletion|LocatorLocatorInterface
-     */
-    protected function getLocator()
-    {
-        return Locator::getInstance();
-    }
 
     /**
      * @param Container $container

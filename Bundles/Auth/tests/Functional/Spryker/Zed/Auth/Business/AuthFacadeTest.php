@@ -7,7 +7,6 @@
 namespace Functional\Spryker\Zed\Auth\Business;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Auth\Business\AuthFacade;
 use Orm\Zed\Auth\Persistence\SpyResetPasswordQuery;
 use Orm\Zed\User\Persistence\SpyUser;
@@ -30,9 +29,7 @@ class AuthFacadeTest extends Test
     {
         parent::setUp();
 
-        $locator = Locator::getInstance();
-
-        $this->authFacade = $locator->auth()->facade();
+        $this->authFacade = new AuthFacade();
     }
 
     /**

@@ -26,14 +26,6 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return ProductFacade
-     */
-    public function getInstallerFacade()
-    {
-        return $this->getLocator()->product()->facade();
-    }
-
-    /**
      * @return ProductTable
      */
     public function createProductTable()

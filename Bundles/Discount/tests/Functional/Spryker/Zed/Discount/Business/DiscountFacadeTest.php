@@ -20,12 +20,10 @@ use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
@@ -85,10 +83,7 @@ class DiscountFacadeTest extends Test
     protected function setUp()
     {
         parent::setUp();
-
-        $this->locator = Locator::getInstance();
-
-        $this->discountFacade = $this->locator->discount()->facade();
+        $this->discountFacade = new DiscountFacade();
     }
 
     /**
@@ -593,14 +588,6 @@ class DiscountFacadeTest extends Test
         }
 
         return $items;
-    }
-
-    /**
-     * @return AbstractLocatorLocator|AutoCompletion
-     */
-    protected function getLocator()
-    {
-        return Locator::getInstance();
     }
 
 }

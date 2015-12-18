@@ -9,9 +9,7 @@ namespace Unit\Spryker\Zed\Discount\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Kernel\Locator;
 
 /**
  * @group Spryker
@@ -44,19 +42,13 @@ class DistributorTest extends Test
     protected $discountFacade;
 
     /**
-     * @var Locator|AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
 
-        $this->locator = Locator::getInstance();
-        $this->discountFacade = $this->locator->discount()->facade();
+        $this->discountFacade = new DiscountFacade();
     }
 
     /**

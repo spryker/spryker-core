@@ -17,8 +17,6 @@ class DiscountCalculationToCalculationBridge implements DiscountCalculationToCal
     protected $calculationFacade;
 
     /**
-     * DiscountCalculationToCalculationBridge constructor.
-     *
      * @param \Spryker\Zed\Calculation\Business\CalculationFacade $calculationFacade
      */
     public function __construct($calculationFacade)

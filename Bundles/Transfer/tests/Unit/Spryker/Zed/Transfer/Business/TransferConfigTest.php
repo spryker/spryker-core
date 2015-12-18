@@ -7,7 +7,6 @@
 namespace Unit\Spryker\Zed\Transfer\Business;
 
 use Spryker\Shared\Config;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -19,7 +18,7 @@ class TransferConfigTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfig()
     {
-        return new TransferConfig(Config::getInstance());
+        return new TransferConfig();
     }
 
     /**

@@ -6,8 +6,6 @@
 namespace Functional\Spryker\Zed\Glossary\Communication\Grid;
 
 use Codeception\TestCase\Test;
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery;
@@ -73,19 +71,11 @@ class TranslationGridTest extends Test
     }
 
     /**
-     * @return AutoCompletion|Locator
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
-    }
-
-    /**
      * @return GlossaryQueryContainer
      */
     private function getGlossaryQueryContainer()
     {
-        return $this->getLocator()->glossary()->queryContainer();
+        return new GlossaryQueryContainer();
     }
 
 }

@@ -15,7 +15,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Category\Business\CategoryFacade;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
@@ -68,11 +67,10 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
     protected function setUp()
     {
         parent::setUp();
-        $this->locator = Locator::getInstance();
 
-        $this->localeFacade = $this->locator->locale()->facade();
-        $this->productFacade = $this->locator->product()->facade();
-        $this->categoryFacade = $this->locator->category()->facade();
+        $this->localeFacade = new LocaleFacade();
+        $this->productFacade = new ProductFacade();
+        $this->categoryFacade = new CategoryFacade();
         $this->productCategoryFacade = new ProductCategoryFacade();
 
         $container = new Container();
@@ -81,10 +79,7 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $dependencyProvider->provideCommunicationLayerDependencies($container);
 
         $this->productCategoryFacade->setExternalDependencies($container);
-        $this->productCategoryQueryContainer = new ProductQueryContainer(
-            new PersistenceFactory('ProductCategory'),
-            $this->locator
-        );
+        $this->productCategoryQueryContainer = new ProductQueryContainer();
     }
 
     /**

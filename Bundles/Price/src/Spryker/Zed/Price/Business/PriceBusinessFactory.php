@@ -61,7 +61,6 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     public function getWriterModel()
     {
         return new Writer(
-            $this->getLocator(),
             $this->getQueryContainer(),
             $this->getReaderModel(),
             $this->getTouchFacade(),
@@ -75,7 +74,6 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     public function getBulkWriterModel()
     {
         return new BulkWriter(
-            $this->getLocator(),
             $this->getQueryContainer(),
             $this->getReaderModel(),
             $this->getTouchFacade(),
@@ -84,23 +82,11 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PriceQueryContainer
-     */
-    protected function getQueryContainer()
-    {
-        if (empty($this->queryContainer)) {
-            $this->queryContainer = $this->getLocator()->price()->queryContainer();
-        }
-
-        return $this->queryContainer;
-    }
-
-    /**
      * @return PriceToProductInterface
      */
     protected function getProductFacade()
     {
-        return $this->getLocator()->product()->facade();
+        return $this->getProvidedDependency(PriceDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
@@ -123,7 +109,7 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     public function getInstaller(MessengerInterface $messenger)
     {
         $installer = new Install(
-            $this->getLocator()->price()->facade(),
+            $this->getWriterModel(),
             $this->getConfig()
         );
         $installer->setMessenger($messenger);

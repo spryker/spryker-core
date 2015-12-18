@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
@@ -57,8 +56,6 @@ class AclTest extends Test
     public function setUp()
     {
         parent::setUp();
-
-        $this->locator = Locator::getInstance();
 
         $this->rolesTransfer = new RolesTransfer();
 

@@ -29,29 +29,15 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
     private static $instance;
 
     /**
-     * @param array $locator
-     *
-     * @return self|static
+     * @return AbstractLocatorLocator|static
      */
-    public static function getInstance(array $locator = null)
+    public static function getInstance()
     {
         if (self::$instance === null) {
             self::$instance = new static();
         }
 
-        self::$instance->setLocator($locator);
-
         return self::$instance;
-    }
-
-    /**
-     * @param array $locator
-     *
-     * @return void
-     */
-    private function setLocator(array $locator = null)
-    {
-        $this->locator = $locator;
     }
 
     final private function __construct()

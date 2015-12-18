@@ -6,9 +6,7 @@
 
 namespace Unit\Spryker\Client\ZedRequest\Client;
 
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Client\ZedRequest\Client\Request;
 use Unit\Spryker\Client\ZedRequest\Client\Fixture\TestTransfer;
 
@@ -21,7 +19,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @param LocatorLocatorInterface $locator
      * @param TransferInterface $transfer
      * @param TransferInterface $metaTransfer1
      * @param TransferInterface $metaTransfer2
@@ -29,7 +26,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      * @return Request
      */
     protected function createFullRequest(
-        LocatorLocatorInterface $locator,
         TransferInterface $transfer,
         TransferInterface $metaTransfer1 = null,
         TransferInterface $metaTransfer2 = null
@@ -69,10 +65,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetterAndSetters()
     {
-        $locator = Locator::getInstance();
         $transfer = new TestTransfer();
         $transfer->setFoo('bar');
-        $request = $this->createFullRequest($locator, $transfer);
+        $request = $this->createFullRequest($transfer);
 
         $this->assertEquals('password', $request->getPassword());
         $this->assertEquals('host', $request->getHost());
@@ -89,7 +84,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testMetaTransfersAreStoredCorrectly()
     {
-        $locator = Locator::getInstance();
         $transfer = new TestTransfer();
         $transfer->setFoo('foo');
 
@@ -99,7 +93,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $metaTransfer2 = new TestTransfer();
         $metaTransfer2->setFoo('baz');
 
-        $request = $this->createFullRequest($locator, $transfer, $metaTransfer1, $metaTransfer2);
+        $request = $this->createFullRequest($transfer, $metaTransfer1, $metaTransfer2);
 
         $this->assertEquals($metaTransfer1, $request->getMetaTransfer('meta1'));
         $this->assertNotSame($metaTransfer1, $request->getMetaTransfer('meta1'));
@@ -112,7 +106,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArrayAndFromArray()
     {
-        $locator = Locator::getInstance();
         $transfer = new TestTransfer();
         $transfer->setFoo('foo');
 
@@ -122,7 +115,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $metaTransfer2 = new TestTransfer();
         $metaTransfer2->setFoo('baz');
 
-        $request = $this->createFullRequest($locator, $transfer, $metaTransfer1, $metaTransfer2);
+        $request = $this->createFullRequest($transfer, $metaTransfer1, $metaTransfer2);
 
         $array = $request->toArray();
 

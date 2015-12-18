@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Zed\Kernel;
 
+use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Zed\Kernel\Locator;
 
 /**
@@ -18,24 +19,23 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return void
+     * @var Locator
      */
-    public function testCallShouldReturnBundleProxy()
-    {
-        $locator = Locator::getInstance();
+    private $locator;
 
-        $this->assertInstanceOf('Spryker\Shared\Kernel\BundleProxy', $locator->foo());
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->locator = Locator::getInstance();
     }
 
     /**
      * @return void
      */
-    public function testGetInstanceWithLocatorAsArgumentShouldReturnLocator()
+    public function testCallShouldReturnBundleProxy()
     {
-        $injectedLocator = Locator::getInstance();
-        $locator = Locator::getInstance([$injectedLocator]);
-
-        $this->assertInstanceOf('Spryker\Zed\Kernel\Locator', $locator);
+        $this->assertInstanceOf(BundleProxy::class, $this->locator->foo());
     }
 
 }

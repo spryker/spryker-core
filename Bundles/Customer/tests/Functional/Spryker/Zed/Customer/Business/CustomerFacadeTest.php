@@ -8,7 +8,6 @@ namespace Functional\Spryker\Zed\Customer\Business;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
-use Spryker\Zed\Kernel\Locator;
 use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 
@@ -40,7 +39,6 @@ class CustomerFacadeTest extends AbstractFunctionalTest
     public function setUp()
     {
         parent::setUp();
-        $this->locator = Locator::getInstance();
         $this->customerFacade = $this->getFacade();
     }
 
@@ -95,7 +93,7 @@ class CustomerFacadeTest extends AbstractFunctionalTest
     protected function createTestAddress(CustomerTransfer $customerTransfer)
     {
         $addressTransfer = $this->createTestAddressTransfer($customerTransfer);
-        $addressTransfer = $this->locator->customer()->facade()->createAddress($addressTransfer);
+        $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
 
         return $addressTransfer;
     }
@@ -301,7 +299,7 @@ class CustomerFacadeTest extends AbstractFunctionalTest
     {
         $customerTransfer = $this->createTestCustomer();
         $this->createTestAddress($customerTransfer);
-        $addressTransfer = $this->locator->customer()->facade()->getDefaultShippingAddress($customerTransfer);
+        $addressTransfer = $this->customerFacade->getDefaultShippingAddress($customerTransfer);
         $this->assertNotNull($addressTransfer);
     }
 
@@ -311,7 +309,7 @@ class CustomerFacadeTest extends AbstractFunctionalTest
     {
         $customerTransfer = $this->createTestCustomer();
         $this->createTestAddress($customerTransfer);
-        $addressTransfer = $this->locator->customer()->facade()->getDefaultBillingAddress($customerTransfer);
+        $addressTransfer = $this->customerFacade->getDefaultBillingAddress($customerTransfer);
         $this->assertNotNull($addressTransfer);
     }
 
@@ -321,8 +319,8 @@ class CustomerFacadeTest extends AbstractFunctionalTest
     {
         $customerTransfer = $this->createTestCustomer();
         $addressTransfer = $this->createTestAddress($customerTransfer);
-        $addressTransfer = $this->locator->customer()->facade()->getAddress($addressTransfer);
-        $renderedAddress = $this->locator->customer()->facade()->renderAddress($addressTransfer);
+        $addressTransfer = $this->customerFacade->getAddress($addressTransfer);
+        $renderedAddress = $this->customerFacade->renderAddress($addressTransfer);
         $this->assertNotNull($renderedAddress);
     }
 

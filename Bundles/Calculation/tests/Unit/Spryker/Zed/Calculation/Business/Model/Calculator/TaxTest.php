@@ -10,14 +10,11 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\PriceCalculationHelper;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -296,14 +293,6 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     private function getTotalsTransfer()
     {
         return new TotalsTransfer();
-    }
-
-    /**
-     * @return AbstractLocatorLocator|AutoCompletion|Locator
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
     }
 
 }

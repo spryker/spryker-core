@@ -13,7 +13,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Config;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Library\Sanitize\Html;
@@ -130,7 +129,6 @@ abstract class AbstractTable
     {
         if (!$this->initialized) {
             $this->initialized = true;
-            $this->locator = Locator::getInstance();
             $this->request = (new Pimple())
                 ->getApplication()['request'];
             $config = $this->newTableConfiguration();

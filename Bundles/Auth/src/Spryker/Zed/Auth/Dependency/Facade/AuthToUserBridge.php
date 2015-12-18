@@ -60,4 +60,55 @@ class AuthToUserBridge implements AuthToUserInterface
         return $this->userFacade->getCurrentUser();
     }
 
+    /**
+     * @param string $username
+     *
+     * @return bool
+     */
+    public function hasUserByUsername($username)
+    {
+        return $this->userFacade->hasUserByUsername($username);
+    }
+
+    /**
+     * @param string $password
+     * @param string $hash
+     *
+     * @return bool
+     */
+    public function isValidPassword($password, $hash)
+    {
+        return $this->userFacade->isValidPassword($password, $hash);
+    }
+
+    /**
+     * @param UserTransfer $user
+     *
+     * @return UserTransfer
+     */
+    public function updateUser(UserTransfer $user)
+    {
+        return $this->userFacade->updateUser($user);
+    }
+
+    /**
+     * @param UserTransfer $user
+     *
+     * @return mixed
+     */
+    public function setCurrentUser(UserTransfer $user)
+    {
+        return $this->userFacade->setCurrentUser($user);
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return UserTransfer
+     */
+    public function getUserById($idUser)
+    {
+        return $this->userFacade->getUserById($idUser);
+    }
+
 }

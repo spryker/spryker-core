@@ -6,8 +6,6 @@
 
 namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -15,7 +13,6 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Spryker\Zed\Kernel\AbstractUnitTest;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -154,14 +151,6 @@ class ExpenseTest extends AbstractUnitTest
         $expense = new ExpenseTransfer();
 
         return $expense;
-    }
-
-    /**
-     * @return AbstractLocatorLocator|AutoCompletion|Locator
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
     }
 
 }

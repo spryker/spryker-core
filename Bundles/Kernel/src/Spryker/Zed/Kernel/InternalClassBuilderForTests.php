@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Kernel;
 
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -62,14 +60,6 @@ trait InternalClassBuilderForTests
         }
 
         return $factory;
-    }
-
-    /**
-     * @return AutoCompletion|LocatorLocatorInterface
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
     }
 
     /**

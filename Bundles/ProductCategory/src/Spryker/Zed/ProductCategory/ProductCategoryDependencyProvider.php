@@ -107,4 +107,19 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container[self::CATEGORY_QUERY_CONTAINER] = function (Container $container) {
+            return $container->getLocator()->category()->queryContainer();
+        };
+
+        return $container;
+    }
+
+
 }

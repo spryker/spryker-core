@@ -6,8 +6,6 @@
 
 namespace Spryker\Shared\Kernel;
 
-use Spryker\Shared\Kernel\Factory\FactoryInterface;
-
 abstract class AbstractClientProvider
 {
 

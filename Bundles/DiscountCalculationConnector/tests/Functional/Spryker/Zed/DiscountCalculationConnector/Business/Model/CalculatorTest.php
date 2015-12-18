@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Shared\Sales\Code\ExpenseConstants;
@@ -22,7 +21,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Spryker\Zed\Calculation\Business\Model\StackExecutor;
 use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\DiscountCalculatorPlugin;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\GrandTotalWithDiscountsTotalsCalculatorPlugin;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
@@ -50,7 +48,6 @@ class CalculatorTest extends AbstractFunctionalTest
     protected function setUp()
     {
         parent::setUp();
-        $this->locator = Locator::getInstance();
     }
 
     protected function createCalculatorStack()
@@ -220,7 +217,7 @@ class CalculatorTest extends AbstractFunctionalTest
      */
     protected function getCalculator()
     {
-        return new StackExecutor(Locator::getInstance());
+        return new StackExecutor();
     }
 
     /**
@@ -282,14 +279,6 @@ class CalculatorTest extends AbstractFunctionalTest
     protected function getExpenseWithFixtureData()
     {
         return new ExpenseTransfer();
-    }
-
-    /**
-     * @return AbstractLocatorLocator|AutoCompletion|Locator
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
     }
 
 }

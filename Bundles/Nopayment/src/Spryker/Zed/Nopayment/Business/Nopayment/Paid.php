@@ -17,15 +17,13 @@ use Propel\Runtime\Exception\PropelException;
 class Paid
 {
 
-    /** @var NopaymentQueryContainer */
+    /**
+     * @var NopaymentQueryContainer
+     */
     protected $queryContainer;
 
-    /** @var Autocompletion */
-    protected $locator;
-
-    public function __construct(QueryContainerInterface $queryContainer, LocatorLocatorInterface $locator)
+    public function __construct(QueryContainerInterface $queryContainer)
     {
-        $this->locator = $locator;
         $this->queryContainer = $queryContainer;
     }
 

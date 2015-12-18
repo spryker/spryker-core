@@ -10,12 +10,14 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToProductBridge;
 
 class PriceManager implements PriceManagerInterface
 {
 
     /**
-     * @var PriceFacade
+     * @var PriceCartToPriceInterface
      */
     private $priceFacade;
 
@@ -25,10 +27,10 @@ class PriceManager implements PriceManagerInterface
     private $grossPriceType;
 
     /**
-     * @param PriceFacade $priceFacade
+     * @param PriceCartToPriceInterface $priceFacade
      * @param null $grossPriceType
      */
-    public function __construct(PriceFacade $priceFacade, $grossPriceType = null)
+    public function __construct(PriceCartToPriceInterface $priceFacade, $grossPriceType = null)
     {
         $this->priceFacade = $priceFacade;
         $this->grossPriceType = $grossPriceType;
