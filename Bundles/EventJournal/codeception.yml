@@ -1,4 +1,4 @@
-namespace: Lumberjack
+namespace: EventJournal
 actor: Tester
 paths:
     tests: tests
