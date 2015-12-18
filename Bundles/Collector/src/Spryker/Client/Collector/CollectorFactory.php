@@ -6,9 +6,11 @@
 
 namespace Spryker\Client\Collector;
 
+use Spryker\Client\Cart\CartDependencyProvider;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder;
 use Spryker\Client\Collector\Matcher\UrlMatcher;
+use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Client\Storage\StorageClient;
 
 class CollectorFactory extends AbstractFactory
@@ -21,7 +23,7 @@ class CollectorFactory extends AbstractFactory
     {
         return new UrlMatcher(
             $this->createUrlKeyBuilder(),
-            $this->createKeyValueReader()
+            $this->getStorageClient()
         );
     }
 
@@ -36,13 +38,12 @@ class CollectorFactory extends AbstractFactory
     }
 
     /**
+     * @throws ContainerKeyNotFoundException
      * @return StorageClient
      */
-    protected function createKeyValueReader()
+    protected function getStorageClient()
     {
-        $keyValueReader = $this->getLocator()->storage()->client();
-
-        return $keyValueReader;
+        return $this->getProvidedDependency(CollectorDependencyProvider::CLIENT_KV_STORAGE);
     }
 
 }

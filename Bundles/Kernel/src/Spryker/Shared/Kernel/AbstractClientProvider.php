@@ -10,11 +10,6 @@ abstract class AbstractClientProvider
 {
 
     /**
-     * @var LocatorLocatorInterface
-     */
-    protected $locator;
-
-    /**
      * @var mixed
      */
     protected $client;
@@ -31,14 +26,6 @@ abstract class AbstractClientProvider
         }
 
         return $this->client;
-    }
-
-    /**
-     * @param LocatorLocatorInterface $locator
-     */
-    public function __construct(LocatorLocatorInterface $locator)
-    {
-        $this->locator = $locator;
     }
 
     /**

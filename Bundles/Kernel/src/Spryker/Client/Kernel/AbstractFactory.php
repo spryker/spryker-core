@@ -2,12 +2,9 @@
 
 namespace Spryker\Client\Kernel;
 
-use Generated\Client\Ide\AutoCompletion;
 use Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
-use Spryker\Client\Kernel\FactoryInterface;
 use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 use Spryker\Client\Storage\StorageClient;
@@ -20,14 +17,6 @@ abstract class AbstractFactory implements FactoryInterface
      * @var Container
      */
     private $container;
-
-    /**
-     * @return AutoCompletion|LocatorLocatorInterface
-     */
-    protected function getLocator()
-    {
-        return Locator::getInstance();
-    }
 
     /**
      * @param Container $container

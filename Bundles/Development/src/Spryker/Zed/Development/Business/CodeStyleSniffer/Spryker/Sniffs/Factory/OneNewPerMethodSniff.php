@@ -97,6 +97,7 @@ class OneNewPerMethodSniff implements \PHP_CodeSniffer_Sniff
         }
 
         $secondNewPosition = $phpCsFile->findNext(T_NEW, $firstNewPosition + 1, $closePointer);
+
         return ($secondNewPosition !== false);
     }
 
