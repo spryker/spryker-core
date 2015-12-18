@@ -29,19 +29,75 @@ class CommunicationFactoryMethodAnnotationSniff implements \PHP_CodeSniffer_Snif
     {
         $tokens = $phpCsFile->getTokens();
         if ($this->isCommunicationFactory($phpCsFile)) {
-            if ($this->hasDocBlock($stackPointer, $tokens)) {
 
-                // doc block found check which elements are present
+            $bundle = $this->getBundle($phpCsFile);
+            $queryContainerName = $bundle . 'QueryContainer';
+            $configName = $bundle . 'Config';
+
+            if ($this->hasDocBlock($stackPointer, $tokens)) {
+                if (!$this->hasQueryContainerAnnotation($phpCsFile, $stackPointer)) {
+                    $fix = $phpCsFile->addFixableError('getQueryContainer() annotation missing', $stackPointer);
+                    if ($fix) {
+                        $phpCsFile->fixer->beginChangeset();
+                        $this->addUseStatements(
+                            $phpCsFile,
+                            $stackPointer,
+                            [$this->getQueryContainerClassName($phpCsFile)]
+                        );
+                        $this->addMissingAnnotation(
+                            $phpCsFile,
+                            $stackPointer,
+                            $queryContainerName . ' getQueryContainer()'
+                        );
+                        $phpCsFile->fixer->endChangeset();
+                    }
+                }
+                if (!$this->hasConfigAnnotation($phpCsFile, $stackPointer)) {
+                    $fix = $phpCsFile->addFixableError('getConfig() annotation missing', $stackPointer);
+                    if ($fix) {
+                        $phpCsFile->fixer->beginChangeset();
+                        $this->addUseStatements(
+                            $phpCsFile,
+                            $stackPointer,
+                            [$this->getConfigClassName($phpCsFile)]
+                        );
+                        $this->addMissingAnnotation(
+                            $phpCsFile,
+                            $stackPointer,
+                            $configName . ' getConfig()'
+                        );
+                        $phpCsFile->fixer->endChangeset();
+                    }
+                }
+
                 return;
             }
 
             $fix = $phpCsFile->addFixableError('getQueryContainer() and getConfig() annotation missing', $stackPointer);
             if ($fix) {
+                $phpCsFile->fixer->beginChangeset();
 
-                // add QueryContainer annotation
-                // add Config annotation
+                $this->addUseStatements(
+                    $phpCsFile,
+                    $stackPointer,
+                    [
+                        $this->getQueryContainerClassName($phpCsFile),
+                        $this->getConfigClassName($phpCsFile)
+                    ]
+                );
 
-                echo '<pre>' . PHP_EOL . var_dump('add missing annotations') . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+                $phpCsFile->fixer->addNewlineBefore($stackPointer);
+                $phpCsFile->fixer->addContentBefore($stackPointer, ' */');
+                $phpCsFile->fixer->addNewlineBefore($stackPointer);
+                $phpCsFile->fixer->addContentBefore($stackPointer, ' * @method ' . $queryContainerName . ' getQueryContainer()');
+                $phpCsFile->fixer->addNewlineBefore($stackPointer);
+                $phpCsFile->fixer->addContentBefore($stackPointer, ' * @method ' . $configName . ' getConfig()');
+                $phpCsFile->fixer->addNewlineBefore($stackPointer);
+                $phpCsFile->fixer->addContentBefore($stackPointer, '/**');
+                $phpCsFile->fixer->addNewlineBefore($stackPointer);
+                $phpCsFile->fixer->addNewlineBefore($stackPointer);
+
+                $phpCsFile->fixer->endChangeset();
             }
         }
     }
@@ -83,7 +139,200 @@ class CommunicationFactoryMethodAnnotationSniff implements \PHP_CodeSniffer_Snif
      */
     private function hasDocBlock($stackPointer, array $tokens)
     {
-        return ($tokens[$stackPointer - 1]['type'] === T_DOC_COMMENT_CLOSE_TAG);
+        return ($tokens[$stackPointer - 2]['type'] === 'T_DOC_COMMENT_CLOSE_TAG');
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     *
+     * @return array
+     */
+    private function getQueryContainerClassName(\PHP_CodeSniffer_File $phpCsFile)
+    {
+        $className = $this->getClassName($phpCsFile);
+        $classNameParts = explode('\\', $className);
+        $classNameParts = array_slice($classNameParts, 0, -2);
+        $bundleName = $classNameParts[2];
+        array_push($classNameParts, $bundleName . 'QueryContainer');
+        $queryContainerClassName = implode('\\', $classNameParts);
+
+        return $queryContainerClassName;
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     *
+     * @return array
+     */
+    private function getConfigClassName(\PHP_CodeSniffer_File $phpCsFile)
+    {
+        $className = $this->getClassName($phpCsFile);
+        $classNameParts = explode('\\', $className);
+        $classNameParts = array_slice($classNameParts, 0, -2);
+        $bundleName = $classNameParts[2];
+        array_push($classNameParts, $bundleName . 'Config');
+        $configClassName = implode('\\', $classNameParts);
+
+        return $configClassName;
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     *
+     * @return string
+     */
+    private function getBundle(\PHP_CodeSniffer_File $phpCsFile)
+    {
+        $className = $this->getClassName($phpCsFile);
+        $classNameParts = explode('\\', $className);
+        $classNameParts = array_slice($classNameParts, 0, -2);
+
+        return $classNameParts[2];
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     * @param int $stackPointer
+     * @param array $missingUses
+     *
+     * @return void
+     */
+    private function addUseStatements(\PHP_CodeSniffer_File $phpCsFile, $stackPointer, array $missingUses)
+    {
+        $useStatements = $this->parseUseStatements($phpCsFile, $stackPointer);
+        foreach ($missingUses as $missingUse) {
+            if (!in_array($missingUse, $useStatements)) {
+                $this->addMissingUse($phpCsFile, $stackPointer, $missingUse);
+            }
+        }
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     * @param int $stackPointer
+     * @param string $missingAnnotation
+     *
+     * @return void
+     */
+    private function addMissingAnnotation(\PHP_CodeSniffer_File $phpCsFile, $stackPointer, $missingAnnotation)
+    {
+        $position = $phpCsFile->findPrevious(T_DOC_COMMENT_CLOSE_TAG, $stackPointer);
+        if ($position !== false) {
+            $phpCsFile->fixer->addNewlineBefore($position);
+            $phpCsFile->fixer->addContentBefore($position, ' * @method ' . $missingAnnotation);
+        }
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     * @param $stackPointer
+     *
+     * @return array
+     */
+    private function parseUseStatements(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
+    {
+        $useStatements = [];
+
+        $tokens = $phpCsFile->getTokens();
+        if ($phpCsFile->findPrevious(T_USE, $stackPointer)) {
+            $position = $phpCsFile->findPrevious(T_USE, $stackPointer);
+
+            while ($position !== false) {
+                $position = $phpCsFile->findPrevious(T_USE, $position);
+                if ($position !== false) {
+                    $end = $phpCsFile->findEndOfStatement($position);
+                    if ($tokens[$position]['type'] === 'T_USE') {
+                        $useTokens = array_slice($tokens, $position + 2, $end - $position - 2);
+                        $useStatements[] = $this->parseUseParts($useTokens);
+                    }
+                    $position--;
+                }
+
+            }
+        }
+
+        return $useStatements;
+    }
+
+    /**
+     * @param array $useTokens
+     *
+     * @return string
+     */
+    private function parseUseParts(array $useTokens)
+    {
+        $useClass = '';
+        foreach ($useTokens as $useToken) {
+            $useClass .= $useToken['content'];
+        }
+
+        return $useClass;
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     * @param int $stackPointer
+     * @param string $missingUse
+     *
+     * @return void
+     */
+    private function addMissingUse(\PHP_CodeSniffer_File $phpCsFile, $stackPointer, $missingUse)
+    {
+        $previousUsePosition = $phpCsFile->findPrevious(T_USE, $stackPointer);
+        if ($previousUsePosition !== false) {
+            $endOfLastUse = $phpCsFile->findEndOfStatement($previousUsePosition);
+
+            $phpCsFile->fixer->addNewline($endOfLastUse);
+            $phpCsFile->fixer->addContent($endOfLastUse, 'use ' . $missingUse . ';');
+        }
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     * @param int $stackPointer
+     *
+     * @return bool
+     */
+    private function hasQueryContainerAnnotation(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
+    {
+        $position = $phpCsFile->findPrevious(T_DOC_COMMENT_CLOSE_TAG, $stackPointer);
+        $tokens = $phpCsFile->getTokens();
+
+        while ($position !== false) {
+            $position = $phpCsFile->findPrevious(T_DOC_COMMENT_TAG, $position);
+            if ($position !== false) {
+                if (strpos($tokens[$position + 2]['content'], 'getQueryContainer()') !== false) {
+                    return true;
+                }
+                $position--;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     * @param int $stackPointer
+     *
+     * @return bool
+     */
+    private function hasConfigAnnotation(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
+    {
+        $position = $phpCsFile->findPrevious(T_DOC_COMMENT_CLOSE_TAG, $stackPointer);
+        $tokens = $phpCsFile->getTokens();
+
+        while ($position !== false) {
+            $position = $phpCsFile->findPrevious(T_DOC_COMMENT_TAG, $position);
+            if ($position !== false) {
+                if (strpos($tokens[$position + 2]['content'], 'getConfig()') !== false) {
+                    return true;
+                }
+                $position--;
+            }
+        }
+
+        return false;
     }
 
 }
