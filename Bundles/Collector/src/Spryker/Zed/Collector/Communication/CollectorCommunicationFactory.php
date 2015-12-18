@@ -10,7 +10,11 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Collector\CollectorConfig;
 
+/**
+ * @method CollectorConfig getConfig()
+ */
 class CollectorCommunicationFactory extends AbstractCommunicationFactory
 {
 

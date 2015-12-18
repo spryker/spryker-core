@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 
-
 class SalesToOmsBridge implements SalesToOmsInterface
 {
 

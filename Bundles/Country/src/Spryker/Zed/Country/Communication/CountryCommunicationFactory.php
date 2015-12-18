@@ -12,7 +12,13 @@ use Spryker\Zed\Country\Communication\Form\CountryForm;
 use Spryker\Zed\Country\CountryDependencyProvider;
 use Spryker\Zed\Country\Communication\Table\CountryTable;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
+use Spryker\Zed\Country\CountryConfig;
+use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 
+/**
+ * @method CountryConfig getConfig()
+ * @method CountryQueryContainer getQueryContainer()
+ */
 class CountryCommunicationFactory extends AbstractCommunicationFactory
 {
 

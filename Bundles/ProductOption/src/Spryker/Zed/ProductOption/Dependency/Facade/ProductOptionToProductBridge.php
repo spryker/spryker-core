@@ -9,6 +9,7 @@ use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class ProductOptionToProductBridge implements ProductOptionToProductInterface
 {
+
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacade
      */

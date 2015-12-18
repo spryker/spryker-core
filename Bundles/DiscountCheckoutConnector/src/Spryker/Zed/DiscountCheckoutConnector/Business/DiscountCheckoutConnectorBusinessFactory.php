@@ -13,7 +13,11 @@ use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydratorInterface;
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaverInterface;
 use Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorDependencyProvider;
+use Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorConfig;
 
+/**
+ * @method DiscountCheckoutConnectorConfig getConfig()
+ */
 class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 

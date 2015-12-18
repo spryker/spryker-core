@@ -23,6 +23,7 @@ use Spryker\Zed\Price\PriceDependencyProvider;
 
 /**
  * @method PriceConfig getConfig()
+ * @method PriceQueryContainer getQueryContainer()
  */
 class PriceBusinessFactory extends AbstractBusinessFactory
 {

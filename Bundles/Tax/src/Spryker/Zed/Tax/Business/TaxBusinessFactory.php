@@ -13,9 +13,11 @@ use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 use Spryker\Zed\Tax\TaxConfig;
 use Spryker\Zed\Tax\Business\Model\TaxReaderInterface;
 use Spryker\Zed\Tax\Business\Model\TaxWriterInterface;
+use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
 
 /**
  * @method TaxConfig getConfig()
+ * @method TaxQueryContainer getQueryContainer()
  */
 class TaxBusinessFactory extends AbstractBusinessFactory
 {

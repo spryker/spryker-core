@@ -15,7 +15,13 @@ use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterf
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
+use Spryker\Zed\ProductCategory\ProductCategoryConfig;
+use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 
+/**
+ * @method ProductCategoryConfig getConfig()
+ * @method ProductCategoryQueryContainer getQueryContainer()
+ */
 class ProductCategoryBusinessFactory extends AbstractBusinessFactory
 {
 

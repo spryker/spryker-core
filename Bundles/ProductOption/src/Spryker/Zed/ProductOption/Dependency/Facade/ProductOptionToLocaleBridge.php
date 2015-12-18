@@ -10,6 +10,7 @@ use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 class ProductOptionToLocaleBridge implements ProductOptionToLocaleInterface
 {
+
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */

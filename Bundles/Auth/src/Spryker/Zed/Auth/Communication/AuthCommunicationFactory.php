@@ -13,9 +13,11 @@ use Spryker\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\Auth\AuthDependencyProvider;
 use Spryker\Zed\Auth\AuthConfig;
+use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
 
 /**
  * @method AuthConfig getConfig()
+ * @method AuthQueryContainer getQueryContainer()
  */
 class AuthCommunicationFactory extends AbstractCommunicationFactory
 {

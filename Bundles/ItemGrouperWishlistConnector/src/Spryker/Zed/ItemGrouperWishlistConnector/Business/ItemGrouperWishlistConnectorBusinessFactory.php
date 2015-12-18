@@ -9,7 +9,11 @@ namespace Spryker\Zed\ItemGrouperWishlistConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorDependencyProvider;
+use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorConfig;
 
+/**
+ * @method ItemGrouperWishlistConnectorConfig getConfig()
+ */
 class ItemGrouperWishlistConnectorBusinessFactory extends AbstractBusinessFactory
 {
 

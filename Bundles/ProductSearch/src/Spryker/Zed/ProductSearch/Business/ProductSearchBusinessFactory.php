@@ -33,9 +33,11 @@ use Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToField;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToMultiField;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
+use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer;
 
 /**
  * @method ProductSearchConfig getConfig()
+ * @method ProductSearchQueryContainer getQueryContainer()
  */
 class ProductSearchBusinessFactory extends AbstractBusinessFactory
 {

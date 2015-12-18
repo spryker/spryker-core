@@ -12,9 +12,11 @@ use Spryker\Zed\Glossary\Communication\Table\TranslationTable;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use Spryker\Zed\Glossary\GlossaryConfig;
 
 /**
  * @method GlossaryQueryContainerInterface getQueryContainer()
+ * @method GlossaryConfig getConfig()
  */
 class GlossaryCommunicationFactory extends AbstractCommunicationFactory
 {

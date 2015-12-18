@@ -9,7 +9,11 @@ namespace Spryker\Zed\CalculationCheckoutConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\CalculationCheckoutConnector\CalculationCheckoutConnectorDependencyProvider;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
+use Spryker\Zed\CalculationCheckoutConnector\CalculationCheckoutConnectorConfig;
 
+/**
+ * @method CalculationCheckoutConnectorConfig getConfig()
+ */
 class CalculationCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 

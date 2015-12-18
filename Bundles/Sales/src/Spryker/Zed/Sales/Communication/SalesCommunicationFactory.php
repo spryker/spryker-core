@@ -16,9 +16,11 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
+use Spryker\Zed\Sales\SalesConfig;
 
 /**
  * @method SalesQueryContainerInterface getQueryContainer()
+ * @method SalesConfig getConfig()
  */
 class SalesCommunicationFactory extends AbstractCommunicationFactory
 {

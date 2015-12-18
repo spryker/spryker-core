@@ -7,7 +7,11 @@
 namespace Spryker\Zed\Console\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Console\ConsoleConfig;
 
+/**
+ * @method ConsoleConfig getConfig()
+ */
 class ConsoleCommunicationFactory extends AbstractCommunicationFactory
 {
 }

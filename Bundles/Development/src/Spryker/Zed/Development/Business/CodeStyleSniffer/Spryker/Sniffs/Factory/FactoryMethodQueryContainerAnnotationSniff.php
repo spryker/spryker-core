@@ -8,6 +8,7 @@ namespace Spryker\Sniffs\Factory;
 
 class FactoryMethodQueryContainerAnnotationSniff extends AbstractFactoryMethodAnnotationSniff
 {
+    const LAYER_PERSISTENCE = 'Persistence';
 
     /**
      * @param \PHP_CodeSniffer_File $phpCsFile
@@ -24,7 +25,9 @@ class FactoryMethodQueryContainerAnnotationSniff extends AbstractFactoryMethodAn
         $bundle = $this->getBundle($phpCsFile);
         $queryContainerName = $bundle . 'QueryContainer';
 
-        if (!$this->hasQueryContainerAnnotation($phpCsFile, $stackPointer) && $this->fileExists($phpCsFile, $this->getQueryContainerClassName($phpCsFile))) {
+        if (!$this->hasQueryContainerAnnotation($phpCsFile, $stackPointer)
+            && $this->fileExists($phpCsFile, $this->getQueryContainerClassName($phpCsFile))
+        ) {
             $fix = $phpCsFile->addFixableError('getQueryContainer() annotation missing', $stackPointer);
             if ($fix) {
                 $this->addQueryContainerAnnotation($phpCsFile, $stackPointer, $queryContainerName);
@@ -67,11 +70,13 @@ class FactoryMethodQueryContainerAnnotationSniff extends AbstractFactoryMethodAn
     {
         $phpCsFile->fixer->beginChangeset();
 
-        $this->addUseStatements(
-            $phpCsFile,
-            $stackPointer,
-            [$this->getQueryContainerClassName($phpCsFile)]
-        );
+        if ($this->getLayer($phpCsFile) !== self::LAYER_PERSISTENCE) {
+            $this->addUseStatements(
+                $phpCsFile,
+                $stackPointer,
+                [$this->getQueryContainerClassName($phpCsFile)]
+            );
+        }
 
         if (!$this->hasDocBlock($phpCsFile, $stackPointer)) {
             $phpCsFile->fixer->addNewlineBefore($stackPointer);
@@ -100,7 +105,7 @@ class FactoryMethodQueryContainerAnnotationSniff extends AbstractFactoryMethodAn
         $classNameParts = explode('\\', $className);
         $classNameParts = array_slice($classNameParts, 0, -2);
         $bundleName = $classNameParts[2];
-        array_push($classNameParts, 'Persistence');
+        array_push($classNameParts, self::LAYER_PERSISTENCE);
         array_push($classNameParts, $bundleName . 'QueryContainer');
         $queryContainerClassName = implode('\\', $classNameParts);
 

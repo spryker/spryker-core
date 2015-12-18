@@ -16,9 +16,11 @@ use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
+use Spryker\Zed\Category\CategoryConfig;
 
 /**
  * @method CategoryQueryContainer getQueryContainer()
+ * @method CategoryConfig getConfig()
  */
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {

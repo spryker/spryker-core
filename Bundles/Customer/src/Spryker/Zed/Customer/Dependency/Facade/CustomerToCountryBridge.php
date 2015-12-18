@@ -30,6 +30,6 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
      */
     public function getIdCountryByIso2Code($iso2Code)
     {
-        return  $this->countryFacade->getIdCountryByIso2Code($iso2Code);
+        return $this->countryFacade->getIdCountryByIso2Code($iso2Code);
     }
 }

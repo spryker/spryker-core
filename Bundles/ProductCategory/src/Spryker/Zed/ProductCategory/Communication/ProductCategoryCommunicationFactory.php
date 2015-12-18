@@ -21,9 +21,11 @@ use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 
 /**
  * @method ProductCategoryQueryContainer getQueryContainer()
+ * @method ProductCategoryConfig getConfig()
  */
 class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 {

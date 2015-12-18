@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class ProductOptionCartConnectorToProductOptionBridge implements ProductOptionCartConnectorToProductOptionInterface
 {
+
     /**
      * @var \Spryker\Zed\ProductOption\Business\ProductOptionFacade
      */

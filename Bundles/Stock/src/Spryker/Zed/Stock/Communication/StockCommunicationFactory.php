@@ -13,9 +13,11 @@ use Spryker\Zed\Stock\Communication\Grid\StockProductGrid;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
+use Spryker\Zed\Stock\StockConfig;
 
 /**
  * @method StockQueryContainer getQueryContainer()
+ * @method StockConfig getConfig()
  */
 class StockCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -12,7 +12,13 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Touch\Business\Model\TouchInterface;
 use Spryker\Zed\Touch\Business\Model\TouchRecordInterface;
 use Spryker\Zed\Touch\TouchDependencyProvider;
+use Spryker\Zed\Touch\TouchConfig;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
+/**
+ * @method TouchConfig getConfig()
+ * @method TouchQueryContainer getQueryContainer()
+ */
 class TouchBusinessFactory extends AbstractBusinessFactory
 {
 

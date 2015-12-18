@@ -7,6 +7,7 @@ namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
 class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
 {
+
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacade
      */

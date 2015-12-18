@@ -83,8 +83,6 @@ abstract class AbstractFactoryMethodAnnotationSniff implements \PHP_CodeSniffer_
         if ($this->layer === null) {
             $className = $this->getClassName($phpCsFile);
             $classNameParts = explode('\\', $className);
-            $classNameParts = array_slice($classNameParts, 0, -2);
-
             $this->layer =  $classNameParts[3];
         }
 

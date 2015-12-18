@@ -15,9 +15,11 @@ use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Spryker\Zed\User\UserDependencyProvider;
+use Spryker\Zed\User\UserConfig;
 
 /**
  * @method UserQueryContainer getQueryContainer()
+ * @method UserConfig getConfig()
  */
 class UserCommunicationFactory extends AbstractCommunicationFactory
 {

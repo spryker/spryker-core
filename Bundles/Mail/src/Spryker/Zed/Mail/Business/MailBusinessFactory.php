@@ -9,7 +9,11 @@ namespace Spryker\Zed\Mail\Business;
 use Spryker\Shared\Library\Config;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Shared\Mail\MailConstants;
+use Spryker\Zed\Mail\MailConfig;
 
+/**
+ * @method MailConfig getConfig()
+ */
 class MailBusinessFactory extends AbstractBusinessFactory
 {
 

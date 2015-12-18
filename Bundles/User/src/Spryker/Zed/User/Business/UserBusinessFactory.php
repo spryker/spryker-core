@@ -12,9 +12,11 @@ use Spryker\Zed\User\Business\Model\Installer;
 use Spryker\Zed\User\Business\Model\UserInterface;
 use Spryker\Zed\User\UserConfig;
 use Spryker\Zed\User\UserDependencyProvider;
+use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 /**
  * @method UserConfig getConfig()
+ * @method UserQueryContainer getQueryContainer()
  */
 class UserBusinessFactory extends AbstractBusinessFactory
 {

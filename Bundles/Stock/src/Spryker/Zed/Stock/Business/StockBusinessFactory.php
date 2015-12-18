@@ -17,9 +17,11 @@ use Spryker\Zed\Stock\Business\Model\CalculatorInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\StockConfig;
 use Spryker\Zed\Stock\StockDependencyProvider;
+use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
  * @method StockConfig getConfig()
+ * @method StockQueryContainer getQueryContainer()
  */
 class StockBusinessFactory extends AbstractBusinessFactory
 {

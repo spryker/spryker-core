@@ -15,9 +15,11 @@ use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
 use Spryker\Zed\Customer\Communication\Table\CustomerTable;
 use Symfony\Component\Form\FormInterface;
+use Spryker\Zed\Customer\CustomerConfig;
 
 /**
  * @method CustomerQueryContainer getQueryContainer()
+ * @method CustomerConfig getConfig()
  */
 class CustomerCommunicationFactory extends AbstractCommunicationFactory
 {

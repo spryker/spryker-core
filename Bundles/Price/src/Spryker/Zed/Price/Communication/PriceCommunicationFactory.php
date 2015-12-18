@@ -14,7 +14,12 @@ use Spryker\Zed\Price\Communication\Grid\PriceTypeGrid;
 use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Price\PriceConfig;
 
+/**
+ * @method PriceConfig getConfig()
+ * @method PriceQueryContainer getQueryContainer()
+ */
 class PriceCommunicationFactory extends AbstractCommunicationFactory
 {
 

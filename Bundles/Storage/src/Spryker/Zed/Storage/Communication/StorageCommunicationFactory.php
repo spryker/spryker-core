@@ -11,7 +11,11 @@ use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Zed\Collector\Business\CollectorFacade;
 use Spryker\Zed\Storage\Communication\Table\StorageTable;
 use Spryker\Zed\Storage\StorageDependencyProvider;
+use Spryker\Zed\Storage\StorageConfig;
 
+/**
+ * @method StorageConfig getConfig()
+ */
 class StorageCommunicationFactory extends AbstractCommunicationFactory
 {
 

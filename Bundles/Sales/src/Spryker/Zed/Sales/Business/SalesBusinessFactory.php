@@ -21,9 +21,11 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 
 /**
  * @method SalesConfig getConfig()
+ * @method SalesQueryContainer getQueryContainer()
  */
 class SalesBusinessFactory extends AbstractBusinessFactory
 {

@@ -13,9 +13,11 @@ use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
+use Spryker\Zed\Refund\RefundConfig;
 
 /**
  * @method RefundQueryContainerInterface getQueryContainer()
+ * @method RefundConfig getConfig()
  */
 class RefundBusinessFactory extends AbstractBusinessFactory
 {

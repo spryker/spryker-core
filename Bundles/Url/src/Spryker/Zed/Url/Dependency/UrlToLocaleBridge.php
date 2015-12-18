@@ -10,6 +10,7 @@ use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 class UrlToLocaleBridge implements UrlToLocaleInterface
 {
+
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */

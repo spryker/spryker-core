@@ -12,6 +12,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class BundleParser
 {
+
     /**
      * @var array
      */

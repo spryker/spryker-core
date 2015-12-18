@@ -12,7 +12,11 @@ use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAll
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface;
 use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
+use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorConfig;
 
+/**
+ * @method DiscountCalculationConnectorConfig getConfig()
+ */
 class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactory
 {
 

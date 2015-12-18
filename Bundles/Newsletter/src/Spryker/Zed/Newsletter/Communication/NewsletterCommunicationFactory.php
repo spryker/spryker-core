@@ -11,9 +11,11 @@ use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Mail\Business\MailFacade;
 use Spryker\Zed\Newsletter\NewsletterConfig;
 use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
+use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 
 /**
  * @method NewsletterConfig getConfig()
+ * @method NewsletterQueryContainer getQueryContainer()
  */
 class NewsletterCommunicationFactory extends AbstractCommunicationFactory
 {
