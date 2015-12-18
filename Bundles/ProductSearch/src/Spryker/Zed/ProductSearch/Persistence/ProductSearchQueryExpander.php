@@ -14,9 +14,9 @@ use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\ProductSearch\Persistence\Map\SpySearchableProductsTableMap;
+use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchTableMap;
 
 class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
 {
@@ -46,7 +46,7 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
         $expandableQuery
             ->addJoin(
                 SpyTouchTableMap::COL_ITEM_ID,
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
                 Criteria::LEFT_JOIN
             );
 
@@ -54,8 +54,8 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
             ->joinConcreteProducts($expandableQuery)
             ->joinProductQueryWithLocalizedAttributes($expandableQuery, $locale);
 
-        $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_SKU, 'abstract_sku');
-        $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT, 'id_abstract_product');
+        $expandableQuery->withColumn(SpyProductAbstractTableMap::COL_SKU, 'abstract_sku');
+        $expandableQuery->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, 'id_product_abstract');
         $this->joinSearchableProducts($expandableQuery);
 
         return $expandableQuery;
@@ -73,18 +73,18 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
         $expandableQuery->addJoinObject(
             new Join(
                 SpyProductTableMap::COL_ID_PRODUCT,
-                SpySearchableProductsTableMap::COL_FK_PRODUCT,
+                SpyProductSearchTableMap::COL_FK_PRODUCT,
                 Criteria::INNER_JOIN
             ),
             'searchableJoin'
         );
         $expandableQuery->addJoinCondition(
             'searchableJoin',
-            SpySearchableProductsTableMap::COL_FK_LOCALE . ' = ' .
+            SpyProductSearchTableMap::COL_FK_LOCALE . ' = ' .
             SpyLocaleTableMap::COL_ID_LOCALE
         );
         $expandableQuery->addAnd(
-            SpySearchableProductsTableMap::COL_IS_SEARCHABLE,
+            SpyProductSearchTableMap::COL_IS_SEARCHABLE,
             true,
             Criteria::EQUAL
         );

@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyLocalizedProductAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributesOperationTableMap;
@@ -52,14 +52,14 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
         $query = SpyProductQuery::create();
         $query
             ->filterByIdProduct($productIds)
-            ->useSpyLocalizedProductAttributesQuery()
+            ->useSpyProductLocalizedAttributesQuery()
             ->filterByFkLocale($locale->getIdLocale())
             ->endUse()
             ->addSelectColumn(SpyProductTableMap::COL_SKU)
-            ->addSelectColumn(SpyLocalizedProductAttributesTableMap::COL_ATTRIBUTES)
-            ->addSelectColumn(SpyLocalizedProductAttributesTableMap::COL_NAME);
+            ->addSelectColumn(SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES)
+            ->addSelectColumn(SpyProductLocalizedAttributesTableMap::COL_NAME);
         $query
-            ->useSpyAbstractProductQuery()
+            ->useSpyProductAbstractQuery()
             ->useSpyLocalizedAbstractProductAttributesQuery()
             ->filterByFkLocale($locale->getIdLocale())
             ->endUse()

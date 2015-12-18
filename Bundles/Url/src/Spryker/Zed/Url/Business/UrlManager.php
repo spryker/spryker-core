@@ -389,16 +389,16 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param int $idLocale
      *
      * @return UrlTransfer
      */
-    public function getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale)
+    public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
     {
         $urlEntity = $this->urlQueryContainer
             ->queryUrls()
-            ->filterByFkResourceAbstractProduct($idAbstractProduct)
+            ->filterByFkResourceProductAbstract($idProductAbstract)
             ->filterByFkLocale($idLocale)
             ->findOne();
 

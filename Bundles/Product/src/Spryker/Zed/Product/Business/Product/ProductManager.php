@@ -20,9 +20,9 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyLocalizedAbstractProductAttributes;
-use Orm\Zed\Product\Persistence\SpyLocalizedProductAttributes;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Generated\Shared\Transfer\TaxSetTransfer;
@@ -33,11 +33,11 @@ class ProductManager implements ProductManagerInterface
 
     const COL_ID_CONCRETE_PRODUCT = 'SpyProduct.IdProduct';
 
-    const COL_ABSTRACT_SKU = 'SpyAbstractProduct.Sku';
+    const COL_ABSTRACT_SKU = 'SpyProductAbstract.Sku';
 
-    const COL_ID_ABSTRACT_PRODUCT = 'SpyAbstractProduct.IdAbstractProduct';
+    const COL_ID_PRODUCT_ABSTRACT = 'SpyProductAbstract.IdProductAbstract';
 
-    const COL_NAME = 'SpyLocalizedProductAttributes.Name';
+    const COL_NAME = 'SpyProductLocalizedAttributes.Name';
 
     /**
      * @var ProductQueryContainerInterface
@@ -60,7 +60,7 @@ class ProductManager implements ProductManagerInterface
     protected $localeFacade;
 
     /**
-     * @var SpyAbstractProduct[]
+     * @var SpyProductAbstract[]
      */
     protected $abstractProductsBySkuCache = [];
 
@@ -113,18 +113,18 @@ class ProductManager implements ProductManagerInterface
 
         $encodedAttributes = $this->encodeAttributes($abstractProductTransfer->getAttributes());
 
-        $abstractProduct = new SpyAbstractProduct();
+        $abstractProduct = new SpyProductAbstract();
         $abstractProduct
             ->setAttributes($encodedAttributes)
             ->setSku($sku);
 
         $abstractProduct->save();
 
-        $idAbstractProduct = $abstractProduct->getPrimaryKey();
-        $abstractProductTransfer->setIdAbstractProduct($idAbstractProduct);
+        $idProductAbstract = $abstractProduct->getPrimaryKey();
+        $abstractProductTransfer->setIdProductAbstract($idProductAbstract);
         $this->createAbstractProductAttributes($abstractProductTransfer);
 
-        return $idAbstractProduct;
+        return $idProductAbstract;
     }
 
     /**
@@ -183,19 +183,19 @@ class ProductManager implements ProductManagerInterface
      */
     protected function createAbstractProductAttributes(AbstractProductTransfer $abstractProductTransfer)
     {
-        $idAbstractProduct = $abstractProductTransfer->getIdAbstractProduct();
+        $idProductAbstract = $abstractProductTransfer->getIdProductAbstract();
 
         foreach ($abstractProductTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
-            //$this->checkAbstractProductAttributesDoNotExist($idAbstractProduct, $locale);
-            if ($this->hasAbstractProductAttributes($idAbstractProduct, $locale)) {
+            //$this->checkAbstractProductAttributesDoNotExist($idProductAbstract, $locale);
+            if ($this->hasAbstractProductAttributes($idProductAbstract, $locale)) {
                 continue;
             }
             $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
 
             $abstractProductAttributesEntity = new SpyLocalizedAbstractProductAttributes();
             $abstractProductAttributesEntity
-                ->setFkAbstractProduct($idAbstractProduct)
+                ->setFkProductAbstract($idProductAbstract)
                 ->setFkLocale($locale->getIdLocale())
                 ->setName($localizedAttributes->getName())
                 ->setAttributes($encodedAttributes);
@@ -204,7 +204,7 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param LocaleTransfer $locale
      *
      * @deprecated Use hasAbstractProductAttributes() instead.
@@ -213,13 +213,13 @@ class ProductManager implements ProductManagerInterface
      *
      * @return void
      */
-    protected function checkAbstractProductAttributesDoNotExist($idAbstractProduct, $locale)
+    protected function checkAbstractProductAttributesDoNotExist($idProductAbstract, $locale)
     {
-        if ($this->hasAbstractProductAttributes($idAbstractProduct, $locale)) {
+        if ($this->hasAbstractProductAttributes($idProductAbstract, $locale)) {
             throw new AbstractProductAttributesExistException(
                 sprintf(
                     'Tried to create abstract attributes for abstract product %s, locale id %s, but it already exists',
-                    $idAbstractProduct,
+                    $idProductAbstract,
                     $locale->getIdLocale()
                 )
             );
@@ -227,15 +227,15 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    protected function hasAbstractProductAttributes($idAbstractProduct, LocaleTransfer $locale)
+    protected function hasAbstractProductAttributes($idProductAbstract, LocaleTransfer $locale)
     {
         $query = $this->productQueryContainer->queryAbstractProductAttributeCollection(
-            $idAbstractProduct,
+            $idProductAbstract,
             $locale->getIdLocale()
         );
 
@@ -244,14 +244,14 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param ConcreteProductTransfer $concreteProductTransfer
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @throws ConcreteProductExistsException
      * @throws PropelException
      *
      * @return int
      */
-    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idAbstractProduct)
+    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idProductAbstract)
     {
         $sku = $concreteProductTransfer->getSku();
 
@@ -261,7 +261,7 @@ class ProductManager implements ProductManagerInterface
         $concreteProductEntity = new SpyProduct();
         $concreteProductEntity
             ->setSku($sku)
-            ->setFkAbstractProduct($idAbstractProduct)
+            ->setFkProductAbstract($idProductAbstract)
             ->setAttributes($encodedAttributes)
             ->setIsActive($concreteProductTransfer->getIsActive());
 
@@ -347,7 +347,7 @@ class ProductManager implements ProductManagerInterface
             $this->checkConcreteProductAttributesDoNotExist($idConcreteProduct, $locale);
             $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
 
-            $productAttributeEntity = new SpyLocalizedProductAttributes();
+            $productAttributeEntity = new SpyProductLocalizedAttributes();
             $productAttributeEntity
                 ->setFkProduct($idConcreteProduct)
                 ->setFkLocale($locale->getIdLocale())
@@ -396,13 +396,13 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    public function touchProductActive($idAbstractProduct)
+    public function touchProductActive($idProductAbstract)
     {
-        $this->touchFacade->touchActive('abstract_product', $idAbstractProduct);
+        $this->touchFacade->touchActive('product_abstract', $idProductAbstract);
     }
 
     /**
@@ -418,13 +418,13 @@ class ProductManager implements ProductManagerInterface
      */
     public function createProductUrl($sku, $url, LocaleTransfer $locale)
     {
-        $idAbstractProduct = $this->getAbstractProductIdBySku($sku);
+        $idProductAbstract = $this->getAbstractProductIdBySku($sku);
 
-        return $this->createProductUrlByIdProduct($idAbstractProduct, $url, $locale);
+        return $this->createProductUrlByIdProduct($idProductAbstract, $url, $locale);
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param string $url
      * @param LocaleTransfer $locale
      *
@@ -434,9 +434,9 @@ class ProductManager implements ProductManagerInterface
      *
      * @return UrlTransfer
      */
-    public function createProductUrlByIdProduct($idAbstractProduct, $url, LocaleTransfer $locale)
+    public function createProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale)
     {
-        return $this->urlFacade->createUrl($url, $locale, 'abstract_product', $idAbstractProduct);
+        return $this->urlFacade->createUrl($url, $locale, 'product_abstract', $idProductAbstract);
     }
 
     /**
@@ -459,7 +459,7 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param string $url
      * @param LocaleTransfer $locale
      *
@@ -469,9 +469,9 @@ class ProductManager implements ProductManagerInterface
      *
      * @return UrlTransfer
      */
-    public function createAndTouchProductUrlByIdProduct($idAbstractProduct, $url, LocaleTransfer $locale)
+    public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale)
     {
-        $url = $this->createProductUrlByIdProduct($idAbstractProduct, $url, $locale);
+        $url = $this->createProductUrlByIdProduct($idProductAbstract, $url, $locale);
         $this->urlFacade->touchUrlActive($url->getIdUrl());
 
         return $url;
@@ -497,7 +497,7 @@ class ProductManager implements ProductManagerInterface
             );
         }
 
-        $abstractProduct = $concreteProduct->getSpyAbstractProduct();
+        $abstractProduct = $concreteProduct->getSpyProductAbstract();
 
         $effectiveTaxRate = 0;
 
@@ -529,7 +529,7 @@ class ProductManager implements ProductManagerInterface
         )->select([
             self::COL_ID_CONCRETE_PRODUCT,
             self::COL_ABSTRACT_SKU,
-            self::COL_ID_ABSTRACT_PRODUCT,
+            self::COL_ID_PRODUCT_ABSTRACT,
             self::COL_NAME,
         ])->findOne();
 
@@ -546,7 +546,7 @@ class ProductManager implements ProductManagerInterface
         $concreteProductTransfer->setSku($concreteSku)
             ->setIdConcreteProduct($concreteProduct[self::COL_ID_CONCRETE_PRODUCT])
             ->setAbstractProductSku($concreteProduct[self::COL_ABSTRACT_SKU])
-            ->setIdAbstractProduct($concreteProduct[self::COL_ID_ABSTRACT_PRODUCT])
+            ->setIdProductAbstract($concreteProduct[self::COL_ID_PRODUCT_ABSTRACT])
             ->setName($concreteProduct[self::COL_NAME]);
 
         $this->addTaxesToProductTransfer($concreteProductTransfer);
@@ -562,7 +562,7 @@ class ProductManager implements ProductManagerInterface
     private function addTaxesToProductTransfer(ConcreteProductTransfer $concreteProductTransfer)
     {
         $taxSetEntity = $this->productQueryContainer
-            ->queryTaxSetForAbstractProduct($concreteProductTransfer->getIdAbstractProduct())
+            ->queryTaxSetForAbstractProduct($concreteProductTransfer->getIdProductAbstract())
             ->findOne();
 
         if ($taxSetEntity === null) {
@@ -605,7 +605,7 @@ class ProductManager implements ProductManagerInterface
             );
         }
 
-        return $concreteProduct->getFkAbstractProduct();
+        return $concreteProduct->getFkProductAbstract();
     }
 
     /**
@@ -628,7 +628,7 @@ class ProductManager implements ProductManagerInterface
             );
         }
 
-        return $concreteProduct->getSpyAbstractProduct()->getSku();
+        return $concreteProduct->getSpyProductAbstract()->getSku();
     }
 
     /**

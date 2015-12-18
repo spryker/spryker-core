@@ -139,7 +139,7 @@ class AttributeManager implements AttributeManagerInterface
         $attributeTypeEntity
             ->setName($name)
             ->setInputRepresentation($inputType)
-            ->setFkParentType($fkParentAttributeType);
+            ->setFkProductAttributeTypeParent($fkParentAttributeType);
 
         $attributeTypeEntity->save();
 

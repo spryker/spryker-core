@@ -30,8 +30,8 @@ interface ProductOptionToProductInterface
     public function getAbstractProductIdByConcreteSku($sku);
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      */
-    public function touchProductActive($idAbstractProduct);
+    public function touchProductActive($idProductAbstract);
 
 }

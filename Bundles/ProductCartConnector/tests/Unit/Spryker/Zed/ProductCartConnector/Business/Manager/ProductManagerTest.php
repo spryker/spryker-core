@@ -26,9 +26,9 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
 
     const ABSTRACT_SKU = 'abstract sku';
 
-    const ID_CONCRETE_PRODUCT = 'id concrete product';
+    const ID_PRODUCT_CONCRETE = 'id concrete product';
 
-    const ID_ABSTRACT_PRODUCT = 'id abstract product';
+    const ID_PRODUCT_ABSTRACT = 'id product abstract';
 
     const PRODUCT_NAME = 'product name';
 
@@ -42,7 +42,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->getChangeTransfer();
 
         $concreteProductTransfer = new ConcreteProductTransfer();
-        $concreteProductTransfer->setIdConcreteProduct(self::ID_CONCRETE_PRODUCT);
+        $concreteProductTransfer->setIdConcreteProduct(self::ID_PRODUCT_CONCRETE);
 
         $productManager = $this->getProductManager($concreteProductTransfer);
         $result = $productManager->expandItems($changeTransfer);
@@ -76,13 +76,13 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->getChangeTransfer();
 
         $concreteProductTransfer = new ConcreteProductTransfer();
-        $concreteProductTransfer->setIdAbstractProduct(self::ID_ABSTRACT_PRODUCT);
+        $concreteProductTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
 
         $productManager = $this->getProductManager($concreteProductTransfer);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
-        $this->assertSame($concreteProductTransfer->getIdAbstractProduct(), $changedItemTransfer->getIdAbstractProduct());
+        $this->assertSame($concreteProductTransfer->getIdProductAbstract(), $changedItemTransfer->getIdProductAbstract());
     }
 
     /**

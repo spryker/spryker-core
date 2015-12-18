@@ -18,19 +18,19 @@ interface ProductOptionExporterToProductOptionInterface
     public function getTypeUsagesForConcreteProduct($idProduct, $idLocale);
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function getValueUsagesForTypeUsage($idTypeUsage, $idLocale);
+    public function getValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale);
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return array
      */
-    public function getTypeExclusionsForTypeUsage($idTypeUsage);
+    public function getTypeExclusionsForTypeUsage($idProductAttributeTypeUsage);
 
     /**
      * @param int $idValueUsage
@@ -62,10 +62,10 @@ interface ProductOptionExporterToProductOptionInterface
     public function getValueUsagesForConfigPreset($idConfigPreset);
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return string|null
      */
-    public function getEffectiveTaxRateForTypeUsage($idTypeUsage);
+    public function getEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage);
 
 }

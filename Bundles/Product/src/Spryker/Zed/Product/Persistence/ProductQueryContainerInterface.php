@@ -8,9 +8,9 @@ namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyLocalizedAbstractProductAttributesQuery;
-use Orm\Zed\Product\Persistence\SpyLocalizedProductAttributesQuery;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -36,11 +36,11 @@ interface ProductQueryContainerInterface
     public function queryProductWithAttributesAndAbstractProduct($concreteSku, $idLocale);
 
     /**
-     * @param $idAbstractProduct
+     * @param $idProductAbstract
      *
      * @return SpyTaxSetQuery
      */
-    public function queryTaxSetForAbstractProduct($idAbstractProduct);
+    public function queryTaxSetForAbstractProduct($idProductAbstract);
 
     /**
      * @param string $sku
@@ -52,7 +52,7 @@ interface ProductQueryContainerInterface
     /**
      * @param string $sku
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function queryAbstractProductBySku($sku);
 
@@ -71,18 +71,18 @@ interface ProductQueryContainerInterface
     public function queryAttributeTypeByName($attributeType);
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param int $fkCurrentLocale
      *
      * @return SpyLocalizedAbstractProductAttributesQuery
      */
-    public function queryAbstractProductAttributeCollection($idAbstractProduct, $fkCurrentLocale);
+    public function queryAbstractProductAttributeCollection($idProductAbstract, $fkCurrentLocale);
 
     /**
      * @param int $idConcreteProduct
      * @param int $fkCurrentLocale
      *
-     * @return SpyLocalizedProductAttributesQuery
+     * @return SpyProductLocalizedAttributesQuery
      */
     public function queryConcreteProductAttributeCollection($idConcreteProduct, $fkCurrentLocale);
 

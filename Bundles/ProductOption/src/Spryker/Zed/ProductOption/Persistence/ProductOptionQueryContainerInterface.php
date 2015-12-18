@@ -14,7 +14,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslationQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslationQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
-use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Tax\Persistence\Base\SpyTaxSetQuery;
 
 interface ProductOptionQueryContainerInterface
@@ -122,21 +122,21 @@ interface ProductOptionQueryContainerInterface
     /**
      * @param int $idProductOptionType
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function queryAssociatedAbstractProductIdsForProductOptionType($idProductOptionType);
 
     /**
      * @param int $idProductOptionValue
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function queryAssociatedAbstractProductIdsForProductOptionValue($idProductOptionValue);
 
     /**
      * @param int $idProductOptionTypeUsage
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage);
 
@@ -164,19 +164,19 @@ interface ProductOptionQueryContainerInterface
     public function queryTypeUsagesForConcreteProduct($idProduct, $idLocale);
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function queryValueUsagesForTypeUsage($idTypeUsage, $idLocale);
+    public function queryValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale);
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return array
      */
-    public function queryTypeExclusionsForTypeUsage($idTypeUsage);
+    public function queryTypeExclusionsForTypeUsage($idProductAttributeTypeUsage);
 
     /**
      * @param int $idValueUsage
@@ -208,10 +208,10 @@ interface ProductOptionQueryContainerInterface
     public function queryValueUsagesForConfigPreset($idConfigPreset);
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return string|null
      */
-    public function queryEffectiveTaxRateForTypeUsage($idTypeUsage);
+    public function queryEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage);
 
 }

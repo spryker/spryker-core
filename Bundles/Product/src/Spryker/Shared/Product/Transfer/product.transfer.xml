@@ -8,7 +8,7 @@
         <property name="sku" type="string" />
         <property name="productImageUrl" type="string" />
         <property name="abstractProductSku" type="string" />
-        <property name="idAbstractProduct" type="int" />
+        <property name="idProductAbstract" type="int" />
         <property name="taxSet" type="TaxSet" />
         <property name="name" type="string" />
         <property name="attributes" type="array" singular="attribute" />
@@ -17,7 +17,7 @@
     </transfer>
 
     <transfer name="AbstractProduct">
-        <property name="idAbstractProduct" type="int" />
+        <property name="idProductAbstract" type="int" />
         <property name="sku" type="string" />
         <property name="attributes" type="array" singular="attribute" />
         <property name="localizedAttributes" type="LocalizedAttributes[]" />

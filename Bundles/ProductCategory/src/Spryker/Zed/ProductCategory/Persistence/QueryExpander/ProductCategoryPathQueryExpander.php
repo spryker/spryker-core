@@ -55,7 +55,7 @@ class ProductCategoryPathQueryExpander
         $expandableQuery
             ->addJoin(
                 SpyTouchTableMap::COL_ITEM_ID,
-                SpyProductCategoryTableMap::COL_FK_ABSTRACT_PRODUCT,
+                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
                 Criteria::LEFT_JOIN
             );
         $expandableQuery

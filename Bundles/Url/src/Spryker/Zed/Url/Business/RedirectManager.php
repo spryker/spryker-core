@@ -16,7 +16,7 @@ use Spryker\Zed\Url\Business\Exception\MissingRedirectException;
 use Spryker\Zed\Url\Business\Exception\RedirectExistsException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Spryker\Zed\Url\Dependency\UrlToTouchInterface;
-use Orm\Zed\Url\Persistence\SpyRedirect;
+use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class RedirectManager implements RedirectManagerInterface
@@ -70,13 +70,13 @@ class RedirectManager implements RedirectManagerInterface
      * @throws \Exception
      * @throws PropelException
      *
-     * @return SpyRedirect
+     * @return SpyUrlRedirect
      */
     public function createRedirect($toUrl, $status = 301)
     {
         $this->connection->beginTransaction();
 
-        $redirect = new SpyRedirect();
+        $redirect = new SpyUrlRedirect();
 
         $redirect
             ->setToUrl($toUrl)
@@ -105,11 +105,11 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
-     * @param SpyRedirect $redirectEntity
+     * @param SpyUrlRedirect $redirectEntity
      *
      * @return RedirectTransfer
      */
-    public function convertRedirectEntityToTransfer(SpyRedirect $redirectEntity)
+    public function convertRedirectEntityToTransfer(SpyUrlRedirect $redirectEntity)
     {
         $transferRedirect = new RedirectTransfer();
         $transferRedirect->fromArray($redirectEntity->toArray());
@@ -126,7 +126,7 @@ class RedirectManager implements RedirectManagerInterface
      */
     public function saveRedirect(RedirectTransfer $redirect)
     {
-        if ($redirect->getIdRedirect() === null) {
+        if ($redirect->getIdUrlRedirect() === null) {
             return $this->createRedirectFromTransfer($redirect);
         } else {
             return $this->updateRedirectFromTransfer($redirect);
@@ -157,7 +157,7 @@ class RedirectManager implements RedirectManagerInterface
      */
     protected function createRedirectFromTransfer(RedirectTransfer $redirectTransfer)
     {
-        $redirectEntity = new SpyRedirect();
+        $redirectEntity = new SpyUrlRedirect();
 
         $this->connection->beginTransaction();
 
@@ -166,7 +166,7 @@ class RedirectManager implements RedirectManagerInterface
         $redirectEntity->save();
         $this->connection->commit();
 
-        $redirectTransfer->setIdRedirect($redirectEntity->getIdRedirect());
+        $redirectTransfer->setIdUrlRedirect($redirectEntity->getIdUrlRedirect());
 
         return $redirectTransfer;
     }
@@ -182,7 +182,7 @@ class RedirectManager implements RedirectManagerInterface
      */
     protected function updateRedirectFromTransfer(RedirectTransfer $redirectTransfer)
     {
-        $redirectEntity = $this->getRedirectById($redirectTransfer->getIdRedirect());
+        $redirectEntity = $this->getRedirectById($redirectTransfer->getIdUrlRedirect());
         $redirectEntity->fromArray($redirectTransfer->toArray());
 
         if (!$redirectEntity->isModified()) {
@@ -195,20 +195,20 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
      * @throws MissingRedirectException
      *
-     * @return SpyRedirect
+     * @return SpyUrlRedirect
      */
-    protected function getRedirectById($idRedirect)
+    protected function getRedirectById($idUrlRedirect)
     {
-        $redirect = $this->urlQueryContainer->queryRedirectById($idRedirect)->findOne();
+        $redirect = $this->urlQueryContainer->queryRedirectById($idUrlRedirect)->findOne();
         if (!$redirect) {
             throw new MissingRedirectException(
                 sprintf(
                     'Tried to retrieve a missing redirect with id %s',
-                    $idRedirect
+                    $idUrlRedirect
                 )
             );
         }
@@ -223,13 +223,13 @@ class RedirectManager implements RedirectManagerInterface
      */
     public function touchRedirectActive(RedirectTransfer $redirect)
     {
-        $this->touchFacade->touchActive(self::ITEM_TYPE_REDIRECT, $redirect->getIdRedirect());
+        $this->touchFacade->touchActive(self::ITEM_TYPE_REDIRECT, $redirect->getIdUrlRedirect());
     }
 
     /**
      * @param string $url
      * @param LocaleTransfer $locale
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
      * @throws UrlExistsException
      * @throws MissingLocaleException
@@ -237,10 +237,10 @@ class RedirectManager implements RedirectManagerInterface
      *
      * @return UrlTransfer
      */
-    public function createRedirectUrl($url, LocaleTransfer $locale, $idRedirect)
+    public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect)
     {
-        $this->checkRedirectExists($idRedirect);
-        $urlEntity = $this->urlManager->createUrl($url, $locale, 'redirect', $idRedirect);
+        $this->checkRedirectExists($idUrlRedirect);
+        $urlEntity = $this->urlManager->createUrl($url, $locale, 'redirect', $idUrlRedirect);
 
         return $this->urlManager->convertUrlEntityToTransfer($urlEntity);
     }
@@ -248,40 +248,40 @@ class RedirectManager implements RedirectManagerInterface
     /**
      * @param string $url
      * @param LocaleTransfer $locale
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
      * @return UrlTransfer
      */
-    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idRedirect)
+    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect)
     {
-        $urlTransfer = $this->createRedirectUrl($url, $locale, $idRedirect);
+        $urlTransfer = $this->createRedirectUrl($url, $locale, $idUrlRedirect);
         $this->urlManager->touchUrlActive($urlTransfer->getIdUrl());
 
         return $urlTransfer;
     }
 
     /**
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
      * @throws MissingRedirectException
      *
      * @return void
      */
-    protected function checkRedirectExists($idRedirect)
+    protected function checkRedirectExists($idUrlRedirect)
     {
-        if (!$this->hasRedirectId($idRedirect)) {
+        if (!$this->hasRedirectId($idUrlRedirect)) {
             throw new MissingRedirectException();
         }
     }
 
     /**
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
      * @return bool
      */
-    protected function hasRedirectId($idRedirect)
+    protected function hasRedirectId($idUrlRedirect)
     {
-        $query = $this->urlQueryContainer->queryRedirectById($idRedirect);
+        $query = $this->urlQueryContainer->queryRedirectById($idUrlRedirect);
 
         return $query->count() > 0;
     }

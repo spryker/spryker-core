@@ -9,10 +9,10 @@ interface ProductStorageInterface
 {
 
     /**
-     * @param $idAbstractProduct
+     * @param $idProductAbstract
      *
      * @return mixed
      */
-    public function getAbstractProductFromStorageById($idAbstractProduct);
+    public function getAbstractProductFromStorageById($idProductAbstract);
 
 }

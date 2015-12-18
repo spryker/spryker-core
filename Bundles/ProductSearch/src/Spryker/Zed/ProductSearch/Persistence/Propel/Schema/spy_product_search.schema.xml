@@ -12,22 +12,22 @@
             <index-column name="weighting"/>
         </index>
 
-        <foreign-key name="spy_product_search_attributes_operation-source_attribute_id" foreignTable="spy_attributes_metadata" onDelete="cascade">
-            <reference local="source_attribute_id" foreign="id_attributes_metadata"/>
+        <foreign-key name="spy_product_search_attributes_operation-source_attribute_id" foreignTable="spy_product_attributes_metadata" onDelete="cascade">
+            <reference local="source_attribute_id" foreign="id_product_attributes_metadata"/>
         </foreign-key>
     </table>
-    <table name="spy_searchable_products">
-        <column name="searchable_id" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+    <table name="spy_product_search">
+        <column name="id_product_search" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product" type="INTEGER"/>
         <column name="fk_locale" type="INTEGER"/>
         <column name="is_searchable" type="BOOLEAN" defaultValue="true"/>
 
-        <foreign-key name="spy_searchable_products-fk_product" foreignTable="spy_product">
+        <foreign-key name="spy_product_search-fk_product" foreignTable="spy_product">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
-        <foreign-key name="spy_searchable_products-fk_locale" foreignTable="spy_locale">
+        <foreign-key name="spy_product_search-fk_locale" foreignTable="spy_locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <id-method-parameter value="spy_searchable_products_pk_seq"/>
+        <id-method-parameter value="spy_product_search_pk_seq"/>
     </table>
 </database>

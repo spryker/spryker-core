@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Url\Persistence\Propel;
 
-use Orm\Zed\Url\Persistence\Base\SpyRedirectQuery as BaseSpyRedirectQuery;
+use Orm\Zed\Url\Persistence\Base\SpyUrlRedirectQuery as BaseSpyUrlRedirectQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_redirect' table.
@@ -17,7 +17,7 @@ use Orm\Zed\Url\Persistence\Base\SpyRedirectQuery as BaseSpyRedirectQuery;
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyRedirectQuery extends BaseSpyRedirectQuery
+abstract class AbstractSpyUrlRedirectQuery extends BaseSpyUrlRedirectQuery
 {
-} // SpyRedirectQuery
+} // SpyUrlRedirectQuery
 

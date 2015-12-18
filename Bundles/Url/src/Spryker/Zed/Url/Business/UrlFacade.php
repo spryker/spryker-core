@@ -197,32 +197,32 @@ class UrlFacade extends AbstractFacade
     /**
      * @param string $url
      * @param LocaleTransfer $locale
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
      * @throws UrlExistsException
      * @throws MissingLocaleException
      *
      * @return UrlTransfer
      */
-    public function createRedirectUrl($url, LocaleTransfer $locale, $idRedirect)
+    public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect)
     {
         $redirectManager = $this->getFactory()->getRedirectManager();
 
-        return $redirectManager->createRedirectUrl($url, $locale, $idRedirect);
+        return $redirectManager->createRedirectUrl($url, $locale, $idUrlRedirect);
     }
 
     /**
      * @param string $url
      * @param LocaleTransfer $locale
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
      * @return UrlTransfer
      */
-    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idRedirect)
+    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect)
     {
         $redirectManager = $this->getFactory()->getRedirectManager();
 
-        return $redirectManager->saveRedirectUrlAndTouch($url, $locale, $idRedirect);
+        return $redirectManager->saveRedirectUrlAndTouch($url, $locale, $idUrlRedirect);
     }
 
     /**
@@ -286,16 +286,16 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param int $idLocale
      *
      * @return UrlTransfer
      */
-    public function getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale)
+    public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
     {
         $urlManager = $this->getFactory()->getUrlManager();
 
-        return $urlManager->getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale);
+        return $urlManager->getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
     }
 
 }

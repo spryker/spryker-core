@@ -8,7 +8,7 @@ namespace Functional\Spryker\Zed\ProductOption\Persistence;
 
 use Propel\Runtime\Propel;
 use Orm\Zed\Locale\Persistence\SpyLocale;
-use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPreset;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetValue;
@@ -63,16 +63,16 @@ class DbFixturesLoader
             ->setFkTaxRate($ids['idTaxRate2']);
         $taxSetTaxEntity->save();
 
-        $abstractProductEntity = new SpyAbstractProduct();
+        $abstractProductEntity = new SpyProductAbstract();
         $abstractProductEntity->setSku('ABC123')
             ->setFkTaxSet($ids['idTaxSet'])
             ->setAttributes('{}');
         $abstractProductEntity->save();
-        $ids['idAbstractProduct'] = $abstractProductEntity->getIdAbstractProduct();
+        $ids['idAbstractProduct'] = $abstractProductEntity->getIdProductAbstract();
 
         $productEntity = new SpyProduct();
         $productEntity->setSku('DEF456')
-            ->setFkAbstractProduct($ids['idAbstractProduct'])
+            ->setFkProductAbstract($ids['idAbstractProduct'])
             ->setAttributes('{}');
         $productEntity->save();
         $ids['idConcreteProduct'] = $productEntity->getIdProduct();

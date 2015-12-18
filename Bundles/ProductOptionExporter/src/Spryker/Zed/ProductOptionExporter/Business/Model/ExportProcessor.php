@@ -136,13 +136,13 @@ class ExportProcessor implements ExportProcessorInterface
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return array
      */
-    protected function processTypeExclusions($idTypeUsage)
+    protected function processTypeExclusions($idProductAttributeTypeUsage)
     {
-        $excludes = $this->productOptionFacade->getTypeExclusionsForTypeUsage($idTypeUsage);
+        $excludes = $this->productOptionFacade->getTypeExclusionsForTypeUsage($idProductAttributeTypeUsage);
         foreach ($excludes as $index => $exclude) {
             $excludes[$index] = (int) $exclude;
         }
@@ -152,13 +152,13 @@ class ExportProcessor implements ExportProcessorInterface
 
     /**
      * @param string $sku
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return float
      */
-    protected function processOptionTaxRate($sku, $idTypeUsage)
+    protected function processOptionTaxRate($sku, $idProductAttributeTypeUsage)
     {
-        $typeUsageTaxRate = $this->productOptionFacade->getEffectiveTaxRateForTypeUsage($idTypeUsage);
+        $typeUsageTaxRate = $this->productOptionFacade->getEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage);
 
         if ($typeUsageTaxRate === null) {
             $typeUsageTaxRate = $this->productFacade
@@ -169,14 +169,14 @@ class ExportProcessor implements ExportProcessorInterface
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    protected function processValuesForTypeUsage($idTypeUsage, $idLocale)
+    protected function processValuesForTypeUsage($idProductAttributeTypeUsage, $idLocale)
     {
-        $valueUsages = $this->productOptionFacade->getValueUsagesForTypeUsage($idTypeUsage, $idLocale);
+        $valueUsages = $this->productOptionFacade->getValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale);
 
         $valueData = [];
         foreach ($valueUsages as $valueUsage) {

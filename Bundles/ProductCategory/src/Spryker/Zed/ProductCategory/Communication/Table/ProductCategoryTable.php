@@ -11,7 +11,7 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterfa
 use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 
@@ -58,14 +58,14 @@ class ProductCategoryTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => 'ID',
-            SpyAbstractProductTableMap::COL_SKU => 'SKU',
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => 'ID',
+            SpyProductAbstractTableMap::COL_SKU => 'SKU',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
             SpyProductCategoryTableMap::COL_PRODUCT_ORDER => 'Order',
             self::COL_CHECKBOX => 'Selected',
         ]);
         $config->setSearchable([
-            SpyAbstractProductTableMap::COL_SKU,
+            SpyProductAbstractTableMap::COL_SKU,
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
         ]);
 
@@ -87,15 +87,15 @@ class ProductCategoryTable extends AbstractTable
             'product_order_alias'
         );
         $query->orderBy('product_order_alias', Criteria::ASC);
-        $query->setModelAlias('spy_abstract_product');
+        $query->setModelAlias('spy_product_abstract');
 
         $queryResults = $this->runQuery($query, $config);
 
         $results = [];
         foreach ($queryResults as $productCategory) {
             $results[] = [
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $productCategory['id_abstract_product'],
-                SpyAbstractProductTableMap::COL_SKU => $productCategory['sku'],
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $productCategory['id_product_abstract'],
+                SpyProductAbstractTableMap::COL_SKU => $productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
                 SpyProductCategoryTableMap::COL_PRODUCT_ORDER => $this->getOrderHtml($productCategory),
                 self::COL_CHECKBOX => $this->getCheckboxHtml($productCategory),
@@ -114,7 +114,7 @@ class ProductCategoryTable extends AbstractTable
     protected function getProductOptionsComboBoxItems($productCategory)
     {
         $preConfigQuery = $this->productCategoryQueryContainer
-            ->queryProductCategoryPreconfig($this->idCategory, $productCategory['id_abstract_product'])
+            ->queryProductCategoryPreconfig($this->idCategory, $productCategory['id_product_abstract'])
             ->orderByFormat();
 
         $preconfigItems = $preConfigQuery->find();
@@ -141,8 +141,8 @@ class ProductCategoryTable extends AbstractTable
     {
         return sprintf(
             '<input id="product_category_checkbox_%d" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
-            $productCategory['id_abstract_product'],
-            $productCategory['id_abstract_product'],
+            $productCategory['id_product_abstract'],
+            $productCategory['id_product_abstract'],
             $productCategory['sku'],
             urlencode($productCategory['name'])
         );
@@ -158,8 +158,8 @@ class ProductCategoryTable extends AbstractTable
         return sprintf(
             '<input type="text" value="%d" id="product_category_order_%d" size="4" onchange="updateProductOrder(this, %d)" />',
             $productCategory['product_order'],
-            $productCategory['id_abstract_product'],
-            $productCategory['id_abstract_product']
+            $productCategory['id_product_abstract'],
+            $productCategory['id_product_abstract']
         );
     }
 

@@ -158,7 +158,7 @@ abstract class AbstractSearch
         $ids = [];
         foreach ($resultSet->getResults() as $result) {
             $product = $result->getSource();
-            $ids[] = $product[FacetConfig::FIELD_SEARCH_RESULT_DATA]['id_abstract_product'];
+            $ids[] = $product[FacetConfig::FIELD_SEARCH_RESULT_DATA]['id_product_abstract'];
         }
 
         return $ids;

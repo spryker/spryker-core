@@ -150,8 +150,8 @@ class Writer implements WriterInterface
      */
     protected function loadAbstractProductIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
     {
-        if ($transferPriceProduct->getIdAbstractProduct() === null) {
-            $transferPriceProduct->setIdAbstractProduct(
+        if ($transferPriceProduct->getIdProductAbstract() === null) {
+            $transferPriceProduct->setIdProductAbstract(
                 $this->reader->getAbstractProductIdBySku($transferPriceProduct->getSkuAbstractProduct())
             );
         }
@@ -190,7 +190,7 @@ class Writer implements WriterInterface
         if ($transferPriceProduct->getIdProduct()) {
             $priceProductEntity->setFkProduct($transferPriceProduct->getIdProduct());
         } else {
-            $priceProductEntity->setFkAbstractProduct($transferPriceProduct->getIdAbstractProduct());
+            $priceProductEntity->setFkProductAbstract($transferPriceProduct->getIdProductAbstract());
         }
 
         $priceProductEntity->save();

@@ -155,24 +155,24 @@ class ProductOptionFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function getValueUsagesForTypeUsage($idTypeUsage, $idLocale)
+    public function getValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale)
     {
-        return $this->getFactory()->getProductOptionReaderModel()->getValueUsagesForTypeUsage($idTypeUsage, $idLocale);
+        return $this->getFactory()->getProductOptionReaderModel()->getValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale);
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return array
      */
-    public function getTypeExclusionsForTypeUsage($idTypeUsage)
+    public function getTypeExclusionsForTypeUsage($idProductAttributeTypeUsage)
     {
-        return $this->getFactory()->getProductOptionReaderModel()->getTypeExclusionsForTypeUsage($idTypeUsage);
+        return $this->getFactory()->getProductOptionReaderModel()->getTypeExclusionsForTypeUsage($idProductAttributeTypeUsage);
     }
 
     /**
@@ -217,13 +217,13 @@ class ProductOptionFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return string|null
      */
-    public function getEffectiveTaxRateForTypeUsage($idTypeUsage)
+    public function getEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage)
     {
-        return $this->getFactory()->getProductOptionReaderModel()->getEffectiveTaxRateForTypeUsage($idTypeUsage);
+        return $this->getFactory()->getProductOptionReaderModel()->getEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage);
     }
 
     /**

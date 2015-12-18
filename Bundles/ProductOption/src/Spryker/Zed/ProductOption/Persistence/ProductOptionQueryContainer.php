@@ -7,8 +7,8 @@
 namespace Spryker\Zed\ProductOption\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Product\Persistence\Base\SpyAbstractProductQuery;
-use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionConfigurationPresetTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionConfigurationPresetValueTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionTypeTranslationTableMap;
@@ -209,11 +209,11 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @param int $idProductOptionType
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function queryAssociatedAbstractProductIdsForProductOptionType($idProductOptionType)
     {
-        return SpyAbstractProductQuery::create()
+        return SpyProductAbstractQuery::create()
             ->useSpyProductQuery()
                 ->useSpyProductOptionTypeUsageQuery()
                     ->useSpyProductOptionTypeQuery()
@@ -221,18 +221,18 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->groupByIdAbstractProduct()
-            ->select([SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT]);
+            ->groupByIdProductAbstract()
+            ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]);
     }
 
     /**
      * @param int $idProductOptionValue
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function queryAssociatedAbstractProductIdsForProductOptionValue($idProductOptionValue)
     {
-        return SpyAbstractProductQuery::create()
+        return SpyProductAbstractQuery::create()
             ->useSpyProductQuery()
                 ->useSpyProductOptionTypeUsageQuery()
                     ->useSpyProductOptionValueUsageQuery()
@@ -242,24 +242,24 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->groupByIdAbstractProduct()
-            ->select([SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT]);
+            ->groupByIdProductAbstract()
+            ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]);
     }
 
     /**
      * @param int $idProductOptionTypeUsage
      *
-     * @return SpyAbstractProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage)
     {
-        return SpyAbstractProductQuery::create()
+        return SpyProductAbstractQuery::create()
             ->useSpyProductQuery()
                 ->useSpyProductOptionTypeUsageQuery()
                     ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage)
                 ->endUse()
             ->endUse()
-            ->groupByIdAbstractProduct();
+            ->groupByIdProductAbstract();
     }
 
     /**
@@ -345,12 +345,12 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function queryValueUsagesForTypeUsage($idTypeUsage, $idLocale)
+    public function queryValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale)
     {
         $query = SpyProductOptionValueUsageQuery::create()
             ->withColumn(SpyProductOptionValueUsageTableMap::COL_ID_PRODUCT_OPTION_VALUE_USAGE, self::ID_VALUE_USAGE)
@@ -366,7 +366,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->endUse()
             ->endUse()
             ->useSpyProductOptionTypeUsageQuery()
-                ->filterByIdProductOptionTypeUsage($idTypeUsage)
+                ->filterByIdProductOptionTypeUsage($idProductAttributeTypeUsage)
             ->endUse()
             ->orderByIdProductOptionValueUsage()
             ->select([self::ID_VALUE_USAGE, self::SEQUENCE, self::LABEL, self::PRICE])
@@ -378,21 +378,21 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return array
      */
-    public function queryTypeExclusionsForTypeUsage($idTypeUsage)
+    public function queryTypeExclusionsForTypeUsage($idProductAttributeTypeUsage)
     {
         $queryA = SpyProductOptionTypeUsageExclusionQuery::create()
             ->withColumn(SpyProductOptionTypeUsageExclusionTableMap::COL_FK_PRODUCT_OPTION_TYPE_USAGE_B, self::EXCLUDES)
-            ->filterByFkProductOptionTypeUsageA($idTypeUsage)
+            ->filterByFkProductOptionTypeUsageA($idProductAttributeTypeUsage)
             ->select([self::EXCLUDES])
             ->find();
 
         $queryB = SpyProductOptionTypeUsageExclusionQuery::create()
             ->withColumn(SpyProductOptionTypeUsageExclusionTableMap::COL_FK_PRODUCT_OPTION_TYPE_USAGE_A, self::EXCLUDES)
-            ->filterByFkProductOptionTypeUsageB($idTypeUsage)
+            ->filterByFkProductOptionTypeUsageB($idProductAttributeTypeUsage)
             ->select([self::EXCLUDES])
             ->find();
 
@@ -514,11 +514,11 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductAttributeTypeUsage
      *
      * @return string|null
      */
-    public function queryEffectiveTaxRateForTypeUsage($idTypeUsage)
+    public function queryEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage)
     {
         $query = SpyProductOptionTypeUsageQuery::create()
             ->withColumn('SUM(' . SpyTaxRateTableMap::COL_RATE . ')', self::TAX_RATE)
@@ -530,7 +530,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->filterByIdProductOptionTypeUsage($idTypeUsage)
+            ->filterByIdProductOptionTypeUsage($idProductAttributeTypeUsage)
             ->select([self::TAX_RATE])
             ->find();
 

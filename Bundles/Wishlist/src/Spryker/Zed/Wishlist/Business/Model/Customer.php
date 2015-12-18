@@ -50,7 +50,7 @@ class Customer
             $productEntity = $wishlistItemEntity->getSpyProduct();
             $wishlistItemTransfer->setGroupKey($wishlistItemEntity->getGroupKey())
                 ->setAddedAt($wishlistItemEntity->getAddedAt())
-                ->setIdAbstractProduct($wishlistItemEntity->getFkAbstractProduct())
+                ->setIdProductAbstract($wishlistItemEntity->getFkProductAbstract())
                 ->setSku($productEntity->getSku())
                 ->setQuantity($wishlistItemEntity->getQuantity());
 

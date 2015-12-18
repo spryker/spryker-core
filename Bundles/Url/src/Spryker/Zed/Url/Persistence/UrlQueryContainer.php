@@ -7,8 +7,8 @@
 namespace Spryker\Zed\Url\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Url\Persistence\Map\SpyRedirectTableMap;
-use Orm\Zed\Url\Persistence\SpyRedirectQuery;
+use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
+use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -69,32 +69,32 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     public function queryUrlsWithRedirect()
     {
         $query = SpyUrlQuery::create();
-        $query->innerJoinSpyRedirect()
-            ->withColumn(SpyRedirectTableMap::COL_TO_URL, self::TO_URL)
-            ->withColumn(SpyRedirectTableMap::COL_STATUS, self::STATUS);
+        $query->innerJoinSpyUrlRedirect()
+            ->withColumn(SpyUrlRedirectTableMap::COL_TO_URL, self::TO_URL)
+            ->withColumn(SpyUrlRedirectTableMap::COL_STATUS, self::STATUS);
 
         return $query;
     }
 
     /**
-     * @return SpyRedirectQuery
+     * @return SpyUrlRedirectQuery
      */
     public function queryRedirects()
     {
-        $query = SpyRedirectQuery::create();
+        $query = SpyUrlRedirectQuery::create();
 
         return $query;
     }
 
     /**
-     * @param int $idRedirect
+     * @param int $idUrlRedirect
      *
-     * @return SpyRedirectQuery
+     * @return SpyUrlRedirectQuery
      */
-    public function queryRedirectById($idRedirect)
+    public function queryRedirectById($idUrlRedirect)
     {
-        $query = SpyRedirectQuery::create();
-        $query->filterByIdRedirect($idRedirect);
+        $query = SpyUrlRedirectQuery::create();
+        $query->filterByIdUrlRedirect($idUrlRedirect);
 
         return $query;
     }
@@ -117,9 +117,9 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     public function queryUrlByIdWithRedirect($id)
     {
         $query = SpyUrlQuery::create();
-        $query->leftJoinSpyRedirect()
-            ->withColumn(SpyRedirectTableMap::COL_TO_URL, self::TO_URL)
-            ->withColumn(SpyRedirectTableMap::COL_STATUS, self::STATUS)
+        $query->leftJoinSpyUrlRedirect()
+            ->withColumn(SpyUrlRedirectTableMap::COL_TO_URL, self::TO_URL)
+            ->withColumn(SpyUrlRedirectTableMap::COL_STATUS, self::STATUS)
             ->filterByIdUrl($id);
 
         return $query;

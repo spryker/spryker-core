@@ -10,18 +10,18 @@ interface ProductClientInterface
 {
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param string $locale
      *
      * @return array
      */
-    public function getAbstractProductFromStorageById($idAbstractProduct, $locale);
+    public function getAbstractProductFromStorageById($idProductAbstract, $locale);
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return array
      */
-    public function getAbstractProductFromStorageByIdForCurrentLocale($idAbstractProduct);
+    public function getAbstractProductFromStorageByIdForCurrentLocale($idProductAbstract);
 
 }

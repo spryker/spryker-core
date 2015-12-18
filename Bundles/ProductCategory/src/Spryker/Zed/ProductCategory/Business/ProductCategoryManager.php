@@ -131,12 +131,12 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         $this->checkMappingDoesNotExist($sku, $categoryName, $locale);
 
-        $idAbstractProduct = $this->productFacade->getAbstractProductIdBySku($sku);
+        $idProductAbstract = $this->productFacade->getAbstractProductIdBySku($sku);
         $idCategory = $this->categoryFacade->getCategoryIdentifier($categoryName, $locale);
 
         $mappingEntity = new SpyProductCategory();
         $mappingEntity
-            ->setFkAbstractProduct($idAbstractProduct)
+            ->setFkProductAbstract($idProductAbstract)
             ->setFkCategory($idCategory);
 
         $mappingEntity->save();
@@ -177,7 +177,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         return $this->productCategoryQueryContainer
             ->queryProductsByCategoryId($idCategory, $locale)
-            ->orderByFkAbstractProduct()
+            ->orderByFkProductAbstract()
             ->find();
     }
 
@@ -189,20 +189,20 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     public function getCategoriesByAbstractProduct(AbstractProductTransfer $abstractProductTransfer)
     {
         return $this->productCategoryQueryContainer
-            ->queryLocalizedProductCategoryMappingByIdProduct($abstractProductTransfer->getIdAbstractProduct())
+            ->queryLocalizedProductCategoryMappingByIdProduct($abstractProductTransfer->getIdProductAbstract())
             ->find();
     }
 
     /**
      * @param int $idCategory
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return SpyProductCategoryQuery
      */
-    public function getProductCategoryMappingById($idCategory, $idAbstractProduct)
+    public function getProductCategoryMappingById($idCategory, $idProductAbstract)
     {
         return $this->productCategoryQueryContainer
-            ->queryProductCategoryMappingByIds($idCategory, $idAbstractProduct);
+            ->queryProductCategoryMappingByIds($idCategory, $idProductAbstract);
     }
 
     /**
@@ -248,7 +248,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             }
 
             $mapping->setFkCategory($idCategory);
-            $mapping->setFkAbstractProduct($idProduct);
+            $mapping->setFkProductAbstract($idProduct);
             $mapping->save();
 
             $this->touchAbstractProductActive($idProduct);
@@ -274,7 +274,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             }
 
             $mapping->setFkCategory($idCategory);
-            $mapping->setFkAbstractProduct($idProduct);
+            $mapping->setFkProductAbstract($idProduct);
             $mapping->setProductOrder($order);
             $mapping->save();
 
@@ -303,7 +303,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
             $idPreconfigProduct = $idPreconfigProduct <= 0 ? null : $idPreconfigProduct;
             $mapping->setFkCategory($idCategory);
-            $mapping->setFkAbstractProduct($idProduct);
+            $mapping->setFkProductAbstract($idProduct);
             $mapping->setFkPreconfigProduct($idPreconfigProduct);
             $mapping->save();
 
@@ -469,29 +469,29 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
         $productIdsToUnAssign = [];
         foreach ($assignedProducts as $mapping) {
-            $productIdsToUnAssign[] = $mapping->getFkAbstractProduct();
+            $productIdsToUnAssign[] = $mapping->getFkProductAbstract();
         }
         $this->removeProductCategoryMappings($idCategory, $productIdsToUnAssign);
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    protected function touchAbstractProductActive($idAbstractProduct)
+    protected function touchAbstractProductActive($idProductAbstract)
     {
-        $this->touchFacade->touchActive(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idAbstractProduct);
+        $this->touchFacade->touchActive(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idProductAbstract);
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    protected function touchAbstractProductDeleted($idAbstractProduct)
+    protected function touchAbstractProductDeleted($idProductAbstract)
     {
-        $this->touchFacade->touchDeleted(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idAbstractProduct);
+        $this->touchFacade->touchDeleted(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idProductAbstract);
     }
 
 }

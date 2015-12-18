@@ -11,7 +11,7 @@ use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 
 /**
@@ -75,7 +75,7 @@ class TaxChangeTouchPluginTest extends Test
     private function performAssertion()
     {
         $query = SpyTouchQuery::create()
-            ->filterByItemType('abstract_product')
+            ->filterByItemType('product_abstract')
             ->limit(2)
             ->orderByIdTouch('desc')
             ->find();
@@ -111,19 +111,19 @@ class TaxChangeTouchPluginTest extends Test
             ->save();
         $this->taxSetId = $taxSet->getIdTaxSet();
 
-        $product1 = new SpyAbstractProduct();
+        $product1 = new SpyProductAbstract();
         $product1->setSku('Product1')
             ->setSpyTaxSet($taxSet)
             ->setAttributes('{}')
             ->save();
-        $this->abstractProductIds[] = $product1->getIdAbstractProduct();
+        $this->abstractProductIds[] = $product1->getIdProductAbstract();
 
-        $product2 = new SpyAbstractProduct();
+        $product2 = new SpyProductAbstract();
         $product2->setSku('Product2')
             ->setSpyTaxSet($taxSet)
             ->setAttributes('{}')
             ->save();
-        $this->abstractProductIds[] = $product2->getIdAbstractProduct();
+        $this->abstractProductIds[] = $product2->getIdProductAbstract();
     }
 
 }

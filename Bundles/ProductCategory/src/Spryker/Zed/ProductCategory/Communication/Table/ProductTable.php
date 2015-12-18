@@ -11,7 +11,7 @@ use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
 
 class ProductTable extends AbstractTable
@@ -56,14 +56,14 @@ class ProductTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => 'ID',
-            SpyAbstractProductTableMap::COL_SKU => 'SKU',
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => 'ID',
+            SpyProductAbstractTableMap::COL_SKU => 'SKU',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
             'checkbox' => 'Selected',
         ]);
 
         $config->setSearchable([
-            SpyAbstractProductTableMap::COL_SKU,
+            SpyProductAbstractTableMap::COL_SKU,
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
         ]);
 
@@ -80,7 +80,7 @@ class ProductTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->productCategoryQueryContainer->queryAbstractProductsBySearchTerm(null, $this->locale, $this->idCategory);
-        $query->setModelAlias('spy_abstract_product');
+        $query->setModelAlias('spy_product_abstract');
 
         $queryResults = $this->runQuery($query, $config);
 
@@ -88,15 +88,15 @@ class ProductTable extends AbstractTable
         foreach ($queryResults as $product) {
             $checkbox_html = sprintf(
                 '<input id="all_products_checkbox_%d" type="checkbox" onclick="allProductsClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
-                $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
-                $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
-                $product[SpyAbstractProductTableMap::COL_SKU],
+                $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
+                $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
+                $product[SpyProductAbstractTableMap::COL_SKU],
                 urlencode($product['name'])
             );
 
             $results[] = [
-                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
-                SpyAbstractProductTableMap::COL_SKU => $product[SpyAbstractProductTableMap::COL_SKU],
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
+                SpyProductAbstractTableMap::COL_SKU => $product[SpyProductAbstractTableMap::COL_SKU],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $product['name'],
                 'checkbox' => $checkbox_html,
             ];

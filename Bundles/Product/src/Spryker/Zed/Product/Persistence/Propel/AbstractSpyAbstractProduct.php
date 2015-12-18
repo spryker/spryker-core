@@ -2,10 +2,10 @@
 
 namespace Spryker\Zed\Product\Persistence\Propel;
 
-use Orm\Zed\Product\Persistence\Base\SpyAbstractProduct as BaseSpyAbstractProduct;
+use Orm\Zed\Product\Persistence\Base\SpyProductAbstract as BaseSpyProductAbstract;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_abstract_product' table.
+ * Skeleton subclass for representing a row from the 'spy_product_abstract' table.
  *
  *
  *
@@ -13,6 +13,6 @@ use Orm\Zed\Product\Persistence\Base\SpyAbstractProduct as BaseSpyAbstractProduc
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyAbstractProduct extends BaseSpyAbstractProduct
+abstract class AbstractSpyProductAbstract extends BaseSpyProductAbstract
 {
 }

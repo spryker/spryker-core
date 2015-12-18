@@ -32,7 +32,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
 
         $spyWishlistItem = new WishlistItemSpy();
         $spyWishlistItem->setQuantity(1);
-        $spyWishlistItem->setFkAbstractProduct(1);
+        $spyWishlistItem->setFkProductAbstract(1);
         $spyWishlistItem->setFkProduct(1);
         $spyWishlistItem->setGroupKey(123);
 
@@ -104,7 +104,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
 
         $spyWishlistItem = new WishlistItemSpy();
         $spyWishlistItem->setQuantity(3);
-        $spyWishlistItem->setFkAbstractProduct(1);
+        $spyWishlistItem->setFkProductAbstract(1);
         $spyWishlistItem->setFkProduct(1);
         $spyWishlistItem->setGroupKey(123);
 
@@ -141,7 +141,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
 
         $spyWishlistItem = new WishlistItemSpy();
         $spyWishlistItem->setQuantity(3);
-        $spyWishlistItem->setFkAbstractProduct(1);
+        $spyWishlistItem->setFkProductAbstract(1);
         $spyWishlistItem->setFkProduct(1);
         $spyWishlistItem->setGroupKey(123);
 
@@ -254,7 +254,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $concreteProduct = new ConcreteProductTransfer();
-        $concreteProduct->setIdAbstractProduct(1);
+        $concreteProduct->setIdProductAbstract(1);
         $concreteProduct->setIdConcreteProduct(1);
         $productFacadeMock
             ->expects($this->any())

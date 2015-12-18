@@ -13,7 +13,7 @@ use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
-use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 
 /**
@@ -202,7 +202,7 @@ class CartFacadeTest extends AbstractFunctionalTest
         $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(self::PRICE_TYPE_DEFAULT)->findOneOrCreate();
         $defaultPriceType->setName(self::PRICE_TYPE_DEFAULT)->save();
 
-        $abstractProduct1 = SpyAbstractProductQuery::create()
+        $abstractProduct1 = SpyProductAbstractQuery::create()
             ->filterBySku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
             ->findOneOrCreate();
 
@@ -216,11 +216,11 @@ class CartFacadeTest extends AbstractFunctionalTest
 
         $concreteProduct1
             ->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
-            ->setSpyAbstractProduct($abstractProduct1)
+            ->setSpyProductAbstract($abstractProduct1)
             ->setAttributes('{}')
             ->save();
 
-        $abstractProduct2 = SpyAbstractProductQuery::create()
+        $abstractProduct2 = SpyProductAbstractQuery::create()
             ->filterBySku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)
             ->findOneOrCreate();
 
@@ -235,13 +235,13 @@ class CartFacadeTest extends AbstractFunctionalTest
 
         $concreteProduct2
             ->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
-            ->setSpyAbstractProduct($abstractProduct2)
+            ->setSpyProductAbstract($abstractProduct2)
             ->setAttributes('{}')
             ->save();
 
         $priceProductConcrete1 = SpyPriceProductQuery::create()
             ->filterByProduct($concreteProduct1)
-            ->filterBySpyAbstractProduct($abstractProduct1)
+            ->filterBySpyProductAbstract($abstractProduct1)
             ->filterByPriceType($defaultPriceType)
             ->findOneOrCreate()
             ->setPrice(100)
@@ -249,7 +249,7 @@ class CartFacadeTest extends AbstractFunctionalTest
 
         $priceProductConcrete2 = SpyPriceProductQuery::create()
             ->filterByProduct($concreteProduct2)
-            ->filterBySpyAbstractProduct($abstractProduct2)
+            ->filterBySpyProductAbstract($abstractProduct2)
             ->filterByPriceType($defaultPriceType)
             ->findOneOrCreate()
             ->setPrice(100)

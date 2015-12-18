@@ -69,7 +69,7 @@ class RedirectController extends AbstractController
 
             $this->getUrlFacade()
                 ->saveRedirectUrlAndTouch($data[CmsRedirectForm::FROM_URL], $this->getLocaleFacade()
-                    ->getCurrentLocale(), $redirectTransfer->getIdRedirect());
+                    ->getCurrentLocale(), $redirectTransfer->getIdUrlRedirect());
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
         }

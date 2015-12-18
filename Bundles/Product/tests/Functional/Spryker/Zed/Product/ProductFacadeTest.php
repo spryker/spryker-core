@@ -15,8 +15,8 @@ use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Orm\Zed\Product\Persistence\SpyAbstractProduct;
-use Orm\Zed\Product\Persistence\SpyLocalizedProductAttributes;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
@@ -89,7 +89,7 @@ class ProductFacadeTest extends Test
         $idAttributeType = $this->productFacade->createAttributeType('AnAttributeType', 'input');
 
         $this->assertEquals(1, $attributeTypeQuery->count());
-        $this->assertEquals($idAttributeType, $attributeTypeQuery->findOne()->getIdType());
+        $this->assertEquals($idAttributeType, $attributeTypeQuery->findOne()->getIdProductAttributeType());
     }
 
     /**
@@ -106,7 +106,7 @@ class ProductFacadeTest extends Test
         $idAttribute = $this->productFacade->createAttribute('ANonExistentAttribute', 'AnAttributeType');
 
         $this->assertEquals(1, $attributeQuery->count());
-        $this->assertEquals($idAttribute, $attributeQuery->findOne()->getIdAttributesMetadata());
+        $this->assertEquals($idAttribute, $attributeQuery->findOne()->getIdProductAttributesMetadata());
     }
 
     /**
@@ -152,10 +152,10 @@ class ProductFacadeTest extends Test
         $abstractProduct->setAttributes([]);
         $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
-        $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
 
         $this->assertEquals(1, $abstractProductQuery->count());
-        $this->assertEquals($idAbstractProduct, $abstractProductQuery->findOne()->getIdAbstractProduct());
+        $this->assertEquals($idProductAbstract, $abstractProductQuery->findOne()->getIdProductAbstract());
     }
 
     /**
@@ -174,7 +174,7 @@ class ProductFacadeTest extends Test
         $abstractProduct->setAttributes([]);
         $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
-        $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
 
         $concreteProduct = new ConcreteProductTransfer();
         $concreteProduct->setSku('AConcreteProductSku');
@@ -182,7 +182,7 @@ class ProductFacadeTest extends Test
         $concreteProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
         $concreteProduct->setIsActive(true);
 
-        $this->productFacade->createConcreteProduct($concreteProduct, $idAbstractProduct);
+        $this->productFacade->createConcreteProduct($concreteProduct, $idProductAbstract);
 
         $effectiveTaxRate = $this->productFacade->getEffectiveTaxRateForConcreteProduct('AConcreteProductSku');
 
@@ -223,14 +223,14 @@ class ProductFacadeTest extends Test
         $abstractProduct->setSku('AnAbstractProductSku');
         $abstractProduct->setAttributes([]);
         $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
-        $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
 
         $concreteProduct = new ConcreteProductTransfer();
         $concreteProduct->setSku('AConcreteProductSku');
         $concreteProduct->setAttributes([]);
         $concreteProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
         $concreteProduct->setIsActive(true);
-        $idConcreteProduct = $this->productFacade->createConcreteProduct($concreteProduct, $idAbstractProduct);
+        $idConcreteProduct = $this->productFacade->createConcreteProduct($concreteProduct, $idProductAbstract);
 
         $this->assertEquals(1, $concreteProductQuery->count());
         $this->assertEquals($idConcreteProduct, $concreteProductQuery->findOne()->getIdProduct());
@@ -250,14 +250,14 @@ class ProductFacadeTest extends Test
         $abstractProduct->setAttributes([]);
         $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
-        $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
 
         $concreteProduct = new ConcreteProductTransfer();
         $concreteProduct->setSku('AConcreteProductSku');
         $concreteProduct->setAttributes([]);
         $concreteProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
         $concreteProduct->setIsActive(true);
-        $this->productFacade->createConcreteProduct($concreteProduct, $idAbstractProduct);
+        $this->productFacade->createConcreteProduct($concreteProduct, $idProductAbstract);
 
         $this->assertTrue($this->productFacade->hasConcreteProduct('AConcreteProductSku'));
     }
@@ -276,15 +276,15 @@ class ProductFacadeTest extends Test
         $abstractProduct->setSku('AnAbstractProductSku');
         $abstractProduct->setAttributes([]);
         $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
-        $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
         $url = $this->productFacade->createProductUrl('AnAbstractProductSku', $urlString, $locale);
 
         $this->assertTrue($this->urlFacade->hasUrl($urlString));
 
         $this->assertEquals($urlString, $url->getUrl());
-        $this->assertEquals($idAbstractProduct, $url->getFkAbstractProduct());
-        $this->assertEquals($idAbstractProduct, $url->getResourceId());
-        $this->assertEquals('abstract_product', $url->getResourceType());
+        $this->assertEquals($idProductAbstract, $url->getFkProductAbstract());
+        $this->assertEquals($idProductAbstract, $url->getResourceId());
+        $this->assertEquals('product_abstract', $url->getResourceType());
         $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
     }
 
@@ -302,14 +302,14 @@ class ProductFacadeTest extends Test
         $abstractProduct->setAttributes([]);
         $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
-        $idAbstractProduct = $this->productFacade->createAbstractProduct($abstractProduct);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
 
         $concreteProduct = new ConcreteProductTransfer();
         $concreteProduct->setSku(self::SKU_CONCRETE_PRODUCT);
         $concreteProduct->setAttributes([]);
         $concreteProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
         $concreteProduct->setIsActive(true);
-        $this->productFacade->createConcreteProduct($concreteProduct, $idAbstractProduct);
+        $this->productFacade->createConcreteProduct($concreteProduct, $idProductAbstract);
 
         $this->assertTrue($this->productFacade->hasConcreteProduct(self::SKU_CONCRETE_PRODUCT));
 
@@ -334,20 +334,20 @@ class ProductFacadeTest extends Test
         $taxSetEntity->addSpyTaxRate($taxRateEntity)
             ->setName(self::TAX_SET_NAME);
 
-        $abstractProductEntity = new SpyAbstractProduct();
+        $abstractProductEntity = new SpyProductAbstract();
         $abstractProductEntity->setSpyTaxSet($taxSetEntity)
             ->setAttributes('')
             ->setSku(self::SKU_ABSTRACT_PRODUCT);
 
-        $localizedAttributesEntity = new SpyLocalizedProductAttributes();
+        $localizedAttributesEntity = new SpyProductLocalizedAttributes();
         $localizedAttributesEntity->setName(self::CONCRETE_PRODUCT_NAME)
             ->setAttributes('')
             ->setFkLocale($localeTransfer->getIdLocale());
 
         $concreteProductEntity = new SpyProduct();
-        $concreteProductEntity->setSpyAbstractProduct($abstractProductEntity)
+        $concreteProductEntity->setSpyProductAbstract($abstractProductEntity)
             ->setAttributes('')
-            ->addSpyLocalizedProductAttributes($localizedAttributesEntity)
+            ->addSpyProductLocalizedAttributes($localizedAttributesEntity)
             ->setSku(self::SKU_CONCRETE_PRODUCT)
             ->save();
 
@@ -356,7 +356,7 @@ class ProductFacadeTest extends Test
         $this->assertEquals(self::SKU_CONCRETE_PRODUCT, $concreteProductTransfer->getSku());
         $this->assertEquals(self::SKU_ABSTRACT_PRODUCT, $concreteProductTransfer->getAbstractProductSku());
         $this->assertEquals($concreteProductEntity->getIdProduct(), $concreteProductTransfer->getIdConcreteProduct());
-        $this->assertEquals($abstractProductEntity->getIdAbstractProduct(), $concreteProductTransfer->getIdAbstractProduct());
+        $this->assertEquals($abstractProductEntity->getIdProductAbstract(), $concreteProductTransfer->getIdProductAbstract());
 
         $taxSetTransfer = $concreteProductTransfer->getTaxSet();
         $this->assertEquals(self::TAX_SET_NAME, $taxSetTransfer->getName());

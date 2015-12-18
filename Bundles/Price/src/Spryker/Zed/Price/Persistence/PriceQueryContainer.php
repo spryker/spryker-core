@@ -12,7 +12,7 @@ use Orm\Zed\Price\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
-use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -53,7 +53,7 @@ class PriceQueryContainer extends AbstractQueryContainer
     {
         return SpyPriceProductQuery::create()
             ->filterByPriceType($priceType)
-            ->useSpyAbstractProductQuery()
+            ->useSpyProductAbstractQuery()
             ->filterBySku($sku)
             ->endUse();
     }
@@ -99,7 +99,7 @@ class PriceQueryContainer extends AbstractQueryContainer
         return SpyPriceProductQuery::create()
             ->filterByPrice($transferPriceProduct->getPrice())
             ->filterByPriceType($priceType)
-            ->useSpyAbstractProductQuery()
+            ->useSpyProductAbstractQuery()
             ->filterBySku($transferPriceProduct->getSkuProduct())
             ->endUse();
     }
@@ -141,8 +141,8 @@ class PriceQueryContainer extends AbstractQueryContainer
         return SpyPriceProductQuery::create()
             ->joinProduct()
             ->withColumn(SpyProductTableMap::COL_SKU, 'sku_product_concrete')
-            ->joinSpyAbstractProduct()
-            ->withColumn(SpyAbstractProductTableMap::COL_SKU, 'sku_product_abstract')
+            ->joinSpyProductAbstract()
+            ->withColumn(SpyProductAbstractTableMap::COL_SKU, 'sku_product_abstract')
             ->joinPriceType()
             ->withColumn(SpyPriceTypeTableMap::COL_NAME, 'price_type_name');
     }

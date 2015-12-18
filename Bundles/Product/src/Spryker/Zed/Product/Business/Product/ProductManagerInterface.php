@@ -46,13 +46,13 @@ interface ProductManagerInterface
 
     /**
      * @param ConcreteProductTransfer $concreteProductTransfer
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @throws ConcreteProductExistsException
      *
      * @return int
      */
-    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idAbstractProduct);
+    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idProductAbstract);
 
     /**
      * @param string $sku
@@ -71,9 +71,9 @@ interface ProductManagerInterface
     public function getConcreteProductIdBySku($sku);
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      */
-    public function touchProductActive($idAbstractProduct);
+    public function touchProductActive($idProductAbstract);
 
     /**
      * @param string $sku
@@ -89,7 +89,7 @@ interface ProductManagerInterface
     public function createProductUrl($sku, $url, LocaleTransfer $locale);
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param string $url
      * @param LocaleTransfer $locale
      *
@@ -99,7 +99,7 @@ interface ProductManagerInterface
      *
      * @return UrlTransfer
      */
-    public function createProductUrlByIdProduct($idAbstractProduct, $url, LocaleTransfer $locale);
+    public function createProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
 
     /**
      * @param string $sku
@@ -115,7 +115,7 @@ interface ProductManagerInterface
     public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale);
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      * @param string $url
      * @param LocaleTransfer $locale
      *
@@ -125,7 +125,7 @@ interface ProductManagerInterface
      *
      * @return UrlTransfer
      */
-    public function createAndTouchProductUrlByIdProduct($idAbstractProduct, $url, LocaleTransfer $locale);
+    public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
 
     /**
      * @param string $sku

@@ -1,39 +1,39 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="Orm\Zed\Product\Persistence" identifierQuoting="true" package="src.Orm.Zed.Product.Persistence">
 
-    <table name="spy_abstract_product" idMethod="native" allowPkInsert="true" phpName="SpyAbstractProduct">
-        <column name="id_abstract_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+    <table name="spy_product_abstract" idMethod="native" allowPkInsert="true" phpName="SpyProductAbstract">
+        <column name="id_product_abstract" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="sku" required="true" type="VARCHAR" size="255"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
         <column name="fk_tax_set" type="INTEGER" required="false"/>
-        <foreign-key name="spy_abstract_product-fk_tax_set" foreignTable="spy_tax_set">
+        <foreign-key name="spy_product_abstract-fk_tax_set" foreignTable="spy_tax_set">
             <reference local="fk_tax_set" foreign="id_tax_set"/>
         </foreign-key>
-        <unique name="spy_abstract_product-sku">
+        <unique name="spy_product_abstract-sku">
             <unique-column name="sku"/>
         </unique>
         <behavior name="timestampable"/>
-        <id-method-parameter value="spy_abstract_product_pk_seq"/>
+        <id-method-parameter value="spy_product_abstract_pk_seq"/>
     </table>
 
-    <table name="spy_abstract_product_localized_attributes" idMethod="native" allowPkInsert="true" phpName="SpyLocalizedAbstractProductAttributes" identifierQuoting="true">
+    <table name="spy_product_abstract_localized_attributes" idMethod="native" allowPkInsert="true" phpName="SpyLocalizedAbstractProductAttributes" identifierQuoting="true">
         <column name="id_abstract_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="fk_abstract_product" required="true" type="INTEGER"/>
+        <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="name" required="true" type="VARCHAR"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
-        <foreign-key name="spy_abstract_product_localized_attributes-fk_abstract_product" foreignTable="spy_abstract_product" onDelete="CASCADE" onUpdate="CASCADE">
-            <reference local="fk_abstract_product" foreign="id_abstract_product"/>
+        <foreign-key name="spy_product_abstract_localized_attributes-fk_product_abstract" foreignTable="spy_product_abstract" onDelete="CASCADE" onUpdate="CASCADE">
+            <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
-        <foreign-key name="spy_abstract_product_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
+        <foreign-key name="spy_product_abstract_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <unique name="spy_abstract_product_localized_attributes-unique-fk_abstract_product">
-            <unique-column name="fk_abstract_product"/>
+        <unique name="spy_product_abstract_localized_attributes-unique-fk_product_abstract">
+            <unique-column name="fk_product_abstract"/>
             <unique-column name="fk_locale"/>
         </unique>
         <behavior name="timestampable"/>
-        <id-method-parameter value="spy_abstract_product_localized_attributes_pk_seq"/>
+        <id-method-parameter value="spy_product_abstract_localized_attributes_pk_seq"/>
     </table>
 
     <table name="spy_product" idMethod="native" allowPkInsert="true" phpName="SpyProduct" identifierQuoting="true">
@@ -41,19 +41,19 @@
         <column name="sku" required="true" type="VARCHAR" size="255"/>
         <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
-        <column name="fk_abstract_product" required="true" type="INTEGER"/>
+        <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <unique name="spy_product-sku">
             <unique-column name="sku"/>
         </unique>
-        <foreign-key name="spy_product-fk_abstract_product" foreignTable="spy_abstract_product">
-            <reference local="fk_abstract_product" foreign="id_abstract_product"/>
+        <foreign-key name="spy_product-fk_product_abstract" foreignTable="spy_product_abstract">
+            <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_product_pk_seq"/>
     </table>
 
-    <table name="spy_product_localized_attributes" idMethod="native" allowPkInsert="true" phpName="SpyLocalizedProductAttributes" identifierQuoting="true">
-        <column name="id_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+    <table name="spy_product_localized_attributes" idMethod="native" allowPkInsert="true" phpName="SpyProductLocalizedAttributes" identifierQuoting="true">
+        <column name="id_product_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="name" required="true" type="VARCHAR"/>
@@ -84,42 +84,42 @@
         </foreign-key>
     </table>
 
-    <table name="spy_attributes_metadata" idMethod="native" allowPkInsert="true" phpName="SpyProductAttributesMetadata" identifierQuoting="true">
-        <column name="id_attributes_metadata" primaryKey="true" type="INTEGER" autoIncrement="true"/>
+    <table name="spy_product_attributes_metadata" idMethod="native" allowPkInsert="true" phpName="SpyProductAttributesMetadata" identifierQuoting="true">
+        <column name="id_product_attributes_metadata" primaryKey="true" type="INTEGER" autoIncrement="true"/>
         <column name="key" required="true" type="VARCHAR"/>
         <column name="is_editable" required="true" defaultValue="true" type="BOOLEAN"/>
         <column name="fk_type" type="INTEGER"/>
-        <foreign-key name="spy_attributes_metadata-fk_type" foreignTable="spy_attribute_type">
-            <reference local="fk_type" foreign="id_type"/>
+        <foreign-key name="spy_product_attributes_metadata-fk_type" foreignTable="spy_product_attribute_type">
+            <reference local="fk_type" foreign="id_product_attribute_type"/>
         </foreign-key>
-        <id-method-parameter value="spy_attributes_metadata_pk_seq"/>
+        <id-method-parameter value="spy_product_attributes_metadata_pk_seq"/>
     </table>
 
-    <table name="spy_attribute_type" idMethod="native" allowPkInsert="true" phpName="SpyProductAttributeType" identifierQuoting="true">
-        <column name="id_type" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+    <table name="spy_product_attribute_type" idMethod="native" allowPkInsert="true" phpName="SpyProductAttributeType" identifierQuoting="true">
+        <column name="id_product_attribute_type" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" required="true"/>
-        <column name="fk_parent_type" type="INTEGER" required="false"/>
+        <column name="fk_product_attribute_type_parent" type="INTEGER" required="false"/>
         <column name="input_representation" type="VARCHAR" required="true"/>
-        <foreign-key name="spy_attribute_type-fk_parent_type" foreignTable="spy_attribute_type">
-            <reference local="fk_parent_type" foreign="id_type"/>
+        <foreign-key name="spy_product_attribute_type-fk_product_attribute_type_parent" foreignTable="spy_product_attribute_type">
+            <reference local="fk_product_attribute_type_parent" foreign="id_product_attribute_type"/>
         </foreign-key>
-        <id-method-parameter value="spy_attribute_type_pk_seq"/>
+        <id-method-parameter value="spy_product_attribute_type_pk_seq"/>
     </table>
 
-    <table name="spy_attribute_type_value" idMethod="native" allowPkInsert="true" phpName="SpyTypeValue" identifierQuoting="true">
+    <table name="spy_product_attribute_type_value" idMethod="native" allowPkInsert="true" phpName="SpyProductAttributeTypeValue" identifierQuoting="true">
         <column name="id" autoIncrement="true" primaryKey="true" type="INTEGER"/>
         <column name="fk_type" type="INTEGER" required="true"/>
         <column name="key" type="VARCHAR" required="true"/>
         <column name="value" type="VARCHAR" required="true"/>
         <column name="fk_locale" type="INTEGER" required="false"/>
-        <foreign-key name="spy_attribute_type_value-fk_locale" foreignTable="spy_locale" phpName="Locale">
+        <foreign-key name="spy_product_attribute_type_value-fk_locale" foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <unique name="spy_attribute_type_value-unique-fk_locale">
+        <unique name="spy_product_attribute_type_value-unique-fk_locale">
             <unique-column name="fk_locale"/>
             <unique-column name="fk_type"/>
             <unique-column name="key"/>
         </unique>
-        <id-method-parameter value="spy_attribute_type_value_pk_seq"/>
+        <id-method-parameter value="spy_product_attribute_type_value_pk_seq"/>
     </table>
 </database>

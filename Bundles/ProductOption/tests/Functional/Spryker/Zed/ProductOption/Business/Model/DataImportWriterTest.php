@@ -11,7 +11,7 @@ use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionConfigurationPresetQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery;
@@ -109,7 +109,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
         $this->facade->flushBuffer();
 
-        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
+        $this->performAssertionOnTouchTable($product->getFkProductAbstract());
     }
 
     /**
@@ -129,7 +129,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->facade->importProductOptionValue('VIOLET', 'SHADE', ['en_GB' => 'Violet'], '2.99');
         $this->facade->flushBuffer();
 
-        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
+        $this->performAssertionOnTouchTable($product->getFkProductAbstract());
     }
 
     /**
@@ -153,7 +153,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
         $this->assertEquals(1, $result->count(), 'Failed asserting that method is idempotent');
 
-        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
+        $this->performAssertionOnTouchTable($product->getFkProductAbstract());
     }
 
     /**
@@ -176,7 +176,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
         $this->assertEquals(1, $result->count(), 'Failed asserting that method is idempotent');
 
-        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
+        $this->performAssertionOnTouchTable($product->getFkProductAbstract());
     }
 
     /**
@@ -202,7 +202,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
         $this->assertEquals(1, $result->count(), 'Failed asserting that method is idempotent');
 
-        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
+        $this->performAssertionOnTouchTable($product->getFkProductAbstract());
     }
 
     /**
@@ -232,7 +232,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
         $this->assertEquals(1, $result->count(), 'Failed asserting that method is idempotent');
 
-        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
+        $this->performAssertionOnTouchTable($product->getFkProductAbstract());
     }
 
     /**
@@ -272,12 +272,12 @@ class DataImportWriterTest extends AbstractFunctionalTest
             );
         }
 
-        $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
+        $this->performAssertionOnTouchTable($product->getFkProductAbstract());
     }
 
     private function createConcreteProduct()
     {
-        $abstractProduct = (new SpyAbstractProduct())
+        $abstractProduct = (new SpyProductAbstract())
             ->setSku('ABC123')
             ->setAttributes('{}');
         $abstractProduct->save();
@@ -286,7 +286,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
             ->setSku('ABC123')
             ->setAttributes('{}')
             ->setIsActive(true)
-            ->setSpyAbstractProduct($abstractProduct);
+            ->setSpyProductAbstract($abstractProduct);
 
         $product->save();
 
@@ -331,21 +331,21 @@ class DataImportWriterTest extends AbstractFunctionalTest
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    private function performAssertionOnTouchTable($idAbstractProduct)
+    private function performAssertionOnTouchTable($idProductAbstract)
     {
         $query = SpyTouchQuery::create()
-            ->filterByItemType('abstract_product')
+            ->filterByItemType('product_abstract')
             ->limit(1)
             ->orderByIdTouch('desc')
             ->find();
 
         $this->assertEquals(1, $query->count());
         foreach ($query as $touchEntity) {
-            $this->assertEquals($touchEntity->getItemId(), $idAbstractProduct);
+            $this->assertEquals($touchEntity->getItemId(), $idProductAbstract);
         }
     }
 

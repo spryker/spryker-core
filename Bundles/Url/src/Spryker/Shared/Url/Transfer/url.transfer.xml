@@ -4,7 +4,7 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Redirect">
-        <property name="idRedirect" type="int" />
+        <property name="idUrlRedirect" type="int" />
         <property name="toUrl" type="string" />
         <property name="status" type="int" />
     </transfer>
@@ -15,7 +15,7 @@
         <property name="fkLocale" type="int" />
         <property name="itemType" type="string" />
         <property name="itemId" type="string" />
-        <property name="fkAbstractProduct" type="int" />
+        <property name="fkProductAbstract" type="int" />
         <property name="fkCategoryNode" type="int" />
         <property name="fkPage" type="int" />
         <property name="fkRedirect" type="int" />
