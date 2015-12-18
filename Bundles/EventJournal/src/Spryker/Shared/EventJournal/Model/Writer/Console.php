@@ -13,9 +13,14 @@ class Console extends AbstractWriter
 
     const TYPE = 'console';
 
+    /**
+     * @param EventInterface $event
+     *
+     * @return bool
+     */
     public function write(EventInterface $event)
     {
-        print json_encode($event->getFields(), JSON_PRETTY_PRINT);
+        echo json_encode($event->getFields(), JSON_PRETTY_PRINT);
 
         return true;
     }

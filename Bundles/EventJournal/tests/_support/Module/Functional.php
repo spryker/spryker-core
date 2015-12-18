@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Lumberjack\Module;
+namespace EventJournal\Module;
 
 use Codeception\TestCase;
 use Codeception\Module;

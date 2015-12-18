@@ -2,4 +2,4 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
-        - \Lumberjack\Module\Functional
+        - \EventJournal\Module\Functional

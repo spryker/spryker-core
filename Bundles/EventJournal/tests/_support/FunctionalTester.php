@@ -1,5 +1,5 @@
 <?php
-namespace Lumberjack;
+namespace EventJournal;
 
 /**
  * Inherited Methods

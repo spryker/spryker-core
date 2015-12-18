@@ -83,7 +83,7 @@ class ServerDataCollector extends AbstractDataCollector
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     protected function getUserAgent()
     {
@@ -91,20 +91,23 @@ class ServerDataCollector extends AbstractDataCollector
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     protected function getRemoteAddress()
     {
         return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
     }
 
+    /**
+     * @return string
+     */
     protected function getRequestMethod()
     {
         return isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     protected function getHttpReferrer()
     {

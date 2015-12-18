@@ -46,13 +46,45 @@ class RecursiveFieldFilter extends AbstractFilter
      */
     protected function applyPattern(array &$fields, array $pattern)
     {
-        if (isset($fields[$pattern[0]]) // current pattern part matches
-            && is_array($fields[$pattern[0]]) // the value is an array and should be recursively processed
-            && isset($pattern[1]) // And there is a next pattern part
+        if ($this->currentPatternPartMatches($fields, $pattern)
+            && $this->valueIsArray($fields, $pattern)
+            && $this->nextPatternPartExists($pattern)
         ) {
             $this->applyPattern($fields[$pattern[0]], array_slice($pattern, 1));
-        } else if (isset($fields[$pattern[0]])) {
+        } else if ($this->currentPatternPartMatches($fields, $pattern)) {
             $fields[$pattern[0]] = $this->options[static::OPTION_FILTERED_STR];
         }
+    }
+
+    /**
+     * @param array $fields
+     * @param array $pattern
+     *
+     * @return bool
+     */
+    protected function currentPatternPartMatches(array &$fields, array $pattern)
+    {
+        return isset($fields[$pattern[0]]);
+    }
+
+    /**
+     * @param array $fields
+     * @param array $pattern
+     *
+     * @return bool
+     */
+    protected function valueIsArray(array &$fields, array $pattern)
+    {
+        return is_array($fields[$pattern[0]]);
+    }
+
+    /**
+     * @param array $pattern
+     *
+     * @return bool
+     */
+    protected function nextPatternPartExists(array $pattern)
+    {
+        return isset($pattern[1]);
     }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "spryker/lumberjack",
+  "name": "spryker/eventjournal",
   "autoload": {
     "psr-0": {
       "SprykerFeature": "src/",
