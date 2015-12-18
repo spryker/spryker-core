@@ -1,6 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Add a translation' %}
+{% if widget_title is not defined %}
+    {% set widget_title = 'Add a translation' %}
+{% endif %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
