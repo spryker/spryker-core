@@ -6,8 +6,13 @@
 
 namespace Spryker\Sniffs\Factory;
 
-class CommunicationFactoryMethodAnnotationSniff implements \PHP_CodeSniffer_Sniff
+class FactoryMethodAnnotationSniff implements \PHP_CodeSniffer_Sniff
 {
+
+    /**
+     * @var array
+     */
+    protected $useStatements = [];
 
     /**
      * @return array
@@ -28,30 +33,12 @@ class CommunicationFactoryMethodAnnotationSniff implements \PHP_CodeSniffer_Snif
     public function process(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
     {
         $tokens = $phpCsFile->getTokens();
-        if ($this->isCommunicationFactory($phpCsFile)) {
-
+        if ($this->isFactory($phpCsFile)) {
             $bundle = $this->getBundle($phpCsFile);
             $queryContainerName = $bundle . 'QueryContainer';
             $configName = $bundle . 'Config';
 
             if ($this->hasDocBlock($stackPointer, $tokens)) {
-                if (!$this->hasQueryContainerAnnotation($phpCsFile, $stackPointer)) {
-                    $fix = $phpCsFile->addFixableError('getQueryContainer() annotation missing', $stackPointer);
-                    if ($fix) {
-                        $phpCsFile->fixer->beginChangeset();
-                        $this->addUseStatements(
-                            $phpCsFile,
-                            $stackPointer,
-                            [$this->getQueryContainerClassName($phpCsFile)]
-                        );
-                        $this->addMissingAnnotation(
-                            $phpCsFile,
-                            $stackPointer,
-                            $queryContainerName . ' getQueryContainer()'
-                        );
-                        $phpCsFile->fixer->endChangeset();
-                    }
-                }
                 if (!$this->hasConfigAnnotation($phpCsFile, $stackPointer)) {
                     $fix = $phpCsFile->addFixableError('getConfig() annotation missing', $stackPointer);
                     if ($fix) {
@@ -70,6 +57,24 @@ class CommunicationFactoryMethodAnnotationSniff implements \PHP_CodeSniffer_Snif
                     }
                 }
 
+                if (!$this->hasQueryContainerAnnotation($phpCsFile, $stackPointer)) {
+                    $fix = $phpCsFile->addFixableError('getQueryContainer() annotation missing', $stackPointer);
+                    if ($fix) {
+                        $phpCsFile->fixer->beginChangeset();
+                        $this->addUseStatements(
+                            $phpCsFile,
+                            $stackPointer,
+                            [$this->getQueryContainerClassName($phpCsFile)]
+                        );
+                        $this->addMissingAnnotation(
+                            $phpCsFile,
+                            $stackPointer,
+                            $queryContainerName . ' getQueryContainer()'
+                        );
+                        $phpCsFile->fixer->endChangeset();
+                    }
+                }
+
                 return;
             }
 
@@ -81,8 +86,8 @@ class CommunicationFactoryMethodAnnotationSniff implements \PHP_CodeSniffer_Snif
                     $phpCsFile,
                     $stackPointer,
                     [
+                        $this->getConfigClassName($phpCsFile),
                         $this->getQueryContainerClassName($phpCsFile),
-                        $this->getConfigClassName($phpCsFile)
                     ]
                 );
 
@@ -107,11 +112,15 @@ class CommunicationFactoryMethodAnnotationSniff implements \PHP_CodeSniffer_Snif
      *
      * @return bool
      */
-    protected function isCommunicationFactory(\PHP_CodeSniffer_File $phpCsFile)
+    protected function isFactory(\PHP_CodeSniffer_File $phpCsFile)
     {
         $className = $this->getClassName($phpCsFile);
 
-        return (substr($className, -20) === 'CommunicationFactory');
+        return (
+            substr($className, -15) === 'BusinessFactory'
+            || substr($className, -20) === 'CommunicationFactory'
+            || substr($className, -18) === 'PersistenceFactory'
+        );
     }
 
     /**
@@ -231,27 +240,25 @@ class CommunicationFactoryMethodAnnotationSniff implements \PHP_CodeSniffer_Snif
      */
     private function parseUseStatements(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
     {
-        $useStatements = [];
-
-        $tokens = $phpCsFile->getTokens();
-        if ($phpCsFile->findPrevious(T_USE, $stackPointer)) {
-            $position = $phpCsFile->findPrevious(T_USE, $stackPointer);
-
-            while ($position !== false) {
-                $position = $phpCsFile->findPrevious(T_USE, $position);
-                if ($position !== false) {
-                    $end = $phpCsFile->findEndOfStatement($position);
-                    if ($tokens[$position]['type'] === 'T_USE') {
-                        $useTokens = array_slice($tokens, $position + 2, $end - $position - 2);
-                        $useStatements[] = $this->parseUseParts($useTokens);
+        if (count($this->useStatements) === 0) {
+            $tokens = $phpCsFile->getTokens();
+            if ($phpCsFile->findPrevious(T_USE, $stackPointer)) {
+                $position = $phpCsFile->findPrevious(T_USE, $stackPointer);
+                while ($position !== false) {
+                    $position = $phpCsFile->findPrevious(T_USE, $position);
+                    if ($position !== false) {
+                        $end = $phpCsFile->findEndOfStatement($position);
+                        if ($tokens[$position]['type'] === 'T_USE') {
+                            $useTokens = array_slice($tokens, $position + 2, $end - $position - 2);
+                            $this->useStatements[] = $this->parseUseParts($useTokens);
+                        }
                     }
                     $position--;
                 }
-
             }
         }
 
-        return $useStatements;
+        return $this->useStatements;
     }
 
     /**

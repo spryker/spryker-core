@@ -39,6 +39,6 @@ interface ProductToUrlInterface
      *
      * @return UrlTransfer
      */
-    public function getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale);
+    public function getUrlByIdProductAbstractAndIdLocale($idAbstractProduct, $idLocale);
 
 }

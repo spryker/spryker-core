@@ -52,15 +52,15 @@ class ProductToUrlBridge implements ProductToUrlInterface
         $this->urlFacade->touchUrlActive($idUrl);
     }
 
-
     /**
      * @param int $idAbstractProduct
      * @param int $idLocale
      *
      * @return UrlTransfer
      */
-    public function getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale)
+    public function getUrlByIdProductAbstractAndIdLocale($idAbstractProduct, $idLocale)
     {
-        return $this->urlFacade->getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale);
+        return $this->urlFacade->getUrlByIdProductAbstractAndIdLocale($idAbstractProduct, $idLocale);
     }
+
 }

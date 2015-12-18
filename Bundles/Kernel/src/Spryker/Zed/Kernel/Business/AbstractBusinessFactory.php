@@ -8,7 +8,6 @@ namespace Spryker\Zed\Kernel\Business;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
-use Spryker\Zed\Kernel\Business\BusinessFactoryInterface;
 use Spryker\Zed\Kernel\Container;
 
 abstract class AbstractBusinessFactory extends AbstractFactory implements BusinessFactoryInterface
