@@ -9,6 +9,21 @@ namespace Spryker\Sniffs\AbstractSniffs;
 abstract class AbstractSprykerSniff implements \PHP_CodeSniffer_Sniff
 {
 
+    const NAMESPACE_SPRYKER = 'Spryker';
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     *
+     * @return string
+     */
+    protected function getNamespace(\PHP_CodeSniffer_File $phpCsFile)
+    {
+        $className = $this->getClassName($phpCsFile);
+        $classNameParts = explode('\\', $className);
+
+        return $classNameParts[0];
+    }
+
     /**
      * @param \PHP_CodeSniffer_File $phpCsFile
      *

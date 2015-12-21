@@ -29,7 +29,7 @@ class FacadeNotInBridgeReturnedSniff extends AbstractSprykerSniff
      */
     public function process(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
     {
-        if (!$this->isProvider($phpCsFile)) {
+        if (!$this->isProvider($phpCsFile) || !$this->isCoreProvider($phpCsFile)) {
             return;
         }
 
@@ -56,6 +56,18 @@ class FacadeNotInBridgeReturnedSniff extends AbstractSprykerSniff
         $relevantClassNamePart = substr($className, -$stringLength);
 
         return ($relevantClassNamePart === $providerName);
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     *
+     * @return bool
+     */
+    protected function isCoreProvider(\PHP_CodeSniffer_File $phpCsFile)
+    {
+        $namespace = $this->getNamespace($phpCsFile);
+
+        return ($namespace === self::NAMESPACE_SPRYKER);
     }
 
     /**
