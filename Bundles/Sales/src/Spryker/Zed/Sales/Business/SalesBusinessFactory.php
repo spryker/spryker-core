@@ -24,7 +24,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\SalesConfig;
-use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 
 /**

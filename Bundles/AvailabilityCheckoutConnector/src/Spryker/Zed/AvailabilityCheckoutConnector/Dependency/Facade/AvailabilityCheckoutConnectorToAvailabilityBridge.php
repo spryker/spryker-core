@@ -22,5 +22,15 @@ class AvailabilityCheckoutConnectorToAvailabilityBridge implements AvailabilityC
         $this->availabilityFacade = $availabilityFacade;
     }
 
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return bool
+     */
+    public function isProductSellable($sku, $quantity)
+    {
+        return $this->availabilityFacade->isProductSellable($sku, $quantity);
+    }
 
 }

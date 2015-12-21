@@ -8,13 +8,12 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method StockBusinessFactory getFactory()
  */
-class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInterface
+class StockFacade extends AbstractFacade
 {
 
     /**

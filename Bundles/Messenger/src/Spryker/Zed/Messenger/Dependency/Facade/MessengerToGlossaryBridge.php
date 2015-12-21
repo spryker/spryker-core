@@ -47,4 +47,14 @@ class MessengerToGlossaryBridge implements MessengerToGlossaryInterface
         return $this->glossaryFacade->translate($keyName, $data);
     }
 
+    /**
+     * @param string $keyName
+     *
+     * @return bool
+     */
+    public function hasKey($keyName)
+    {
+        return $this->glossaryFacade->hasKey($keyName);
+    }
+
 }

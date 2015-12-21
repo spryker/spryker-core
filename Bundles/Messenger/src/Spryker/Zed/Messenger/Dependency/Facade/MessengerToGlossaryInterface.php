@@ -29,4 +29,12 @@ interface MessengerToGlossaryInterface
      * @return string
      */
     public function translate($keyName, array $data = []);
+
+    /**
+     * @param string $keyName
+     *
+     * @return bool
+     */
+    public function hasKey($keyName);
+
 }

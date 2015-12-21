@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Discount\Dependency\Facade;
 
+use Generated\Shared\Transfer\MessageTransfer;
+
 class DiscountToMessengerBridge implements DiscountToMessengerInterface
 {
 
@@ -22,5 +24,14 @@ class DiscountToMessengerBridge implements DiscountToMessengerInterface
         $this->messengerFacade = $messengerFacade;
     }
 
+    /**
+     * @param MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addSuccessMessage(MessageTransfer $message)
+    {
+        $this->messengerFacade->addSuccessMessage($message);
+    }
 
 }

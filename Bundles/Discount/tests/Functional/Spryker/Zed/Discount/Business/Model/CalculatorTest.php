@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
@@ -309,7 +310,7 @@ class CalculatorTest extends Test
         $collectorResolver = new CollectorResolver($settings);
 
         $messengerFacade = new MessengerFacade();
-        $calculator = new Calculator($collectorResolver, $messengerFacade);
+        $calculator = new Calculator($collectorResolver, new DiscountToMessengerBridge($messengerFacade));
 
         return $calculator;
     }

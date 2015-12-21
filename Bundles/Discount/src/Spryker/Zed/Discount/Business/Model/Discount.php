@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Business\Model;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
@@ -69,7 +69,7 @@ class Discount
     protected $distributor;
 
     /**
-     * @var MessengerFacade
+     * @var DiscountToMessengerInterface
      */
     protected $messengerFacade;
 
@@ -80,7 +80,7 @@ class Discount
      * @param DiscountConfig $discountSettings
      * @param CalculatorInterface $calculator
      * @param DistributorInterface $distributor
-     * @param MessengerFacade $messengerFacade
+     * @param DiscountToMessengerInterface $messengerFacade
      */
     public function __construct(
         CalculableInterface $discountContainer,
@@ -89,7 +89,7 @@ class Discount
         DiscountConfig $discountSettings,
         CalculatorInterface $calculator,
         DistributorInterface $distributor,
-        MessengerFacade $messengerFacade
+        DiscountToMessengerInterface $messengerFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->decisionRule = $decisionRule;

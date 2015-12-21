@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountBridge;
 use Spryker\Zed\Kernel\AbstractUnitTest;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -180,7 +181,7 @@ class DiscountSaverTest extends AbstractUnitTest
         $discountSaverMock = $this->getMock(
             'Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver',
             $discountSaverMethods,
-            [$this->getDiscountQueryContainerMock($queryContainerMethods), new DiscountFacade()]
+            [$this->getDiscountQueryContainerMock($queryContainerMethods), new DiscountCheckoutConnectorToDiscountBridge(new DiscountFacade())]
         );
 
         return $discountSaverMock;
