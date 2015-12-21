@@ -12,7 +12,7 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 
 class ProductTable extends AbstractTable
 {
@@ -58,13 +58,13 @@ class ProductTable extends AbstractTable
         $config->setHeader([
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => 'ID',
             SpyProductAbstractTableMap::COL_SKU => 'SKU',
-            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
             'checkbox' => 'Selected',
         ]);
 
         $config->setSearchable([
             SpyProductAbstractTableMap::COL_SKU,
-            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
 
         $config->setPageLength(10);
@@ -97,7 +97,7 @@ class ProductTable extends AbstractTable
             $results[] = [
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 SpyProductAbstractTableMap::COL_SKU => $product[SpyProductAbstractTableMap::COL_SKU],
-                SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $product['name'],
+                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $product['name'],
                 'checkbox' => $checkbox_html,
             ];
         }

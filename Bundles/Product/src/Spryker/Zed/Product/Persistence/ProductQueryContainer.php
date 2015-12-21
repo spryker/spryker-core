@@ -7,6 +7,8 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -14,12 +16,10 @@ use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyLocalizedAbstractProductAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery;
@@ -192,11 +192,11 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      * @param int $idProductAbstract
      * @param int $fkCurrentLocale
      *
-     * @return SpyLocalizedAbstractProductAttributesQuery
+     * @return SpyProductAbstractLocalizedAttributesQuery
      */
     public function queryAbstractProductAttributeCollection($idProductAbstract, $fkCurrentLocale)
     {
-        $query = SpyLocalizedAbstractProductAttributesQuery::create();
+        $query = SpyProductAbstractLocalizedAttributesQuery::create();
         $query
             ->filterByFkProductAbstract($idProductAbstract)
             ->filterByFkLocale($fkCurrentLocale);
@@ -263,13 +263,13 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         $expandableQuery
             ->addJoin(
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                SpyLocalizedAbstractProductAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
                 Criteria::INNER_JOIN
             );
 
         $expandableQuery
             ->addJoin(
-                SpyLocalizedAbstractProductAttributesTableMap::COL_FK_LOCALE,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE,
                 SpyLocaleTableMap::COL_ID_LOCALE,
                 Criteria::INNER_JOIN
             );
@@ -324,7 +324,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             'abstract_attributes'
         );
         $expandableQuery->withColumn(
-            SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES,
+            SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES,
             'abstract_localized_attributes'
         );
         $expandableQuery->withColumn(
@@ -340,7 +340,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             'product_urls'
         );
         $expandableQuery->withColumn(
-            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
             'abstract_name'
         );
         $expandableQuery->withColumn(

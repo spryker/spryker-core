@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Cart\Dependency\Facade;
 
+use Generated\Shared\Transfer\GroupableContainerTransfer;
+
 class CartToItemGrouperBridge implements CartToItemGrouperInterface
 {
 
@@ -22,5 +24,14 @@ class CartToItemGrouperBridge implements CartToItemGrouperInterface
         $this->itemGrouperFacade = $itemGrouperFacade;
     }
 
+    /**
+     * @param GroupableContainerTransfer $groupAbleItems
+     *
+     * @return GroupableContainerTransfer
+     */
+    public function groupItemsByKey(GroupableContainerTransfer $groupAbleItems)
+    {
+        return $this->itemGrouperFacade->groupItemsByKey($groupAbleItems);
+    }
 
 }

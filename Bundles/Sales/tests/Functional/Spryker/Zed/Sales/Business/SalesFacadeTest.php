@@ -24,6 +24,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
@@ -52,13 +53,16 @@ class SalesFacadeTest extends Test
     {
         parent::setUp();
 
-        $countryFacadeMock = $this->getMock('Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface', ['getIdCountryByIso2Code']);
+        $countryFacadeMock = $this->getMock(SalesToCountryInterface::class, ['getIdCountryByIso2Code']);
         $countryFacadeMock->method('getIdCountryByIso2Code')
             ->will($this->returnValue(1));
 
         $omsOrderProcessEntity = $this->getProcessEntity();
 
-        $omsFacadeMock = $this->getMock(SalesToOmsInterface::class, ['selectProcess', 'getInitialStateEntity', 'getProcessEntity', 'getManualEvents']);
+        $omsFacadeMock = $this->getMock(
+            SalesToOmsInterface::class,
+            ['selectProcess', 'getInitialStateEntity', 'getProcessEntity', 'getManualEvents', 'getItemsWithFlag']
+        );
         $omsFacadeMock->method('selectProcess')
             ->will($this->returnValue('CheckoutTest01'));
 

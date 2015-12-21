@@ -141,7 +141,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function getFacadeRefund()
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS);
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_REFUND);
     }
 
 }
