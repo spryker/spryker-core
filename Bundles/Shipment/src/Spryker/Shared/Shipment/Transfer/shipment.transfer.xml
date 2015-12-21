@@ -59,7 +59,11 @@
     </transfer>
 
     <transfer name="ShipmentMethodAvailability">
-        <property name="cart" type="Cart" />
+        <property name="quote" type="Quote" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod"/>
     </transfer>
 
     <transfer name="CheckoutRequest">
