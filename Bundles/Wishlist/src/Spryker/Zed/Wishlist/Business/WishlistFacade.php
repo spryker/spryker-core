@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method WishlistBusinessFactory getFactory()
  */
-class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
+class WishlistFacade extends AbstractFacade
 {
 
     /**

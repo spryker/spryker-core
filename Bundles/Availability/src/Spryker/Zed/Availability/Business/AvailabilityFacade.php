@@ -6,13 +6,12 @@
 
 namespace Spryker\Zed\Availability\Business;
 
-use Spryker\Zed\AvailabilityCheckoutConnector\Dependency\Facade\AvailabilityToCheckoutConnectorFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method AvailabilityBusinessFactory getFactory()
  */
-class AvailabilityFacade extends AbstractFacade implements AvailabilityToCheckoutConnectorFacadeInterface
+class AvailabilityFacade extends AbstractFacade
 {
 
     /**

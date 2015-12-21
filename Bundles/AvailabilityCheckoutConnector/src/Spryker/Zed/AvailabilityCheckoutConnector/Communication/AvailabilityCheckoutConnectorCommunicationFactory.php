@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityCheckoutConnector\Communication;
 use Spryker\Zed\AvailabilityCheckoutConnector\Dependency\Facade\AvailabilityCheckoutConnectorToAvailabilityInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\AvailabilityCheckoutConnector\AvailabilityCheckoutConnectorDependencyProvider;
-use Spryker\Zed\AvailabilityCheckoutConnector\Dependency\Facade\AvailabilityToCheckoutConnectorFacadeInterface as AvailabilityFacade;
 use Spryker\Zed\AvailabilityCheckoutConnector\AvailabilityCheckoutConnectorConfig;
 
 /**
