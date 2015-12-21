@@ -5,7 +5,9 @@
  */
 
 namespace Spryker\Shared\Lumberjack;
-
+/**
+ * @deprecated Lumberjack is deprecated use EventJournal instead.
+ */
 interface LumberjackConstants
 {
 

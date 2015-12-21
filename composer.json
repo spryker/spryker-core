@@ -30,7 +30,7 @@
     "spryker/kernel": "self.version",
     "spryker/library": "self.version",
     "spryker/locale": "self.version",
-    "spryker/lumberjack": "self.version",
+    "spryker/eventjournal": "self.version",
     "spryker/mail": "self.version",
     "spryker/oms": "self.version",
     "spryker/price": "self.version",

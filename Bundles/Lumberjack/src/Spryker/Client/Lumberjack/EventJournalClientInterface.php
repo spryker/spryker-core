@@ -6,6 +6,9 @@ namespace Spryker\Client\Lumberjack;
 
 use Spryker\Shared\Lumberjack\Model\EventInterface;
 
+/**
+ * @deprecated Lumberjack is deprecated use EventJournal instead.
+ */
 interface EventJournalClientInterface
 {
 

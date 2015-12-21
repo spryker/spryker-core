@@ -7,6 +7,9 @@ namespace Spryker\Client\Lumberjack;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 
+/**
+ * @deprecated Lumberjack is deprecated use EventJournal instead.
+ */
 class LumberjackDependencyProvider extends AbstractDependencyProvider
 {
 }

@@ -5,9 +5,12 @@
 
 namespace Spryker\Client\Lumberjack;
 
-use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Kernel\AbstractDependencyContainer;
 
-class LumberjackFactory extends AbstractFactory
+/**
+ * @deprecated Lumberjack is deprecated use EventJournal instead.
+ */
+class LumberjackDependencyContainer extends AbstractDependencyContainer
 {
 
     /**

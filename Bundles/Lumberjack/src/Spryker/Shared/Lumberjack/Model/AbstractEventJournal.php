@@ -11,6 +11,9 @@ use Spryker\Shared\Lumberjack\LumberjackConstants;
 use Spryker\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
 use Spryker\Shared\Lumberjack\Model\Writer\WriterInterface;
 
+/**
+ * @deprecated Lumberjack is deprecated use EventJournal instead.
+ */
 abstract class AbstractEventJournal implements EventJournalInterface
 {
 

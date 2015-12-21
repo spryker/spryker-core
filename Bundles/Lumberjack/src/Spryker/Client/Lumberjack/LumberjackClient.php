@@ -9,7 +9,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Lumberjack\Model\EventInterface;
 
 /**
- * @method LumberjackFactory getFactory()
+ * @deprecated Lumberjack is deprecated use EventJournal instead.
  */
 class LumberjackClient extends AbstractClient
 {
@@ -21,7 +21,7 @@ class LumberjackClient extends AbstractClient
      */
     public function saveEvent(EventInterface $event)
     {
-        $this->getFactory()->createEventJournalClient()->saveEvent($event);
+        $this->getDependencyContainer()->createEventJournalClient()->saveEvent($event);
     }
 
 }

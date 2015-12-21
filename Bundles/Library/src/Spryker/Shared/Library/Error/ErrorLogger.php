@@ -6,10 +6,10 @@
 
 namespace Spryker\Shared\Library\Error;
 
-use Spryker\Shared\Lumberjack\Model\Event;
-use Spryker\Shared\Lumberjack\Model\EventInterface;
-use Spryker\Shared\Lumberjack\Model\EventJournalInterface;
-use Spryker\Shared\Lumberjack\Model\SharedEventJournal;
+use Spryker\Shared\EventJournal\Model\Event;
+use Spryker\Shared\EventJournal\Model\EventInterface;
+use Spryker\Shared\EventJournal\Model\EventJournalInterface;
+use Spryker\Shared\EventJournal\Model\SharedEventJournal;
 use Spryker\Shared\Library\Application\Version;
 use Spryker\Shared\Library\Log;
 use Spryker\Shared\NewRelic\Api;
@@ -29,7 +29,7 @@ class ErrorLogger
 
         self::sendExceptionToFile($exception, new SharedEventJournal(), $newRelicApi);
         self::sendExceptionToNewRelic($exception, new SharedEventJournal(), $newRelicApi);
-        self::sendExceptionToLumberjack($exception, new SharedEventJournal(), $newRelicApi);
+        self::sendExceptionToEventJournal($exception, new SharedEventJournal(), $newRelicApi);
     }
 
     /**
@@ -40,7 +40,7 @@ class ErrorLogger
      *
      * @return void
      */
-    protected static function sendExceptionToLumberjack(
+    protected static function sendExceptionToEventJournal(
         \Exception $exception,
         EventJournalInterface $eventJournal,
         ApiInterface $newRelicApi,
@@ -48,12 +48,12 @@ class ErrorLogger
     ) {
         try {
             $event = new Event();
-            $event->addField('message', $exception->getMessage());
-            $event->addField('trace', $exception->getTraceAsString());
-            $event->addField('class_name', get_class($exception));
-            $event->addField('file_name', $exception->getFile());
-            $event->addField('line', $exception->getLine());
-            $event->addField(Event::FIELD_NAME, 'exception');
+            $event->setField('message', $exception->getMessage());
+            $event->setField('trace', $exception->getTraceAsString());
+            $event->setField('class_name', get_class($exception));
+            $event->setField('file_name', $exception->getFile());
+            $event->setField('line', $exception->getLine());
+            $event->setField(Event::FIELD_NAME, 'exception');
             self::addDeploymentInformation($event);
             $eventJournal->saveEvent($event);
         } catch (\Exception $internalException) {
@@ -82,7 +82,7 @@ class ErrorLogger
             $newRelicApi->noticeError($message, $exception);
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
-                self::sendExceptionToLumberjack($internalException, $eventJournal, $newRelicApi, true);
+                self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);
             }
         }
     }
@@ -103,7 +103,7 @@ class ErrorLogger
             $message = ErrorRenderer::renderException($exception);
             Log::log($message, 'exception.log');
         } catch (\Exception $internalException) {
-            self::sendExceptionToLumberjack($internalException, $eventJournal, $newRelicApi, true);
+            self::sendExceptionToEventJournal($internalException, $eventJournal, $newRelicApi, true);
             self::sendExceptionToNewRelic($internalException, $eventJournal, $newRelicApi, true);
         }
     }
@@ -118,7 +118,7 @@ class ErrorLogger
         $deploymentInformation = (new Version())->toArray();
         foreach ($deploymentInformation as $name => $data) {
             if (!empty($data)) {
-                $event->addField('deployment_' . $name, $data);
+                $event->setField('deployment_' . $name, $data);
             }
         }
     }
