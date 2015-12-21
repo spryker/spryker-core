@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-interface AvailabilityToStockFacadeInterface
+interface AvailabilityToStockInterface
 {
 
     /**

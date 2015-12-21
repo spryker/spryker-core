@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Cms\Communication;
 
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Cms\Business\CmsFacade;
@@ -159,7 +160,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return LocaleFacade
+     * @return CmsToLocaleInterface
      */
     public function getLocaleFacade()
     {

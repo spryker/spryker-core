@@ -8,10 +8,10 @@ namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfigInterface;
 
 class Calculator implements CalculatorInterface
@@ -34,17 +34,17 @@ class Calculator implements CalculatorInterface
     protected $collectorResolver;
 
     /**
-     * @var MessengerFacade
+     * @var DiscountToMessengerInterface
      */
     protected $messengerFacade;
 
     /**
      * @param CollectorResolver $collectorResolver
-     * @param MessengerFacade $messengerFacade
+     * @param DiscountToMessengerInterface $messengerFacade
      */
     public function __construct(
         CollectorResolver $collectorResolver,
-        MessengerFacade  $messengerFacade
+        DiscountToMessengerInterface  $messengerFacade
     ) {
         $this->collectorResolver = $collectorResolver;
         $this->messengerFacade = $messengerFacade;

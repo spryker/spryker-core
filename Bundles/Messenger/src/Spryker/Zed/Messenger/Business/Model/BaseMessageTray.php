@@ -5,20 +5,20 @@
 
 namespace Spryker\Zed\Messenger\Business\Model;
 
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface;
 
 class BaseMessageTray
 {
 
     /**
-     * @var GlossaryFacade
+     * @var MessengerToGlossaryInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @param GlossaryFacade $glossaryFacade
+     * @param MessengerToGlossaryInterface $glossaryFacade
      */
-    public function __construct(GlossaryFacade $glossaryFacade)
+    public function __construct(MessengerToGlossaryInterface $glossaryFacade)
     {
         $this->glossaryFacade = $glossaryFacade;
     }

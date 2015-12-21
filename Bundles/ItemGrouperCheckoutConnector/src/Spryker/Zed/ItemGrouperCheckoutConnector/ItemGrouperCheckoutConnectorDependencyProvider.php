@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ItemGrouperCheckoutConnector;
 
+use Spryker\Zed\ItemGrouperCheckoutConnector\Dependency\Facade\ItemGrouperCheckoutConnectorToItemGrouperBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -22,7 +23,7 @@ class ItemGrouperCheckoutConnectorDependencyProvider extends AbstractBundleDepen
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::FACADE_ITEM_GROUPER] = function (Container $container) {
-            return $container->getLocator()->itemGrouper()->facade();
+            return new ItemGrouperCheckoutConnectorToItemGrouperBridge($container->getLocator()->itemGrouper()->facade());
         };
 
         return $container;

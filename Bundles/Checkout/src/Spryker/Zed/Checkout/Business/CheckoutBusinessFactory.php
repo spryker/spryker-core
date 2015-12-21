@@ -29,8 +29,7 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_ORDER_HYDRATORS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_POST_HOOKS),
-            $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS),
-            $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_CALCULATION)
+            $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS)
         );
     }
 

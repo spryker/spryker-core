@@ -8,11 +8,12 @@ namespace Spryker\Zed\Cart\Business\Operator;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Cart\Business\Model\CalculableContainer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
+use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
+use Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
@@ -30,7 +31,7 @@ abstract class AbstractOperator implements OperatorInterface
     protected $messenger;
 
     /**
-     * @var CalculationFacade
+     * @var CartToCalculationInterface
      */
     protected $cartCalculator;
 
@@ -40,20 +41,20 @@ abstract class AbstractOperator implements OperatorInterface
     protected $itemExpanderPlugins = [];
 
     /**
-     * @var ItemGrouperFacade
+     * @var CartToItemGrouperInterface
      */
     protected $itemGrouperFacade;
 
     /**
      * @param StorageProviderInterface $storageProvider
-     * @param CalculationFacade $cartCalculator
-     * @param ItemGrouperFacade $itemGrouperFacade
+     * @param CartToCalculationInterface $cartCalculator
+     * @param CartToItemGrouperInterface $itemGrouperFacade
      * @param LoggerInterface $messenger
      */
     public function __construct(
         StorageProviderInterface $storageProvider,
-        CalculationFacade $cartCalculator,
-        ItemGrouperFacade $itemGrouperFacade,
+        CartToCalculationInterface $cartCalculator,
+        CartToItemGrouperInterface $itemGrouperFacade,
         LoggerInterface $messenger = null //@todo to be discussed
 )
     {

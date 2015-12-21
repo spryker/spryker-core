@@ -15,7 +15,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountCode;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
+use Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface;
 
 class DiscountSaver implements DiscountSaverInterface
 {
@@ -31,17 +31,17 @@ class DiscountSaver implements DiscountSaverInterface
     protected $voucherCodesUsed = [];
 
     /**
-     * @var DiscountFacadeInterface
+     * @var DiscountCheckoutConnectorToDiscountInterface
      */
     protected $discountFacade;
 
     /**
      * @param DiscountQueryContainerInterface $discountQueryContainer
-     * @param DiscountFacadeInterface $discountFacade
+     * @param DiscountCheckoutConnectorToDiscountInterface $discountFacade
      */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,
-        DiscountFacadeInterface $discountFacade
+        DiscountCheckoutConnectorToDiscountInterface $discountFacade
     ) {
         $this->discountQueryContainer = $discountQueryContainer;
         $this->discountFacade = $discountFacade;

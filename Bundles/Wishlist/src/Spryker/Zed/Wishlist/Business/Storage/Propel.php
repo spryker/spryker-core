@@ -31,6 +31,11 @@ class Propel implements StorageInterface
     protected $customerTransfer;
 
     /**
+     * @var WishlistTransfer
+     */
+    protected $wishlistTransfer;
+
+    /**
      * @var Customer
      */
     protected $customer;

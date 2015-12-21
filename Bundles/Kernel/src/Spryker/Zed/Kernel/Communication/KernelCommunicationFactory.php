@@ -6,15 +6,14 @@
 
 namespace Spryker\Zed\Kernel\Communication;
 
-use Spryker\Zed\Messenger\Business\MessengerFacade;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerInterface;
 use Spryker\Zed\Kernel\KernelDependencyProvider;
 
 class KernelCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return MessengerFacade
+     * @return KernelToMessengerInterface
      */
     public function createMessengerFacade()
     {

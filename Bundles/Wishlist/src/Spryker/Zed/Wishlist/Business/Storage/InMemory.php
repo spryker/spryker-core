@@ -22,16 +22,16 @@ class InMemory implements StorageInterface
     /**
      * @var WishlistTransfer
      */
-    protected $wishlist;
+    protected $wishlistTransfer;
 
     /**
-     * @param WishlistTransfer $wishlist
+     * @param WishlistTransfer $wishlistTransfer
      * @param ProductFacade $facadeProduct
      */
-    public function __construct(WishlistTransfer $wishlist, ProductFacade $facadeProduct)
+    public function __construct(WishlistTransfer $wishlistTransfer, ProductFacade $facadeProduct)
     {
+        $this->wishlistTransfer = $wishlistTransfer;
         $this->facadeProduct = $facadeProduct;
-        $this->wishlist = $wishlist;
     }
 
     /**
@@ -45,16 +45,16 @@ class InMemory implements StorageInterface
         foreach ($wishlistChange->getItems() as $wishlistItem) {
             if (isset($wishlistIndex[$wishlistItem->getGroupKey()])) {
                 $key = $wishlistIndex[$wishlistItem->getGroupKey()];
-                $existingItem = $this->wishlist->getItems()[$key];
+                $existingItem = $this->wishlistTransfer->getItems()[$key];
                 $existingItem->setQuantity($wishlistItem->getQuantity() + $existingItem->getQuantity());
             } else {
                 $concreteProduct = $this->facadeProduct->getConcreteProduct($wishlistItem->getSku());
                 $wishlistItem->setIdProductAbstract($concreteProduct->getIdProductAbstract());
-                $this->wishlist->addItem($wishlistItem);
+                $this->wishlistTransfer->addItem($wishlistItem);
             }
         }
 
-        return $this->wishlist;
+        return $this->wishlistTransfer;
     }
 
     /**
@@ -73,7 +73,7 @@ class InMemory implements StorageInterface
             }
         }
 
-        return $this->wishlist;
+        return $this->wishlistTransfer;
     }
 
     /**
@@ -104,7 +104,7 @@ class InMemory implements StorageInterface
      */
     protected function decreaseByProductIdentifier(array $wishlistIndex, ItemTransfer $itemToChange)
     {
-        foreach ($this->wishlist->getItems() as $key => $item) {
+        foreach ($this->wishlistTransfer->getItems() as $key => $item) {
             if ($item->getSku() === $itemToChange->getSku()) {
                 $this->decreaseItem($wishlistIndex[$item->getGroupKey()], $itemToChange);
 
@@ -121,7 +121,7 @@ class InMemory implements StorageInterface
      */
     protected function decreaseItem($index, ItemTransfer $itemToChange)
     {
-        $existingItems = $this->wishlist->getItems();
+        $existingItems = $this->wishlistTransfer->getItems();
         $existingItem = $existingItems[$index];
         $newQuantity = $existingItem->getQuantity() - $itemToChange->getQuantity();
 
@@ -137,7 +137,7 @@ class InMemory implements StorageInterface
      */
     protected function createIndex()
     {
-        $wishlistItem = $this->wishlist->getItems();
+        $wishlistItem = $this->wishlistTransfer->getItems();
         $wishlistIndex = [];
         foreach ($wishlistItem as $key => $cartItem) {
             if (!empty($cartItem->getGroupKey())) {

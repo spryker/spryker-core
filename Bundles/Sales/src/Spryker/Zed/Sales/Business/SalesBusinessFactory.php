@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Sales\Business\Model\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Split\Validation\Validator;
 use Spryker\Zed\Sales\Business\Model\Split\Calculator;
@@ -17,6 +18,9 @@ use Spryker\Zed\Sales\Business\Model\OrderDetailsManager;
 use Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface;
 use Spryker\Zed\Sales\Business\Model\Split\ItemInterface;
 use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\SalesConfig;
@@ -106,7 +110,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SequenceNumberFacade
+     * @return SalesToSequenceNumberInterface
      */
     protected function createSequenceNumberFacade()
     {
@@ -121,6 +125,24 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         $calculator = new Calculator();
 
         return $calculator;
+    }
+
+    /**
+     * @throws ContainerKeyNotFoundException
+     * @return SalesToOmsInterface
+     */
+    public function getFacadeOms()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @throws ContainerKeyNotFoundException
+     * @return SalesToRefundInterface
+     */
+    public function getFacadeRefund()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS);
     }
 
 }

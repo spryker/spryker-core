@@ -6,23 +6,32 @@
 namespace Spryker\Zed\Installer\Business\Model;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Installer\Dependency\Facade\InstallerToGlossaryInterface;
 use Symfony\Component\Yaml\Yaml;
 
 class GlossaryInstaller extends AbstractInstaller
 {
 
+    /**
+     * @var InstallerToGlossaryInterface
+     */
     protected $glossaryFacade;
 
+    /**
+     * @var array
+     */
     protected $paths;
 
+    /**
+     * @var Yaml
+     */
     protected $yamlParser;
 
     /**
-     * @param GlossaryFacade $glossaryFacade
+     * @param InstallerToGlossaryInterface $glossaryFacade
      * @param array $paths
      */
-    public function __construct(GlossaryFacade $glossaryFacade, array $paths = [])
+    public function __construct(InstallerToGlossaryInterface $glossaryFacade, array $paths = [])
     {
         $this->glossaryFacade = $glossaryFacade;
         $this->paths = $paths;

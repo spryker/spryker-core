@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
@@ -49,6 +50,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getPathToRoot(),
             $this->getConfig()->getBundleDirectory()
         );
+    }
+
+    /**
+     * @return BridgeBuilder
+     */
+    public function createBridgeBuilder()
+    {
+        return new BridgeBuilder();
     }
 
 }

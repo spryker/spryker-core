@@ -6,29 +6,29 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
-use Spryker\Zed\Oms\Business\OmsFacade;
-use Spryker\Zed\Stock\Business\StockFacade;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 
 class Sellable implements SellableInterface
 {
 
     /**
-     * @var OmsFacade
+     * @var AvailabilityToOmsInterface
      */
     protected $omsFacade;
 
     /**
-     * @var StockFacade
+     * @var AvailabilityToStockInterface
      */
     protected $stockFacade;
 
     /**
-     * @param OmsFacade $omsFacade
-     * @param StockFacade $stockFacade
+     * @param AvailabilityToOmsInterface $omsFacade
+     * @param AvailabilityToStockInterface $stockFacade
      */
     public function __construct(
-        OmsFacade $omsFacade,
-        StockFacade $stockFacade
+        AvailabilityToOmsInterface $omsFacade,
+        AvailabilityToStockInterface $stockFacade
     ) {
         $this->omsFacade = $omsFacade;
         $this->stockFacade = $stockFacade;

@@ -69,9 +69,7 @@ class SalesFacade extends AbstractFacade
      */
     public function getOrderItemManualEvents($idOrderItem)
     {
-        return $this->getFactory()
-            ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
-            ->getManualEvents($idOrderItem);
+        return $this->getFactory()->getFacadeOms()->getManualEvents($idOrderItem);
     }
 
     /**
@@ -84,20 +82,6 @@ class SalesFacade extends AbstractFacade
         return $this->getFactory()
             ->createOrderManager()
             ->getOrderByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
-     * @param int $idOrderItem
-     *
-     * @deprecated
-     *
-     * @return OrderItemsTransfer
-     */
-    public function getOrderItemById($idOrderItem)
-    {
-        return $this->getFactory()
-            ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
-            ->getOrderItemById($idOrderItem);
     }
 
     /**
@@ -205,8 +189,7 @@ class SalesFacade extends AbstractFacade
      */
     public function getRefunds($idSalesOrder)
     {
-        return $this->getFactory()
-            ->getProvidedDependency(SalesDependencyProvider::FACADE_REFUND)
+        return $this->getFactory()->getFacadeRefund()
             ->getRefundsByIdSalesOrder($idSalesOrder);
     }
 

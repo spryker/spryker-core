@@ -8,10 +8,10 @@ namespace Spryker\Zed\Messenger\Business;
 use Spryker\Zed\Messenger\Business\Model\InMemoryMessageTray;
 use Spryker\Zed\Messenger\Business\Model\MessageTrayInterface;
 use Spryker\Zed\Messenger\Business\Model\SessionMessageTray;
+use Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface;
 use Spryker\Zed\Messenger\MessengerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\MessengerConfig;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -58,7 +58,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GlossaryFacade
+     * @return MessengerToGlossaryInterface
      */
     public function getGlossaryFacade()
     {

@@ -9,8 +9,10 @@ namespace Spryker\Zed\Product\Communication;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Communication\Table\ProductTable;
+use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToProductOptionInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Product\ProductConfig;
 use Spryker\Zed\Product\ProductDependencyProvider;
@@ -42,7 +44,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return LocaleFacade
+     * @return ProductToLocaleInterface
      */
     public function createLocaleFacade()
     {
@@ -50,7 +52,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ProductOptionFacade
+     * @return ProductToProductOptionInterface
      */
     public function createProductOptionsFacade()
     {
@@ -58,7 +60,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UrlFacade
+     * @return ProductToUrlInterface
      */
     public function createUrlFacade()
     {

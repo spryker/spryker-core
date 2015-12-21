@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Kernel;
 
+use Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerBridge;
+
 class KernelDependencyProvider extends AbstractBundleDependencyProvider
 {
 
@@ -21,7 +23,7 @@ class KernelDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container[self::FACADE_MESSENGER] = function (Container $container) {
-            return $container->getLocator()->messenger()->facade();
+            return new KernelToMessengerBridge($container->getLocator()->messenger()->facade());
         };
 
         return $container;

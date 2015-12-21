@@ -15,10 +15,7 @@ class ProductOptionExporterDependencyProvider extends AbstractBundleDependencyPr
 {
 
     const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
-
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
-
-    const FACADE_LOCALE = 'LOCALE_FACADE';
 
     /**
      * @param Container $container
@@ -33,10 +30,6 @@ class ProductOptionExporterDependencyProvider extends AbstractBundleDependencyPr
 
         $container[self::FACADE_PRODUCT] = function (Container $container) {
             return new ProductOptionExporterToProductBridge($container->getLocator()->product()->facade());
-        };
-
-        $container[self::FACADE_LOCALE] = function (Container $container) {
-            return $container->getLocator()->locale()->facade();
         };
 
         return $container;

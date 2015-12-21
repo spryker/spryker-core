@@ -7,7 +7,8 @@
 namespace Spryker\Zed\Payone\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Oms\Business\OmsFacade;
+use Spryker\Zed\Payone\Dependency\Facade\PayoneToOmsInterface;
+use Spryker\Zed\Payone\Dependency\Facade\PayoneToRefundInterface;
 use Spryker\Zed\Payone\PayoneConfig;
 use Spryker\Zed\Payone\PayoneDependencyProvider;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
@@ -21,7 +22,7 @@ class PayoneCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return OmsFacade
+     * @return PayoneToOmsInterface
      */
     public function createOmsFacade()
     {
@@ -29,7 +30,7 @@ class PayoneCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return RefundFacade
+     * @return PayoneToRefundInterface
      */
     public function createRefundFacade()
     {

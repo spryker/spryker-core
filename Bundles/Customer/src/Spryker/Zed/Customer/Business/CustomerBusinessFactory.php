@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Customer\Business;
 
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\Address;
@@ -98,7 +99,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SequenceNumberFacade
+     * @return CustomerToSequenceNumberInterface
      */
     protected function createSequenceNumberFacade()
     {

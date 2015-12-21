@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SequenceNumberFacade extends AbstractFacade
 {
 
-    /***
+    /**
      * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
      *
      * @return string

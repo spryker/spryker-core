@@ -57,10 +57,6 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
             return new CheckoutToOmsBridge($container->getLocator()->oms()->facade());
         };
 
-        $container[self::FACADE_CALCULATION] = function (Container $container) {
-            return $container->getLocator()->calculation()->facade();
-        };
-
         return $container;
     }
 

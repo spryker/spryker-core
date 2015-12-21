@@ -8,6 +8,7 @@ namespace Spryker\Zed\Messenger;
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryBridge;
 
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -27,7 +28,7 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return $container->getLocator()->glossary()->facade();
+            return new MessengerToGlossaryBridge($container->getLocator()->glossary()->facade());
         };
 
         return $container;

@@ -28,6 +28,11 @@ interface SalesToOmsInterface
      */
     public function selectProcess(OrderTransfer $transferOrder);
 
-
+    /**
+     * @param int $idOrderItem
+     *
+     * @return string[]
+     */
+    public function getManualEvents($idOrderItem);
 
 }

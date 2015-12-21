@@ -7,8 +7,8 @@
 namespace Spryker\Zed\Newsletter\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Mail\Business\MailFacade;
+use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToGlossaryInterface;
+use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface;
 use Spryker\Zed\Newsletter\NewsletterConfig;
 use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
@@ -21,7 +21,7 @@ class NewsletterCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return MailFacade
+     * @return NewsletterToMailInterface
      */
     public function getMailFacade()
     {
@@ -29,7 +29,7 @@ class NewsletterCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return GlossaryFacade
+     * @return NewsletterToGlossaryInterface
      */
     public function getGlossaryFacade()
     {

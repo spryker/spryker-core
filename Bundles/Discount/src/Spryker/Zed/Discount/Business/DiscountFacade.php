@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
@@ -30,7 +29,7 @@ use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 /**
  * @method DiscountBusinessFactory getFactory()
  */
-class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
+class DiscountFacade extends AbstractFacade
 {
 
     /**

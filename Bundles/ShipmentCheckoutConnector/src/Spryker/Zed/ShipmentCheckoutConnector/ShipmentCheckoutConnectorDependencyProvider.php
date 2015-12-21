@@ -8,6 +8,7 @@ namespace Spryker\Zed\ShipmentCheckoutConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentBridge;
 
 class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -26,7 +27,7 @@ class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependen
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_SHIPMENT] = function (Container $container) {
-            return $container->getLocator()->shipment()->facade();
+            return new ShipmentCheckoutConnectorToShipmentBridge($container->getLocator()->shipment()->facade());
         };
 
         return $container;

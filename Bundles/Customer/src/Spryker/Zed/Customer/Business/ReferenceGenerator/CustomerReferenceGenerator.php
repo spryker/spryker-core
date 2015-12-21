@@ -7,23 +7,27 @@ namespace Spryker\Zed\Customer\Business\ReferenceGenerator;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface;
 
 class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
 {
 
-    /** @var SequenceNumberFacade */
+    /**
+     * @var CustomerToSequenceNumberInterface
+     */
     protected $facadeSequenceNumber;
 
-    /** @var SequenceNumberSettingsTransfer */
+    /**
+     * @var SequenceNumberSettingsTransfer
+     */
     protected $sequenceNumberSettings;
 
     /**
-     * @param SequenceNumberFacade $sequenceNumberFacade
+     * @param CustomerToSequenceNumberInterface $sequenceNumberFacade
      * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
      */
     public function __construct(
-        SequenceNumberFacade $sequenceNumberFacade,
+        CustomerToSequenceNumberInterface $sequenceNumberFacade,
         SequenceNumberSettingsTransfer $sequenceNumberSettings
     ) {
         $this->facadeSequenceNumber = $sequenceNumberFacade;

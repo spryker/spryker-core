@@ -90,7 +90,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * @return SpyProductQuery
+     * @return SpyProductAbstractQuery
      */
     public function queryAbstractProducts()
     {

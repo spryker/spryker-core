@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\AvailabilityCheckoutConnector;
 
+use Spryker\Zed\AvailabilityCheckoutConnector\Dependency\Facade\AvailabilityCheckoutConnectorToAvailabilityBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -22,7 +23,9 @@ class AvailabilityCheckoutConnectorDependencyProvider extends AbstractBundleDepe
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_AVAILABILITY] = function (Container $container) {
-            return $container->getLocator()->availability()->facade();
+            return new AvailabilityCheckoutConnectorToAvailabilityBridge(
+                $container->getLocator()->availability()->facade()
+            );
         };
 
         return $container;

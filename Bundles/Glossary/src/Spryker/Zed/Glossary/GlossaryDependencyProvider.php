@@ -6,6 +6,7 @@
 namespace Spryker\Zed\Glossary;
 
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleBridge;
@@ -20,7 +21,7 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGIN_VALIDATOR = 'validator plugin';
 
-    const MESSAGES = 'messages';
+    const FACADE_MESSENGER = 'messages';
 
     /**
      * @param Container $container
@@ -55,8 +56,8 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
             return new GlossaryToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
-        $container[self::MESSAGES] = function (Container $container) {
-            return $container->getLocator()->messenger()->facade();
+        $container[self::FACADE_MESSENGER] = function (Container $container) {
+            return new GlossaryToMessengerBridge($container->getLocator()->messenger()->facade());
         };
 
         return $container;

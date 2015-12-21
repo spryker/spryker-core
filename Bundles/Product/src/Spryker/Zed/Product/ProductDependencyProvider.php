@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToProductOptionBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 
@@ -56,12 +57,8 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
-        $container[self::FACADE_PRODUCT_CATEGORY] = function (Container $container) {
-            return $container->getLocator()->productCategory()->facade();
-        };
-
         $container[self::FACADE_PRODUCT_OPTION] = function (Container $container) {
-            return $container->getLocator()->productOption()->facade();
+            return new ProductToProductOptionBridge($container->getLocator()->productOption()->facade());
         };
 
         $container[self::FACADE_URL] = function (Container $container) {

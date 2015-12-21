@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Discount;
 
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -30,7 +31,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_MESSENGER] = function (Container $container) {
-            return $container->getLocator()->messenger()->facade();
+            return new DiscountToMessengerBridge($container->getLocator()->messenger()->facade());
         };
 
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {

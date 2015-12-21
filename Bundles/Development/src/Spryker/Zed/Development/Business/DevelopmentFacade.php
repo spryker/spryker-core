@@ -47,4 +47,15 @@ class DevelopmentFacade extends AbstractFacade
         $this->getFactory()->createCodeTester()->runTest($bundle, $options);
     }
 
+    /**
+     * @param string $bundle
+     * @param string $toBundle
+     *
+     * @return void
+     */
+    public function createBridge($bundle, $toBundle)
+    {
+        $this->getFactory()->createBridgeBuilder()->build($bundle, $toBundle);
+    }
+
 }

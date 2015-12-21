@@ -9,9 +9,10 @@ namespace Spryker\Zed\Refund\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Refund\Business\Model\Refund;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
 use Spryker\Zed\Refund\RefundDependencyProvider;
-use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 use Spryker\Zed\Refund\RefundConfig;
 
@@ -46,7 +47,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SalesFacade
+     * @return RefundToSalesInterface
      */
     public function createSalesFacade()
     {
@@ -54,7 +55,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OmsFacade
+     * @return RefundToOmsInterface
      */
     protected function createOmsFacade()
     {

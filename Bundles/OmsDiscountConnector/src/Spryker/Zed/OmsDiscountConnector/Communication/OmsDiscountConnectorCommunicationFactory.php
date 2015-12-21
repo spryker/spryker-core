@@ -7,7 +7,7 @@
 namespace Spryker\Zed\OmsDiscountConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\OmsDiscountConnector\Dependency\Facade\OmsDiscountConnectorToDiscountInterface;
 use Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorDependencyProvider;
 use Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorConfig;
 
@@ -18,7 +18,7 @@ class OmsDiscountConnectorCommunicationFactory extends AbstractCommunicationFact
 {
 
     /**
-     * @return DiscountFacade
+     * @return OmsDiscountConnectorToDiscountInterface
      */
     public function createDiscountFacade()
     {

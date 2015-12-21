@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ItemGrouperCheckoutConnector\Business;
 
+use Spryker\Zed\ItemGrouperCheckoutConnector\Dependency\Facade\ItemGrouperCheckoutConnectorToItemGrouperInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 use Spryker\Zed\ItemGrouperCheckoutConnector\ItemGrouperCheckoutConnectorDependencyProvider;
@@ -18,7 +19,7 @@ class ItemGrouperCheckoutConnectorBusinessFactory extends AbstractBusinessFactor
 {
 
     /**
-     * @return ItemGrouperFacade
+     * @return ItemGrouperCheckoutConnectorToItemGrouperInterface
      */
     public function createItemGrouperFacade()
     {

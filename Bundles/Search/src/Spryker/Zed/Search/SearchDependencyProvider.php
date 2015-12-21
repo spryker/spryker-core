@@ -8,8 +8,8 @@ namespace Spryker\Zed\Search;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 use Spryker\Zed\ProductSearch\Communication\Plugin\Installer;
+use Spryker\Zed\Search\Dependency\Facade\SearchToCollectorBridge;
 
 class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -67,7 +67,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCollectorFacade(Container $container)
     {
         $container[self::FACADE_COLLECTOR] = function (Container $container) {
-            return $container->getLocator()->collector()->facade();
+            return new SearchToCollectorBridge($container->getLocator()->collector()->facade());
         };
     }
 

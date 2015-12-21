@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
-interface AvailabilityToCartConnectorFacadeInterface
+interface AvailabilityCartConnectorToAvailabilityInterface
 {
 
     /**

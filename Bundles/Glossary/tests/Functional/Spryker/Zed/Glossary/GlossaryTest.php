@@ -6,6 +6,7 @@
 
 namespace Functional\Spryker\Zed\Glossary;
 
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerBridge;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
@@ -355,8 +356,8 @@ class GlossaryTest extends AbstractFunctionalTest
             return $this->localeFacade;
         };
 
-        $container[GlossaryDependencyProvider::MESSAGES] = function (Container $container) {
-            return $container->getLocator()->messenger()->facade();
+        $container[GlossaryDependencyProvider::FACADE_MESSENGER] = function (Container $container) {
+            return new GlossaryToMessengerBridge($container->getLocator()->messenger()->facade());
         };
 
         $touchContainer = new Container();

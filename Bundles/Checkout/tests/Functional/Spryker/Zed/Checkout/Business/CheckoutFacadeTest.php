@@ -92,9 +92,6 @@ class CheckoutFacadeTest extends Test
         $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
             return new CheckoutToOmsBridge($container->getLocator()->oms()->facade());
         };
-        $container[CheckoutDependencyProvider::FACADE_CALCULATION] = function (Container $container) {
-            return $container->getLocator()->calculation()->facade();
-        };
 
         $this->checkoutFacade->setExternalDependencies($container);
     }

@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Cms;
 
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleBridge;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -38,7 +39,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_LOCALE] = function (Container $container) {
-            return $container->getLocator()->locale()->facade();
+            return new CmsToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         $container[self::FACADE_GLOSSARY] = function (Container $container) {

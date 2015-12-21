@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector;
 
+use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -22,7 +23,7 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_AVAILABILITY] = function (Container $container) {
-            return $container->getLocator()->availability()->facade();
+            return new AvailabilityCartConnectorToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
 
         return $container;

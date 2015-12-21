@@ -6,13 +6,15 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-interface AvailabilityToOmsFacadeInterface
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+
+interface AvailabilityToOmsInterface
 {
 
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return SpySalesOrderItem
      */
     public function countReservedOrderItemsForSku($sku);
 
