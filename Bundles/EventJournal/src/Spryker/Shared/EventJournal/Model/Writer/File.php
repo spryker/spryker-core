@@ -100,7 +100,7 @@ class File extends AbstractWriter
         $path = $this->getLogPath();
         $path .= sprintf(
             '%s.%s.%d.log',
-            'lumberjack',
+            'events',
             date('Y-m-d'),
             $this->getRandomizedFileIndex()
         );
@@ -113,9 +113,8 @@ class File extends AbstractWriter
      */
     protected function getLogPath()
     {
-        return isset($this->options[self::OPTION_LOG_PATH]) ?
-            $this->options[self::OPTION_LOG_PATH]
-            : DataDirectory::getLocalCommonPath('lumberjack');
+        return $this->options[self::OPTION_LOG_PATH];
+
     }
 
     /**
