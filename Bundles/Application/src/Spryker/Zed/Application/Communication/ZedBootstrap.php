@@ -59,7 +59,6 @@ class ZedBootstrap extends Bootstrap
 
         Pimple::setApplication($application);
 
-        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($application) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
         return $application;
     }
 
