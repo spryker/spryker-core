@@ -74,10 +74,6 @@ class EditController extends AddController
 
                 $this->updateCategoryNodeChild($currentCategoryTransfer, $locale, $data);
             }
-
-            //TODO column was removed from DB, fix later when working on produt preconfig
-            //https://kartenmacherei.atlassian.net/browse/KSP-877
-            //$this->updateProductCategoryPreconfig($currentCategoryTransfer, (array) json_decode($data['product_category_preconfig']));
             $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order'], true));
 
             $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
