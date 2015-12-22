@@ -55,9 +55,21 @@ class ZedBootstrap extends Bootstrap
     {
         $application = new Application();
 
+        $this->unsetSilexExceptionHandler($application);
+
         Pimple::setApplication($application);
 
         return $application;
+    }
+
+    /**
+     * @param Application $application
+     *
+     * @return void
+     */
+    private function unsetSilexExceptionHandler(Application $application)
+    {
+        unset($application['exception_handler']);
     }
 
     /**
