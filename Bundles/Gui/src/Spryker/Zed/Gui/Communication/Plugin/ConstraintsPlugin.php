@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\EqualTo;
 use Symfony\Component\Validator\Constraints\Expression;
-use Symfony\Component\Validator\Constraints\False;
+use Symfony\Component\Validator\Constraints\IsFalse;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
@@ -42,12 +42,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotEqualTo;
 use Symfony\Component\Validator\Constraints\NotIdenticalTo;
 use Symfony\Component\Validator\Constraints\NotNull;
-use Symfony\Component\Validator\Constraints\Null;
+use Symfony\Component\Validator\Constraints\IsNull;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Time;
-use Symfony\Component\Validator\Constraints\True;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\Validator\Constraints\Uuid;
@@ -112,31 +112,31 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Null
+     * @return IsNull
      */
     public function createConstraintNull($options = null)
     {
-        return new Null($options);
+        return new IsNull($options);
     }
 
     /**
      * @param mixed $options
      *
-     * @return True
+     * @return IsTrue
      */
     public function createConstraintTrue($options = null)
     {
-        return new True($options);
+        return new IsTrue($options);
     }
 
     /**
      * @param mixed $options
      *
-     * @return False
+     * @return IsFalse
      */
     public function createConstraintFalse($options = null)
     {
-        return new False($options);
+        return new IsFalse($options);
     }
 
     /**
