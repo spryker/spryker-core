@@ -34,7 +34,7 @@ abstract class AbstractController
     /**
      * @var Application
      */
-    private $app;
+    private $application;
 
     /**
      * @var AbstractFactory
@@ -52,12 +52,12 @@ abstract class AbstractController
     private $client;
 
     /**
-     * @param Application $app
+     * @param Application $application
      */
-    public function __construct(Application $app)
+    public function __construct(Application $application)
     {
-        $this->app = $app;
-        $this->flashBag = $app['request']->getSession()->getFlashBag();
+        $this->application = $application;
+        $this->flashBag = $application['request']->getSession()->getFlashBag();
     }
 
     /**
@@ -77,23 +77,7 @@ abstract class AbstractController
      */
     protected function getApplication()
     {
-        return $this->app;
-    }
-
-    /**
-     * @return \ArrayObject
-     */
-    protected function getCookieBag()
-    {
-        return $this->app->getCookieBag();
-    }
-
-    /**
-     * @return TransferSession
-     */
-    protected function getTransferSession()
-    {
-        return $this->app->getTransferSession();
+        return $this->application;
     }
 
     /**
@@ -101,15 +85,7 @@ abstract class AbstractController
      */
     protected function getLocale()
     {
-        return $this->app['locale'];
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getTranslator()
-    {
-        return $this->getApplication()['translator'];
+        return $this->application['locale'];
     }
 
     /**
@@ -257,7 +233,7 @@ abstract class AbstractController
      */
     protected function getSecurityError(Request $request)
     {
-        return $this->app['security.last_error']($request);
+        return $this->application['security.last_error']($request);
     }
 
     /**
@@ -321,7 +297,7 @@ abstract class AbstractController
      */
     protected function renderView($viewPath, array $parameters = [])
     {
-        return $this->app->render($viewPath, $parameters);
+        return $this->application->render($viewPath, $parameters);
     }
 
     /**
@@ -349,7 +325,7 @@ abstract class AbstractController
      *
      * @return AbstractClient
      */
-    protected function resolveClient()
+    private function resolveClient()
     {
         return $this->getClientResolver()->resolve($this);
     }
@@ -357,7 +333,7 @@ abstract class AbstractController
     /**
      * @return ClientResolver
      */
-    protected function getClientResolver()
+    private function getClientResolver()
     {
         return new ClientResolver();
     }
@@ -379,7 +355,7 @@ abstract class AbstractController
      *
      * @return AbstractFactory
      */
-    protected function resolveFactory()
+    private function resolveFactory()
     {
         return $this->getFactoryResolver()->resolve($this);
     }
@@ -387,7 +363,7 @@ abstract class AbstractController
     /**
      * @return FactoryResolver
      */
-    protected function getFactoryResolver()
+    private function getFactoryResolver()
     {
         return new FactoryResolver();
     }

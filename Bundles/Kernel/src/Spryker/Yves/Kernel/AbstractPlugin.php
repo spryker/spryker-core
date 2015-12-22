@@ -42,7 +42,7 @@ abstract class AbstractPlugin
      *
      * @return AbstractFactory
      */
-    protected function resolveFactory()
+    private function resolveFactory()
     {
         return $this->getFactoryResolver()->resolve($this);
     }
@@ -50,7 +50,7 @@ abstract class AbstractPlugin
     /**
      * @return FactoryResolver
      */
-    protected function getFactoryResolver()
+    private function getFactoryResolver()
     {
         return new FactoryResolver();
     }
@@ -72,7 +72,7 @@ abstract class AbstractPlugin
      *
      * @return AbstractClient
      */
-    protected function resolveClient()
+    private function resolveClient()
     {
         return $this->getClientResolver()->resolve($this);
     }
@@ -80,7 +80,7 @@ abstract class AbstractPlugin
     /**
      * @return ClientResolver
      */
-    protected function getClientResolver()
+    private function getClientResolver()
     {
         return new ClientResolver();
     }

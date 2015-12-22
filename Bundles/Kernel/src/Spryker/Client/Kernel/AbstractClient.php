@@ -57,7 +57,7 @@ abstract class AbstractClient
      *
      * @return FactoryInterface
      */
-    protected function resolveFactory()
+    private function resolveFactory()
     {
         return $this->getFactoryResolver()->resolve($this);
     }
@@ -65,7 +65,7 @@ abstract class AbstractClient
     /**
      * @return FactoryResolver
      */
-    protected function getFactoryResolver()
+    private function getFactoryResolver()
     {
         return new FactoryResolver();
     }
