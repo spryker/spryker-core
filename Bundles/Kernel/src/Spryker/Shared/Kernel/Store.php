@@ -22,10 +22,6 @@ class Store
     protected static $instance;
 
     /**
-     * Name of the store = name of the area
-     *
-     * @link  https://project-a.atlassian.net/wiki/display/SYSOP/Port+numbering
-     *
      * @var string
      */
     protected $storeName;
