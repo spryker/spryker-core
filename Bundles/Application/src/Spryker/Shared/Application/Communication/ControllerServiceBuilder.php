@@ -6,9 +6,9 @@
 
 namespace Spryker\Shared\Application\Communication;
 
+use Spryker\Shared\Kernel\ClassResolver\Controller\AbstractControllerResolver;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Shared\Kernel\Communication\RouteNameResolverInterface;
-use Spryker\Shared\Kernel\Communication\ControllerLocatorInterface;
 
 class ControllerServiceBuilder
 {
@@ -16,7 +16,7 @@ class ControllerServiceBuilder
     /**
      * @param \Pimple $application
      * @param BundleControllerActionInterface $bundleControllerAction
-     * @param ControllerLocatorInterface $controllerLocator
+     * @param AbstractControllerResolver $controllerResolver
      * @param RouteNameResolverInterface $routeNameResolver
      *
      * @return string
@@ -24,12 +24,12 @@ class ControllerServiceBuilder
     public function createServiceForController(
         \Pimple $application,
         BundleControllerActionInterface $bundleControllerAction,
-        ControllerLocatorInterface $controllerLocator,
+        AbstractControllerResolver $controllerResolver,
         RouteNameResolverInterface $routeNameResolver
     ) {
         $serviceName = 'controller.service.' . str_replace('/', '.', $routeNameResolver->resolve());
-        $service = function () use ($application, $controllerLocator) {
-            $controller = $controllerLocator->locate();
+        $service = function () use ($application, $controllerResolver, $bundleControllerAction) {
+            $controller = $controllerResolver->resolve($bundleControllerAction);
             $controller->setApplication($application);
 
             return $controller;

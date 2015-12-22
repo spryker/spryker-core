@@ -11,8 +11,14 @@ use Spryker\Zed\Price\Business\PriceFacade;
 class PriceFacadeStub extends PriceFacade
 {
 
+    /**
+     * @var array
+     */
     private $prices = [];
 
+    /**
+     * @var array
+     */
     private $validities = [];
 
     public function getPriceBySku($sku, $priceType = null)

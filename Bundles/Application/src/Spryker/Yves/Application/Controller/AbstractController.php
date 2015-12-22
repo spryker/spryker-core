@@ -249,7 +249,9 @@ abstract class AbstractController
      */
     protected function getSecurityError(Request $request)
     {
-        return $this->getApplication()['security.last_error']($request);
+        $app = $this->getApplication();
+
+        return $app['security.last_error']($request);
     }
 
     /**

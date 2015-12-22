@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
 use Spryker\Zed\Library\Twig\TwigFunction;
+use Zend\Filter\Word\DashToCamelCase;
 
 class GridConfirmDialog extends TwigFunction
 {
@@ -79,7 +80,7 @@ class GridConfirmDialog extends TwigFunction
         if (array_key_exists('additionalCallback', $options)) {
             $callback .= $options['additionalCallback'] . ';';
         }
-        $filter = new \Zend_Filter_Word_DashToCamelCase();
+        $filter = new DashToCamelCase();
         $functionSuffix = $filter->filter($buttonName);
 
         return <<<HTML

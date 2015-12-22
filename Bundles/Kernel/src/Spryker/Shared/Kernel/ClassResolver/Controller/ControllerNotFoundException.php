@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Shared\Kernel\ClassResolver\DependencyContainer;
+namespace Spryker\Shared\Kernel\ClassResolver\Controller;
 
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Shared\Kernel\Exception\Backtrace;

@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Kernel\Communication\CommunicationFactoryInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -74,7 +73,27 @@ abstract class AbstractController
     }
 
     /**
-     * @return CommunicationFactoryInterface
+     * @param Container $container
+     *
+     * @return self
+     */
+    public function setExternalDependencies(Container $container)
+    {
+        $this->container = $container;
+
+        return $this;
+    }
+
+    /**
+     * @return Container
+     */
+    protected function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * @return AbstractCommunicationFactory
      */
     protected function getFactory()
     {

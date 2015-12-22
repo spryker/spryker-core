@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Kernel\ClassResolver\Controller;
+namespace Spryker\Yves\Kernel\ClassResolver\Controller;
 
 use Spryker\Shared\Kernel\ClassResolver\Controller\AbstractControllerResolver;
 
 class ControllerResolver extends AbstractControllerResolver
 {
 
-    const CLASS_NAME_PATTERN = '\\%s\\Zed\\%s%s\\Communication\\Controller\\%sController';
+    const CLASS_NAME_PATTERN = '\\%s\\Yves\\%s%s\\Controller\\%sController';
 
     /**
      * @return string

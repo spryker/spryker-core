@@ -6,7 +6,12 @@
 
 namespace Spryker\Yves\Application\Routing;
 
+use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
+use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
+use Silex\Application;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
+use Spryker\Yves\Kernel\Controller\RouteNameResolver;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\RequestContext;
@@ -172,6 +177,29 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
         }
 
         return $scheme;
+    }
+
+    /**
+     * @param Application $application
+     * @param BundleControllerActionInterface $bundleControllerAction
+     * @param RouteNameResolver $routeResolver
+     *
+     * @return string
+     */
+    protected function createServiceForController(
+        Application $application,
+        BundleControllerActionInterface $bundleControllerAction,
+        RouteNameResolver $routeResolver
+    ) {
+        $controllerResolver = new ControllerResolver($bundleControllerAction);
+        $service = (new ControllerServiceBuilder())->createServiceForController(
+            $application,
+            $bundleControllerAction,
+            $controllerResolver,
+            $routeResolver
+        );
+
+        return $service;
     }
 
 }

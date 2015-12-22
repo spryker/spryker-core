@@ -64,7 +64,8 @@ class GoogleGraph
             throw new \Exception(sprintf('Content type "%s" is not a valid content type for this operation', $contentType));
         }
 
-        $client = new \Zend_Http_Client();
+
+        $client = new \Zend\Http\Client();
         $client->setUri(self::URI);
 
         $vars = get_object_vars($this);

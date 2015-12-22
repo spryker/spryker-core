@@ -8,12 +8,11 @@ namespace Spryker\Yves\Application\Plugin\Provider;
 
 use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
 use Spryker\Yves\Kernel\BundleControllerAction;
+use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
-use Spryker\Yves\Kernel\ControllerLocator;
 use Silex\Application;
 use Silex\Controller;
 use Silex\ControllerCollection;
-use Spryker\Yves\Kernel\Locator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -37,9 +36,9 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
 
     /**
      * Set the sslEnabledFlag to
-     *     true to force ssl
-     *     false to force http
-     *     null to not force anything (both https or http allowed)
+     * true to force ssl
+     * false to force http
+     * null to not force anything (both https or http allowed)
      *
      * @param bool|null $sslEnabled
      */
@@ -49,7 +48,9 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param Application $app
+     *
+     * @return mixed|ControllerCollection
      */
     public function connect(Application $app)
     {
@@ -61,7 +62,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getUrlPrefix()
     {
@@ -103,7 +104,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
         $parseJsonBody = false
     ) {
         $bundleControllerAction = new BundleControllerAction($bundle, $controllerName, $actionName);
-        $controllerResolver = new ControllerLocator($bundleControllerAction);
+        $controllerResolver = new ControllerResolver($bundleControllerAction);
         $routeResolver = new BundleControllerActionRouteNameResolver($bundleControllerAction);
 
         $service = (new ControllerServiceBuilder())->createServiceForController(
