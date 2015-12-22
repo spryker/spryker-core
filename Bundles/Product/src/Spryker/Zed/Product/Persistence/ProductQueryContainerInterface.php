@@ -7,9 +7,9 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyLocalizedAbstractProductAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery;
@@ -74,7 +74,7 @@ interface ProductQueryContainerInterface
      * @param int $idProductAbstract
      * @param int $fkCurrentLocale
      *
-     * @return SpyLocalizedAbstractProductAttributesQuery
+     * @return SpyProductAbstractLocalizedAttributesQuery
      */
     public function queryAbstractProductAttributeCollection($idProductAbstract, $fkCurrentLocale);
 

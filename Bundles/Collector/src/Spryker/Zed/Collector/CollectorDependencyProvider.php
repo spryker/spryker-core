@@ -6,21 +6,17 @@
 
 namespace Spryker\Zed\Collector;
 
+use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_COLLECTOR = 'collector_facade';
-
-    const QUERY_CONTAINER_TOUCH = 'touch_query_container';
-
-    const FACADE_LOCALE = 'locale_facade';
-
-    const SEARCH_PLUGINS = 'search_plugins';
-
-    const STORAGE_PLUGINS = 'storage_plugins';
+    const FACADE_LOCALE = 'locale facade';
+    const QUERY_CONTAINER_TOUCH = 'touch query container';
+    const SEARCH_PLUGINS = 'search plugins';
+    const STORAGE_PLUGINS = 'storage plugins';
 
     /**
      * @var Container
@@ -47,10 +43,6 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->provideLocaleFacade($container);
 
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
-            return $container->getLocator()->collector()->facade();
-        };
-
         return $container;
     }
 
@@ -62,7 +54,7 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     private function provideLocaleFacade(Container $container)
     {
         $container[self::FACADE_LOCALE] = function (Container $container) {
-            return $container->getLocator()->locale()->facade();
+            return new CollectorToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;

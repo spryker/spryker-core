@@ -33,9 +33,11 @@ use Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToField;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToMultiField;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
+use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer;
 
 /**
  * @method ProductSearchConfig getConfig()
+ * @method ProductSearchQueryContainer getQueryContainer()
  */
 class ProductSearchBusinessFactory extends AbstractBusinessFactory
 {
@@ -111,8 +113,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     protected function createOperationManager()
     {
         return new OperationManager(
-            $this->createProductSearchQueryContainer(),
-            $this->getLocator()
+            $this->createProductSearchQueryContainer()
         );
     }
 
@@ -121,15 +122,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductSearchQueryContainer()
     {
-        return $this->getLocator()->productSearch()->queryContainer();
-    }
-
-    /**
-     * @return ProductFacade
-     */
-    protected function createProductFacade()
-    {
-        return $this->getLocator()->product()->facade();
+        return $this->getQueryContainer();
     }
 
     /**
@@ -137,7 +130,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
      */
     protected function createLocaleFacade()
     {
-        return $this->getLocator()->locale()->facade();
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_LOCALE);
     }
 
     /**
@@ -145,7 +138,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
      */
     protected function createTouchFacade()
     {
-        return $this->getLocator()->touch()->facade();
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_TOUCH);
     }
 
     /**

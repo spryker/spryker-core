@@ -6,11 +6,13 @@
 
 namespace Spryker\Zed\Country\Communication\Plugin;
 
+use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 use Spryker\Zed\Country\Communication\CountryCommunicationFactory;
 
 /**
  * @method CountryCommunicationFactory getFactory()
+ * @method CountryFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin
 {
@@ -20,7 +22,7 @@ class Installer extends AbstractInstallerPlugin
      */
     public function install()
     {
-        $this->getFactory()->getInstallerFacade()->install($this->messenger);
+        $this->getFacade()->install($this->messenger);
     }
 
 }

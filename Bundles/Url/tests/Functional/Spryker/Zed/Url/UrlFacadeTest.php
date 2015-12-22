@@ -8,9 +8,7 @@ namespace Functional\Spryker\Zed\Url;
 
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
@@ -47,18 +45,11 @@ class UrlFacadeTest extends AbstractFunctionalTest
     protected $localeFacade;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-
-        $this->locator = Locator::getInstance();
         $this->urlFacade = $this->getFacade();
 
         $this->localeFacade = new LocaleFacade();

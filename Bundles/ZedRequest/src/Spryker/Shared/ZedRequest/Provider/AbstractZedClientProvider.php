@@ -29,7 +29,6 @@ abstract class AbstractZedClientProvider extends AbstractClientProvider
     protected function createZedClient()
     {
         $httpClient = new HttpClient(
-            $this->locator,
             'http://' . Config::get(ApplicationConstants::HOST_ZED_API),
             Config::get(ApplicationConstants::TRANSFER_USERNAME),
             Config::get(ApplicationConstants::TRANSFER_PASSWORD)

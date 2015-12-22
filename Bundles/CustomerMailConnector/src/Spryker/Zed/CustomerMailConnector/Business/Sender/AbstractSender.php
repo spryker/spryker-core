@@ -9,8 +9,8 @@ namespace Spryker\Zed\CustomerMailConnector\Business\Sender;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Mail\Business\MailFacade;
+use Spryker\Zed\CustomerMailConnector\Dependency\Facade\CustomerMailConnectorToGlossaryInterface;
+use Spryker\Zed\CustomerMailConnector\Dependency\Facade\CustomerMailConnectorToMailInterface;
 
 abstract class AbstractSender
 {
@@ -21,22 +21,25 @@ abstract class AbstractSender
     protected $config;
 
     /**
-     * @var MailFacade
+     * @var CustomerMailConnectorToMailInterface
      */
     protected $mailFacade;
 
     /**
-     * @var GlossaryFacade
+     * @var CustomerMailConnectorToGlossaryInterface
      */
     protected $glossaryFacade;
 
     /**
      * @param CustomerMailConnectorConfig $config
-     * @param MailFacade $mailFacade
-     * @param GlossaryFacade $glossaryFacade
+     * @param CustomerMailConnectorToMailInterface $mailFacade
+     * @param CustomerMailConnectorToGlossaryInterface $glossaryFacade
      */
-    public function __construct(CustomerMailConnectorConfig $config, MailFacade $mailFacade, GlossaryFacade $glossaryFacade)
-    {
+    public function __construct(
+        CustomerMailConnectorConfig $config,
+        CustomerMailConnectorToMailInterface $mailFacade,
+        CustomerMailConnectorToGlossaryInterface $glossaryFacade
+    ) {
         $this->config = $config;
         $this->mailFacade = $mailFacade;
         $this->glossaryFacade = $glossaryFacade;

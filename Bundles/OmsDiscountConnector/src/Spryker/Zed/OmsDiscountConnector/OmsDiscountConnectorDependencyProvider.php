@@ -8,6 +8,7 @@ namespace Spryker\Zed\OmsDiscountConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\OmsDiscountConnector\Dependency\Facade\OmsDiscountConnectorToDiscountBridge;
 
 class OmsDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,7 +23,7 @@ class OmsDiscountConnectorDependencyProvider extends AbstractBundleDependencyPro
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_DISCOUNT] = function (Container $container) {
-            return $container->getLocator()->discount()->facade();
+            return new OmsDiscountConnectorToDiscountBridge($container->getLocator()->discount()->facade());
         };
 
         return $container;

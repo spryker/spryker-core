@@ -10,8 +10,8 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
 use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
+use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
-use Spryker\Zed\User\Business\UserFacade;
 
 class Installer implements InstallerInterface
 {
@@ -32,7 +32,7 @@ class Installer implements InstallerInterface
     private $rule;
 
     /**
-     * @var UserFacade
+     * @var AclToUserInterface
      */
     private $facadeUser;
 
@@ -45,14 +45,14 @@ class Installer implements InstallerInterface
      * @param GroupInterface $group
      * @param RoleInterface $role
      * @param RuleInterface $rule
-     * @param UserFacade $facadeUser
+     * @param AclToUserInterface $facadeUser
      * @param AclConfig $settings
      */
     public function __construct(
         GroupInterface $group,
         RoleInterface $role,
         RuleInterface $rule,
-        UserFacade $facadeUser,
+        AclToUserInterface $facadeUser,
         AclConfig $settings
     ) {
         $this->group = $group;

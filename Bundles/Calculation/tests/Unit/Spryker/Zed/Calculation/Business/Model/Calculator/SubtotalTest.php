@@ -9,10 +9,7 @@ namespace Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -33,7 +30,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
         $order->getCalculableObject()->setItems(new \ArrayObject());
 
         $totalsTransfer = $this->getTotals();
-        $calculator = new SubtotalTotalsCalculator(Locator::getInstance());
+        $calculator = new SubtotalTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
         $this->assertEquals(0, $totalsTransfer->getSubtotal());
     }
@@ -51,7 +48,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
         $order->getCalculableObject()->addItem($item);
 
         $totalsTransfer = $this->getTotals();
-        $calculator = new SubtotalTotalsCalculator(Locator::getInstance());
+        $calculator = new SubtotalTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
         $this->assertEquals(self::ITEM_GROSS_PRICE, $totalsTransfer->getSubtotal());
     }
@@ -71,7 +68,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
         $order->getCalculableObject()->addItem(clone $item);
 
         $totalsTransfer = $this->getTotals();
-        $calculator = new SubtotalTotalsCalculator(Locator::getInstance());
+        $calculator = new SubtotalTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $order, $order->getCalculableObject()->getItems());
         $this->assertEquals(2 * self::ITEM_GROSS_PRICE, $totalsTransfer->getSubtotal());
     }
@@ -102,14 +99,6 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     protected function getTotals()
     {
         return new TotalsTransfer();
-    }
-
-    /**
-     * @return AbstractLocatorLocator|AutoCompletion
-     */
-    protected function getLocator()
-    {
-        return Locator::getInstance();
     }
 
 }

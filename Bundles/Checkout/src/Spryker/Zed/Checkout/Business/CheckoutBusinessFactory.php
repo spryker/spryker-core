@@ -10,7 +10,11 @@ use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflowInterface;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Checkout\CheckoutConfig;
 
+/**
+ * @method CheckoutConfig getConfig()
+ */
 class CheckoutBusinessFactory extends AbstractBusinessFactory
 {
 
@@ -25,8 +29,7 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_ORDER_HYDRATORS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_POST_HOOKS),
-            $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS),
-            $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_CALCULATION)
+            $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS)
         );
     }
 

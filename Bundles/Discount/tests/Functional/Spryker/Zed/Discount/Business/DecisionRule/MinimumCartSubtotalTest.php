@@ -8,10 +8,7 @@ namespace Functional\Spryker\Zed\Discount\Business\DecisionRule;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
-use Spryker\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
@@ -93,14 +90,6 @@ class MinimumCartSubtotalTest extends Test
         $decisionRule->setValue($value);
 
         return $decisionRule;
-    }
-
-    /**
-     * @return AbstractLocatorLocator|AutoCompletion
-     */
-    protected function getLocator()
-    {
-        return Locator::getInstance();
     }
 
     /**

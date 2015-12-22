@@ -6,12 +6,9 @@
 
 namespace Spryker\Shared\Library\Communication;
 
-use Spryker\Shared\Kernel\TransferLocatorHelper;
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Kernel\Locator;
 
-class Request extends AbstractObject implements
-    EmbeddedTransferInterface
+class Request extends AbstractObject implements EmbeddedTransferInterface
 {
 
     /**
@@ -56,10 +53,8 @@ class Request extends AbstractObject implements
     public function getMetaTransfer($name)
     {
         if (isset($this->values['metaTransfers'][$name])) {
-            $getMethodName = (new TransferLocatorHelper())
-                ->transferClassNameToLocatorMethod($this->values['metaTransfers'][$name]['className']);
-
-            $transfer = $this->locator->$getMethodName();
+            $className = $this->values['metaTransfers'][$name]['className'];
+            $transfer = new $className();
             $transfer->formArray($this->values['metaTransfers'][$name]['data']);
 
             return $transfer;

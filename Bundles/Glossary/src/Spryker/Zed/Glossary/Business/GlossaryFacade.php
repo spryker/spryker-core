@@ -205,7 +205,7 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param array $keyTranslationTransfer
+     * @param KeyTranslationTransfer $keyTranslationTransfer
      *
      * @return bool
      */

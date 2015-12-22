@@ -6,11 +6,11 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Spryker\Zed\Gui\Communication\Form\AbstractForm;
-use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsPageForm extends AbstractForm
@@ -47,7 +47,7 @@ class CmsPageForm extends AbstractForm
     protected $idPage;
 
     /**
-     * @var UrlFacade
+     * @var CmsToUrlInterface
      */
     protected $urlFacade;
 
@@ -59,12 +59,12 @@ class CmsPageForm extends AbstractForm
     /**
      * @param SpyCmsTemplateQuery $templateQuery
      * @param SpyCmsPageQuery $pageUrlByIdQuery
-     * @param UrlFacade $urlFacade
+     * @param CmsToUrlInterface $urlFacade
      * @param string $formType
      * @param int $idPage
      */
 
-    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsPageQuery $pageUrlByIdQuery, UrlFacade $urlFacade, $formType, $idPage)
+    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsPageQuery $pageUrlByIdQuery, CmsToUrlInterface $urlFacade, $formType, $idPage)
     {
         $this->templateQuery = $templateQuery;
         $this->pageUrlByIdQuery = $pageUrlByIdQuery;

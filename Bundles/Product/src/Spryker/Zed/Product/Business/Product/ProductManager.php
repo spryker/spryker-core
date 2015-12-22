@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\AbstractProductExistsException;
@@ -21,7 +22,6 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyLocalizedAbstractProductAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
@@ -187,18 +187,18 @@ class ProductManager implements ProductManagerInterface
 
         foreach ($abstractProductTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
-            //$this->checkAbstractProductAttributesDoNotExist($idProductAbstract, $locale);
             if ($this->hasAbstractProductAttributes($idProductAbstract, $locale)) {
                 continue;
             }
             $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
 
-            $abstractProductAttributesEntity = new SpyLocalizedAbstractProductAttributes();
+            $abstractProductAttributesEntity = new SpyProductAbstractLocalizedAttributes();
             $abstractProductAttributesEntity
                 ->setFkProductAbstract($idProductAbstract)
                 ->setFkLocale($locale->getIdLocale())
                 ->setName($localizedAttributes->getName())
                 ->setAttributes($encodedAttributes);
+
             $abstractProductAttributesEntity->save();
         }
     }

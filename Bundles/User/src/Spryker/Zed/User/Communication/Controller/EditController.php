@@ -77,7 +77,7 @@ class EditController extends AbstractController
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
-        $userForm = $this->getFactory()->createUpdateUserForm($idUser);
+        $userForm = $this->getFactory()->createUpdateUserForm($idUser, $this->getFacade());
         $userForm->handleRequest();
 
         if ($userForm->isValid()) {
@@ -185,7 +185,7 @@ class EditController extends AbstractController
     public function passwordResetAction()
     {
         $currentUserTransfer = $this->getFacade()->getCurrentUser();
-        $resetPasswordForm = $this->getFactory()->createResetPasswordForm();
+        $resetPasswordForm = $this->getFactory()->createResetPasswordForm($this->getFacade());
         $resetPasswordForm->handleRequest();
 
         if ($resetPasswordForm->isValid()) {

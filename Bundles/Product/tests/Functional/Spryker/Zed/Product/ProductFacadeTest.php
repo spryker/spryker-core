@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
@@ -22,6 +21,12 @@ use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Zed\Url\Business\UrlFacade;
 
+/**
+ * @group Spryker
+ * @group Zed
+ * @group Business
+ * @group ProductFacadeTest
+ */
 class ProductFacadeTest extends Test
 {
 
@@ -68,12 +73,11 @@ class ProductFacadeTest extends Test
     protected function setUp()
     {
         parent::setUp();
-        $this->locator = Locator::getInstance();
 
-        $this->localeFacade = $this->locator->locale()->facade();
-        $this->productFacade = $this->locator->product()->facade();
-        $this->urlFacade = $this->locator->url()->facade();
-        $this->productQueryContainer = new ProductQueryContainer(new PersistenceFactory('Product'), $this->locator);
+        $this->localeFacade = new LocaleFacade();
+        $this->productFacade = new ProductFacade();
+        $this->urlFacade = new UrlFacade();
+        $this->productQueryContainer = new ProductQueryContainer();
     }
 
     /**

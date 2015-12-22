@@ -9,23 +9,23 @@ namespace Spryker\Zed\ProductCategory\Communication;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\Cms\Business\CmsFacade; //TODO: https://spryker.atlassian.net/browse/CD-540
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsBridge;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductBridge;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
+use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 
 /**
  * @method ProductCategoryQueryContainer getQueryContainer()
+ * @method ProductCategoryConfig getConfig()
  */
 class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -42,7 +42,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @throws \ErrorException
      *
-     * @return ProductFacade
+     * @return ProductCategoryToProductBridge
      */
     public function createProductFacade()
     {
@@ -52,7 +52,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @throws \ErrorException
      *
-     * @return CategoryFacade
+     * @return ProductCategoryToCategoryBridge
      */
     public function createCategoryFacade()
     {
@@ -60,21 +60,11 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws \ErrorException
-     *
-     * @return ProductCategoryFacade
-     */
-    public function createProductCategoryFacade()
-    {
-        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_PRODUCT_CATEGORY);
-    }
-
-    /**
      * TODO: https://spryker.atlassian.net/browse/CD-540
      *
      * @throws \ErrorException
      *
-     * @return CmsFacade
+     * @return ProductCategoryToCmsBridge
      */
     public function createCmsFacade()
     {
@@ -82,19 +72,11 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ProductCategoryQueryContainerInterface
-     */
-    public function createProductCategoryQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductCategoryDependencyProvider::QUERY_CONTAINER_PRODUCT_CATEGORY);
-    }
-
-    /**
      * @return CategoryQueryContainerInterface
      */
     public function createCategoryQueryContainer()
     {
-        return $this->getProvidedDependency(ProductCategoryDependencyProvider::QUERY_CONTAINER_CATEGORY);
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::CATEGORY_QUERY_CONTAINER);
     }
 
     /**
@@ -102,7 +84,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductQueryContainer()
     {
-        return $this->getProvidedDependency(ProductCategoryDependencyProvider::QUERY_CONTAINER_PRODUCT);
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::PRODUCT_QUERY_CONTAINER);
     }
 
     /**
@@ -114,7 +96,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryFormAdd(
             $this->createCategoryQueryContainer(),
-            $this->createProductCategoryQueryContainer(),
+            $this->getQueryContainer(),
             $this->createCurrentLocale(),
             null,
             $idParentNode
@@ -130,7 +112,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryFormEdit(
             $this->createCategoryQueryContainer(),
-            $this->createProductCategoryQueryContainer(),
+            $this->getQueryContainer(),
             $this->createCurrentLocale(),
             $idCategory,
             null
@@ -146,7 +128,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryFormDelete(
             $this->createCategoryQueryContainer(),
-            $this->createProductCategoryQueryContainer(),
+            $this->getQueryContainer(),
             $this->createCurrentLocale(),
             $idCategory,
             null
@@ -161,9 +143,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductCategoryTable(LocaleTransfer $locale, $idCategory)
     {
-        $productCategoryQueryContainer = $this->createProductCategoryQueryContainer();
-
-        return new ProductCategoryTable($productCategoryQueryContainer, $locale, $idCategory);
+        return new ProductCategoryTable($this->getQueryContainer(), $locale, $idCategory);
     }
 
     /**
@@ -174,9 +154,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductTable(LocaleTransfer $locale, $idCategory)
     {
-        $productCategoryQueryContainer = $this->createProductCategoryQueryContainer();
-
-        return new ProductTable($productCategoryQueryContainer, $locale, $idCategory);
+        return new ProductTable($this->getQueryContainer(), $locale, $idCategory);
     }
 
     /**

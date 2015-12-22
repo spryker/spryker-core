@@ -10,11 +10,13 @@ use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\User\Business\Model\Installer;
 use Spryker\Zed\User\Business\Model\UserInterface;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Spryker\Zed\User\UserConfig;
+use Spryker\Zed\User\UserDependencyProvider;
+use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 /**
  * @method UserConfig getConfig()
+ * @method UserQueryContainer getQueryContainer()
  */
 class UserBusinessFactory extends AbstractBusinessFactory
 {
@@ -26,17 +28,9 @@ class UserBusinessFactory extends AbstractBusinessFactory
     {
         return new User(
             $this->getQueryContainer(),
-            $this->getLocator()->session()->client(),
+            $this->getProvidedDependency(UserDependencyProvider::CLIENT_SESSION),
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return UserQueryContainer
-     */
-    protected function getQueryContainer()
-    {
-        return $this->getLocator()->user()->queryContainer();
     }
 
     /**

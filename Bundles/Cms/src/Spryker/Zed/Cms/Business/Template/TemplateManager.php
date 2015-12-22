@@ -7,9 +7,7 @@
 namespace Spryker\Zed\Cms\Business\Template;
 
 use Generated\Shared\Transfer\CmsTemplateTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
 use Spryker\Zed\Cms\CmsConfig;
@@ -27,11 +25,6 @@ class TemplateManager implements TemplateManagerInterface
     protected $cmsQueryContainer;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var CmsConfig
      */
     protected $config;
@@ -43,18 +36,15 @@ class TemplateManager implements TemplateManagerInterface
 
     /**
      * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param LocatorLocatorInterface $locator
      * @param CmsConfig $config
      * @param Finder $finder
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        LocatorLocatorInterface $locator,
         CmsConfig $config,
         Finder $finder
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
-        $this->locator = $locator;
         $this->config = $config;
         $this->finder = $finder;
     }

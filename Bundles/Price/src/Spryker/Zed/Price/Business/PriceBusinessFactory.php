@@ -19,9 +19,11 @@ use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Spryker\Zed\Price\Business\Internal\Install;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\Price\PriceConfig;
+use Spryker\Zed\Price\PriceDependencyProvider;
 
 /**
  * @method PriceConfig getConfig()
+ * @method PriceQueryContainer getQueryContainer()
  */
 class PriceBusinessFactory extends AbstractBusinessFactory
 {
@@ -59,7 +61,6 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     public function getWriterModel()
     {
         return new Writer(
-            $this->getLocator(),
             $this->getQueryContainer(),
             $this->getReaderModel(),
             $this->getTouchFacade(),
@@ -73,7 +74,6 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     public function getBulkWriterModel()
     {
         return new BulkWriter(
-            $this->getLocator(),
             $this->getQueryContainer(),
             $this->getReaderModel(),
             $this->getTouchFacade(),
@@ -82,23 +82,11 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PriceQueryContainer
-     */
-    protected function getQueryContainer()
-    {
-        if (empty($this->queryContainer)) {
-            $this->queryContainer = $this->getLocator()->price()->queryContainer();
-        }
-
-        return $this->queryContainer;
-    }
-
-    /**
      * @return PriceToProductInterface
      */
     protected function getProductFacade()
     {
-        return $this->getLocator()->product()->facade();
+        return $this->getProvidedDependency(PriceDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
@@ -107,7 +95,7 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     protected function getTouchFacade()
     {
         if (empty($this->touchFacade)) {
-            $this->touchFacade = $this->getLocator()->touch()->facade();
+            $this->touchFacade = $this->getProvidedDependency(PriceDependencyProvider::FACADE_TOUCH);
         }
 
         return $this->touchFacade;
@@ -121,7 +109,7 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     public function getInstaller(MessengerInterface $messenger)
     {
         $installer = new Install(
-            $this->getLocator()->price()->facade(),
+            $this->getWriterModel(),
             $this->getConfig()
         );
         $installer->setMessenger($messenger);

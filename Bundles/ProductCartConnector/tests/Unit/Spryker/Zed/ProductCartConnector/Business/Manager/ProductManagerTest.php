@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 /**
  * @group Spryker
@@ -23,15 +24,10 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
 {
 
     const CONCRETE_SKU = 'concrete sku';
-
     const ABSTRACT_SKU = 'abstract sku';
-
     const ID_PRODUCT_CONCRETE = 'id concrete product';
-
     const ID_PRODUCT_ABSTRACT = 'id product abstract';
-
     const PRODUCT_NAME = 'product name';
-
     const TAX_SET_NAME = 'tax set name';
 
     /**
@@ -157,7 +153,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function getMockProductFacade()
     {
-        return $this->getMock('Spryker\Zed\Product\Business\ProductFacade', ['getConcreteProduct'], [], '', false);
+        return $this->getMock(ProductCartConnectorToProductInterface::class, ['getConcreteProduct'], [], '', false);
     }
 
 }

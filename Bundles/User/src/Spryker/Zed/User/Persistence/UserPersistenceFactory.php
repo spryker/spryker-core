@@ -7,28 +7,15 @@
 namespace Spryker\Zed\User\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Auth\Business\AuthFacade;
-use Spryker\Zed\User\Business\UserFacade;
 use Orm\Zed\User\Persistence\SpyUserQuery;
+use Spryker\Zed\User\UserConfig;
 
+/**
+ * @method UserConfig getConfig()
+ * @method UserQueryContainer getQueryContainer()
+ */
 class UserPersistenceFactory extends AbstractPersistenceFactory
 {
-
-    /**
-     * @return AuthFacade
-     */
-    public function locateFacade()
-    {
-        return $this->getLocator()->user()->facade();
-    }
-
-    /**
-     * @return UserFacade
-     */
-    public function locateInstallerFacade()
-    {
-        return $this->getLocator()->user()->facade();
-    }
 
     /**
      * @return SpyUserQuery

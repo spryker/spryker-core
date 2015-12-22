@@ -37,6 +37,7 @@ use Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder;
 
 /**
  * @method PayoneConfig getConfig()
+ * @method PayoneQueryContainer getQueryContainer()
  */
 class PayoneBusinessFactory extends AbstractBusinessFactory
 {
@@ -53,7 +54,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     {
         $paymentManager = new PaymentManager(
             $this->createExecutionAdapter(),
-            $this->createQueryContainer(),
+            $this->getQueryContainer(),
             $this->createStandardParameter(),
             $this->createKeyHashGenerator(),
             $this->createSequenceNumberProvider(),
@@ -83,7 +84,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     public function createTransactionStatusManager()
     {
         return new TransactionStatusUpdateManager(
-            $this->createQueryContainer(),
+            $this->getQueryContainer(),
             $this->createStandardParameter(),
             $this->createKeyHashGenerator()
         );
@@ -95,16 +96,8 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     public function createApiLogFinder()
     {
         return new ApiLogFinder(
-            $this->createQueryContainer()
+            $this->getQueryContainer()
         );
-    }
-
-    /**
-     * @return PayoneQueryContainer
-     */
-    protected function createQueryContainer()
-    {
-        return $this->getLocator()->payone()->queryContainer();
     }
 
     /**
@@ -125,7 +118,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
         $defaultEmptySequenceNumber = $this->getConfig()->getEmptySequenceNumber();
 
         return new SequenceNumberProvider(
-            $this->createQueryContainer(),
+            $this->getQueryContainer(),
             $defaultEmptySequenceNumber
         );
     }

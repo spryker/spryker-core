@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Cms\Dependency\Facade;
 
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
@@ -104,5 +105,12 @@ interface CmsToGlossaryInterface
      * @return int
      */
     public function getOrCreateKey($keyName);
+
+    /**
+     * @param KeyTranslationTransfer $keyTranslationTransfer
+     *
+     * @return bool
+     */
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer);
 
 }

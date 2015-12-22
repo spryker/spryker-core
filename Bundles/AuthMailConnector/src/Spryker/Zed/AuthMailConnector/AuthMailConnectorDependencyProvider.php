@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\AuthMailConnector;
 
+use Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -21,7 +22,7 @@ class AuthMailConnectorDependencyProvider extends AbstractBundleDependencyProvid
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_MAIL] = function (Container $container) {
-            return $container->getLocator()->mail()->facade();
+            return new AuthMailConnectorToMailBridge($container->getLocator()->mail()->facade());
         };
 
         return $container;

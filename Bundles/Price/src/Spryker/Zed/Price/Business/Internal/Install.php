@@ -7,30 +7,30 @@
 namespace Spryker\Zed\Price\Business\Internal;
 
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
-use Spryker\Zed\Price\Business\PriceFacade;
-use Spryker\Zed\Price\Business\PriceSettings;
+use Spryker\Zed\Price\Business\Model\Writer;
+use Spryker\Zed\Price\Business\Model\WriterInterface;
 use Spryker\Zed\Price\PriceConfig;
 
 class Install extends AbstractInstaller
 {
 
     /**
-     * @var PriceFacade
+     * @var Writer
      */
-    protected $priceFacade;
+    protected $writer;
 
     /**
-     * @var PriceSettings
+     * @var PriceConfig
      */
     protected $config;
 
     /**
-     * @param PriceFacade $priceFacade
+     * @param WriterInterface $writer
      * @param PriceConfig $config
      */
-    public function __construct(PriceFacade $priceFacade, PriceConfig $config)
+    public function __construct(WriterInterface $writer, PriceConfig $config)
     {
-        $this->priceFacade = $priceFacade;
+        $this->writer = $writer;
         $this->config = $config;
     }
 
@@ -47,7 +47,7 @@ class Install extends AbstractInstaller
      */
     protected function createPriceType()
     {
-        $this->priceFacade->createPriceType($this->config->getPriceTypeDefaultName());
+        $this->writer->createPriceType($this->config->getPriceTypeDefaultName());
     }
 
 }

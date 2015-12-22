@@ -45,16 +45,16 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
+     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return ShipmentTransfer
      */
-    public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability)
+    public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
         $methodModel = $this->getFactory()
             ->createMethod();
 
-        return $methodModel->getAvailableMethods($shipmentMethodAvailability);
+        return $methodModel->getAvailableMethods($shipmentMethodAvailabilityTransfer);
     }
 
     /**

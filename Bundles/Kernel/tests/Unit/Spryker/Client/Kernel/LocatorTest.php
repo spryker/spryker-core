@@ -7,6 +7,7 @@
 namespace Unit\Spryker\Client\Kernel;
 
 use Spryker\Client\Kernel\Locator;
+use Spryker\Shared\Kernel\BundleProxy;
 
 /**
  * @group Spryker
@@ -24,18 +25,7 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
     {
         $locator = Locator::getInstance();
 
-        $this->assertInstanceOf('Spryker\Shared\Kernel\BundleProxy', $locator->foo());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetInstanceWithLocatorAsArgumentShouldReturnLocator()
-    {
-        $injectedLocator = Locator::getInstance();
-        $locator = Locator::getInstance([$injectedLocator]);
-
-        $this->assertInstanceOf('Spryker\Client\Kernel\Locator', $locator);
+        $this->assertInstanceOf(BundleProxy::class, $locator->foo());
     }
 
 }

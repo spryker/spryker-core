@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\CalculationCheckoutConnector;
 
+use Spryker\Zed\CalculationCheckoutConnector\Dependency\Facade\CalculationCheckoutConnectorToCalculationBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -22,7 +23,7 @@ class CalculationCheckoutConnectorDependencyProvider extends AbstractBundleDepen
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::FACADE_CALCULATION] = function (Container $container) {
-            return $container->getLocator()->calculation()->facade();
+            return new CalculationCheckoutConnectorToCalculationBridge($container->getLocator()->calculation()->facade());
         };
 
         return $container;

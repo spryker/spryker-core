@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerInterface;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
 use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
@@ -51,7 +51,7 @@ class TranslationManager implements TranslationManagerInterface
     protected $localeFacade;
 
     /**
-     * @var MessengerFacade
+     * @var GlossaryToMessengerInterface
      */
     protected $messengerFacade;
 
@@ -60,14 +60,14 @@ class TranslationManager implements TranslationManagerInterface
      * @param GlossaryToTouchInterface $touchFacade
      * @param GlossaryToLocaleInterface $localeFacade
      * @param KeyManagerInterface $keyManager
-     * @param MessengerFacade $messengerFacade
+     * @param GlossaryToMessengerInterface $messengerFacade
      */
     public function __construct(
         GlossaryQueryContainerInterface $glossaryQueryContainer,
         GlossaryToTouchInterface $touchFacade,
         GlossaryToLocaleInterface $localeFacade,
         KeyManagerInterface $keyManager,
-        MessengerFacade $messengerFacade
+        GlossaryToMessengerInterface $messengerFacade
     ) {
         $this->glossaryQueryContainer = $glossaryQueryContainer;
         $this->touchFacade = $touchFacade;

@@ -8,6 +8,8 @@ namespace Spryker\Zed\Newsletter;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToGlossaryBridge;
+use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailBridge;
 
 class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -40,10 +42,10 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_MAIL] = function (Container $container) {
-            return $container->getLocator()->mail()->facade();
+            return new NewsletterToMailBridge($container->getLocator()->mail()->facade());
         };
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return $container->getLocator()->glossary()->facade();
+            return new NewsletterToGlossaryBridge($container->getLocator()->glossary()->facade());
         };
 
         return $container;

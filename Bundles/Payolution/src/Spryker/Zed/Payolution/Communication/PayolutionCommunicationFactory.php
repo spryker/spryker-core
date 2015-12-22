@@ -6,14 +6,14 @@
 namespace Spryker\Zed\Payolution\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Payolution\Communication\Table\Payments;
 use Spryker\Zed\Payolution\Communication\Table\RequestLog;
 use Spryker\Zed\Payolution\Communication\Table\StatusLog;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToGlossaryInterface;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMailInterface;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use Spryker\Zed\Payolution\PayolutionDependencyProvider;
-use Spryker\Zed\Mail\Business\MailFacade;
 
 /**
  * @method PayolutionQueryContainerInterface getQueryContainer()
@@ -57,7 +57,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return MailFacade
+     * @return PayolutionToMailInterface
      */
     public function getMailFacade()
     {
@@ -65,7 +65,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return GlossaryFacade
+     * @return PayolutionToGlossaryInterface
      */
     public function getGlossaryFacade()
     {

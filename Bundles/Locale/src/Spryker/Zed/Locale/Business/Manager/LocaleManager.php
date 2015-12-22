@@ -30,17 +30,15 @@ class LocaleManager
     protected $transferGenerator;
 
     /**
-     * @var AutoCompletion
+     * @param LocaleQueryContainerInterface $localeQueryContainer
+     * @param TransferGeneratorInterface $transferGenerator
      */
-    protected $locator;
-
-    public function __construct(LocaleQueryContainerInterface $localeQueryContainer,
-        TransferGeneratorInterface $transferGenerator,
-        LocatorLocatorInterface $locator
+    public function __construct(
+        LocaleQueryContainerInterface $localeQueryContainer,
+        TransferGeneratorInterface $transferGenerator
     ) {
         $this->localeQueryContainer = $localeQueryContainer;
         $this->transferGenerator = $transferGenerator;
-        $this->locator = $locator;
     }
 
     /**

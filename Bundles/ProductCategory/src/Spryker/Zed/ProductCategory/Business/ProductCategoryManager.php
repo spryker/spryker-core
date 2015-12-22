@@ -10,15 +10,13 @@ use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
-use Spryker\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
@@ -56,14 +54,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $touchFacade;
 
     /**
-     * @var CmsToCategoryInterface
+     * @var ProductCategoryToCmsInterface
      */
     protected $cmsFacade;
-
-    /**
-     * @var AutoCompletion
-     */
-    protected $locator;
 
     /**
      * @var ConnectionInterface
@@ -76,8 +69,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param ProductCategoryToProductInterface $productFacade
      * @param ProductCategoryToCategoryInterface $categoryFacade
      * @param ProductCategoryToTouchInterface $touchFacade
-     * @param CmsToCategoryInterface $cmsFacade
-     * @param LocatorLocatorInterface $locator
+     * @param ProductCategoryToCmsInterface $cmsFacade
      * @param ConnectionInterface $connection
      */
     public function __construct(
@@ -86,8 +78,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         ProductCategoryToProductInterface $productFacade,
         ProductCategoryToCategoryInterface $categoryFacade,
         ProductCategoryToTouchInterface $touchFacade,
-        CmsToCategoryInterface $cmsFacade,
-        LocatorLocatorInterface $locator,
+        ProductCategoryToCmsInterface $cmsFacade,
         ConnectionInterface $connection
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
@@ -96,7 +87,6 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         $this->categoryFacade = $categoryFacade;
         $this->touchFacade = $touchFacade;
         $this->cmsFacade = $cmsFacade;
-        $this->locator = $locator;
         $this->connection = $connection;
     }
 

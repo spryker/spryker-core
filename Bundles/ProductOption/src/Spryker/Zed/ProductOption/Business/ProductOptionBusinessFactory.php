@@ -13,9 +13,11 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Spryker\Zed\ProductOption\Business\Model\DataImportWriterInterface;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionReaderInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 
 /**
  * @method ProductOptionConfig getConfig()
+ * @method ProductOptionQueryContainer getQueryContainer()
  */
 class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {

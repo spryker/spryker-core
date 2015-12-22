@@ -36,8 +36,7 @@ class NodeController extends AbstractController
         $locale = $this->getFactory()
             ->createCurrentLocale();
 
-        $nodeList = $this->getFactory()
-            ->createCategoryQueryContainer()
+        $nodeList = $this->getQueryContainer()
             ->getCategoryNodesWithOrder($idCategoryNode, $locale->getIdLocale())
             ->find();
 
@@ -73,8 +72,7 @@ class NodeController extends AbstractController
         foreach ($categoryNodesToReorder as $index => $nodeData) {
             $idNode = $nodeData['id'];
 
-            $nodeEntity = $this->getFactory()
-                ->createCategoryQueryContainer()
+            $nodeEntity = $this->getQueryContainer()
                 ->queryNodeById($idNode)
                 ->findOne();
 
@@ -83,8 +81,7 @@ class NodeController extends AbstractController
 
             $nodeTransfer->setNodeOrder($order);
 
-            $this->getFactory()
-                ->createCategoryFacade()
+            $this->getFacade()
                 ->updateCategoryNode($nodeTransfer, $locale);
 
             $order--;

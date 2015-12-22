@@ -15,8 +15,8 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Library\Copy;
-use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -32,7 +32,7 @@ class OrderDetailsManager
     protected $queryContainer;
 
     /**
-     * @var OmsFacade
+     * @var SalesToOmsInterface
      */
     protected $omsFacade;
 
@@ -43,10 +43,10 @@ class OrderDetailsManager
 
     /**
      * @param SalesQueryContainerInterface $queryContainer
-     * @param OmsFacade $omsFacade
+     * @param SalesToOmsInterface $omsFacade
      * @param array $logReceiverPluginStack
      */
-    public function __construct(SalesQueryContainerInterface $queryContainer, OmsFacade $omsFacade, array $logReceiverPluginStack)
+    public function __construct(SalesQueryContainerInterface $queryContainer, SalesToOmsInterface $omsFacade, array $logReceiverPluginStack)
     {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;

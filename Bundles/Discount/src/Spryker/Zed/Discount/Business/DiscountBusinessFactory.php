@@ -10,7 +10,7 @@ use Spryker\Zed\Discount\Business\Model\VoucherCode;
 use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
 use Spryker\Zed\Discount\Business\Model\CartRule;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Business\Calculator\Fixed;
 use Spryker\Zed\Discount\Business\Calculator\Percentage;
@@ -289,12 +289,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createAggregateCollector()
     {
         return new Aggregate([
-                $this->createItemCollector(),
-                $this->createItemProductOptionCollector(),
-                $this->createItemExpenseCollector(),
-                $this->createOrderExpenseCollector(),
-            ]
-        );
+            $this->createItemCollector(),
+            $this->createItemProductOptionCollector(),
+            $this->createItemExpenseCollector(),
+            $this->createOrderExpenseCollector(),
+        ]);
     }
 
     /**
@@ -314,7 +313,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MessengerFacade
+     * @return DiscountToMessengerInterface
      */
     protected function getMessengerFacade()
     {

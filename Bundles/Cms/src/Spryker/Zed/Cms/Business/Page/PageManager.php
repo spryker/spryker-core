@@ -10,9 +10,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Block\BlockManagerInterface;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -46,11 +44,6 @@ class PageManager implements PageManagerInterface
     protected $blockManager;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var CmsToGlossaryInterface
      */
     protected $glossaryFacade;
@@ -72,14 +65,12 @@ class PageManager implements PageManagerInterface
      * @param CmsToGlossaryInterface $glossaryFacade
      * @param CmsToTouchInterface $touchFacade
      * @param CmsToUrlInterface $urlFacade
-     * @param LocatorLocatorInterface $locator
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, BlockManagerInterface $blockManager, CmsToGlossaryInterface $glossaryFacade, CmsToTouchInterface $touchFacade, CmsToUrlInterface $urlFacade, LocatorLocatorInterface $locator)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, BlockManagerInterface $blockManager, CmsToGlossaryInterface $glossaryFacade, CmsToTouchInterface $touchFacade, CmsToUrlInterface $urlFacade)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->templateManager = $templateManager;
         $this->blockManager = $blockManager;
-        $this->locator = $locator;
         $this->glossaryFacade = $glossaryFacade;
         $this->touchFacade = $touchFacade;
         $this->urlFacade = $urlFacade;

@@ -17,12 +17,11 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 
 /**
  * @method OmsBusinessFactory getFactory()
  */
-class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterface
+class OmsFacade extends AbstractFacade
 {
 
     /**

@@ -17,8 +17,6 @@ use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Zed\Kernel\Locator;
 
 /**
  * @group Spryker
@@ -53,20 +51,13 @@ class ProductCartPluginTest extends AbstractFunctionalTest
     private $localeFacade;
 
     /**
-     * @var AutoCompletion
-     */
-    private $locator;
-
-    /**
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->locator = Locator::getInstance();
-
-        $this->localeFacade = $this->locator->locale()->facade();
+        $this->localeFacade = new LocaleFacade();
         $this->productCartConnectorFacade = $this->getFacade();
     }
 

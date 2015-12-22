@@ -10,6 +10,7 @@ use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\Cms\Business\Block\BlockManager;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\Business\Page\PageManager;
+use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Cms\Business\Block\BlockManagerInterface;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface;
@@ -21,7 +22,12 @@ use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Symfony\Component\Finder\Finder;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 
+/**
+ * @method CmsConfig getConfig()
+ * @method CmsQueryContainer getQueryContainer()
+ */
 class CmsBusinessFactory extends AbstractBusinessFactory
 {
 
@@ -30,7 +36,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     protected function getCmsQueryContainer()
     {
-        return $this->getLocator()->cms()->queryContainer();
+        return $this->getQueryContainer();
     }
 
     /**
@@ -44,8 +50,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getBlockManager(),
             $this->getGlossaryFacade(),
             $this->getTouchFacade(),
-            $this->getUrlFacade(),
-            $this->getLocator()
+            $this->getUrlFacade()
         );
     }
 
@@ -56,7 +61,6 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new TemplateManager(
             $this->getCmsQueryContainer(),
-            $this->getLocator(),
             $this->getConfig(),
             $this->getFinder()
         );
@@ -84,7 +88,6 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getCmsQueryContainer(),
             $this->getTemplateManager(),
             $this->getPageManager(),
-            $this->getLocator(),
             $this->getProvidedDependency(CmsDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }
@@ -94,7 +97,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     protected function getGlossaryFacade()
     {
-        return $this->getLocator()->glossary()->facade();
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }
 
     /**
@@ -102,7 +105,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     protected function getTouchFacade()
     {
-        return $this->getLocator()->touch()->facade();
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_TOUCH);
     }
 
     /**
@@ -110,7 +113,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     protected function getUrlFacade()
     {
-        return $this->getLocator()->url()->facade();
+        return $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
     }
 
     /**

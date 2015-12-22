@@ -6,10 +6,8 @@
 
 namespace Functional\Spryker\Zed\Country;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
@@ -22,11 +20,6 @@ class CountryFacadeTest extends AbstractFunctionalTest
 {
 
     const ISO2_CODE = 'qx';
-
-    /**
-     * @var Locator|AutoCompletion
-     */
-    protected $locator;
 
     /**
      * @var CountryFacade

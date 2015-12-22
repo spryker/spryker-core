@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Locator;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Spryker\Zed\Oms\OmsConfig;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
@@ -24,6 +23,11 @@ use Spryker\Zed\Sales\Business\SalesFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
@@ -48,15 +52,17 @@ class SalesFacadeTest extends Test
     protected function setUp()
     {
         parent::setUp();
-        $locator = Locator::getInstance();
 
-        $countryFacadeMock = $this->getMock('Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface', ['getIdCountryByIso2Code']);
+        $countryFacadeMock = $this->getMock(SalesToCountryInterface::class, ['getIdCountryByIso2Code']);
         $countryFacadeMock->method('getIdCountryByIso2Code')
             ->will($this->returnValue(1));
 
         $omsOrderProcessEntity = $this->getProcessEntity();
 
-        $omsFacadeMock = $this->getMock('Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface', ['selectProcess', 'getInitialStateEntity', 'getProcessEntity']);
+        $omsFacadeMock = $this->getMock(
+            SalesToOmsInterface::class,
+            ['selectProcess', 'getInitialStateEntity', 'getProcessEntity', 'getManualEvents', 'getItemsWithFlag']
+        );
         $omsFacadeMock->method('selectProcess')
             ->will($this->returnValue('CheckoutTest01'));
 
@@ -74,9 +80,9 @@ class SalesFacadeTest extends Test
         $sequenceNumberFacade = new SequenceNumberFacade();
 
         $container = new Container();
-        $container[SalesDependencyProvider::FACADE_COUNTRY] = $countryFacadeMock;
-        $container[SalesDependencyProvider::FACADE_OMS] = $omsFacadeMock;
-        $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = $sequenceNumberFacade;
+        $container[SalesDependencyProvider::FACADE_COUNTRY] = new SalesToCountryBridge($countryFacadeMock);
+        $container[SalesDependencyProvider::FACADE_OMS] = new SalesToOmsBridge($omsFacadeMock);
+        $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
 
         $this->salesFacade = new SalesFacade();
         $this->salesFacade->setQueryContainer(new SalesQueryContainer());

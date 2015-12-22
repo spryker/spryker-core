@@ -11,12 +11,12 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Shared\Config;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\DiscountConfig;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -33,12 +33,12 @@ class CalculatorTest extends Test
      */
     public function testCalculationWithoutAnyDiscountShouldNotReturnMatchingDiscounts()
     {
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
         $order = $this->getCalculableContainerWithTwoItems();
 
-        $result = $calculator->calculate([], $order, $settings, new Distributor(Locator::getInstance()));
+        $result = $calculator->calculate([], $order, $settings, new Distributor());
 
         $this->assertEquals(0, count($result));
     }
@@ -58,7 +58,7 @@ class CalculatorTest extends Test
             true
         );
 
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
         $calculableContainer = $this->getCalculableContainerWithTwoItems();
@@ -67,7 +67,7 @@ class CalculatorTest extends Test
             $discountCollection,
             $calculableContainer,
             $settings,
-            new Distributor(Locator::getInstance())
+            new Distributor()
         );
 
         $this->assertEquals(1, count($result));
@@ -96,7 +96,7 @@ class CalculatorTest extends Test
             false
         );
 
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
 
         $calculator = $this->getCalculator();
 
@@ -105,7 +105,7 @@ class CalculatorTest extends Test
             $discountCollection,
             $order,
             $settings,
-            new Distributor(Locator::getInstance())
+            new Distributor()
         );
         $this->assertEquals(2, count($result));
     }
@@ -141,7 +141,7 @@ class CalculatorTest extends Test
             false
         );
 
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
         $order = $this->getCalculableContainerWithTwoItems();
@@ -149,7 +149,7 @@ class CalculatorTest extends Test
             $discountCollection,
             $order,
             $settings,
-            new Distributor(Locator::getInstance())
+            new Distributor()
         );
         $this->assertEquals(2, count($result));
     }
@@ -193,7 +193,7 @@ class CalculatorTest extends Test
             false
         );
 
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
         $order = $this->getCalculableContainerWithTwoItems();
@@ -201,7 +201,7 @@ class CalculatorTest extends Test
             $discountCollection,
             $order,
             $settings,
-            new Distributor(Locator::getInstance())
+            new Distributor()
         );
         $this->assertEquals(2, count($result));
     }
@@ -245,11 +245,11 @@ class CalculatorTest extends Test
             false
         );
 
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
         $order = $this->getCalculableContainerWithTwoItems();
-        $result = $calculator->calculate($discountCollection, $order, $settings, new Distributor(Locator::getInstance()));
+        $result = $calculator->calculate($discountCollection, $order, $settings, new Distributor());
         $this->assertEquals(3, count($result));
     }
 
@@ -306,12 +306,11 @@ class CalculatorTest extends Test
      */
     protected function getCalculator()
     {
-        $locator = Locator::getInstance();
-        $settings = new DiscountConfig(Config::getInstance(), $locator);
+        $settings = new DiscountConfig();
         $collectorResolver = new CollectorResolver($settings);
 
-        $messengerFacade = $locator->Messenger()->facade();
-        $calculator = new Calculator($collectorResolver, $messengerFacade);
+        $messengerFacade = new MessengerFacade();
+        $calculator = new Calculator($collectorResolver, new DiscountToMessengerBridge($messengerFacade));
 
         return $calculator;
     }

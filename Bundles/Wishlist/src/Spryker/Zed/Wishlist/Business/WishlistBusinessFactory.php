@@ -20,9 +20,11 @@ use Spryker\Zed\Wishlist\Business\Operator\Increase;
 use Spryker\Zed\Wishlist\Business\Operator\Remove;
 use Spryker\Zed\Wishlist\Business\Operator\Decrease;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
+use Spryker\Zed\Wishlist\WishlistConfig;
 
 /**
  * @method WishlistQueryContainer getQueryContainer()
+ * @method WishlistConfig getConfig()
  */
 class WishlistBusinessFactory extends AbstractBusinessFactory
 {

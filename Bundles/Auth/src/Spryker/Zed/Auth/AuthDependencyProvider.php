@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Auth;
 
+use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
@@ -15,6 +16,7 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_USER = 'facade user';
     const PASSWORD_RESET_SENDER = 'Password reset sender';
+    const CLIENT_SESSION = 'session client';
 
     /**
      * @param Container $container
@@ -24,7 +26,7 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_USER] = function (Container $container) {
-            return $container->getLocator()->user()->facade();
+            return new AuthToUserBridge($container->getLocator()->user()->facade());
         };
 
         return $container;
@@ -38,11 +40,15 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::FACADE_USER] = function (Container $container) {
-            return $container->getLocator()->user()->facade();
+            return new AuthToUserBridge($container->getLocator()->user()->facade());
         };
 
         $container[self::PASSWORD_RESET_SENDER] = function (Container $container) {
             return $this->getPasswordResetNotificationSender($container);
+        };
+
+        $container[self::CLIENT_SESSION] = function (Container $container) {
+            return $container->getLocator()->session()->client();
         };
 
         return $container;

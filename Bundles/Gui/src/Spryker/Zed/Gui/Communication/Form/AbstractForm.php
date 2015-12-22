@@ -7,9 +7,7 @@
 namespace Spryker\Zed\Gui\Communication\Form;
 
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormErrorIterator;
@@ -154,16 +152,6 @@ abstract class AbstractForm
     protected function getDefaultDataType()
     {
         return $this->defaultDataType;
-    }
-
-    /**
-     * @deprecated use AbstractFormType instead
-     *
-     * @return AutoCompletion
-     */
-    protected function getLocator()
-    {
-        return Locator::getInstance();
     }
 
     /**

@@ -52,16 +52,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Pass the facade via DI.
-     *
-     * @return DiscountFacade
-     */
-    public function getDiscountFacade()
-    {
-        return $this->getLocator()->discount()->facade();
-    }
-
-    /**
      * @return VoucherPoolCategoryTable
      */
     public function createPoolCategoriesTable()

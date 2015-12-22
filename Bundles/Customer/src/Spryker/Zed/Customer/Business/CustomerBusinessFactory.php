@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Customer\Business;
 
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\Address;
@@ -16,9 +17,11 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 
 /**
  * @method CustomerConfig getConfig()
+ * @method CustomerQueryContainer getQueryContainer()
  */
 class CustomerBusinessFactory extends AbstractBusinessFactory
 {
@@ -28,9 +31,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createQueryContainer()
     {
-        return $this->getLocator()
-            ->customer()
-            ->queryContainer();
+        return $this->getQueryContainer();
     }
 
     /**
@@ -75,9 +76,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCountryFacade()
     {
-        return $this->getLocator()
-            ->country()
-            ->facade();
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY);
     }
 
     /**
@@ -85,9 +84,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     protected function createLocaleFacade()
     {
-        return $this->getLocator()
-            ->locale()
-            ->facade();
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_LOCALE);
     }
 
     /**
@@ -102,7 +99,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SequenceNumberFacade
+     * @return CustomerToSequenceNumberInterface
      */
     protected function createSequenceNumberFacade()
     {

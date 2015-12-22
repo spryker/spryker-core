@@ -14,7 +14,7 @@ class ClientMethodTagBuilder extends AbstractSingleFileMethodTagBuilder
     const METHOD_STRING_PATTERN = '@method {{className}} client()';
     const APPLICATION_CLIENT = 'Client';
     const FILE_NAME_SUFFIX = 'Client.php';
-    const PATH_PATTERN = 'Service/';
+    const PATH_PATTERN = '/';
 
     /**
      * @param OptionsResolver $resolver

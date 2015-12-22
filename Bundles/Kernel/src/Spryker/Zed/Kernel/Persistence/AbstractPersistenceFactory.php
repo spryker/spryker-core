@@ -9,7 +9,6 @@ namespace Spryker\Zed\Kernel\Persistence;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface;
 
 abstract class AbstractPersistenceFactory extends AbstractFactory implements PersistenceFactoryInterface
 {

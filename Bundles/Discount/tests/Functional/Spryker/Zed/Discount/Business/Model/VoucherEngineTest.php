@@ -11,14 +11,14 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Shared\Config;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
+use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -43,12 +43,12 @@ class VoucherEngineTest extends Test
      */
     public function testCalculationWithoutAnyDiscountShouldNotReturnMatchingDiscounts()
     {
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
         $order = $this->getOrderWithTwoItems();
 
-        $result = $calculator->calculate([], $order, $settings, new Distributor(Locator::getInstance()));
+        $result = $calculator->calculate([], $order, $settings, new Distributor());
 
         $this->assertEquals(0, count($result));
     }
@@ -67,12 +67,12 @@ class VoucherEngineTest extends Test
             true
         );
 
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
         $order = $this->getOrderWithTwoItems();
 
-        $result = $calculator->calculate([$discount], $order, $settings, new Distributor(Locator::getInstance()));
+        $result = $calculator->calculate([$discount], $order, $settings, new Distributor());
 
         $this->assertEquals(1, count($result));
     }
@@ -100,11 +100,11 @@ class VoucherEngineTest extends Test
             false
         );
 
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
         $order = $this->getOrderWithTwoItems();
-        $result = $calculator->calculate([$discount1, $discount2], $order, $settings, new Distributor(Locator::getInstance()));
+        $result = $calculator->calculate([$discount1, $discount2], $order, $settings, new Distributor());
         $this->assertEquals(2, count($result));
     }
 
@@ -140,12 +140,12 @@ class VoucherEngineTest extends Test
             false
         );
 
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
         $order = $this->getOrderWithTwoItems();
         $result = $calculator->calculate(
-            [$discount1, $discount2, $discount3], $order, $settings, new Distributor(Locator::getInstance())
+            [$discount1, $discount2, $discount3], $order, $settings, new Distributor()
         );
         $this->assertEquals(2, count($result));
     }
@@ -191,11 +191,11 @@ class VoucherEngineTest extends Test
             false
         );
 
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
         $order = $this->getOrderWithTwoItems();
-        $result = $calculator->calculate([$discount1, $discount2, $discount3, $discount4], $order, $settings, new Distributor(Locator::getInstance()));
+        $result = $calculator->calculate([$discount1, $discount2, $discount3, $discount4], $order, $settings, new Distributor());
         $this->assertEquals(2, count($result));
     }
 
@@ -249,11 +249,11 @@ class VoucherEngineTest extends Test
             true
         );
 
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $settings = new DiscountConfig();
         $calculator = $this->getCalculator();
 
         $order = $this->getOrderWithTwoItems();
-        $result = $calculator->calculate([$discount1, $discount2, $discount3, $discount4, $discount5], $order, $settings, new Distributor(Locator::getInstance()));
+        $result = $calculator->calculate([$discount1, $discount2, $discount3, $discount4, $discount5], $order, $settings, new Distributor());
         $this->assertEquals(3, count($result));
     }
 
@@ -318,12 +318,11 @@ class VoucherEngineTest extends Test
      */
     protected function getCalculator()
     {
-        $locator = Locator::getInstance();
-        $settings = new DiscountConfig(Config::getInstance(), $locator);
+        $settings = new DiscountConfig();
         $collectorResolver = new CollectorResolver($settings);
 
-        $messengerFacade = $locator->Messenger()->facade();
-        $calculator = new Calculator($collectorResolver, $messengerFacade);
+        $messengerFacade = new MessengerFacade();
+        $calculator = new Calculator($collectorResolver, new DiscountToMessengerBridge($messengerFacade));
 
         return $calculator;
     }

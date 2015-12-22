@@ -9,13 +9,11 @@ namespace Spryker\Zed\Sales\Business;
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
-use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Sales\SalesDependencyProvider;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
@@ -69,9 +67,7 @@ class SalesFacade extends AbstractFacade
      */
     public function getOrderItemManualEvents($idOrderItem)
     {
-        return $this->getFactory()
-            ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
-            ->getManualEvents($idOrderItem);
+        return $this->getFactory()->getFacadeOms()->getManualEvents($idOrderItem);
     }
 
     /**
@@ -84,20 +80,6 @@ class SalesFacade extends AbstractFacade
         return $this->getFactory()
             ->createOrderManager()
             ->getOrderByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
-     * @param int $idOrderItem
-     *
-     * @deprecated
-     *
-     * @return OrderItemsTransfer
-     */
-    public function getOrderItemById($idOrderItem)
-    {
-        return $this->getFactory()
-            ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
-            ->getOrderItemById($idOrderItem);
     }
 
     /**
@@ -205,8 +187,7 @@ class SalesFacade extends AbstractFacade
      */
     public function getRefunds($idSalesOrder)
     {
-        return $this->getFactory()
-            ->getProvidedDependency(SalesDependencyProvider::FACADE_REFUND)
+        return $this->getFactory()->getFacadeRefund()
             ->getRefundsByIdSalesOrder($idSalesOrder);
     }
 

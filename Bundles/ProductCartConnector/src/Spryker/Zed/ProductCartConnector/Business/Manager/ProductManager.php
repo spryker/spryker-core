@@ -8,19 +8,20 @@ namespace Spryker\Zed\ProductCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 class ProductManager implements ProductManagerInterface
 {
 
     /**
-     * @var ProductFacade
+     * @var ProductCartConnectorToProductInterface
      */
     private $productFacade;
 
     /**
-     * @param ProductFacade $productFacade
+     * @param ProductCartConnectorToProductInterface $productFacade
      */
-    public function __construct(ProductFacade $productFacade)
+    public function __construct(ProductCartConnectorToProductInterface $productFacade)
     {
         $this->productFacade = $productFacade;
     }

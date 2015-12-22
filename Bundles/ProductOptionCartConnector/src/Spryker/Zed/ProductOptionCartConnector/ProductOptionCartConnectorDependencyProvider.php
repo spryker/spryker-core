@@ -7,13 +7,12 @@ namespace Spryker\Zed\ProductOptionCartConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionBridge;
 
 class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
-
-    const FACADE_PRODUCT_OPTION_CART_CONNECTOR = 'FACADE_PRODUCT_OPTION_CART_CONNECTOR';
 
     /**
      * @param Container $container
@@ -23,21 +22,7 @@ class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDepende
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::FACADE_PRODUCT_OPTION] = function (Container $container) {
-            return $container->getLocator()->productOption()->facade();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param Container $container
-     *
-     * @return Container
-     */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        $container[self::FACADE_PRODUCT_OPTION_CART_CONNECTOR] = function (Container $container) {
-            return $container->getLocator()->productOptionCartConnector()->facade();
+            return new ProductOptionCartConnectorToProductOptionBridge($container->getLocator()->productOption()->facade());
         };
 
         return $container;

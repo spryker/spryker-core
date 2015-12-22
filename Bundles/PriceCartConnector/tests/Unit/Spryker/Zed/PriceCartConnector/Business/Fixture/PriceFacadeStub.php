@@ -6,8 +6,6 @@
 
 namespace Unit\Spryker\Zed\PriceCartConnector\Business\Fixture;
 
-use Spryker\Shared\Kernel\Factory\FactoryInterface;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Price\Business\PriceFacade;
 
 class PriceFacadeStub extends PriceFacade
@@ -16,10 +14,6 @@ class PriceFacadeStub extends PriceFacade
     private $prices = [];
 
     private $validities = [];
-
-    public function __construct(FactoryInterface $factory = null, Locator $locator = null)
-    {
-    }
 
     public function getPriceBySku($sku, $priceType = null)
     {

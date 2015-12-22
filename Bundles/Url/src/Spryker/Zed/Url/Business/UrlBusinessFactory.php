@@ -9,9 +9,11 @@ namespace Spryker\Zed\Url\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 use Spryker\Zed\Url\UrlDependencyProvider;
+use Spryker\Zed\Url\UrlConfig;
 
 /**
  * @method UrlQueryContainerInterface getQueryContainer()
+ * @method UrlConfig getConfig()
  */
 class UrlBusinessFactory extends AbstractBusinessFactory
 {

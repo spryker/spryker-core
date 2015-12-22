@@ -11,9 +11,11 @@ use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
+use Spryker\Zed\Shipment\ShipmentConfig;
 
 /**
  * @method ShipmentQueryContainerInterface getQueryContainer()
+ * @method ShipmentConfig getConfig()
  */
 class ShipmentBusinessFactory extends AbstractBusinessFactory
 {

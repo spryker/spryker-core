@@ -8,7 +8,11 @@ namespace Spryker\Zed\SalesCheckoutConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesCheckoutConnector\SalesCheckoutConnectorDependencyProvider;
+use Spryker\Zed\SalesCheckoutConnector\SalesCheckoutConnectorConfig;
 
+/**
+ * @method SalesCheckoutConnectorConfig getConfig()
+ */
 class SalesCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 

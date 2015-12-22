@@ -8,15 +8,18 @@ namespace Spryker\Zed\Customer\Communication;
 
 use Spryker\Zed\Customer\Communication\Form\AddressForm;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
 use Spryker\Zed\Customer\Communication\Table\CustomerTable;
 use Symfony\Component\Form\FormInterface;
+use Spryker\Zed\Customer\CustomerConfig;
 
 /**
- * @method CustomerQueryContainerInterface getQueryContainer()
+ * @method CustomerQueryContainer getQueryContainer()
+ * @method CustomerConfig getConfig()
  */
 class CustomerCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -26,9 +29,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createQueryContainer()
     {
-        return $this->getLocator()
-            ->customer()
-            ->queryContainer();
+        return $this->getQueryContainer();
     }
 
     /**
@@ -69,9 +70,9 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     public function createAddressForm()
     {
         $customerAddressForm = new AddressForm(
-                $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY),
-                $this->getQueryContainer()
-            );
+            $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY),
+            $this->getQueryContainer()
+        );
 
         return $this->createForm($customerAddressForm);
     }

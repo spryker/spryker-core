@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\DiscountCheckoutConnector;
 
+use Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -27,7 +28,7 @@ class DiscountCheckoutConnectorDependencyProvider extends AbstractBundleDependen
         };
 
         $container[self::FACADE_DISCOUNT] = function (Container $container) {
-            return $container->getLocator()->discount()->facade();
+            return new DiscountCheckoutConnectorToDiscountBridge($container->getLocator()->discount()->facade());
         };
 
         return $container;

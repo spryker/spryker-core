@@ -18,7 +18,6 @@
     <exclude-pattern>*/Fixtures/*</exclude-pattern>
     <exclude-pattern>*/Propel/DE/Migration/*</exclude-pattern>
     <exclude-pattern>*/data/DE/cache/*</exclude-pattern>
-    <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*.xml</exclude-pattern>
     <exclude-pattern>*.css</exclude-pattern>
     <exclude-pattern>*.js</exclude-pattern>
@@ -40,6 +39,7 @@
     <rule ref="Squiz.Commenting.DocCommentAlignment"/>
 
     <rule ref="PEAR.ControlStructures.ControlSignature"/>
+
     <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
     <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
 

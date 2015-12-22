@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfigInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
@@ -39,7 +39,7 @@ class VoucherEngine
     protected $queryContainer;
 
     /**
-     * @var MessengerFacade
+     * @var DiscountToMessengerInterface
      */
     protected $messengerFacade;
 
@@ -51,13 +51,13 @@ class VoucherEngine
     /**
      * @param DiscountConfigInterface $settings
      * @param DiscountQueryContainer $queryContainer
-     * @param MessengerFacade $messengerFacade
+     * @param DiscountToMessengerInterface $messengerFacade
      * @param ConnectionInterface $connection
      */
     public function __construct(
         DiscountConfigInterface $settings,
         DiscountQueryContainer $queryContainer,
-        MessengerFacade $messengerFacade,
+        DiscountToMessengerInterface $messengerFacade,
         ConnectionInterface $connection
     ) {
         $this->settings = $settings;

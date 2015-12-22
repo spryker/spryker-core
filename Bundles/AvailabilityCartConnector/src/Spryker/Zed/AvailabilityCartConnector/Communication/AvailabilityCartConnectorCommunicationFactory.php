@@ -6,15 +6,15 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Communication;
 
+use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\AvailabilityCartConnector\AvailabilityCartConnectorDependencyProvider;
-use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityToCartConnectorFacadeInterface as AvailabilityFacade;
 
 class AvailabilityCartConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return AvailabilityFacade
+     * @return AvailabilityCartConnectorToAvailabilityInterface
      */
     public function getAvailabilityFacade()
     {

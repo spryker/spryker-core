@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Gui\Communication\Form\AbstractForm;
-use Spryker\Zed\Url\Business\UrlFacade;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
@@ -27,7 +27,7 @@ class CmsRedirectForm extends AbstractForm
     protected $urlByIdQuery;
 
     /**
-     * @var UrlFacade
+     * @var CmsToUrlInterface
      */
     protected $urlFacade;
 
@@ -47,10 +47,10 @@ class CmsRedirectForm extends AbstractForm
 
     /**
      * @param SpyUrlQuery $urlByIdQuery
-     * @param UrlFacade $urlFacade
+     * @param CmsToUrlInterface $urlFacade
      * @param string $formType
      */
-    public function __construct(SpyUrlQuery $urlByIdQuery, UrlFacade $urlFacade, $formType)
+    public function __construct(SpyUrlQuery $urlByIdQuery, CmsToUrlInterface $urlFacade, $formType)
     {
         $this->urlByIdQuery = $urlByIdQuery;
         $this->urlFacade = $urlFacade;

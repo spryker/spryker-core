@@ -12,6 +12,7 @@ use Spryker\Zed\Wishlist\Business\Operator\Add;
 use Spryker\Zed\Wishlist\Business\Operator\Decrease;
 use Spryker\Zed\Wishlist\Business\Operator\Increase;
 use Spryker\Zed\Wishlist\Business\Operator\Remove;
+use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductBridge;
 
 class WishlistDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -28,7 +29,7 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->facade();
+            return new WishlistToProductBridge($container->getLocator()->product()->facade());
         };
 
         $container[self::PRE_SAVE_PLUGINS] = function (Container $container) {

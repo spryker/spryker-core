@@ -10,6 +10,8 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Url\Business\UrlFacade;
 
+use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
+
 class ProductTable extends AbstractTable
 {
 
@@ -21,7 +23,7 @@ class ProductTable extends AbstractTable
     protected $productQuery;
 
     /**
-     * @var UrlFacade
+     * @var ProductToUrlInterface
      */
     protected $urlFacade;
 
@@ -37,13 +39,13 @@ class ProductTable extends AbstractTable
 
     /**
      * @param SpyProductAbstractQuery $productQuery
-     * @param UrlFacade $urlFacade
+     * @param ProductToUrlInterface $urlFacade
      * @param LocaleTransfer $localeTransfer
      * @param $yvesUrl
      */
     public function __construct(
         SpyProductAbstractQuery $productQuery,
-        UrlFacade $urlFacade,
+        ProductToUrlInterface $urlFacade,
         LocaleTransfer $localeTransfer,
         $yvesUrl
     ) {

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use Spryker\Zed\Cms\Business\Page\PageManagerInterface;
@@ -49,11 +48,6 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     protected $pageManager;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var ConnectionInterface
      */
     protected $connection;
@@ -63,16 +57,19 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @param CmsQueryContainerInterface $cmsQueryContainer
      * @param TemplateManagerInterface $templateManager
      * @param PageManagerInterface $pageManager
-     * @param LocatorLocatorInterface $locator
      * @param ConnectionInterface $connection
      */
-    public function __construct(CmsToGlossaryInterface $glossaryFacade, CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, PageManagerInterface $pageManager, LocatorLocatorInterface $locator, ConnectionInterface $connection)
-    {
+    public function __construct(
+        CmsToGlossaryInterface $glossaryFacade,
+        CmsQueryContainerInterface $cmsQueryContainer,
+        TemplateManagerInterface $templateManager,
+        PageManagerInterface $pageManager,
+        ConnectionInterface $connection
+    ) {
         $this->glossaryFacade = $glossaryFacade;
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->templateManager = $templateManager;
         $this->pageManager = $pageManager;
-        $this->locator = $locator;
         $this->connection = $connection;
     }
 

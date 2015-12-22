@@ -5,8 +5,6 @@
 
 namespace Unit\Spryker\Zed\Propel;
 
-use Spryker\Shared\Config;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Propel\PropelConfig;
 
 class PropelConfigTest extends \PHPUnit_Framework_TestCase
@@ -17,15 +15,7 @@ class PropelConfigTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfig()
     {
-        return new PropelConfig(Config::getInstance(), $this->getLocator());
-    }
-
-    /**
-     * @return Locator
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
+        return new PropelConfig();
     }
 
     /**

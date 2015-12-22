@@ -26,7 +26,7 @@ class SearchFactory extends AbstractFactory
      */
     protected function createProviderIndexClientProvider()
     {
-        return new IndexClientProvider($this->getLocator());
+        return new IndexClientProvider();
     }
 
 }

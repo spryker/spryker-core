@@ -12,9 +12,11 @@ use Spryker\Zed\Glossary\Communication\Table\TranslationTable;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use Spryker\Zed\Glossary\GlossaryConfig;
 
 /**
  * @method GlossaryQueryContainerInterface getQueryContainer()
+ * @method GlossaryConfig getConfig()
  */
 class GlossaryCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -25,16 +27,6 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(GlossaryDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return GlossaryFacade
-     */
-    public function createGlossaryFacade()
-    {
-        return $this->getLocator()
-            ->glossary()
-            ->facade();
     }
 
     /**
@@ -51,9 +43,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createQueryContainer()
     {
-        return $this->getLocator()
-            ->glossary()
-            ->queryContainer();
+        return $this->getQueryContainer();
     }
 
     /**

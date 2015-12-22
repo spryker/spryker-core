@@ -8,6 +8,8 @@ namespace Spryker\Zed\Refund;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsBridge;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesBridge;
 use Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
 use Symfony\Component\Intl\Exception\NotImplementedException;
 
@@ -29,11 +31,11 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::FACADE_SALES] = function (Container $container) {
-            return $container->getLocator()->sales()->facade();
+            return new RefundToSalesBridge($container->getLocator()->sales()->facade());
         };
 
         $container[static::FACADE_OMS] = function (Container $container) {
-            return $container->getLocator()->oms()->facade();
+            return new RefundToOmsBridge($container->getLocator()->oms()->facade());
         };
 
         $container[static::QUERY_CONTAINER_REFUND] = function (Container $container) {
@@ -60,18 +62,6 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
-        };
-
-        $container[static::FACADE_REFUND] = function (Container $container) {
-            return $container->getLocator()->refund()->facade();
-        };
-
-        $container[self::FACADE_SALES] = function (Container $container) {
-            return $container->getLocator()->sales()->facade();
-        };
-
-        $container[static::FACADE_OMS] = function (Container $container) {
-            return $container->getLocator()->oms()->facade();
         };
 
         return $container;

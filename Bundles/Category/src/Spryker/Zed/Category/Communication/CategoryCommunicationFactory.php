@@ -16,9 +16,11 @@ use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
+use Spryker\Zed\Category\CategoryConfig;
 
 /**
  * @method CategoryQueryContainer getQueryContainer()
+ * @method CategoryConfig getConfig()
  */
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -105,26 +107,6 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
         $locale = $this->getCurrentLocale();
 
         return new CategoryNodeForm($locale);
-    }
-
-    /**
-     * @throws \ErrorException
-     *
-     * @return CategoryFacade
-     */
-    public function createCategoryFacade()
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_CATEGORY);
-    }
-
-    /**
-     * @throws \ErrorException
-     *
-     * @return CategoryQueryContainer
-     */
-    public function createCategoryQueryContainer()
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 
 }

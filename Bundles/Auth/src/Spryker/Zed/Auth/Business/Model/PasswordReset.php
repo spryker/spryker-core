@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\Auth\Business\Model;
 
+use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
 use Orm\Zed\Auth\Persistence\SpyResetPassword;
@@ -26,7 +27,7 @@ class PasswordReset
     private $userPasswordResetNotificationSender;
 
     /**
-     * @var UserFacade
+     * @var AuthToUserBridge
      */
     private $facadeUser;
 
@@ -37,12 +38,12 @@ class PasswordReset
 
     /**
      * @param AuthQueryContainer $authQueryContainer
-     * @param UserFacade $facadeUser
+     * @param AuthToUserBridge $facadeUser
      * @param AuthConfig $authConfig
      */
     public function __construct(
         AuthQueryContainer $authQueryContainer,
-        UserFacade $facadeUser,
+        AuthToUserBridge $facadeUser,
         AuthConfig $authConfig
     ) {
         $this->authQueryContainer = $authQueryContainer;

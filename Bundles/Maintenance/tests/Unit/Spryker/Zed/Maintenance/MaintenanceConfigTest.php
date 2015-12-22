@@ -6,8 +6,6 @@
 
 namespace Unit\Spryker\Zed\Maintenance;
 
-use Spryker\Shared\Config;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Maintenance\MaintenanceConfig;
 
 class MaintenanceConfigTest extends \PHPUnit_Framework_TestCase
@@ -18,15 +16,7 @@ class MaintenanceConfigTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfig()
     {
-        return new MaintenanceConfig(Config::getInstance(), $this->getLocator());
-    }
-
-    /**
-     * @return Locator
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
+        return new MaintenanceConfig();
     }
 
     /**

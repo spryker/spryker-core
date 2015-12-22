@@ -8,6 +8,7 @@ namespace Spryker\Zed\Messenger\Business\Model;
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
+use Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
@@ -20,9 +21,9 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
 
     /**
      * @param SessionInterface $session
-     * @param GlossaryFacade $glossaryFacade
+     * @param MessengerToGlossaryInterface $glossaryFacade
      */
-    public function __construct(SessionInterface $session, GlossaryFacade $glossaryFacade)
+    public function __construct(SessionInterface $session, MessengerToGlossaryInterface $glossaryFacade)
     {
         parent::__construct($glossaryFacade);
         $this->session = $session;

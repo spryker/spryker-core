@@ -8,13 +8,13 @@ namespace Spryker\Zed\Discount\Communication\Plugin\Collector;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 
 /**
- * @method DiscountCommunicationFactory getFactory()
+ * @method DiscountFacade getFacade()
  */
 class OrderExpense extends AbstractDiscountPlugin implements DiscountCollectorPluginInterface
 {
@@ -31,8 +31,7 @@ class OrderExpense extends AbstractDiscountPlugin implements DiscountCollectorPl
         CalculableInterface $container,
         DiscountCollectorTransfer $discountCollectorTransfer
     ) {
-        return $this->getFactory()->getDiscountFacade()
-            ->getDiscountableOrderExpenses($container, $discountCollectorTransfer);
+        return $this->getFacade()->getDiscountableOrderExpenses($container, $discountCollectorTransfer);
     }
 
 }

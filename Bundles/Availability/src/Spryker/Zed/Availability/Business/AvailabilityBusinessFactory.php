@@ -7,14 +7,19 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Spryker\Zed\Availability\Business\Model\Sellable;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
+use Spryker\Zed\Availability\AvailabilityConfig;
+use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 
 /**
- * Class AvailabilityBusinessFactory
+ * @method AvailabilityConfig getConfig()
+ * @method AvailabilityQueryContainer getQueryContainer()
  */
 class AvailabilityBusinessFactory extends AbstractBusinessFactory
 {
@@ -31,7 +36,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AvailabilityToStockFacadeInterface
+     * @return AvailabilityToStockInterface
      */
     protected function getStockFacade()
     {
@@ -39,7 +44,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AvailabilityToOmsFacadeInterface
+     * @return AvailabilityToOmsInterface
      */
     protected function getOmsFacade()
     {

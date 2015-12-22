@@ -107,6 +107,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @param string $itemType
      * @param string $itemEvent
      * @param array $itemIds
      *

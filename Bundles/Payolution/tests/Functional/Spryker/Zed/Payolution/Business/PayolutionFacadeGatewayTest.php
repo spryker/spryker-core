@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Zed\Kernel\Locator;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
@@ -25,6 +23,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
+use Spryker\Zed\Payolution\Business\PayolutionFacade;
 
 /**
  * Note:
@@ -49,6 +48,16 @@ class PayolutionFacadeGatewayTest extends Test
      * @var bool
      */
     private $enableTests = false;
+
+    /**
+     * @var PayolutionFacade
+     */
+    private $payolutionFacade;
+
+    public function setUp()
+    {
+        $this->payolutionFacade = new PayolutionFacade();
+    }
 
     /**
      * Test the saveOrderPayment() method of PayolutionFacade
@@ -88,7 +97,7 @@ class PayolutionFacadeGatewayTest extends Test
         $orderTransfer->setIdSalesOrder($this->orderEntity->getIdSalesOrder());
         $orderTransfer->setPayolutionPayment($paymentTransfer);
 
-        $facade = $this->getLocator()->payolution()->facade();
+        $facade = $this->payolutionFacade;
         $facade->saveOrderPayment($orderTransfer);
 
         $paymentEntity = $this->orderEntity->getSpyPaymentPayolutions()->getFirst();
@@ -139,7 +148,7 @@ class PayolutionFacadeGatewayTest extends Test
             ->setCart($cartTransfer)
             ->setPayolutionPayment($paymentTransfer);
 
-        $facade = $this->getLocator()->payolution()->facade();
+        $facade = $this->payolutionFacade;
         $response = $facade->preCheckPayment($checkoutRequestTransfer);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
@@ -157,7 +166,7 @@ class PayolutionFacadeGatewayTest extends Test
         $this->setBaseTestData();
         $this->setPaymentTestData();
 
-        $facade = $this->getLocator()->payolution()->facade();
+        $facade = $this->payolutionFacade;
         $response = $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
@@ -175,7 +184,7 @@ class PayolutionFacadeGatewayTest extends Test
         $this->setBaseTestData();
         $this->setPaymentTestData();
 
-        $facade = $this->getLocator()->payolution()->facade();
+        $facade = $this->payolutionFacade;
         $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
         /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
@@ -221,7 +230,7 @@ class PayolutionFacadeGatewayTest extends Test
         $this->setBaseTestData();
         $this->setPaymentTestData();
 
-        $facade = $this->getLocator()->payolution()->facade();
+        $facade = $this->payolutionFacade;
         $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
         /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
@@ -255,7 +264,7 @@ class PayolutionFacadeGatewayTest extends Test
         $this->setBaseTestData();
         $this->setPaymentTestData();
 
-        $facade = $this->getLocator()->payolution()->facade();
+        $facade = $this->payolutionFacade;
         $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
         $facade->capturePayment($this->paymentEntity->getIdPaymentPayolution());
 
@@ -338,14 +347,6 @@ class PayolutionFacadeGatewayTest extends Test
             ->setLanguageIso2Code('de')
             ->setCurrencyIso3Code('EUR');
         $this->paymentEntity->save();
-    }
-
-    /**
-     * @return AutoCompletion|Locator
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
     }
 
 }

@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Library\Communication\Response;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
 use Spryker\Shared\ZedRequest\Client\RequestInterface;
-use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -55,12 +53,10 @@ class TransferServer
     private $repeater;
 
     /**
-     * @param LocatorLocatorInterface $locator
      * @param Repeater $repeater
      */
-    private function __construct(LocatorLocatorInterface $locator, Repeater $repeater)
+    private function __construct(Repeater $repeater)
     {
-        $this->locator = $locator;
         $this->repeater = $repeater;
     }
 
@@ -75,14 +71,11 @@ class TransferServer
             return self::$instance;
         }
 
-        /** @var LocatorLocatorInterface|AutoCompletion $locator */
-        $locator = Locator::getInstance();
-
         if ($repeater === null) {
             $repeater = new Repeater();
         }
 
-        self::$instance = new static($locator, $repeater);
+        self::$instance = new static($repeater);
 
         return self::$instance;
     }

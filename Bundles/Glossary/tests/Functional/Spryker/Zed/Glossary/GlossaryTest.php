@@ -6,10 +6,9 @@
 
 namespace Functional\Spryker\Zed\Glossary;
 
-use Generated\Zed\Ide\AutoCompletion;
+use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerBridge;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Generated\Shared\Transfer\TranslationTransfer;
@@ -55,18 +54,11 @@ class GlossaryTest extends AbstractFunctionalTest
     private $touchQueryContainer;
 
     /**
-     * @var AutoCompletion
-     */
-    private $locator;
-
-    /**
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
-
-        $this->locator = Locator::getInstance();
 
         $this->localeFacade = $this->getMock(GlossaryToLocaleInterface::class, ['getContainer', 'getQueryContainer', 'getLocale', 'getCurrentLocale', 'getAvailableLocales']);
         $this->touchFacade = $this->getMock(GlossaryToTouchInterface::class, ['getContainer', 'getQueryContainer', 'touchActive', 'touchDeleted']);
@@ -286,7 +278,7 @@ class GlossaryTest extends AbstractFunctionalTest
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeId);
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
 
-        $transferTranslation = new TranslationTransfer($this->locator);
+        $transferTranslation = new TranslationTransfer();
         $transferTranslation->setFkGlossaryKey($keyId);
         $transferTranslation->setFkLocale($localeId);
         $transferTranslation->setValue('some Value');
@@ -364,8 +356,8 @@ class GlossaryTest extends AbstractFunctionalTest
             return $this->localeFacade;
         };
 
-        $container[GlossaryDependencyProvider::MESSAGES] = function (Container $container) {
-            return $container->getLocator()->messenger()->facade();
+        $container[GlossaryDependencyProvider::FACADE_MESSENGER] = function (Container $container) {
+            return new GlossaryToMessengerBridge($container->getLocator()->messenger()->facade());
         };
 
         $touchContainer = new Container();

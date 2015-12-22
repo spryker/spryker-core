@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
 use Unit\Spryker\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
 
 /**
@@ -37,7 +38,8 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $item->setId(123);
         $itemCollection->addItem($item);
 
-        $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');
+        $priceCartToPriceBridge = new PriceCartToPriceBridge($priceFacadeStub);
+        $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice');
 
         $modifiedItems = $priceManager->addGrossPriceToItems($itemCollection);
 
@@ -64,7 +66,8 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
         $item->setSku(123);
         $itemCollection->addItem($item);
 
-        $priceManager = new PriceManager($priceFacadeStub, 'grossPrice');
+        $priceCartToPriceBridge = new PriceCartToPriceBridge($priceFacadeStub);
+        $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice');
         $priceManager->addGrossPriceToItems($itemCollection);
     }
 
@@ -73,7 +76,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function createPriceFacadeStub()
     {
-        return new PriceFacadeStub(null, null);
+        return new PriceFacadeStub();
     }
 
 }

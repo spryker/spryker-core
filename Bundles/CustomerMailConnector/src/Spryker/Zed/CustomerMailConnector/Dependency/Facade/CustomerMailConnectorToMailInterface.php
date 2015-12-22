@@ -3,6 +3,7 @@
 namespace Spryker\Zed\CustomerMailConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\SendMailResponsesTransfer;
 
 interface CustomerMailConnectorToMailInterface
 {
@@ -10,8 +11,15 @@ interface CustomerMailConnectorToMailInterface
     /**
      * @param MailTransfer $mailTransfer
      *
-     * @return array
+     * @return SendMailResponsesTransfer
      */
     public function sendMail(MailTransfer $mailTransfer);
+
+    /**
+     * @param SendMailResponsesTransfer $mailResponses
+     *
+     * @return bool
+     */
+    public function isMailSent(SendMailResponsesTransfer $mailResponses);
 
 }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductSearch\Persistence;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -60,13 +60,13 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
             ->addSelectColumn(SpyProductLocalizedAttributesTableMap::COL_NAME);
         $query
             ->useSpyProductAbstractQuery()
-            ->useSpyLocalizedAbstractProductAttributesQuery()
+            ->useSpyProductAbstractLocalizedAttributesQuery()
             ->filterByFkLocale($locale->getIdLocale())
             ->endUse()
             ->endUse()
             ->addAsColumn(
                 'abstract_attributes',
-                SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES
+                SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES
             );
 
         return $query;

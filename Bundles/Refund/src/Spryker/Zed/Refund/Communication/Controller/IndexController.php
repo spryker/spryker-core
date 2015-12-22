@@ -69,7 +69,7 @@ class IndexController extends AbstractController
         $expenses = $this->getFacade()->getRefundableExpenses($idOrder);
 
         $form = $this->getFactory()
-            ->createRefundForm($orderTransfer);
+            ->createRefundForm($orderTransfer, $this->getFacade());
 
         $form->handleRequest();
 

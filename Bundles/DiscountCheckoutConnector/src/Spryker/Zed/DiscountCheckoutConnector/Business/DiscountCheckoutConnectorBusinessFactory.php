@@ -8,12 +8,17 @@ namespace Spryker\Zed\DiscountCheckoutConnector\Business;
 
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydrator;
+use Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydratorInterface;
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaverInterface;
 use Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorDependencyProvider;
+use Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorConfig;
 
+/**
+ * @method DiscountCheckoutConnectorConfig getConfig()
+ */
 class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
@@ -37,7 +42,7 @@ class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountFacade
+     * @return DiscountCheckoutConnectorToDiscountInterface
      */
     public function createDiscountFacade()
     {

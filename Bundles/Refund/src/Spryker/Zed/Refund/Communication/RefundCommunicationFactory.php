@@ -27,15 +27,15 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param OrderTransfer $orderTransfer
+     * @param RefundFacade $facadeRefund
      *
      * @return RefundForm
      */
-    public function createRefundForm(OrderTransfer $orderTransfer)
+    public function createRefundForm(OrderTransfer $orderTransfer, RefundFacade $facadeRefund)
     {
-        $refundFacade = $this->getRefundFacade();
         $paymentDataPlugin = $this->getConfig()->getPaymentDataPlugin();
 
-        return new RefundForm($refundFacade, $orderTransfer, $paymentDataPlugin);
+        return new RefundForm($facadeRefund, $orderTransfer, $paymentDataPlugin);
     }
 
     /**
@@ -58,14 +58,6 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesQueryContainer()
     {
         return $this->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_SALES);
-    }
-
-    /**
-     * @return RefundFacade
-     */
-    protected function getRefundFacade()
-    {
-        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_REFUND);
     }
 
     /**

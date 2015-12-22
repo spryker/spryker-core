@@ -7,14 +7,16 @@
 namespace Spryker\Zed\TaxProductConnector\Business;
 
 use Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
+use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 use Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface;
 use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
+use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**
  * @method TaxProductConnectorConfig getConfig()
+ * @method TaxProductConnectorQueryContainer getQueryContainer()
  */
 class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -31,19 +33,11 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TaxProductConnectorQueryContainerInterface
-     */
-    protected function getQueryContainer()
-    {
-        return $this->getLocator()->taxProductConnector()->queryContainer();
-    }
-
-    /**
      * @return TaxProductConnectorToProductInterface
      */
     protected function getProductFacade()
     {
-        return $this->getLocator()->product()->facade();
+        return $this->getProvidedDependency(TaxProductConnectorDependencyProvider::FACADE_PRODUCT);
     }
 
 }

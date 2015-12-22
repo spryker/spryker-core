@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Nopayment\Communication\Plugin\Command;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Nopayment\Business\NopaymentFacade;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -15,6 +16,7 @@ use Spryker\Zed\Nopayment\Communication\NopaymentCommunicationFactory;
 
 /**
  * @method NopaymentCommunicationFactory getFactory()
+ * @method NopaymentFacade getFacade()
  */
 class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
@@ -28,7 +30,7 @@ class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInt
      */
     public function run(array $orderItems, SpySalesOrder $order, ReadOnlyArrayObject $data)
     {
-        return $this->getFactory()->createFacade()->setAsPaid($orderItems);
+        return $this->getFacade()->setAsPaid($orderItems);
     }
 
 }

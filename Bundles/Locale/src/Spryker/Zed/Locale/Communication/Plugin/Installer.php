@@ -7,10 +7,12 @@
 namespace Spryker\Zed\Locale\Communication\Plugin;
 
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Communication\LocaleCommunicationFactory;
 
 /**
  * @method LocaleCommunicationFactory getFactory()
+ * @method LocaleFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin
 {
@@ -20,7 +22,7 @@ class Installer extends AbstractInstallerPlugin
      */
     public function install()
     {
-        $this->getFactory()->getInstallerFacade()->install($this->messenger);
+        $this->getFacade()->install($this->messenger);
     }
 
 }

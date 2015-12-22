@@ -6,15 +6,8 @@
 
 namespace Spryker\Shared\Kernel;
 
-use Spryker\Shared\Kernel\Factory\FactoryInterface;
-
 abstract class AbstractClientProvider
 {
-
-    /**
-     * @var LocatorLocatorInterface
-     */
-    protected $locator;
 
     /**
      * @var mixed
@@ -33,14 +26,6 @@ abstract class AbstractClientProvider
         }
 
         return $this->client;
-    }
-
-    /**
-     * @param LocatorLocatorInterface $locator
-     */
-    public function __construct(LocatorLocatorInterface $locator)
-    {
-        $this->locator = $locator;
     }
 
     /**

@@ -12,10 +12,10 @@ interface DiscountCheckoutConnectorToDiscountInterface
 {
 
     /**
-     * @param string $displayName
+     * @param array|string[] $codes
      *
-     * @return SpyDiscount
+     * @return bool
      */
-    public function getDiscountByDisplayName($displayName);
+    public function useVoucherCodes(array $codes);
 
 }

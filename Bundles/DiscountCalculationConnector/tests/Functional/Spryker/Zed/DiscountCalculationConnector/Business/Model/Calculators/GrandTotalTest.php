@@ -11,17 +11,17 @@ use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
-use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationBridge;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -39,17 +39,11 @@ class GrandTotalTest extends Test
     const ORDER_SHIPPING_COSTS = 2000;
 
     /**
-     * @var LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-        $this->locator = Locator::getInstance();
     }
 
     /**
@@ -135,7 +129,7 @@ class GrandTotalTest extends Test
     protected function getGrandTotalWithDiscountCalculator()
     {
         return new GrandTotalWithDiscountsTotalsCalculator(
-            $this->locator->calculation()->facade(),
+            new DiscountCalculationToCalculationBridge(new CalculationFacade()),
             new DiscountTotalsCalculator()
         );
     }

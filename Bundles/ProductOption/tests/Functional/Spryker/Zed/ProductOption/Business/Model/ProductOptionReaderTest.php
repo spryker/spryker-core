@@ -14,7 +14,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Locale\Business\LocaleBusinessFactory;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
@@ -38,7 +37,7 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
     const LOCALE_CODE = 'xx_XX';
     const PROPEL_CONNECTION = 'propel connection';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
+    const FACADE_LOCALE = 'LOCALE_FACADE';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
@@ -65,16 +64,6 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
      * @var ProductQueryContainerInterface
      */
     private $productQueryContainer;
-
-    /**
-     * @var Locator
-     */
-    private $locator;
-
-    /**
-     * @var AutoCompletion;
-     */
-    private $locatorAutoCompletion;
 
     /**
      * @var ProductOptionQueryContainer

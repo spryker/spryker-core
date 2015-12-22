@@ -16,7 +16,7 @@
         <id-method-parameter value="spy_product_abstract_pk_seq"/>
     </table>
 
-    <table name="spy_product_abstract_localized_attributes" idMethod="native" allowPkInsert="true" phpName="SpyLocalizedAbstractProductAttributes" identifierQuoting="true">
+    <table name="spy_product_abstract_localized_attributes" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_abstract_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
@@ -36,7 +36,7 @@
         <id-method-parameter value="spy_product_abstract_localized_attributes_pk_seq"/>
     </table>
 
-    <table name="spy_product" idMethod="native" allowPkInsert="true" phpName="SpyProduct" identifierQuoting="true">
+    <table name="spy_product" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="sku" required="true" type="VARCHAR" size="255"/>
         <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
@@ -52,7 +52,7 @@
         <id-method-parameter value="spy_product_pk_seq"/>
     </table>
 
-    <table name="spy_product_localized_attributes" idMethod="native" allowPkInsert="true" phpName="SpyProductLocalizedAttributes" identifierQuoting="true">
+    <table name="spy_product_localized_attributes" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>

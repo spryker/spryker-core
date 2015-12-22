@@ -25,9 +25,11 @@ use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
+use Spryker\Zed\Category\CategoryConfig;
 
 /**
  * @method CategoryQueryContainer getQueryContainer()
+ * @method CategoryConfig getConfig()
  */
 class CategoryBusinessFactory extends AbstractBusinessFactory
 {

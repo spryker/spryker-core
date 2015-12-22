@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Auth;
 
 use Spryker\Shared\Auth\AuthConstants;
+use Spryker\Shared\User\UserConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AuthConfig extends AbstractBundleConfig
@@ -93,17 +94,23 @@ class AuthConfig extends AbstractBundleConfig
     {
         $response = [];
 
-        $users = $this->getLocator()->user()->facade()->getSystemUsers();
         $credentials = $this->get(AuthConstants::AUTH_DEFAULT_CREDENTIALS);
 
-        foreach ($users->getUser() as $transferUser) {
-            $username = $transferUser->getUsername();
+        foreach ($this->getSystemUsers() as $username) {
             if (isset($credentials[$username])) {
                 $response[$username] = $credentials[$username];
             }
         }
 
         return $response;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSystemUsers()
+    {
+        return $this->get(UserConstants::USER_SYSTEM_USERS);
     }
 
     /**

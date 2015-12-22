@@ -6,9 +6,10 @@
 
 namespace Spryker\Zed\Console\Communication;
 
-use Generated\Zed\Ide\AutoCompletion;
+use Spryker\Zed\Console\Business\ConsoleFacade;
 use Spryker\Zed\Console\Business\Model\Environment;
-use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,6 +17,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleBootstrap extends Application
 {
+
+    /**
+     * @var ConsoleFacade
+     */
+    private $facade;
 
     /**
      * @param string $name
@@ -36,10 +42,7 @@ class ConsoleBootstrap extends Application
     {
         $commands = parent::getDefaultCommands();
 
-        $locatedCommands = $this->getLocator()
-            ->console()
-            ->facade()
-            ->getConsoleCommands();
+        $locatedCommands = $this->getFacade()->getConsoleCommands();
 
         foreach ($locatedCommands as $command) {
             $commands[$command->getName()] = $command;
@@ -49,11 +52,33 @@ class ConsoleBootstrap extends Application
     }
 
     /**
-     * @return AutoCompletion
+     * @return ConsoleFacade
      */
-    private function getLocator()
+    protected function getFacade()
     {
-        return Locator::getInstance();
+        if ($this->facade === null) {
+            $this->facade = $this->resolveFacade();
+        }
+
+        return $this->facade;
+    }
+
+    /**
+     * @throws FacadeNotFoundException
+     *
+     * @return ConsoleFacade
+     */
+    protected function resolveFacade()
+    {
+        return $this->getFacadeResolver()->resolve($this);
+    }
+
+    /**
+     * @return FacadeResolver
+     */
+    protected function getFacadeResolver()
+    {
+        return new FacadeResolver();
     }
 
     /*

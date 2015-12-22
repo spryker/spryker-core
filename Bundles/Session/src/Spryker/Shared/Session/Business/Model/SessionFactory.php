@@ -35,7 +35,7 @@ abstract class SessionFactory
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
-        $handler = new SessionHandlerCouchbase(new Api(), $hosts, $user, $password, $this->getBucketName(), true, $lifetime);
+        $handler = new SessionHandlerCouchbase($this->getNewRelicApi(), $hosts, $user, $password, $this->getBucketName(), true, $lifetime);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -54,7 +54,7 @@ abstract class SessionFactory
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
-        $handler = new SessionHandlerMysql(new Api(), $hosts, $user, $password, $lifetime);
+        $handler = new SessionHandlerMysql($this->getNewRelicApi(), $hosts, $user, $password, $lifetime);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -68,7 +68,7 @@ abstract class SessionFactory
     public function registerRedisSessionHandler($savePath)
     {
         $lifetime = $this->getSessionLifetime();
-        $handler = new SessionHandlerRedis($savePath, $lifetime, new Api());
+        $handler = new SessionHandlerRedis($savePath, $lifetime, $this->getNewRelicApi());
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -82,7 +82,7 @@ abstract class SessionFactory
     public function registerFileSessionHandler($savePath)
     {
         $lifetime = $this->getSessionLifetime();
-        $handler = new SessionHandlerFile($savePath, $lifetime, new Api());
+        $handler = new SessionHandlerFile($savePath, $lifetime, $this->getNewRelicApi());
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -165,6 +165,14 @@ abstract class SessionFactory
         }
 
         return $hosts;
+    }
+
+    /**
+     * @return Api
+     */
+    protected function getNewRelicApi()
+    {
+        return new Api();
     }
 
 }

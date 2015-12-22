@@ -6,9 +6,13 @@
 
 namespace Spryker\Zed\Cms;
 
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleBridge;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryBridge;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchBridge;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlBridge;
 
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -16,6 +20,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_URL = 'facade_url';
     const FACADE_LOCALE = 'facade_locale';
     const FACADE_GLOSSARY = 'facade glossary';
+    const FACADE_TOUCH = 'facade_touch';
     const QUERY_CONTAINER_URL = 'url_query_container';
     const QUERY_CONTAINER_GLOSSARY = 'glossary_query_container';
     const QUERY_CONTAINER_CATEGORY = 'category query container';
@@ -30,15 +35,15 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_URL] = function (Container $container) {
-            return $container->getLocator()->url()->facade();
+            return new CmsToUrlBridge($container->getLocator()->url()->facade());
         };
 
         $container[self::FACADE_LOCALE] = function (Container $container) {
-            return $container->getLocator()->locale()->facade();
+            return new CmsToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return $container->getLocator()->glossary()->facade();
+            return new CmsToGlossaryBridge($container->getLocator()->glossary()->facade());
         };
 
         return $container;
@@ -53,6 +58,18 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
             return (new Connection())->get();
+        };
+
+        $container[self::FACADE_TOUCH] = function (Container $container) {
+            return new CmsToTouchBridge($container->getLocator()->touch()->facade());
+        };
+
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return new CmsToGlossaryBridge($container->getLocator()->glossary()->facade());
+        };
+
+        $container[self::FACADE_URL] = function (Container $container) {
+            return new CmsToUrlBridge($container->getLocator()->url()->facade());
         };
 
         return $container;

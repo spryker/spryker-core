@@ -23,6 +23,7 @@ class CodeStyleSnifferConsole extends Console
     const OPTION_BUNDLE = 'bundle';
     const OPTION_DRY_RUN = 'dry-run';
     const OPTION_FIX = 'fix';
+    const OPTION_PRINT_DIFF_REPORT = 'report-diff';
     const OPTION_BUNDLE_ALL = 'all';
 
     /**
@@ -40,6 +41,7 @@ class CodeStyleSnifferConsole extends Console
         $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to fix code style for (or "all").');
         $this->addOption(self::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only.');
         $this->addOption(self::OPTION_FIX, 'f', InputOption::VALUE_NONE, 'Automatically fix errors that can be fixed.');
+        $this->addOption(self::OPTION_PRINT_DIFF_REPORT, 'r', InputOption::VALUE_NONE, 'Print diff.');
     }
 
     /**

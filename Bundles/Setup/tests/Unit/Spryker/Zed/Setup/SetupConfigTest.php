@@ -6,8 +6,6 @@
 
 namespace Unit\Spryker\Zed\Setup;
 
-use Spryker\Shared\Config;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Setup\SetupConfig;
 
 /**
@@ -25,7 +23,7 @@ class SetupConfigTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfig()
     {
-        return new SetupConfig(Config::getInstance(), Locator::getInstance());
+        return new SetupConfig();
     }
 
     /**

@@ -12,11 +12,10 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class CodeStyleSniffer
 {
 
-    const XML_RULESET = 'ruleset.xml';
-
     const BUNDLE_ALL = 'all';
 
     const OPTION_FIX = 'fix';
+    const OPTION_PRINT_DIFF_REPORT = 'report-diff';
     const OPTION_DRY_RUN = 'dry-run';
     const OPTION_VERBOSE = 'verbose';
 
@@ -119,6 +118,10 @@ class CodeStyleSniffer
         $config = ' --standard=' . __DIR__ . '/Spryker/ruleset.xml';
         if ($options[self::OPTION_VERBOSE]) {
             $config .= ' -v';
+        }
+
+        if ($options[self::OPTION_PRINT_DIFF_REPORT]) {
+            $config .= ' --report=diff';
         }
 
         $command = $options[self::OPTION_FIX] ? 'phpcbf' : 'phpcs';
