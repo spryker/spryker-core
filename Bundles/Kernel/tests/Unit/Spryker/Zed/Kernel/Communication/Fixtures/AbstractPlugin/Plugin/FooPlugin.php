@@ -7,15 +7,15 @@
 namespace Unit\Spryker\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Communication\CommunicationFactoryInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 class FooPlugin extends AbstractPlugin
 {
 
     /**
-     * @return CommunicationFactoryInterface
+     * @return AbstractCommunicationFactory
      */
     public function getFactory()
     {

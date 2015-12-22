@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Kernel\Communication\CommunicationFactoryInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
@@ -46,7 +45,7 @@ class Console extends SymfonyCommand
     protected $output;
 
     /**
-     * @var CommunicationFactoryInterface
+     * @var AbstractCommunicationFactory
      */
     private $communicationFactory;
 

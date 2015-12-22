@@ -81,7 +81,6 @@
     }
   },
   "bin": [
-    "Bundles/Console/bin/console",
-    "Bundles/Kernel/bin/build-class-map"
+    "Bundles/Console/bin/console"
   ]
 }

@@ -50,21 +50,9 @@ class ApplicationIntegrationCheckConsole extends Console
             throw new \Exception('This command is only allowed to run in development environment');
         }
 
-        $this->info('Build class map');
-        $this->buildClassMap();
-
         $this->checkApplication(
             $this->getCheckSteps()
         );
-    }
-
-    /**
-     * @return void
-     */
-    private function buildClassMap()
-    {
-        $process = new Process('vendor/bin/build-class-map', APPLICATION_ROOT_DIR);
-        $process->run();
     }
 
     /**

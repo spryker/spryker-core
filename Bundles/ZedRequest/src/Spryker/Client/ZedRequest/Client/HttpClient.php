@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\ZedRequest\Client;
 
-use Spryker\Shared\Kernel\Factory\FactoryInterface;
 use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
 

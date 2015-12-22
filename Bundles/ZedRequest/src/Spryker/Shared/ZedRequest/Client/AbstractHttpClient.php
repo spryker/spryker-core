@@ -6,7 +6,6 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
-use Generated\Client\Ide\AutoCompletion;
 use Guzzle\Http\Client;
 use Guzzle\Http\Exception\RequestException as GuzzleRequestException;
 use Guzzle\Http\Message\EntityEnclosingRequest;
@@ -14,9 +13,9 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cookie\Cookie;
 use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
 use Guzzle\Plugin\Cookie\CookiePlugin;
-use Spryker\Shared\Kernel\Factory\FactoryInterface;
 use Spryker\Client\Auth\AuthClientInterface;
-use Spryker\Shared\Library\Config;
+use Spryker\Client\ZedRequest\Client\Request;
+use Spryker\Shared\Config;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
 use Spryker\Shared\EventJournal\Model\SharedEventJournal;
@@ -25,7 +24,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
-use Spryker\Zed\ZedRequest\Business\Client\Request;
+use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
@@ -68,31 +67,18 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected static $timeoutInSeconds = 60;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
-     * @var FactoryInterface
-     */
-    protected $factory;
-
-    /**
      * @var AuthClientInterface
      */
     protected $authClient;
 
     /**
-     * @param FactoryInterface $factory
      * @param AuthClientInterface $authClient
      * @param string $baseUrl
      */
     public function __construct(
-        FactoryInterface $factory,
         AuthClientInterface $authClient,
         $baseUrl
     ) {
-        $this->factory = $factory;
         $this->authClient = $authClient;
         $this->baseUrl = $baseUrl;
     }
@@ -114,14 +100,13 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param TransferInterface $transferObject
+     * @param TransferInterface|null $transferObject
      * @param array $metaTransfers
      * @param null $timeoutInSeconds
      * @param bool $isBackgroundRequest
      *
-     * @throws \LogicException
-     *
-     * @return \Spryker\Shared\Library\Communication\Response
+     * @throws RequestException
+     * @return ResponseInterface
      */
     public function request(
         $pathInfo,
@@ -237,7 +222,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
-        $request = $this->getClientRequest();
+        $request = $this->getRequest();
         $request->setSessionId(session_id());
         $request->setTime(time());
         $request->setHost(System::getHostname() ?: 'n/a');
@@ -286,7 +271,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         if (empty($data) || !is_array($data)) {
             throw new InvalidZedResponseException('no valid JSON', $response);
         }
-        $responseTransfer = $this->factory->createClientResponse();
+        $responseTransfer = new SprykerResponse();
         $responseTransfer->fromArray($data);
 
         return $responseTransfer;
@@ -330,16 +315,17 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $event = new Event();
         $responseTransfer = $transfer->getTransfer();
         if ($responseTransfer instanceof TransferInterface) {
-            $event->addField(self::EVENT_FIELD_TRANSFER_DATA, $responseTransfer->toArray());
-            $event->addField(self::EVENT_FIELD_TRANSFER_CLASS, get_class($responseTransfer));
+            $event->setField(self::EVENT_FIELD_TRANSFER_DATA, $responseTransfer->toArray());
+            $event->setField(self::EVENT_FIELD_TRANSFER_CLASS, get_class($responseTransfer));
         } else {
-            $event->addField(self::EVENT_FIELD_TRANSFER_DATA, null);
-            $event->addField(self::EVENT_FIELD_TRANSFER_CLASS, null);
+            $event->setField(self::EVENT_FIELD_TRANSFER_DATA, null);
+            $event->setField(self::EVENT_FIELD_TRANSFER_CLASS, null);
         }
 
-        $event->addField(Event::FIELD_NAME, 'transfer');
-        $event->addField(self::EVENT_FIELD_PATH_INFO, $pathInfo);
-        $event->addField(self::EVENT_FIELD_SUB_TYPE, $subType);
+        $event->setField(Event::FIELD_NAME, 'transfer');
+        $event->setField(self::EVENT_FIELD_PATH_INFO, $pathInfo);
+        $event->setField(self::EVENT_FIELD_SUB_TYPE, $subType);
+
         $lumberjack->saveEvent($event);
     }
 
@@ -377,9 +363,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @return Request
      */
-    private function getClientRequest()
+    private function getRequest()
     {
-        $request = $this->factory->createClientRequest();
+        $request = new Request();
 
         return $request;
     }

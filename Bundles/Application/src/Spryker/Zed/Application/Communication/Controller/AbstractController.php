@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Zed\Ide\AutoCompletion;
 use Silex\Application;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
@@ -17,7 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Kernel\Communication\CommunicationFactoryInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -62,15 +62,38 @@ abstract class AbstractController
 
     /**
      * @param Application $application
+     *
+     * @return $this
      */
-    public function __construct(Application $application)
+    public function setApplication(Application $application)
     {
         $this->application = $application;
-        $this->messengerFacade = Locator::getInstance()->messenger()->facade();
+
+        return $this;
     }
 
     /**
-     * @return CommunicationFactoryInterface
+     * @param Container $container
+     *
+     * @return self
+     */
+    public function setExternalDependencies(Container $container)
+    {
+        $this->container = $container;
+
+        return $this;
+    }
+
+    /**
+     * @return Container
+     */
+    protected function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * @return AbstractCommunicationFactory
      */
     protected function getFactory()
     {
@@ -115,6 +138,7 @@ abstract class AbstractController
         if ($this->facade === null) {
             $this->facade = $this->resolveFacade();
         }
+
         return $this->facade;
     }
 
@@ -235,18 +259,18 @@ abstract class AbstractController
      */
     protected function addSuccessMessage($message, array $data = [])
     {
-        $this->messengerFacade->addSuccessMessage($this->createMessageTransfer($message, $data));
+        $this->getMessengerFacade()->addSuccessMessage($this->createMessageTransfer($message, $data));
     }
 
     /**
      * @param string $message
      * @param array $data
      *
-     * @return $this
+     * @return self
      */
     protected function addInfoMessage($message, array $data = [])
     {
-        $this->messengerFacade->addInfoMessage($this->createMessageTransfer($message, $data));
+        $this->getMessengerFacade()->addInfoMessage($this->createMessageTransfer($message, $data));
 
         return $this;
     }
@@ -255,13 +279,25 @@ abstract class AbstractController
      * @param string $message
      * @param array $data
      *
-     * @return $this
+     * @return self
      */
     protected function addErrorMessage($message, array $data = [])
     {
-        $this->messengerFacade->addErrorMessage($this->createMessageTransfer($message, $data));
+        $this->getMessengerFacade()->addErrorMessage($this->createMessageTransfer($message, $data));
 
         return $this;
+    }
+
+    /**
+     * @return MessengerFacade
+     */
+    protected function getMessengerFacade()
+    {
+        if ($this->messengerFacade === null) {
+            $this->messengerFacade = $this->getLocator()->messenger()->facade();
+        }
+
+        return $this->messengerFacade;
     }
 
     /**
@@ -342,6 +378,14 @@ abstract class AbstractController
     protected function setMenuHighlight($uri)
     {
         $this->getTwig()->addGlobal('menu_highlight', $uri);
+    }
+
+    /**
+     * @return AutoCompletion
+     */
+    private function getLocator()
+    {
+        return Locator::getInstance();
     }
 
 }

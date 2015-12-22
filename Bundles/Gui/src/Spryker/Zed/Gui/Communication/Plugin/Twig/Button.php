@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
 use Spryker\Zed\Library\Twig\TwigFunction;
+use Zend\Filter\Word\SeparatorToDash;
 
 class Button extends TwigFunction
 {
@@ -46,7 +47,7 @@ class Button extends TwigFunction
         if (array_key_exists('id', $options)) {
             $id = $options['id'];
         } else {
-            $filter = new \Zend_Filter_Word_SeparatorToDash();
+            $filter = new SeparatorToDash();
             $id = strtolower($filter->filter($title));
         }
 

@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Application\Business\Model\Router;
 
 use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
+use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Zed\Kernel\Communication\BundleControllerAction;
 use Spryker\Zed\Kernel\Communication\Controller\RouteNameResolver;
 use Spryker\Zed\Kernel\Communication\ControllerLocator;
@@ -84,9 +85,9 @@ class MvcRouter implements RouterInterface
     {
         $request = $this->app['request_stack']->getCurrentRequest();
         $bundleControllerAction = new BundleControllerAction($request);
-        $controllerLocator = new ControllerLocator($bundleControllerAction);
+        $controllerResolver = new ControllerResolver();
 
-        if (!$controllerLocator->canLocate()) {
+        if (!$controllerResolver->isResolveAble($bundleControllerAction)) {
             throw new ResourceNotFoundException();
         }
 
@@ -94,9 +95,8 @@ class MvcRouter implements RouterInterface
 
         $service = (new ControllerServiceBuilder())->createServiceForController(
             $this->app,
-            Locator::getInstance(),
             $bundleControllerAction,
-            $controllerLocator,
+            $controllerResolver,
             $routeNameResolver
         );
 

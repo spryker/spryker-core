@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
-abstract class AbstractCommunicationFactory extends AbstractFactory implements CommunicationFactoryInterface
+abstract class AbstractCommunicationFactory extends AbstractFactory
 {
 
     const FORM_FACTORY = 'form.factory';
