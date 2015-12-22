@@ -31,32 +31,12 @@ class AbstractPluginTest extends AbstractUnitTest
     /**
      * @return void
      */
-    public function testGetCommunicationFactoryShouldThrowExceptionIfCommunicationFactoryNotFound()
-    {
-        $this->setExpectedException(FactoryNotFoundException::class);
-
-        $communicationFactoryResolverMock = $this->getMock(FactoryResolver::class, ['canResolve', 'getClassInfo']);
-        $communicationFactoryResolverMock->method('canResolve')->willReturn(false);
-
-        $classInfo = new ClassInfo();
-        $classInfo->setClass('\\Namespace\\Application\\Bundle\\Layer\\Foo\\Bar');
-        $communicationFactoryResolverMock->method('getClassInfo')->willReturn($classInfo);
-
-        $pluginMock = $this->getPluginMock(['getFactoryResolver']);
-        $pluginMock->method('getFactoryResolver')->willReturn($communicationFactoryResolverMock);
-
-        $pluginMock->getFactory();
-    }
-
-    /**
-     * @return void
-     */
     public function testGetCommunicationFactoryShouldReturnInstanceIfExists()
     {
         $plugin = new FooPlugin();
 
         $pluginReflection = new \ReflectionClass($plugin);
-        $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('communicationFactory');
+        $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('factory');
         $communicationFactoryProperty->setAccessible(true);
         $communicationFactoryProperty->setValue($plugin, $this->getMock(AbstractCommunicationFactory::class, null, [], '', false));
 
