@@ -33,6 +33,10 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductSearchToTouchBridge($container->getLocator()->touch()->facade());
         };
 
+        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+            return $container->getLocator()->collector()->facade();
+        };
+
         return $container;
     }
 }

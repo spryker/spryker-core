@@ -554,11 +554,11 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array|null $options
+     * @param array $options
      *
      * @return string
      */
-    protected function generateCreateButton($url, $title, array $options = null)
+    protected function generateCreateButton($url, $title, array $options = [])
     {
         $defaultOptions = [
             'class' => 'btn-primary',
@@ -571,11 +571,11 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array|null $options
+     * @param array $options
      *
      * @return string
      */
-    protected function generateEditButton($url, $title, array $options = null)
+    protected function generateEditButton($url, $title, array $options = [])
     {
         $defaultOptions = [
             'class' => 'btn-success',
@@ -588,11 +588,11 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array|null $options
+     * @param array $options
      *
      * @return string
      */
-    protected function generateViewButton($url, $title, array $options = null)
+    protected function generateViewButton($url, $title, array $options = [])
     {
         $defaultOptions = [
             'class' => 'btn-info',
@@ -605,11 +605,11 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array|null $options
+     * @param array $options
      *
      * @return string
      */
-    protected function generateRemoveButton($url, $title, array $options = null)
+    protected function generateRemoveButton($url, $title, array $options = [])
     {
         $defaultOptions = [
             'class' => 'btn-danger',
