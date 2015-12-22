@@ -11,6 +11,9 @@
 
 namespace Spryker\Zed\Library\Service;
 
+use Zend\Http\Client;
+use Zend\Http\Request;
+
 class GoogleGraph
 {
 
@@ -64,15 +67,14 @@ class GoogleGraph
             throw new \Exception(sprintf('Content type "%s" is not a valid content type for this operation', $contentType));
         }
 
-
-        $client = new \Zend\Http\Client();
+        $client = new Client();
         $client->setUri(self::URI);
 
         $vars = get_object_vars($this);
-        foreach ($vars as $k => $v) {
-            $client->setParameterPost($k, $v);
-        }
-        $response = $client->request('POST');
+        $client->setParameterPost($vars);
+
+        $client->setMethod(Request::METHOD_POST);
+        $response = $client->send();
         if ($sendHeader) {
             header('content-type: image/' . $contentType);
         }
