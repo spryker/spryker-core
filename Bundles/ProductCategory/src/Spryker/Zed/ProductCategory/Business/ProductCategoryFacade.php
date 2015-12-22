@@ -18,7 +18,7 @@ use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 
 /**
- * @property ProductCategoryBusinessFactory $businessFactory
+ * @property ProductCategoryBusinessFactory $factory
  *
  * @method ProductCategoryBusinessFactory getFactory()
  * @method ProductCategoryManager createProductManager()

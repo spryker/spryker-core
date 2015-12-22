@@ -30,7 +30,7 @@ abstract class AbstractPlugin
     /**
      * @var AbstractCommunicationFactory
      */
-    private $communicationFactory;
+    private $factory;
 
     /**
      * @var Container
@@ -71,7 +71,7 @@ abstract class AbstractPlugin
      *
      * @return AbstractFacade
      */
-    protected function resolveFacade()
+    private function resolveFacade()
     {
         return $this->getFacadeResolver()->resolve($this);
     }
@@ -79,7 +79,7 @@ abstract class AbstractPlugin
     /**
      * @return FacadeResolver
      */
-    protected function getFacadeResolver()
+    private function getFacadeResolver()
     {
         return new FacadeResolver();
     }
@@ -89,19 +89,19 @@ abstract class AbstractPlugin
      */
     protected function getFactory()
     {
-        if ($this->communicationFactory === null) {
-            $this->communicationFactory = $this->resolveCommunicationFactory();
+        if ($this->factory === null) {
+            $this->factory = $this->resolveFactory();
         }
 
         if ($this->container !== null) {
-            $this->communicationFactory->setContainer($this->container);
+            $this->factory->setContainer($this->container);
         }
 
         if ($this->queryContainer !== null) {
-            $this->communicationFactory->setQueryContainer($this->queryContainer);
+            $this->factory->setQueryContainer($this->queryContainer);
         }
 
-        return $this->communicationFactory;
+        return $this->factory;
     }
 
     /**
@@ -109,7 +109,7 @@ abstract class AbstractPlugin
      *
      * @return AbstractCommunicationFactory
      */
-    protected function resolveCommunicationFactory()
+    private function resolveFactory()
     {
         return $this->getFactoryResolver()->resolve($this);
     }
@@ -117,27 +117,9 @@ abstract class AbstractPlugin
     /**
      * @return FactoryResolver
      */
-    protected function getFactoryResolver()
+    private function getFactoryResolver()
     {
         return new FactoryResolver();
-    }
-
-    /**
-     * @throws DependencyProviderNotFoundException
-     *
-     * @return AbstractBundleDependencyProvider
-     */
-    protected function resolveDependencyProvider()
-    {
-        return $this->getDependencyProviderResolver()->resolve($this);
-    }
-
-    /**
-     * @return DependencyProviderResolver
-     */
-    protected function getDependencyProviderResolver()
-    {
-        return new DependencyProviderResolver();
     }
 
     /**
@@ -169,7 +151,7 @@ abstract class AbstractPlugin
      *
      * @return AbstractQueryContainer
      */
-    protected function resolveQueryContainer()
+    private function resolveQueryContainer()
     {
         return $this->getQueryContainerResolver()->resolve($this);
     }
@@ -177,7 +159,7 @@ abstract class AbstractPlugin
     /**
      * @return QueryContainerResolver
      */
-    protected function getQueryContainerResolver()
+    private function getQueryContainerResolver()
     {
         return new QueryContainerResolver();
     }

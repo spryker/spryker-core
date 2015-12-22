@@ -17,7 +17,7 @@ abstract class AbstractFacade implements FacadeInterface
     /**
      * @var BusinessFactoryInterface
      */
-    private $businessFactory;
+    private $factory;
 
     /**
      * @var AbstractQueryContainer
@@ -30,13 +30,13 @@ abstract class AbstractFacade implements FacadeInterface
     private $container;
 
     /**
-     * @param AbstractBusinessFactory $businessFactory
+     * @param AbstractBusinessFactory $factory
      *
      * @return self
      */
-    public function setBusinessFactory(AbstractBusinessFactory $businessFactory)
+    public function setFactory(AbstractBusinessFactory $factory)
     {
-        $this->businessFactory = $businessFactory;
+        $this->factory = $factory;
 
         return $this;
     }
@@ -66,31 +66,23 @@ abstract class AbstractFacade implements FacadeInterface
     }
 
     /**
-     * @return Container
-     */
-    protected function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
      * @return BusinessFactoryInterface
      */
     protected function getFactory()
     {
-        if ($this->businessFactory === null) {
-            $this->businessFactory = $this->resolveBusinessFactory();
+        if ($this->factory === null) {
+            $this->factory = $this->resolveFactory();
         }
 
         if ($this->container !== null) {
-            $this->businessFactory->setContainer($this->container);
+            $this->factory->setContainer($this->container);
         }
 
         if ($this->queryContainer !== null) {
-            $this->businessFactory->setQueryContainer($this->queryContainer);
+            $this->factory->setQueryContainer($this->queryContainer);
         }
 
-        return $this->businessFactory;
+        return $this->factory;
     }
 
     /**
@@ -98,7 +90,7 @@ abstract class AbstractFacade implements FacadeInterface
      *
      * @return AbstractBusinessFactory
      */
-    protected function resolveBusinessFactory()
+    private function resolveFactory()
     {
         return $this->getFactoryResolver()->resolve($this);
     }
@@ -106,7 +98,7 @@ abstract class AbstractFacade implements FacadeInterface
     /**
      * @return FactoryResolver
      */
-    protected function getFactoryResolver()
+    private function getFactoryResolver()
     {
         return new FactoryResolver();
     }

@@ -50,7 +50,7 @@ class SellableTest extends AbstractFunctionalTest
         $dependencyProvider->provideBusinessLayerDependencies($container);
         $businessFactory->setContainer($container);
 
-        $this->availabilityFacade->setBusinessFactory($businessFactory);
+        $this->availabilityFacade->setFactory($businessFactory);
     }
 
     /**
