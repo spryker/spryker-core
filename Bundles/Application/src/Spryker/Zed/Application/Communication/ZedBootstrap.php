@@ -55,9 +55,22 @@ class ZedBootstrap extends Bootstrap
     {
         $application = new Application();
 
+        $this->unsetSilexExceptionHandler($application);
+
         Pimple::setApplication($application);
 
+        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($application) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
         return $application;
+    }
+
+    /**
+     * @param Application $application
+     *
+     * @return void
+     */
+    private function unsetSilexExceptionHandler(Application $application)
+    {
+        unset($application['exception_handler']);
     }
 
     /**
