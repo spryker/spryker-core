@@ -8,16 +8,11 @@ namespace Functional\Spryker\Zed\Glossary;
 
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
-use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
-use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
  * @group Spryker
