@@ -47,25 +47,7 @@ class CountryFacadeTest extends AbstractFunctionalTest
      */
     protected function getMockLogger()
     {
-        return $this->getMock('Spryker\\Shared\\Kernel\\Messenger\\MessengerInterface');
-    }
-
-    /**
-     * @return void
-     */
-    public function testInitdbInstallation()
-    {
-        $this->markTestSkipped('This test was using a mechanism to truncate tables, this is wrong in tests');
-
-        $countryQuery = $this->countryQueryContainer->queryCountries();
-
-        $countryCountBefore = $countryQuery->count();
-
-        $this->countryFacade->install($this->getMockLogger());
-
-        $countryCountAfter = $countryQuery->count();
-
-        $this->assertTrue($countryCountAfter > $countryCountBefore);
+        return $this->getMock(MessengerInterface::class);
     }
 
     /**
