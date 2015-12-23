@@ -35,13 +35,23 @@ class DeployPreparePropelConsole extends Console
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @return int|null|void
+     * @return int|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->runDependingCommand(ConvertConfigConsole::COMMAND_NAME);
-        $this->runDependingCommand(SchemaCopyConsole::COMMAND_NAME);
-        $this->runDependingCommand(BuildModelConsole::COMMAND_NAME);
+        $dependingCommands = [
+            ConvertConfigConsole::COMMAND_NAME,
+            SchemaCopyConsole::COMMAND_NAME,
+            BuildModelConsole::COMMAND_NAME,
+        ];
+
+        foreach ($dependingCommands as $commandName) {
+            $this->runDependingCommand($commandName);
+
+            if ($this->hasError()) {
+                return $this->getLastExitCode();
+            }
+        }
     }
 
     /**

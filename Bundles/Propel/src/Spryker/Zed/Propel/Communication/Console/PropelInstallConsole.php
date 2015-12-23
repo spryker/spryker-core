@@ -44,23 +44,19 @@ class PropelInstallConsole extends Console
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @return void
+     * @return int|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $noDiffOption = $this->input->getOption(self::OPTION_NO_DIFF);
+        $dependingCommands = $this->getDependingCommands();
 
-        $this->runDependingCommand(ConvertConfigConsole::COMMAND_NAME);
-        $this->runDependingCommand(CreateDatabaseConsole::COMMAND_NAME);
-        $this->runDependingCommand(PostgresqlCompatibilityConsole::COMMAND_NAME);
-        $this->runDependingCommand(SchemaCopyConsole::COMMAND_NAME);
-        $this->runDependingCommand(BuildModelConsole::COMMAND_NAME);
+        foreach ($dependingCommands as $commandName) {
+            $this->runDependingCommand($commandName);
 
-        if ($noDiffOption === false) {
-            $this->runDependingCommand(DiffConsole::COMMAND_NAME);
+            if ($this->hasError()) {
+                return $this->getLastExitCode();
+            }
         }
-
-        $this->runDependingCommand(MigrateConsole::COMMAND_NAME);
     }
 
     /**
@@ -77,6 +73,28 @@ class PropelInstallConsole extends Console
         $arguments['command'] = $command;
         $input = new ArrayInput($arguments);
         $command->run($input, $this->output);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDependingCommands()
+    {
+        $noDiffOption = $this->input->getOption(self::OPTION_NO_DIFF);
+
+        $dependingCommands = [
+            ConvertConfigConsole::COMMAND_NAME,
+            CreateDatabaseConsole::COMMAND_NAME,
+            PostgresqlCompatibilityConsole::COMMAND_NAME,
+            SchemaCopyConsole::COMMAND_NAME,
+            BuildModelConsole::COMMAND_NAME,
+        ];
+        if ($noDiffOption === false) {
+            $dependingCommands[] = DiffConsole::COMMAND_NAME;
+        }
+        $dependingCommands[] = MigrateConsole::COMMAND_NAME;
+
+        return $dependingCommands;
     }
 
 }

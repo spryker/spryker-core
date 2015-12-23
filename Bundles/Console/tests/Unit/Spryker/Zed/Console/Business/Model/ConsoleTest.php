@@ -20,7 +20,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     public function testGetCommunicationFactoryShouldReturnInstanceIfSet()
     {
         $console = $this->getConsole();
-        $console->setCommunicationFactory($this->getCommunicationFactoryMock());
+        $console->setFactory($this->getCommunicationFactoryMock());
 
         $this->assertInstanceOf('Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
             $console->getFactory()

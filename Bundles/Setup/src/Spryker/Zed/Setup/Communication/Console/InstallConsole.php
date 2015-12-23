@@ -35,7 +35,7 @@ class InstallConsole extends Console
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @return void
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -46,6 +46,10 @@ class InstallConsole extends Console
                 $this->runDependingCommand($key, $value);
             } else {
                 $this->runDependingCommand($value);
+            }
+
+            if ($this->hasError()) {
+                return $this->getLastExitCode();
             }
         }
     }
