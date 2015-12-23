@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @deprecated Lumberjack is deprecated use EventJournal instead.
+ *
+ * @method LumberjackBusinessFactory getFactory()
  */
 class LumberjackFacade extends AbstractFacade
 {
@@ -22,7 +24,7 @@ class LumberjackFacade extends AbstractFacade
      */
     public function saveEvent(EventInterface $event)
     {
-        $this->getDependencyContainer()
+        $this->getFactory()
              ->createEventJournal()
              ->saveEvent($event);
     }
