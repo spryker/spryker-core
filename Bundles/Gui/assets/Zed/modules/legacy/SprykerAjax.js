@@ -35,7 +35,7 @@ module.exports = new function() {
         return self;
     };
 
-    self.ajaxSubmit = function(options, callbackFunction, parameters, isGet=false) {
+    self.ajaxSubmit = function(options, callbackFunction, parameters, isGet) {
         var callType = (!!isGet) ? 'get' : 'post';
         return $.ajax({
             url: this.url,

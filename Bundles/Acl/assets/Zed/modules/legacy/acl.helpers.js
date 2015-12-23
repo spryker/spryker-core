@@ -7,11 +7,8 @@
 
 'use strict';
 
-require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
-var SprykerAlert = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAlert');
-var SprykerAjaxCallbacks = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjaxCallbacks');
-
-var memoize = new GroupModalMemoization();
+// var SprykerAlert = require('Gui/assets/Zed/modules/legacy/SprykerAlert');
+// var SprykerAjaxCallbacks = require('Gui/assets/Zed/modules/legacy/SprykerAjaxCallbacks');
 
 function spinnerCreate(elementId){
     var container = $('<div/>', {
@@ -70,6 +67,8 @@ function GroupModal(elementId) {
 
     self.init();
 }
+
+var memoize = new GroupModalMemoization();
 
 SprykerAjax.getRolesForGroup = function(idGroup) {
     var options = {

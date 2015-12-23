@@ -1,6 +1,6 @@
 /**
- *
- * Discount dependencies
+ * 
+ * CMS bundle main module
  * @copyright: Spryker Systems GmbH
  *
  */
@@ -8,4 +8,5 @@
 'use strict';
 
 require('ZedGui');
-require('./legacy/logic');
+require('./logic');
+require('../sass/main.scss');

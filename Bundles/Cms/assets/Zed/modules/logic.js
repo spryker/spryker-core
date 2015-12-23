@@ -1,4 +1,11 @@
-"use strict";
+/**
+ * 
+ * CMS bundle logic
+ * @copyright: Spryker Systems GmbH
+ *
+ */
+
+'use strict';
 
 const GLOSSARY_SELECT_MARGIN_TOP = 159;
 const GLOSSARY_SELECT_MARGIN_LEFT = 230;

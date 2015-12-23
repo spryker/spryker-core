@@ -7,9 +7,9 @@
 
 'use strict';
 
-require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
-var SprykerAlert = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAlert');
-var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
+// require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
+// var SprykerAlert = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAlert');
+// var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
 
 SprykerAjax.loadDecisionRulesOptions = function(element, mainFormName){
     var elementsCount = $('#rules-container > .col-md-6').length;

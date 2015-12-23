@@ -7,5 +7,6 @@
 
 'use strict';
 
+require('ZedGui');
 require('../sass/main.scss');
 require('./legacy/logic');

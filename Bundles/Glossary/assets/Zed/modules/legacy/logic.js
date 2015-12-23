@@ -1,8 +1,8 @@
 'use strict';
 
-require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
+// require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
 
-var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
+// var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
 
 SprykerAjax.glossaryKeyUniqueCheck = function(){
     var obj = $('#form_glossary_key').val();

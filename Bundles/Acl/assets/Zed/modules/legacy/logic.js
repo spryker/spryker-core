@@ -7,10 +7,10 @@
 
 'use strict';
 
-require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
+require('ZedGui');
 require('./acl.helpers.js');
 
-var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
+// var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
 
 $(document).ready(function() {
     $('#group-table').on('click', 'a.display-roles', function(event){
