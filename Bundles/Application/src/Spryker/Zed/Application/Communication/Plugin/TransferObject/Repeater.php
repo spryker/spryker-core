@@ -12,7 +12,13 @@ use Spryker\Shared\Library\Config;
 use Spryker\Shared\Library\Log;
 use Spryker\Shared\ZedRequest\Client\RequestInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use Spryker\Zed\Application\Business\ApplicationFacade;
+use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 
+/**
+ * @method ApplicationFacade getFacade()
+ * @method ApplicationCommunicationFactory getFactory()
+ */
 class Repeater extends AbstractPlugin
 {
 

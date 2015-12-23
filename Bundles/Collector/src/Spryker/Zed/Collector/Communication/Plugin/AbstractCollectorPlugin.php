@@ -13,7 +13,13 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
+use Spryker\Zed\Collector\Business\CollectorFacade;
+use Spryker\Zed\Collector\Communication\CollectorCommunicationFactory;
 
+/**
+ * @method CollectorFacade getFacade()
+ * @method CollectorCommunicationFactory getFactory()
+ */
 abstract class AbstractCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
 

@@ -28,7 +28,6 @@ class RequestDataCollector extends AbstractDataCollector
     {
         parent::__construct($options);
 
-
         if (self::$idRequest === null) {
             self::$idRequest = uniqid('', true);
         }

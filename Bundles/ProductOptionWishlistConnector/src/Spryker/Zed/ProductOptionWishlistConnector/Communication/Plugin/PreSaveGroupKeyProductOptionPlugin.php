@@ -9,7 +9,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface;
+use Spryker\Zed\ProductOptionWishlistConnector\Communication\ProductOptionWishlistConnectorCommunicationFactory;
 
+/**
+ * @method ProductOptionWishlistConnectorCommunicationFactory getFactory()
+ */
 class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSavePluginInterface
 {
 

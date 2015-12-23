@@ -6,7 +6,13 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
+use Spryker\Zed\Cart\Business\CartFacade;
+use Spryker\Zed\Cart\Communication\CartCommunicationFactory;
 
+/**
+ * @method CartFacade getFacade()
+ * @method CartCommunicationFactory getFactory()
+ */
 class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
 

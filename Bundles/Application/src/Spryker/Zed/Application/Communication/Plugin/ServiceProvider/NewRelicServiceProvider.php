@@ -12,9 +12,11 @@ use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Zed\Application\Business\ApplicationFacade;
 
 /**
  * @method ApplicationCommunicationFactory getFactory()
+ * @method ApplicationFacade getFacade()
  */
 class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

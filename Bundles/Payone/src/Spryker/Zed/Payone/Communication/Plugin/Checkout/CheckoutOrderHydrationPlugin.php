@@ -11,9 +11,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Payone\Business\PayoneCommunicationFactory;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Spryker\Zed\Payone\Business\PayoneFacade;
 
 /**
  * @method PayoneCommunicationFactory getFactory()
+ * @method PayoneFacade getFacade()
  */
 class CheckoutOrderHydrationPlugin extends AbstractPlugin implements CheckoutOrderHydrationInterface
 {

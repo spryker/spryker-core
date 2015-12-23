@@ -6,7 +6,6 @@
 
 namespace Spryker\Shared\EventJournal;
 
-
 interface EventJournalConstants
 {
 

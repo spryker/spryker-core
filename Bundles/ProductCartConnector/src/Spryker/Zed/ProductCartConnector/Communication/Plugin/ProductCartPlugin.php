@@ -10,9 +10,11 @@ use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
+use Spryker\Zed\ProductCartConnector\Communication\ProductCartConnectorCommunicationFactory;
 
 /**
  * @method ProductCartConnectorFacade getFacade()
+ * @method ProductCartConnectorCommunicationFactory getFactory()
  */
 class ProductCartPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {

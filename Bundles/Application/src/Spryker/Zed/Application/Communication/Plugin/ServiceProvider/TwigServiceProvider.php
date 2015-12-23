@@ -19,7 +19,13 @@ use Spryker\Yves\Application\Application as SprykerApplication;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Spryker\Zed\Application\Business\ApplicationFacade;
+use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 
+/**
+ * @method ApplicationFacade getFacade()
+ * @method ApplicationCommunicationFactory getFactory()
+ */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 

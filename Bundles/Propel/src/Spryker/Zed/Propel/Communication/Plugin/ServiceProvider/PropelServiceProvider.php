@@ -15,9 +15,11 @@ use Spryker\Shared\Config;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Propel\Communication\PropelCommunicationFactory;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Propel\Business\PropelFacade;
 
 /**
  * @method PropelCommunicationFactory getFactory()
+ * @method PropelFacade getFacade()
  */
 class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

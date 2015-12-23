@@ -8,9 +8,11 @@ namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Payone\Business\PayoneFacade;
+use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 
 /**
  * @method PayoneFacade getFacade()
+ * @method PayoneCommunicationFactory getFactory()
  */
 class PreauthorizationIsErrorPlugin extends AbstractPlugin
 {

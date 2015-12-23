@@ -8,6 +8,7 @@ namespace Spryker\Zed\Lumberjack;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+
 /**
  * @deprecated Lumberjack is deprecated use EventJournal instead.
  */
