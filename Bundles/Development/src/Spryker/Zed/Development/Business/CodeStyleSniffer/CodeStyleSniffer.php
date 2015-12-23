@@ -120,10 +120,6 @@ class CodeStyleSniffer
             $config .= ' -v';
         }
 
-        if ($options[self::OPTION_PRINT_DIFF_REPORT]) {
-            $config .= ' --report=diff';
-        }
-
         $command = $options[self::OPTION_FIX] ? 'phpcbf' : 'phpcs';
         $command = 'vendor/bin/' . $command . ' ' . $pathToFiles . $config;
 

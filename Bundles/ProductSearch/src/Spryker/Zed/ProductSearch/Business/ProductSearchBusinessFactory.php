@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\ProductSearch\Business;
 
+use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
+use Spryker\Zed\Collector\Business\CollectorFacade;
 use Spryker\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
 use Spryker\Zed\ProductSearch\Business\Operation\OperationManager;
 use Spryker\Zed\ProductSearch\Business\Locator\OperationLocator;
@@ -16,13 +18,13 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch;
 use Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface;
 use Spryker\Zed\ProductSearch\Business\Operation\OperationInterface;
 use Spryker\Zed\ProductSearch\Business\Operation\OperationManagerInterface;
 use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessorInterface;
 use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformerInterface;
+use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
@@ -72,7 +74,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
      */
     public function getInstaller(MessengerInterface $messenger)
     {
-        $collectorFacade = $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_COLLECTOR);
+        $collectorFacade = $this->getCollectorFacade();
 
         $installer = new InstallProductSearch(
             StorageInstanceBuilder::getElasticsearchInstance(),
@@ -82,6 +84,16 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         $installer->setMessenger($messenger);
 
         return $installer;
+    }
+
+    /**
+     * @throws ContainerKeyNotFoundException
+     *
+     * @return ProductSearchToCollectorInterface
+     */
+    protected function getCollectorFacade()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_COLLECTOR);
     }
 
     /**
@@ -173,28 +185,32 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return AddToResult
      */
-    protected function createAddToResult() {
+    protected function createAddToResult()
+    {
         return new AddToResult();
     }
 
     /**
      * @return CopyToField
      */
-    protected function createCopyToField() {
+    protected function createCopyToField()
+    {
         return new CopyToField();
     }
 
     /**
      * @return CopyToFacet
      */
-    protected function createCopyToFacet() {
+    protected function createCopyToFacet()
+    {
         return new CopyToFacet();
     }
 
     /**
      * @return CopyToMultiField
      */
-    protected function createCopyToMultiField() {
+    protected function createCopyToMultiField()
+    {
         return new CopyToMultiField();
     }
 

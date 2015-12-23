@@ -47,7 +47,7 @@ class Console extends SymfonyCommand
     /**
      * @var AbstractCommunicationFactory
      */
-    private $communicationFactory;
+    private $factory;
 
     /**
      * @var AbstractFacade
@@ -70,6 +70,11 @@ class Console extends SymfonyCommand
     protected $messenger;
 
     /**
+     * @var int
+     */
+    private $exitCode = 0;
+
+    /**
      * @param Container $container
      *
      * @return self
@@ -90,13 +95,13 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param AbstractCommunicationFactory $communicationFactory
+     * @param AbstractCommunicationFactory $factory
      *
      * @return self
      */
-    public function setCommunicationFactory(AbstractCommunicationFactory $communicationFactory)
+    public function setFactory(AbstractCommunicationFactory $factory)
     {
-        $this->communicationFactory = $communicationFactory;
+        $this->factory = $factory;
 
         return $this;
     }
@@ -106,19 +111,19 @@ class Console extends SymfonyCommand
      */
     protected function getFactory()
     {
-        if ($this->communicationFactory === null) {
-            $this->communicationFactory = $this->resolveCommunicationFactory();
+        if ($this->factory === null) {
+            $this->factory = $this->resolveFactory();
         }
 
         if ($this->container !== null) {
-            $this->communicationFactory->setContainer($this->container);
+            $this->factory->setContainer($this->container);
         }
 
         if ($this->queryContainer !== null) {
-            $this->communicationFactory->setQueryContainer($this->queryContainer);
+            $this->factory->setQueryContainer($this->queryContainer);
         }
 
-        return $this->communicationFactory;
+        return $this->factory;
     }
 
     /**
@@ -126,7 +131,7 @@ class Console extends SymfonyCommand
      *
      * @return AbstractCommunicationFactory
      */
-    protected function resolveCommunicationFactory()
+    private function resolveFactory()
     {
         return $this->getFactoryResolver()->resolve($this);
     }
@@ -134,7 +139,7 @@ class Console extends SymfonyCommand
     /**
      * @return FactoryResolver
      */
-    protected function getFactoryResolver()
+    private function getFactoryResolver()
     {
         return new FactoryResolver();
     }
@@ -162,7 +167,7 @@ class Console extends SymfonyCommand
      *
      * @return AbstractFacade
      */
-    protected function resolveFacade()
+    private function resolveFacade()
     {
         return $this->getFacadeResolver()->resolve($this);
     }
@@ -170,7 +175,7 @@ class Console extends SymfonyCommand
     /**
      * @return FacadeResolver
      */
-    protected function getFacadeResolver()
+    private function getFacadeResolver()
     {
         return new FacadeResolver();
     }
@@ -214,7 +219,8 @@ class Console extends SymfonyCommand
      * @param string $command
      * @param array $arguments
      *
-     * @return void
+     * @throws \Exception
+     * @return int
      */
     protected function runDependingCommand($command, array $arguments = [])
     {
@@ -224,7 +230,39 @@ class Console extends SymfonyCommand
         $arguments['command'] = $command->getName();
         $input = new ArrayInput($arguments);
 
-        $command->run($input, $this->output);
+        $exitCode = $command->run($input, $this->output);
+
+        $this->setExitCode($exitCode);
+
+        return $exitCode;
+    }
+
+    /**
+     * @param $exitCode
+     *
+     * @return $this
+     */
+    private function setExitCode($exitCode)
+    {
+        $this->exitCode = $exitCode;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasError()
+    {
+        return $this->exitCode !== 0;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getLastExitCode()
+    {
+        return $this->exitCode;
     }
 
     /**

@@ -28,16 +28,23 @@ class GenerateIdeAutoCompletionConsole extends Console
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @return int|null|void
+     * @return int|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->runDependingCommand(GenerateClientIdeAutoCompletionConsole::COMMAND_NAME);
-        $this->info('Client-Files successfully created.', false);
-        $this->runDependingCommand(GenerateYvesIdeAutoCompletionConsole::COMMAND_NAME);
-        $this->info('Yves-Files successfully created.', false);
-        $this->runDependingCommand(GenerateZedIdeAutoCompletionConsole::COMMAND_NAME);
-        $this->info('Zed-Files successfully created.', false);
+        $dependingCommands = [
+            GenerateClientIdeAutoCompletionConsole::COMMAND_NAME,
+            GenerateYvesIdeAutoCompletionConsole::COMMAND_NAME,
+            GenerateZedIdeAutoCompletionConsole::COMMAND_NAME,
+        ];
+
+        foreach ($dependingCommands as $commandName) {
+            $this->runDependingCommand($commandName);
+
+            if ($this->hasError()) {
+                return $this->getLastExitCode();
+            }
+        }
     }
 
 }
