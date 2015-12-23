@@ -10,9 +10,7 @@ use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleBusinessFactory;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
@@ -99,7 +97,6 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
      */
     public function testGetProductOption()
     {
-        /** @var $productOptionTransfer ProductOptionTransfer */
         $productOptionTransfer = $this->facade->getProductOption(
             $this->ids['idUsageLarge'],
             self::LOCALE_CODE
@@ -270,7 +267,6 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
             return $this->productQueryContainer;
         };
         $container[self::PROPEL_CONNECTION] = function () {
-            /* @var $locator AutoCompletion */
             return (new Connection())->get();
         };
         $this->productOptionQueryContainer->setExternalDependencies($container);
