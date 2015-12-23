@@ -10,7 +10,13 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Cmf\Component\Routing\ChainRouter;
+use Spryker\Zed\Application\Business\ApplicationFacade;
+use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 
+/**
+ * @method ApplicationFacade getFacade()
+ * @method ApplicationCommunicationFactory getFactory()
+ */
 class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 

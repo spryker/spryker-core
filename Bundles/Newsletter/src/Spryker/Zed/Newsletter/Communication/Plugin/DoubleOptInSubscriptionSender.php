@@ -14,9 +14,11 @@ use Spryker\Shared\Mail\MailConstants;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface;
 use Spryker\Zed\Newsletter\Communication\NewsletterCommunicationFactory;
 use Spryker\Zed\Newsletter\NewsletterConfig;
+use Spryker\Zed\Newsletter\Business\NewsletterFacade;
 
 /**
  * @method NewsletterCommunicationFactory getFactory()
+ * @method NewsletterFacade getFacade()
  */
 class DoubleOptInSubscriptionSender extends AbstractPlugin implements SubscriberOptInSenderInterface
 {

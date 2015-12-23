@@ -11,9 +11,11 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorFacade;
+use Spryker\Zed\CustomerCheckoutConnector\Communication\CustomerCheckoutConnectorCommunicationFactory;
 
 /**
  * @method CustomerCheckoutConnectorFacade getFacade()
+ * @method CustomerCheckoutConnectorCommunicationFactory getFactory()
  */
 class CustomerPreConditionCheckerPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {

@@ -11,9 +11,11 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use Spryker\Zed\ProductOptionCheckoutConnector\Business\ProductOptionCheckoutConnectorFacade;
+use Spryker\Zed\ProductOptionCheckoutConnector\Communication\ProductOptionCheckoutConnectorCommunicationFactory;
 
 /**
  * @method ProductOptionCheckoutConnectorFacade getFacade()
+ * @method ProductOptionCheckoutConnectorCommunicationFactory getFactory()
  */
 class OrderProductOptionHydrationPlugin extends AbstractPlugin implements CheckoutOrderHydrationInterface
 {

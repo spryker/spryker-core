@@ -10,9 +10,11 @@ use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 use Spryker\Zed\Heartbeat\Business\HeartbeatFacade;
+use Spryker\Zed\Heartbeat\Communication\HeartbeatCommunicationFactory;
 
 /**
  * @method HeartbeatFacade getFacade()
+ * @method HeartbeatCommunicationFactory getFactory()
  */
 class SessionHealthIndicatorPlugin extends AbstractPlugin implements HealthIndicatorInterface
 {

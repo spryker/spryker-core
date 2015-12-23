@@ -13,9 +13,11 @@ use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
 
 /**
  * @method PayolutionFacade getFacade()
+ * @method PayolutionCommunicationFactory getFactory()
  */
 class RevertPlugin extends AbstractPlugin implements CommandByOrderInterface
 {

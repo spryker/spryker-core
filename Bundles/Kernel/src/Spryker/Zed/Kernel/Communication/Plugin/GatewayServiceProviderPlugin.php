@@ -14,7 +14,11 @@ use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Spryker\Zed\Kernel\Communication\KernelCommunicationFactory;
 
+/**
+ * @method KernelCommunicationFactory getFactory()
+ */
 class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
 {
 

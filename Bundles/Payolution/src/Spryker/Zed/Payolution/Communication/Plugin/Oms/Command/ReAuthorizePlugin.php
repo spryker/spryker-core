@@ -12,9 +12,11 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
 
 /**
  * @method PayolutionFacade getFacade()
+ * @method PayolutionCommunicationFactory getFactory()
  */
 class ReAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
 {

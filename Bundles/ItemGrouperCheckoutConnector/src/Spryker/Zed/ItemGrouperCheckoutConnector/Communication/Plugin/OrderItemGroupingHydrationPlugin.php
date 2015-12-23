@@ -12,9 +12,11 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use Spryker\Zed\ItemGrouperCheckoutConnector\Business\ItemGrouperCheckoutConnectorFacade;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\ItemGrouperCheckoutConnector\Communication\ItemGrouperCheckoutConnectorCommunicationFactory;
 
 /**
  * @method ItemGrouperCheckoutConnectorFacade getFacade()
+ * @method ItemGrouperCheckoutConnectorCommunicationFactory getFactory()
  */
 class OrderItemGroupingHydrationPlugin extends AbstractPlugin implements CheckoutOrderHydrationInterface
 {

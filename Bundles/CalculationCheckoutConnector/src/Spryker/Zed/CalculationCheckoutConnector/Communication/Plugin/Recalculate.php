@@ -13,10 +13,12 @@ use Spryker\Zed\CalculationCheckoutConnector\Business\CalculationCheckoutConnect
 use Spryker\Zed\CalculationCheckoutConnector\CalculationCheckoutConnectorConfig;
 use Spryker\Zed\Checkout\Business\Calculation\CalculableContainer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface;
+use Spryker\Zed\CalculationCheckoutConnector\Communication\CalculationCheckoutConnectorCommunicationFactory;
 
 /**
  * @method CalculationCheckoutConnectorConfig getConfig()
  * @method CalculationCheckoutConnectorFacade getFacade()
+ * @method CalculationCheckoutConnectorCommunicationFactory getFactory()
  */
 class Recalculate extends AbstractPlugin implements CheckoutPreHydrationInterface
 {

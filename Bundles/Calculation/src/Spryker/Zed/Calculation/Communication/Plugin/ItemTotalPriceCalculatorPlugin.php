@@ -9,9 +9,11 @@ use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory;
 
 /**
  * @method CalculationFacade getFacade()
+ * @method CalculationCommunicationFactory getFactory()
  */
 class ItemTotalPriceCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
