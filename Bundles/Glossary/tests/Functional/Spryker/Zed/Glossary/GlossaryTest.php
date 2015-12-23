@@ -6,17 +6,17 @@
 
 namespace Functional\Spryker\Zed\Glossary;
 
-use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerBridge;
+use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
+use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Touch\Business\TouchFacade;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Generated\Shared\Transfer\TranslationTransfer;
-use Spryker\Zed\Touch\TouchDependencyProvider;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
-use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
@@ -34,22 +34,22 @@ class GlossaryTest extends AbstractFunctionalTest
     private $glossaryFacade;
 
     /**
-     * @var GlossaryToLocaleInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var LocaleFacade
      */
     private $localeFacade;
 
     /**
-     * @var GlossaryToTouchInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var TouchFacade
      */
     private $touchFacade;
 
     /**
-     * @var GlossaryQueryContainerInterface
+     * @var GlossaryQueryContainer
      */
     private $glossaryQueryContainer;
 
     /**
-     * @var TouchQueryContainerInterface
+     * @var TouchQueryContainer
      */
     private $touchQueryContainer;
 
@@ -60,16 +60,11 @@ class GlossaryTest extends AbstractFunctionalTest
     {
         parent::setUp();
 
-        $this->localeFacade = $this->getMock(GlossaryToLocaleInterface::class, ['getContainer', 'getQueryContainer', 'getLocale', 'getCurrentLocale', 'getAvailableLocales']);
-        $this->touchFacade = $this->getMock(GlossaryToTouchInterface::class, ['getContainer', 'getQueryContainer', 'touchActive', 'touchDeleted']);
-        $container = new Container();
-        $touchDependencyProvider = new TouchDependencyProvider();
-        $touchDependencyProvider->provideBusinessLayerDependencies($container);
-
-        $this->glossaryQueryContainer = new Mock\GlossaryQueryContainer();
-        $this->touchQueryContainer = new Mock\TouchQueryContainer();
-
-        $this->buildGlossaryFacade();
+        $this->glossaryQueryContainer = new GlossaryQueryContainer();
+        $this->localeFacade = new LocaleFacade();
+        $this->touchFacade = new TouchFacade();
+        $this->touchQueryContainer = new TouchQueryContainer();
+        $this->glossaryFacade = new GlossaryFacade();
     }
 
     /**
@@ -127,7 +122,6 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testCreateTranslationInsertsSomething()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $this->glossaryFacade->createKey('AKey');
         $locale = $this->localeFacade->createLocale('Local');
@@ -144,7 +138,6 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testCreateAndTouchTranslationInsertsSomethingAndTouchesIt()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
         $this->glossaryFacade->createKey('AKey2');
@@ -165,7 +158,6 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testUpdateTranslationUpdatesSomething()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $locale = $this->localeFacade->createLocale('Local');
 
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('AnotherKey', $locale->getLocaleName());
@@ -184,7 +176,6 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testUpdateAndTouchTranslationUpdatesSomethingAndTouchesIt()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $locale = $this->localeFacade->createLocale('Locaz');
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('AnotherKey2', $locale->getLocaleName());
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
@@ -206,7 +197,6 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testDeleteTranslationDeletesSoftly()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $locale = $this->localeFacade->createLocale('yx_qw');
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('KeyWithTranslation', $locale->getLocaleName());
         $this->glossaryFacade->createKey('KeyWithTranslation');
@@ -223,7 +213,6 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testSaveTranslationDoesACreate()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey');
         $locale = $this->localeFacade->createLocale('ab_xy');
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $locale->getIdLocale());
@@ -247,7 +236,6 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testSaveTranslationDoesAnUpdate()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey2');
         $locale = $this->localeFacade->createLocale('ab_yz');
         $transferTranslation = $this->glossaryFacade->createTranslation(
@@ -272,7 +260,6 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testSaveAndTouchTranslationDoesATouchForCreation()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey3');
         $localeId = $this->localeFacade->createLocale('ab_ef')->getIdLocale();
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeId);
@@ -301,7 +288,6 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testSaveAndTouchTranslationDoesATouchForUpdate()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey4');
         $locale = $this->localeFacade->createLocale('ab_fg');
         $transferTranslation = $this->glossaryFacade->createTranslation('SomeNonExistentKey4', $locale, 'some Value', true);
@@ -326,7 +312,6 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testCreatingTranslationForCurrentLocaleInsertsSomething()
     {
-        $this->markTestSkipped('[ErrorException] Container does not exist in Pyz\Zed\Glossary\Business\GlossaryBusinessFactory @see spryker/spryker#796');
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $this->glossaryFacade->createKey('SomeNonExistingKey5');
 
@@ -337,37 +322,6 @@ class GlossaryTest extends AbstractFunctionalTest
         $this->assertTrue($translationCountAfterCreation > $translationCountBeforeCreation);
 
         $this->assertNotNull($translation->getIdGlossaryTranslation());
-    }
-
-    /**
-     * @return void
-     */
-    protected function buildGlossaryFacade()
-    {
-        $this->glossaryFacade = new GlossaryFacade();
-
-        $container = new Container();
-
-        $container[GlossaryDependencyProvider::FACADE_TOUCH] = function (Container $container) {
-            return $this->touchFacade;
-        };
-
-        $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
-            return $this->localeFacade;
-        };
-
-        $container[GlossaryDependencyProvider::FACADE_MESSENGER] = function (Container $container) {
-            return new GlossaryToMessengerBridge($container->getLocator()->messenger()->facade());
-        };
-
-        $touchContainer = new Container();
-        $touchContainer[TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return (new Connection())->get();
-        };
-
-        $this->touchFacade->method('getContainer')->will($this->returnValue($touchContainer));
-
-        $this->glossaryFacade->setQueryContainer($this->glossaryQueryContainer);
     }
 
 }
