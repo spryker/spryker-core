@@ -53,4 +53,20 @@ abstract class AbstractPluginMethodAnnotationSniff extends AbstractMethodAnnotat
         return false;
     }
 
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     * @param $stackPointer
+     *
+     * @return bool|int
+     */
+    protected function getStackPointerOfClassBegin(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
+    {
+        $abstractPosition = $phpCsFile->findPrevious(T_ABSTRACT, $stackPointer);
+        if ($abstractPosition) {
+            return $abstractPosition;
+        }
+
+        return $stackPointer;
+    }
+
 }

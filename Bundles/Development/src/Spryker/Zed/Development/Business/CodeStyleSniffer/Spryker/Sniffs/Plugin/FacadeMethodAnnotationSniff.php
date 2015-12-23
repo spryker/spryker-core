@@ -75,6 +75,8 @@ class FacadeMethodAnnotationSniff extends AbstractPluginMethodAnnotationSniff
             [$this->getFacadeClassName($phpCsFile)]
         );
 
+        $stackPointer = $this->getStackPointerOfClassBegin($phpCsFile, $stackPointer);
+
         if (!$this->hasDocBlock($phpCsFile, $stackPointer)) {
             $phpCsFile->fixer->addNewlineBefore($stackPointer);
             $phpCsFile->fixer->addContentBefore($stackPointer, ' */');

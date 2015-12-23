@@ -72,6 +72,8 @@ class FactoryMethodAnnotationSniff extends AbstractPluginMethodAnnotationSniff
             [$this->getFactoryClassName($phpCsFile)]
         );
 
+        $stackPointer = $this->getStackPointerOfClassBegin($phpCsFile, $stackPointer);
+
         if (!$this->hasDocBlock($phpCsFile, $stackPointer)) {
             $phpCsFile->fixer->addNewlineBefore($stackPointer);
             $phpCsFile->fixer->addContentBefore($stackPointer, ' */');
