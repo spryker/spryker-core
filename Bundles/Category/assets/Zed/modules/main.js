@@ -7,5 +7,6 @@
 
 'use strict';
 
+require('ZedGui');
 require('../sass/category.scss');
 require('./legacy/category');

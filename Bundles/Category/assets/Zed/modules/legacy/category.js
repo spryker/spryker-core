@@ -9,14 +9,12 @@
 
 window.serializedList = {};
 
-var $ = require('jquery');
-window.$ = $;
-window.jQuery = $;
+// var $ = require('jquery');
+// window.$ = $;
+// window.jQuery = $;
+// var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
 
-require('static/assets/Zed/bundles/Gui/js/plugins/nestable/jquery.nestable');
-
-var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
-var categoryHelper = require('./category.helpers.js');
+var categoryHelper = require('./helpers.js');
 
 $(document).ready(function() {
     var triggeredFirstEvent = false;

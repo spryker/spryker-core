@@ -1,11 +1,10 @@
-#spy-cms.glossary{
+#spy-cms.glossary {
     hr {
         border: 1px dashed #eee;
     }
     .loading {
         display: none;
         position: absolute;
-
         img {
             display: inline;
             width: 15px;
@@ -30,10 +29,10 @@
         }
     }
     .key-container {
-        display:none;
+        display: none;
         position: absolute;
         width: 400px;
-        font-family: Helvetica,Arial,sans-serif;
+        font-family: Helvetica, Arial, sans-serif;
         font-size: 13px;
         color: #676a6c;
         overflow-x: hidden;

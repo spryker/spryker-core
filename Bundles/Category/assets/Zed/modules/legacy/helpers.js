@@ -7,7 +7,7 @@
 
 'use strict';
 
-var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
+// var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
 
 var showLoaderBar = function(){
     $('#category-loader').removeClass('hidden');

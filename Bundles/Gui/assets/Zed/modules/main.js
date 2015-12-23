@@ -20,6 +20,8 @@ require('datatables.net-buttons');
 require('datatables.net-buttons-bs');
 require('datatables.net-responsive');
 require('datatables.net-select');
+require('nestable');
+require('select2');
 
 // inspinia
 require('../../Inspinia/inspinia');
