@@ -5,9 +5,11 @@
 
 namespace Spryker\Zed\User\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class ResetPasswordForm extends AbstractForm
 {
@@ -31,36 +33,46 @@ class ResetPasswordForm extends AbstractForm
     }
 
     /**
-     * Prepares form
-     *
-     * @return self
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return $this->addPassword(
-            self::CURRENT_PASSWORD,
-            [
-                'label' => 'Current password',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                    new CurrentPassword([
-                        'facadeUser' => $this->userFacade,
-                    ]),
-                ],
-            ]
-        )->addRepeated(
-            self::PASSWORD,
-            [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-                'invalid_message' => 'The password fields must match.',
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
-                'required' => true,
-                'type' => 'password',
-            ]
-        );
+        $builder->add(self::CURRENT_PASSWORD, 'password', [
+            'label' => 'Current password',
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+                new CurrentPassword([
+                    'facadeUser' => $this->userFacade,
+                ]),
+            ],
+        ])
+        ->add(self::PASSWORD, 'repeated', [
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+            'invalid_message' => 'The password fields must match.',
+            'first_options' => ['label' => 'Password'],
+            'second_options' => ['label' => 'Repeat Password'],
+            'required' => true,
+            'type' => 'password',
+        ]);
+    }
+
+    /**
+     * @return null
+     */
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'reset_password';
     }
 
     /**
@@ -68,7 +80,7 @@ class ResetPasswordForm extends AbstractForm
      *
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         return [];
     }

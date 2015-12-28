@@ -7,6 +7,7 @@ namespace Spryker\Zed\User\Communication\Form;
 
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class UserUpdateForm extends UserForm
 {
@@ -35,15 +36,16 @@ class UserUpdateForm extends UserForm
     }
 
     /**
-     * @return self
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildFormFields();
+        parent::buildForm($builder, $options);
 
-        $this->addUserStatus();
-
-        return $this;
+        $builder->add(self::STATUS, 'choice', [
+            'choices' => $this->getStatusSelectChoices(),
+        ]);
     }
 
     /**
@@ -51,7 +53,7 @@ class UserUpdateForm extends UserForm
      *
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $userTransfer = $this->userFacade->getUserById($this->idUser);
 

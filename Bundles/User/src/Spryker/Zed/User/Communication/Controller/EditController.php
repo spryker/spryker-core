@@ -31,10 +31,10 @@ class EditController extends AbstractController
     /**
      * @return array
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $userForm = $this->getFactory()->createUserForm();
-        $userForm->handleRequest();
+        $userForm->handleRequest($request);
 
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
@@ -78,7 +78,7 @@ class EditController extends AbstractController
         }
 
         $userForm = $this->getFactory()->createUpdateUserForm($idUser, $this->getFacade());
-        $userForm->handleRequest();
+        $userForm->handleRequest($request);
 
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
@@ -182,11 +182,11 @@ class EditController extends AbstractController
     /**
      * @return array
      */
-    public function passwordResetAction()
+    public function passwordResetAction(Request $request)
     {
         $currentUserTransfer = $this->getFacade()->getCurrentUser();
         $resetPasswordForm = $this->getFactory()->createResetPasswordForm($this->getFacade());
-        $resetPasswordForm->handleRequest();
+        $resetPasswordForm->handleRequest($request);
 
         if ($resetPasswordForm->isValid()) {
             $formData = $resetPasswordForm->getData();
