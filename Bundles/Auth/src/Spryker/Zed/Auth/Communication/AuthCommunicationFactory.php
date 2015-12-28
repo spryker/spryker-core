@@ -27,9 +27,9 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createLoginForm()
     {
-        $loginForm = new LoginForm();
+        $form = new LoginForm();
 
-        return $this->createForm($loginForm);
+        return $this->createForm($form);
     }
 
     /**
@@ -37,7 +37,9 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createResetPasswordRequestForm()
     {
-        return new ResetPasswordRequestForm();
+        $form = new ResetPasswordRequestForm();
+
+        return $this->createForm($form);
     }
 
     /**
@@ -45,7 +47,9 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createResetPasswordForm()
     {
-        return new ResetPasswordForm();
+        $form = new ResetPasswordForm();
+
+        return $this->createForm($form);
     }
 
     /**

@@ -5,7 +5,8 @@
 
 namespace Spryker\Zed\Auth\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class ResetPasswordForm extends AbstractForm
 {
@@ -13,48 +14,59 @@ class ResetPasswordForm extends AbstractForm
     const PASSWORD = 'password';
 
     /**
-     * Prepares form
+     * @param FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return self
+     * @return FormBuilderInterface
      */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return $this->addRepeated(
-            self::PASSWORD,
-            [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-                'invalid_message' => 'The password fields must match.',
-                'first_options' => [
-                    'label' => 'Password',
-                    'attr' => [
-                        'placeholder' => 'Password',
-                    ],
-                ],
-                'second_options' => [
-                    'label' => 'Repeat Password',
-                    'attr' => [
-                        'placeholder' => 'Repeat Password',
-                    ],
-                ],
-                'required' => true,
-                'type' => 'password',
+        return $builder->add(self::PASSWORD, 'repeated', [
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+            'invalid_message' => 'The password fields must match.',
+            'first_options' => [
+                'label' => 'Password',
                 'attr' => [
-                    'class' => 'btn btn-default btn-block btn-outline',
+                    'placeholder' => 'Password',
                 ],
-            ]
-        );
+            ],
+            'second_options' => [
+                'label' => 'Repeat Password',
+                'attr' => [
+                    'placeholder' => 'Repeat Password',
+                ],
+            ],
+            'required' => true,
+            'type' => 'password',
+            'attr' => [
+                'class' => 'btn btn-default btn-block btn-outline',
+            ],
+        ]);
     }
 
     /**
-     * Set the values for fields
-     *
+     * @return null
+     */
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'reset_password';
+    }
+
+    /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         return [];
     }
-
 }

@@ -29,7 +29,7 @@ class LoginController extends AbstractController
         $form = $this->getFactory()->createLoginForm();
         $form->handleRequest($request);
 
-        if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {
+        if ($form->isValid()) {
             $formData = $form->getData();
 
             $isLogged = $this->getFacade()->login($formData[LoginForm::USERNAME], $formData[LoginForm::PASSWORD]);
