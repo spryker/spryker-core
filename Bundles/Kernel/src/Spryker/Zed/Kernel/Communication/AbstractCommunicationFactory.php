@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Kernel\Communication;
 
+use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Container;
@@ -34,7 +35,7 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
      */
     protected function getFormFactory()
     {
-        return $this->getProvidedDependency(self::FORM_FACTORY);
+        return (new Pimple())->getApplication()[self::FORM_FACTORY];
     }
 
     /**
