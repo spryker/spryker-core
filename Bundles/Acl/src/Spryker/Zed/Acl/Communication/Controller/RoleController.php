@@ -14,6 +14,7 @@ use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Acl\Communication\Form\RoleForm;
@@ -57,10 +58,10 @@ class RoleController extends AbstractController
     /**
      * @return array|RedirectResponse
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $ruleForm = $this->getFactory()->createRoleForm();
-        $ruleForm->handleRequest();
+        $ruleForm->handleRequest($request);
 
         if ($ruleForm->isValid()) {
             $formData = $ruleForm->getData();
@@ -145,10 +146,10 @@ class RoleController extends AbstractController
         $roleTransfer = $this->getFacade()->getRoleById($idRole);
 
         $roleForm = $this->getFactory()->createRoleForm();
-        $this->handleRoleForm($roleForm, $roleTransfer);
+        $this->handleRoleForm($request, $roleForm, $roleTransfer);
 
         $rulesetForm = $this->getFactory()->createRulesetForm();
-        $this->handleRulesetForm($rulesetForm, $idRole);
+        $this->handleRulesetForm($request, $rulesetForm, $idRole);
 
         if ($rulesetForm->isSubmitted() && $rulesetForm->isValid()) {
             return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idRole));
@@ -165,14 +166,13 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param RulesetForm $rulesetForm
+     * @param Request $request
+     * @param Form $rulesetForm
      * @param int $idRole
-     *
-     * @return RulesetForm
      */
-    protected function handleRulesetForm(RulesetForm $rulesetForm, $idRole)
+    protected function handleRulesetForm(Request $request, Form $rulesetForm, $idRole)
     {
-        $rulesetForm->handleRequest();
+        $rulesetForm->handleRequest($request);
         if ($rulesetForm->isValid()) {
             $formData = $rulesetForm->getData();
 
@@ -191,14 +191,13 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param RoleForm $roleForm
+     * @param Request $request
+     * @param Form $roleForm
      * @param RoleTransfer $roleTransfer
-     *
-     * @return void
      */
-    protected function handleRoleForm(RoleForm $roleForm, RoleTransfer $roleTransfer)
+    protected function handleRoleForm(Request $request, Form $roleForm, RoleTransfer $roleTransfer)
     {
-        $roleForm->handleRequest();
+        $roleForm->handleRequest($request);
         if (!$roleForm->isSubmitted()) {
             $roleForm->setData($roleTransfer->toArray());
         }

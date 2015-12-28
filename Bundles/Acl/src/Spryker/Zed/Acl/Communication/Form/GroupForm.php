@@ -6,9 +6,10 @@
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
+use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Zed\Acl\Communication\Controller\GroupController;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -42,11 +43,12 @@ class GroupForm extends AbstractForm
     }
 
     /**
-     * @return GroupForm
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addText(self::FIELD_TITLE, [
+        $builder->add(self::FIELD_TITLE, 'text', [
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank([
                     'groups' => [self::VALIDATE_ADD, self::VALIDATE_EDIT],
@@ -62,22 +64,35 @@ class GroupForm extends AbstractForm
                     ],
                 ]),
             ],
-        ]);
-
-        $this->add(self::FIELD_ROLES, 'choice', [
+        ])
+        ->add(self::FIELD_ROLES, 'choice', [
             'label' => 'Customer Group',
             'empty_value' => false,
             'multiple' => true,
             'choices' => $this->getAvailableRoleList(),
         ]);
+    }
 
-        return $this;
+    /**
+     * @return null
+     */
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'group';
     }
 
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $defaultData = [
             self::FIELD_TITLE => '',

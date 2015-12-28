@@ -83,12 +83,14 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return GroupForm
      */
-    public function createGroupForm(Request $request)
+    public function createGroupForm(Request $request, array $options)
     {
-        return new GroupForm(
+        $form = new GroupForm(
             $this->getQueryContainer(),
             $request
         );
+
+        return $this->createForm($form, $options);
     }
 
     /**
@@ -104,7 +106,9 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createRoleForm()
     {
-        return new RoleForm();
+        $form = new RoleForm();
+
+        return $this->createForm($form);
     }
 
     /**
@@ -112,7 +116,9 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createRulesetForm()
     {
-        return new RulesetForm();
+        $form = new RulesetForm();
+
+        return $this->createForm($form);
     }
 
     /**

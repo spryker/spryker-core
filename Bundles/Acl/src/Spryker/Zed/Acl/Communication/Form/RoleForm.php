@@ -5,7 +5,9 @@
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Shared\Transfer\TransferInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class RoleForm extends AbstractForm
 {
@@ -13,58 +15,45 @@ class RoleForm extends AbstractForm
     const NAME = 'name';
     const ID_ROLE = 'id_acl_role';
 
-    /**
-     * @return self
-     */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addName()
-            ->addRoleId();
-
-        return $this;
+        $builder->add(self::NAME, 'text', [
+            'label' => 'Role name',
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+        ])
+        ->add(self::ID_ROLE, 'hidden', [
+            'label' => 'Role name',
+        ]);
     }
 
-    /**
-     * @return self
-     */
-    protected function addName()
+    protected function getDataClass()
     {
-        $this->addText(
-            self::NAME,
-            [
-                'label' => 'Role name',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ]
-        );
-
-        return $this;
+        return null;
     }
+
+    public function getName()
+    {
+        return 'role';
+    }
+
 
     /**
      * @return self
      */
     protected function addRoleId()
     {
-        $this->addHidden(
-            self::ID_ROLE,
-            [
-                'label' => 'Role name',
-            ]
-        );
+
 
         return $this;
     }
 
-    /**
-     * Set the values for fields
-     *
-     * @return array
-     */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
+        // TODO: Implement populateFormFields() method.
     }
+
 
     /**
      * @return string

@@ -13,6 +13,7 @@ use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,12 +61,11 @@ class GroupController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $form = $this->getFactory()->createGroupForm($request);
-        $form->setOptions([
+        $form = $this->getFactory()->createGroupForm($request, [
             'validation_groups' => [GroupForm::VALIDATE_ADD],
         ]);
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
@@ -94,12 +94,11 @@ class GroupController extends AbstractController
     {
         $idAclGroup = $request->query->get(self::PARAMETER_ID_GROUP);
 
-        $form = $this->getFactory()->createGroupForm($request);
-        $form->setOptions([
+        $form = $this->getFactory()->createGroupForm($request, [
             'validation_groups' => [GroupForm::VALIDATE_EDIT],
         ]);
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
@@ -126,11 +125,11 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param GroupForm $form
+     * @param Form $form
      *
      * @return RolesTransfer
      */
-    protected function getRoleTransfersFromForm(GroupForm $form)
+    protected function getRoleTransfersFromForm(Form $form)
     {
         $roles = new RolesTransfer();
         $formData = $form->getData();
