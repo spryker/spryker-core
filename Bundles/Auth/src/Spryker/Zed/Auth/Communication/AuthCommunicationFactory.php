@@ -27,7 +27,9 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createLoginForm()
     {
-        return new LoginForm();
+        $loginForm = new LoginForm();
+
+        return $this->createForm($loginForm);
     }
 
     /**

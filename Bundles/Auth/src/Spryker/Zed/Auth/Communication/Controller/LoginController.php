@@ -27,7 +27,7 @@ class LoginController extends AbstractController
     public function indexAction(Request $request)
     {
         $form = $this->getFactory()->createLoginForm();
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {
             $formData = $form->getData();
