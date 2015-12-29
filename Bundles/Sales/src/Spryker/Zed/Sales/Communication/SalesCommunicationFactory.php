@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Communication;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm\Collection;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
@@ -75,13 +74,20 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param ObjectCollection $orderItems
      *
-     * @return Collection
+     * @return array
      */
-    public function getOrderItemSplitFormCollection(ObjectCollection $orderItems)
+    public function createOrderItemSplitFormCollection(ObjectCollection $orderItems)
     {
-        $form = new Collection($orderItems);
+        $formCollection = [];
 
-        return $this->createForm($form);
+        foreach ($orderItems as $item) {
+            $form = new OrderItemSplitForm($item);
+            $formCollection[$item->getIdSalesOrderItem()] = $this->createForm($form, [
+                'action' => '/sales/order-item-split/split',
+            ])->createView();
+        }
+
+        return $formCollection;
     }
 
     /**

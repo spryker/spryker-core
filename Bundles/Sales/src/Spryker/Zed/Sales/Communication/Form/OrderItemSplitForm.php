@@ -6,17 +6,39 @@
 
 namespace Spryker\Zed\Sales\Communication\Form;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class OrderItemSplitForm extends AbstractForm
 {
-
     const QUANTITY = 'quantity';
     const ID_ORDER_ITEM = 'id_order_item';
     const ID_ORDER = 'id_order';
     const VALIDATE_MESSAGE_NUMERIC = 'Please provide numeric value.';
     const VALIDATION_MESSAGE_QUANTITY = 'Please provide quantity.';
+
+    /**
+     * @var SpySalesOrderItem
+     */
+    protected $orderItem;
+
+    /**
+     * @param SpySalesOrderItem $orderItem
+     */
+    public function __construct(SpySalesOrderItem $orderItem = null)
+    {
+        $this->orderItem = $orderItem;
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+    }
 
     /**
      * @return null
@@ -54,17 +76,26 @@ class OrderItemSplitForm extends AbstractForm
             ])
             ->add(self::ID_ORDER_ITEM, 'hidden')
             ->add(self::ID_ORDER, 'hidden')
-            ->add('Split', 'submit');
+            ->add('Split', 'submit', [
+                'attr' => [
+                    'class' => 'btn btn-sm btn-primary'
+                ],
+            ]);
     }
 
     /**
-     * Set the values for fields
-     *
-     * @return self
+     * @return array
      */
     public function populateFormFields()
     {
-        return [];
+        if ($this->orderItem === null) {
+            return [];
+        }
+
+        return [
+            self::ID_ORDER_ITEM => $this->orderItem->getIdSalesOrderItem(),
+            self::ID_ORDER => $this->orderItem->getFkSalesOrder(),
+        ];
     }
 
 }

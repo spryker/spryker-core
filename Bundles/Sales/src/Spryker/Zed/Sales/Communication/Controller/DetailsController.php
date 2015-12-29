@@ -51,7 +51,7 @@ class DetailsController extends AbstractController
             $orderItem->resetPartialStateHistories(false);
         }
 
-        $orderItemSplitFormCollection = $this->getFactory()->getOrderItemSplitFormCollection($orderItems);
+        $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderItems);
 
         $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
         $allEvents = $this->groupEvents($events);
@@ -88,7 +88,7 @@ class DetailsController extends AbstractController
             'refunds' => $refunds,
             'billingAddress' => $billingAddress,
             'shippingAddress' => $shippingAddress,
-            'orderItemSplitFormCollection' => $orderItemSplitFormCollection->create(),
+            'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'itemsInProgress' => $itemsInProgress,
             'itemsPaid' => $itemsPaid,
             'itemsCancelled' => $itemsCancelled,
