@@ -32,7 +32,7 @@ class LoginController extends AbstractController
         if ($form->isValid()) {
             $formData = $form->getData();
 
-            $isLogged = $this->getFacade()->login($formData[LoginForm::USERNAME], $formData[LoginForm::PASSWORD]);
+            $isLogged = $this->getFacade()->login($formData[LoginForm::FIELD_USERNAME], $formData[LoginForm::FIELD_PASSWORD]);
 
             if ($isLogged) {
                 return $this->redirectResponse('/');

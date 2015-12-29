@@ -12,12 +12,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 class LoginForm extends AbstractForm
 {
 
-    const USERNAME = 'username';
-    const PASSWORD = 'password';
+    const FIELD_USERNAME = 'username';
+    const FIELD_PASSWORD = 'password';
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::USERNAME, 'text', [
+        $builder->add(self::FIELD_USERNAME, 'text', [
             'constraints' => [
                 $this->getConstraints()->createConstraintRequired(),
                 $this->getConstraints()->createConstraintNotBlank(),
@@ -26,7 +26,7 @@ class LoginForm extends AbstractForm
                 'placeholder' => 'Email Address',
             ],
         ])
-        ->add(self::PASSWORD, 'password', [
+        ->add(self::FIELD_PASSWORD, 'password', [
             'constraints' => [
                 $this->getConstraints()->createConstraintRequired(),
                 $this->getConstraints()->createConstraintNotBlank(),
@@ -37,16 +37,25 @@ class LoginForm extends AbstractForm
         ]);
     }
 
+    /**
+     * @return array
+     */
     public function populateFormFields()
     {
         return [];
     }
 
+    /**
+     * @return null
+     */
     protected function getDataClass()
     {
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'auth';
