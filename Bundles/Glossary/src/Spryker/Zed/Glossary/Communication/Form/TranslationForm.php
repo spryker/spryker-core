@@ -13,7 +13,10 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Shared\Transfer\TransferInterface;
+use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class TranslationForm extends AbstractForm
 {
@@ -63,28 +66,43 @@ class TranslationForm extends AbstractForm
     }
 
     /**
-     * @return array
+     * @return null
      */
-    public function buildFormFields()
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'translation';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if (self::UPDATE === $this->type) {
-            $this->addText(self::FIELD_GLOSSARY_KEY, [
+            $builder->add(self::FIELD_GLOSSARY_KEY, 'text', [
                 'label' => self::NAME,
                 'attr' => [
                     'readonly' => 'readonly',
                 ],
             ]);
         } else {
-            $this->addAutosuggest(self::FIELD_GLOSSARY_KEY, [
+            $builder->add(self::FIELD_GLOSSARY_KEY, new AutosuggestType(), [
                 'label' => self::NAME,
                 'url' => '/glossary/key/suggest',
                 'constraints' => $this->getFieldDefaultConstraints(),
             ]);
         }
 
-        $this->add(self::FIELD_LOCALES, 'collection', $this->buildLocaleFieldConfiguration());
-
-        return $this;
+        $builder->add(self::FIELD_LOCALES, 'collection', $this->buildLocaleFieldConfiguration());
     }
 
     /**
@@ -126,11 +144,11 @@ class TranslationForm extends AbstractForm
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $defaultData = [];
 
-        $fkGlossaryKey = $this->request->get(self::URL_PARAMETER_GLOSSARY_KEY);
+        $fkGlossaryKey = $this->getRequest()->query->get(self::URL_PARAMETER_GLOSSARY_KEY);
 
         if (!empty($fkGlossaryKey)) {
             $glossaryKeyEntity = $this->getGlossaryKey($fkGlossaryKey);
