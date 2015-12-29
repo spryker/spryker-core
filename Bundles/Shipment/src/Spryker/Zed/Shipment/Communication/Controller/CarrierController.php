@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -22,11 +23,11 @@ class CarrierController extends AbstractController
     /**
      * @return Response
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $form = $this->getFactory()
             ->createCarrierForm();
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
