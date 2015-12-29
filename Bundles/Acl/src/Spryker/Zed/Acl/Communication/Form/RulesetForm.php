@@ -12,10 +12,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class RulesetForm extends AbstractForm
 {
 
-    const BUNDLE = 'bundle';
-    const CONTROLLER = 'controller';
-    const ACTION = 'action';
-    const TYPE = 'type';
+    const FIELD_BUNDLE = 'bundle';
+    const FIELD_CONTROLLER = 'controller';
+    const FIELD_ACTION = 'action';
+    const FIELD_TYPE = 'type';
 
     /**
      * @param FormBuilderInterface $builder
@@ -23,25 +23,25 @@ class RulesetForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::BUNDLE, 'text', [
+        $builder->add(self::FIELD_BUNDLE, 'text', [
             'label' => 'Bundle',
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank(),
             ],
         ])
-        ->add(self::CONTROLLER, 'text', [
+        ->add(self::FIELD_CONTROLLER, 'text', [
             'label' => 'Controller',
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank(),
             ],
         ])
-        ->add(self::ACTION, 'text', [
+        ->add(self::FIELD_ACTION, 'text', [
             'label' => 'Action',
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank(),
             ],
         ])
-        ->add(self::TYPE, 'choice', [
+        ->add(self::FIELD_TYPE, 'choice', [
             'label' => 'Permission',
             'choices' => $this->getPermissionSelectChoices(),
             'placeholder' => false,

@@ -102,7 +102,7 @@ class BlockController extends AbstractController
             $data = $form->getData();
 
             $pageTransfer = $this->createPageTransfer($data);
-            $pageTransfer->setIdCmsPage($data[CmsBlockForm::FK_PAGE]);
+            $pageTransfer->setIdCmsPage($data[CmsBlockForm::FIELD_FK_PAGE]);
 
             $this->updatePageAndBlock($data, $pageTransfer);
 
@@ -138,8 +138,8 @@ class BlockController extends AbstractController
      */
     protected function updatePageAndBlock(array $data, PageTransfer $pageTransfer)
     {
-        if ((int) $data[CmsPageForm::CURRENT_TEMPLATE] !== (int) $data[CmsPageForm::FK_TEMPLATE]) {
-            $this->getFacade()->deleteGlossaryKeysByIdPage($data[CmsBlockForm::FK_PAGE]);
+        if ((int) $data[CmsPageForm::FIELD_CURRENT_TEMPLATE] !== (int) $data[CmsPageForm::FIELD_FK_TEMPLATE]) {
+            $this->getFacade()->deleteGlossaryKeysByIdPage($data[CmsBlockForm::FIELD_FK_PAGE]);
         }
         $blockTransfer = $this->createBlockTransfer($data);
 
@@ -155,7 +155,7 @@ class BlockController extends AbstractController
     {
         $blockTransfer = new CmsBlockTransfer();
         $blockTransfer->fromArray($data, true);
-        if ($data[CmsBlockForm::TYPE] === 'static') {
+        if ($data[CmsBlockForm::FIELD_TYPE] === 'static') {
             $blockTransfer->setValue(0);
         }
 

@@ -329,18 +329,18 @@ class GlossaryController extends AbstractController
      */
     private function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer)
     {
-        $this->glossaryKeyName = $data[CmsGlossaryForm::GLOSSARY_KEY];
+        $this->glossaryKeyName = $data[CmsGlossaryForm::FIELD_GLOSSARY_KEY];
 
         if ($this->glossaryKeyName === null) {
             $this->glossaryKeyName = $this->getFacade()
-                ->generateGlossaryKeyName($data[CmsGlossaryForm::TEMPLATE_NAME], $data[CmsGlossaryForm::PLACEHOLDER]);
+                ->generateGlossaryKeyName($data[CmsGlossaryForm::FIELD_TEMPLATE_NAME], $data[CmsGlossaryForm::FIELD_PLACEHOLDER]);
         }
 
         $keyTranslationTransfer = new KeyTranslationTransfer();
         $keyTranslationTransfer->setGlossaryKey($this->glossaryKeyName);
 
         $keyTranslationTransfer->setLocales([
-            $localeTransfer->getLocaleName() => $data[CmsGlossaryForm::TRANSLATION],
+            $localeTransfer->getLocaleName() => $data[CmsGlossaryForm::FIELD_TRANSLATION],
         ]);
 
         return $keyTranslationTransfer;

@@ -19,16 +19,16 @@ class CmsBlockForm extends AbstractForm
     const TYPE_STATIC = 'static';
     const CATEGORY = 'category';
     const PRODUCT = 'product';
-    const SELECT_VALUE = 'selectValue';
-    const ID_CMS_BLOCK = 'idCmsBlock';
-    const FK_PAGE = 'fkPage';
-    const FK_TEMPLATE = 'fkTemplate';
-    const NAME = 'name';
-    const TYPE = 'type';
-    const VALUE = 'value';
-    const CURRENT_TEMPLATE = 'cur_temp';
+    const FIELD_SELECT_VALUE = 'selectValue';
+    const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
+    const FIELD_FK_PAGE = 'fkPage';
+    const FIELD_FK_TEMPLATE = 'fkTemplate';
+    const FIELD_NAME = 'name';
+    const FIELD_TYPE = 'type';
+    const FIELD_VALUE = 'value';
+    const FIELD_CURRENT_TEMPLATE = 'cur_temp';
     const PAGE = 'Page';
-    const IS_ACTIVE = 'is_active';
+    const FIELD_IS_ACTIVE = 'is_active';
 
     /**
      * @var SpyCmsTemplateQuery
@@ -126,18 +126,18 @@ class CmsBlockForm extends AbstractForm
             ],
         ]);
 
-        $builder->add(self::ID_CMS_BLOCK, 'hidden')
-            ->add(self::CURRENT_TEMPLATE, 'hidden')
-            ->add(self::FK_PAGE, 'hidden')
-            ->add(self::FK_TEMPLATE, 'choice', [
+        $builder->add(self::FIELD_ID_CMS_BLOCK, 'hidden')
+            ->add(self::FIELD_CURRENT_TEMPLATE, 'hidden')
+            ->add(self::FIELD_FK_PAGE, 'hidden')
+            ->add(self::FIELD_FK_TEMPLATE, 'choice', [
                 'label' => 'Template',
                 'choices' => $this->getTemplateList(),
             ])
-            ->add(self::NAME, 'text', [
+            ->add(self::FIELD_NAME, 'text', [
                 'label' => 'Name',
                 'constraints' => $blockConstraints,
             ])
-            ->add(self::TYPE, 'choice', [
+            ->add(self::FIELD_TYPE, 'choice', [
                 'label' => 'Type',
                 'choices' => [
                     self::TYPE_STATIC => 'Static',
@@ -145,13 +145,13 @@ class CmsBlockForm extends AbstractForm
                     self::PRODUCT => 'Product',
                 ],
             ])
-            ->add(self::SELECT_VALUE, 'text', [
+            ->add(self::FIELD_SELECT_VALUE, 'text', [
                 'label' => 'Value',
             ])
-            ->add(self::VALUE, 'hidden', [
+            ->add(self::FIELD_VALUE, 'hidden', [
                 'label' => 'Value',
             ])
-            ->add(self::IS_ACTIVE, 'checkbox', [
+            ->add(self::FIELD_IS_ACTIVE, 'checkbox', [
                 'label' => 'Active',
             ]);
     }
@@ -184,15 +184,15 @@ class CmsBlockForm extends AbstractForm
             $this->selectValue = $pageUrlTemplate->getCategoryName();
 
             return [
-                self::ID_CMS_BLOCK => $pageUrlTemplate->getIdCmsBlock(),
-                self::FK_PAGE => $pageUrlTemplate->getFkPage(),
-                self::FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::NAME => $pageUrlTemplate->getName(),
-                self::TYPE => $pageUrlTemplate->getType(),
-                self::SELECT_VALUE => $pageUrlTemplate->getCategoryName(),
-                self::VALUE => $pageUrlTemplate->getValue(),
-                self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::IS_ACTIVE => (bool) $pageUrlTemplate->getIsActive(),
+                self::FIELD_ID_CMS_BLOCK => $pageUrlTemplate->getIdCmsBlock(),
+                self::FIELD_FK_PAGE => $pageUrlTemplate->getFkPage(),
+                self::FIELD_FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
+                self::FIELD_NAME => $pageUrlTemplate->getName(),
+                self::FIELD_TYPE => $pageUrlTemplate->getType(),
+                self::FIELD_SELECT_VALUE => $pageUrlTemplate->getCategoryName(),
+                self::FIELD_VALUE => $pageUrlTemplate->getValue(),
+                self::FIELD_CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
+                self::FIELD_IS_ACTIVE => (bool) $pageUrlTemplate->getIsActive(),
             ];
         }
     }

@@ -15,17 +15,17 @@ use Symfony\Component\Validator\Context\ExecutionContext;
 class CmsGlossaryForm extends AbstractForm
 {
 
-    const FK_PAGE = 'fkPage';
-    const PLACEHOLDER = 'placeholder';
-    const GLOSSARY_KEY = 'glossary_key';
-    const ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
+    const FIELD_FK_PAGE = 'fkPage';
+    const FIELD_PLACEHOLDER = 'placeholder';
+    const FIELD_GLOSSARY_KEY = 'glossary_key';
+    const FIELD_ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
     const AUTO_GLOSSARY = 'Auto';
-    const SEARCH_OPTION = 'search_option';
+    const FIELD_SEARCH_OPTION = 'search_option';
     const GLOSSARY_NEW = 'New glossary';
     const GLOSSARY_FIND = 'Find glossary';
     const FULLTEXT_SEARCH = 'Full text';
-    const TRANSLATION = 'translation';
-    const TEMPLATE_NAME = 'templateName';
+    const FIELD_TRANSLATION = 'translation';
+    const FIELD_TEMPLATE_NAME = 'templateName';
 
     /**
      * @var SpyCmsGlossaryKeyMappingQuery
@@ -111,11 +111,11 @@ class CmsGlossaryForm extends AbstractForm
 
         $placeholderParams['disabled'] = 'disabled';
 
-        $builder->add(self::FK_PAGE, 'hidden')
-            ->add(self::ID_KEY_MAPPING, 'hidden')
-            ->add(self::TEMPLATE_NAME, 'hidden')
-            ->add(self::PLACEHOLDER, 'text', $placeholderParams)
-            ->add(self::SEARCH_OPTION, 'choice', [
+        $builder->add(self::FIELD_FK_PAGE, 'hidden')
+            ->add(self::FIELD_ID_KEY_MAPPING, 'hidden')
+            ->add(self::FIELD_TEMPLATE_NAME, 'hidden')
+            ->add(self::FIELD_PLACEHOLDER, 'text', $placeholderParams)
+            ->add(self::FIELD_SEARCH_OPTION, 'choice', [
                 'label' => 'Search Type',
                 'choices' => [
                     self::AUTO_GLOSSARY,
@@ -124,8 +124,8 @@ class CmsGlossaryForm extends AbstractForm
                     self::FULLTEXT_SEARCH,
                 ],
             ])
-            ->add(self::GLOSSARY_KEY, 'text')
-            ->add(self::TRANSLATION, 'textarea', [
+            ->add(self::FIELD_GLOSSARY_KEY, 'text')
+            ->add(self::FIELD_TRANSLATION, 'textarea', [
                 'label' => 'Content',
                 'constraints' => $this->getConstraints()->getRequiredConstraints(),
                 'attr' => [
@@ -140,21 +140,21 @@ class CmsGlossaryForm extends AbstractForm
     public function populateFormFields()
     {
         $formItems = [
-            self::FK_PAGE => $this->idPage,
-            self::ID_KEY_MAPPING => $this->idMapping,
+            self::FIELD_FK_PAGE => $this->idPage,
+            self::FIELD_ID_KEY_MAPPING => $this->idMapping,
         ];
 
         if ($this->placeholder) {
-            $formItems[self::PLACEHOLDER] = $this->placeholder;
+            $formItems[self::FIELD_PLACEHOLDER] = $this->placeholder;
         }
 
         if ($this->idMapping !== null) {
             $glossaryMapping = $this->glossaryByIdQuery->findOne();
 
             if ($glossaryMapping) {
-                $formItems[self::PLACEHOLDER] = $glossaryMapping->getPlaceholder();
-                $formItems[self::GLOSSARY_KEY] = $glossaryMapping->getKeyname();
-                $formItems[self::TRANSLATION] = $glossaryMapping->getTrans();
+                $formItems[self::FIELD_PLACEHOLDER] = $glossaryMapping->getPlaceholder();
+                $formItems[self::FIELD_GLOSSARY_KEY] = $glossaryMapping->getKeyname();
+                $formItems[self::FIELD_TRANSLATION] = $glossaryMapping->getTrans();
             }
         }
 

@@ -67,7 +67,7 @@ class PageController extends AbstractController
             $pageTransfer = $this->createPageTransfer($data);
 
             $this->getFacade()
-                ->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::URL]);
+                ->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::FIELD_URL]);
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
@@ -101,7 +101,7 @@ class PageController extends AbstractController
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
             $this->getFacade()->touchPageActive($pageTransfer);
 
-            if ((int) $data[CmsPageForm::CURRENT_TEMPLATE] !== (int) $data[CmsPageForm::FK_TEMPLATE]) {
+            if ((int) $data[CmsPageForm::FIELD_CURRENT_TEMPLATE] !== (int) $data[CmsPageForm::FIELD_FK_TEMPLATE]) {
                 $this->getFacade()->deleteGlossaryKeysByIdPage($idPage);
             }
 

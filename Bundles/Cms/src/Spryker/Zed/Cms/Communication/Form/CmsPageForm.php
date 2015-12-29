@@ -20,13 +20,12 @@ class CmsPageForm extends AbstractForm
 
     const ADD = 'add';
     const UPDATE = 'update';
-    const ID_CMS_PAGE = 'idCmsPage';
-    const FK_TEMPLATE = 'fkTemplate';
-    const ID_URL = 'idUrl';
-    const URL = 'url';
-    const CURRENT_TEMPLATE = 'cur_temp';
+    const FIELD_ID_CMS_PAGE = 'idCmsPage';
+    const FIELD_FK_TEMPLATE = 'fkTemplate';
+    const FIELD_URL = 'url';
+    const FIELD_CURRENT_TEMPLATE = 'cur_temp';
     const PAGE = 'Page';
-    const IS_ACTIVE = 'is_active';
+    const FIELD_IS_ACTIVE = 'is_active';
 
     /**
      * @var SpyCmsTemplateQuery
@@ -108,18 +107,18 @@ class CmsPageForm extends AbstractForm
             ],
         ]);
 
-        $builder->add(self::ID_CMS_PAGE, 'hidden')
+        $builder->add(self::FIELD_ID_CMS_PAGE, 'hidden')
             ->add(CmsQueryContainer::ID_URL, 'hidden')
-            ->add(self::CURRENT_TEMPLATE, 'hidden')
-            ->add(self::FK_TEMPLATE, 'choice', [
+            ->add(self::FIELD_CURRENT_TEMPLATE, 'hidden')
+            ->add(self::FIELD_FK_TEMPLATE, 'choice', [
                 'label' => 'Template',
                 'choices' => $this->getTemplateList(),
             ])
-            ->add(self::URL, 'text', [
+            ->add(self::FIELD_URL, 'text', [
                 'label' => 'URL',
                 'constraints' => $urlConstraints,
             ])
-            ->add(self::IS_ACTIVE, 'checkbox', [
+            ->add(self::FIELD_IS_ACTIVE, 'checkbox', [
                 'label' => 'Active',
             ]);
     }
@@ -153,12 +152,12 @@ class CmsPageForm extends AbstractForm
         $this->pageUrl = $pageUrlTemplate->getUrl();
 
         return [
-            self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
-            self::FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-            self::URL => $pageUrlTemplate->getUrl(),
-            self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-            self::IS_ACTIVE => $pageUrlTemplate->getIsActive(),
-            CmsQueryContainer::ID_URL => $pageUrlTemplate->getIdUrl(),
+            self::FIELD_ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
+            self::FIELD_FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
+            self::FIELD_URL => $pageUrlTemplate->getUrl(),
+            self::FIELD_CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
+            self::FIELD_IS_ACTIVE => $pageUrlTemplate->getIsActive(),
+            CmsQueryContainer::FIELD_ID_URL => $pageUrlTemplate->getIdUrl(),
         ];
     }
 

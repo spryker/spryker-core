@@ -11,17 +11,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ResetPasswordForm extends AbstractForm
 {
 
-    const PASSWORD = 'password';
+    const FIELD_PASSWORD = 'password';
 
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
-     *
-     * @return FormBuilderInterface
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return $builder->add(self::PASSWORD, 'repeated', [
+        $builder->add(self::FIELD_PASSWORD, 'repeated', [
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank(),
             ],

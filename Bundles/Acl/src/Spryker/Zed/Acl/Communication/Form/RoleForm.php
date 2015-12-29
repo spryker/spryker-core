@@ -12,18 +12,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 class RoleForm extends AbstractForm
 {
 
-    const NAME = 'name';
-    const ID_ROLE = 'id_acl_role';
+    const FIELD_NAME = 'name';
+    const FIELD_ID_ROLE = 'id_acl_role';
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::NAME, 'text', [
+        $builder->add(self::FIELD_NAME, 'text', [
             'label' => 'Role name',
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank(),
             ],
         ])
-        ->add(self::ID_ROLE, 'hidden', [
+        ->add(self::FIELD_ID_ROLE, 'hidden', [
             'label' => 'Role name',
         ]);
     }
