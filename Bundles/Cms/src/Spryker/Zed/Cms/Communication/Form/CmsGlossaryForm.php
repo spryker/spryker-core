@@ -6,9 +6,10 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
+use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsGlossaryForm extends AbstractForm
@@ -58,7 +59,6 @@ class CmsGlossaryForm extends AbstractForm
      * @param int $idMapping
      * @param array $placeholder
      */
-
     public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery, CmsFacade $cmsFacade, $idPage, $idMapping, $placeholder)
     {
         $this->glossaryByIdQuery = $glossaryByIdQuery;
@@ -69,9 +69,26 @@ class CmsGlossaryForm extends AbstractForm
     }
 
     /**
-     * @return CmsRedirectForm
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'cms_glossary';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $placeholderConstraints = $this->getConstraints()->getMandatoryConstraints();
 
@@ -94,11 +111,11 @@ class CmsGlossaryForm extends AbstractForm
 
         $placeholderParams['disabled'] = 'disabled';
 
-        return $this->addHidden(self::FK_PAGE)
-            ->addHidden(self::ID_KEY_MAPPING)
-            ->addHidden(self::TEMPLATE_NAME)
-            ->addText(self::PLACEHOLDER, $placeholderParams)
-            ->addChoice(self::SEARCH_OPTION, [
+        $builder->add(self::FK_PAGE, 'hidden')
+            ->add(self::ID_KEY_MAPPING, 'hidden')
+            ->add(self::TEMPLATE_NAME, 'hidden')
+            ->add(self::PLACEHOLDER, 'text', $placeholderParams)
+            ->add(self::SEARCH_OPTION, 'choice', [
                 'label' => 'Search Type',
                 'choices' => [
                     self::AUTO_GLOSSARY,
@@ -107,8 +124,8 @@ class CmsGlossaryForm extends AbstractForm
                     self::FULLTEXT_SEARCH,
                 ],
             ])
-            ->addText(self::GLOSSARY_KEY)
-            ->addTextarea(self::TRANSLATION, [
+            ->add(self::GLOSSARY_KEY, 'text')
+            ->add(self::TRANSLATION, 'textarea', [
                 'label' => 'Content',
                 'constraints' => $this->getConstraints()->getRequiredConstraints(),
                 'attr' => [
@@ -120,7 +137,7 @@ class CmsGlossaryForm extends AbstractForm
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $formItems = [
             self::FK_PAGE => $this->idPage,

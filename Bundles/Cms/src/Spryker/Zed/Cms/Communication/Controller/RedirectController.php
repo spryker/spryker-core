@@ -54,12 +54,12 @@ class RedirectController extends AbstractController
     /**
      * @return array
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $form = $this->getFactory()
             ->createCmsRedirectForm('add');
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -91,7 +91,7 @@ class RedirectController extends AbstractController
         $form = $this->getFactory()
             ->createCmsRedirectForm('update', $idUrl);
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();

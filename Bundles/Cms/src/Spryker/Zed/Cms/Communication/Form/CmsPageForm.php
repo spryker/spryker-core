@@ -6,11 +6,13 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsPageForm extends AbstractForm
@@ -63,7 +65,6 @@ class CmsPageForm extends AbstractForm
      * @param string $formType
      * @param int $idPage
      */
-
     public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsPageQuery $pageUrlByIdQuery, CmsToUrlInterface $urlFacade, $formType, $idPage)
     {
         $this->templateQuery = $templateQuery;
@@ -74,9 +75,26 @@ class CmsPageForm extends AbstractForm
     }
 
     /**
-     * @return CmsPageForm
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'cms_page';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $urlConstraints = $this->getConstraints()->getMandatoryConstraints();
 
@@ -90,18 +108,18 @@ class CmsPageForm extends AbstractForm
             ],
         ]);
 
-        return $this->addHidden(self::ID_CMS_PAGE)
-            ->addHidden(CmsQueryContainer::ID_URL)
-            ->addHidden(self::CURRENT_TEMPLATE)
-            ->addChoice(self::FK_TEMPLATE, [
+        $builder->add(self::ID_CMS_PAGE, 'hidden')
+            ->add(CmsQueryContainer::ID_URL, 'hidden')
+            ->add(self::CURRENT_TEMPLATE, 'hidden')
+            ->add(self::FK_TEMPLATE, 'choice', [
                 'label' => 'Template',
                 'choices' => $this->getTemplateList(),
             ])
-            ->addText(self::URL, [
+            ->add(self::URL, 'text', [
                 'label' => 'URL',
                 'constraints' => $urlConstraints,
             ])
-            ->addCheckbox(self::IS_ACTIVE, [
+            ->add(self::IS_ACTIVE, 'checkbox', [
                 'label' => 'Active',
             ]);
     }
@@ -124,22 +142,24 @@ class CmsPageForm extends AbstractForm
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
-        if ($this->idPage !== null) {
-            $pageUrlTemplate = $this->pageUrlByIdQuery->findOne();
-
-            $this->pageUrl = $pageUrlTemplate->getUrl();
-
-            return [
-                self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
-                self::FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::URL => $pageUrlTemplate->getUrl(),
-                self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::IS_ACTIVE => $pageUrlTemplate->getIsActive(),
-                CmsQueryContainer::ID_URL => $pageUrlTemplate->getIdUrl(),
-            ];
+        if ($this->idPage === null) {
+            return null;
         }
+
+        $pageUrlTemplate = $this->pageUrlByIdQuery->findOne();
+
+        $this->pageUrl = $pageUrlTemplate->getUrl();
+
+        return [
+            self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
+            self::FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
+            self::URL => $pageUrlTemplate->getUrl(),
+            self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
+            self::IS_ACTIVE => $pageUrlTemplate->getIsActive(),
+            CmsQueryContainer::ID_URL => $pageUrlTemplate->getIdUrl(),
+        ];
     }
 
 }

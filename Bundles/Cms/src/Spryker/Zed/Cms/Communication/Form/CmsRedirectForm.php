@@ -6,9 +6,10 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
+use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsRedirectForm extends AbstractForm
@@ -58,9 +59,26 @@ class CmsRedirectForm extends AbstractForm
     }
 
     /**
-     * @return CmsRedirectForm
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'cms_redirect';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $urlConstraints = $this->getConstraints()->getMandatoryConstraints();
 
@@ -74,34 +92,36 @@ class CmsRedirectForm extends AbstractForm
             ],
         ]);
 
-        return $this->addHidden(self::ID_REDIRECT)
-            ->addText(self::FROM_URL, [
+        $builder->add(self::ID_REDIRECT, 'hidden')
+            ->add(self::FROM_URL, 'text', [
                 'label' => 'URL',
                 'constraints' => $urlConstraints,
             ])
-            ->addText(self::TO_URL, [
+            ->add(self::TO_URL, 'text', [
                 'label' => 'To URL',
                 'constraints' => $this->getConstraints()->getMandatoryConstraints(),
             ])
-            ->addText(self::STATUS);
+            ->add(self::STATUS, 'text');
     }
 
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $url = $this->urlByIdQuery->findOne();
 
-        if (isset($url)) {
-            $this->redirectUrl = $url->getUrl();
-
-            return [
-                self::FROM_URL => $url->getUrl(),
-                self::TO_URL => $url->getToUrl(),
-                self::STATUS => $url->getStatus(),
-            ];
+        if (!isset($url)) {
+            return [];
         }
+
+        $this->redirectUrl = $url->getUrl();
+
+        return [
+            self::FROM_URL => $url->getUrl(),
+            self::TO_URL => $url->getToUrl(),
+            self::STATUS => $url->getStatus(),
+        ];
     }
 
 }

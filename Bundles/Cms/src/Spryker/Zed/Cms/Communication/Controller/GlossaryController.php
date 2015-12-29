@@ -76,7 +76,7 @@ class GlossaryController extends AbstractController
         $formViews = [];
 
         foreach ($placeholders as $place) {
-            $form = $this->createPlaceholderForm($glossaryMappingArray, $place, $idPage);
+            $form = $this->createPlaceholderForm($request, $glossaryMappingArray, $place, $idPage);
             $forms[] = $form;
             $formViews[] = $form->createView();
         }
@@ -308,7 +308,7 @@ class GlossaryController extends AbstractController
      *
      * @return mixed
      */
-    private function createPlaceholderForm(array $glossaryMappingArray, $place, $idPage)
+    private function createPlaceholderForm(Request $request, array $glossaryMappingArray, $place, $idPage)
     {
         $idMapping = null;
         if (isset($glossaryMappingArray[$place])) {
@@ -316,7 +316,7 @@ class GlossaryController extends AbstractController
         }
         $form = $this->getFactory()
             ->createCmsGlossaryForm($idPage, $idMapping, $place, $this->getFacade());
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         return $form;
     }

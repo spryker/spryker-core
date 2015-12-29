@@ -59,12 +59,12 @@ class BlockController extends AbstractController
     /**
      * @return array|RedirectResponse
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $form = $this->getFactory()->createCmsBlockForm('add');
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -97,7 +97,7 @@ class BlockController extends AbstractController
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
-        $form->handleRequest();
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $data = $form->getData();
 
@@ -177,7 +177,7 @@ class BlockController extends AbstractController
      */
     public function searchCategoryAction(Request $request)
     {
-        $term = $request->get('term');
+        $term = $request->query->get('term');
 
         $searchedItems = $this->getQueryContainer()
             ->queryNodeByCategoryName($term, $this->getCurrentIdLocale())
