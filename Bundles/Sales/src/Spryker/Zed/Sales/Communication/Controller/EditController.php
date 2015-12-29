@@ -26,7 +26,7 @@ class EditController extends AbstractController
         $idOrder = $request->get('id-sales-order');
         $form = $this->getFactory()
             ->createCustomerForm($idOrder);
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $orderTransfer = (new OrderTransfer())->fromArray($form->getData(), true);
@@ -54,7 +54,7 @@ class EditController extends AbstractController
 
         $form = $this->getFactory()
             ->createAddressForm($idOrderAddress);
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $addressTransfer = (new AddressTransfer())->fromArray($form->getData(), true);

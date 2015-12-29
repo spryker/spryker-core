@@ -2,9 +2,10 @@
 
 namespace Spryker\Zed\Sales\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class AddressForm extends AbstractForm
 {
@@ -42,42 +43,55 @@ class AddressForm extends AbstractForm
     }
 
     /**
-     * @return CustomerForm
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
     {
-        return $this
-            ->addChoice(self::SALUTATION, [
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'address';
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add(self::SALUTATION, 'choice', [
                 'label' => 'Salutation',
                 'placeholder' => '-select-',
                 'choices' => $this->getSalutationOptions(),
             ])
-            ->addText(self::FIRST_NAME, [
+            ->add(self::FIRST_NAME, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addText(self::MIDDLE_NAME)
-            ->addText(self::LAST_NAME, [
+            ->add(self::MIDDLE_NAME, 'text')
+            ->add(self::LAST_NAME, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addText(self::EMAIL, [
+            ->add(self::EMAIL, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                     $this->getConstraints()->createConstraintEmail(),
                 ],
             ])
-            ->addText(self::ADDRESS_1)
-            ->addText(self::COMPANY)
-            ->addText(self::CITY)
-            ->addText(self::ZIP_CODE)
-            ->addText(self::PO_BOX)
-            ->addText(self::PHONE)
-            ->addText(self::CELL_PHONE)
-            ->addText(self::DESCRIPTION)
-            ->addTextarea(self::COMMENT);
+            ->add(self::ADDRESS_1, 'text')
+            ->add(self::COMPANY, 'text')
+            ->add(self::CITY, 'text')
+            ->add(self::ZIP_CODE, 'text')
+            ->add(self::PO_BOX, 'text')
+            ->add(self::PHONE, 'text')
+            ->add(self::CELL_PHONE, 'text')
+            ->add(self::DESCRIPTION, 'text')
+            ->add(self::COMMENT, 'textarea');
     }
 
     /**
@@ -95,7 +109,7 @@ class AddressForm extends AbstractForm
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $address = $this->addressQuery->findOne();
 

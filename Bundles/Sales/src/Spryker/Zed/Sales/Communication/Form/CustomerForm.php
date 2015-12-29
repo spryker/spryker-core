@@ -2,9 +2,10 @@
 
 namespace Spryker\Zed\Sales\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class CustomerForm extends AbstractForm
 {
@@ -28,26 +29,44 @@ class CustomerForm extends AbstractForm
     }
 
     /**
-     * @return CustomerForm
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
     {
-        return $this->addChoice(self::SALUTATION, [
-            'label' => 'Salutation',
-            'placeholder' => '-select-',
-            'choices' => $this->getSalutationOptions(),
-        ])
-            ->addText(self::FIRST_NAME, [
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'customer';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add(self::SALUTATION, 'choice', [
+                'label' => 'Salutation',
+                'placeholder' => '-select-',
+                'choices' => $this->getSalutationOptions(),
+            ])
+            ->add(self::FIRST_NAME, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addText(self::LAST_NAME, [
+            ->add(self::LAST_NAME, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addText(self::EMAIL, [
+            ->add(self::EMAIL, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
@@ -69,7 +88,7 @@ class CustomerForm extends AbstractForm
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $order = $this->orderQuery->findOne();
 

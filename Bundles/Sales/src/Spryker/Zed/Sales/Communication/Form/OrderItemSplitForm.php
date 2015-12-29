@@ -6,7 +6,8 @@
 
 namespace Spryker\Zed\Sales\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class OrderItemSplitForm extends AbstractForm
 {
@@ -18,15 +19,28 @@ class OrderItemSplitForm extends AbstractForm
     const VALIDATION_MESSAGE_QUANTITY = 'Please provide quantity.';
 
     /**
-     * Prepares form
-     *
-     * @return self
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
     {
-        return $this->addText(
-            self::QUANTITY,
-            [
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'order_item_split';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::QUANTITY, 'text', [
                 'label' => 'Quantity',
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank([
@@ -37,11 +51,10 @@ class OrderItemSplitForm extends AbstractForm
                         'message' => self::VALIDATE_MESSAGE_NUMERIC,
                     ]),
                 ],
-            ]
-        )
-            ->addHidden(self::ID_ORDER_ITEM)
-            ->addHidden(self::ID_ORDER)
-            ->addSubmit('Split');
+            ])
+            ->add(self::ID_ORDER_ITEM, 'hidden')
+            ->add(self::ID_ORDER, 'hidden')
+            ->add('Split', 'submit');
     }
 
     /**
@@ -49,7 +62,7 @@ class OrderItemSplitForm extends AbstractForm
      *
      * @return self
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         return [];
     }

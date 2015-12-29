@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Communication;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm\Collection;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -40,7 +39,9 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getOrderItemSplitForm()
     {
-        return new OrderItemSplitForm();
+        $form = new OrderItemSplitForm();
+
+        return $this->createForm($form);
     }
 
     /**
@@ -52,7 +53,9 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     {
         $customerQuery = $this->getQueryContainer()->querySalesOrderById($idSalesOrder);
 
-        return new CustomerForm($customerQuery);
+        $form = new CustomerForm($customerQuery);
+
+        return $this->createForm($form);
     }
 
     /**
@@ -64,7 +67,9 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     {
         $addressQuery = $this->getQueryContainer()->querySalesOrderAddressById($idOrderAddress);
 
-        return new AddressForm($addressQuery);
+        $form = new AddressForm($addressQuery);
+
+        return $this->createForm($form);
     }
 
     /**
@@ -74,7 +79,9 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getOrderItemSplitFormCollection(ObjectCollection $orderItems)
     {
-        return new Collection($orderItems);
+        $form = new Collection($orderItems);
+
+        return $this->createForm($form);
     }
 
     /**
