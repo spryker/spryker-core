@@ -35,19 +35,22 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     {
         $paymentDataPlugin = $this->getConfig()->getPaymentDataPlugin();
 
-        return new RefundForm($facadeRefund, $orderTransfer, $paymentDataPlugin);
+        $form = new RefundForm($facadeRefund, $orderTransfer, $paymentDataPlugin);
+
+        return $this->createForm($form);
     }
 
     /**
+     * @param RefundFacade $refundFacade
      * @return RefundTable
      */
-    public function createRefundTable()
+    public function createRefundTable(RefundFacade $refundFacade)
     {
         $refundQuery = $this->getQueryContainer()->queryRefund();
 
         return new RefundTable(
             $refundQuery,
-            $this->getRefundFacade(),
+            $refundFacade,
             $this->createDateFormatter()
         );
     }
