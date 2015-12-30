@@ -43,7 +43,7 @@ class UserUpdateForm extends UserForm
     {
         parent::buildForm($builder, $options);
 
-        $builder->add(self::STATUS, 'choice', [
+        $builder->add(self::FIELD_STATUS, 'choice', [
             'choices' => $this->getStatusSelectChoices(),
         ]);
     }
@@ -75,7 +75,7 @@ class UserUpdateForm extends UserForm
         $groupChoices = $this->getGroupChoices();
         foreach ($userAclGroupsTransfer->getGroups() as $aclGroupTransfer) {
             if (array_key_exists($aclGroupTransfer->getIdAclGroup(), $groupChoices)) {
-                $formData[UserForm::GROUP][] = $aclGroupTransfer->getIdAclGroup();
+                $formData[UserForm::FIELD_GROUP][] = $aclGroupTransfer->getIdAclGroup();
             }
         }
 

@@ -13,9 +13,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class OrderItemSplitForm extends AbstractForm
 {
-    const QUANTITY = 'quantity';
-    const ID_ORDER_ITEM = 'id_order_item';
-    const ID_ORDER = 'id_order';
+    const FIELD_QUANTITY = 'quantity';
+    const FIELD_ID_ORDER_ITEM = 'id_order_item';
+    const FIELD_ID_ORDER = 'id_order';
     const VALIDATE_MESSAGE_NUMERIC = 'Please provide numeric value.';
     const VALIDATION_MESSAGE_QUANTITY = 'Please provide quantity.';
 
@@ -62,7 +62,7 @@ class OrderItemSplitForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::QUANTITY, 'text', [
+        $builder->add(self::FIELD_QUANTITY, 'text', [
                 'label' => 'Quantity',
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank([
@@ -74,8 +74,8 @@ class OrderItemSplitForm extends AbstractForm
                     ]),
                 ],
             ])
-            ->add(self::ID_ORDER_ITEM, 'hidden')
-            ->add(self::ID_ORDER, 'hidden')
+            ->add(self::FIELD_ID_ORDER_ITEM, 'hidden')
+            ->add(self::FIELD_ID_ORDER, 'hidden')
             ->add('Split', 'submit', [
                 'attr' => [
                     'class' => 'btn btn-sm btn-primary'
@@ -93,8 +93,8 @@ class OrderItemSplitForm extends AbstractForm
         }
 
         return [
-            self::ID_ORDER_ITEM => $this->orderItem->getIdSalesOrderItem(),
-            self::ID_ORDER => $this->orderItem->getFkSalesOrder(),
+            self::FIELD_ID_ORDER_ITEM => $this->orderItem->getIdSalesOrderItem(),
+            self::FIELD_ID_ORDER => $this->orderItem->getFkSalesOrder(),
         ];
     }
 

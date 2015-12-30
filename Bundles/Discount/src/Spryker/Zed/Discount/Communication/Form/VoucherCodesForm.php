@@ -14,14 +14,14 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 class VoucherCodesForm extends AbstractRuleForm
 {
 
-    const NAME = 'name';
-    const VOUCHER_POOL_CATEGORY = 'voucher_pool_category';
-    const IS_ACTIVE = 'is_active';
-    const IS_PRIVILEGED = 'is_privileged';
-    const DESCRIPTION = 'description';
-    const AMOUNT = 'amount';
-    const VALID_FROM = 'valid_from';
-    const VALID_TO = 'valid_to';
+    const FIELD_NAME = 'name';
+    const FIELD_VOUCHER_POOL_CATEGORY = 'voucher_pool_category';
+    const FIELD_IS_ACTIVE = 'is_active';
+    const FIELD_IS_PRIVILEGED = 'is_privileged';
+    const FIELD_DESCRIPTION = 'description';
+    const FIELD_AMOUNT = 'amount';
+    const FIELD_VALID_FROM = 'valid_from';
+    const FIELD_VALID_TO = 'valid_to';
     const DATE_NOW = 'now';
     const DATE_PERIOD_YEARS = 3;
 
@@ -85,8 +85,8 @@ class VoucherCodesForm extends AbstractRuleForm
         }
 
         return [
-            self::VALID_FROM => new \DateTime('now'),
-            self::VALID_TO => new \DateTime('now'),
+            self::FIELD_VALID_FROM => new \DateTime('now'),
+            self::FIELD_VALID_TO => new \DateTime('now'),
             'decision_rules' => [
                 'rule_1' => [
                     'value' => '',
@@ -150,20 +150,20 @@ class VoucherCodesForm extends AbstractRuleForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(self::NAME, 'text', [
+            ->add(self::FIELD_NAME, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->add(self::VOUCHER_POOL_CATEGORY, new AutosuggestType(), [
+            ->add(self::FIELD_VOUCHER_POOL_CATEGORY, new AutosuggestType(), [
                 'label' => 'Pool Category',
                 'url' => '/discount/pool/category-suggest',
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->add(self::DESCRIPTION, 'textarea')
-            ->add(self::AMOUNT, 'text', [
+            ->add(self::FIELD_DESCRIPTION, 'textarea')
+            ->add(self::FIELD_AMOUNT, 'text', [
                 'label' => 'Amount (Please enter a valid amount. Eg. 5 or 5.55)',
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
@@ -172,16 +172,16 @@ class VoucherCodesForm extends AbstractRuleForm
                     ]),
                 ],
             ])
-            ->add(self::VALID_FROM, 'date', [
+            ->add(self::FIELD_VALID_FROM, 'date', [
                 'label' => 'Valid From',
             ])
-            ->add(self::VALID_TO, 'date', [
+            ->add(self::FIELD_VALID_TO, 'date', [
                 'label' => 'Valid Until',
             ])
-            ->add(self::IS_PRIVILEGED, 'checkbox', [
+            ->add(self::FIELD_IS_PRIVILEGED, 'checkbox', [
                 'label' => 'Is Combinable with other discounts',
             ])
-            ->add(self::IS_ACTIVE, 'checkbox', [
+            ->add(self::FIELD_IS_ACTIVE, 'checkbox', [
                 'label' => 'Active',
             ])
             ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [

@@ -14,12 +14,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 class UserForm extends AbstractForm
 {
 
-    const USERNAME = 'username';
-    const GROUP = 'group';
-    const FIRST_NAME = 'first_name';
-    const LAST_NAME = 'last_name';
-    const PASSWORD = 'password';
-    const STATUS = 'status';
+    const FIELD_USERNAME = 'username';
+    const FIELD_GROUP = 'group';
+    const FIELD_FIRST_NAME = 'first_name';
+    const FIELD_LAST_NAME = 'last_name';
+    const FIELD_PASSWORD = 'password';
+    const FIELD_STATUS = 'status';
 
     /**
      * @var array
@@ -47,13 +47,13 @@ class UserForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::USERNAME, 'text', [
+        $builder->add(self::FIELD_USERNAME, 'text', [
             'label' => 'Username',
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank(),
             ],
         ])
-        ->add(self::PASSWORD, 'repeated', [
+        ->add(self::FIELD_PASSWORD, 'repeated', [
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank(),
             ],
@@ -63,17 +63,17 @@ class UserForm extends AbstractForm
             'required' => true,
             'type' => 'password',
         ])
-        ->add(self::FIRST_NAME, 'text', [
+        ->add(self::FIELD_FIRST_NAME, 'text', [
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank(),
             ],
         ])
-        ->add(self::LAST_NAME, 'text', [
+        ->add(self::FIELD_LAST_NAME, 'text', [
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank(),
             ],
         ])
-        ->add(self::GROUP, 'choice', [
+        ->add(self::FIELD_GROUP, 'choice', [
             'constraints' => [
                 $this->getConstraints()->createConstraintChoice([
                     'choices' => array_keys($this->getGroupChoices()),

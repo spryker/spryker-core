@@ -33,10 +33,10 @@ class OrderItemSplitController extends AbstractController
 
         if ($orderItemForm->isValid()) {
             $this->getFacade()
-                ->splitSalesOrderItem($data[OrderItemSplitForm::ID_ORDER_ITEM], $data[OrderItemSplitForm::QUANTITY]);
+                ->splitSalesOrderItem($data[OrderItemSplitForm::FIELD_ID_ORDER_ITEM], $data[OrderItemSplitForm::FIELD_QUANTITY]);
         }
 
-        return $this->redirectResponse(sprintf(self::SALES_ORDER_DETAIL_URL, $data[OrderItemSplitForm::ID_ORDER]));
+        return $this->redirectResponse(sprintf(self::SALES_ORDER_DETAIL_URL, $data[OrderItemSplitForm::FIELD_ID_ORDER]));
     }
 
 }

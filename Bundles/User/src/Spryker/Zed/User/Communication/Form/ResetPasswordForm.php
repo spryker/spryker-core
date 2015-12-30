@@ -14,8 +14,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ResetPasswordForm extends AbstractForm
 {
 
-    const CURRENT_PASSWORD = 'current_password';
-    const PASSWORD = 'password';
+    const FIELD_CURRENT_PASSWORD = 'current_password';
+    const FIELD_PASSWORD = 'password';
 
     /**
      * @var UserFacade
@@ -38,7 +38,7 @@ class ResetPasswordForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::CURRENT_PASSWORD, 'password', [
+        $builder->add(self::FIELD_CURRENT_PASSWORD, 'password', [
             'label' => 'Current password',
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank(),
@@ -47,7 +47,7 @@ class ResetPasswordForm extends AbstractForm
                 ]),
             ],
         ])
-        ->add(self::PASSWORD, 'repeated', [
+        ->add(self::FIELD_PASSWORD, 'repeated', [
             'constraints' => [
                 $this->getConstraints()->createConstraintNotBlank(),
             ],

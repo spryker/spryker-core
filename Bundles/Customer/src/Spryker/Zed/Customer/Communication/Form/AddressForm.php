@@ -74,40 +74,40 @@ class AddressForm extends AbstractForm
             ->getPreferedCountryByName(self::PREFERED_COUNTRY_NAME);
 
         $builder
-            ->add(AddressTransfer::ID_CUSTOMER_ADDRESS, 'hidden')
-            ->add(AddressTransfer::FK_CUSTOMER, 'hidden')
-            ->add(AddressTransfer::SALUTATION, 'choice', [
+            ->add(AddressTransfer::FIELD_ID_CUSTOMER_ADDRESS, 'hidden')
+            ->add(AddressTransfer::FIELD_FK_CUSTOMER, 'hidden')
+            ->add(AddressTransfer::FIELD_SALUTATION, 'choice', [
                 'label' => 'Salutation',
                 'placeholder' => 'Select one',
                 'choices' => $this->getSalutationOptions(),
             ])
-            ->add(AddressTransfer::FIRST_NAME, 'text', [
+            ->add(AddressTransfer::FIELD_FIRST_NAME, 'text', [
                 'label' => 'First Name',
                 'constraints' => $this->getTextFieldConstraints(),
             ])
-            ->add(AddressTransfer::LAST_NAME, 'text', [
+            ->add(AddressTransfer::FIELD_LAST_NAME, 'text', [
                 'label' => 'Last Name',
                 'constraints' => $this->getTextFieldConstraints(),
             ])
-            ->add(AddressTransfer::ADDRESS1, 'text', [
+            ->add(AddressTransfer::FIELD_ADDRESS1, 'text', [
                 'label' => 'Address line 1',
             ])
-            ->add(AddressTransfer::ADDRESS2, 'text', [
+            ->add(AddressTransfer::FIELD_ADDRESS2, 'text', [
                 'label' => 'Address line 2',
             ])
-            ->add(AddressTransfer::ADDRESS3, 'text', [
+            ->add(AddressTransfer::FIELD_ADDRESS3, 'text', [
                 'label' => 'Address line 3',
             ])
-            ->add(AddressTransfer::CITY, 'text', [
+            ->add(AddressTransfer::FIELD_CITY, 'text', [
                 'label' => 'City',
             ])
-            ->add(AddressTransfer::ZIP_CODE, 'text', [
+            ->add(AddressTransfer::FIELD_ZIP_CODE, 'text', [
                 'label' => 'Zip Code',
                 'constraints' => [
                     $this->getConstraints()->createConstraintLength(['max' => 15]),
                 ],
             ])
-            ->add(AddressTransfer::FK_COUNTRY, 'choice', [
+            ->add(AddressTransfer::FIELD_FK_COUNTRY, 'choice', [
                 'label' => 'Country',
                 'placeholder' => 'Select one',
                 'choices' => $this->getCountryOptions(),
@@ -115,13 +115,13 @@ class AddressForm extends AbstractForm
                     $preferedCountry->getIdCountry(),
                 ],
             ])
-            ->add(AddressTransfer::PHONE, 'text', [
+            ->add(AddressTransfer::FIELD_PHONE, 'text', [
                 'label' => 'Phone',
             ])
-            ->add(AddressTransfer::COMPANY, 'text', [
+            ->add(AddressTransfer::FIELD_COMPANY, 'text', [
                 'label' => 'Company',
             ])
-            ->add(AddressTransfer::COMMENT, 'textarea', [
+            ->add(AddressTransfer::FIELD_COMMENT, 'textarea', [
                 'label' => 'Comment',
                 'constraints' => [
                     $this->getConstraints()->createConstraintLength(['max' => 255]),
