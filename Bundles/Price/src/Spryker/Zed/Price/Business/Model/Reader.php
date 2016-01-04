@@ -112,8 +112,6 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param string|null $priceTypeName
      *
-     * @throws \Exception
-     *
      * @return bool
      */
     public function hasValidPrice($sku, $priceTypeName = null)
@@ -153,8 +151,6 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param string $priceTypeName
      *
-     * @throws \Exception
-     *
      * @return int
      */
     public function getProductPriceIdBySku($sku, $priceTypeName)
@@ -166,12 +162,12 @@ class Reader implements ReaderInterface
                 ->queryPriceEntityForConcreteProduct($sku, $priceType)
                 ->findOne()
                 ->getIdPriceProduct();
-        } else {
-            return $this->queryContainer
-                ->queryPriceEntityForConcreteProduct($sku, $priceType)
-                ->findOne()
-                ->getIdPriceProduct();
         }
+
+        return $this->queryContainer
+            ->queryPriceEntityForAbstractProduct($sku, $priceType)
+            ->findOne()
+            ->getIdPriceProduct();
     }
 
     /**
@@ -191,12 +187,13 @@ class Reader implements ReaderInterface
             return $this->getPriceEntityForAbstractProduct($sku, $priceType);
         }
         $abstractSku = $this->productFacade->getAbstractSkuFromConcreteProduct($sku);
-        if ($this->hasAbstractProduct($sku)
-            && $this->hasPriceForAbstractProduct($abstractSku, $priceType)
+        if (!$this->hasAbstractProduct($sku)
+            || !$this->hasPriceForAbstractProduct($abstractSku, $priceType)
         ) {
-            return $this->getPriceEntityForAbstractProduct($abstractSku, $priceType);
+            throw new \Exception(self::NO_RESULT);
         }
-        throw new \Exception(self::NO_RESULT);
+
+        return $this->getPriceEntityForAbstractProduct($abstractSku, $priceType);
     }
 
     /**
