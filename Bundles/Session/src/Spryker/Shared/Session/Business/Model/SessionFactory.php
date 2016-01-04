@@ -30,8 +30,8 @@ abstract class SessionFactory
     {
         // get the credentials from the first defined couchbase host
         $credentials = $this->getCredentialsFromSavePathSegment(explode(';', $savePath)[0]);
-        $user = is_array($credentials) && array_key_exists(self::USER, $credentials) ? $credentials[self::USER] : null;
-        $password = is_array($credentials) && array_key_exists(self::PASSWORD, $credentials) ? $credentials[self::PASSWORD] : null;
+        $user = !empty($credentials) && array_key_exists(self::USER, $credentials) ? $credentials[self::USER] : null;
+        $password = !empty($credentials) && array_key_exists(self::PASSWORD, $credentials) ? $credentials[self::PASSWORD] : null;
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
@@ -49,8 +49,8 @@ abstract class SessionFactory
     public function registerMysqlSessionHandler($savePath)
     {
         $credentials = $this->getCredentialsFromSavePathSegment(explode(';', $savePath)[0]);
-        $user = is_array($credentials) && array_key_exists(self::USER, $credentials) ? $credentials[self::USER] : null;
-        $password = is_array($credentials) && array_key_exists(self::PASSWORD, $credentials) ? $credentials[self::PASSWORD] : null;
+        $user = !empty($credentials) && array_key_exists(self::USER, $credentials) ? $credentials[self::USER] : null;
+        $password = !empty($credentials) && array_key_exists(self::PASSWORD, $credentials) ? $credentials[self::PASSWORD] : null;
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
@@ -124,7 +124,7 @@ abstract class SessionFactory
     /**
      * @param string $savePathSegment
      *
-     * @return array|null
+     * @return array
      */
     protected function getCredentialsFromSavePathSegment($savePathSegment)
     {
@@ -141,9 +141,9 @@ abstract class SessionFactory
             } else {
                 return [self::USER => $credentials];
             }
-        } else {
-            return null;
         }
+
+        return [];
     }
 
     /**
