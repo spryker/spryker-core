@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Collector\Business\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
 use SprykerFeature\Zed\Collector\Business\Exporter\Exception\DependencyException;
@@ -282,28 +281,52 @@ abstract class AbstractCollectorPlugin
     protected function delete($itemType, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater,
         LocaleTransfer $locale)
     {
-        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
-        $touchEntityCollection = $deleteQuery->find();
-
         $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
         $keysToDelete = [];
-        foreach ($touchEntityCollection as $touchEntity) {
-            $entityData = $touchEntity->toArray();
-            $key = $entityData[$touchUpdater->getTouchKeyColumnName()];
+        $batchCount = 1;
+        $offset = 0;
+        $deletedCount = 0;
 
-            if (trim($key) !== '') {
-                $keysToDelete[$key] = true;
-                $touchUpdaterSet->add($key, $touchEntity->getIdTouch(), [
-                    CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($entityData),
-                    CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($entityData),
-                ]);
+        $this->touchQueryContainer->getConnection()->beginTransaction();
+        try {
+            while ($batchCount > 0) {
+                $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
+                $deleteQuery
+                    ->setOffset($offset)
+                    ->setLimit($this->chunkSize);
+
+                $entityCollection = $deleteQuery->find();
+                $batchCount = count($entityCollection);
+
+                if ($batchCount > 0) {
+                    $deletedCount += $batchCount;
+                    $offset += $this->chunkSize;
+
+                    foreach ($entityCollection as $touchEntity) {
+                        $entityData = $touchEntity->toArray();
+                        $key = $entityData[$touchUpdater->getTouchKeyColumnName()];
+
+                        if (trim($key) !== '') {
+                            $keysToDelete[$key] = true;
+                            $touchUpdaterSet->add($key, $touchEntity->getIdTouch(), [
+                                CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($entityData),
+                                CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($entityData),
+                            ]);
+                        }
+                    }
+
+                    if (!empty($keysToDelete)) {
+                        $touchUpdater->deleteMulti($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
+                        $dataWriter->delete($keysToDelete);
+                    }
+                }
             }
+        } catch (\Exception $exception) {
+            $this->touchQueryContainer->getConnection()->rollBack();
+            throw $exception;
         }
 
-        if (!empty($keysToDelete)) {
-            $touchUpdater->deleteMulti($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
-            $dataWriter->delete($keysToDelete);
-        }
+        $this->touchQueryContainer->getConnection()->commit();
     }
 
     /**
@@ -324,8 +347,7 @@ abstract class AbstractCollectorPlugin
         try {
             while ($batchCount > 0) {
                 $deleteQuery = $this->touchQueryContainer
-                    ->queryTouchDeleteStorageAndSearch($itemType)
-                    ->orderByIdTouch(Criteria::DESC);
+                    ->queryTouchDeleteStorageAndSearch($itemType);
 
                 $deleteQuery
                     ->setOffset($offset)

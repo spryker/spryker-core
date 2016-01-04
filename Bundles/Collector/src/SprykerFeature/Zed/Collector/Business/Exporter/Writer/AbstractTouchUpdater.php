@@ -88,7 +88,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
             if ($idKey !== null) {
                 $updateSql .= $this->getUpdateSql($idKey, $key);
             } else {
-                /** @var SpyTouchStorage|SpyTouchSearch $entity */
+                /* @var SpyTouchStorage|SpyTouchSearch $entity */
                 $entity = $this->createTouchKeyEntity();
                 $entity->setKey($key);
                 $entity->setFkTouch($touchData[CollectorConfig::COLLECTOR_TOUCH_ID]);
