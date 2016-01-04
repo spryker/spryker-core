@@ -15,6 +15,10 @@ class RoleForm extends AbstractForm
     const FIELD_NAME = 'name';
     const FIELD_ID_ROLE = 'id_acl_role';
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_NAME, 'text', [
@@ -28,39 +32,36 @@ class RoleForm extends AbstractForm
         ]);
     }
 
+    /**
+     * @return null
+     */
     protected function getDataClass()
     {
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'role';
     }
-
 
     /**
      * @return self
      */
     protected function addRoleId()
     {
-
-
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function populateFormFields()
     {
-        // TODO: Implement populateFormFields() method.
-    }
-
-
-    /**
-     * @return string
-     */
-    protected function getFormName()
-    {
-        return 'role_form';
+        return [];
     }
 
 }

@@ -16,6 +16,10 @@ class ResetPasswordRequestForm extends AbstractForm
     const FIELD_SUBMIT = 'submit';
     const FIELD_LOGIN = 'login';
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

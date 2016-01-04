@@ -24,7 +24,9 @@ class MethodController extends AbstractController
     const ID_METHOD_PARAMETER = 'id-method';
 
     /**
-     * @return Response
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
     public function addAction(Request $request)
     {

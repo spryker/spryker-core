@@ -78,16 +78,16 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createOrderItemSplitFormCollection(ObjectCollection $orderItems)
     {
-        $formCollection = [];
+        $formCollectionArray = [];
 
         foreach ($orderItems as $item) {
             $form = new OrderItemSplitForm($item);
-            $formCollection[$item->getIdSalesOrderItem()] = $this->createForm($form, [
+            $formCollectionArray[$item->getIdSalesOrderItem()] = $this->createForm($form, [
                 'action' => '/sales/order-item-split/split',
             ])->createView();
         }
 
-        return $formCollection;
+        return $formCollectionArray;
     }
 
     /**

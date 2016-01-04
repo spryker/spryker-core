@@ -203,7 +203,7 @@ class CmsBlockForm extends AbstractForm
      *
      * @return array
      */
-    private function checkExistingBlock($name, array $formData)
+    protected function checkExistingBlock($name, array $formData)
     {
         return $this->templateQuery->useSpyCmsPageQuery()
             ->useSpyCmsBlockQuery()

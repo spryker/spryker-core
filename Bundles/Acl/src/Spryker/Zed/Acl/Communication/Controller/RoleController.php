@@ -56,6 +56,8 @@ class RoleController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
      * @return array|RedirectResponse
      */
     public function createAction(Request $request)

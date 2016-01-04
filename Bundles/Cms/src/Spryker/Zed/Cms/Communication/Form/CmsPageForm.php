@@ -144,7 +144,7 @@ class CmsPageForm extends AbstractForm
     public function populateFormFields()
     {
         if ($this->idPage === null) {
-            return null;
+            return [];
         }
 
         $pageUrlTemplate = $this->pageUrlByIdQuery->findOne();

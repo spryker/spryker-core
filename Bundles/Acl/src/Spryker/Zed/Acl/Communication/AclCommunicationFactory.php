@@ -80,6 +80,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param Request $request
+     * @param array $options
      *
      * @return GroupForm
      */
