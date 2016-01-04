@@ -15,8 +15,8 @@ class CollectorConfig extends AbstractBundleConfig
 
     const COLLECTOR_TOUCH_ID = 'collector_touch_id';
     const COLLECTOR_RESOURCE_ID = 'collector_resource_id';
-    const COLLECTOR_STORAGE_KEY_ID = 'collector_storage_key_id';
-    const COLLECTOR_SEARCH_KEY_ID = 'collector_search_key_id';
+    const COLLECTOR_STORAGE_KEY = 'collector_storage_key';
+    const COLLECTOR_SEARCH_KEY = 'collector_search_key';
 
     /**
      * @return string

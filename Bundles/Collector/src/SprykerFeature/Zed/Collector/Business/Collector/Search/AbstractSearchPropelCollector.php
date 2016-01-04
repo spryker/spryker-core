@@ -31,7 +31,7 @@ abstract class AbstractSearchPropelCollector extends AbstractPropelCollectorPlug
             Criteria::LEFT_JOIN
         );
 
-        $touchQuery->withColumn(SpyTouchSearchTableMap::COL_ID_TOUCH_SEARCH, CollectorConfig::COLLECTOR_SEARCH_KEY_ID);
+        $touchQuery->withColumn(SpyTouchSearchTableMap::COL_ID_TOUCH_SEARCH, CollectorConfig::COLLECTOR_SEARCH_KEY);
 
         parent::prepareCollectorScope($touchQuery, $locale);
     }

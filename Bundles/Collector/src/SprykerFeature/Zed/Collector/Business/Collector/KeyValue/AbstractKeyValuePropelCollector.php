@@ -31,7 +31,7 @@ abstract class AbstractKeyValuePropelCollector extends AbstractPropelCollectorPl
             Criteria::LEFT_JOIN
         );
 
-        $touchQuery->withColumn(SpyTouchStorageTableMap::COL_ID_TOUCH_STORAGE, CollectorConfig::COLLECTOR_STORAGE_KEY_ID);
+        $touchQuery->withColumn(SpyTouchStorageTableMap::COL_ID_TOUCH_STORAGE, CollectorConfig::COLLECTOR_STORAGE_KEY);
 
         parent::prepareCollectorScope($touchQuery, $locale);
     }

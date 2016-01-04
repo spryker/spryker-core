@@ -20,7 +20,7 @@ abstract class AbstractKeyValuePdoCollector extends AbstractPdoCollectorPlugin
         $sql = sprintf($this->criteriaBuilder->getSqlTemplate(),
             CollectorConfig::COLLECTOR_TOUCH_ID,
             CollectorConfig::COLLECTOR_RESOURCE_ID,
-            CollectorConfig::COLLECTOR_STORAGE_KEY_ID
+            CollectorConfig::COLLECTOR_STORAGE_KEY
         );
 
         $this->criteriaBuilder->sql($sql);

@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Collector\Business\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use SprykerFeature\Zed\Collector\Business\Exporter\Exception\DependencyException;
+use SprykerFeature\Zed\Collector\Business\Model\CountableIteratorInterface;
 use SprykerFeature\Zed\Collector\Persistence\Exporter\AbstractPropelCollectorQuery;
 use SprykerFeature\Zed\Collector\Persistence\PropelBatchIterator;
 
@@ -32,7 +33,7 @@ abstract class AbstractPropelCollectorPlugin extends AbstractCollectorPlugin
     }
 
     /**
-     * @return PropelBatchIterator
+     * @return CountableIteratorInterface
      */
     protected function generateBatchIterator()
     {

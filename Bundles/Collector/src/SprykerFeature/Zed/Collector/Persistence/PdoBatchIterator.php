@@ -53,8 +53,10 @@ class PdoBatchIterator implements CountableIteratorInterface
      */
     protected $currentDataSet = [];
 
-    public function __construct(CriteriaBuilderInterface $criteriaBuilder, TouchQueryContainerInterface $touchQueryContainer, $touchType, $chunkSize = 1000)
-    {
+    public function __construct(
+        CriteriaBuilderInterface $criteriaBuilder, TouchQueryContainerInterface $touchQueryContainer, $touchType,
+        $chunkSize = 1000
+    ) {
         $this->criteriaBuilder = $criteriaBuilder;
         $this->touchQueryContainer = $touchQueryContainer;
         $this->touchType = $touchType;

@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Collector\Business\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
 use SprykerFeature\Zed\Collector\Business\Exporter\Exception\DependencyException;
@@ -146,8 +147,8 @@ abstract class AbstractCollectorPlugin
     protected function processCollectedItem($touchKey, array $collectItemData, TouchUpdaterSet $touchUpdaterSet)
     {
         $touchUpdaterSet->add($touchKey, $collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID], [
-            CollectorConfig::COLLECTOR_STORAGE_KEY_ID => $this->getCollectorStorageKeyId($collectItemData),
-            CollectorConfig::COLLECTOR_SEARCH_KEY_ID => $this->getCollectorSearchKeyId($collectItemData),
+            CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($collectItemData),
+            CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($collectItemData),
         ]);
 
         return $this->collectItem($touchKey, $collectItemData);
@@ -160,11 +161,11 @@ abstract class AbstractCollectorPlugin
      */
     protected function getCollectorStorageKeyId(array $collectItemData)
     {
-        if (!isset($collectItemData[CollectorConfig::COLLECTOR_STORAGE_KEY_ID])) {
+        if (!isset($collectItemData[CollectorConfig::COLLECTOR_STORAGE_KEY])) {
             return null;
         }
 
-        return $collectItemData[CollectorConfig::COLLECTOR_STORAGE_KEY_ID];
+        return $collectItemData[CollectorConfig::COLLECTOR_STORAGE_KEY];
     }
 
     /**
@@ -174,11 +175,11 @@ abstract class AbstractCollectorPlugin
      */
     protected function getCollectorSearchKeyId(array $collectItemData)
     {
-        if (!isset($collectItemData[CollectorConfig::COLLECTOR_SEARCH_KEY_ID])) {
+        if (!isset($collectItemData[CollectorConfig::COLLECTOR_SEARCH_KEY])) {
             return null;
         }
 
-        return $collectItemData[CollectorConfig::COLLECTOR_SEARCH_KEY_ID];
+        return $collectItemData[CollectorConfig::COLLECTOR_SEARCH_KEY];
     }
 
     /**
@@ -269,34 +270,6 @@ abstract class AbstractCollectorPlugin
     }
 
     /**
-     * @param $itemType
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    protected function flushDeletedTouchStorageAndSearchKeys($itemType)
-    {
-        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType);
-        $entityCollection = $deleteQuery->find();
-        $deletedCount = count($entityCollection);
-
-        $this->touchQueryContainer->getConnection()->beginTransaction();
-        try {
-            foreach ($entityCollection as $entity) {
-                $entity->delete();
-            }
-        } catch (\Exception $e) {
-            $this->touchQueryContainer->getConnection()->rollBack();
-            throw $e;
-        }
-
-        $this->touchQueryContainer->getConnection()->commit();
-
-        return $deletedCount;
-    }
-
-    /**
      * @param string $itemType
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
@@ -310,16 +283,88 @@ abstract class AbstractCollectorPlugin
         LocaleTransfer $locale)
     {
         $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
-        $touchEntities = $deleteQuery->find();
+        $touchEntityCollection = $deleteQuery->find();
 
-        foreach ($touchEntities as $touchEntity) {
-            $keyEntity = $touchUpdater->getKeyById($touchEntity->getIdTouch(), $locale);
-            if (!empty($keyEntity)) {
-                $key = $keyEntity->getKey();
-                $dataWriter->delete($key);
-                $keyEntity->delete();
+        $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
+        $keysToDelete = [];
+        foreach ($touchEntityCollection as $touchEntity) {
+            $entityData = $touchEntity->toArray();
+            $key = $entityData[$touchUpdater->getTouchKeyColumnName()];
+
+            if (trim($key) !== '') {
+                $keysToDelete[$key] = true;
+                $touchUpdaterSet->add($key, $touchEntity->getIdTouch(), [
+                    CollectorConfig::COLLECTOR_STORAGE_KEY => $this->getCollectorStorageKeyId($entityData),
+                    CollectorConfig::COLLECTOR_SEARCH_KEY => $this->getCollectorSearchKeyId($entityData),
+                ]);
             }
         }
+
+        if (!empty($keysToDelete)) {
+            $touchUpdater->deleteMulti($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
+            $dataWriter->delete($keysToDelete);
+        }
+    }
+
+    /**
+     * @param $itemType
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    protected function flushDeletedTouchStorageAndSearchKeys($itemType)
+    {
+        $idList = [];
+        $batchCount = 1;
+        $offset = 0;
+        $deletedCount = 0;
+
+        $this->touchQueryContainer->getConnection()->beginTransaction();
+        try {
+            while ($batchCount > 0) {
+                $deleteQuery = $this->touchQueryContainer
+                    ->queryTouchDeleteStorageAndSearch($itemType)
+                    ->orderByIdTouch(Criteria::DESC);
+
+                $deleteQuery
+                    ->setOffset($offset)
+                    ->setLimit($this->chunkSize);
+
+                $entityCollection = $deleteQuery->find();
+                $batchCount = count($entityCollection);
+
+                if ($batchCount > 0) {
+                    $deletedCount += $batchCount;
+                    $offset += $this->chunkSize;
+
+                    foreach ($entityCollection as $entity) {
+                        $idList[] = $entity->getIdTouch();
+                    }
+
+                    if (!empty($idList)) {
+                        $sql = 'DELETE FROM %s WHERE %s IN (%s)';
+                        $sql = sprintf($sql,
+                            SpyTouchTableMap::TABLE_NAME,
+                            SpyTouchTableMap::COL_ID_TOUCH,
+                            rtrim(
+                                implode(',', $idList),
+                                ','
+                            )
+                        );
+
+                        $this->touchQueryContainer->getConnection()->exec($sql);
+                    }
+                }
+            }
+        } catch (\Exception $exception) {
+            $this->touchQueryContainer->getConnection()->rollBack();
+            throw $exception;
+        }
+
+        $this->touchQueryContainer->getConnection()->commit();
+
+        return $deletedCount;
     }
 
     /**
