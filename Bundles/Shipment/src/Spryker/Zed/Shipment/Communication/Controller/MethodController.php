@@ -24,13 +24,15 @@ class MethodController extends AbstractController
     const ID_METHOD_PARAMETER = 'id-method';
 
     /**
-     * @return Response
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $form = $this->getFactory()
             ->createMethodForm();
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -61,7 +63,7 @@ class MethodController extends AbstractController
         if ($this->getFacade()->hasMethod($idMethod)) {
             $form = $this->getFactory()
                 ->createMethodForm($idMethod);
-            $form->handleRequest();
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $data = $form->getData();

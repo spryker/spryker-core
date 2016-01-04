@@ -2,17 +2,18 @@
 
 namespace Spryker\Zed\Sales\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class CustomerForm extends AbstractForm
 {
 
-    const FIRST_NAME = 'first_name';
-    const LAST_NAME = 'last_name';
-    const SALUTATION = 'salutation';
-    const EMAIL = 'email';
+    const FIELD_FIRST_NAME = 'first_name';
+    const FIELD_LAST_NAME = 'last_name';
+    const FIELD_SALUTATION = 'salutation';
+    const FIELD_EMAIL = 'email';
     const SUBMIT = 'submit';
 
     protected $orderQuery;
@@ -28,26 +29,44 @@ class CustomerForm extends AbstractForm
     }
 
     /**
-     * @return CustomerForm
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
     {
-        return $this->addChoice(self::SALUTATION, [
-            'label' => 'Salutation',
-            'placeholder' => '-select-',
-            'choices' => $this->getSalutationOptions(),
-        ])
-            ->addText(self::FIRST_NAME, [
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'customer';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add(self::FIELD_SALUTATION, 'choice', [
+                'label' => 'Salutation',
+                'placeholder' => '-select-',
+                'choices' => $this->getSalutationOptions(),
+            ])
+            ->add(self::FIELD_FIRST_NAME, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addText(self::LAST_NAME, [
+            ->add(self::FIELD_LAST_NAME, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addText(self::EMAIL, [
+            ->add(self::FIELD_EMAIL, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
@@ -69,15 +88,15 @@ class CustomerForm extends AbstractForm
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $order = $this->orderQuery->findOne();
 
         return [
-            self::FIRST_NAME => $order->getFirstName(),
-            self::LAST_NAME => $order->getLastName(),
-            self::SALUTATION => $order->getSalutation(),
-            self::EMAIL => $order->getEmail(),
+            self::FIELD_FIRST_NAME => $order->getFirstName(),
+            self::FIELD_LAST_NAME => $order->getLastName(),
+            self::FIELD_SALUTATION => $order->getSalutation(),
+            self::FIELD_EMAIL => $order->getEmail(),
         ];
     }
 

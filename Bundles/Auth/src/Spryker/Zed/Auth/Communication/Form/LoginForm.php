@@ -6,38 +6,58 @@
 
 namespace Spryker\Zed\Auth\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class LoginForm extends AbstractForm
 {
 
-    const USERNAME = 'username';
-    const PASSWORD = 'password';
+    const FIELD_USERNAME = 'username';
+    const FIELD_PASSWORD = 'password';
 
-    /**
-     * @return self
-     */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return $this
-            ->addText(self::USERNAME, [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintRequired(),
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-                'attr' => [
-                    'placeholder' => 'Email Address',
-                ],
-            ])
-            ->addPassword(self::PASSWORD, [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintRequired(),
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-                'attr' => [
-                    'placeholder' => 'Password',
-                ],
-            ]);
+        $builder->add(self::FIELD_USERNAME, 'text', [
+            'constraints' => [
+                $this->getConstraints()->createConstraintRequired(),
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+            'attr' => [
+                'placeholder' => 'Email Address',
+            ],
+        ])
+        ->add(self::FIELD_PASSWORD, 'password', [
+            'constraints' => [
+                $this->getConstraints()->createConstraintRequired(),
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+            'attr' => [
+                'placeholder' => 'Password',
+            ],
+        ]);
     }
 
+    /**
+     * @return array
+     */
+    public function populateFormFields()
+    {
+        return [];
+    }
+
+    /**
+     * @return null
+     */
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'auth';
+    }
 }

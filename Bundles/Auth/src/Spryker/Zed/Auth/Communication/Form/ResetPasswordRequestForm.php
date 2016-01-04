@@ -6,22 +6,24 @@
 
 namespace Spryker\Zed\Auth\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class ResetPasswordRequestForm extends AbstractForm
 {
 
-    const EMAIL = 'email';
-    const SUBMIT = 'submit';
-    const LOGIN = 'login';
+    const FIELD_EMAIL = 'email';
+    const FIELD_SUBMIT = 'submit';
+    const FIELD_LOGIN = 'login';
 
     /**
-     * @return self;
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return $this
-            ->addText(self::EMAIL, [
+        $builder
+            ->add(self::FIELD_EMAIL, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                     $this->getConstraints()->createConstraintRequired(),
@@ -31,13 +33,13 @@ class ResetPasswordRequestForm extends AbstractForm
                     'placeholder' => 'Email Address',
                 ],
             ])
-            ->addSubmit(self::SUBMIT, [
+            ->add(self::FIELD_SUBMIT, 'submit', [
                 'label' => 'Recover password',
                 'attr' => [
                     'class' => 'btn btn-primary btn-block btn-outline',
                 ],
             ])
-            ->addUrl(self::LOGIN, [
+            ->add(self::FIELD_LOGIN, 'url', [
                 'attr' => [
                     'href' => '/auth/login',
                     'class' => 'btn btn-success btn-block btn-outline',
@@ -47,11 +49,26 @@ class ResetPasswordRequestForm extends AbstractForm
     }
 
     /**
+     * @return null
+     */
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'reset_password';
+    }
+
+    /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         return [];
     }
-
 }

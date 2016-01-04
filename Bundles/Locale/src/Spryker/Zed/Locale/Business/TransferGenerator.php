@@ -20,7 +20,7 @@ class TransferGenerator implements TransferGeneratorInterface
     public function convertLocale(SpyLocale $localeEntity)
     {
         return (new LocaleTransfer())
-            ->fromArray($localeEntity->toArray());
+            ->fromArray($localeEntity->toArray(), true);
     }
 
     /**

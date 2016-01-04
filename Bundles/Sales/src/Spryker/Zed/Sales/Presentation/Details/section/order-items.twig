@@ -82,11 +82,9 @@
                 </tr>
                 {% if orderItemSplitFormCollection is defined %}
                     <tr style="display: none;" id="split_form_row_{{ orderItem.IdSalesOrderItem }}">
-                        <td colspan="8">
+                        <td colspan="9">
                             <h4>Split order item</h4>
-                            {% if orderItemSplitFormCollection.isFormSet(orderItem.IdSalesOrderItem) %}
-                                {{ form(orderItemSplitFormCollection.getById(orderItem.IdSalesOrderItem)) }}
-                            {% endif %}
+                            {{ form(orderItemSplitFormCollection[orderItem.IdSalesOrderItem]) }}
                         </td>
                     </tr>
                 {% endif %}

@@ -39,7 +39,9 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     {
         $carrierQuery = $this->getQueryContainer()->queryCarriers();
 
-        return new CarrierForm($carrierQuery);
+        $form = new CarrierForm($carrierQuery);
+
+        return $this->createForm($form);
     }
 
     /**
@@ -56,7 +58,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 
         $taxSetQuery = $this->getTaxQueryContainer()->queryAllTaxSets();
 
-        return new MethodForm(
+        $form = new MethodForm(
                 $methodQuery,
                 $carrierQuery,
                 $taxSetQuery,
@@ -64,6 +66,8 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
                 $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS),
                 $idMethod
             );
+
+        return $this->createForm($form);
     }
 
     /**

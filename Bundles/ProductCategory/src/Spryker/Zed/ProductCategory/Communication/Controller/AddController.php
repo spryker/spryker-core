@@ -36,7 +36,7 @@ class AddController extends AbstractController
 
         $form = $this->getFactory()
             ->createCategoryFormAdd($idParentNode);
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $localeTransfer = $this->getFactory()

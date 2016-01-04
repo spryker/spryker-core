@@ -54,21 +54,21 @@ class RedirectController extends AbstractController
     /**
      * @return array
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $form = $this->getFactory()
             ->createCmsRedirectForm('add');
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
 
             $redirectTransfer = $this->getUrlFacade()
-                ->createRedirectAndTouch($data[CmsRedirectForm::TO_URL], $data[CmsRedirectForm::STATUS]);
+                ->createRedirectAndTouch($data[CmsRedirectForm::FIELD_TO_URL], $data[CmsRedirectForm::FIELD_STATUS]);
 
             $this->getUrlFacade()
-                ->saveRedirectUrlAndTouch($data[CmsRedirectForm::FROM_URL], $this->getLocaleFacade()
+                ->saveRedirectUrlAndTouch($data[CmsRedirectForm::FIELD_FROM_URL], $this->getLocaleFacade()
                     ->getCurrentLocale(), $redirectTransfer->getIdUrlRedirect());
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
@@ -91,7 +91,7 @@ class RedirectController extends AbstractController
         $form = $this->getFactory()
             ->createCmsRedirectForm('update', $idUrl);
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -144,7 +144,7 @@ class RedirectController extends AbstractController
     private function createUrlTransfer($url, $data)
     {
         $urlTransfer = (new UrlTransfer())->fromArray($url->toArray(), true);
-        $urlTransfer->setUrl($data[CmsRedirectForm::FROM_URL]);
+        $urlTransfer->setUrl($data[CmsRedirectForm::FIELD_FROM_URL]);
         $urlTransfer->setFkRedirect($url->getFkResourceRedirect());
         $urlTransfer->setResourceId($url->getResourceId());
         $urlTransfer->setResourceType($url->getResourceType());
@@ -161,8 +161,8 @@ class RedirectController extends AbstractController
     private function createRedirectTransfer($redirect, $data)
     {
         $redirectTransfer = (new RedirectTransfer())->fromArray($redirect->toArray());
-        $redirectTransfer->setToUrl($data[CmsRedirectForm::TO_URL]);
-        $redirectTransfer->setStatus($data[CmsRedirectForm::STATUS]);
+        $redirectTransfer->setToUrl($data[CmsRedirectForm::FIELD_TO_URL]);
+        $redirectTransfer->setStatus($data[CmsRedirectForm::FIELD_STATUS]);
 
         return $redirectTransfer;
     }

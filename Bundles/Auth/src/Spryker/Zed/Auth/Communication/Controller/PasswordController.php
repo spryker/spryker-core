@@ -33,11 +33,11 @@ class PasswordController extends AbstractController
     public function resetRequestAction(Request $request)
     {
         $resetRequestForm = $this->getFactory()->createResetPasswordRequestForm();
-        $resetRequestForm->handleRequest();
+        $resetRequestForm->handleRequest($request);
 
-        if ($request->isMethod(Request::METHOD_POST) && $resetRequestForm->isValid()) {
+        if ($resetRequestForm->isValid()) {
             $formData = $resetRequestForm->getData();
-            $this->getFacade()->requestPasswordReset($formData[ResetPasswordRequestForm::EMAIL]);
+            $this->getFacade()->requestPasswordReset($formData[ResetPasswordRequestForm::FIELD_EMAIL]);
             $this->addSuccessMessage('Email sent. Please check your inbox for further instructions.');
         }
 
@@ -68,14 +68,14 @@ class PasswordController extends AbstractController
         }
 
         $resetPasswordForm = $this->getFactory()->createResetPasswordForm();
-        $resetPasswordForm->handleRequest();
+        $resetPasswordForm->handleRequest($request);
 
-        if ($request->isMethod(Request::METHOD_POST) && $resetPasswordForm->isValid()) {
+        if ($resetPasswordForm->isValid()) {
             $formData = $resetPasswordForm->getData();
             $resetStatus = $this->getFacade()
                 ->resetPassword(
                     $request->get('token'),
-                    $formData[ResetPasswordForm::PASSWORD]
+                    $formData[ResetPasswordForm::FIELD_PASSWORD]
                 );
 
             if ($resetStatus === true) {

@@ -9,6 +9,7 @@ namespace Spryker\Zed\User\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\UserCreateForm;
+use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 use Spryker\Zed\User\Communication\Table\UsersTable;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
@@ -31,7 +32,9 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createResetPasswordForm(UserFacade $userFacade)
     {
-        return new ResetPasswordForm($userFacade);
+        $form = new ResetPasswordForm($userFacade);
+
+        return $this->createForm($form);
     }
 
     /**
@@ -45,11 +48,13 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UserCreateForm
+     * @return UserForm
      */
     public function createUserForm()
     {
-        return new UserCreateForm($this->createAclFacade());
+        $form = new UserForm($this->createAclFacade());
+
+        return $this->createForm($form);
     }
 
     /**
@@ -60,7 +65,9 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUpdateUserForm($idUser, UserFacade $userFacade)
     {
-        return new UserUpdateForm($idUser, $userFacade, $this->createAclFacade());
+        $form = new UserUpdateForm($idUser, $userFacade, $this->createAclFacade());
+
+        return $this->createForm($form);
     }
 
     /**

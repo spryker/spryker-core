@@ -7,14 +7,17 @@
 namespace Spryker\Zed\ProductCategory\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class CategoryFormAdd extends AbstractForm
 {
@@ -73,28 +76,46 @@ class CategoryFormAdd extends AbstractForm
     }
 
     /**
-     * @return self
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return $this->addText(self::NAME, [
+        $builder
+            ->add(self::NAME, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addText(self::CATEGORY_KEY, [
+            ->add(self::CATEGORY_KEY, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
+            ->add(self::FK_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
                 'label' => 'Parent',
                 'choices' => $this->getCategoriesWithPaths($this->locale->getIdLocale()),
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addHidden(self::PK_CATEGORY_NODE);
+            ->add(self::PK_CATEGORY_NODE, 'hidden');
+    }
+
+    /**
+     * @return null
+     */
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'category';
     }
 
     /**
@@ -204,7 +225,7 @@ class CategoryFormAdd extends AbstractForm
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $fields = $this->getDefaultFormFields();
 

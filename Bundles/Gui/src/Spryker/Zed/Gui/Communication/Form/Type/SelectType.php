@@ -13,6 +13,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class SelectType extends AbstractType
 {
+    const URL = 'url';
+    const PLACEHOLDER = 'placeholder';
 
     /**
      * @param FormView $view
@@ -23,8 +25,8 @@ class SelectType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['url'] = $options['url'];
-        $view->vars['placeholder'] = $options['placeholder'];
+        $view->vars[self::URL] = $options[self::URL];
+        $view->vars[self::PLACEHOLDER] = $options[self::PLACEHOLDER];
     }
 
     /**
@@ -35,8 +37,8 @@ class SelectType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'url' => '',
-            'placeholder' => 'Select value',
+            self::URL => '',
+            self::PLACEHOLDER => 'Select value',
         ]);
     }
 

@@ -113,7 +113,9 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
         $templateQuery = $this->getQueryContainer()
             ->queryTemplates();
 
-        return new CmsBlockForm($templateQuery, $blockPageByIdQuery, $formType, $idCmsBlock);
+        $form = new CmsBlockForm($templateQuery, $blockPageByIdQuery, $formType, $idCmsBlock);
+
+        return $this->createForm($form);
     }
 
     /**
@@ -129,7 +131,9 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
 
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
 
-        return new CmsRedirectForm($queryUrlById, $urlFacade, $formType);
+        $form = new CmsRedirectForm($queryUrlById, $urlFacade, $formType);
+
+        return $this->createForm($form);
     }
 
     /**
@@ -145,7 +149,9 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
         $glossaryMappingByIdQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingWithKeyById($idMapping);
 
-        return new CmsGlossaryForm($glossaryMappingByIdQuery, $cmsFacade, $idPage, $idMapping, $placeholder);
+        $form = new CmsGlossaryForm($glossaryMappingByIdQuery, $cmsFacade, $idPage, $idMapping, $placeholder);
+
+        return $this->createForm($form);
     }
 
     /**

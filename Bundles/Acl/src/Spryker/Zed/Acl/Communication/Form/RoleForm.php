@@ -5,41 +5,47 @@
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Shared\Transfer\TransferInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class RoleForm extends AbstractForm
 {
 
-    const NAME = 'name';
-    const ID_ROLE = 'id_acl_role';
+    const FIELD_NAME = 'name';
+    const FIELD_ID_ROLE = 'id_acl_role';
 
     /**
-     * @return self
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addName()
-            ->addRoleId();
-
-        return $this;
+        $builder->add(self::FIELD_NAME, 'text', [
+            'label' => 'Role name',
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+        ])
+        ->add(self::FIELD_ID_ROLE, 'hidden', [
+            'label' => 'Role name',
+        ]);
     }
 
     /**
-     * @return self
+     * @return null
      */
-    protected function addName()
+    protected function getDataClass()
     {
-        $this->addText(
-            self::NAME,
-            [
-                'label' => 'Role name',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ]
-        );
+        return null;
+    }
 
-        return $this;
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'role';
     }
 
     /**
@@ -47,31 +53,15 @@ class RoleForm extends AbstractForm
      */
     protected function addRoleId()
     {
-        $this->addHidden(
-            self::ID_ROLE,
-            [
-                'label' => 'Role name',
-            ]
-        );
-
         return $this;
     }
 
     /**
-     * Set the values for fields
-     *
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
-    }
-
-    /**
-     * @return string
-     */
-    protected function getFormName()
-    {
-        return 'role_form';
+        return [];
     }
 
 }

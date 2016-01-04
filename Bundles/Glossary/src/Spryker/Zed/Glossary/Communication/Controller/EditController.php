@@ -9,6 +9,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method GlossaryCommunicationFactory getFactory()
@@ -22,7 +23,7 @@ class EditController extends AbstractController
     /**
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $availableLocales = $this->getFactory()
             ->createEnabledLocales();
@@ -30,7 +31,7 @@ class EditController extends AbstractController
         $glossaryForm = $this->getFactory()
             ->createTranslationForm($availableLocales, self::FORM_UPDATE_TYPE);
 
-        $glossaryForm->handleRequest();
+        $glossaryForm->handleRequest($request);
 
         if ($glossaryForm->isValid()) {
             $data = $glossaryForm->getData();

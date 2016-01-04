@@ -4,10 +4,12 @@ namespace Spryker\Zed\Refund\Communication\Form;
 
 use Generated\Shared\Transfer\RefundTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Refund\Business\RefundFacade;
 use Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class RefundForm extends AbstractForm
 {
@@ -55,20 +57,37 @@ class RefundForm extends AbstractForm
     }
 
     /**
-     * @return self
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
     {
-        $this->addCollection(self::FIELD_ORDER_ITEMS, $this->buildOrderItemsFieldConfiguration());
-        $this->addCollection(self::FIELD_EXPENSES, $this->buildExpensesFieldConfiguration());
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'refund';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_ORDER_ITEMS, 'collection', $this->buildOrderItemsFieldConfiguration());
+        $builder->add(self::FIELD_EXPENSES, 'collection', $this->buildExpensesFieldConfiguration());
 
         $maxAmount = $this->refundFacade->calculateRefundableAmount($this->orderTransfer);
 
-        $this
-            ->addNumber(self::FIELD_ADJUSTMENT_FEE, [
+        $builder
+            ->add(self::FIELD_ADJUSTMENT_FEE, 'number', [
                 'label' => 'Adjustment Fee (in Cents)',
             ])
-            ->addNumber(self::FIELD_AMOUNT, [
+            ->add(self::FIELD_AMOUNT, 'number', [
                 'label' => 'Total Refund Amount (autocalculated / in Cents)',
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
@@ -77,7 +96,7 @@ class RefundForm extends AbstractForm
                 ],
                 'attr' => ['readonly' => true],
             ])
-            ->addTextarea(static::FIELD_COMMENT, [
+            ->add(static::FIELD_COMMENT, 'textarea', [
                 'label' => 'Comment',
                 'attr' => [
                     'rows' => 7,
@@ -88,26 +107,24 @@ class RefundForm extends AbstractForm
             ]);
 
         if ($this->requiresPaymentData()) {
-            $this
-                ->addText(self::FIELD_IBAN, [
+            $builder
+                ->add(self::FIELD_IBAN, 'text', [
                     'constraints' => [
                         $this->getConstraints()->createConstraintNotBlank(),
                     ],
                 ])
-                ->addText(self::FIELD_BIC, [
+                ->add(self::FIELD_BIC, 'text', [
                     'constraints' => [
                         $this->getConstraints()->createConstraintNotBlank(),
                     ],
                 ]);
         }
-
-        return $this;
     }
 
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         if (!$this->requiresPaymentData()) {
             return [];

@@ -53,7 +53,7 @@ class EditController extends AddController
         $form = $this->getFactory()
             ->createCategoryFormEdit($idCategory);
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $connection = $this->getFactory()

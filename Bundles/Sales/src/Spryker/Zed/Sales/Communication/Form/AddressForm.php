@@ -2,29 +2,30 @@
 
 namespace Spryker\Zed\Sales\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class AddressForm extends AbstractForm
 {
 
-    const SALUTATION = 'salutation';
-    const FIRST_NAME = 'first_name';
-    const MIDDLE_NAME = 'middle_name';
-    const LAST_NAME = 'last_name';
-    const EMAIL = 'email';
-    const ADDRESS_1 = 'address1';
+    const FIELD_SALUTATION = 'salutation';
+    const FIELD_FIRST_NAME = 'first_name';
+    const FIELD_MIDDLE_NAME = 'middle_name';
+    const FIELD_LAST_NAME = 'last_name';
+    const FIELD_EMAIL = 'email';
+    const FIELD_ADDRESS_1 = 'address1';
     const ADDRESS_2 = 'address2';
     const ADDRESS_3 = 'address3';
-    const COMPANY = 'company';
-    const CITY = 'city';
-    const ZIP_CODE = 'zip_code';
-    const PO_BOX = 'po_box';
-    const PHONE = 'phone';
-    const CELL_PHONE = 'cell_phone';
-    const DESCRIPTION = 'description';
-    const COMMENT = 'comment';
+    const FIELD_COMPANY = 'company';
+    const FIELD_CITY = 'city';
+    const FIELD_ZIP_CODE = 'zip_code';
+    const FIELD_PO_BOX = 'po_box';
+    const FIELD_PHONE = 'phone';
+    const FIELD_CELL_PHONE = 'cell_phone';
+    const FIELD_DESCRIPTION = 'description';
+    const FIELD_COMMENT = 'comment';
 
     const SUBMIT = 'submit';
 
@@ -42,42 +43,55 @@ class AddressForm extends AbstractForm
     }
 
     /**
-     * @return CustomerForm
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
     {
-        return $this
-            ->addChoice(self::SALUTATION, [
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'address';
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add(self::FIELD_SALUTATION, 'choice', [
                 'label' => 'Salutation',
                 'placeholder' => '-select-',
                 'choices' => $this->getSalutationOptions(),
             ])
-            ->addText(self::FIRST_NAME, [
+            ->add(self::FIELD_FIRST_NAME, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addText(self::MIDDLE_NAME)
-            ->addText(self::LAST_NAME, [
+            ->add(self::FIELD_MIDDLE_NAME, 'text')
+            ->add(self::FIELD_LAST_NAME, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addText(self::EMAIL, [
+            ->add(self::FIELD_EMAIL, 'text', [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                     $this->getConstraints()->createConstraintEmail(),
                 ],
             ])
-            ->addText(self::ADDRESS_1)
-            ->addText(self::COMPANY)
-            ->addText(self::CITY)
-            ->addText(self::ZIP_CODE)
-            ->addText(self::PO_BOX)
-            ->addText(self::PHONE)
-            ->addText(self::CELL_PHONE)
-            ->addText(self::DESCRIPTION)
-            ->addTextarea(self::COMMENT);
+            ->add(self::FIELD_ADDRESS_1, 'text')
+            ->add(self::FIELD_COMPANY, 'text')
+            ->add(self::FIELD_CITY, 'text')
+            ->add(self::FIELD_ZIP_CODE, 'text')
+            ->add(self::FIELD_PO_BOX, 'text')
+            ->add(self::FIELD_PHONE, 'text')
+            ->add(self::FIELD_CELL_PHONE, 'text')
+            ->add(self::FIELD_DESCRIPTION, 'text')
+            ->add(self::FIELD_COMMENT, 'textarea');
     }
 
     /**
@@ -95,25 +109,25 @@ class AddressForm extends AbstractForm
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $address = $this->addressQuery->findOne();
 
         return [
-            self::FIRST_NAME => $address->getFirstName(),
-            self::MIDDLE_NAME => $address->getMiddleName(),
-            self::LAST_NAME => $address->getLastName(),
-            self::EMAIL => $address->getEmail(),
-            self::ADDRESS_1 => $address->getAddress1(),
-            self::COMPANY => $address->getCompany(),
-            self::CITY => $address->getCity(),
-            self::ZIP_CODE => $address->getZipCode(),
-            self::PO_BOX => $address->getPoBox(),
-            self::PHONE => $address->getPhone(),
-            self::CELL_PHONE => $address->getCellPhone(),
-            self::DESCRIPTION => $address->getDescription(),
-            self::COMMENT => $address->getComment(),
-            self::SALUTATION => $address->getSalutation(),
+            self::FIELD_FIRST_NAME => $address->getFirstName(),
+            self::FIELD_MIDDLE_NAME => $address->getMiddleName(),
+            self::FIELD_LAST_NAME => $address->getLastName(),
+            self::FIELD_EMAIL => $address->getEmail(),
+            self::FIELD_ADDRESS_1 => $address->getAddress1(),
+            self::FIELD_COMPANY => $address->getCompany(),
+            self::FIELD_CITY => $address->getCity(),
+            self::FIELD_ZIP_CODE => $address->getZipCode(),
+            self::FIELD_PO_BOX => $address->getPoBox(),
+            self::FIELD_PHONE => $address->getPhone(),
+            self::FIELD_CELL_PHONE => $address->getCellPhone(),
+            self::FIELD_DESCRIPTION => $address->getDescription(),
+            self::FIELD_COMMENT => $address->getComment(),
+            self::FIELD_SALUTATION => $address->getSalutation(),
         ];
     }
 

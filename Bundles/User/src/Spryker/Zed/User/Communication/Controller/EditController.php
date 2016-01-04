@@ -31,10 +31,10 @@ class EditController extends AbstractController
     /**
      * @return array
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $userForm = $this->getFactory()->createUserForm();
-        $userForm->handleRequest();
+        $userForm->handleRequest($request);
 
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
@@ -78,7 +78,7 @@ class EditController extends AbstractController
         }
 
         $userForm = $this->getFactory()->createUpdateUserForm($idUser, $this->getFacade());
-        $userForm->handleRequest();
+        $userForm->handleRequest($request);
 
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
@@ -182,15 +182,15 @@ class EditController extends AbstractController
     /**
      * @return array
      */
-    public function passwordResetAction()
+    public function passwordResetAction(Request $request)
     {
         $currentUserTransfer = $this->getFacade()->getCurrentUser();
         $resetPasswordForm = $this->getFactory()->createResetPasswordForm($this->getFacade());
-        $resetPasswordForm->handleRequest();
+        $resetPasswordForm->handleRequest($request);
 
         if ($resetPasswordForm->isValid()) {
             $formData = $resetPasswordForm->getData();
-            $currentUserTransfer->setPassword($formData[ResetPasswordForm::PASSWORD]);
+            $currentUserTransfer->setPassword($formData[ResetPasswordForm::FIELD_PASSWORD]);
 
             try {
                 $this->getFacade()->updateUser($currentUserTransfer);
@@ -213,12 +213,12 @@ class EditController extends AbstractController
      */
     protected function addAclGroups(array $formData, UserTransfer $userTransfer)
     {
-        if (!array_key_exists(UserForm::GROUP, $formData)) {
+        if (!array_key_exists(UserForm::FIELD_GROUP, $formData)) {
             return false;
         }
 
         $aclFacade = $this->getFactory()->createAclFacade();
-        foreach ($formData[UserForm::GROUP] as $idGroup) {
+        foreach ($formData[UserForm::FIELD_GROUP] as $idGroup) {
             $aclFacade->addUserToGroup($userTransfer->getIdUser(), $idGroup);
         }
 

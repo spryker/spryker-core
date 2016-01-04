@@ -6,27 +6,63 @@
 
 namespace Spryker\Zed\Sales\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class OrderItemSplitForm extends AbstractForm
 {
-
-    const QUANTITY = 'quantity';
-    const ID_ORDER_ITEM = 'id_order_item';
-    const ID_ORDER = 'id_order';
+    const FIELD_QUANTITY = 'quantity';
+    const FIELD_ID_ORDER_ITEM = 'id_order_item';
+    const FIELD_ID_ORDER = 'id_order';
     const VALIDATE_MESSAGE_NUMERIC = 'Please provide numeric value.';
     const VALIDATION_MESSAGE_QUANTITY = 'Please provide quantity.';
 
     /**
-     * Prepares form
-     *
-     * @return self
+     * @var SpySalesOrderItem
      */
-    protected function buildFormFields()
+    protected $orderItem;
+
+    /**
+     * @param SpySalesOrderItem $orderItem
+     */
+    public function __construct(SpySalesOrderItem $orderItem = null)
     {
-        return $this->addText(
-            self::QUANTITY,
-            [
+        $this->orderItem = $orderItem;
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+    }
+
+    /**
+     * @return null
+     */
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'order_item_split';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_QUANTITY, 'text', [
                 'label' => 'Quantity',
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank([
@@ -37,21 +73,29 @@ class OrderItemSplitForm extends AbstractForm
                         'message' => self::VALIDATE_MESSAGE_NUMERIC,
                     ]),
                 ],
-            ]
-        )
-            ->addHidden(self::ID_ORDER_ITEM)
-            ->addHidden(self::ID_ORDER)
-            ->addSubmit('Split');
+            ])
+            ->add(self::FIELD_ID_ORDER_ITEM, 'hidden')
+            ->add(self::FIELD_ID_ORDER, 'hidden')
+            ->add('Split', 'submit', [
+                'attr' => [
+                    'class' => 'btn btn-sm btn-primary'
+                ],
+            ]);
     }
 
     /**
-     * Set the values for fields
-     *
-     * @return self
+     * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
-        return [];
+        if ($this->orderItem === null) {
+            return [];
+        }
+
+        return [
+            self::FIELD_ID_ORDER_ITEM => $this->orderItem->getIdSalesOrderItem(),
+            self::FIELD_ID_ORDER => $this->orderItem->getFkSalesOrder(),
+        ];
     }
 
 }

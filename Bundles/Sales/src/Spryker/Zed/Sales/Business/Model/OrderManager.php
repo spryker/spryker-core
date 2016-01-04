@@ -242,6 +242,10 @@ class OrderManager
             ->querySalesOrderById($idSalesOrder)
             ->findOne();
 
+        if ($orderEntity === null) {
+            return new OrderTransfer();
+        }
+
         return (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
     }
 

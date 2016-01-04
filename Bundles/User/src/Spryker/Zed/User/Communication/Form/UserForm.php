@@ -5,19 +5,21 @@
 
 namespace Spryker\Zed\User\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class UserForm extends AbstractForm
 {
 
-    const USERNAME = 'username';
-    const GROUP = 'group';
-    const FIRST_NAME = 'first_name';
-    const LAST_NAME = 'last_name';
-    const PASSWORD = 'password';
-    const STATUS = 'status';
+    const FIELD_USERNAME = 'username';
+    const FIELD_GROUP = 'group';
+    const FIELD_FIRST_NAME = 'first_name';
+    const FIELD_LAST_NAME = 'last_name';
+    const FIELD_PASSWORD = 'password';
+    const FIELD_STATUS = 'status';
 
     /**
      * @var array
@@ -40,133 +42,66 @@ class UserForm extends AbstractForm
     }
 
     /**
-     * Prepares form
-     *
-     * @return self
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addUsername()
-            ->addRepeatedUserPassword()
-            ->addFirstName()
-            ->addLastName()
-            ->addGroupSelect();
-
-        return $this;
+        $builder->add(self::FIELD_USERNAME, 'text', [
+            'label' => 'Username',
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+        ])
+        ->add(self::FIELD_PASSWORD, 'repeated', [
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+            'invalid_message' => 'The password fields must match.',
+            'first_options' => ['label' => 'Password'],
+            'second_options' => ['label' => 'Repeat Password'],
+            'required' => true,
+            'type' => 'password',
+        ])
+        ->add(self::FIELD_FIRST_NAME, 'text', [
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+        ])
+        ->add(self::FIELD_LAST_NAME, 'text', [
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+        ])
+        ->add(self::FIELD_GROUP, 'choice', [
+            'constraints' => [
+                $this->getConstraints()->createConstraintChoice([
+                    'choices' => array_keys($this->getGroupChoices()),
+                    'multiple' => true,
+                    'min' => 1,
+                ]),
+            ],
+            'label' => 'Assigned groups',
+            'multiple' => true,
+            'expanded' => true,
+            'choices' => $this->getGroupChoices(),
+        ]);
     }
 
     /**
-     * @return self
+     * @return null
      */
-    protected function addUsername()
+    protected function getDataClass()
     {
-        $this->addText(
-            self::USERNAME,
-            [
-                'label' => 'Username',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ]
-        );
-
-        return $this;
+        return null;
     }
 
     /**
-     * @return self
+     * @return string
      */
-    protected function addRepeatedUserPassword()
+    public function getName()
     {
-        $this->addRepeated(
-            self::PASSWORD,
-            [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-                'invalid_message' => 'The password fields must match.',
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
-                'required' => true,
-                'type' => 'password',
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @return self
-     */
-    protected function addFirstName()
-    {
-        $this->addText(
-            self::FIRST_NAME,
-            [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @return self
-     */
-    protected function addLastName()
-    {
-        $this->addText(
-            self::LAST_NAME,
-            [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @return self
-     */
-    protected function addGroupSelect()
-    {
-        $this->addSelect(
-            self::GROUP,
-            [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintChoice([
-                        'choices' => array_keys($this->getGroupChoices()),
-                        'multiple' => true,
-                        'min' => 1,
-                    ]),
-                ],
-                'label' => 'Assigned groups',
-                'multiple' => true,
-                'expanded' => true,
-                'choices' => $this->getGroupChoices(),
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @return self
-     */
-    public function addUserStatus()
-    {
-        $this->addSelect(
-            self::STATUS,
-            [
-                'choices' => $this->getStatusSelectChoices(),
-            ]
-        );
-
-        return $this;
+        return 'user';
     }
 
     /**
@@ -212,7 +147,7 @@ class UserForm extends AbstractForm
      *
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         return [];
     }

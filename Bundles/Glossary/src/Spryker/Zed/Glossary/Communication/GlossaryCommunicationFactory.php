@@ -76,7 +76,9 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
         $glossaryKeyQuery = $this->getQueryContainer()
             ->queryKeys();
 
-        return new TranslationForm($translationQuery, $glossaryKeyQuery, $locales, $type);
+        $form = new TranslationForm($translationQuery, $glossaryKeyQuery, $locales, $type);
+
+        return $this->createForm($form);
     }
 
 }

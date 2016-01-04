@@ -6,98 +6,62 @@
 namespace Spryker\Zed\Acl\Communication\Form;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class RulesetForm extends AbstractForm
 {
 
-    const BUNDLE = 'bundle';
-    const CONTROLLER = 'controller';
-    const ACTION = 'action';
-    const TYPE = 'type';
+    const FIELD_BUNDLE = 'bundle';
+    const FIELD_CONTROLLER = 'controller';
+    const FIELD_ACTION = 'action';
+    const FIELD_TYPE = 'type';
 
     /**
-     * @return self
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addBundleName()
-            ->addControllerName()
-            ->addActionName()
-            ->addPermissionSelect();
-
-        return $this;
+        $builder->add(self::FIELD_BUNDLE, 'text', [
+            'label' => 'Bundle',
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+        ])
+        ->add(self::FIELD_CONTROLLER, 'text', [
+            'label' => 'Controller',
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+        ])
+        ->add(self::FIELD_ACTION, 'text', [
+            'label' => 'Action',
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+        ])
+        ->add(self::FIELD_TYPE, 'choice', [
+            'label' => 'Permission',
+            'choices' => $this->getPermissionSelectChoices(),
+            'placeholder' => false,
+        ]);
     }
 
     /**
-     * @return self
+     * @return null
      */
-    protected function addBundleName()
+    protected function getDataClass()
     {
-        $this->addText(
-            self::BUNDLE,
-            [
-                'label' => 'Bundle',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ]
-        );
-
-        return $this;
+        return null;
     }
 
     /**
-     * @return self
+     * @return string
      */
-    protected function addControllerName()
+    public function getName()
     {
-        $this->addText(
-            self::CONTROLLER,
-            [
-                'label' => 'Controller',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @return self
-     */
-    protected function addActionName()
-    {
-        $this->addText(
-            self::ACTION,
-            [
-                'label' => 'Action',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @return self
-     */
-    protected function addPermissionSelect()
-    {
-        $this->addSelect(
-            self::TYPE,
-            [
-                'label' => 'Permission',
-                'choices' => $this->getPermissionSelectChoices(),
-                'placeholder' => false,
-            ]
-        );
-
-        return $this;
+        return 'ruleset';
     }
 
     /**
@@ -116,16 +80,8 @@ class RulesetForm extends AbstractForm
      *
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
+        return [];
     }
-
-    /**
-     * @return string
-     */
-    protected function getFormName()
-    {
-        return 'ruleset_form';
-    }
-
 }

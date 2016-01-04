@@ -14,6 +14,7 @@ use Spryker\Zed\Country\Communication\Table\CountryTable;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Spryker\Zed\Country\CountryConfig;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method CountryConfig getConfig()
@@ -30,17 +31,6 @@ class CountryCommunicationFactory extends AbstractCommunicationFactory
         $countryQuery = $this->getQueryContainer()->queryCountries();
 
         return new CountryTable($countryQuery);
-    }
-
-    /**
-     * @return CountryForm
-     */
-    public function createCountryForm()
-    {
-        $countryQuery = $this->getQueryContainer()->queryCountries();
-        $userQuery = $this->getUserQueryContainer()->queryUsers();
-
-        return new CountryForm($countryQuery, $userQuery);
     }
 
     /**

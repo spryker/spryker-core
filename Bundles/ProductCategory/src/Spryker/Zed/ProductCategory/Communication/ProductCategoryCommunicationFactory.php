@@ -94,13 +94,15 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryFormAdd($idParentNode)
     {
-        return new CategoryFormAdd(
+        $form = new CategoryFormAdd(
             $this->createCategoryQueryContainer(),
             $this->getQueryContainer(),
             $this->createCurrentLocale(),
             null,
             $idParentNode
         );
+
+        return $this->createForm($form);
     }
 
     /**

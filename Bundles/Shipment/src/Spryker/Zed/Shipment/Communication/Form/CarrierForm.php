@@ -6,15 +6,17 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
+use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class CarrierForm extends AbstractForm
 {
 
-    const NAME_GLOSSARY_FIELD = 'glossaryKeyName';
-    const NAME_FIELD = 'name';
-    const IS_ACTIVE_FIELD = 'isActive';
+    const FIELD_NAME_GLOSSARY_FIELD = 'glossaryKeyName';
+    const FIELD_NAME_FIELD = 'name';
+    const FIELD_IS_ACTIVE_FIELD = 'isActive';
     const CARRIER_ID = 'carrier_id';
 
     /**
@@ -31,37 +33,58 @@ class CarrierForm extends AbstractForm
     }
 
     /**
-     * @return self
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
     {
-        $this->addText(self::NAME_FIELD, [
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'carrier';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_NAME_FIELD, 'text', [
                 'label' => 'Name',
-            ]);
-        $this->addAutosuggest(self::NAME_GLOSSARY_FIELD, [
+                'constraints' => [
+                    $this->getConstraints()->createConstraintNotBlank(),
+                ],
+            ])
+            ->add(self::FIELD_NAME_GLOSSARY_FIELD, new AutosuggestType(), [
                 'label' => 'Name glossary key',
                 'url' => '/glossary/ajax/keys',
-            ]);
-        $this->addCheckbox(self::IS_ACTIVE_FIELD, [
+                'constraints' => [
+                    $this->getConstraints()->createConstraintNotBlank(),
+                ],
+            ])
+            ->add(self::FIELD_IS_ACTIVE_FIELD, 'checkbox', [
                 'label' => 'Enabled?',
             ]);
-
-        return $this;
     }
 
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $result = [];
-        $carrierId = $this->request->get(self::CARRIER_ID);
+        $carrierId = $this->getRequest()->get(self::CARRIER_ID);
 
         if ($carrierId !== null) {
             $carrier = $this->carrierQuery->findOneByIdShipmentCarrier($carrierId);
             $result = [
-                self::NAME_FIELD => $carrier->getFkGlossaryKeyCarrierName(),
-                self::IS_ACTIVE_FIELD => $carrier->getIsActive(),
+                self::FIELD_NAME_FIELD => $carrier->getFkGlossaryKeyCarrierName(),
+                self::FIELD_IS_ACTIVE_FIELD => $carrier->getIsActive(),
             ];
         }
 

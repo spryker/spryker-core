@@ -10,6 +10,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method SalesCommunicationFactory getFactory()
@@ -24,18 +25,18 @@ class OrderItemSplitController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function splitAction()
+    public function splitAction(Request $request)
     {
         $orderItemForm = $orderItemSplitForm = $this->getFactory()->getOrderItemSplitForm();
-        $orderItemForm->handleRequest();
+        $orderItemForm->handleRequest($request);
         $data = $orderItemForm->getData();
 
         if ($orderItemForm->isValid()) {
             $this->getFacade()
-                ->splitSalesOrderItem($data[OrderItemSplitForm::ID_ORDER_ITEM], $data[OrderItemSplitForm::QUANTITY]);
+                ->splitSalesOrderItem($data[OrderItemSplitForm::FIELD_ID_ORDER_ITEM], $data[OrderItemSplitForm::FIELD_QUANTITY]);
         }
 
-        return $this->redirectResponse(sprintf(self::SALES_ORDER_DETAIL_URL, $data[OrderItemSplitForm::ID_ORDER]));
+        return $this->redirectResponse(sprintf(self::SALES_ORDER_DETAIL_URL, $data[OrderItemSplitForm::FIELD_ID_ORDER]));
     }
 
 }

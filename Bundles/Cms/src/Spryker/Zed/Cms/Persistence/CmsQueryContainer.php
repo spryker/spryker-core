@@ -183,7 +183,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             )
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
             ->withColumn(SpyCmsBlockTableMap::COL_NAME)
-            ->withColumn(SpyCmsPageTableMap::COL_FK_TEMPLATE, CmsBlockForm::FK_TEMPLATE)
+            ->withColumn(SpyCmsPageTableMap::COL_FK_TEMPLATE, CmsBlockForm::FIELD_FK_TEMPLATE)
             ->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, 'isActive');
     }
 
@@ -343,7 +343,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
             ->withColumn(SpyUrlTableMap::COL_ID_URL, 'idUrl')
             ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_PATH, self::TEMPLATE_PATH)
-            ->withColumn(CmsPageForm::IS_ACTIVE)
+            ->withColumn(CmsPageForm::FIELD_IS_ACTIVE)
             ->filterByIdCmsPage($idCmsPage);
     }
 

@@ -76,7 +76,7 @@ class GlossaryController extends AbstractController
         $formViews = [];
 
         foreach ($placeholders as $place) {
-            $form = $this->createPlaceholderForm($glossaryMappingArray, $place, $idPage);
+            $form = $this->createPlaceholderForm($request, $glossaryMappingArray, $place, $idPage);
             $forms[] = $form;
             $formViews[] = $form->createView();
         }
@@ -308,7 +308,7 @@ class GlossaryController extends AbstractController
      *
      * @return mixed
      */
-    private function createPlaceholderForm(array $glossaryMappingArray, $place, $idPage)
+    private function createPlaceholderForm(Request $request, array $glossaryMappingArray, $place, $idPage)
     {
         $idMapping = null;
         if (isset($glossaryMappingArray[$place])) {
@@ -316,7 +316,7 @@ class GlossaryController extends AbstractController
         }
         $form = $this->getFactory()
             ->createCmsGlossaryForm($idPage, $idMapping, $place, $this->getFacade());
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         return $form;
     }
@@ -329,18 +329,18 @@ class GlossaryController extends AbstractController
      */
     private function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer)
     {
-        $this->glossaryKeyName = $data[CmsGlossaryForm::GLOSSARY_KEY];
+        $this->glossaryKeyName = $data[CmsGlossaryForm::FIELD_GLOSSARY_KEY];
 
         if ($this->glossaryKeyName === null) {
             $this->glossaryKeyName = $this->getFacade()
-                ->generateGlossaryKeyName($data[CmsGlossaryForm::TEMPLATE_NAME], $data[CmsGlossaryForm::PLACEHOLDER]);
+                ->generateGlossaryKeyName($data[CmsGlossaryForm::FIELD_TEMPLATE_NAME], $data[CmsGlossaryForm::FIELD_PLACEHOLDER]);
         }
 
         $keyTranslationTransfer = new KeyTranslationTransfer();
         $keyTranslationTransfer->setGlossaryKey($this->glossaryKeyName);
 
         $keyTranslationTransfer->setLocales([
-            $localeTransfer->getLocaleName() => $data[CmsGlossaryForm::TRANSLATION],
+            $localeTransfer->getLocaleName() => $data[CmsGlossaryForm::FIELD_TRANSLATION],
         ]);
 
         return $keyTranslationTransfer;

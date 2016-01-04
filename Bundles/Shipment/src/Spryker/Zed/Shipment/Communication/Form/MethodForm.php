@@ -6,30 +6,32 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
+use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Shipment\ShipmentConfig;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class MethodForm extends AbstractForm
 {
 
-    const NAME_FIELD = 'name';
-    const ID_FIELD = 'idShipmentMethod';
-    const NAME_GLOSSARY_FIELD = 'glossaryKeyName';
-    const DESCRIPTION_GLOSSARY_FIELD = 'glossaryKeyDescription';
+    const FIELD_NAME_FIELD = 'name';
+    const FIELD_ID_FIELD = 'idShipmentMethod';
+    const FIELD_NAME_GLOSSARY_FIELD = 'glossaryKeyName';
+    const FIELD_DESCRIPTION_GLOSSARY_FIELD = 'glossaryKeyDescription';
     const IS_ACTIVE_FIELD = 'isActive';
-    const PRICE_FIELD = 'price';
-    const AVAILABILITY_PLUGIN_FIELD = 'availabilityPlugin';
-    const TAX_PLUGIN_FIELD = 'taxCalculationPlugin';
-    const PRICE_CALCULATION_PLUGIN_FIELD = 'priceCalculationPlugin';
-    const DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
-    const CARRIER_FIELD = 'fkShipmentCarrier';
-    const TAX_SET = 'fkTaxSet';
+    const FIELD_PRICE_FIELD = 'price';
+    const FIELD_AVAILABILITY_PLUGIN_FIELD = 'availabilityPlugin';
+    const FIELD_TAX_PLUGIN_FIELD = 'taxCalculationPlugin';
+    const FIELD_PRICE_CALCULATION_PLUGIN_FIELD = 'priceCalculationPlugin';
+    const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
+    const FIELD_CARRIER_FIELD = 'fkShipmentCarrier';
+    const FIELD_TAX_SET = 'fkTaxSet';
 
     /**
      * @var SpyShipmentMethodQuery
@@ -64,10 +66,10 @@ class MethodForm extends AbstractForm
     /**
      * @param SpyShipmentMethodQuery $methodQuery
      * @param SpyShipmentCarrierQuery $carrierQuery
-     * @param SpyTaxSetQuery $taxQuery
+     * @param SpyTaxSetQuery $taxSetQuery
      * @param ShipmentConfig $shipmentConfig
      * @param array $plugins
-     * @param null $idMethod
+     * @param int|null $idMethod
      */
     public function __construct(
         SpyShipmentMethodQuery $methodQuery,
@@ -86,74 +88,89 @@ class MethodForm extends AbstractForm
     }
 
     /**
-     * @return self
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
     {
-        $this->addChoice(self::CARRIER_FIELD, [
-            'label' => 'Carrier',
-            'placeholder' => 'Select one',
-            'choices' => $this->getCarrierOptions(),
-        ]);
-        $this->addText(self::NAME_FIELD, [
-            'label' => 'Name',
-        ]);
-        $this->addAutosuggest(self::NAME_GLOSSARY_FIELD, [
-            'label' => 'Name glossary key',
-            'url' => '/glossary/ajax/keys',
-        ]);
-        $this->addAutosuggest(self::DESCRIPTION_GLOSSARY_FIELD, [
-            'label' => 'Description glossary key',
-            'url' => '/glossary/ajax/keys',
-        ]);
-        $this->addMoney(self::PRICE_FIELD, [
-            'label' => 'Price',
-        ]);
-        $this->addChoice(self::AVAILABILITY_PLUGIN_FIELD, [
-            'label' => 'Availability Plugin',
-            'placeholder' => 'Select one',
-            'choice_list' => new ChoiceList(
-                array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS]),
-                array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS])
-            ),
-        ]);
-        $this->addChoice(self::PRICE_CALCULATION_PLUGIN_FIELD, [
-            'label' => 'Price Calculation Plugin',
-            'placeholder' => 'Select one',
-            'choice_list' => new ChoiceList(
-                array_keys($this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS]),
-                array_keys($this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS])
-            ),
-        ]);
-        $this->addChoice(self::DELIVERY_TIME_PLUGIN_FIELD, [
-            'label' => 'Delivery Time Plugin',
-            'placeholder' => 'Select one',
-            'choice_list' => new ChoiceList(
-                array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS]),
-                array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS])
-            ),
-        ]);
-        $this->addChoice(self::TAX_PLUGIN_FIELD, [
-            'label' => 'Tax Calculation Plugin',
-            'placeholder' => 'Select one',
-            'choice_list' => new ChoiceList(
-                array_keys($this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS]),
-                array_keys($this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS])
-            ),
-        ]);
+        return null;
+    }
 
-        $this->addChoice(self::TAX_SET, [
-            'label' => 'Tax Set',
-            'placeholder' => 'Select one',
-            'choices' => $this->loadTaxSets(),
-        ]);
-        $this->addCheckbox('isActive');
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'method';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add(self::FIELD_CARRIER_FIELD, 'choice', [
+                'label' => 'Carrier',
+                'placeholder' => 'Select one',
+                'choices' => $this->getCarrierOptions(),
+            ])
+            ->add(self::FIELD_NAME_FIELD, 'text', [
+                'label' => 'Name',
+            ])
+            ->add(self::FIELD_NAME_GLOSSARY_FIELD, new AutosuggestType(), [
+                'label' => 'Name glossary key',
+                'url' => '/glossary/ajax/keys',
+            ])
+            ->add(self::FIELD_DESCRIPTION_GLOSSARY_FIELD, new AutosuggestType(), [
+                'label' => 'Description glossary key',
+                'url' => '/glossary/ajax/keys',
+            ])
+            ->add(self::FIELD_PRICE_FIELD, 'money', [
+                'label' => 'Price',
+            ])
+            ->add(self::FIELD_AVAILABILITY_PLUGIN_FIELD, 'choice', [
+                'label' => 'Availability Plugin',
+                'placeholder' => 'Select one',
+                'choice_list' => new ChoiceList(
+                    array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS]),
+                    array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS])
+                ),
+            ])
+            ->add(self::FIELD_PRICE_CALCULATION_PLUGIN_FIELD, 'choice', [
+                'label' => 'Price Calculation Plugin',
+                'placeholder' => 'Select one',
+                'choice_list' => new ChoiceList(
+                    array_keys($this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS]),
+                    array_keys($this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS])
+                ),
+            ])
+            ->add(self::FIELD_DELIVERY_TIME_PLUGIN_FIELD, 'choice', [
+                'label' => 'Delivery Time Plugin',
+                'placeholder' => 'Select one',
+                'choice_list' => new ChoiceList(
+                    array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS]),
+                    array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS])
+                ),
+            ])
+            ->add(self::FIELD_TAX_PLUGIN_FIELD, 'choice', [
+                'label' => 'Tax Calculation Plugin',
+                'placeholder' => 'Select one',
+                'choice_list' => new ChoiceList(
+                    array_keys($this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS]),
+                    array_keys($this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS])
+                ),
+            ])
+            ->add(self::FIELD_TAX_SET, 'choice', [
+                'label' => 'Tax Set',
+                'placeholder' => 'Select one',
+                'choices' => $this->loadTaxSets(),
+            ])
+            ->add('isActive', 'checkbox');
 
         if ($this->idMethod !== null) {
-            $this->addHidden(self::ID_FIELD);
+            $builder->add(self::FIELD_ID_FIELD, 'hidden');
         }
-
-        return $this;
     }
 
     /**
@@ -172,44 +189,30 @@ class MethodForm extends AbstractForm
     }
 
     /**
-     * Set price vom euro to cent
-     */
-    public function getData()
-    {
-        $data = parent::getData();
-        if (isset($data[self::PRICE_FIELD])) {
-            $data[self::PRICE_FIELD] = CurrencyManager::getInstance()->convertDecimalToCent($data[self::PRICE_FIELD]);
-            $data[self::PRICE_FIELD] = round($data[self::PRICE_FIELD]);
-        }
-
-        return $data;
-    }
-
-    /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         if ($this->idMethod !== null) {
             $method = $this->methodQuery->findOneByIdShipmentMethod($this->idMethod);
 
             $data = [
-                self::ID_FIELD => $method->getIdShipmentMethod(),
-                self::CARRIER_FIELD => $method->getFkShipmentCarrier(),
-                self::NAME_FIELD => $method->getName(),
-                self::NAME_GLOSSARY_FIELD => $method->getGlossaryKeyName(),
-                self::DESCRIPTION_GLOSSARY_FIELD => $method->getGlossaryKeyDescription(),
-                self::PRICE_FIELD => CurrencyManager::getInstance()->convertCentToDecimal($method->getPrice()),
-                self::AVAILABILITY_PLUGIN_FIELD => $method->getAvailabilityPlugin(),
-                self::PRICE_CALCULATION_PLUGIN_FIELD => $method->getPriceCalculationPlugin(),
-                self::DELIVERY_TIME_PLUGIN_FIELD => $method->getDeliveryTimePlugin(),
-                self::TAX_PLUGIN_FIELD => $method->getTaxCalculationPlugin(),
+                self::FIELD_ID_FIELD => $method->getIdShipmentMethod(),
+                self::FIELD_CARRIER_FIELD => $method->getFkShipmentCarrier(),
+                self::FIELD_NAME_FIELD => $method->getName(),
+                self::FIELD_NAME_GLOSSARY_FIELD => $method->getGlossaryKeyName(),
+                self::FIELD_DESCRIPTION_GLOSSARY_FIELD => $method->getGlossaryKeyDescription(),
+                self::FIELD_PRICE_FIELD => CurrencyManager::getInstance()->convertCentToDecimal($method->getPrice()),
+                self::FIELD_AVAILABILITY_PLUGIN_FIELD => $method->getAvailabilityPlugin(),
+                self::FIELD_PRICE_CALCULATION_PLUGIN_FIELD => $method->getPriceCalculationPlugin(),
+                self::FIELD_DELIVERY_TIME_PLUGIN_FIELD => $method->getDeliveryTimePlugin(),
+                self::FIELD_TAX_PLUGIN_FIELD => $method->getTaxCalculationPlugin(),
                 self::IS_ACTIVE_FIELD => $method->getIsActive(),
             ];
 
             $taxSet = $method->getTaxSet();
             if (isset($taxSet)) {
-                $data[self::TAX_SET] = $method->getTaxSet()->getIdTaxSet();
+                $data[self::FIELD_TAX_SET] = $method->getTaxSet()->getIdTaxSet();
             }
 
             return $data;

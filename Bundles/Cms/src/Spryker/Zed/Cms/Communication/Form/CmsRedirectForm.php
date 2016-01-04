@@ -6,9 +6,10 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
+use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsRedirectForm extends AbstractForm
@@ -16,10 +17,10 @@ class CmsRedirectForm extends AbstractForm
 
     const ADD = 'add';
     const UPDATE = 'update';
-    const ID_REDIRECT = 'id_redirect';
-    const FROM_URL = 'from_url';
-    const TO_URL = 'to_url';
-    const STATUS = 'status';
+    const FIELD_ID_REDIRECT = 'id_redirect';
+    const FIELD_FROM_URL = 'from_url';
+    const FIELD_TO_URL = 'to_url';
+    const FIELD_STATUS = 'status';
 
     /**
      * @var SpyUrlQuery
@@ -58,9 +59,26 @@ class CmsRedirectForm extends AbstractForm
     }
 
     /**
-     * @return CmsRedirectForm
+     * @return null
      */
-    protected function buildFormFields()
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'cms_redirect';
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $urlConstraints = $this->getConstraints()->getMandatoryConstraints();
 
@@ -74,34 +92,36 @@ class CmsRedirectForm extends AbstractForm
             ],
         ]);
 
-        return $this->addHidden(self::ID_REDIRECT)
-            ->addText(self::FROM_URL, [
+        $builder->add(self::FIELD_ID_REDIRECT, 'hidden')
+            ->add(self::FIELD_FROM_URL, 'text', [
                 'label' => 'URL',
                 'constraints' => $urlConstraints,
             ])
-            ->addText(self::TO_URL, [
+            ->add(self::FIELD_TO_URL, 'text', [
                 'label' => 'To URL',
                 'constraints' => $this->getConstraints()->getMandatoryConstraints(),
             ])
-            ->addText(self::STATUS);
+            ->add(self::FIELD_STATUS, 'text');
     }
 
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $url = $this->urlByIdQuery->findOne();
 
-        if (isset($url)) {
-            $this->redirectUrl = $url->getUrl();
-
-            return [
-                self::FROM_URL => $url->getUrl(),
-                self::TO_URL => $url->getToUrl(),
-                self::STATUS => $url->getStatus(),
-            ];
+        if (!isset($url)) {
+            return [];
         }
+
+        $this->redirectUrl = $url->getUrl();
+
+        return [
+            self::FIELD_FROM_URL => $url->getUrl(),
+            self::FIELD_TO_URL => $url->getToUrl(),
+            self::FIELD_STATUS => $url->getStatus(),
+        ];
     }
 
 }

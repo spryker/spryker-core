@@ -30,7 +30,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getFactory()->createRefundTable();
+        $table = $this->getFactory()->createRefundTable($this->getFacade());
 
         return $this->viewResponse(['refunds' => $table->render()]);
     }
@@ -40,7 +40,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getFactory()->createRefundTable();
+        $table = $this->getFactory()->createRefundTable($this->getFacade());
 
         return $this->jsonResponse(
             $table->fetchData()

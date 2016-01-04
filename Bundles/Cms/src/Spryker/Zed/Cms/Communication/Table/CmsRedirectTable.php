@@ -78,7 +78,7 @@ class CmsRedirectTable extends AbstractTable
                 SpyUrlTableMap::COL_ID_URL => $item[SpyUrlTableMap::COL_ID_URL],
                 SpyUrlTableMap::COL_URL => $item[SpyUrlTableMap::COL_URL],
                 CmsQueryContainer::TO_URL => $item[CmsQueryContainer::TO_URL],
-                SpyUrlRedirectTableMap::COL_STATUS => $item[CmsRedirectForm::STATUS],
+                SpyUrlRedirectTableMap::COL_STATUS => $item[CmsRedirectForm::FIELD_STATUS],
                 self::ACTIONS => $this->buildLinks($item),
             ];
         }
