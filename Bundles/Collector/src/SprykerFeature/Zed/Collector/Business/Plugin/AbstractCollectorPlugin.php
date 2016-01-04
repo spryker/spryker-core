@@ -263,8 +263,7 @@ abstract class AbstractCollectorPlugin
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, $itemType, OutputInterface $output)
     {
         $this->delete($itemType, $dataWriter, $touchUpdater, $locale);
-
-        $deletedCount = $this->flushDeletedTouchStorageAndSearchKeys($itemType);
+        $deletedCount = $this->pruneTouchStorageAndSearchKeys($itemType);
         $batchResult->setDeletedCount($deletedCount);
     }
 
@@ -336,7 +335,7 @@ abstract class AbstractCollectorPlugin
      *
      * @return int
      */
-    protected function flushDeletedTouchStorageAndSearchKeys($itemType)
+    protected function pruneTouchStorageAndSearchKeys($itemType)
     {
         $idList = [];
         $batchCount = 1;
@@ -365,14 +364,11 @@ abstract class AbstractCollectorPlugin
                     }
 
                     if (!empty($idList)) {
-                        $sql = 'DELETE FROM %s WHERE %s IN (%s)';
-                        $sql = sprintf($sql,
+                        $idListSql = rtrim(implode(',', $idList), ',');
+                        $sql = sprintf('DELETE FROM %s WHERE %s IN (%s)',
                             SpyTouchTableMap::TABLE_NAME,
                             SpyTouchTableMap::COL_ID_TOUCH,
-                            rtrim(
-                                implode(',', $idList),
-                                ','
-                            )
+                            $idListSql
                         );
 
                         $this->touchQueryContainer->getConnection()->exec($sql);
@@ -482,13 +478,14 @@ abstract class AbstractCollectorPlugin
     }
 
     /**
+     * Display progress while counting data for real progress bar
+     *
      * @param OutputInterface $output
      *
      * @return void
      */
     protected function displayProgressWhileCountingBatchCollectionSize(OutputInterface $output)
     {
-        //display progress while counting in real progress bar
         $progressBar = new ProgressBar($output, 1);
         $progressBar->setMessage($this->collectResourceType(), 'collectorType');
         $progressBar->setFormat(" * %collectorType%\x0D ");
