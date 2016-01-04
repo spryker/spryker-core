@@ -135,7 +135,7 @@ class Reader implements ReaderInterface
             ->queryStockProductByStockAndProduct($idStockType, $idProduct)
             ->findOne();
 
-        if ($stockProductEntity) {
+        if ($stockProductEntity === null) {
             throw new StockProductNotFoundException(
                 sprintf(
                     'There is no Stock %s for a product with sku: %s',
