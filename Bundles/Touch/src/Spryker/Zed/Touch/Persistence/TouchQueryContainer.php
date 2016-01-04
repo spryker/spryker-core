@@ -153,7 +153,11 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     {
         $query = $this->getFactory()->createTouchQuery();
         $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-            ->filterByItemType($itemType);
+            ->filterByItemType($itemType)
+            ->leftJoinTouchSearch()
+            ->leftJoinTouchStorage()
+            ->withColumn(SpyTouchSearchTableMap::COL_KEY, CollectorConfig::COLLECTOR_SEARCH_KEY)
+            ->withColumn(SpyTouchStorageTableMap::COL_KEY, CollectorConfig::COLLECTOR_STORAGE_KEY);
 
         return $query;
     }
