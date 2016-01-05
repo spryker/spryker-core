@@ -17,6 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CollectorFacade extends AbstractFacade
 {
 
+    public function exportKeyValueByStorage(OutputInterface $output = null)
+    {
+        $exporter = $this->getDependencyContainer()->createYvesKeyValueExporter();
+
+        return $exporter->exportForStorage($output);
+    }
+
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface|null $output

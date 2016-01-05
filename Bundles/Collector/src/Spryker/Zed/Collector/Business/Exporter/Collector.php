@@ -11,49 +11,55 @@ use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
-use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
-use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Intl\Locale;
 
 class Collector
 {
 
     /**
-     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
+     * @var TouchQueryContainer
      */
-    protected $queryContainer;
+    protected $touchQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Exporter\ExporterInterface
+     * @var ExporterInterface
      */
     protected $exporter;
 
     /**
-     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $queryContainer
-     * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
+     * @var LocaleFacade
      */
-    public function __construct(TouchQueryContainer $queryContainer, ExporterInterface $exporter)
+    protected $localeFacade;
+
+    /**
+     * @param TouchQueryContainer $touchQueryContainer
+     * @param LocaleFacade $localeFacade
+     * @param ExporterInterface $exporter
+     */
+    public function __construct(TouchQueryContainer $touchQueryContainer, LocaleFacade $localeFacade, ExporterInterface $exporter)
     {
-        $this->queryContainer = $queryContainer;
+        $this->touchQueryContainer = $touchQueryContainer;
+        $this->localeFacade = $localeFacade;
         $this->exporter = $exporter;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param LocaleTransfer $locale
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     * @return BatchResultInterface[]
      */
     public function exportForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
         $results = [];
         $types = array_keys($this->exporter->getCollectorPlugins());
-        $availableTypes = $this->queryContainer->queryExportTypes()->find();
+        $availableTypes = $this->touchQueryContainer->queryExportTypes()->find();
 
         if (isset($output)) {
             $output->writeln('');
             $output->writeln(
-                sprintf('<fg=yellow>%d out of %d collectors available:</fg=yellow>',
+                sprintf('<fg=white>%s</fg=white>: <fg=yellow>%d out of %d collectors available:</fg=yellow>',
+                    $locale->getLocaleName(),
                     count($types),
                     count($availableTypes)
                 )
@@ -87,7 +93,26 @@ class Collector
     }
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param OutputInterface|null $output
+     *
+     * @return array
+     */
+    public function exportForStorage(OutputInterface $output = null)
+    {
+        $locales = Store::getInstance()->getLocales();
+
+        $results = [];
+
+        foreach ($locales as $locale) {
+            $localeTransfer = $this->localeFacade->getLocale($locale);
+            $results[$locale] = $this->exportForLocale($localeTransfer, $output);
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param BatchResultInterface $result
      *
      * @return bool
      */

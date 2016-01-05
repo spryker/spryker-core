@@ -74,6 +74,14 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return LocaleFacade
+     */
+    protected function createLocaleFacade()
+    {
+        return $this->getProvidedDependency(CollectorDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
      * @return ExporterInterface
      */
     protected function createKeyValueExporter()
@@ -188,7 +196,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
 
         return new Collector(
             $this->getTouchQueryContainer(),
-            $this->createElasticsearchExporter(
+            $this->createLocaleFacade(),
+            $this->createElasticSearchExporter(
                 $searchWriter,
                 $config
             )
@@ -202,6 +211,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new Collector(
             $this->getTouchQueryContainer(),
+            $this->createLocaleFacade(),
             $this->createElasticSearchExporter(
                 $this->createSearchUpdateWriter(),
                 $this->getConfig()
