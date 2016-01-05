@@ -22,6 +22,9 @@
         <unique name="spy_customer-email">
             <unique-column name="email"/>
         </unique>
+        <unique name="spy_customer-customer_reference">
+            <unique-column name="customer_reference"/>
+        </unique>
         <foreign-key name="spy_customer-default_billing_address" foreignTable="spy_customer_address" phpName="BillingAddress" refPhpName="CustomerBillingAddress">
             <reference foreign="id_customer_address" local="default_billing_address"/>
         </foreign-key>
