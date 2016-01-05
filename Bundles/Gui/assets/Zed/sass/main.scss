@@ -6,16 +6,16 @@
  */
 
 // external dependencies
-@import 'jquery-ui-bundle/jquery-ui';
-@import 'jquery-ui-bundle/jquery-ui.structure';
-@import 'jquery-ui-bundle/jquery-ui.theme';
-@import 'bootstrap-sass/assets/stylesheets/bootstrap';
-@import 'font-awesome/scss/font-awesome';
-@import 'animate.css/animate';
-@import 'datatables.net-bs/css/dataTables.bootstrap';
-@import 'datatables.net-buttons-bs/css/buttons.bootstrap';
-@import 'datatables.net-responsive-bs/css/responsive.bootstrap';
-@import 'datatables.net-select-bs/css/select.bootstrap';
+@import '~jquery-ui-bundle/jquery-ui';
+@import '~jquery-ui-bundle/jquery-ui.structure';
+@import '~jquery-ui-bundle/jquery-ui.theme';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+@import '~font-awesome/scss/font-awesome';
+@import '~animate.css/animate';
+@import '~datatables.net-bs/css/dataTables.bootstrap';
+@import '~datatables.net-buttons-bs/css/buttons.bootstrap';
+@import '~datatables.net-responsive-bs/css/responsive.bootstrap';
+@import '~datatables.net-select-bs/css/select.bootstrap';
 
 // inspinia
 @import '../../Inspinia/css/style';
