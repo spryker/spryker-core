@@ -13,6 +13,8 @@ use Symfony\Component\Finder\SplFileInfo;
 class BundleParser
 {
 
+    const CONFIG_FILE = 'bundle_config.json';
+
     /**
      * @var array
      */
@@ -22,6 +24,11 @@ class BundleParser
      * @var MaintenanceConfig
      */
     protected $config;
+
+    /**
+     * @var array
+     */
+    protected $bundleConfig;
 
     /**
      * @param MaintenanceConfig $config
@@ -140,8 +147,12 @@ class BundleParser
      */
     public function isEngine($bundleName)
     {
-        // TODO: need to get this information somewhere else of the namespace
-        return false;
+        $config = $this->getBundleConfig();
+        if (empty($config[$bundleName])) {
+            return false;
+        }
+
+        return $config[$bundleName] === 'engine';
     }
 
     /**
@@ -157,6 +168,22 @@ class BundleParser
             ->in($this->config->getBundleDirectory() . $bundleName . '/src');
 
         return $directories;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBundleConfig() {
+        if (isset($this->bundleConfig)) {
+            return $this->bundleConfig;
+        }
+        $file = APPLICATION_VENDOR_DIR
+            . DIRECTORY_SEPARATOR . 'spryker'
+            . DIRECTORY_SEPARATOR . 'spryker'
+            . DIRECTORY_SEPARATOR . self::CONFIG_FILE;
+
+        $this->bundleConfig = json_decode(file_get_contents($file), true);
+        return $this->bundleConfig;
     }
 
 }
