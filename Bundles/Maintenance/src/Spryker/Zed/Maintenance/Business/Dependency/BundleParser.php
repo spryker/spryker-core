@@ -15,6 +15,8 @@ class BundleParser
 
     const CONFIG_FILE = 'bundle_config.json';
 
+    const ENGINE = 'engine';
+
     /**
      * @var array
      */
@@ -152,7 +154,7 @@ class BundleParser
             return false;
         }
 
-        return $config[$bundleName] === 'engine';
+        return $config[$bundleName] === self::ENGINE;
     }
 
     /**
@@ -173,7 +175,8 @@ class BundleParser
     /**
      * @return array
      */
-    protected function getBundleConfig() {
+    protected function getBundleConfig()
+    {
         if (isset($this->bundleConfig)) {
             return $this->bundleConfig;
         }
@@ -183,6 +186,7 @@ class BundleParser
             . DIRECTORY_SEPARATOR . self::CONFIG_FILE;
 
         $this->bundleConfig = json_decode(file_get_contents($file), true);
+        
         return $this->bundleConfig;
     }
 
