@@ -1,0 +1,13 @@
+{
+    "Auth": "engine",
+    "Config": "engine",
+    "Console": "engine",
+    "Installer": "engine",
+    "Kernel": "engine",
+    "Library": "engine",
+    "Locale": "engine",
+    "Propel": "engine",
+    "Touch": "engine",
+    "Transfer": "engine",
+    "Twig": "engine"
+}
