@@ -9,7 +9,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Library\Twig\TwigFunction;
 
-class FormatPrice extends TwigFunction
+class FormatPriceFunction extends TwigFunction
 {
 
     /**
