@@ -6,16 +6,17 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Handler\Calculation;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\PayolutionCalculationRequestTransfer;
+use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 
 interface CalculationInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param PayolutionCalculationRequestTransfer $calculationRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
+     * @return PayolutionCalculationResponseTransfer
      */
-    public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer);
+    public function calculateInstallmentPayments(PayolutionCalculationRequestTransfer $calculationRequestTransfer);
 
 }

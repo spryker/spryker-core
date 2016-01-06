@@ -8,22 +8,24 @@ namespace Spryker\Zed\Payolution\Business;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PayolutionCalculationRequestTransfer;
+use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Payolution\Business\PayolutionBusinessFactory getFactory()
  */
-class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterface
+class PayolutionFacade extends AbstractFacade
 {
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
      */
     public function saveOrderPayment(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()
+        return $this
+            ->getFactory()
             ->createOrderSaver()
             ->saveOrderPayment($orderTransfer);
     }
@@ -109,16 +111,16 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\PayolutionCalculationRequestTransfer $calculationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
-    public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function calculateInstallmentPayments(PayolutionCalculationRequestTransfer $calculationRequestTransfer)
     {
         $payolutionResponseTransfer = $this
             ->getFactory()
             ->createPaymentCalculationHandler()
-            ->calculateInstallmentPayments($checkoutRequestTransfer);
+            ->calculateInstallmentPayments($calculationRequestTransfer);
 
         return $payolutionResponseTransfer;
     }

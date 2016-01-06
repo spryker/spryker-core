@@ -6,23 +6,23 @@
 
 namespace Spryker\Client\Payolution;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\PayolutionCalculationRequestTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 
 interface PayolutionClientInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param PayolutionCalculationRequestTransfer $calculationRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
+     * @return PayolutionCalculationResponseTransfer
      */
-    public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer);
+    public function calculateInstallmentPayments(PayolutionCalculationRequestTransfer $calculationRequestTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
+     * @param PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
+     * @return PayolutionCalculationResponseTransfer
      */
     public function storeInstallmentPaymentsInSession(PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer);
 
@@ -32,7 +32,7 @@ interface PayolutionClientInterface
     public function hasInstallmentPaymentsInSession();
 
     /**
-     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
+     * @return PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPaymentsFromSession();
 
