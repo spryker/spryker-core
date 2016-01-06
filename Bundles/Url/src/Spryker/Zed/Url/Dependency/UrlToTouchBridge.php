@@ -44,4 +44,5 @@ class UrlToTouchBridge implements UrlToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }
+
 }

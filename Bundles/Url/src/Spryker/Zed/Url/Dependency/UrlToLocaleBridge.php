@@ -45,4 +45,5 @@ class UrlToLocaleBridge implements UrlToLocaleInterface
     {
         return $this->localeFacade->getCurrentLocale();
     }
+
 }
