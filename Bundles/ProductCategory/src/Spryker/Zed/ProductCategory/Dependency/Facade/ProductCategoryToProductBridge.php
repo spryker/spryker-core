@@ -42,4 +42,5 @@ class ProductCategoryToProductBridge implements ProductCategoryToProductInterfac
     {
         return $this->productFacade->getAbstractProductIdBySku($sku);
     }
+
 }

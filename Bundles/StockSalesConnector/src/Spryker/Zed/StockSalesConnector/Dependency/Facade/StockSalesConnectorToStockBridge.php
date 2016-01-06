@@ -54,4 +54,5 @@ class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInte
     {
         $this->stockFacade->incrementStockProduct($sku, $stockType, $incrementBy);
     }
+
 }

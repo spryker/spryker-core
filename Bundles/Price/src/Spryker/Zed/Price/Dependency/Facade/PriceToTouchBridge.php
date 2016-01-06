@@ -31,7 +31,7 @@ class PriceToTouchBridge implements PriceToTouchInterface
      */
     public function touchActive($itemType, $itemId)
     {
-        return $this->touchFacade->touchActive($itemType,$itemId);
+        return $this->touchFacade->touchActive($itemType, $itemId);
     }
 
     /**
@@ -66,4 +66,5 @@ class PriceToTouchBridge implements PriceToTouchInterface
     {
         return $this->touchFacade->bulkTouchDeleted($itemType, $itemIds);
     }
+
 }

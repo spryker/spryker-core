@@ -105,4 +105,5 @@ class ProductOptionExporterToProductOptionBridge implements ProductOptionExporte
     {
         return $this->productOptionFacade->getEffectiveTaxRateForTypeUsage($idTypeUsage);
     }
+
 }

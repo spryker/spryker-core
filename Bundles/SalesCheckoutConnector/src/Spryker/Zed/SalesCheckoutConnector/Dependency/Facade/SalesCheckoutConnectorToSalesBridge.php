@@ -34,4 +34,5 @@ class SalesCheckoutConnectorToSalesBridge implements SalesCheckoutConnectorToSal
     {
         return $this->salesFacade->saveOrder($transferOrder);
     }
+
 }

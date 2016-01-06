@@ -64,4 +64,5 @@ class UserToAclBridge implements UserToAclInterface
     {
         $this->removeUserFromGroup($idUser, $idGroup);
     }
+
 }

@@ -8,11 +8,6 @@ namespace Spryker\Zed\Installer\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
-use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
-use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 class InstallerToGlossaryBridge implements InstallerToGlossaryInterface
 {
@@ -97,6 +92,5 @@ class InstallerToGlossaryBridge implements InstallerToGlossaryInterface
     {
         return $this->glossaryFacade->updateAndTouchTranslation($keyName, $locale, $value, $isActive);
     }
-
 
 }

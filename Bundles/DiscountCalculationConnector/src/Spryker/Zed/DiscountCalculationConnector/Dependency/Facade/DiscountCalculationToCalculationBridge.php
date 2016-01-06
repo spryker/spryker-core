@@ -35,4 +35,5 @@ class DiscountCalculationToCalculationBridge implements DiscountCalculationToCal
     {
         $this->calculationFacade->recalculateGrandTotalTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
+
 }

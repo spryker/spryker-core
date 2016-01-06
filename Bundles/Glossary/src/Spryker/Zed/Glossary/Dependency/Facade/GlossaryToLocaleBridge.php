@@ -50,4 +50,5 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     {
         return $this->localeFacade->getAvailableLocales();
     }
+
 }

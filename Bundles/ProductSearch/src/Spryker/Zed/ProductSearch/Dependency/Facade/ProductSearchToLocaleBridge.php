@@ -24,6 +24,7 @@ class ProductSearchToLocaleBridge implements ProductSearchToLocaleInterface
     {
         $this->localeFacade = $localeFacade;
     }
+
     /**
      * @return LocaleTransfer
      */
@@ -31,4 +32,5 @@ class ProductSearchToLocaleBridge implements ProductSearchToLocaleInterface
     {
         return $this->localeFacade->getCurrentLocale();
     }
+
 }

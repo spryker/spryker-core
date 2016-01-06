@@ -35,4 +35,5 @@ class ProductOptionCartConnectorToProductOptionBridge implements ProductOptionCa
     {
         return $this->productOptionFacade->getProductOption($idProductOptionValueUsage, $idLocale);
     }
+
 }

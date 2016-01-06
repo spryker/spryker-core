@@ -30,4 +30,5 @@ class TaxProductConnectorToProductBridge implements TaxProductConnectorToProduct
     {
         $this->productFacade->touchProductActive($idAbstractProduct);
     }
+
 }

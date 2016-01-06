@@ -116,4 +116,5 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     {
         $this->urlFacade->deleteUrl($urlTransfer);
     }
+
 }

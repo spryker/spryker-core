@@ -56,4 +56,5 @@ class ProductOptionToProductBridge implements ProductOptionToProductInterface
     {
         $this->productFacade->touchProductActive($idAbstractProduct);
     }
+
 }

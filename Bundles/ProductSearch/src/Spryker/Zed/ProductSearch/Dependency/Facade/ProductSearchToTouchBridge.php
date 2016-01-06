@@ -22,6 +22,7 @@ class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
     {
         $this->touchFacade = $touchFacade;
     }
+
     /**
      * @param string $itemType
      * @param int $itemId
@@ -32,4 +33,5 @@ class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
     {
         return $this->touchFacade->touchActive($itemType, $itemId);
     }
+
 }

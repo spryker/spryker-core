@@ -34,4 +34,5 @@ class ShipmentCheckoutConnectorToShipmentBridge implements ShipmentCheckoutConne
     {
         return $this->shipmentFacade->getAvailableMethods($shipmentMethodAvailabilityTransferTransfer);
     }
+
 }

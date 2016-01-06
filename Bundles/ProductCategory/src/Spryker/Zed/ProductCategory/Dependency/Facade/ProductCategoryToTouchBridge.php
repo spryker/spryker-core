@@ -44,4 +44,5 @@ class ProductCategoryToTouchBridge implements ProductCategoryToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }
+
 }

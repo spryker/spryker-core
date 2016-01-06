@@ -58,4 +58,5 @@ class StockToProductBridge implements StockToProductInterface
     {
         return $this->productFacade->hasConcreteProduct($sku);
     }
+
 }

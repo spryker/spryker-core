@@ -86,5 +86,4 @@ class SalesToOmsBridge implements SalesToOmsInterface
         return $this->omsFacade->getItemsWithFlag($order, $flag);
     }
 
-
 }

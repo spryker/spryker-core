@@ -32,4 +32,5 @@ class SalesToCountryBridge implements SalesToCountryInterface
     {
         return $this->countryFacade->getIdCountryByIso2Code($iso2Code);
     }
+
 }

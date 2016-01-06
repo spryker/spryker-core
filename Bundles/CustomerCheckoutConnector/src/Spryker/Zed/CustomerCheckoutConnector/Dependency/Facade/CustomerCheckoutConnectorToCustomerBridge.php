@@ -86,4 +86,5 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     {
         return $this->customerFacade->hasEmail($email);
     }
+
 }

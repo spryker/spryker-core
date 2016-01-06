@@ -30,6 +30,7 @@ class ProductCategoryToLocaleBridge implements ProductCategoryToLocaleInterface
      */
     public function getCurrentLocale()
     {
-       return $this->localeFacade->getCurrentLocale();
+        return $this->localeFacade->getCurrentLocale();
     }
+
 }

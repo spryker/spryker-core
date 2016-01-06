@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-use Generated\Shared\Transfer\RefundTransfer;
-
 class SalesToRefundBridge implements SalesToRefundInterface
 {
 

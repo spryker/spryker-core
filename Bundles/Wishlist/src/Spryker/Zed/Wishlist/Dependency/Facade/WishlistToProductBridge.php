@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Wishlist\Dependency\Facade;
 
 use Generated\Shared\Transfer\ConcreteProductTransfer;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class WishlistToProductBridge implements WishlistToProductInterface
 {
@@ -44,6 +43,5 @@ class WishlistToProductBridge implements WishlistToProductInterface
     {
         return $this->productFacade->getConcreteProductIdBySku($sku);
     }
-
 
 }

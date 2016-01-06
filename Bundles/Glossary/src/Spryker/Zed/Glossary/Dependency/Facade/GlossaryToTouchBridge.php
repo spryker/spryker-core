@@ -44,4 +44,5 @@ class GlossaryToTouchBridge implements GlossaryToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $idItem);
     }
+
 }

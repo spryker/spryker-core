@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Payolution\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 class PayolutionToGlossaryBridge implements PayolutionToGlossaryInterface

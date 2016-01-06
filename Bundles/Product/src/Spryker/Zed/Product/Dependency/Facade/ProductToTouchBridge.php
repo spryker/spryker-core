@@ -22,6 +22,7 @@ class ProductToTouchBridge implements ProductToTouchInterface
     {
         $this->touchFacade = $touchFacade;
     }
+
     /**
      * @param string $itemType
      * @param int $itemId
@@ -32,4 +33,5 @@ class ProductToTouchBridge implements ProductToTouchInterface
     {
         return $this->touchFacade->touchActive($itemType, $itemId);
     }
+
 }

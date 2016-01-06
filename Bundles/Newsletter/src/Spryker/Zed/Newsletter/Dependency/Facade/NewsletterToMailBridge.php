@@ -45,5 +45,4 @@ class NewsletterToMailBridge implements NewsletterToMailInterface
         return $this->mailFacade->isMailSent($mailResponses);
     }
 
-
 }

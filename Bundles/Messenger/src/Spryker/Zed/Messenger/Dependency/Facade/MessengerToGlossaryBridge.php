@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Messenger\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 class MessengerToGlossaryBridge implements MessengerToGlossaryInterface
 {

@@ -80,8 +80,8 @@ class SprykerUseStatementFixer extends AbstractFixer
         }
 
         $this->loadStatements($tokens);
-        $this->fixUseForNew($tokens);
         $this->fixUseForDocBlocks($tokens);
+        $this->fixUseForNew($tokens);
         $this->insertNewUseStatements($tokens, $namespaceStatements);
 
         return $tokens->generateCode();
@@ -159,6 +159,7 @@ class SprykerUseStatementFixer extends AbstractFixer
      */
     protected function fixUseForDocBlocks(Tokens $tokens)
     {
+        /** @var Token $token */
         foreach ($tokens->findGivenKind(T_DOC_COMMENT) as $token) {
             $token->setContent($this->fixDocBlock($token->getContent()));
         }
@@ -175,20 +176,29 @@ class SprykerUseStatementFixer extends AbstractFixer
             return $content;
         }
 
+        return $content;
+
         $replace = function ($matches) {
             $fullClassName = $matches[2];
             $lastSeparatorIndex = strrpos($fullClassName, '\\');
             $className = substr($fullClassName, $lastSeparatorIndex + 1);
 
             $addedUseStatement = $this->addUseStatement($className, $fullClassName);
+
+            //dump($className); dump($addedUseStatement);
             if ($addedUseStatement['shortname'] !== $className) {
-                throw new \Exception('Manual fixing needed.');
+                //throw new \Exception('Manual fixing needed.');
             }
+
+            //dump('@' . $matches[1] . ' ' . $addedUseStatement['shortname']);
 
             return '@' . $matches[1] . ' ' . $addedUseStatement['shortname'];
         };
 
         $content = preg_replace_callback('/\@(var|param)\s+(\\\\Spryker\\\\[a-z\\\\]+)\b/i', $replace, $content);
+
+        dump($content);
+        exit('E');
 
         return $content;
     }

@@ -33,4 +33,5 @@ class StockToTouchBridge implements StockToTouchInterface
     {
         return $this->touchFacade->touchActive($itemType, $itemId);
     }
+
 }
