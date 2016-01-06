@@ -171,13 +171,11 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @param int $amount
-     *
-     * @return float
+     * @return \Spryker\Shared\Library\Currency\CurrencyManager
      */
-    protected function convertCentsToDecimal($amount)
+    protected function getCurrencyManger()
     {
-        return CurrencyManager::getInstance()->convertCentToDecimal($amount);
+        return CurrencyManager::getInstance();
     }
 
 }

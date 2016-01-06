@@ -6,18 +6,18 @@
 
 namespace Spryker\Client\Payolution;
 
-use Generated\Shared\Transfer\PayolutionCalculationRequestTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PayolutionClientInterface
 {
 
     /**
-     * @param PayolutionCalculationRequestTransfer $calculationRequestTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return PayolutionCalculationResponseTransfer
      */
-    public function calculateInstallmentPayments(PayolutionCalculationRequestTransfer $calculationRequestTransfer);
+    public function calculateInstallmentPayments(QuoteTransfer $quoteTransfer);
 
     /**
      * @param PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer

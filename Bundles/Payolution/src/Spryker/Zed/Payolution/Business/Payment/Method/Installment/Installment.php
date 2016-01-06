@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Installment;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
@@ -48,11 +48,11 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param PayolutionCalculationRequestTransfer $calculationRequestTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function buildCalculationRequest(PayolutionCalculationRequestTransfer $calculationRequestTransfer)
+    public function buildCalculationRequest(QuoteTransfer $quoteTransfer)
     {
         return [
             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_REQUEST_ELEMENT,
@@ -90,7 +90,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_PRESENTATION_ELEMENT,
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_CURRENCY_ELEMENT,
-                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $calculationRequestTransfer->getCurrency(),
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->getCurrencyManger()->getDefaultCurrency()->getIsoCode()
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_USAGE_ELEMENT,
@@ -98,7 +98,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_AMOUNT_ELEMENT,
-                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->convertCentsToDecimal($calculationRequestTransfer->getAmount()),
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->getCurrencyManger()->convertCentToDecimal($quoteTransfer->getTotals()->getGrandTotal()),
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_VAT_ELEMENT,
@@ -113,7 +113,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         ApiConstants::CALCULATION_XML_ELEMENT_ATTRIBUTES => [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_TARGET_COUNTRY,
                         ],
-                        ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $calculationRequestTransfer->getCounty(),
+                        ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $quoteTransfer->getBillingAddress()->getIso2Code(),
                     ],
                 ],
 
@@ -157,7 +157,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::CRITERION_PRE_CHECK => 'TRUE',
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $payolutionTransfer->getLanguageIso2Code(),
                 ApiConstants::CRITERION_CALCULATION_ID => $payolutionTransfer->getInstallmentCalculationId(),
-                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->convertCentsToDecimal($payolutionTransfer->getInstallmentAmount()),
+                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->getCurrencyManger()->convertCentToDecimal($payolutionTransfer->getInstallmentAmount()),
                 ApiConstants::CRITERION_DURATION => $payolutionTransfer->getInstallmentDuration(),
                 ApiConstants::CRITERION_ACCOUNT_HOLDER => $payolutionTransfer->getBankAccountHolder(),
                 ApiConstants::CRITERION_ACCOUNT_BIC => $payolutionTransfer->getBankAccountBic(),
@@ -200,7 +200,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::CRITERION_PRE_CHECK_ID => $paymentEntity->getPreCheckId(),
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
                 ApiConstants::CRITERION_CALCULATION_ID => $paymentEntity->getInstallmentCalculationId(),
-                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->convertCentsToDecimal($paymentEntity->getInstallmentAmount()),
+                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->getCurrencyManger()->convertCentToDecimal($paymentEntity->getInstallmentAmount()),
                 ApiConstants::CRITERION_DURATION => $paymentEntity->getInstallmentDuration(),
                 ApiConstants::CRITERION_ACCOUNT_HOLDER => $paymentEntity->getBankAccountHolder(),
                 ApiConstants::CRITERION_ACCOUNT_BIC => $paymentEntity->getBankAccountBic(),

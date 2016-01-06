@@ -6,17 +6,17 @@
 
 namespace Spryker\Client\Payolution\Zed;
 
-use Generated\Shared\Transfer\PayolutionCalculationRequestTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PayolutionStubInterface
 {
 
     /**
-     * @param PayolutionCalculationRequestTransfer $calculationRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
-    public function calculateInstallmentPayments(PayolutionCalculationRequestTransfer $calculationRequestTransfer);
+    public function calculateInstallmentPayments(QuoteTransfer $quoteTransfer);
 
 }

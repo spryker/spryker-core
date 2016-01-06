@@ -6,8 +6,8 @@
 
 namespace Spryker\Client\Payolution\Zed;
 
-use Generated\Shared\Transfer\PayolutionCalculationRequestTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class PayolutionStub implements PayolutionStubInterface
@@ -27,13 +27,13 @@ class PayolutionStub implements PayolutionStubInterface
     }
 
     /**
-     * @param PayolutionCalculationRequestTransfer $calculationRequestTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return PayolutionCalculationResponseTransfer
      */
-    public function calculateInstallmentPayments(PayolutionCalculationRequestTransfer $calculationRequestTransfer)
+    public function calculateInstallmentPayments(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedRequestClient->call('/payolution/gateway/calculate-installment-payments', $calculationRequestTransfer);
+        return $this->zedRequestClient->call('/payolution/gateway/calculate-installment-payments', $quoteTransfer);
     }
 
 }

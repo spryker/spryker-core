@@ -7,18 +7,18 @@
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Installment;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 interface InstallmentInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\PayolutionCalculationRequestTransfer $calculationRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function buildCalculationRequest(PayolutionCalculationRequestTransfer $calculationRequestTransfer);
+    public function buildCalculationRequest(QuoteTransfer $quoteTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer

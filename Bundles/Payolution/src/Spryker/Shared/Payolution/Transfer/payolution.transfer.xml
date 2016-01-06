@@ -75,12 +75,6 @@
         <property name="nameTitle" type="string"/>
     </transfer>
 
-    <transfer name="PayolutionCalculationRequest">
-        <property name="currency" type="string"/>
-        <property name="amount" type="int"/>
-        <property name="county" type="string"/>
-    </transfer>
-
     <transfer name="PayolutionCalculationResponse">
         <property name="version" type="string"/>
         <property name="transactionType" type="string"/>
