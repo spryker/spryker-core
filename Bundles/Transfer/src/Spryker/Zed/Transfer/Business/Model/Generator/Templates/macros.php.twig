@@ -25,7 +25,7 @@
     /**
      * @var {{ property.type }}
      */
-    protected ${{ property.name }};
+    protected ${{ property.name }}{% if property.type == 'array' %} = []{% endif %};
 {% endmacro %}
 
 {# constructor #}
@@ -47,11 +47,11 @@
      * @bundle {{ method.bundles|join('|') }}
      *
 {% endif %}
-     * @param {{ method.var }} ${{ method.property }}
+     * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}
      *
      * @return self
      */
-    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
+    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
         $this->{{ method.property }} = ${{ method.property }};
         $this->addModifiedProperty(self::{{ method.propertyConst }});

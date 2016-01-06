@@ -157,12 +157,12 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
-     * @param \ArrayObject $messages
+     * @param array $messages
      * @param array|Message[] $storedMessages
      *
      * @return array|Message[]
      */
-    protected function createResponseMessages(\ArrayObject $messages, array $storedMessages = [])
+    protected function createResponseMessages(array $messages, array $storedMessages = [])
     {
         foreach ($messages as $message) {
             $responseMessage = new Message();

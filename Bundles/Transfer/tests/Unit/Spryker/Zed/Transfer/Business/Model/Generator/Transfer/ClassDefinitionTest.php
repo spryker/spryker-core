@@ -294,7 +294,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperty1'];
-        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTY1', $bundles);
+        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTY1', $bundles, true);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
@@ -323,7 +323,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperties'];
-        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTIES');
+        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTIES', [], true);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];
@@ -343,10 +343,11 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
      * @param string|null $typeHint
      * @param string|null $constant
      * @param array $bundles
+     * @param bool|null $hasDefaultNull
      *
      * @return array
      */
-    private function getMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [])
+    private function getMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [], $hasDefaultNull = null)
     {
         $method = [
             'name' => $method,
@@ -368,6 +369,10 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         if ($constant !== null) {
             $method['propertyConst'] = $constant;
+        }
+
+        if ($hasDefaultNull !== null) {
+            $method['hasDefaultNull'] = $hasDefaultNull;
         }
 
         return $method;

@@ -147,11 +147,11 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @param \ArrayObject|FooBarTransfer[] $selfReference
+     * @param \ArrayObject|FooBarTransfer[]|null $selfReference
      *
      * @return self
      */
-    public function setSelfReference(\ArrayObject $selfReference)
+    public function setSelfReference(\ArrayObject $selfReference = null)
     {
         $this->selfReference = $selfReference;
         $this->addModifiedProperty(self::SELF_REFERENCE);

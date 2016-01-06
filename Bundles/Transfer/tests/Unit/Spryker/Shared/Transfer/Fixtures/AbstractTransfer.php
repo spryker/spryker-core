@@ -43,7 +43,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @var array
      */
-    protected $array;
+    protected $array = [];
 
     /**
      * @var TransferInterface
@@ -99,7 +99,6 @@ class AbstractTransfer extends ParentAbstractTransfer
 
     public function __construct()
     {
-        $this->array = new \ArrayObject();
         $this->transferCollection = new \ArrayObject();
     }
 
@@ -203,11 +202,11 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param array $array
+     * @param array|null $array
      *
      * @return self
      */
-    public function setArray(array $array)
+    public function setArray(array $array = null)
     {
         $this->array = $array;
         $this->addModifiedProperty(self::ARRAY_PROPERTY);
@@ -249,11 +248,11 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param TransferInterface $transfer
+     * @param TransferInterface|null $transfer
      *
      * @return self
      */
-    public function setTransfer(TransferInterface $transfer)
+    public function setTransfer(TransferInterface $transfer = null)
     {
         $this->transfer = $transfer;
         $this->addModifiedProperty(self::TRANSFER);
@@ -282,11 +281,11 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param \ArrayObject|TransferInterface[] $transferCollection
+     * @param \ArrayObject|TransferInterface[]|null $transferCollection
      *
      * @return self
      */
-    public function setTransferCollection(\ArrayObject $transferCollection)
+    public function setTransferCollection(\ArrayObject $transferCollection = null)
     {
         $this->transferCollection = $transferCollection;
         $this->addModifiedProperty(self::TRANSFER_COLLECTION);

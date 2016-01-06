@@ -330,7 +330,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function addPropertyMethods(array $property)
     {
-        if ($this->isCollection($property)) {
+        if ($this->isCollection($property) || $this->isArray($property)) {
             $this->buildCollectionMethods($property);
             $this->buildRequireMethod($property, true);
         } else {
@@ -442,7 +442,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function isCollection(array $property)
     {
-        return preg_match('/((.*?)\[\]|\[\]|array)/', $property['type']);
+        return preg_match('/((.*?)\[\]|\[\])/', $property['type']);
     }
 
     /**
@@ -525,8 +525,11 @@ class ClassDefinition implements ClassDefinitionInterface
             'propertyConst' => $this->getPropertyConstantName($property),
             'var' => $this->getSetVar($property),
             'bundles' => $property['bundles'],
+            'typeHint' => null,
+            'hasDefaultNull' => null,
         ];
         $method = $this->addTypeHint($property, $method);
+        $method = $this->addDefaultNull($method['typeHint'], $method);
 
         $this->methods[$methodName] = $method;
     }
@@ -573,6 +576,23 @@ class ClassDefinition implements ClassDefinitionInterface
         $typeHint = $this->getTypeHint($property);
         if ($typeHint) {
             $method['typeHint'] = $typeHint;
+        }
+
+        return $method;
+    }
+
+    /**
+     * @param string $typeHint
+     * @param array $method
+     *
+     * @return array
+     */
+    private function addDefaultNull($typeHint, array $method)
+    {
+        $method['hasDefaultNull'] = false;
+
+        if ($typeHint !== null && $typeHint !== 'array') {
+            $method['hasDefaultNull'] = true;
         }
 
         return $method;

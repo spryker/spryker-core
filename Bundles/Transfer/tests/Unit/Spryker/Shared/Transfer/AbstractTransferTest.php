@@ -151,7 +151,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'string' => null,
             'int' => null,
             'bool' => null,
-            'array' => new \ArrayObject(),
+            'array' => [],
             'transfer' => null,
             'transfer_collection' => new \ArrayObject(),
         ];
@@ -173,7 +173,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'string' => 'foo',
             'int' => 2,
             'bool' => null,
-            'array' => new \ArrayObject(),
+            'array' => [],
             'transfer' => null,
             'transfer_collection' => new \ArrayObject(),
         ];
@@ -201,12 +201,12 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'string' => 'foo',
             'int' => 2,
             'bool' => null,
-            'array' => new \ArrayObject(),
+            'array' => [],
             'transfer' => [
                 'string' => 'bar',
                 'int' => 3,
                 'bool' => null,
-                'array' => new \ArrayObject(),
+                'array' => [],
                 'transfer' => null,
                 'transfer_collection' => new \ArrayObject(),
             ],
@@ -236,7 +236,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'string' => 'foo',
             'int' => 2,
             'bool' => null,
-            'array' => new \ArrayObject(),
+            'array' => [],
             'transfer' => $innerTransfer->toArray(false),
             'transfer_collection' => new \ArrayObject(),
         ];
@@ -309,7 +309,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'string' => 'foo',
             'int' => 2,
             'bool' => null,
-            'array' => new \ArrayObject(),
+            'array' => [],
             'transfer' => null,
             'transfer_collection' => new \ArrayObject(),
         ];
@@ -353,6 +353,38 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $transfer->getTransfer()->getString());
         $this->assertEquals('foo', $transfer->getTransfer()->getTransfer()->getString());
         $this->assertEquals('bar', $transfer->getTransfer()->getTransfer()->getTransfer()->getString());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFromArrayToArrayConversionShouldWorkWithEmptyDataForTheSameTransferType()
+    {
+        $transfer1 = new AbstractTransfer();
+        $transfer2 = new AbstractTransfer();
+
+        $transfer1->fromArray($transfer2->toArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFromArrayToArrayConversionShouldWorkForTheSameTransferType()
+    {
+        $transfer1 = new AbstractTransfer();
+        $data = [
+            'string' => 'foo',
+            'transfer' => [
+                'string' => 'bar',
+            ],
+        ];
+        $transfer1->fromArray($data);
+
+        $transfer2 = new AbstractTransfer();
+        $transfer2->fromArray($transfer1->toArray());
+
+        $this->assertEquals('foo', $transfer2->getString());
+        $this->assertEquals('bar', $transfer2->getTransfer()->getString());
     }
 
 }
