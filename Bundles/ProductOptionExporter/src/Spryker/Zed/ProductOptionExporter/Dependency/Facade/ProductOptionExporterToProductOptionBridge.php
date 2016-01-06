@@ -5,18 +5,20 @@
 
 namespace Spryker\Zed\ProductOptionExporter\Dependency\Facade;
 
+use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
+
 class ProductOptionExporterToProductOptionBridge implements ProductOptionExporterToProductOptionInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductOption\Business\ProductOptionFacade
+     * @var ProductOptionFacade
      */
     protected $productOptionFacade;
 
     /**
      * ProductOptionExporterToProductOptionBridge constructor.
      *
-     * @param \Spryker\Zed\ProductOption\Business\ProductOptionFacade $productOptionFacade
+     * @param ProductOptionFacade $productOptionFacade
      */
     public function __construct($productOptionFacade)
     {

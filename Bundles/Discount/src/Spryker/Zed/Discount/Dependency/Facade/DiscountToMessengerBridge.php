@@ -6,18 +6,19 @@
 
 namespace Spryker\Zed\Discount\Dependency\Facade;
 
+use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Generated\Shared\Transfer\MessageTransfer;
 
 class DiscountToMessengerBridge implements DiscountToMessengerInterface
 {
 
     /**
-     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
+     * @var MessengerFacade
      */
     protected $messengerFacade;
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\MessengerFacade $messengerFacade
+     * @param MessengerFacade $messengerFacade
      */
     public function __construct($messengerFacade)
     {

@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade;
 
+use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
@@ -13,12 +14,12 @@ class ShipmentCheckoutConnectorToShipmentBridge implements ShipmentCheckoutConne
 {
 
     /**
-     * @var \Spryker\Zed\Shipment\Business\ShipmentFacade
+     * @var ShipmentFacade
      */
     protected $shipmentFacade;
 
     /**
-     * @param \Spryker\Zed\Shipment\Business\ShipmentFacade $shipmentFacade
+     * @param ShipmentFacade $shipmentFacade
      */
     public function __construct($shipmentFacade)
     {

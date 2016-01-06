@@ -5,16 +5,19 @@
 
 namespace Spryker\Zed\Price\Dependency\Facade;
 
+use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Touch\Business\TouchFacade;
+
 class PriceToProductBridge implements PriceToProductInterface
 {
 
     /**
-     * @var \Spryker\Zed\Touch\Business\TouchFacade
+     * @var TouchFacade
      */
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
+     * @param ProductFacade $productFacade
      */
     public function __construct($productFacade)
     {

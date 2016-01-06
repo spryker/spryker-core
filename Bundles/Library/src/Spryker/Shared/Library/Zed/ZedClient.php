@@ -262,7 +262,7 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param \Spryker\Shared\Library\Communication\Response $responseTransfer
+     * @param Response $responseTransfer
      * @param string $rawBody
      *
      * @return void

@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade;
 
+use Spryker\Zed\Customer\Business\CustomerFacade;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -13,14 +14,14 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
 {
 
     /**
-     * @var \Spryker\Zed\Customer\Business\CustomerFacade
+     * @var CustomerFacade
      */
     protected $customerFacade;
 
     /**
      * CustomerCheckoutConnectorToCustomerBridge constructor.
      *
-     * @param \Spryker\Zed\Customer\Business\CustomerFacade $customerFacade
+     * @param CustomerFacade $customerFacade
      */
     public function __construct($customerFacade)
     {

@@ -5,20 +5,21 @@
 
 namespace Spryker\Zed\Stock\Dependency\Facade;
 
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class StockToProductBridge implements StockToProductInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacade
+     * @var ProductFacade
      */
     protected $productFacade;
 
     /**
      * ProductCategoryToProductBridge constructor.
      *
-     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
+     * @param ProductFacade $productFacade
      */
     public function __construct($productFacade)
     {

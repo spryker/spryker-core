@@ -5,20 +5,21 @@
 
 namespace Spryker\Zed\StockSalesConnector\Dependency\Facade;
 
+use Spryker\Zed\Stock\Business\StockFacade;
 use Generated\Shared\Transfer\StockProductTransfer;
 
 class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInterface
 {
 
     /**
-     * @var \Spryker\Zed\Stock\Business\StockFacade
+     * @var StockFacade
      */
     protected $stockFacade;
 
     /**
      * StockToSalesBridge constructor.
      *
-     * @param \Spryker\Zed\Stock\Business\StockFacade $stockFacade
+     * @param StockFacade $stockFacade
      */
     public function __construct($stockFacade)
     {

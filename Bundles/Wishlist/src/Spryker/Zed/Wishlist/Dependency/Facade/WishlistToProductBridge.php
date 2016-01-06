@@ -6,18 +6,19 @@
 
 namespace Spryker\Zed\Wishlist\Dependency\Facade;
 
+use Spryker\Zed\Product\Business\ProductFacade;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 
 class WishlistToProductBridge implements WishlistToProductInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacade
+     * @var ProductFacade
      */
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
+     * @param ProductFacade $productFacade
      */
     public function __construct($productFacade)
     {

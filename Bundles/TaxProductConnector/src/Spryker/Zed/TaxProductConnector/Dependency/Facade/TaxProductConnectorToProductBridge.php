@@ -5,18 +5,20 @@
 
 namespace Spryker\Zed\TaxProductConnector\Dependency\Facade;
 
+use Spryker\Zed\Product\Business\ProductFacade;
+
 class TaxProductConnectorToProductBridge implements TaxProductConnectorToProductInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacade
+     * @var ProductFacade
      */
     protected $productFacade;
 
     /**
      * ProductCategoryToProductBridge constructor.
      *
-     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
+     * @param ProductFacade $productFacade
      */
     public function __construct($productFacade)
     {

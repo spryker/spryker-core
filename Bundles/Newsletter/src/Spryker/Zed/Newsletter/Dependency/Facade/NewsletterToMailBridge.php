@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Newsletter\Dependency\Facade;
 
+use Spryker\Zed\Mail\Business\MailFacade;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\SendMailResponsesTransfer;
 
@@ -13,12 +14,12 @@ class NewsletterToMailBridge implements NewsletterToMailInterface
 {
 
     /**
-     * @var \Spryker\Zed\Mail\Business\MailFacade
+     * @var MailFacade
      */
     protected $mailFacade;
 
     /**
-     * @param \Spryker\Zed\Mail\Business\MailFacade $mailFacade
+     * @param MailFacade $mailFacade
      */
     public function __construct($mailFacade)
     {

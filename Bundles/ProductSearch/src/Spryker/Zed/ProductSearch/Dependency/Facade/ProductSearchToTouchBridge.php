@@ -5,18 +5,20 @@
 
 namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
+use Spryker\Zed\Touch\Business\TouchFacade;
+
 class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
 {
 
     /**
-     * @var \Spryker\Zed\Touch\Business\TouchFacade
+     * @var TouchFacade
      */
     protected $touchFacade;
 
     /**
      * CmsToTouchBridge constructor.
      *
-     * @param \Spryker\Zed\Touch\Business\TouchFacade $touchFacade
+     * @param TouchFacade $touchFacade
      */
     public function __construct($touchFacade)
     {

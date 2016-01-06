@@ -5,20 +5,21 @@
 
 namespace Spryker\Zed\ProductOptionCartConnector\Dependency\Facade;
 
+use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class ProductOptionCartConnectorToProductOptionBridge implements ProductOptionCartConnectorToProductOptionInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductOption\Business\ProductOptionFacade
+     * @var ProductOptionFacade
      */
     protected $productOptionFacade;
 
     /**
      * ProductOptionExporterToProductOptionBridge constructor.
      *
-     * @param \Spryker\Zed\ProductOption\Business\ProductOptionFacade $productOptionFacade
+     * @param ProductOptionFacade $productOptionFacade
      */
     public function __construct($productOptionFacade)
     {

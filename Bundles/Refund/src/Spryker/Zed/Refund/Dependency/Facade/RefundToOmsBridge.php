@@ -6,18 +6,19 @@
 
 namespace Spryker\Zed\Refund\Dependency\Facade;
 
+use Spryker\Zed\Oms\Business\OmsFacade;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class RefundToOmsBridge implements RefundToOmsInterface
 {
 
     /**
-     * @var \Spryker\Zed\Oms\Business\OmsFacade
+     * @var OmsFacade
      */
     protected $omsFacade;
 
     /**
-     * @param \Spryker\Zed\Oms\Business\OmsFacade $omsFacade
+     * @param OmsFacade $omsFacade
      */
     public function __construct($omsFacade)
     {

@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
+use Spryker\Zed\Locale\Business\LocaleFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
@@ -12,14 +13,14 @@ class ProductOptionToLocaleBridge implements ProductOptionToLocaleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacade
+     * @var LocaleFacade
      */
     protected $localeFacade;
 
     /**
      * CategoryToLocaleBridge constructor.
      *
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
+     * @param LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {

@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\Cms\Dependency\Facade;
 
+use Spryker\Zed\Url\Business\UrlFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -15,14 +16,14 @@ class CmsToUrlBridge implements CmsToUrlInterface
 {
 
     /**
-     * @var \Spryker\Zed\Url\Business\UrlFacade
+     * @var UrlFacade
      */
     protected $urlFacade;
 
     /**
      * CmsToUrlBridge constructor.
      *
-     * @param \Spryker\Zed\Url\Business\UrlFacade $urlFacade
+     * @param UrlFacade $urlFacade
      */
     public function __construct($urlFacade)
     {

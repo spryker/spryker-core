@@ -5,20 +5,21 @@
 
 namespace Spryker\Zed\SalesCheckoutConnector\Dependency\Facade;
 
+use Spryker\Zed\Sales\Business\SalesFacade;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class SalesCheckoutConnectorToSalesBridge implements SalesCheckoutConnectorToSalesInterface
 {
 
     /**
-     * @var \Spryker\Zed\Sales\Business\SalesFacade
+     * @var SalesFacade
      */
     protected $salesFacade;
 
     /**
      * SalesCheckoutConnectorToSalesBridge constructor.
      *
-     * @param \Spryker\Zed\Sales\Business\SalesFacade $salesFacade
+     * @param SalesFacade $salesFacade
      */
     public function __construct($salesFacade)
     {

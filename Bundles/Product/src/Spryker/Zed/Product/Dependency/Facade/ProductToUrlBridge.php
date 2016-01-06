@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
+use Spryker\Zed\Url\Business\UrlFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -14,14 +15,14 @@ class ProductToUrlBridge implements ProductToUrlInterface
 {
 
     /**
-     * @var \Spryker\Zed\Url\Business\UrlFacade
+     * @var UrlFacade
      */
     protected $urlFacade;
 
     /**
      * CmsToUrlBridge constructor.
      *
-     * @param \Spryker\Zed\Url\Business\UrlFacade $urlFacade
+     * @param UrlFacade $urlFacade
      */
     public function __construct($urlFacade)
     {

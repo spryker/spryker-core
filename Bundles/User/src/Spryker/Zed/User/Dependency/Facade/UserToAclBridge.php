@@ -5,20 +5,21 @@
 
 namespace Spryker\Zed\User\Dependency\Facade;
 
+use Spryker\Zed\Acl\Business\AclFacade;
 use Generated\Shared\Transfer\GroupsTransfer;
 
 class UserToAclBridge implements UserToAclInterface
 {
 
     /**
-     * @var \Spryker\Zed\Acl\Business\AclFacade
+     * @var AclFacade
      */
     protected $aclFacade;
 
     /**
      * UserToAclBridge constructor.
      *
-     * @param \Spryker\Zed\Acl\Business\AclFacade $aclFacade
+     * @param AclFacade $aclFacade
      */
     public function __construct($aclFacade)
     {

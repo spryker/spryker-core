@@ -6,18 +6,19 @@
 
 namespace Spryker\Zed\Payone\Dependency\Facade;
 
+use Spryker\Zed\Refund\Business\RefundFacade;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class PayoneToRefundBridge implements PayoneToRefundInterface
 {
 
     /**
-     * @var \Spryker\Zed\Refund\Business\RefundFacade
+     * @var RefundFacade
      */
     protected $refundFacade;
 
     /**
-     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
+     * @param RefundFacade $refundFacade
      */
     public function __construct($refundFacade)
     {

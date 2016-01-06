@@ -5,20 +5,21 @@
 
 namespace Spryker\Zed\Glossary\Dependency\Facade;
 
+use Spryker\Zed\Locale\Business\LocaleFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacade
+     * @var LocaleFacade
      */
     protected $localeFacade;
 
     /**
      * GlossaryToLocaleBridge constructor.
      *
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade
+     * @param LocaleFacade
      */
     public function __construct($localeFacade)
     {

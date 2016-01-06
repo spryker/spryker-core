@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
+use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
@@ -12,12 +13,12 @@ class DiscountCalculationToCalculationBridge implements DiscountCalculationToCal
 {
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\CalculationFacade
+     * @var CalculationFacade
      */
     protected $calculationFacade;
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\CalculationFacade $calculationFacade
+     * @param CalculationFacade $calculationFacade
      */
     public function __construct($calculationFacade)
     {

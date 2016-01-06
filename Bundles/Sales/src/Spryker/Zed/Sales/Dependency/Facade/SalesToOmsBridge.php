@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
+use Spryker\Zed\Oms\Business\OmsFacade;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
@@ -15,14 +16,14 @@ class SalesToOmsBridge implements SalesToOmsInterface
 {
 
     /**
-     * @var \Spryker\Zed\Oms\Business\OmsFacade
+     * @var OmsFacade
      */
     protected $omsFacade;
 
     /**
      * SalesToOmsBridge constructor.
      *
-     * @param \Spryker\Zed\Oms\Business\OmsFacade $omsFacade
+     * @param OmsFacade $omsFacade
      */
     public function __construct($omsFacade)
     {

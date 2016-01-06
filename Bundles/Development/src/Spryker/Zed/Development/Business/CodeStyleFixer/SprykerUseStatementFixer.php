@@ -176,8 +176,6 @@ class SprykerUseStatementFixer extends AbstractFixer
             return $content;
         }
 
-        return $content;
-
         $replace = function ($matches) {
             $fullClassName = $matches[2];
             $lastSeparatorIndex = strrpos($fullClassName, '\\');
@@ -185,20 +183,14 @@ class SprykerUseStatementFixer extends AbstractFixer
 
             $addedUseStatement = $this->addUseStatement($className, $fullClassName);
 
-            //dump($className); dump($addedUseStatement);
-            if ($addedUseStatement['shortname'] !== $className) {
-                //throw new \Exception('Manual fixing needed.');
+            if ($addedUseStatement['shortName'] !== $className) {
+                throw new \Exception('Manual fixing needed.');
             }
 
-            //dump('@' . $matches[1] . ' ' . $addedUseStatement['shortname']);
-
-            return '@' . $matches[1] . ' ' . $addedUseStatement['shortname'];
+            return '@' . $matches[1] . ' ' . $addedUseStatement['shortName'];
         };
 
         $content = preg_replace_callback('/\@(var|param)\s+(\\\\Spryker\\\\[a-z\\\\]+)\b/i', $replace, $content);
-
-        dump($content);
-        exit('E');
 
         return $content;
     }

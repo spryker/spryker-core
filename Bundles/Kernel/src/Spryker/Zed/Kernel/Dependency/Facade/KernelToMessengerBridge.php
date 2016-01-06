@@ -6,18 +6,19 @@
 
 namespace Spryker\Zed\Kernel\Dependency\Facade;
 
+use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 
 class KernelToMessengerBridge implements KernelToMessengerInterface
 {
 
     /**
-     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
+     * @var MessengerFacade
      */
     protected $messengerFacade;
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\MessengerFacade $messengerFacade
+     * @param MessengerFacade $messengerFacade
      */
     public function __construct($messengerFacade)
     {

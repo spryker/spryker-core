@@ -6,16 +6,18 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
+use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
+
 class ProductToProductOptionBridge implements ProductToProductOptionInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductOption\Business\ProductOptionFacade
+     * @var ProductOptionFacade
      */
     protected $productOptionFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOption\Business\ProductOptionFacade $productOptionFacade
+     * @param ProductOptionFacade $productOptionFacade
      */
     public function __construct($productOptionFacade)
     {
