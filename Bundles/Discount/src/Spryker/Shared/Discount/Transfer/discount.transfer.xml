@@ -136,7 +136,6 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address"/>
-        <property name="paymentMethod" type="string"/>
         <property name="customer" type="Customer"/>
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>

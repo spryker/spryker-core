@@ -123,13 +123,7 @@
         <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
-    <transfer name="CheckoutRequest">
-        <property name="payolutionPayment" type="PayolutionPayment"/>
-        <property name="cart" type="Cart"/>
-    </transfer>
-
-    <transfer name="Quote">
-        <property name="payolutionInvoice" type="PayolutionPayment"/>
-        <property name="payolutionInstallment" type="PayolutionPayment"/>
+    <transfer name="Payment">
+        <property name="payolution" type="PayolutionPayment"/>
     </transfer>
 </transfer>

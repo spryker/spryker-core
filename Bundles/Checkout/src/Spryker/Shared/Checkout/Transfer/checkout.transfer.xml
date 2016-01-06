@@ -87,7 +87,6 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address"/>
-        <property name="paymentMethod" type="string" />
         <property name="customer" type="Customer" />
     </transfer>
 

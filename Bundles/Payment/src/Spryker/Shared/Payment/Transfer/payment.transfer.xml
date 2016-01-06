@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<transfer
+    xmlns="http://xsd.spryker.com"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd"
+>
+    <transfer name="Payment">
+        <property name="paymentProvider" type="string"/>
+        <property name="paymentMethod" type="string"/>
+        <property name="paymentId" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="payment" type="Payment"/>
+    </transfer>
+</transfer>
