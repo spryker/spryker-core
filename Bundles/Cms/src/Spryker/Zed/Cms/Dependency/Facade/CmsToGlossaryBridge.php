@@ -8,6 +8,7 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
+use Pyz\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
 use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
@@ -18,14 +19,14 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
 {
 
     /**
-     * @var \Spryker\Zed\Glossary\Business\GlossaryFacade
+     * @var GlossaryFacade
      */
     protected $glossaryFacade;
 
     /**
      * CmsToGlossaryBridge constructor.
      *
-     * @param \Spryker\Zed\Glossary\Business\GlossaryFacade $glossaryFacade
+     * @param GlossaryFacade $glossaryFacade
      */
     public function __construct($glossaryFacade)
     {

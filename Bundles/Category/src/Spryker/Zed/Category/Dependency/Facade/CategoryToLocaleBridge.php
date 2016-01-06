@@ -6,19 +6,20 @@
 namespace Spryker\Zed\Category\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 
 class CategoryToLocaleBridge implements CategoryToLocaleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacade
+     * @var LocaleFacade
      */
     protected $localeFacade;
 
     /**
      * CategoryToLocaleBridge constructor.
      *
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
+     * @param LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {

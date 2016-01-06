@@ -5,18 +5,20 @@
 
 namespace Spryker\Zed\Customer\Dependency\Facade;
 
+use Spryker\Zed\Country\Business\CountryFacade;
+
 class CustomerToCountryBridge implements CustomerToCountryInterface
 {
 
     /**
-     * @var \Spryker\Zed\Country\Business\CountryFacade
+     * @var CountryFacade
      */
     protected $countryFacade;
 
     /**
      * CustomerToCountryBridge constructor.
      *
-     * @param \Spryker\Zed\Country\Business\CountryFacade $countryFacade
+     * @param CountryFacade $countryFacade
      */
     public function __construct($countryFacade)
     {

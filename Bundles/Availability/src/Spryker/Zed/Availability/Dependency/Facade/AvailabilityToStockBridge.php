@@ -6,16 +6,18 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
+use Spryker\Zed\Stock\Business\StockFacade;
+
 class AvailabilityToStockBridge implements AvailabilityToStockInterface
 {
 
     /**
-     * @var \Spryker\Zed\Stock\Business\StockFacade
+     * @var StockFacade
      */
     protected $stockFacade;
 
     /**
-     * @param \Spryker\Zed\Stock\Business\StockFacade $stockFacade
+     * @param StockFacade $stockFacade
      */
     public function __construct($stockFacade)
     {

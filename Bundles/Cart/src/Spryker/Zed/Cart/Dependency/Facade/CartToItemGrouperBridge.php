@@ -7,17 +7,18 @@
 namespace Spryker\Zed\Cart\Dependency\Facade;
 
 use Generated\Shared\Transfer\GroupableContainerTransfer;
+use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
 class CartToItemGrouperBridge implements CartToItemGrouperInterface
 {
 
     /**
-     * @var \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade
+     * @var ItemGrouperFacade
      */
     protected $itemGrouperFacade;
 
     /**
-     * @param \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade $itemGrouperFacade
+     * @param ItemGrouperFacade $itemGrouperFacade
      */
     public function __construct($itemGrouperFacade)
     {

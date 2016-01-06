@@ -7,17 +7,18 @@
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Oms\Business\OmsFacade;
 
 class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
 {
 
     /**
-     * @var \Spryker\Zed\Oms\Business\OmsFacade
+     * @var OmsFacade
      */
     protected $omsFacade;
 
     /**
-     * @param \Spryker\Zed\Oms\Business\OmsFacade $omsFacade
+     * @param OmsFacade $omsFacade
      */
     public function __construct($omsFacade)
     {
