@@ -39,7 +39,6 @@ class Locator implements LocatorLocatorInterface
         return self::$instance;
     }
 
-
     final private function __construct()
     {
     }

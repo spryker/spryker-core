@@ -9,7 +9,6 @@ namespace Spryker\Client\Cms;
 use Spryker\Client\Cms\KeyBuilder\CmsBlockKeyBuilder;
 use Spryker\Client\Cms\Storage\CmsBlockStorage;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Cms\CmsDependencyProvider;
 use Spryker\Client\Cms\Storage\CmsBlockStorageInterface;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;

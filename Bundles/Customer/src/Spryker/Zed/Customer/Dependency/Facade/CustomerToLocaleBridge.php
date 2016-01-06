@@ -33,4 +33,5 @@ class CustomerToLocaleBridge implements CustomerToLocaleInterface
     {
         return $this->localeFacade->getCurrentLocale();
     }
+
 }

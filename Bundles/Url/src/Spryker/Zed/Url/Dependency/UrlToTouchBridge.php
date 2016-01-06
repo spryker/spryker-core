@@ -5,18 +5,20 @@
 
 namespace Spryker\Zed\Url\Dependency;
 
+use Spryker\Zed\Touch\Business\TouchFacade;
+
 class UrlToTouchBridge implements UrlToTouchInterface
 {
 
     /**
-     * @var \Spryker\Zed\Touch\Business\TouchFacade
+     * @var TouchFacade
      */
     protected $touchFacade;
 
     /**
      * ProductCategoryToTouchBridge constructor.
      *
-     * @param \Spryker\Zed\Touch\Business\TouchFacade $touchFacade
+     * @param TouchFacade $touchFacade
      */
     public function __construct($touchFacade)
     {

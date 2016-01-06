@@ -10,8 +10,6 @@ use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
 use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Zed\Kernel\Communication\BundleControllerAction;
 use Spryker\Zed\Kernel\Communication\Controller\RouteNameResolver;
-use Spryker\Zed\Kernel\Communication\ControllerLocator;
-use Spryker\Zed\Kernel\Locator;
 use Silex\Application;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;

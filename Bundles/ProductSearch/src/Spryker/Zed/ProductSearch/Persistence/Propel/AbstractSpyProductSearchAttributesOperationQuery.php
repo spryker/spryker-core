@@ -18,5 +18,4 @@ use Orm\Zed\ProductSearch\Persistence\Base\SpyProductSearchAttributesOperationQu
  */
 abstract class AbstractSpyProductSearchAttributesOperationQuery extends BaseSpyProductSearchAttributesOperationQuery
 {
-} // SpyProductSearchAttributesOperationQuery
-
+}

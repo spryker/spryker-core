@@ -79,4 +79,5 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
     {
         return $this->touchFacade->getItemsByType($itemType);
     }
+
 }

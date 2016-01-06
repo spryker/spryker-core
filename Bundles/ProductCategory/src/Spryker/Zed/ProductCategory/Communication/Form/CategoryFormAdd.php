@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductCategory\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\Gui\Form\AbstractForm;
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;

@@ -157,4 +157,5 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
     {
         return $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }
+
 }

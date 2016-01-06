@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Kernel\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-
 class KernelBusinessFactory extends AbstractBusinessFactory
 {
 }

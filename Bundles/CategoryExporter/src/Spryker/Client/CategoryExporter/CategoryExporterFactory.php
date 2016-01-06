@@ -44,6 +44,7 @@ class CategoryExporterFactory extends AbstractFactory
 
     /**
      * @throws ContainerKeyNotFoundException
+     *
      * @return StorageClientInterface
      */
     protected function getStorageClient()

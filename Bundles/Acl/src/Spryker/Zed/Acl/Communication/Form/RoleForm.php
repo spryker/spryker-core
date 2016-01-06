@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Acl\Communication\Form;
 
 use Spryker\Shared\Gui\Form\AbstractForm;
-use Spryker\Shared\Transfer\TransferInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RoleForm extends AbstractForm

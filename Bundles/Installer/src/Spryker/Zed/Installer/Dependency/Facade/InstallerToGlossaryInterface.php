@@ -77,6 +77,4 @@ interface InstallerToGlossaryInterface
      */
     public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 
-
-
 }

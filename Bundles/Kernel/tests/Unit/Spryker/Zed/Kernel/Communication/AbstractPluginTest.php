@@ -9,8 +9,6 @@ namespace Unit\Spryker\Zed\Kernel\Communication;
 use Spryker\Zed\Kernel\AbstractUnitTest;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;

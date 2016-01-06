@@ -7,7 +7,6 @@
 namespace Spryker\Zed\ProductSearch\Business;
 
 use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Zed\Collector\Business\CollectorFacade;
 use Spryker\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
 use Spryker\Zed\ProductSearch\Business\Operation\OperationManager;
 use Spryker\Zed\ProductSearch\Business\Locator\OperationLocator;

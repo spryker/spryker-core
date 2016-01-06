@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Price\Business\Model;
 
-use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Generated\Shared\Transfer\PriceProductTransfer;

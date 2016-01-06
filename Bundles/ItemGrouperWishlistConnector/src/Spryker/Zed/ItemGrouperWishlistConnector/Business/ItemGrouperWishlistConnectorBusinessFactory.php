@@ -15,6 +15,7 @@ use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorConfig;
  */
 class ItemGrouperWishlistConnectorBusinessFactory extends AbstractBusinessFactory
 {
+
     /**
      * @return ItemGrouperWishlistConnectorToItemGrouperInterface
      */
@@ -22,4 +23,5 @@ class ItemGrouperWishlistConnectorBusinessFactory extends AbstractBusinessFactor
     {
         return $this->getProvidedDependency(ItemGrouperWishlistConnectorDependencyProvider::FACADE_ITEM_GROUPER);
     }
+
 }

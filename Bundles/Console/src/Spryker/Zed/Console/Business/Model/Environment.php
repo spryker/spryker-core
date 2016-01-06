@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Console\Business\Model;
 
 use Spryker\Shared\Library\Application\Environment as SprykerEnvironment;
-use Symfony\Component\Process\Process;
 
 class Environment
 {

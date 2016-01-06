@@ -8,7 +8,6 @@ namespace Spryker\Zed\Product\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Product\Communication\Table\ProductTable;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToProductOptionInterface;
@@ -17,8 +16,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Product\ProductConfig;
 use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
-use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
  * @method ProductQueryContainer getQueryContainer()

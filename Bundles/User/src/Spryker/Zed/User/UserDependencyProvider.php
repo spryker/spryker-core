@@ -12,9 +12,9 @@ use Spryker\Zed\User\Dependency\Facade\UserToAclBridge;
 
 class UserDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_ACL = 'facade acl';
     const CLIENT_SESSION = 'client session';
-
 
     /**
      * @param Container $container

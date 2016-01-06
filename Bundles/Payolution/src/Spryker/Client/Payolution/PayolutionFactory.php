@@ -10,7 +10,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Payolution\Session\PayolutionSession;
 use Spryker\Client\Payolution\Zed\PayolutionStub;
 use Spryker\Client\Payolution\Zed\PayolutionStubInterface;
-use Generated\Client\Ide\FactoryAutoCompletion\PayolutionService;
 
 class PayolutionFactory extends AbstractFactory
 {

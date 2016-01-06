@@ -106,6 +106,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param bool $isBackgroundRequest
      *
      * @throws RequestException
+     *
      * @return ResponseInterface
      */
     public function request(

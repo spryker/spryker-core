@@ -63,7 +63,7 @@ abstract class AbstractController
     /**
      * @param Application $application
      *
-     * @return $this
+     * @return self
      */
     public function setApplication(Application $application)
     {

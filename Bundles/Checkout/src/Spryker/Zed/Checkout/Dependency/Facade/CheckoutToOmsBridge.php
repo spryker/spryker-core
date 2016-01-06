@@ -33,6 +33,7 @@ class CheckoutToOmsBridge implements CheckoutToOmsInterface
      */
     public function triggerEventForNewOrderItems(array $orderItemIds, array $data = [])
     {
-        return $this->omsFacade->triggerEventForNewOrderItems($orderItemIds,$data);
+        return $this->omsFacade->triggerEventForNewOrderItems($orderItemIds, $data);
     }
+
 }

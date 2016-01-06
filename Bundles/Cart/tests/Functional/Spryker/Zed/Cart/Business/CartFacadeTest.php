@@ -7,7 +7,6 @@ use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
-use Spryker\Zed\Cart\Business\CartBusinessFactory;
 use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Price\Business\PriceFacade;

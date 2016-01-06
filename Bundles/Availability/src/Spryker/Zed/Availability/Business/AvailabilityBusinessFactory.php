@@ -11,8 +11,6 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Business\Mapping;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;

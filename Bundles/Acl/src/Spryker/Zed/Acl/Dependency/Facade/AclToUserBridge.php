@@ -61,4 +61,5 @@ class AclToUserBridge implements AclToUserInterface
     {
         return $this->userFacade->getCurrentUser();
     }
+
 }

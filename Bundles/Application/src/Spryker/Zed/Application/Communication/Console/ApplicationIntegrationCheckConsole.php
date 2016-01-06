@@ -14,7 +14,6 @@ use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 /**
  * @method ApplicationFacade getFacade()

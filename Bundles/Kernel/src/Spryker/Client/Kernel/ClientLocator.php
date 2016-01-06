@@ -43,7 +43,6 @@ class ClientLocator extends AbstractLocator
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
         return $this->getClientResolver()->resolve($bundle);
-
     }
 
     /**

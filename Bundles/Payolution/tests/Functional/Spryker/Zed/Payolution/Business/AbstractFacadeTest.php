@@ -12,7 +12,6 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;

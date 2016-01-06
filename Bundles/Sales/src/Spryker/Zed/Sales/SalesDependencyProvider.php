@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;

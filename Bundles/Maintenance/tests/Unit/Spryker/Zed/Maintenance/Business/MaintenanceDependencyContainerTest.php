@@ -16,7 +16,7 @@ use Spryker\Zed\Maintenance\Business\MaintenanceBusinessFactory;
  * @group Business
  * @group MaintenanceBusinessFactory
  */
-class MaintenanceBusinessFactoryTest extends \PHPUnit_Framework_TestCase
+class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**

@@ -29,4 +29,5 @@ abstract class AbstractFilter implements FilterInterface
     {
         return static::TYPE;
     }
+
 }

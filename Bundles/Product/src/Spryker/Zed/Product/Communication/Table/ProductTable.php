@@ -9,7 +9,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Url\Business\UrlFacade;
-
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 
 class ProductTable extends AbstractTable

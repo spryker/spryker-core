@@ -12,7 +12,6 @@ use Spryker\Zed\Payone\Dependency\Facade\PayoneToRefundInterface;
 use Spryker\Zed\Payone\PayoneConfig;
 use Spryker\Zed\Payone\PayoneDependencyProvider;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use Spryker\Zed\Refund\Business\RefundFacade;
 
 /**
  * @method PayoneConfig getConfig()

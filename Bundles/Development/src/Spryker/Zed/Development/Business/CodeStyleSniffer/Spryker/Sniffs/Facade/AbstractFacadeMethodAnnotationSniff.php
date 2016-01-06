@@ -23,7 +23,7 @@ abstract class AbstractFacadeMethodAnnotationSniff extends AbstractMethodAnnotat
 
         $facadeName = $bundleName . 'Facade';
         $stringLength = strlen($facadeName);
-        $relevantClassNamePart = substr($className, - $stringLength);
+        $relevantClassNamePart = substr($className, -$stringLength);
 
         return ($relevantClassNamePart === $facadeName);
     }

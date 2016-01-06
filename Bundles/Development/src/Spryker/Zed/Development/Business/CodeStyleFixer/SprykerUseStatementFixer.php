@@ -81,6 +81,7 @@ class SprykerUseStatementFixer extends AbstractFixer
 
         $this->loadStatements($tokens);
         $this->fixUseForNew($tokens);
+        $this->fixUseForDocBlocks($tokens);
         $this->insertNewUseStatements($tokens, $namespaceStatements);
 
         return $tokens->generateCode();
@@ -149,6 +150,47 @@ class SprykerUseStatementFixer extends AbstractFixer
                 $tokens[$index]->setContent($tokens[$index]->getContent() . ' ');
             }
         }
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     *
+     * @return void
+     */
+    protected function fixUseForDocBlocks(Tokens $tokens)
+    {
+        foreach ($tokens->findGivenKind(T_DOC_COMMENT) as $token) {
+            $token->setContent($this->fixDocBlock($token->getContent()));
+        }
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return string
+     */
+    protected function fixDocBlock($content)
+    {
+        if (strpos($content, '@var \\Spryker') === false && strpos($content, '@param \\Spryker') === false) {
+            return $content;
+        }
+
+        $replace = function ($matches) {
+            $fullClassName = $matches[2];
+            $lastSeparatorIndex = strrpos($fullClassName, '\\');
+            $className = substr($fullClassName, $lastSeparatorIndex + 1);
+
+            $addedUseStatement = $this->addUseStatement($className, $fullClassName);
+            if ($addedUseStatement['shortname'] !== $className) {
+                throw new \Exception('Manual fixing needed.');
+            }
+
+            return '@' . $matches[1] . ' ' . $addedUseStatement['shortname'];
+        };
+
+        $content = preg_replace_callback('/\@(var|param)\s+(\\\\Spryker\\\\[a-z\\\\]+)\b/i', $replace, $content);
+
+        return $content;
     }
 
     /**

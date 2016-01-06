@@ -68,10 +68,11 @@ class PayolutionSession implements PayolutionSessionInterface
     {
         if ($this->hasInstallmentPayments()) {
             $this->session->remove(self::PAYOLUTION_SESSION_IDENTIFIER);
+
             return true;
         }
 
-      return false;
+        return false;
     }
 
 }

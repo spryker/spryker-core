@@ -5,7 +5,6 @@ namespace Spryker\Zed\Refund\Communication\Form;
 use Generated\Shared\Transfer\RefundTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Shared\Gui\Form\AbstractForm;
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Refund\Business\RefundFacade;
 use Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;

@@ -54,7 +54,6 @@ interface CmsToUrlInterface
      */
     public function hasUrl($url);
 
-
     /**
      * @param string $toUrl
      * @param int $status

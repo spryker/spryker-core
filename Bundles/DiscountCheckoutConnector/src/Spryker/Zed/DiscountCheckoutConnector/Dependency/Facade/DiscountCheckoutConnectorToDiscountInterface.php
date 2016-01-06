@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade;
 
-use Orm\Zed\Discount\Persistence\SpyDiscount;
-
 interface DiscountCheckoutConnectorToDiscountInterface
 {
 

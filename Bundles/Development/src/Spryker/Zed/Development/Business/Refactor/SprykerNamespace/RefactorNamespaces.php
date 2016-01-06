@@ -9,8 +9,6 @@ namespace Spryker\Zed\Development\Business\Refactor\SprykerNamespace;
 use Spryker\Zed\Development\Business\Refactor\AbstractRefactor;
 use Spryker\Zed\Development\Business\Refactor\RefactorException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class RefactorNamespaces extends AbstractRefactor
 {

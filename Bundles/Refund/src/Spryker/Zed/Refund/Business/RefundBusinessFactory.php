@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Refund\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Refund\Business\Model\Refund;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
