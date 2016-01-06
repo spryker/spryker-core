@@ -19,7 +19,6 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\GridConfirmDialog;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Grid;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPrice;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ConfirmDialog;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Button;
 
 class ZedExtension extends \Twig_Extension
 {
@@ -50,7 +49,6 @@ class ZedExtension extends \Twig_Extension
     public function getFunctions()
     {
         $functions = [
-            new Button(),
             new ConfirmDialog(),
             new FormatPrice(),
             new Grid(),
