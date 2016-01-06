@@ -15,7 +15,6 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\StaticPath;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Panel;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Modal;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ListGroup;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Grid;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPrice;
 
 class ZedExtension extends \Twig_Extension
@@ -48,7 +47,6 @@ class ZedExtension extends \Twig_Extension
     {
         $functions = [
             new FormatPrice(),
-            new Grid(),
             new ListGroup(),
             new Modal(),
             new Panel(),
