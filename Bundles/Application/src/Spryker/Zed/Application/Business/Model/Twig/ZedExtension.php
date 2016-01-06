@@ -13,7 +13,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButtonFunctio
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\StaticPath;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Panel;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Modal;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\ModalFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ListGroupFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPriceFunction;
 
@@ -48,7 +48,7 @@ class ZedExtension extends \Twig_Extension
         $functions = [
             new FormatPriceFunction(),
             new ListGroupFunction(),
-            new Modal(),
+            new ModalFunction(),
             new Panel(),
             new StaticPath(),
             new BackActionButtonFunction(),
