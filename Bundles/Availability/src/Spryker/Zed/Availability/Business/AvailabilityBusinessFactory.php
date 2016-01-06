@@ -27,7 +27,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     /**
      * @return SellableInterface
      */
-    public function getSellableModel()
+    public function createSellableModel()
     {
         return new Sellable(
             $this->getOmsFacade(),

@@ -31,7 +31,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return StackExecutor
      */
-    public function getStackExecutor()
+    public function createStackExecutor()
     {
         $stackExecutor = new StackExecutor();
 
@@ -41,7 +41,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ExpensePriceToPayCalculator
      */
-    public function getExpensePriceToPayCalculator()
+    public function createExpensePriceToPayCalculator()
     {
         $expensePriceToPayCalculator = new ExpensePriceToPayCalculator();
 
@@ -49,19 +49,9 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ExpenseTotalsCalculator
-     */
-    public function getExpenseTotalsCalculator()
-    {
-        $expenseTotalsCalculator = new ExpenseTotalsCalculator();
-
-        return $expenseTotalsCalculator;
-    }
-
-    /**
      * @return GrandTotalTotalsCalculator
      */
-    public function getGrandTotalsCalculator()
+    public function createGrandTotalsCalculator()
     {
         $subtotalTotalsCalculator = $this->createSubTotalsCalculator();
         $expenseTotalsCalculator = $this->createExpenseTotalsCalculator();
@@ -77,7 +67,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ItemPriceToPayCalculator
      */
-    public function getItemPriceToPayCalculator()
+    public function createItemPriceToPayCalculator()
     {
         $itemPriceToPayCalculator = new ItemPriceToPayCalculator();
 
@@ -87,7 +77,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ProductOptionPriceToPayCalculator
      */
-    public function getOptionPriceToPayCalculator()
+    public function createOptionPriceToPayCalculator()
     {
         $productOptionPriceToPayCalculator = new ProductOptionPriceToPayCalculator();
 
@@ -97,7 +87,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return RemoveAllExpensesCalculator
      */
-    public function getRemoveAllExpensesCalculator()
+    public function createRemoveAllExpensesCalculator()
     {
         $removeAllExpensesCalculator = new RemoveAllExpensesCalculator();
 
@@ -107,7 +97,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return RemoveTotalsCalculator
      */
-    public function getRemoveTotalsCalculator()
+    public function createRemoveTotalsCalculator()
     {
         $removeTotalsCalculator = new RemoveTotalsCalculator();
 
@@ -117,7 +107,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return SubtotalTotalsCalculator
      */
-    public function getSubtotalTotalsCalculator()
+    public function createSubtotalTotalsCalculator()
     {
         $subtotalTotalsCalculator = new SubtotalTotalsCalculator();
 
@@ -127,7 +117,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ItemTotalPriceCalculator
      */
-    public function getItemTotalCalculator()
+    public function createItemTotalCalculator()
     {
         $itemTotalPriceCalculator = new ItemTotalPriceCalculator();
 
@@ -137,7 +127,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return SubtotalWithoutItemExpensesTotalsCalculator
      */
-    public function getSubtotalWithoutItemExpensesTotalsCalculator()
+    public function createSubtotalWithoutItemExpensesTotalsCalculator()
     {
         $subtotalWithoutItemExpensesTotalsCalculator = new SubtotalWithoutItemExpensesTotalsCalculator();
 
@@ -147,7 +137,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return TaxTotalsCalculator
      */
-    public function getTaxTotalsCalculator()
+    public function createTaxTotalsCalculator()
     {
         return new TaxTotalsCalculator(
             $this->createPriceCalculationHelper()
@@ -167,7 +157,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ExpenseTotalsCalculator
      */
-    protected function createExpenseTotalsCalculator()
+    public function createExpenseTotalsCalculator()
     {
         $expenseTotalsCalculator = new ExpenseTotalsCalculator();
 

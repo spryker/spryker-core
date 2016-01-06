@@ -21,7 +21,7 @@ class ProductOptionExporterBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ExportProcessorInterface
      */
-    public function getProcessorModel()
+    public function createProcessorModel()
     {
         return new ExportProcessor(
             $this->getProvidedDependency(ProductOptionExporterDependencyProvider::FACADE_PRODUCT_OPTION),

@@ -34,7 +34,7 @@ class UrlFacade extends AbstractFacade
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
     {
-        $urlManager = $this->getFactory()->getUrlManager();
+        $urlManager = $this->getFactory()->createUrlManager();
         $pageUrl = $urlManager->createUrl($url, $locale, $resourceType, $idResource);
 
         return $urlManager->convertUrlEntityToTransfer($pageUrl);
@@ -52,7 +52,7 @@ class UrlFacade extends AbstractFacade
      */
     public function createUrlForCurrentLocale($url, $resourceType, $idResource)
     {
-        $urlManager = $this->getFactory()->getUrlManager();
+        $urlManager = $this->getFactory()->createUrlManager();
         $url = $urlManager->createUrlForCurrentLocale($url, $resourceType, $idResource);
 
         return $urlManager->convertUrlEntityToTransfer($url);
@@ -65,7 +65,7 @@ class UrlFacade extends AbstractFacade
      */
     public function saveUrl(UrlTransfer $urlTransfer)
     {
-        $urlManager = $this->getFactory()->getUrlManager();
+        $urlManager = $this->getFactory()->createUrlManager();
 
         return $urlManager->saveUrl($urlTransfer);
     }
@@ -77,7 +77,7 @@ class UrlFacade extends AbstractFacade
      */
     public function hasUrl($url)
     {
-        $urlManager = $this->getFactory()->getUrlManager();
+        $urlManager = $this->getFactory()->createUrlManager();
 
         return $urlManager->hasUrl($url);
     }
@@ -89,7 +89,7 @@ class UrlFacade extends AbstractFacade
      */
     public function hasUrlId($idUrl)
     {
-        $urlManager = $this->getFactory()->getUrlManager();
+        $urlManager = $this->getFactory()->createUrlManager();
 
         return $urlManager->hasUrlId($idUrl);
     }
@@ -103,7 +103,7 @@ class UrlFacade extends AbstractFacade
      */
     public function getUrlByPath($urlString)
     {
-        $urlManager = $this->getFactory()->getUrlManager();
+        $urlManager = $this->getFactory()->createUrlManager();
         $urlEntity = $urlManager->getUrlByPath($urlString);
 
         return $urlManager->convertUrlEntityToTransfer($urlEntity);
@@ -118,7 +118,7 @@ class UrlFacade extends AbstractFacade
      */
     public function getUrlById($idUrl)
     {
-        $urlManager = $this->getFactory()->getUrlManager();
+        $urlManager = $this->getFactory()->createUrlManager();
         $urlEntity = $urlManager->getUrlById($idUrl);
 
         return $urlManager->convertUrlEntityToTransfer($urlEntity);
@@ -132,7 +132,7 @@ class UrlFacade extends AbstractFacade
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
     {
-        $urlManager = $this->getFactory()->getUrlManager();
+        $urlManager = $this->getFactory()->createUrlManager();
         $urlEntity = $urlManager->getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $locale->getIdLocale());
 
         if (!$urlEntity) {
@@ -149,7 +149,7 @@ class UrlFacade extends AbstractFacade
      */
     public function touchUrlActive($idUrl)
     {
-        $this->getFactory()->getUrlManager()->touchUrlActive($idUrl);
+        $this->getFactory()->createUrlManager()->touchUrlActive($idUrl);
     }
 
     /**
@@ -159,7 +159,7 @@ class UrlFacade extends AbstractFacade
      */
     public function touchUrlDeleted($idUrl)
     {
-        $this->getFactory()->getUrlManager()->touchUrlDeleted($idUrl);
+        $this->getFactory()->createUrlManager()->touchUrlDeleted($idUrl);
     }
 
     /**
@@ -174,7 +174,7 @@ class UrlFacade extends AbstractFacade
      */
     public function createRedirect($toUrl, $status = 303)
     {
-        $redirectManager = $this->getFactory()->getRedirectManager();
+        $redirectManager = $this->getFactory()->createRedirectManager();
         $redirect = $redirectManager->createRedirect($toUrl, $status);
 
         return $redirectManager->convertRedirectEntityToTransfer($redirect);
@@ -188,7 +188,7 @@ class UrlFacade extends AbstractFacade
      */
     public function createRedirectAndTouch($toUrl, $status = 303)
     {
-        $redirectManager = $this->getFactory()->getRedirectManager();
+        $redirectManager = $this->getFactory()->createRedirectManager();
         $redirectTransfer = $redirectManager->createRedirectAndTouch($toUrl, $status);
 
         return $redirectTransfer;
@@ -206,7 +206,7 @@ class UrlFacade extends AbstractFacade
      */
     public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect)
     {
-        $redirectManager = $this->getFactory()->getRedirectManager();
+        $redirectManager = $this->getFactory()->createRedirectManager();
 
         return $redirectManager->createRedirectUrl($url, $locale, $idUrlRedirect);
     }
@@ -220,7 +220,7 @@ class UrlFacade extends AbstractFacade
      */
     public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect)
     {
-        $redirectManager = $this->getFactory()->getRedirectManager();
+        $redirectManager = $this->getFactory()->createRedirectManager();
 
         return $redirectManager->saveRedirectUrlAndTouch($url, $locale, $idUrlRedirect);
     }
@@ -232,7 +232,7 @@ class UrlFacade extends AbstractFacade
      */
     public function saveRedirect(RedirectTransfer $redirect)
     {
-        $redirectManager = $this->getFactory()->getRedirectManager();
+        $redirectManager = $this->getFactory()->createRedirectManager();
 
         return $redirectManager->saveRedirect($redirect);
     }
@@ -244,7 +244,7 @@ class UrlFacade extends AbstractFacade
      */
     public function touchRedirectActive(RedirectTransfer $redirect)
     {
-        $redirectManager = $this->getFactory()->getRedirectManager();
+        $redirectManager = $this->getFactory()->createRedirectManager();
 
         $redirectManager->touchRedirectActive($redirect);
     }
@@ -256,7 +256,7 @@ class UrlFacade extends AbstractFacade
      */
     public function saveUrlAndTouch(UrlTransfer $urlTransfer)
     {
-        $urlManager = $this->getFactory()->getUrlManager();
+        $urlManager = $this->getFactory()->createUrlManager();
 
         return $urlManager->saveUrlAndTouch($urlTransfer);
     }
@@ -268,7 +268,7 @@ class UrlFacade extends AbstractFacade
      */
     public function deleteUrl(UrlTransfer $urlTransfer)
     {
-        $urlManager = $this->getFactory()->getUrlManager();
+        $urlManager = $this->getFactory()->createUrlManager();
 
         $urlManager->deleteUrl($urlTransfer);
     }
@@ -280,7 +280,7 @@ class UrlFacade extends AbstractFacade
      */
     public function saveRedirectAndTouch(RedirectTransfer $redirect)
     {
-        $redirectManager = $this->getFactory()->getRedirectManager();
+        $redirectManager = $this->getFactory()->createRedirectManager();
 
         return $redirectManager->saveRedirectAndTouch($redirect);
     }
@@ -293,7 +293,7 @@ class UrlFacade extends AbstractFacade
      */
     public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
     {
-        $urlManager = $this->getFactory()->getUrlManager();
+        $urlManager = $this->getFactory()->createUrlManager();
 
         return $urlManager->getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
     }

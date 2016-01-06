@@ -37,7 +37,7 @@ class InstallerFacade extends AbstractFacade
      */
     public function getGlossaryInstaller()
     {
-        return $this->getFactory()->getGlossaryInstaller();
+        return $this->getFactory()->createGlossaryInstaller();
     }
 
 }

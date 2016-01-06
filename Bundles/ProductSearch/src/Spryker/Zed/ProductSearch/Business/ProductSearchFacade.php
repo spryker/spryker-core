@@ -25,7 +25,7 @@ class ProductSearchFacade extends AbstractFacade
     public function enrichProductsWithSearchAttributes(array $productsRaw, array $processedProducts)
     {
         return $this->getFactory()
-            ->getProductAttributesTransformer()
+            ->createProductAttributesTransformer()
             ->buildProductAttributes($productsRaw, $processedProducts);
     }
 
@@ -39,7 +39,7 @@ class ProductSearchFacade extends AbstractFacade
     public function createSearchProducts(array $productsRaw, array $processedProducts, LocaleTransfer $locale)
     {
         return $this->getFactory()
-            ->getProductSearchProcessor()
+            ->createProductSearchProcessor()
             ->buildProducts($productsRaw, $processedProducts, $locale);
     }
 
@@ -50,7 +50,7 @@ class ProductSearchFacade extends AbstractFacade
      */
     public function install(MessengerInterface $messenger)
     {
-        $this->getFactory()->getInstaller($messenger)->install();
+        $this->getFactory()->createInstaller($messenger)->install();
     }
 
 }

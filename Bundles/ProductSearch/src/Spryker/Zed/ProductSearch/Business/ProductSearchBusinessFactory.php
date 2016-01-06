@@ -47,7 +47,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ProductAttributesTransformerInterface
      */
-    public function getProductAttributesTransformer()
+    public function createProductAttributesTransformer()
     {
         return new ProductAttributesTransformer(
             $this->createProductSearchQueryContainer(),
@@ -59,7 +59,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ProductSearchProcessorInterface
      */
-    public function getProductSearchProcessor()
+    public function createProductSearchProcessor()
     {
         return new ProductSearchProcessor(
             $this->createKeyBuilder(),
@@ -72,7 +72,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
      *
      * @return InstallProductSearch
      */
-    public function getInstaller(MessengerInterface $messenger)
+    public function createInstaller(MessengerInterface $messenger)
     {
         $collectorFacade = $this->getCollectorFacade();
 

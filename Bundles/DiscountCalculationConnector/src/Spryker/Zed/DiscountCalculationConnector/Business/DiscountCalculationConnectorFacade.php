@@ -27,7 +27,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
         CalculableInterface $discountableContainer,
         \ArrayObject $discountableContainers
     ) {
-        $calculator = $this->getFactory()->getDiscountTotalsCalculator();
+        $calculator = $this->getFactory()->createDiscountTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $discountableContainer, $discountableContainers);
     }
 
@@ -43,7 +43,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
         CalculableInterface $container,
         \ArrayObject $items
     ) {
-        $calculator = $this->getFactory()->getGrandTotalWithDiscountsTotalsCalculator();
+        $calculator = $this->getFactory()->createGrandTotalWithDiscountsTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $container, $items);
     }
 
@@ -54,7 +54,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
      */
     public function recalculateRemoveAllCalculatedDiscounts(CalculableInterface $container)
     {
-        $calculator = $this->getFactory()->getRemoveAllCalculatedDiscountsCalculator();
+        $calculator = $this->getFactory()->createRemoveAllCalculatedDiscountsCalculator();
         $calculator->recalculate($container);
     }
 

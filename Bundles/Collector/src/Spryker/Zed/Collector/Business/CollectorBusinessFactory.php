@@ -157,7 +157,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return Collector
      */
-    public function getYvesSearchExporter()
+    public function createYvesSearchExporter()
     {
         $config = $this->getConfig();
         $searchWriter = $this->createSearchWriter();
@@ -174,7 +174,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return Collector
      */
-    public function getYvesSearchUpdateExporter()
+    public function createYvesSearchUpdateExporter()
     {
         return new Collector(
             $this->createTouchQueryContainer(),

@@ -54,7 +54,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @return Voucher
      */
-    public function getDecisionRuleVoucher()
+    public function createDecisionRuleVoucher()
     {
         return new Voucher($this->getQueryContainer());
     }
@@ -62,7 +62,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @return MinimumCartSubtotal
      */
-    public function getDecisionRuleMinimumCartSubtotal()
+    public function createDecisionRuleMinimumCartSubtotal()
     {
         return new MinimumCartSubtotal();
     }

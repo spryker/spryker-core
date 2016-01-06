@@ -27,7 +27,7 @@ class OrderItemSplitController extends AbstractController
      */
     public function splitAction(Request $request)
     {
-        $orderItemForm = $orderItemSplitForm = $this->getFactory()->getOrderItemSplitForm();
+        $orderItemForm = $orderItemSplitForm = $this->getFactory()->createOrderItemSplitForm();
         $orderItemForm->handleRequest($request);
         $data = $orderItemForm->getData();
 

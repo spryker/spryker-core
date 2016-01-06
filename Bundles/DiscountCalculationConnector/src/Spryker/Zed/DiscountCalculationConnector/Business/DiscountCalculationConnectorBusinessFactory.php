@@ -23,7 +23,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     /**
      * @return DiscountTotalsCalculator
      */
-    public function getDiscountTotalsCalculator()
+    public function createDiscountTotalsCalculator()
     {
         return new DiscountTotalsCalculator();
     }
@@ -31,10 +31,10 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     /**
      * @return GrandTotalWithDiscountsTotalsCalculator
      */
-    public function getGrandTotalWithDiscountsTotalsCalculator()
+    public function createGrandTotalWithDiscountsTotalsCalculator()
     {
         $calculationFacade = $this->getCalculationFacade();
-        $discountTotalsCalculator = $this->getDiscountTotalsCalculator();
+        $discountTotalsCalculator = $this->createDiscountTotalsCalculator();
 
         return new GrandTotalWithDiscountsTotalsCalculator(
             $calculationFacade,
@@ -45,7 +45,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     /**
      * @return RemoveAllCalculatedDiscountsCalculator
      */
-    public function getRemoveAllCalculatedDiscountsCalculator()
+    public function createRemoveAllCalculatedDiscountsCalculator()
     {
         return new RemoveAllCalculatedDiscountsCalculator();
     }

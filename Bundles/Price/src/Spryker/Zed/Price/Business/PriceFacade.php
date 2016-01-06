@@ -22,7 +22,7 @@ class PriceFacade extends AbstractFacade
      */
     public function getPriceTypeValues()
     {
-        return $this->getFactory()->getReaderModel()->getPriceTypes();
+        return $this->getFactory()->createReaderModel()->getPriceTypes();
     }
 
     /**
@@ -33,7 +33,7 @@ class PriceFacade extends AbstractFacade
      */
     public function getPriceBySku($sku, $priceType = null)
     {
-        return $this->getFactory()->getReaderModel()->getPriceBySku($sku, $priceType);
+        return $this->getFactory()->createReaderModel()->getPriceBySku($sku, $priceType);
     }
 
     /**
@@ -43,7 +43,7 @@ class PriceFacade extends AbstractFacade
      */
     public function createPriceType($name)
     {
-        return $this->getFactory()->getWriterModel()->createPriceType($name);
+        return $this->getFactory()->createWriterModel()->createPriceType($name);
     }
 
     /**
@@ -53,7 +53,7 @@ class PriceFacade extends AbstractFacade
      */
     public function setPriceForProduct(PriceProductTransfer $transferPriceProduct)
     {
-        return $this->getFactory()->getWriterModel()->setPriceForProduct($transferPriceProduct);
+        return $this->getFactory()->createWriterModel()->setPriceForProduct($transferPriceProduct);
     }
 
     /**
@@ -63,7 +63,7 @@ class PriceFacade extends AbstractFacade
      */
     public function install(MessengerInterface $messenger)
     {
-        $this->getFactory()->getInstaller($messenger)->install();
+        $this->getFactory()->createInstaller($messenger)->install();
     }
 
     /**
@@ -74,7 +74,7 @@ class PriceFacade extends AbstractFacade
      */
     public function hasValidPrice($sku, $priceType = null)
     {
-        return $this->getFactory()->getReaderModel()->hasValidPrice($sku, $priceType);
+        return $this->getFactory()->createReaderModel()->hasValidPrice($sku, $priceType);
     }
 
     /**
@@ -84,7 +84,7 @@ class PriceFacade extends AbstractFacade
      */
     public function createPriceForProduct(PriceProductTransfer $transferPriceProduct)
     {
-        $this->getFactory()->getWriterModel()->createPriceForProduct($transferPriceProduct);
+        $this->getFactory()->createWriterModel()->createPriceForProduct($transferPriceProduct);
     }
 
     /**
@@ -103,7 +103,7 @@ class PriceFacade extends AbstractFacade
      */
     public function getIdPriceProduct($sku, $priceType)
     {
-        return $this->getFactory()->getReaderModel()->getProductPriceIdBySku($sku, $priceType);
+        return $this->getFactory()->createReaderModel()->getProductPriceIdBySku($sku, $priceType);
     }
 
 }

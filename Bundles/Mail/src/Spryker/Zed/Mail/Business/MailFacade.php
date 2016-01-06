@@ -23,7 +23,7 @@ class MailFacade extends AbstractFacade
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
-        return $this->getFactory()->getMailSender()->sendMail($mailTransfer);
+        return $this->getFactory()->createMailSender()->sendMail($mailTransfer);
     }
 
     /**
@@ -33,7 +33,7 @@ class MailFacade extends AbstractFacade
      */
     public function isMailSent(SendMailResponsesTransfer $mailResponses)
     {
-        return $this->getFactory()->getMailSender()->isMailSent($mailResponses);
+        return $this->getFactory()->createMailSender()->isMailSent($mailResponses);
     }
 
 }

@@ -27,7 +27,7 @@ class CalculationFacade extends AbstractFacade
     {
         $calculatorStack = $this->getFactory()->getConfig()->getCalculatorStack();
 
-        return $this->getFactory()->getStackExecutor()->recalculate($calculatorStack, $calculableContainer);
+        return $this->getFactory()->createStackExecutor()->recalculate($calculatorStack, $calculableContainer);
     }
 
     /**
@@ -39,7 +39,7 @@ class CalculationFacade extends AbstractFacade
     {
         $calculatorStack = $this->getFactory()->getConfig()->getSoftCalculatorStack();
 
-        return $this->getFactory()->getStackExecutor()->recalculate($calculatorStack, $calculableContainer);
+        return $this->getFactory()->createStackExecutor()->recalculate($calculatorStack, $calculableContainer);
     }
 
     /**
@@ -54,7 +54,7 @@ class CalculationFacade extends AbstractFacade
     ) {
         $calculatorStack = $this->getFactory()->getConfig()->getCalculatorStack();
 
-        return $this->getFactory()->getStackExecutor()->recalculateTotals(
+        return $this->getFactory()->createStackExecutor()->recalculateTotals(
             $calculatorStack,
             $calculableContainer,
             $calculableItems
@@ -69,7 +69,7 @@ class CalculationFacade extends AbstractFacade
      */
     public function recalculateExpensePriceToPay(CalculableInterface $calculableContainer)
     {
-        $calculator = $this->getFactory()->getExpensePriceToPayCalculator();
+        $calculator = $this->getFactory()->createExpensePriceToPayCalculator();
         $calculator->recalculate($calculableContainer);
     }
 
@@ -85,7 +85,7 @@ class CalculationFacade extends AbstractFacade
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
-        $calculator = $this->getFactory()->getExpenseTotalsCalculator();
+        $calculator = $this->getFactory()->createExpenseTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
@@ -101,7 +101,7 @@ class CalculationFacade extends AbstractFacade
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
-        $calculator = $this->getFactory()->getGrandTotalsCalculator();
+        $calculator = $this->getFactory()->createGrandTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
@@ -112,7 +112,7 @@ class CalculationFacade extends AbstractFacade
      */
     public function recalculateItemPriceToPay(CalculableInterface $calculableContainer)
     {
-        $calculator = $this->getFactory()->getItemPriceToPayCalculator();
+        $calculator = $this->getFactory()->createItemPriceToPayCalculator();
         $calculator->recalculate($calculableContainer);
     }
 
@@ -123,7 +123,7 @@ class CalculationFacade extends AbstractFacade
      */
     public function recalculateOptionPriceToPay(CalculableInterface $calculableContainer)
     {
-        $calculator = $this->getFactory()->getOptionPriceToPayCalculator();
+        $calculator = $this->getFactory()->createOptionPriceToPayCalculator();
         $calculator->recalculate($calculableContainer);
     }
 
@@ -134,7 +134,7 @@ class CalculationFacade extends AbstractFacade
      */
     public function recalculateRemoveAllExpenses(CalculableInterface $calculableContainer)
     {
-        $calculator = $this->getFactory()->getRemoveAllExpensesCalculator();
+        $calculator = $this->getFactory()->createRemoveAllExpensesCalculator();
         $calculator->recalculate($calculableContainer);
     }
 
@@ -145,7 +145,7 @@ class CalculationFacade extends AbstractFacade
      */
     public function recalculateRemoveTotals(CalculableInterface $calculableContainer)
     {
-        $calculator = $this->getFactory()->getRemoveTotalsCalculator();
+        $calculator = $this->getFactory()->createRemoveTotalsCalculator();
         $calculator->recalculate($calculableContainer);
     }
 
@@ -156,7 +156,7 @@ class CalculationFacade extends AbstractFacade
      */
     public function calculateItemTotalPrice(CalculableInterface $calculableContainer)
     {
-        $calculator = $this->getFactory()->getItemTotalCalculator();
+        $calculator = $this->getFactory()->createItemTotalCalculator();
         $calculator->recalculate($calculableContainer);
     }
 
@@ -172,7 +172,7 @@ class CalculationFacade extends AbstractFacade
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
-        $calculator = $this->getFactory()->getSubtotalTotalsCalculator();
+        $calculator = $this->getFactory()->createSubtotalTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
@@ -188,7 +188,7 @@ class CalculationFacade extends AbstractFacade
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
-        $calculator = $this->getFactory()->getSubtotalWithoutItemExpensesTotalsCalculator();
+        $calculator = $this->getFactory()->createSubtotalWithoutItemExpensesTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
@@ -204,7 +204,7 @@ class CalculationFacade extends AbstractFacade
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
-        $calculator = $this->getFactory()->getTaxTotalsCalculator();
+        $calculator = $this->getFactory()->createTaxTotalsCalculator();
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 

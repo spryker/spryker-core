@@ -19,7 +19,7 @@ class SalesCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return SalesOrderSaverInterface
      */
-    public function getSalesOrderSaver()
+    public function createSalesOrderSaver()
     {
         return new SalesOrderSaver(
             $this->getProvidedDependency(SalesCheckoutConnectorDependencyProvider::FACADE_SALES)

@@ -25,7 +25,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return TouchRecordInterface
      */
-    public function getTouchRecordModel()
+    public function createTouchRecordModel()
     {
         return new TouchRecord(
             $this->getQueryContainer(),
@@ -36,7 +36,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return TouchInterface
      */
-    public function getTouchModel()
+    public function createTouchModel()
     {
         return new Touch(
             $this->getQueryContainer(),

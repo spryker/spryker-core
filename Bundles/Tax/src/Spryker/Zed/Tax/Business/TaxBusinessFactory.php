@@ -25,7 +25,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     /**
      * @return TaxReaderInterface
      */
-    public function getReaderModel()
+    public function createReaderModel()
     {
         return new TaxReader(
             $this->getQueryContainer()
@@ -35,7 +35,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     /**
      * @return TaxWriterInterface
      */
-    public function getWriterModel()
+    public function createWriterModel()
     {
         return new TaxWriter(
             $this->getQueryContainer(),

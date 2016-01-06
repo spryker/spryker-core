@@ -22,7 +22,7 @@ class UserFacade extends AbstractFacade
     public function install()
     {
         $this->getFactory()
-            ->getInstallerModel()
+            ->createInstallerModel()
             ->install();
     }
 
@@ -34,7 +34,7 @@ class UserFacade extends AbstractFacade
     public function hasUserByUsername($username)
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->hasUserByUsername($username);
     }
 
@@ -46,7 +46,7 @@ class UserFacade extends AbstractFacade
     public function getUserByUsername($username)
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->getUserByUsername($username);
     }
 
@@ -58,7 +58,7 @@ class UserFacade extends AbstractFacade
     public function getUserById($idUser)
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->getUserById($idUser);
     }
 
@@ -73,7 +73,7 @@ class UserFacade extends AbstractFacade
     public function addUser($firstName, $lastName, $username, $password)
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->addUser($firstName, $lastName, $username, $password);
     }
 
@@ -87,7 +87,7 @@ class UserFacade extends AbstractFacade
     public function updateUser(UserTransfer $user)
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->save($user);
     }
 
@@ -99,7 +99,7 @@ class UserFacade extends AbstractFacade
     public function setCurrentUser(UserTransfer $user)
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->setCurrentUser($user);
     }
 
@@ -109,7 +109,7 @@ class UserFacade extends AbstractFacade
     public function getCurrentUser()
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->getCurrentUser();
     }
 
@@ -119,7 +119,7 @@ class UserFacade extends AbstractFacade
     public function hasCurrentUser()
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->hasCurrentUser();
     }
 
@@ -132,7 +132,7 @@ class UserFacade extends AbstractFacade
     public function isValidPassword($password, $hash)
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->validatePassword($password, $hash);
     }
 
@@ -144,7 +144,7 @@ class UserFacade extends AbstractFacade
     public function isSystemUser(UserTransfer $user)
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->isSystemUser($user);
     }
 
@@ -154,7 +154,7 @@ class UserFacade extends AbstractFacade
     public function getSystemUsers()
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->getSystemUsers();
     }
 
@@ -164,7 +164,7 @@ class UserFacade extends AbstractFacade
     public function getUsers()
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->getUsers();
     }
 
@@ -176,7 +176,7 @@ class UserFacade extends AbstractFacade
     public function removeUser($idUser)
     {
         return $this->getFactory()
-            ->getUserModel()
+            ->createUserModel()
             ->removeUser($idUser);
     }
 
@@ -187,7 +187,7 @@ class UserFacade extends AbstractFacade
      */
     public function activateUser($idUser)
     {
-        return $this->getFactory()->getUserModel()->activateUser($idUser);
+        return $this->getFactory()->createUserModel()->activateUser($idUser);
     }
 
     /**
@@ -197,7 +197,7 @@ class UserFacade extends AbstractFacade
      */
     public function deactivateUser($idUser)
     {
-        return $this->getFactory()->getUserModel()->deactivateUser($idUser);
+        return $this->getFactory()->createUserModel()->deactivateUser($idUser);
     }
 
 }

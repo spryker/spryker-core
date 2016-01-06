@@ -23,7 +23,7 @@ class StockFacade extends AbstractFacade
      */
     public function isNeverOutOfStock($sku)
     {
-        return $this->getFactory()->getReaderModel()->isNeverOutOfStock($sku);
+        return $this->getFactory()->createReaderModel()->isNeverOutOfStock($sku);
     }
 
     /**
@@ -33,7 +33,7 @@ class StockFacade extends AbstractFacade
      */
     public function calculateStockForProduct($sku)
     {
-        return $this->getFactory()->getCalculatorModel()->calculateStockForProduct($sku);
+        return $this->getFactory()->createCalculatorModel()->calculateStockForProduct($sku);
     }
 
     /**
@@ -43,7 +43,7 @@ class StockFacade extends AbstractFacade
      */
     public function createStockType(TypeTransfer $stockTypeTransfer)
     {
-        return $this->getFactory()->getWriterModel()->createStockType($stockTypeTransfer);
+        return $this->getFactory()->createWriterModel()->createStockType($stockTypeTransfer);
     }
 
     /**
@@ -53,7 +53,7 @@ class StockFacade extends AbstractFacade
      */
     public function updateStockType(TypeTransfer $stockTypeTransfer)
     {
-        return $this->getFactory()->getWriterModel()->updateStockType($stockTypeTransfer);
+        return $this->getFactory()->createWriterModel()->updateStockType($stockTypeTransfer);
     }
 
     /**
@@ -63,7 +63,7 @@ class StockFacade extends AbstractFacade
      */
     public function createStockProduct(StockProductTransfer $transferStockProduct)
     {
-        return $this->getFactory()->getWriterModel()->createStockProduct($transferStockProduct);
+        return $this->getFactory()->createWriterModel()->createStockProduct($transferStockProduct);
     }
 
     /**
@@ -73,7 +73,7 @@ class StockFacade extends AbstractFacade
      */
     public function updateStockProduct(StockProductTransfer $stockProductTransfer)
     {
-        return $this->getFactory()->getWriterModel()->updateStockProduct($stockProductTransfer);
+        return $this->getFactory()->createWriterModel()->updateStockProduct($stockProductTransfer);
     }
 
     /**
@@ -85,7 +85,7 @@ class StockFacade extends AbstractFacade
      */
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1)
     {
-        $this->getFactory()->getWriterModel()->decrementStock($sku, $stockType, $decrementBy);
+        $this->getFactory()->createWriterModel()->decrementStock($sku, $stockType, $decrementBy);
     }
 
     /**
@@ -97,7 +97,7 @@ class StockFacade extends AbstractFacade
      */
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1)
     {
-        $this->getFactory()->getWriterModel()->incrementStock($sku, $stockType, $incrementBy);
+        $this->getFactory()->createWriterModel()->incrementStock($sku, $stockType, $incrementBy);
     }
 
     /**
@@ -108,7 +108,7 @@ class StockFacade extends AbstractFacade
      */
     public function hasStockProduct($sku, $stockType)
     {
-        return $this->getFactory()->getReaderModel()->hasStockProduct($sku, $stockType);
+        return $this->getFactory()->createReaderModel()->hasStockProduct($sku, $stockType);
     }
 
     /**
@@ -119,7 +119,7 @@ class StockFacade extends AbstractFacade
      */
     public function getIdStockProduct($sku, $stockType)
     {
-        return $this->getFactory()->getReaderModel()->getIdStockProduct($sku, $stockType);
+        return $this->getFactory()->createReaderModel()->getIdStockProduct($sku, $stockType);
     }
 
 }

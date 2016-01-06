@@ -28,7 +28,7 @@ class TaxFacade extends AbstractFacade
      */
     public function getTaxRates()
     {
-        return $this->getFactory()->getReaderModel()->getTaxRates();
+        return $this->getFactory()->createReaderModel()->getTaxRates();
     }
 
     /**
@@ -41,7 +41,7 @@ class TaxFacade extends AbstractFacade
      */
     public function getTaxRate($id)
     {
-        return $this->getFactory()->getReaderModel()->getTaxRate($id);
+        return $this->getFactory()->createReaderModel()->getTaxRate($id);
     }
 
     /**
@@ -53,7 +53,7 @@ class TaxFacade extends AbstractFacade
      */
     public function taxRateExists($id)
     {
-        return $this->getFactory()->getReaderModel()->taxRateExists($id);
+        return $this->getFactory()->createReaderModel()->taxRateExists($id);
     }
 
     /**
@@ -63,7 +63,7 @@ class TaxFacade extends AbstractFacade
      */
     public function getTaxSets()
     {
-        return $this->getFactory()->getReaderModel()->getTaxSets();
+        return $this->getFactory()->createReaderModel()->getTaxSets();
     }
 
     /**
@@ -76,7 +76,7 @@ class TaxFacade extends AbstractFacade
      */
     public function getTaxSet($id)
     {
-        return $this->getFactory()->getReaderModel()->getTaxSet($id);
+        return $this->getFactory()->createReaderModel()->getTaxSet($id);
     }
 
     /**
@@ -88,7 +88,7 @@ class TaxFacade extends AbstractFacade
      */
     public function taxSetExists($id)
     {
-        return $this->getFactory()->getReaderModel()->taxSetExists($id);
+        return $this->getFactory()->createReaderModel()->taxSetExists($id);
     }
 
     /**
@@ -100,7 +100,7 @@ class TaxFacade extends AbstractFacade
      */
     public function createTaxRate(TaxRateTransfer $taxRate)
     {
-        return $this->getFactory()->getWriterModel()->createTaxRate($taxRate);
+        return $this->getFactory()->createWriterModel()->createTaxRate($taxRate);
     }
 
     /**
@@ -113,7 +113,7 @@ class TaxFacade extends AbstractFacade
      */
     public function updateTaxRate(TaxRateTransfer $taxRateTransfer)
     {
-        return $this->getFactory()->getWriterModel()->updateTaxRate($taxRateTransfer);
+        return $this->getFactory()->createWriterModel()->updateTaxRate($taxRateTransfer);
     }
 
     /**
@@ -127,7 +127,7 @@ class TaxFacade extends AbstractFacade
      */
     public function createTaxSet(TaxSetTransfer $taxSet)
     {
-        return $this->getFactory()->getWriterModel()->createTaxSet($taxSet);
+        return $this->getFactory()->createWriterModel()->createTaxSet($taxSet);
     }
 
     /**
@@ -141,7 +141,7 @@ class TaxFacade extends AbstractFacade
      */
     public function updateTaxSet(TaxSetTransfer $taxSetTransfer)
     {
-        return $this->getFactory()->getWriterModel()->updateTaxSet($taxSetTransfer);
+        return $this->getFactory()->createWriterModel()->updateTaxSet($taxSetTransfer);
     }
 
     /**
@@ -155,7 +155,7 @@ class TaxFacade extends AbstractFacade
      */
     public function addTaxRateToTaxSet($taxSetId, TaxRateTransfer $taxRateTransfer)
     {
-        return $this->getFactory()->getWriterModel()->addTaxRateToTaxSet($taxSetId, $taxRateTransfer);
+        return $this->getFactory()->createWriterModel()->addTaxRateToTaxSet($taxSetId, $taxRateTransfer);
     }
 
     /**
@@ -170,7 +170,7 @@ class TaxFacade extends AbstractFacade
      */
     public function removeTaxRateFromTaxSet($taxSetId, $taxRateId)
     {
-        return $this->getFactory()->getWriterModel()->removeTaxRateFromTaxSet($taxSetId, $taxRateId);
+        return $this->getFactory()->createWriterModel()->removeTaxRateFromTaxSet($taxSetId, $taxRateId);
     }
 
     /**
@@ -180,7 +180,7 @@ class TaxFacade extends AbstractFacade
      */
     public function deleteTaxRate($id)
     {
-        return $this->getFactory()->getWriterModel()->deleteTaxRate($id);
+        return $this->getFactory()->createWriterModel()->deleteTaxRate($id);
     }
 
     /**
@@ -190,7 +190,7 @@ class TaxFacade extends AbstractFacade
      */
     public function deleteTaxSet($id)
     {
-        return $this->getFactory()->getWriterModel()->deleteTaxSet($id);
+        return $this->getFactory()->createWriterModel()->deleteTaxSet($id);
     }
 
 }
