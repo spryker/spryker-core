@@ -7,10 +7,10 @@
 namespace Spryker\Zed\Application\Business\Model\Twig;
 
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButton;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButton;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButton;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButton;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\StaticPath;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Panel;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Modal;
@@ -51,10 +51,10 @@ class ZedExtension extends \Twig_Extension
             new Modal(),
             new Panel(),
             new StaticPath(),
-            new BackActionButton(),
-            new CreateActionButton(),
-            new ViewActionButton(),
-            new EditActionButton(),
+            new BackActionButtonFunction(),
+            new CreateActionButtonFunction(),
+            new ViewActionButtonFunction(),
+            new EditActionButtonFunction(),
             new UrlFunction(),
         ];
 

@@ -4,7 +4,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 
 use Spryker\Zed\Library\Twig\TwigFunction;
 
-abstract class AbstractActionButton extends TwigFunction
+abstract class AbstractActionButtonFunction extends TwigFunction
 {
 
     const PARAM_ID = 'id';
