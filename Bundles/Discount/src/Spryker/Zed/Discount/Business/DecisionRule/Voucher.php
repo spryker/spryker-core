@@ -86,7 +86,7 @@ class Voucher
      */
     protected function isValidNumberOfUses(SpyDiscountVoucher $discountVoucherEntity)
     {
-        if ($discountVoucherEntity->getMaxNumberOfUses() !== null &&
+        if ($discountVoucherEntity->getMaxNumberOfUses() > 0 &&
             $discountVoucherEntity->getNumberOfUses() >= $discountVoucherEntity->getMaxNumberOfUses()) {
             return false;
         }
