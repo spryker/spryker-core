@@ -8,7 +8,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
 use Spryker\Zed\Library\Twig\TwigFunction;
 
-class StaticPath extends TwigFunction
+class AssetsPathFunction extends TwigFunction
 {
 
     /**
@@ -16,7 +16,7 @@ class StaticPath extends TwigFunction
      */
     protected function getFunctionName()
     {
-        return 'staticPath';
+        return 'assetsPath';
     }
 
     /**
@@ -25,9 +25,9 @@ class StaticPath extends TwigFunction
     protected function getFunction()
     {
         return function ($path) {
-            ltrim($path, '/');
+            $path = ltrim($path, '/');
 
-            return '/bundles/' . $path;
+            return '/assets/' . $path;
         };
     }
 

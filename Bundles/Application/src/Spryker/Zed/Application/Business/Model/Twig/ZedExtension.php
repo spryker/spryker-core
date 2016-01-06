@@ -11,7 +11,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\StaticPath;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\PanelFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ModalFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\ListGroupFunction;
@@ -50,7 +50,7 @@ class ZedExtension extends \Twig_Extension
             new ListGroupFunction(),
             new ModalFunction(),
             new PanelFunction(),
-            new StaticPath(),
+            new AssetsPathFunction(),
             new BackActionButtonFunction(),
             new CreateActionButtonFunction(),
             new ViewActionButtonFunction(),
