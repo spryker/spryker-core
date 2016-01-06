@@ -12,7 +12,6 @@ use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 
 /**
  * @method DiscountFacade getFacade()
