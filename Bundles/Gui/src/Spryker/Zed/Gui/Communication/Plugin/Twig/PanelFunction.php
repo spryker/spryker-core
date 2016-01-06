@@ -8,7 +8,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
 use Spryker\Zed\Library\Twig\TwigFunction;
 
-class Panel extends TwigFunction
+class PanelFunction extends TwigFunction
 {
 
     /**
