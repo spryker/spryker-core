@@ -7,13 +7,16 @@ namespace Spryker\Zed\Acl\Communication\Table;
 
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RulesetTable extends AbstractTable
 {
 
-    const REMOVE_ACL_RULESET_URL = '/acl/ruleset/delete?id-rule=%d&id-role=%d';
+    const PARAM_ID_RULE = 'id-rule';
+    const PARAM_ID_ROLE = 'id-role';
+    const REMOVE_ACL_RULESET_URL = '/acl/ruleset/delete';
     const EMPTY_HEADER_NAME = 'empty';
 
     /**
@@ -100,15 +103,15 @@ class RulesetTable extends AbstractTable
      */
     public function createTableActions(array $ruleset)
     {
-        $actionButtons = sprintf(
-            '<a class="btn btn-xs btn-white" href="' . self::REMOVE_ACL_RULESET_URL . '">
-                  Remove
-             </a>',
-            $ruleset[SpyAclRuleTableMap::COL_ID_ACL_RULE],
-            $ruleset[SpyAclRuleTableMap::COL_FK_ACL_ROLE]
+        $button = $this->generateRemoveButton(
+            Url::generate(self::REMOVE_ACL_RULESET_URL, [
+                self::PARAM_ID_RULE => $ruleset[SpyAclRuleTableMap::COL_ID_ACL_RULE],
+                self::PARAM_ID_ROLE => $ruleset[SpyAclRuleTableMap::COL_FK_ACL_ROLE],
+            ]),
+            'Remove'
         );
 
-        return $actionButtons;
+        return $button;
     }
 
 }

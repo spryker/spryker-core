@@ -8,6 +8,7 @@ namespace Spryker\Zed\Acl\Communication\Table;
 
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Acl\AclConfig;
@@ -16,8 +17,9 @@ class RoleTable extends AbstractTable
 {
 
     const ACTION = 'Action';
-    const UPDATE_ROLE_URL = '/acl/role/update?id-role=%d';
-    const DELETE_ROLE_URL = '/acl/role/delete?id-role=%d';
+    const PARAM_ID_ROLE = 'id-role';
+    const UPDATE_ROLE_URL = '/acl/role/update';
+    const DELETE_ROLE_URL = '/acl/role/delete';
 
     /**
      * @var AclQueryContainer
@@ -86,26 +88,21 @@ class RoleTable extends AbstractTable
      */
     protected function createTableActions(array $rule)
     {
-        $deleteButton = '';
-        $editButton = sprintf(
-            '<a class="btn btn-xs btn-white" href="' . self::UPDATE_ROLE_URL . '">
-                  Edit
-             </a>
-            ',
-            $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]
+        $buttons = [];
+
+        $buttons[] = $this->generateEditButton(
+            Url::generate(self::UPDATE_ROLE_URL, [self::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]]),
+            'Edit'
         );
 
         if ($rule[SpyAclRoleTableMap::COL_NAME] !== AclConfig::ROOT_ROLE) {
-            $deleteButton = sprintf(
-                '<a class="btn btn-xs btn-white" href="' . self::DELETE_ROLE_URL . '">
-                  Delete
-                 </a>
-                ',
-                $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]
+            $buttons[] = $this->generateRemoveButton(
+                Url::generate(self::DELETE_ROLE_URL, [self::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]]),
+                'Delete'
             );
         }
 
-        return $editButton . $deleteButton;
+        return implode(' ', $buttons);
     }
 
 }

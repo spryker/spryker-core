@@ -8,6 +8,7 @@ namespace Spryker\Zed\Acl\Communication\Table;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;
 use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -101,10 +102,9 @@ class GroupTable extends AbstractTable
      */
     protected function createEditUrl(array $group)
     {
-        return sprintf(
-            '<a href="/acl/group/edit?%s=%d" class="btn btn-xs btn-primary">Edit</a>',
-            self::EDIT_PARAMETER,
-            $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP]
+        return $this->generateEditButton(
+            Url::generate('/acl/group/edit', [self::EDIT_PARAMETER => $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP]]),
+            'Edit'
         );
     }
 
