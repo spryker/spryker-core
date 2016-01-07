@@ -21,6 +21,7 @@ class DiscountsTable extends AbstractTable
     const DECISION_RULE_PLUGIN = 'DecisionRulePlugin';
 
     const PARAM_ID_DISCOUNT = 'id-discount';
+    const URL_DISCOUNT_CART_RULE_EDIT = '/discount/cart-rule/edit';
 
     /**
      * @var SpyDiscountQuery
@@ -83,7 +84,7 @@ class DiscountsTable extends AbstractTable
                 SpyDiscountTableMap::COL_IS_ACTIVE => $item->getIsActive(),
                 self::COL_PERIOD => $item->getValidFrom(self::DATE_FORMAT) . ' - ' . $item->getValidTo(self::DATE_FORMAT),
                 self::COL_DECISION_RULES => implode(', ', $chosenDecisionRules),
-                self::COL_OPTIONS => $this->getRowOptions($item),
+                self::COL_OPTIONS => implode(' ', $this->getRowOptions($item)),
             ];
         }
 
@@ -120,13 +121,19 @@ class DiscountsTable extends AbstractTable
     /**
      * @param SpyDiscount $item
      *
-     * @return string
+     * @return array
      */
     protected function getRowOptions(SpyDiscount $item)
     {
-        $url = Url::generate('/discount/cart-rule/edit', [self::PARAM_ID_DISCOUNT => $item->getIdDiscount()]);
+        $options = [];
+        $options[] = $this->generateEditButton(
+            Url::generate(self::URL_DISCOUNT_CART_RULE_EDIT, [
+                self::PARAM_ID_DISCOUNT => $item->getIdDiscount()
+            ]),
+            'Edit'
+        );
 
-        return '<a class="btn btn-xs btn-info" href="' . $url->buildEscaped() . '">Edit</a>';
+        return $options;
     }
 
 }

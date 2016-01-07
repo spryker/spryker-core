@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\User\Communication\Table;
 
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
@@ -15,10 +16,11 @@ class UsersTable extends AbstractTable
 {
 
     const ACTION = 'Action';
-    const UPDATE_USER_URL = '/user/edit/update?id-user=%d';
-    const DEACTIVATE_USER_URL = '/user/edit/deactivate-user?id-user=%d';
-    const ACTIVATE_USER_URL = '/user/edit/activate-user?id-user=%d';
-    const DELETE_USER_URL = '/user/edit/delete?id-user=%d';
+    const UPDATE_USER_URL = '/user/edit/update';
+    const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
+    const ACTIVATE_USER_URL = '/user/edit/activate-user';
+    const DELETE_USER_URL = '/user/edit/delete';
+    const PARAM_ID_USER = 'id-user';
 
     /**
      * @var UserQueryContainer
@@ -84,7 +86,7 @@ class UsersTable extends AbstractTable
                 SpyUserTableMap::COL_LAST_NAME => $item[SpyUserTableMap::COL_LAST_NAME],
                 SpyUserTableMap::COL_LAST_LOGIN => $item[SpyUserTableMap::COL_LAST_LOGIN],
                 SpyUserTableMap::COL_STATUS => $this->createStatusLabel($item),
-                self::ACTION => $this->createActionButtons($item),
+                self::ACTION => implode(' ', $this->createActionButtons($item)),
             ];
         }
 
@@ -94,31 +96,38 @@ class UsersTable extends AbstractTable
     /**
      * @param array $user
      *
-     * @return string
+     * @return array
      */
     public function createActionButtons(array $user)
     {
-        $actionButtons = sprintf(
-            '<a class="btn btn-xs btn-white" href="' . self::UPDATE_USER_URL . '">
-                 Edit
-            </a>
-            <a class="btn btn-xs btn-white" href="' . self::DEACTIVATE_USER_URL . '">
-                 Deactivate
-            </a>
-            <a class="btn btn-xs btn-white" href="' . self::ACTIVATE_USER_URL . '">
-                 Activate
-            </a>
-            <a class="btn btn-xs btn-white" href="' . self::DELETE_USER_URL . '">
-                 Delete
-            </a>',
+        $urls = [];
 
-            $user[SpyUserTableMap::COL_ID_USER],
-            $user[SpyUserTableMap::COL_ID_USER],
-            $user[SpyUserTableMap::COL_ID_USER],
-            $user[SpyUserTableMap::COL_ID_USER]
+        $urls[] = $this->generateEditButton(
+            Url::generate(self::UPDATE_USER_URL, [
+                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+            ]),
+            'Edit'
+        );
+        $urls[] = $this->generateViewButton(
+            Url::generate(self::DEACTIVATE_USER_URL, [
+                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+            ]),
+            'Deactivate'
+        );
+        $urls[] = $this->generateViewButton(
+            Url::generate(self::ACTIVATE_USER_URL, [
+                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+            ]),
+            'Activate'
+        );
+        $urls[] = $this->generateRemoveButton(
+            Url::generate(self::DELETE_USER_URL, [
+                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+            ]),
+            'Delete'
         );
 
-        return $actionButtons;
+        return $urls;
     }
 
     /**

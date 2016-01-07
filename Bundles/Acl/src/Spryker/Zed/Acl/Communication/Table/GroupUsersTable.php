@@ -112,13 +112,10 @@ class GroupUsersTable extends AbstractTable
      */
     protected function getRemoveUrl(array $user)
     {
-        return sprintf(
-            '<a id="row-%d-%d" href="#" data-options=\'{"idUser": %d, "idGroup": %d}\' class="btn btn-xs btn-danger remove-user-from-group">Remove</a>',
-            $user[self::COL_FK_USER],
-            $this->idGroup,
-            $user[self::COL_FK_USER],
-            $this->idGroup
-        );
+        return $this->generateRemoveButton('#', 'Remove', [
+            'id' => sprintf('row-%d-%d', $user[self::COL_FK_USER], $this->idGroup),
+            'data-options' => sprintf('{"idUser": %d, "idGroup": %d}', $user[self::COL_FK_USER], $this->idGroup),
+        ]);
     }
 
 }

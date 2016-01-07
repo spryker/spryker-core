@@ -4,11 +4,13 @@ namespace Spryker\Zed\Discount\Communication\Table;
 
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class VoucherPoolCategoryTable extends AbstractTable
 {
+    const URL_DISCOUNT_POOL_EDIT_CATEGORY = '/discount/pool/edit-category';
 
     /**
      * @var SpyDiscountVoucherPoolCategoryQuery
@@ -35,13 +37,15 @@ class VoucherPoolCategoryTable extends AbstractTable
             'options' => 'Options',
         ]);
 
+        $config->setUrl('categories-table');
+
         return $config;
     }
 
     /**
      * @param TableConfiguration $config
      *
-     * @return mixed
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -52,14 +56,30 @@ class VoucherPoolCategoryTable extends AbstractTable
         foreach ($queryResults as $item) {
             $results[] = [
                 SpyDiscountVoucherPoolCategoryTableMap::COL_NAME => $item[SpyDiscountVoucherPoolCategoryTableMap::COL_NAME],
-                'options' => sprintf(
-                    '<a href="/discount/pool/edit-category?id=%d" class="btn btn-sm btn-primary">Edit</a>',
-                    $item[SpyDiscountVoucherPoolCategoryTableMap::COL_ID_DISCOUNT_VOUCHER_POOL_CATEGORY]
-                ),
+                'options' => implode(' ', $this->getOptionsUrls($item)),
             ];
         }
 
         return $results;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function getOptionsUrls(array $item)
+    {
+        $options = [];
+
+        $options[] = $this->generateEditButton(
+            Url::generate(self::URL_DISCOUNT_POOL_EDIT_CATEGORY, [
+                'id' => $item[SpyDiscountVoucherPoolCategoryTableMap::COL_ID_DISCOUNT_VOUCHER_POOL_CATEGORY],
+            ]),
+            'Edit'
+        );
+
+        return $options;
     }
 
 }

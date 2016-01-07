@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Shipment\Communication\Table;
 
 use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
@@ -176,14 +177,34 @@ class MethodTable extends AbstractTable
             SpyShipmentMethodTableMap::COL_DELIVERY_TIME_PLUGIN => $method->getDeliveryTimePlugin(),
             SpyShipmentMethodTableMap::COL_TAX_CALCULATION_PLUGIN => $method->getTaxCalculationPlugin(),
 
-            self::ACTIONS => '<div class="btn-group btn-group-sm" role="group">' .
-                '<a class="btn btn-outline btn-default" href="/shipment/method/edit?' . self::ID_METHOD_PARAMETER . '='
-                . $idShipmentMethod . '"><i class="fa fa-paste"></i> Edit</a>' .
-                '<a class="btn btn-outline  btn-default" href="/shipment/method/delete?' . self::ID_METHOD_PARAMETER . '='
-                . $idShipmentMethod . '"><i class="fa fa-times"></i> Delete</a>' .
-                '</div>',
+            self::ACTIONS => implode(' ', $this->createActionUrls($idShipmentMethod)),
 
         ];
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return array
+     */
+    protected function createActionUrls($idShipmentMethod)
+    {
+        $urls = [];
+        $urls[] = $this->generateEditButton(
+            Url::generate('/shipment/method/edit', [
+                self::ID_METHOD_PARAMETER => $idShipmentMethod,
+            ]),
+            'Edit'
+        );
+
+        $urls[] = $this->generateRemoveButton(
+            Url::generate('/shipment/method/delete', [
+                self::ID_METHOD_PARAMETER => $idShipmentMethod,
+            ]),
+            'Delete'
+        );
+
+        return $urls;
     }
 
 }

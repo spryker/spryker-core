@@ -688,7 +688,7 @@ abstract class AbstractTable
             if (in_array($argument, [self::BUTTON_CLASS, self::BUTTON_HREF, self::BUTTON_ICON])) {
                 continue;
             }
-            $parameters .= sprintf(' %s="%s"', $argument, $value);
+            $parameters .= sprintf(' %s=\'%s\'', $argument, $value);
         }
 
         return $parameters;

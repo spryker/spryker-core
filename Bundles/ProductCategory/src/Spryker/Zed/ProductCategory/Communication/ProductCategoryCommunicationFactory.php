@@ -112,13 +112,15 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryFormEdit($idCategory)
     {
-        return new CategoryFormEdit(
+        $form = new CategoryFormEdit(
             $this->createCategoryQueryContainer(),
             $this->getQueryContainer(),
             $this->createCurrentLocale(),
             $idCategory,
             null
         );
+
+        return $this->createForm($form);
     }
 
     /**
@@ -128,13 +130,15 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryFormDelete($idCategory)
     {
-        return new CategoryFormDelete(
+        $form = new CategoryFormDelete(
             $this->createCategoryQueryContainer(),
             $this->getQueryContainer(),
             $this->createCurrentLocale(),
             $idCategory,
             null
         );
+
+        return $this->createForm($form);
     }
 
     /**

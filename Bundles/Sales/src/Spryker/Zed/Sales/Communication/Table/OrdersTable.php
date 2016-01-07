@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Communication\Table;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
@@ -22,6 +23,8 @@ class OrdersTable extends AbstractTable
     const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
     const ID_ORDER_ITEM_STATE = 'id-order-item-state';
     const FILTER = 'filter';
+    const URL_SALES_DETAILS = '/sales/details';
+    const PARAM_ID_SALES_ORDER = 'id-sales-order';
 
     /**
      * @var SpySalesOrderQuery
@@ -99,15 +102,31 @@ class OrdersTable extends AbstractTable
                 SpySalesOrderTableMap::COL_EMAIL => $item[SpySalesOrderTableMap::COL_EMAIL],
                 SpySalesOrderTableMap::COL_FIRST_NAME => $item[SpySalesOrderTableMap::COL_FIRST_NAME],
                 SpySalesOrderTableMap::COL_GRAND_TOTAL => $this->formatPrice($item[SpySalesOrderTableMap::COL_GRAND_TOTAL]),
-                self::URL => sprintf(
-                    '<a class="btn btn-primary" href="/sales/details/?id-sales-order=%d">View</a>',
-                    $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER]
-                ),
+                self::URL => implode(' ', $this->createActionUrls($item)),
             ];
         }
         unset($queryResults);
 
         return $results;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function createActionUrls(array $item)
+    {
+        $urls = [];
+
+        $urls[] = $this->generateViewButton(
+            Url::generate(self::URL_SALES_DETAILS, [
+                self::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
+            ]),
+            'View'
+        );
+
+        return $urls;
     }
 
     /**

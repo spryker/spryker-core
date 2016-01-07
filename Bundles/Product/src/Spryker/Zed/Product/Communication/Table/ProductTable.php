@@ -4,6 +4,7 @@ namespace Spryker\Zed\Product\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -15,6 +16,8 @@ class ProductTable extends AbstractTable
 {
 
     const OPTIONS = 'Options';
+    const URL_PRODUCT_INDEX_VIEW = '/product/index/view/';
+    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
      * @var SpyProductAbstractQuery
@@ -89,7 +92,7 @@ class ProductTable extends AbstractTable
             $abstractProducts[] = [
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 SpyProductAbstractTableMap::COL_SKU => $item[SpyProductAbstractTableMap::COL_SKU],
-                self::OPTIONS => $this->createActionColumn($item),
+                self::OPTIONS => implode(' ', $this->createActionColumn($item)),
             ];
         }
 
@@ -99,25 +102,28 @@ class ProductTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string
+     * @return array
      */
     protected function createActionColumn(array $item)
     {
         $urls = [];
 
-        $urls['viewUrl'] = sprintf(
-            '<a href="/product/index/view/?id-product-abstract=%d" class="btn btn-sm btn-primary">%s</a>',
-            $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
+        $urls[] = $this->generateViewButton(
+            Url::generate(self::URL_PRODUCT_INDEX_VIEW, [
+                self::PARAM_ID_PRODUCT_ABSTRACT => $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
+            ]),
             'View'
         );
 
-        $urls['yvesProductUrl'] = sprintf(
-            '<a href="%s" class="btn btn-sm btn-info" target="_blank">%s</a>',
+        $urls[] = $this->generateViewButton(
             $this->yvesUrl . $this->getYvesProductUrl($item)->getUrl(),
-            'View in Shop'
+            'View in Shop',
+            [
+                'target' => '_blank',
+            ]
         );
 
-        return implode(' ', $urls);
+        return $urls;
     }
 
     /**

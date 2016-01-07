@@ -112,7 +112,7 @@ class CartRuleController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $form = $this->getFactory()->createCartRuleForm();
+        $form = $this->getFactory()->createCartRuleForm($this->getFacade());
         $form->handleRequest($request);
 
         if ($form->isValid()) {

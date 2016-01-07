@@ -9,6 +9,7 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Propel\Runtime\Map\TableMap;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
@@ -40,11 +41,11 @@ class PoolController extends AbstractController
 
             $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
 
-            return $this->redirectResponse(sprintf(
-                DiscountConfig::URL_DISCOUNT_POOL_EDIT,
-                DiscountConfig::PARAM_ID_POOL,
-                $voucherPoolTransfer->getIdDiscountVoucherPool()
-            ));
+            $url = Url::generate(DiscountConfig::URL_DISCOUNT_POOL_EDIT, [
+                DiscountConfig::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool()
+            ]);
+
+            return $this->redirectResponse($url->__toString());
         }
 
         return [
@@ -68,11 +69,11 @@ class PoolController extends AbstractController
             $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($formData, true);
             $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
 
-            return $this->redirectResponse(sprintf(
-                DiscountConfig::URL_DISCOUNT_POOL_EDIT,
-                DiscountConfig::PARAM_ID_POOL,
-                $voucherPoolTransfer->getIdDiscountVoucherPool()
-            ));
+            $url = Url::generate(DiscountConfig::URL_DISCOUNT_POOL_EDIT, [
+                DiscountConfig::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool()
+            ]);
+
+            return $this->redirectResponse($url->__toString());
         }
 
         return [
