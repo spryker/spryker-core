@@ -21,8 +21,6 @@ use Spryker\Zed\Propel\Communication\Plugin\Connection;
 abstract class AbstractQueryContainer implements QueryContainerInterface
 {
 
-    const PROPEL_CONNECTION = 'propel connection';
-
     /**
      * @var PersistenceFactoryInterface
      */
