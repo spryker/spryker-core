@@ -5,6 +5,8 @@
 
 namespace Spryker\Zed\Customer\Dependency\Facade;
 
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Spryker\Zed\Country\Business\CountryFacade;
 
 class CustomerToCountryBridge implements CustomerToCountryInterface
@@ -23,6 +25,24 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
     public function __construct($countryFacade)
     {
         $this->countryFacade = $countryFacade;
+    }
+
+    /**
+     * @param string$countryName
+     *
+     * @return CountryTransfer
+     */
+    public function getPreferedCountryByName($countryName)
+    {
+        return $this->countryFacade->getPreferedCountryByName($countryName);
+    }
+
+    /**
+     * @return CountryCollectionTransfer
+     */
+    public function getAvailableCountries()
+    {
+        return $this->countryFacade->getAvailableCountries();
     }
 
     /**
