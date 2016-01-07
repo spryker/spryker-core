@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AutosuggestType extends AbstractType
 {
+
     const URL = 'url';
     const PLACEHOLDER = 'placeholder';
 
