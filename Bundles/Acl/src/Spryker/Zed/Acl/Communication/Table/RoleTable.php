@@ -74,7 +74,7 @@ class RoleTable extends AbstractTable
             $results[] = [
                 SpyAclRoleTableMap::COL_CREATED_AT => $rule[SpyAclRoleTableMap::COL_CREATED_AT],
                 SpyAclRoleTableMap::COL_NAME => $rule[SpyAclRoleTableMap::COL_NAME],
-                self::ACTION => $this->createTableActions($rule),
+                self::ACTION => implode(' ', $this->createTableActions($rule)),
             ];
         }
 
@@ -84,7 +84,7 @@ class RoleTable extends AbstractTable
     /**
      * @param array $rule
      *
-     * @return string
+     * @return array
      */
     protected function createTableActions(array $rule)
     {
@@ -102,7 +102,7 @@ class RoleTable extends AbstractTable
             );
         }
 
-        return implode(' ', $buttons);
+        return $buttons;
     }
 
 }

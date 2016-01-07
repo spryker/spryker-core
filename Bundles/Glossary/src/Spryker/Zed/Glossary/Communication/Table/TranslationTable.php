@@ -136,7 +136,7 @@ class TranslationTable extends AbstractTable
 
         if (!empty($result)) {
             foreach ($result as $key => $value) {
-                $result[$key][self::ACTIONS] = implode(' ', $this->buildLinks($value));
+                $result[$key][self::ACTIONS] = implode(' ', $this->buildActionUrls($value));
             }
         }
 
@@ -148,7 +148,7 @@ class TranslationTable extends AbstractTable
      *
      * @return array
      */
-    private function buildLinks($details)
+    private function buildActionUrls($details)
     {
         $urls = [];
 

@@ -89,7 +89,7 @@ class RootNodeTable extends AbstractTable
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY => $rootNode[SpyCategoryAttributeTableMap::COL_FK_CATEGORY],
                 SpyCategoryAttributeTableMap::COL_NAME => $rootNode[SpyCategoryAttributeTableMap::COL_NAME],
                 SpyLocaleTableMap::COL_LOCALE_NAME => $rootNode[self::LOCALE_NAME],
-                self::COL_REORDER => $this->getReorderButtonHtml($rootNode) . ' ' . $this->getAddButtonHtml($rootNode),
+                self::COL_REORDER => implode(' ', $this->createActionButtons($rootNode)),
             ];
         }
         unset($queryResults);
@@ -100,11 +100,23 @@ class RootNodeTable extends AbstractTable
     /**
      * @param array $rootNode
      *
-     * @return string
+     * @return array
      */
-    protected function getAddButtonHtml(array $rootNode)
+    protected function createActionButtons(array $rootNode)
     {
-        return $this->generateViewButton(
+        $urls = [];
+
+        $urls[] = $this->generateCreateButton(
+            Url::generate(self::URL_PRODUCT_CATEGORY_ADD, [
+                self::PARAM_ID_PARENT_NODE => $rootNode[self::ID_CATEGORY_NODE],
+            ]),
+            '<i class="fa fa-plus"></i></a>',
+            [
+                self::BUTTON_ICON => null,
+            ]
+        );
+
+        $urls[] = $this->generateViewButton(
             Url::generate(self::URL_CATEGORY_NODE_VIEW, [
                 self::PARAM_ID_NODE => $rootNode[self::ID_CATEGORY_NODE],
             ]),
@@ -114,24 +126,8 @@ class RootNodeTable extends AbstractTable
                 'id' => sprintf('node-%d', $rootNode[self::ID_CATEGORY_NODE])
             ]
         );
-    }
 
-    /**
-     * @param array $rootNode
-     *
-     * @return string
-     */
-    protected function getReorderButtonHtml(array $rootNode)
-    {
-        return $this->generateCreateButton(
-            Url::generate(self::URL_PRODUCT_CATEGORY_ADD, [
-                self::PARAM_ID_PARENT_NODE => $rootNode[self::ID_CATEGORY_NODE],
-            ]),
-            '<i class="fa fa-plus"></i></a>',
-            [
-                self::BUTTON_ICON => null,
-            ]
-        );
+        return $urls;
     }
 
 }

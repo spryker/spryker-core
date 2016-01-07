@@ -89,7 +89,7 @@ class RulesetTable extends AbstractTable
                 SpyAclRuleTableMap::COL_CONTROLLER => $ruleset[SpyAclRuleTableMap::COL_CONTROLLER],
                 SpyAclRuleTableMap::COL_ACTION => $ruleset[SpyAclRuleTableMap::COL_ACTION],
                 SpyAclRuleTableMap::COL_TYPE => $ruleset[SpyAclRuleTableMap::COL_TYPE],
-                self::EMPTY_HEADER_NAME => $this->createTableActions($ruleset),
+                self::EMPTY_HEADER_NAME => implode(' ', $this->createTableActions($ruleset)),
             ];
         }
 
@@ -99,11 +99,12 @@ class RulesetTable extends AbstractTable
     /**
      * @param array $ruleset
      *
-     * @return string
+     * @return array
      */
     public function createTableActions(array $ruleset)
     {
-        $button = $this->generateRemoveButton(
+        $buttons = [];
+        $buttons[] = $this->generateRemoveButton(
             Url::generate(self::REMOVE_ACL_RULESET_URL, [
                 self::PARAM_ID_RULE => $ruleset[SpyAclRuleTableMap::COL_ID_ACL_RULE],
                 self::PARAM_ID_ROLE => $ruleset[SpyAclRuleTableMap::COL_FK_ACL_ROLE],
@@ -111,7 +112,7 @@ class RulesetTable extends AbstractTable
             'Remove'
         );
 
-        return $button;
+        return $buttons;
     }
 
 }
