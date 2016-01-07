@@ -95,7 +95,9 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
 
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
 
-        return new CmsPageForm($templateQuery, $pageUrlByIdQuery, $urlFacade, $formType, $idPage);
+        $form = new CmsPageForm($templateQuery, $pageUrlByIdQuery, $urlFacade, $formType, $idPage);
+
+        return $this->createForm($form);
     }
 
     /**

@@ -11,9 +11,11 @@ use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Communication\CmsCommunicationFactory;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Url\Business\UrlFacade;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -53,14 +55,14 @@ class PageController extends AbstractController
     /**
      * @return array
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $form = $this->getFactory()
             ->createCmsPageForm('add');
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -92,8 +94,8 @@ class PageController extends AbstractController
             ->createCmsPageForm('update', $idPage);
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
+        $form->handleRequest($request);
 
-        $form->handleRequest();
         if ($form->isValid()) {
             $data = $form->getData();
 

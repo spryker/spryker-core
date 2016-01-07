@@ -156,7 +156,7 @@ class CmsPageForm extends AbstractForm
             self::FIELD_URL => $pageUrlTemplate->getUrl(),
             self::FIELD_CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
             self::FIELD_IS_ACTIVE => $pageUrlTemplate->getIsActive(),
-            CmsQueryContainer::FIELD_ID_URL => $pageUrlTemplate->getIdUrl(),
+            CmsQueryContainer::ID_URL => $pageUrlTemplate->getIdUrl(),
         ];
     }
 
