@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Collector;
 
-use Spryker\Client\Cart\CartDependencyProvider;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder;
 use Spryker\Client\Collector\Matcher\UrlMatcher;
@@ -39,6 +38,7 @@ class CollectorFactory extends AbstractFactory
 
     /**
      * @throws ContainerKeyNotFoundException
+     *
      * @return StorageClient
      */
     protected function getStorageClient()

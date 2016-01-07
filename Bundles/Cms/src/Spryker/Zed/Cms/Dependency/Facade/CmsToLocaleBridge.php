@@ -7,17 +7,18 @@
 namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 
 class CmsToLocaleBridge implements CmsToLocaleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacade
+     * @var LocaleFacade
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
+     * @param LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {

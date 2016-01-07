@@ -116,6 +116,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
 
     /**
      * @throws FactoryNotFoundException
+     *
      * @return AbstractFactory
      */
     private function resolveFactory()

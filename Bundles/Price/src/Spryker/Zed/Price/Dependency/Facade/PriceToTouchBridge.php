@@ -5,18 +5,20 @@
 
 namespace Spryker\Zed\Price\Dependency\Facade;
 
+use Spryker\Zed\Touch\Business\TouchFacade;
+
 class PriceToTouchBridge implements PriceToTouchInterface
 {
 
     /**
-     * @var \Spryker\Zed\Touch\Business\TouchFacade
+     * @var TouchFacade
      */
     protected $touchFacade;
 
     /**
      * ProductCategoryToTouchBridge constructor.
      *
-     * @param \Spryker\Zed\Touch\Business\TouchFacade $touchFacade
+     * @param TouchFacade $touchFacade
      */
     public function __construct($touchFacade)
     {
@@ -31,7 +33,7 @@ class PriceToTouchBridge implements PriceToTouchInterface
      */
     public function touchActive($itemType, $itemId)
     {
-        return $this->touchFacade->touchActive($itemType,$itemId);
+        return $this->touchFacade->touchActive($itemType, $itemId);
     }
 
     /**
@@ -66,4 +68,5 @@ class PriceToTouchBridge implements PriceToTouchInterface
     {
         return $this->touchFacade->bulkTouchDeleted($itemType, $itemIds);
     }
+
 }

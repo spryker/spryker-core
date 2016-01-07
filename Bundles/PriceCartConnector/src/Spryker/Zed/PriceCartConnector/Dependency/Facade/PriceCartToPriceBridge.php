@@ -5,16 +5,18 @@
 
 namespace Spryker\Zed\PriceCartConnector\Dependency\Facade;
 
+use Spryker\Zed\Price\Business\PriceFacade;
+
 class PriceCartToPriceBridge implements PriceCartToPriceInterface
 {
 
     /**
-     * @var \Spryker\Zed\Price\Business\PriceFacade
+     * @var PriceFacade
      */
     protected $priceFacade;
 
     /**
-     * @param \Spryker\Zed\Price\Business\PriceFacade $priceFacade
+     * @param PriceFacade $priceFacade
      */
     public function __construct($priceFacade)
     {

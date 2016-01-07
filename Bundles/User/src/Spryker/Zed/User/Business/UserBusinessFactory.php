@@ -24,7 +24,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
     /**
      * @return UserInterface
      */
-    public function getUserModel()
+    public function createUserModel()
     {
         return new User(
             $this->getQueryContainer(),
@@ -36,11 +36,11 @@ class UserBusinessFactory extends AbstractBusinessFactory
     /**
      * @return Installer
      */
-    public function getInstallerModel()
+    public function createInstallerModel()
     {
         return new Installer(
             $this->getQueryContainer(),
-            $this->getUserModel(),
+            $this->createUserModel(),
             $this->getConfig()
         );
     }

@@ -5,18 +5,20 @@
 
 namespace Spryker\Zed\Cms\Dependency\Facade;
 
+use Spryker\Zed\Touch\Business\TouchFacade;
+
 class CmsToTouchBridge implements CmsToTouchInterface
 {
 
     /**
-     * @var \Spryker\Zed\Touch\Business\TouchFacade
+     * @var TouchFacade
      */
     protected $touchFacade;
 
     /**
      * CmsToTouchBridge constructor.
      *
-     * @param \Spryker\Zed\Touch\Business\TouchFacade $touchFacade
+     * @param TouchFacade $touchFacade
      */
     public function __construct($touchFacade)
     {
@@ -56,4 +58,5 @@ class CmsToTouchBridge implements CmsToTouchInterface
     {
         return $this->touchDeleted($itemType, $itemId);
     }
+
 }

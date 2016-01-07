@@ -7,7 +7,6 @@
 namespace Spryker\Zed\ProductSearch\Business;
 
 use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Zed\Collector\Business\CollectorFacade;
 use Spryker\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
 use Spryker\Zed\ProductSearch\Business\Operation\OperationManager;
 use Spryker\Zed\ProductSearch\Business\Locator\OperationLocator;
@@ -47,7 +46,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ProductAttributesTransformerInterface
      */
-    public function getProductAttributesTransformer()
+    public function createProductAttributesTransformer()
     {
         return new ProductAttributesTransformer(
             $this->createProductSearchQueryContainer(),
@@ -59,7 +58,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ProductSearchProcessorInterface
      */
-    public function getProductSearchProcessor()
+    public function createProductSearchProcessor()
     {
         return new ProductSearchProcessor(
             $this->createKeyBuilder(),
@@ -72,7 +71,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
      *
      * @return InstallProductSearch
      */
-    public function getInstaller(MessengerInterface $messenger)
+    public function createInstaller(MessengerInterface $messenger)
     {
         $collectorFacade = $this->getCollectorFacade();
 

@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 namespace Spryker\Shared\EventJournal\Model\Filter;
@@ -37,6 +36,7 @@ class RecursiveFieldFilter extends AbstractFilter
         foreach ($this->options[static::OPTION_FILTER_PATTERN] as $pattern) {
             $this->applyPattern($fields, $pattern);
         }
+
         return $fields;
     }
 
@@ -51,7 +51,7 @@ class RecursiveFieldFilter extends AbstractFilter
             && $this->nextPatternPartExists($pattern)
         ) {
             $this->applyPattern($fields[$pattern[0]], array_slice($pattern, 1));
-        } else if ($this->currentPatternPartMatches($fields, $pattern)) {
+        } elseif ($this->currentPatternPartMatches($fields, $pattern)) {
             $fields[$pattern[0]] = $this->options[static::OPTION_FILTERED_STR];
         }
     }
@@ -87,4 +87,5 @@ class RecursiveFieldFilter extends AbstractFilter
     {
         return isset($pattern[1]);
     }
+
 }

@@ -24,7 +24,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return TaxChangePluginInterface
      */
-    public function getTaxChangeTouchPlugin()
+    public function createTaxChangeTouchPlugin()
     {
         return new TaxChangeTouchPlugin(
             $this->getProductFacade(),

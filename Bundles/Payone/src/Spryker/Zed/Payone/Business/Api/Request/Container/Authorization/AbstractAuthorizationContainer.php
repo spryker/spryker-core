@@ -62,27 +62,27 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     protected $narrative_text;
 
     /**
-     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
+     * @var PersonalContainer
      */
     protected $personalData;
 
     /**
-     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer
+     * @var ShippingContainer
      */
     protected $shippingData;
 
     /**
-     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer
+     * @var AbstractPaymentMethodContainer
      */
     protected $paymentMethod;
 
     /**
-     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer
+     * @var ThreeDSecureContainer
      */
     protected $_3dsecure;
 
     /**
-     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
+     * @var TransactionContainer
      */
     protected $invoicing;
 
@@ -295,7 +295,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     }
 
     /**
-     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer $invoicing
+     * @param TransactionContainer $invoicing
      *
      * @return void
      */

@@ -42,12 +42,12 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return PageManagerInterface
      */
-    public function getPageManager()
+    public function createPageManager()
     {
         return new PageManager(
             $this->getCmsQueryContainer(),
-            $this->getTemplateManager(),
-            $this->getBlockManager(),
+            $this->createTemplateManager(),
+            $this->createBlockManager(),
             $this->getGlossaryFacade(),
             $this->getTouchFacade(),
             $this->getUrlFacade()
@@ -57,19 +57,19 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return TemplateManagerInterface
      */
-    public function getTemplateManager()
+    public function createTemplateManager()
     {
         return new TemplateManager(
             $this->getCmsQueryContainer(),
             $this->getConfig(),
-            $this->getFinder()
+            $this->createFinder()
         );
     }
 
     /**
      * @return BlockManagerInterface
      */
-    public function getBlockManager()
+    public function createBlockManager()
     {
         return new BlockManager(
             $this->getCmsQueryContainer(),
@@ -81,15 +81,23 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return GlossaryKeyMappingManagerInterface
      */
-    public function getGlossaryKeyMappingManager()
+    public function createGlossaryKeyMappingManager()
     {
         return new GlossaryKeyMappingManager(
             $this->getGlossaryFacade(),
             $this->getCmsQueryContainer(),
-            $this->getTemplateManager(),
-            $this->getPageManager(),
+            $this->createTemplateManager(),
+            $this->createPageManager(),
             $this->getProvidedDependency(CmsDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
+    }
+
+    /**
+     * @return Finder
+     */
+    protected function createFinder()
+    {
+        return new Finder();
     }
 
     /**
@@ -114,14 +122,6 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     protected function getUrlFacade()
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
-    }
-
-    /**
-     * @return Finder
-     */
-    protected function getFinder()
-    {
-        return new Finder();
     }
 
 }

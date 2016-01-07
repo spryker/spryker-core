@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Glossary\Business;
 
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerInterface;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Glossary\Business\Key\KeyManager;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManager;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;

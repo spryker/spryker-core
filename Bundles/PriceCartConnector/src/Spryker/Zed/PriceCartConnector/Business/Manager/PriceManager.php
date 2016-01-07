@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
-use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToProductBridge;
 
 class PriceManager implements PriceManagerInterface
 {

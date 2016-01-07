@@ -54,4 +54,5 @@ class RequestDataCollector extends AbstractDataCollector
     {
         return $_REQUEST;
     }
+
 }

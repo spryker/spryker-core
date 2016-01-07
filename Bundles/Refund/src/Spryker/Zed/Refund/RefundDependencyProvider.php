@@ -67,7 +67,6 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-
     /**
      * @throws NotImplementedException
      *

@@ -22,7 +22,7 @@ class AvailabilityFacade extends AbstractFacade
      */
     public function isProductSellable($sku, $quantity)
     {
-        return $this->getFactory()->getSellableModel()->isProductSellable($sku, $quantity);
+        return $this->getFactory()->createSellableModel()->isProductSellable($sku, $quantity);
     }
 
     /**
@@ -32,7 +32,7 @@ class AvailabilityFacade extends AbstractFacade
      */
     public function calculateStockForProduct($sku)
     {
-        return $this->getFactory()->getSellableModel()->calculateStockForProduct($sku);
+        return $this->getFactory()->createSellableModel()->calculateStockForProduct($sku);
     }
 
 }

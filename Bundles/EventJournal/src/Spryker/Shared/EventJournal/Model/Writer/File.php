@@ -7,7 +7,6 @@
 namespace Spryker\Shared\EventJournal\Model\Writer;
 
 use Spryker\Shared\EventJournal\Model\EventInterface;
-use Spryker\Shared\Library\DataDirectory;
 
 class File extends AbstractWriter
 {
@@ -114,7 +113,6 @@ class File extends AbstractWriter
     protected function getLogPath()
     {
         return $this->options[self::OPTION_LOG_PATH];
-
     }
 
     /**

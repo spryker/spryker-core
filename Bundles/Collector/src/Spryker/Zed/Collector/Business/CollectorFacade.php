@@ -39,7 +39,7 @@ class CollectorFacade extends AbstractFacade
      */
     public function exportSearchForLocale(LocaleTransfer $locale)
     {
-        $exporter = $this->getFactory()->getYvesSearchExporter();
+        $exporter = $this->getFactory()->createYvesSearchExporter();
 
         return $exporter->exportForLocale($locale);
     }
@@ -51,7 +51,7 @@ class CollectorFacade extends AbstractFacade
      */
     public function updateSearchForLocale(LocaleTransfer $locale)
     {
-        $exporter = $this->getFactory()->getYvesSearchUpdateExporter();
+        $exporter = $this->getFactory()->createYvesSearchUpdateExporter();
 
         return $exporter->exportForLocale($locale);
     }

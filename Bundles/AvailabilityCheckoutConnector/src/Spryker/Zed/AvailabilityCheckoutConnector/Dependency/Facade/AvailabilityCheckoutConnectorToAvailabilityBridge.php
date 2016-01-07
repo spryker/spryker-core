@@ -6,16 +6,18 @@
 
 namespace Spryker\Zed\AvailabilityCheckoutConnector\Dependency\Facade;
 
+use Spryker\Zed\Availability\Business\AvailabilityFacade;
+
 class AvailabilityCheckoutConnectorToAvailabilityBridge implements AvailabilityCheckoutConnectorToAvailabilityInterface
 {
 
     /**
-     * @var \Spryker\Zed\Availability\Business\AvailabilityFacade
+     * @var AvailabilityFacade
      */
     protected $availabilityFacade;
 
     /**
-     * @param \Spryker\Zed\Availability\Business\AvailabilityFacade $availabilityFacade
+     * @param AvailabilityFacade $availabilityFacade
      */
     public function __construct($availabilityFacade)
     {

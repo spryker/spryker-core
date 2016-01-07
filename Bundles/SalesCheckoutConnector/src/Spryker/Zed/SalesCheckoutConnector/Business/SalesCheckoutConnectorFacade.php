@@ -24,7 +24,7 @@ class SalesCheckoutConnectorFacade extends AbstractFacade
      */
     public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->getSalesOrderSaver()->saveOrder($orderTransfer, $checkoutResponse);
+        $this->getFactory()->createSalesOrderSaver()->saveOrder($orderTransfer, $checkoutResponse);
     }
 
 }

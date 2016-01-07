@@ -22,5 +22,4 @@ class {bundle}To{toBundle}Bridge implements {bundle}To{toBundle}Interface
         $this->{toBundleVariable}Facade = ${toBundleVariable}Facade;
     }
 
-
 }

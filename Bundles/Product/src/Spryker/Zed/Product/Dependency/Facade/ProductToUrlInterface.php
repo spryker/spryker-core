@@ -32,7 +32,6 @@ interface ProductToUrlInterface
      */
     public function touchUrlActive($idUrl);
 
-
     /**
      * @param int $idAbstractProduct
      * @param int $idLocale

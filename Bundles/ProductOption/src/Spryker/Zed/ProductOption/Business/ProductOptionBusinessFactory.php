@@ -25,7 +25,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return DataImportWriterInterface
      */
-    public function getDataImportWriterModel()
+    public function createDataImportWriterModel()
     {
         return new DataImportWriter(
             $this->getQueryContainer(),
@@ -37,7 +37,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ProductOptionReaderInterface
      */
-    public function getProductOptionReaderModel()
+    public function createProductOptionReaderModel()
     {
         return new ProductOptionReader(
             $this->getQueryContainer(),

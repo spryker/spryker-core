@@ -8,7 +8,6 @@ namespace Spryker\Zed\Category\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Form\CategoryNodeForm;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;

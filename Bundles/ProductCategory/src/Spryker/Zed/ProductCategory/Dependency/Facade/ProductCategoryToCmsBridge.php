@@ -5,20 +5,21 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
+use Spryker\Zed\Cms\Business\CmsFacade;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
 class ProductCategoryToCmsBridge implements ProductCategoryToCmsInterface
 {
 
     /**
-     * @var \Spryker\Zed\Cms\Business\CmsFacade
+     * @var CmsFacade
      */
     protected $cmsFacade;
 
     /**
      * ProductCategoryToCmsBridge constructor.
      *
-     * @param \Spryker\Zed\Cms\Business\CmsFacade $cmsFacade
+     * @param CmsFacade $cmsFacade
      */
     public function __construct($cmsFacade)
     {

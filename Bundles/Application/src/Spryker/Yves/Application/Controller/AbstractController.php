@@ -16,7 +16,6 @@ use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Locator;
-use Spryker\Yves\Library\Session\TransferSession;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -54,7 +53,7 @@ abstract class AbstractController
     /**
      * @param Application $application
      *
-     * @return $this
+     * @return self
      */
     public function setApplication(Application $application)
     {

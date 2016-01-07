@@ -61,5 +61,4 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
         return [];
     }
 
-
 }

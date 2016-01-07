@@ -13,6 +13,7 @@ use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculati
 
 class DiscountCalculationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_CALCULATOR = 'calculator facade';
     const FACADE_DISCOUNT = 'discount facade';
 

@@ -5,18 +5,20 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
+use Spryker\Zed\Country\Business\CountryFacade;
+
 class SalesToCountryBridge implements SalesToCountryInterface
 {
 
     /**
-     * @var \Spryker\Zed\Country\Business\CountryFacade
+     * @var CountryFacade
      */
     protected $countryFacade;
 
     /**
      * SalesToCountryBridge constructor.
      *
-     * @param \Spryker\Zed\Country\Business\CountryFacade $countryFacade
+     * @param CountryFacade $countryFacade
      */
     public function __construct($countryFacade)
     {
@@ -32,4 +34,5 @@ class SalesToCountryBridge implements SalesToCountryInterface
     {
         return $this->countryFacade->getIdCountryByIso2Code($iso2Code);
     }
+
 }

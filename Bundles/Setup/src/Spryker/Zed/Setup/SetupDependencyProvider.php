@@ -9,7 +9,6 @@ namespace Spryker\Zed\Setup;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Symfony\Component\Console\Command\Command;
 
 class SetupDependencyProvider extends AbstractBundleDependencyProvider
 {

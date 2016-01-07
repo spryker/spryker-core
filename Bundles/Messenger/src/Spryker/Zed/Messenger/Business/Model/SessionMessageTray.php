@@ -7,7 +7,6 @@ namespace Spryker\Zed\Messenger\Business\Model;
 
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 

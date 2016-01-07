@@ -128,6 +128,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @throws ContainerKeyNotFoundException
+     *
      * @return SalesToOmsInterface
      */
     public function getFacadeOms()
@@ -137,6 +138,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @throws ContainerKeyNotFoundException
+     *
      * @return SalesToRefundInterface
      */
     public function getFacadeRefund()

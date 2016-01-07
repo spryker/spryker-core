@@ -25,18 +25,9 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @Todo check if we can remove this method
-     *
-     * @return mixed
-     */
-    public function getCommentForm()
-    {
-    }
-
-    /**
      * @return Form\OrderItemSplitForm
      */
-    public function getOrderItemSplitForm()
+    public function createOrderItemSplitForm()
     {
         $form = new OrderItemSplitForm();
 

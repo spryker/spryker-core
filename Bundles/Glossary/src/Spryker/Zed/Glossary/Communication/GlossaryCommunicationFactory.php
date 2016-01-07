@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Glossary\Communication;
 
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Spryker\Zed\Glossary\Communication\Table\TranslationTable;

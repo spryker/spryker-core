@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 namespace Spryker\Shared\EventJournal\Model\Filter;
@@ -21,4 +20,5 @@ interface FilterInterface
      * @return string
      */
     public function getType();
+
 }

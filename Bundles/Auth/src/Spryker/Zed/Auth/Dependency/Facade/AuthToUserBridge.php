@@ -7,17 +7,18 @@
 namespace Spryker\Zed\Auth\Dependency\Facade;
 
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Zed\User\Business\UserFacade;
 
 class AuthToUserBridge implements AuthToUserInterface
 {
 
     /**
-     * @var \Spryker\Zed\User\Business\UserFacade
+     * @var UserFacade
      */
     protected $userFacade;
 
     /**
-     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
+     * @param UserFacade $userFacade
      */
     public function __construct($userFacade)
     {

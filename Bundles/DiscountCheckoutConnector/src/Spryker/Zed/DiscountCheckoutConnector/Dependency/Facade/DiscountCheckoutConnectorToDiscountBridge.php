@@ -6,16 +6,18 @@
 
 namespace Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade;
 
+use Spryker\Zed\Discount\Business\DiscountFacade;
+
 class DiscountCheckoutConnectorToDiscountBridge implements DiscountCheckoutConnectorToDiscountInterface
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Business\DiscountFacade
+     * @var DiscountFacade
      */
     protected $discountFacade;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
+     * @param DiscountFacade $discountFacade
      */
     public function __construct($discountFacade)
     {

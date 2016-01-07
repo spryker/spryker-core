@@ -49,7 +49,7 @@ class DiscountFacade extends AbstractFacade
      */
     public function isVoucherUsable($code)
     {
-        return $this->getFactory()->getDecisionRuleVoucher()->isUsable($code);
+        return $this->getFactory()->createDecisionRuleVoucher()->isUsable($code);
     }
 
     /**
@@ -61,7 +61,7 @@ class DiscountFacade extends AbstractFacade
     public function isMinimumCartSubtotalReached(CalculableInterface $container, DecisionRule $decisionRule)
     {
         return $this->getFactory()
-            ->getDecisionRuleMinimumCartSubtotal()
+            ->createDecisionRuleMinimumCartSubtotal()
             ->isMinimumCartSubtotalReached($container, $decisionRule);
     }
 

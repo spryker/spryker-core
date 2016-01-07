@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class OrderItemSplitForm extends AbstractForm
 {
+
     const FIELD_QUANTITY = 'quantity';
     const FIELD_ID_ORDER_ITEM = 'id_order_item';
     const FIELD_ID_ORDER = 'id_order';
@@ -78,7 +79,7 @@ class OrderItemSplitForm extends AbstractForm
             ->add(self::FIELD_ID_ORDER, 'hidden')
             ->add('Split', 'submit', [
                 'attr' => [
-                    'class' => 'btn btn-sm btn-primary'
+                    'class' => 'btn btn-sm btn-primary',
                 ],
             ]);
     }

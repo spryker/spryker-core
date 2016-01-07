@@ -27,4 +27,5 @@ interface CategoryToLocaleInterface
      * @return array
      */
     public function getAvailableLocales();
+
 }

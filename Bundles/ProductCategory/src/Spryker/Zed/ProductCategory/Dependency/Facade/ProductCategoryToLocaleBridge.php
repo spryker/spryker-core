@@ -5,20 +5,21 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
+use Spryker\Zed\Locale\Business\LocaleFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class ProductCategoryToLocaleBridge implements ProductCategoryToLocaleInterface
 {
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacade
+     * @var LocaleFacade
      */
     protected $localeFacade;
 
     /**
      * ProductCategoryToLocaleBridge constructor.
      *
-     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
+     * @param LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {
@@ -30,6 +31,7 @@ class ProductCategoryToLocaleBridge implements ProductCategoryToLocaleInterface
      */
     public function getCurrentLocale()
     {
-       return $this->localeFacade->getCurrentLocale();
+        return $this->localeFacade->getCurrentLocale();
     }
+
 }

@@ -6,24 +6,20 @@
 
 namespace Spryker\Zed\Installer\Dependency\Facade;
 
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
-use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
-use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 class InstallerToGlossaryBridge implements InstallerToGlossaryInterface
 {
 
     /**
-     * @var \Spryker\Zed\Glossary\Business\GlossaryFacade
+     * @var GlossaryFacade
      */
     protected $glossaryFacade;
 
     /**
-     * @param \Spryker\Zed\Glossary\Business\GlossaryFacade $glossaryFacade
+     * @param GlossaryFacade $glossaryFacade
      */
     public function __construct($glossaryFacade)
     {
@@ -97,6 +93,5 @@ class InstallerToGlossaryBridge implements InstallerToGlossaryInterface
     {
         return $this->glossaryFacade->updateAndTouchTranslation($keyName, $locale, $value, $isActive);
     }
-
 
 }

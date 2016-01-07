@@ -6,18 +6,19 @@
 
 namespace Spryker\Zed\ItemGrouperCheckoutConnector\Dependency\Facade;
 
+use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 
 class ItemGrouperCheckoutConnectorToItemGrouperBridge implements ItemGrouperCheckoutConnectorToItemGrouperInterface
 {
 
     /**
-     * @var \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade
+     * @var ItemGrouperFacade
      */
     protected $itemGrouperFacade;
 
     /**
-     * @param \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade $itemGrouperFacade
+     * @param ItemGrouperFacade $itemGrouperFacade
      */
     public function __construct($itemGrouperFacade)
     {

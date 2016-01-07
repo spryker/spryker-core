@@ -16,5 +16,4 @@ use Spryker\Zed\Stock\StockConfig;
  */
 class StockCommunicationFactory extends AbstractCommunicationFactory
 {
-
 }

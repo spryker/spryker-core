@@ -21,7 +21,7 @@ class Event implements EventInterface
     /**
      * @var array
      */
-    protected static $staticFields  = [];
+    protected static $staticFields = [];
 
     public function __construct()
     {
@@ -37,7 +37,8 @@ class Event implements EventInterface
      *
      * @return void
      */
-    public function setStaticField($name, $data) {
+    public function setStaticField($name, $data)
+    {
         $this->validateData($name, $data);
         self::$staticFields[$name] = $data;
     }
@@ -53,8 +54,9 @@ class Event implements EventInterface
     public function setField($name, $data)
     {
         $this->validateData($name, $data);
-        if(isset(static::$staticFields[$name])) {
+        if (isset(static::$staticFields[$name])) {
             static::$staticFields[$name] = $data;
+
             return;
         }
         $this->fields[$name] = $data;

@@ -6,7 +6,6 @@
 
 namespace Unit\Spryker\Zed\Transfer\Business;
 
-use Spryker\Shared\Config;
 use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Filesystem\Filesystem;
 

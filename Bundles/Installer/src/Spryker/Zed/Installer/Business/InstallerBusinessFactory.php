@@ -37,7 +37,7 @@ class InstallerBusinessFactory extends AbstractBusinessFactory
     /**
      * @return GlossaryInstaller
      */
-    public function getGlossaryInstaller()
+    public function createGlossaryInstaller()
     {
         return new GlossaryInstaller(
             $this->getProvidedDependency(InstallerDependencyProvider::FACADE_GLOSSARY),

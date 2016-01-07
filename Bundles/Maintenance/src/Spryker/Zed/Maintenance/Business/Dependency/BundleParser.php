@@ -186,7 +186,7 @@ class BundleParser
             . DIRECTORY_SEPARATOR . self::CONFIG_FILE;
 
         $this->bundleConfig = json_decode(file_get_contents($file), true);
-        
+
         return $this->bundleConfig;
     }
 

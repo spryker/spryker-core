@@ -23,7 +23,7 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     /**
      * @return LocaleManager
      */
-    public function getLocaleManager()
+    public function createLocaleManager()
     {
         return new LocaleManager(
             $this->getQueryContainer(),
@@ -44,7 +44,7 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
      *
      * @return LocaleInstaller
      */
-    public function getInstaller(MessengerInterface $messenger)
+    public function createInstaller(MessengerInterface $messenger)
     {
         $installer = new LocaleInstaller(
             $this->getQueryContainer(),

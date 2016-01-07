@@ -20,18 +20,18 @@ class MailBusinessFactory extends AbstractBusinessFactory
     /**
      * @return MailSenderInterface
      */
-    public function getMailSender()
+    public function createMailSender()
     {
         return new MandrillMailSender(
-            $this->getMandrill(),
-            $this->getInclusionHandler()
+            $this->createMandrill(),
+            $this->createInclusionHandler()
         );
     }
 
     /**
      * @return \Mandrill
      */
-    protected function getMandrill()
+    protected function createMandrill()
     {
         return new \Mandrill(
             $this->getAPIKey()
@@ -41,7 +41,7 @@ class MailBusinessFactory extends AbstractBusinessFactory
     /**
      * @return InclusionHandlerInterface
      */
-    protected function getInclusionHandler()
+    protected function createInclusionHandler()
     {
         return new InclusionHandler();
     }

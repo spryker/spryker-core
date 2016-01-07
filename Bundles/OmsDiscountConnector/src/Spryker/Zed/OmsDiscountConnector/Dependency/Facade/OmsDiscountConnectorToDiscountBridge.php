@@ -6,16 +6,18 @@
 
 namespace Spryker\Zed\OmsDiscountConnector\Dependency\Facade;
 
+use Spryker\Zed\Discount\Business\DiscountFacade;
+
 class OmsDiscountConnectorToDiscountBridge implements OmsDiscountConnectorToDiscountInterface
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Business\DiscountFacade
+     * @var DiscountFacade
      */
     protected $discountFacade;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
+     * @param DiscountFacade $discountFacade
      */
     public function __construct($discountFacade)
     {

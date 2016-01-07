@@ -19,7 +19,6 @@ use Spryker\Client\Catalog\Model\FacetSearch;
 use Spryker\Client\Catalog\Model\Catalog as ModelCatalog;
 use Elastica\Index;
 use Generated\Client\Ide\FactoryAutoCompletion\Catalog;
-use Spryker\Client\Catalog\CatalogDependencyProvider;
 use Spryker\Client\Catalog\Model\FacetConfig;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;

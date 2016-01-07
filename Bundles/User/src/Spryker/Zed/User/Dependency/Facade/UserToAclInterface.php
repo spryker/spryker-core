@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\GroupsTransfer;
 
 interface UserToAclInterface
 {
+
     /**
      * @param int $idUser
      *
@@ -37,4 +38,5 @@ interface UserToAclInterface
      * @return void
      */
     public function removeUserFromGroup($idUser, $idGroup);
+
 }

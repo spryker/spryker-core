@@ -21,7 +21,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     /**
      * @return UrlManagerInterface
      */
-    public function getUrlManager()
+    public function createUrlManager()
     {
         return new UrlManager(
             $this->getQueryContainer(),
@@ -34,11 +34,11 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     /**
      * @return RedirectManagerInterface
      */
-    public function getRedirectManager()
+    public function createRedirectManager()
     {
         return new RedirectManager(
             $this->getQueryContainer(),
-            $this->getUrlManager(),
+            $this->createUrlManager(),
             $this->getProvidedDependency(UrlDependencyProvider::FACADE_TOUCH),
             $this->getProvidedDependency(UrlDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );

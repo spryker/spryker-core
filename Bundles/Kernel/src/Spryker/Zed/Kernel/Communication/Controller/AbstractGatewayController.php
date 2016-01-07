@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\Communication\Controller;
 
-use Silex\Application;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Shared\NewRelic\Api;
 use Spryker\Shared\ZedRequest\Client\Message;

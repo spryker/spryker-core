@@ -5,18 +5,20 @@
 
 namespace Spryker\Zed\Stock\Dependency\Facade;
 
+use Spryker\Zed\Touch\Business\TouchFacade;
+
 class StockToTouchBridge implements StockToTouchInterface
 {
 
     /**
-     * @var \Spryker\Zed\Touch\Business\TouchFacade
+     * @var TouchFacade
      */
     protected $touchFacade;
 
     /**
      * ProductCategoryToTouchBridge constructor.
      *
-     * @param \Spryker\Zed\Touch\Business\TouchFacade $touchFacade
+     * @param TouchFacade $touchFacade
      */
     public function __construct($touchFacade)
     {
@@ -33,4 +35,5 @@ class StockToTouchBridge implements StockToTouchInterface
     {
         return $this->touchFacade->touchActive($itemType, $itemId);
     }
+
 }

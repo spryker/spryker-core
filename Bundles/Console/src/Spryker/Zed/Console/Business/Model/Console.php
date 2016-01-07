@@ -220,6 +220,7 @@ class Console extends SymfonyCommand
      * @param array $arguments
      *
      * @throws \Exception
+     *
      * @return int
      */
     protected function runDependingCommand($command, array $arguments = [])
@@ -240,7 +241,7 @@ class Console extends SymfonyCommand
     /**
      * @param $exitCode
      *
-     * @return $this
+     * @return self
      */
     private function setExitCode($exitCode)
     {

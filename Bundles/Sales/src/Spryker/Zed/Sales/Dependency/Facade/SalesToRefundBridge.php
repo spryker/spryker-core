@@ -6,18 +6,18 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-use Generated\Shared\Transfer\RefundTransfer;
+use Spryker\Zed\Refund\Business\RefundFacade;
 
 class SalesToRefundBridge implements SalesToRefundInterface
 {
 
     /**
-     * @var \Spryker\Zed\Refund\Business\RefundFacade
+     * @var RefundFacade
      */
     protected $refundFacade;
 
     /**
-     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
+     * @param RefundFacade $refundFacade
      */
     public function __construct($refundFacade)
     {

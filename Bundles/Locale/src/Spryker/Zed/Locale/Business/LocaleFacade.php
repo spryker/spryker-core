@@ -26,7 +26,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function hasLocale($localeName)
     {
-        $localeManager = $this->getFactory()->getLocaleManager();
+        $localeManager = $this->getFactory()->createLocaleManager();
 
         return $localeManager->hasLocale($localeName);
     }
@@ -40,7 +40,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function getLocale($localeName)
     {
-        $localeManager = $this->getFactory()->getLocaleManager();
+        $localeManager = $this->getFactory()->createLocaleManager();
 
         return $localeManager->getLocale($localeName);
     }
@@ -87,7 +87,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function createLocale($localeName)
     {
-        $localeManager = $this->getFactory()->getLocaleManager();
+        $localeManager = $this->getFactory()->createLocaleManager();
 
         return $localeManager->createLocale($localeName);
     }
@@ -99,7 +99,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function deleteLocale($localeName)
     {
-        $localeManager = $this->getFactory()->getLocaleManager();
+        $localeManager = $this->getFactory()->createLocaleManager();
         $localeManager->deleteLocale($localeName);
     }
 
@@ -110,7 +110,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function install(MessengerInterface $messenger)
     {
-        $this->getFactory()->getInstaller($messenger)->install();
+        $this->getFactory()->createInstaller($messenger)->install();
     }
 
 }

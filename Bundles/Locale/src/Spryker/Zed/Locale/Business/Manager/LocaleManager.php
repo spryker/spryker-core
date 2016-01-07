@@ -7,9 +7,7 @@
 namespace Spryker\Zed\Locale\Business\Manager;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 use Spryker\Zed\Locale\Business\TransferGeneratorInterface;

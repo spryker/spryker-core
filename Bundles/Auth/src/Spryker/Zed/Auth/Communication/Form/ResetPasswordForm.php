@@ -67,4 +67,5 @@ class ResetPasswordForm extends AbstractForm
     {
         return [];
     }
+
 }

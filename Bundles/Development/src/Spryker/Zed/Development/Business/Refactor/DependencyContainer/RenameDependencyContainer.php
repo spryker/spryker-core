@@ -65,7 +65,6 @@ class RenameDependencyContainer extends AbstractRefactor
                 $filesystem->remove($phpFile->getPathname());
                 echo 'REMOVED! ' . $phpFile->getPathname() . PHP_EOL;
             }
-
         }
     }
 

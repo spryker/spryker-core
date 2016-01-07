@@ -8,17 +8,18 @@ namespace Spryker\Zed\AuthMailConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\SendMailResponsesTransfer;
+use Spryker\Zed\Mail\Business\MailFacade;
 
 class AuthMailConnectorToMailBridge implements AuthMailConnectorToMailInterface
 {
 
     /**
-     * @var \Spryker\Zed\Mail\Business\MailFacade
+     * @var MailFacade
      */
     protected $mailFacade;
 
     /**
-     * @param \Spryker\Zed\Mail\Business\MailFacade $mailFacade
+     * @param MailFacade $mailFacade
      */
     public function __construct($mailFacade)
     {

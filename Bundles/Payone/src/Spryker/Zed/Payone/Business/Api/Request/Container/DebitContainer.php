@@ -50,17 +50,17 @@ class DebitContainer extends AbstractRequestContainer
     protected $use_customerdata;
 
     /**
-     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer
+     * @var BusinessContainer
      */
     protected $business;
 
     /**
-     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\AbstractPaymentMethodContainer
+     * @var AbstractPaymentMethodContainer
      */
     protected $paymentMethod;
 
     /**
-     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
+     * @var TransactionContainer
      */
     protected $invoicing;
 

@@ -42,6 +42,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param RefundFacade $refundFacade
+     *
      * @return RefundTable
      */
     public function createRefundTable(RefundFacade $refundFacade)

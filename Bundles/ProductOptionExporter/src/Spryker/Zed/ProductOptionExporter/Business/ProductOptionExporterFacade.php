@@ -24,7 +24,7 @@ class ProductOptionExporterFacade extends AbstractFacade
      */
     public function processDataForExport(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
-        return $this->getFactory()->getProcessorModel()->processDataForExport($resultSet, $processedResultSet, $locale);
+        return $this->getFactory()->createProcessorModel()->processDataForExport($resultSet, $processedResultSet, $locale);
     }
 
 }

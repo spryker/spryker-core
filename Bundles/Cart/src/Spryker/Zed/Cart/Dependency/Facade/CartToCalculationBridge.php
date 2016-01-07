@@ -6,18 +6,19 @@
 
 namespace Spryker\Zed\Cart\Dependency\Facade;
 
+use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class CartToCalculationBridge implements CartToCalculationInterface
 {
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\CalculationFacade
+     * @var CalculationFacade
      */
     protected $calculationFacade;
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\CalculationFacade $calculationFacade
+     * @param CalculationFacade $calculationFacade
      */
     public function __construct($calculationFacade)
     {

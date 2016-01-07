@@ -228,7 +228,7 @@ interface AuthorizationContainerInterface
     public function __toString();
 
     /**
-     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer $invoicing
+     * @param TransactionContainer $invoicing
      */
     public function setInvoicing(TransactionContainer $invoicing);
 

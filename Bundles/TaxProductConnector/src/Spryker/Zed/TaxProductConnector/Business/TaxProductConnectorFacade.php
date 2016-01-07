@@ -20,7 +20,7 @@ class TaxProductConnectorFacade extends AbstractFacade
      */
     public function getTaxChangeTouchPlugin()
     {
-        return $this->getFactory()->getTaxChangeTouchPlugin();
+        return $this->getFactory()->createTaxChangeTouchPlugin();
     }
 
 }

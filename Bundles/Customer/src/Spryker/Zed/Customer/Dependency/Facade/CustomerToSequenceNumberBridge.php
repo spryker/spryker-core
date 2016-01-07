@@ -7,17 +7,18 @@
 namespace Spryker\Zed\Customer\Dependency\Facade;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 class CustomerToSequenceNumberBridge implements CustomerToSequenceNumberInterface
 {
 
     /**
-     * @var \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade
+     * @var SequenceNumberFacade
      */
     protected $sequenceNumberFacade;
 
     /**
-     * @param \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade $sequenceNumberFacade
+     * @param SequenceNumberFacade $sequenceNumberFacade
      */
     public function __construct($sequenceNumberFacade)
     {

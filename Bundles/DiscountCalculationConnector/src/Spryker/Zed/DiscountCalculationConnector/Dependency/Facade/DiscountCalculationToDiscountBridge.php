@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
+use Spryker\Zed\Discount\Business\DiscountFacade;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
@@ -12,12 +13,12 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Business\DiscountFacade
+     * @var DiscountFacade
      */
     protected $discountFacade;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
+     * @param DiscountFacade $discountFacade
      */
     public function __construct($discountFacade)
     {

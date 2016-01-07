@@ -121,5 +121,4 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-
 }

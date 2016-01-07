@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Newsletter\Dependency\Facade;
 
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 
@@ -13,12 +14,12 @@ class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
 {
 
     /**
-     * @var \Spryker\Zed\Glossary\Business\GlossaryFacade
+     * @var GlossaryFacade
      */
     protected $glossaryFacade;
 
     /**
-     * @param \Spryker\Zed\Glossary\Business\GlossaryFacade $glossaryFacade
+     * @param GlossaryFacade $glossaryFacade
      */
     public function __construct($glossaryFacade)
     {

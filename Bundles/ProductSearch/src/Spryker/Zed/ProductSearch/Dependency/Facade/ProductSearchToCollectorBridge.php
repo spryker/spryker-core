@@ -6,16 +6,18 @@
 
 namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
+use Spryker\Zed\Collector\Business\CollectorFacade;
+
 class ProductSearchToCollectorBridge implements ProductSearchToCollectorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Collector\Business\CollectorFacade
+     * @var CollectorFacade
      */
     protected $collectorFacade;
 
     /**
-     * @param \Spryker\Zed\Collector\Business\CollectorFacade $collectorFacade
+     * @param CollectorFacade $collectorFacade
      */
     public function __construct($collectorFacade)
     {

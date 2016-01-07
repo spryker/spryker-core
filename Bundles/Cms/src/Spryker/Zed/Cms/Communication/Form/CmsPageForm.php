@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Cms\Communication\Form;
 
 use Spryker\Shared\Gui\Form\AbstractForm;
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;

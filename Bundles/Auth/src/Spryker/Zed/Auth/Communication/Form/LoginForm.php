@@ -60,4 +60,5 @@ class LoginForm extends AbstractForm
     {
         return 'auth';
     }
+
 }

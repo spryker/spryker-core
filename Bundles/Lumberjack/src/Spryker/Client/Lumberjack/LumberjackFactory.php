@@ -10,7 +10,7 @@ use Spryker\Client\Kernel\AbstractDependencyContainer;
 /**
  * @deprecated Lumberjack is deprecated use EventJournal instead.
  */
-class LumberjackDependencyContainer extends AbstractDependencyContainer
+class LumberjackFactory extends AbstractDependencyContainer
 {
 
     /**

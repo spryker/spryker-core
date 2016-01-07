@@ -13,7 +13,6 @@ use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInter
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;

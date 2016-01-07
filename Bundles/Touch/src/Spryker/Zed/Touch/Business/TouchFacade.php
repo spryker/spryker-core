@@ -25,7 +25,7 @@ class TouchFacade extends AbstractFacade
      */
     public function touchActive($itemType, $idItem, $keyChange = false)
     {
-        $touchRecordModel = $this->getFactory()->getTouchRecordModel();
+        $touchRecordModel = $this->getFactory()->createTouchRecordModel();
 
         return $touchRecordModel->saveTouchRecord(
             $itemType,
@@ -43,7 +43,7 @@ class TouchFacade extends AbstractFacade
      */
     public function touchInactive($itemType, $idItem)
     {
-        $touchRecordModel = $this->getFactory()->getTouchRecordModel();
+        $touchRecordModel = $this->getFactory()->createTouchRecordModel();
 
         return $touchRecordModel->saveTouchRecord(
             $itemType,
@@ -60,7 +60,7 @@ class TouchFacade extends AbstractFacade
      */
     public function touchDeleted($itemType, $idItem)
     {
-        $touchRecordModel = $this->getFactory()->getTouchRecordModel();
+        $touchRecordModel = $this->getFactory()->createTouchRecordModel();
 
         return $touchRecordModel->saveTouchRecord(
             $itemType,
@@ -77,7 +77,7 @@ class TouchFacade extends AbstractFacade
      */
     public function bulkTouchActive($itemType, array $itemIds = [])
     {
-        $touchModel = $this->getFactory()->getTouchModel();
+        $touchModel = $this->getFactory()->createTouchModel();
 
         return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $itemIds);
     }
@@ -90,7 +90,7 @@ class TouchFacade extends AbstractFacade
      */
     public function bulkTouchInactive($itemType, array $itemIds = [])
     {
-        $touchModel = $this->getFactory()->getTouchModel();
+        $touchModel = $this->getFactory()->createTouchModel();
 
         return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, $itemIds);
     }
@@ -103,7 +103,7 @@ class TouchFacade extends AbstractFacade
      */
     public function bulkTouchDeleted($itemType, array $itemIds = [])
     {
-        $touchModel = $this->getFactory()->getTouchModel();
+        $touchModel = $this->getFactory()->createTouchModel();
 
         return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $itemIds);
     }
@@ -115,7 +115,7 @@ class TouchFacade extends AbstractFacade
      */
     public function getItemsByType($itemType)
     {
-        $touchModel = $this->getFactory()->getTouchModel();
+        $touchModel = $this->getFactory()->createTouchModel();
 
         return $touchModel->getItemsByType($itemType);
     }

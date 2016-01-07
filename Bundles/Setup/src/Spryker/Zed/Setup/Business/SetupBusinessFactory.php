@@ -88,7 +88,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
             $this->createJenkinsEnableConsole(),
             $this->createJenkinsDisableConsole(),
             $this->createJenkinsGenerateConsole(),
-            $this->createDeployPreparePropelConsole()
+            $this->createDeployPreparePropelConsole(),
         ];
     }
 

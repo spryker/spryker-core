@@ -25,7 +25,6 @@ interface ApplicationConstants
     const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';
     const ZED_TWIG_OPTIONS = 'ZED_TWIG_OPTIONS';
 
-
     const YVES_THEME = 'YVES_THEME';
     const YVES_TRUSTED_PROXIES = 'YVES_TRUSTED_PROXIES';
     const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
