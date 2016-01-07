@@ -6,6 +6,7 @@
 namespace Spryker\Zed\Category\Communication\Table;
 
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -19,6 +20,10 @@ class RootNodeTable extends AbstractTable
     const ID_CATEGORY_NODE = 'id_category_node';
     const LOCALE_NAME = 'locale_name';
     const COL_REORDER = 'Reorder';
+    const URL_CATEGORY_NODE_VIEW = '/category/node/view';
+    const PARAM_ID_NODE = 'id-node';
+    const URL_PRODUCT_CATEGORY_ADD = '/product-category/add';
+    const PARAM_ID_PARENT_NODE = 'id-parent-node';
 
     /**
      * @var CategoryQueryContainerInterface
@@ -99,10 +104,15 @@ class RootNodeTable extends AbstractTable
      */
     protected function getAddButtonHtml(array $rootNode)
     {
-        return sprintf(
-            '<a href="/category/node/view?id-node=%d" id="node-%d" class="btn btn-xs btn-success"><i class="fa fa-sitemap"></i></a>',
-            $rootNode[self::ID_CATEGORY_NODE],
-            $rootNode[self::ID_CATEGORY_NODE]
+        return $this->generateViewButton(
+            Url::generate(self::URL_CATEGORY_NODE_VIEW, [
+                self::PARAM_ID_NODE => $rootNode[self::ID_CATEGORY_NODE],
+            ]),
+            '<i class="fa fa-sitemap"></i>',
+            [
+                self::BUTTON_ICON => null,
+                'id' => sprintf('node-%d', $rootNode[self::ID_CATEGORY_NODE])
+            ]
         );
     }
 
@@ -113,9 +123,14 @@ class RootNodeTable extends AbstractTable
      */
     protected function getReorderButtonHtml(array $rootNode)
     {
-        return sprintf(
-            '<a href="/product-category/add?id-parent-node=%d" class="btn btn-xs btn-success"><i class="fa fa-plus"></i></a>',
-            $rootNode[self::ID_CATEGORY_NODE]
+        return $this->generateCreateButton(
+            Url::generate(self::URL_PRODUCT_CATEGORY_ADD, [
+                self::PARAM_ID_PARENT_NODE => $rootNode[self::ID_CATEGORY_NODE],
+            ]),
+            '<i class="fa fa-plus"></i></a>',
+            [
+                self::BUTTON_ICON => null,
+            ]
         );
     }
 
