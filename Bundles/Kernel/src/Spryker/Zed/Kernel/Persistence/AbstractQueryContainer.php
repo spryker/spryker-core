@@ -16,11 +16,10 @@ use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolv
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
 abstract class AbstractQueryContainer implements QueryContainerInterface
 {
-
-    const PROPEL_CONNECTION = 'propel connection';
 
     /**
      * @var PersistenceFactoryInterface
@@ -137,7 +136,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
      */
     public function getConnection()
     {
-        return $this->getProvidedDependency(self::PROPEL_CONNECTION);
+        return (new Connection())->get();
     }
 
 }
