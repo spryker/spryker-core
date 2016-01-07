@@ -5,6 +5,7 @@
  */
 namespace Spryker\Zed\Payolution\Communication\Table;
 
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
@@ -14,6 +15,8 @@ class Payments extends AbstractTable
 {
 
     const FIELD_VIEW = 'FIELD_VIEW';
+    const URL_PAYOLUTION_DETAILS = '/payolution/details/';
+    const PARAM_ID_PAYMENT = 'id-payment';
 
     /**
      * @var SpyPaymentPayolutionQuery
@@ -65,14 +68,30 @@ class Payments extends AbstractTable
                 SpyPaymentPayolutionTableMap::COL_FK_SALES_ORDER => $paymentItem[SpyPaymentPayolutionTableMap::COL_FK_SALES_ORDER],
                 SpyPaymentPayolutionTableMap::COL_EMAIL => $paymentItem[SpyPaymentPayolutionTableMap::COL_EMAIL],
                 SpyPaymentPayolutionTableMap::COL_CREATED_AT => $paymentItem[SpyPaymentPayolutionTableMap::COL_CREATED_AT],
-                self::FIELD_VIEW => sprintf(
-                    '<a class="btn btn-primary" href="/payolution/details?id-payment=%s">View</a>',
-                    $paymentItem[SpyPaymentPayolutionTableMap::COL_ID_PAYMENT_PAYOLUTION]
-                ),
+                self::FIELD_VIEW => implode(' ', $this->buildOptionsUrls($paymentItem)),
             ];
         }
 
         return $results;
+    }
+
+    /**
+     * @param array $paymentItem
+     *
+     * @return array
+     */
+    protected function buildOptionsUrls(array $paymentItem)
+    {
+        $urls = [];
+
+        $urls[] = $this->generateViewButton(
+            Url::generate(self::URL_PAYOLUTION_DETAILS, [
+                self::PARAM_ID_PAYMENT => $paymentItem[SpyPaymentPayolutionTableMap::COL_ID_PAYMENT_PAYOLUTION],
+            ]),
+            'View'
+        );
+
+        return $urls;
     }
 
 }
