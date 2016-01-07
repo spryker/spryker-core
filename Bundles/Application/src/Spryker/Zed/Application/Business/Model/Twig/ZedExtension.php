@@ -7,19 +7,15 @@
 namespace Spryker\Zed\Application\Business\Model\Twig;
 
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButton;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButton;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButton;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButton;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\StaticPath;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Panel;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Modal;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ListGroup;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\GridConfirmDialog;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Grid;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPrice;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\ConfirmDialog;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Button;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\PanelFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\ModalFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\ListGroupFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\FormatPriceFunction;
 
 class ZedExtension extends \Twig_Extension
 {
@@ -50,19 +46,15 @@ class ZedExtension extends \Twig_Extension
     public function getFunctions()
     {
         $functions = [
-            new Button(),
-            new ConfirmDialog(),
-            new FormatPrice(),
-            new Grid(),
-            new GridConfirmDialog(),
-            new ListGroup(),
-            new Modal(),
-            new Panel(),
-            new StaticPath(),
-            new BackActionButton(),
-            new CreateActionButton(),
-            new ViewActionButton(),
-            new EditActionButton(),
+            new FormatPriceFunction(),
+            new ListGroupFunction(),
+            new ModalFunction(),
+            new PanelFunction(),
+            new AssetsPathFunction(),
+            new BackActionButtonFunction(),
+            new CreateActionButtonFunction(),
+            new ViewActionButtonFunction(),
+            new EditActionButtonFunction(),
             new UrlFunction(),
         ];
 

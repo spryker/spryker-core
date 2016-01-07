@@ -2,7 +2,7 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 
-class ViewActionButton extends AbstractActionButton
+class CreateActionButtonFunction extends AbstractActionButtonFunction
 {
 
     /**
@@ -10,7 +10,7 @@ class ViewActionButton extends AbstractActionButton
      */
     protected function getButtonClass()
     {
-        return 'btn-info';
+        return 'btn-success';
     }
 
     /**
@@ -18,7 +18,7 @@ class ViewActionButton extends AbstractActionButton
      */
     protected function getIcon()
     {
-        return '<i class="fa fa-caret-right"></i> ';
+        return '<i class="fa fa-plus"></i> ';
     }
 
     /**
@@ -26,7 +26,7 @@ class ViewActionButton extends AbstractActionButton
      */
     protected function getFunctionName()
     {
-        return 'viewActionButton';
+        return 'createActionButton';
     }
 
 }

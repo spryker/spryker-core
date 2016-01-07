@@ -8,7 +8,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
 use Spryker\Zed\Library\Twig\TwigFunction;
 
-class ListGroup extends TwigFunction
+class ListGroupFunction extends TwigFunction
 {
 
     /**

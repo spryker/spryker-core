@@ -8,7 +8,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
 use Spryker\Zed\Library\Twig\TwigFunction;
 
-class Grid extends TwigFunction
+class AssetsPathFunction extends TwigFunction
 {
 
     /**
@@ -16,7 +16,7 @@ class Grid extends TwigFunction
      */
     protected function getFunctionName()
     {
-        return 'grid';
+        return 'assetsPath';
     }
 
     /**
@@ -24,8 +24,10 @@ class Grid extends TwigFunction
      */
     protected function getFunction()
     {
-        return function ($grid) {
-            return $grid;
+        return function ($path) {
+            $path = ltrim($path, '/');
+
+            return '/assets/' . $path;
         };
     }
 
