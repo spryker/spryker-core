@@ -95,6 +95,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
     ) {
+        $this->providePropelConnection($container);
         $dependencyProvider->providePersistenceLayerDependencies($container);
     }
 
@@ -138,6 +139,16 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     public function getConnection()
     {
         return $this->getProvidedDependency(self::PROPEL_CONNECTION);
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return void
+     */
+    private function providePropelConnection(Container $container)
+    {
+        $container[self::PROPEL_CONNECTION] = $container->getLocator()->propel()->pluginConnection();
     }
 
 }
