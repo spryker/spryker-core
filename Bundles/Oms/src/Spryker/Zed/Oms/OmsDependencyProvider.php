@@ -64,6 +64,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param Container $container
+     *
      * @return void
      */
     public function providePersistenceLayerDependencies(Container $container)

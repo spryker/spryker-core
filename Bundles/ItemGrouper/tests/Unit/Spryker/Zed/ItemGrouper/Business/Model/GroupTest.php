@@ -18,10 +18,9 @@ class GroupTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsGroupedBySku()
     {
-        $this->markTestSkipped('Test is broken');
         $groupAbleContainer = $this->getGroupableContainer();
 
-        $group = new Group($threshold = -1);
+        $group = new Group($threshold = 0, true);
         $groupedItems = (array) $group->groupByKey($groupAbleContainer)->getItems();
 
         $this->assertCount(2, $groupedItems);
@@ -40,21 +39,16 @@ class GroupTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsThresholdValidatorApplied()
     {
-        $this->markTestSkipped('Test is broken');
         $groupAbleContainer = $this->getGroupableContainer();
 
-        $group = new Group($threshold = 1);
+        $group = new Group($threshold = 1, true);
         $groupedItems = (array) $group->groupByKey($groupAbleContainer)->getItems();
 
-        $this->assertCount(3, $groupedItems);
+        $this->assertCount(2, $groupedItems);
 
         $firstItem = array_shift($groupedItems);
         $this->assertEquals('A', $firstItem->getGroupKey());
-        $this->assertEquals(1, $firstItem->getQuantity());
-
-        $firstItem = array_shift($groupedItems);
-        $this->assertEquals('A', $firstItem->getGroupKey());
-        $this->assertEquals(1, $firstItem->getQuantity());
+        $this->assertEquals(2, $firstItem->getQuantity());
 
         $secondItem = array_shift($groupedItems);
         $this->assertEquals('B', $secondItem->getGroupKey());

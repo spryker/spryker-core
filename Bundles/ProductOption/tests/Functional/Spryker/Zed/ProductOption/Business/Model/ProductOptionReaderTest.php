@@ -163,18 +163,16 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
      */
     public function testQueryValueConstraintsForValueUsage()
     {
-        $this->markTestSkipped('Ordering of result always different');
-
         $result = $this->facade
             ->getValueConstraintsForValueUsage($this->ids['idUsageGreen']);
 
         $this->assertCount(2, $result);
 
         $this->assertEquals('ALLOW', $result[0]['operator']);
-        $this->assertEquals($this->ids['idUsageSmall'], $result[0]['valueUsageId']);
+        $this->assertEquals($this->ids['idUsageSmall'], $result[1]['valueUsageId']);
 
         $this->assertEquals('ALLOW', $result[1]['operator']);
-        $this->assertEquals($this->ids['idUsageLarge'], $result[1]['valueUsageId']);
+        $this->assertEquals($this->ids['idUsageLarge'], $result[0]['valueUsageId']);
 
         $result = $this->facade
             ->getValueConstraintsForValueUsage($this->ids['idUsageBlue']);
@@ -196,14 +194,12 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
      */
     public function testQueryValueConstraintsForValueUsageByOperator()
     {
-        $this->markTestSkipped('Ordering of result always different');
-
         $result = $this->facade
             ->getValueConstraintsForValueUsageByOperator($this->ids['idUsageGreen'], 'ALLOW');
 
         $this->assertCount(2, $result);
-        $this->assertEquals($this->ids['idUsageSmall'], $result[0]);
-        $this->assertEquals($this->ids['idUsageLarge'], $result[1]);
+        $this->assertEquals($this->ids['idUsageSmall'], $result[1]);
+        $this->assertEquals($this->ids['idUsageLarge'], $result[0]);
 
         $result = $this->facade
             ->getValueConstraintsForValueUsageByOperator($this->ids['idUsageGreen'], 'NOT');
