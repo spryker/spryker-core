@@ -11,10 +11,18 @@ use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
+use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
+use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
@@ -23,13 +31,13 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function saveOrder(OrderTransfer $orderTransfer)
+    public function saveOrder(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->createOrderManager()->saveOrder($orderTransfer);
+        $this->getFactory()->createOrderManager()->saveOrder($quoteTransfer);
     }
 
     /**

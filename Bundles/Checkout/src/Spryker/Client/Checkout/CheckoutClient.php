@@ -6,8 +6,10 @@
 
 namespace Spryker\Client\Checkout;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Checkout\Zed\CheckoutStub;
 
 /**
  * @method \Spryker\Client\Checkout\CheckoutFactory getFactory()
@@ -16,13 +18,13 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
+    public function requestCheckout(QuoteTransfer $quoteTransfer)
     {
-        return $this->getZedStub()->requestCheckout($checkoutRequest);
+        return $this->getZedStub()->requestCheckout($quoteTransfer);
     }
 
     /**

@@ -6,9 +6,9 @@
 
 namespace Spryker\Zed\CustomerCheckoutConnector\Business;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface;
 
 class CustomerOrderSaver implements CustomerOrderSaverInterface
@@ -28,14 +28,14 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $customerTransfer = $orderTransfer->getCustomer();
+        $customerTransfer = $quoteTransfer->getCustomer();
 
         if ($customerTransfer->getIsGuest()) {
             return;
@@ -44,14 +44,14 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
         if ($customerTransfer->getIdCustomer() !== null) {
             $this->customerFacade->updateCustomer($customerTransfer);
         } else {
-            $customerTransfer->setFirstName($orderTransfer->getBillingAddress()->getFirstName());
-            $customerTransfer->setLastName($orderTransfer->getBillingAddress()->getLastName());
+            $customerTransfer->setFirstName($quoteTransfer->getBillingAddress()->getFirstName());
+            $customerTransfer->setLastName($quoteTransfer->getBillingAddress()->getLastName());
             if (!$customerTransfer->getEmail()) {
-                $customerTransfer->setEmail($orderTransfer->getBillingAddress()->getEmail());
+                $customerTransfer->setEmail($quoteTransfer->getBillingAddress()->getEmail());
             }
             $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
-            $orderTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
-            $orderTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
+            $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
+            //$quoteTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
         }
 
         $this->persistAddresses($customerTransfer);

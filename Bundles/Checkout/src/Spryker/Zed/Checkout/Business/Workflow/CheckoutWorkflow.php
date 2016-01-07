@@ -6,14 +6,14 @@
 
 namespace Spryker\Zed\Checkout\Business\Workflow;
 
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Checkout\CheckoutConstants;
-use Spryker\Shared\Library\Error\ErrorHandler;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
@@ -22,16 +22,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
      */
     protected $preConditionStack;
-
-    /**
-     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface[]
-     */
-    protected $preHydrationStack;
-
-    /**
-     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface[]
-     */
-    protected $orderHydrationStack;
 
     /**
      * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]
@@ -50,52 +40,39 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[] $preConditionStack
-     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface[] $preHydrationStack
-     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface[] $orderHydrationStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[] $saveOrderStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[] $postSaveHookStack
      * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface $omsFacade
      */
     public function __construct(
         array $preConditionStack,
-        array $preHydrationStack,
-        array $orderHydrationStack,
         array $saveOrderStack,
         array $postSaveHookStack,
         CheckoutToOmsInterface $omsFacade
     ) {
         $this->preConditionStack = $preConditionStack;
-        $this->preHydrationStack = $preHydrationStack;
         $this->postSaveHookStack = $postSaveHookStack;
-        $this->orderHydrationStack = $orderHydrationStack;
         $this->saveOrderStack = $saveOrderStack;
         $this->omsFacade = $omsFacade;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
+    public function requestCheckout(QuoteTransfer $quoteTransfer)
     {
         $checkoutResponse = new CheckoutResponseTransfer();
         $checkoutResponse->setIsSuccess(false);
 
-        $this->checkPreConditions($checkoutRequest, $checkoutResponse);
+        $this->checkPreConditions($quoteTransfer, $checkoutResponse);
 
         if (!$this->hasErrors($checkoutResponse)) {
-            $this->preHydrate($checkoutRequest, $checkoutResponse);
-
-            $orderTransfer = $this->getOrderTransfer();
-            $this->hydrateOrder($orderTransfer, $checkoutRequest);
-
-            $orderTransfer = $this->doSaveOrder($orderTransfer, $checkoutResponse);
-
-            $checkoutResponse->setOrder($orderTransfer);
+            $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponse);
             if (!$this->hasErrors($checkoutResponse)) {
-                $this->triggerStateMachine($orderTransfer, $checkoutRequest);
-                $this->executePostHooks($orderTransfer, $checkoutResponse);
+                $this->triggerStateMachine($quoteTransfer);
+                $this->executePostHooks($quoteTransfer, $checkoutResponse);
 
                 $isSuccess = !$this->hasErrors($checkoutResponse);
                 $checkoutResponse->setIsSuccess($isSuccess);
@@ -106,40 +83,15 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    protected function preHydrate(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
+    protected function checkPreConditions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        foreach ($this->preHydrationStack as $preHydrator) {
-            $preHydrator->execute($checkoutRequest, $checkoutResponse);
-        }
-    }
-
-    /**
-     * @TODO Refactor this code to make conditions throw specific exceptions, catch \Exception should not be used here
-     *
-     * @see https://github.com/spryker/spryker/issues/967
-     *
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
-     *
-     * @return void
-     */
-    protected function checkPreConditions(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
-    {
-        try {
-            foreach ($this->preConditionStack as $preCondition) {
-                $preCondition->checkCondition($checkoutRequest, $checkoutResponse);
-            }
-        } catch (\Exception $e) {
-            $error = $this->handleCheckoutError($e);
-
-            $checkoutResponse
-                ->addError($error)
-                ->setIsSuccess(false);
+        foreach ($this->preConditionStack as $preCondition) {
+            $preCondition->checkCondition($quoteTransfer, $checkoutResponse);
         }
     }
 
@@ -154,18 +106,19 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @throws \Exception
      */
-    protected function doSaveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
+    protected function doSaveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         Propel::getConnection()->beginTransaction();
 
         try {
             foreach ($this->saveOrderStack as $orderSaver) {
-                $orderSaver->saveOrder($orderTransfer, $checkoutResponse);
+                $orderSaver->saveOrder($quoteTransfer, $checkoutResponse);
             }
 
             if (!$this->hasErrors($checkoutResponse)) {
@@ -173,19 +126,14 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             } else {
                 Propel::getConnection()->rollBack();
 
-                return $orderTransfer;
+                return $quoteTransfer;
             }
         } catch (\Exception $e) {
             Propel::getConnection()->rollBack();
-
-            $error = $this->handleCheckoutError($e);
-
-            $checkoutResponse
-                ->addError($error)
-                ->setIsSuccess(false);
+            throw $e;
         }
 
-        return $orderTransfer;
+        return $quoteTransfer;
     }
 
     /**
@@ -197,16 +145,15 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    protected function triggerStateMachine(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
+    protected function triggerStateMachine(QuoteTransfer $quoteTransfer)
     {
         $itemIds = [];
 
-        foreach ($orderTransfer->getItems() as $item) {
+        foreach ($quoteTransfer->getItems() as $item) {
             $itemIds[] = $item->getIdSalesOrderItem();
         }
 
@@ -214,57 +161,16 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
-     *
-     * @return void
-     */
-    protected function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
-    {
-        foreach ($this->orderHydrationStack as $orderHydrator) {
-            $orderHydrator->hydrateOrder($orderTransfer, $checkoutRequest);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    protected function executePostHooks($orderTransfer, $checkoutResponse)
+    protected function executePostHooks(QuoteTransfer $quoteTransfer, $checkoutResponse)
     {
-        try {
-            foreach ($this->postSaveHookStack as $postSaveHook) {
-                $postSaveHook->executeHook($orderTransfer, $checkoutResponse);
-            }
-        } catch (\Exception $e) {
-            $error = $this->handleCheckoutError($e);
-
-            $checkoutResponse
-                ->addError($error)
-                ->setIsSuccess(false);
+        foreach ($this->postSaveHookStack as $postSaveHook) {
+            $postSaveHook->executeHook($quoteTransfer, $checkoutResponse);
         }
-    }
-
-    /**
-     * @param \Exception $exception
-     *
-     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
-     */
-    protected function handleCheckoutError(\Exception $exception)
-    {
-        ErrorHandler::initialize()->handleException($exception, false, false);
-
-        $error = new CheckoutErrorTransfer();
-
-        $error
-            ->setMessage($exception->getMessage())
-            ->setErrorCode(CheckoutConstants::ERROR_CODE_UNKNOWN_ERROR)
-            ->setType(get_class($exception))
-            ->setTrace($exception->getTraceAsString());
-
-        return $error;
     }
 
 }

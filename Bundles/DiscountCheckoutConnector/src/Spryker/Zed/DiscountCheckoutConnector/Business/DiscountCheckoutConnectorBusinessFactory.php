@@ -7,23 +7,11 @@
 namespace Spryker\Zed\DiscountCheckoutConnector\Business;
 
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
-use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydrator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorDependencyProvider;
 
-/**
- * @method \Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorConfig getConfig()
- */
 class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
-    /**
-     * @return \Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydratorInterface
-     */
-    public function createOrderHydrator()
-    {
-        return new DiscountOrderHydrator();
-    }
 
     /**
      * @return \Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaverInterface

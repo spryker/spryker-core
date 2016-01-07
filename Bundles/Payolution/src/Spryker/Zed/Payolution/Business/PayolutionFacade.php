@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Payolution\Business;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PayolutionCalculationRequestTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -20,27 +20,27 @@ class PayolutionFacade extends AbstractFacade
 {
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $orderTransfer
      */
-    public function saveOrderPayment(OrderTransfer $orderTransfer)
+    public function saveOrderPayment(QuoteTransfer $quoteTransfer)
     {
         return $this
             ->getFactory()
             ->createOrderSaver()
-            ->saveOrderPayment($orderTransfer);
+            ->saveOrderPayment($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function preCheckPayment(QuoteTransfer $quoteTransfer)
     {
         $payolutionResponseTransfer = $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->preCheckPayment($checkoutRequestTransfer);
+            ->preCheckPayment($quoteTransfer);
 
         return $payolutionResponseTransfer;
     }
@@ -126,7 +126,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -139,7 +139,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -152,7 +152,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -165,7 +165,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -178,7 +178,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */

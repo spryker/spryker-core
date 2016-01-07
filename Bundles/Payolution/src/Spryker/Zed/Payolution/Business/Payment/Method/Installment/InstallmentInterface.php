@@ -21,11 +21,11 @@ interface InstallmentInterface
     public function buildCalculationRequest(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function buildPreCheckRequest(CheckoutRequestTransfer $checkoutRequestTransfer);
+    public function buildPreCheckRequest(QuoteTransfer $quoteTransfer);
 
     /**
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity

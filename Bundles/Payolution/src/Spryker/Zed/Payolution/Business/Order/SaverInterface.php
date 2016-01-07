@@ -6,16 +6,14 @@
 
 namespace Spryker\Zed\Payolution\Business\Order;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface SaverInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
-    public function saveOrderPayment(OrderTransfer $orderTransfer);
+    public function saveOrderPayment(QuoteTransfer $quoteTransfer);
 
 }

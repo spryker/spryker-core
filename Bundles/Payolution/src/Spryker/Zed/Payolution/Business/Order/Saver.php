@@ -7,6 +7,7 @@ namespace Spryker\Zed\Payolution\Business\Order;
 
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionOrderItem;
 
@@ -14,11 +15,11 @@ class Saver implements SaverInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function saveOrderPayment(OrderTransfer $orderTransfer)
+    public function saveOrderPayment(QuoteTransfer $quoteTransfer)
     {
         $paymentEntity = $this->savePaymentForOrder(
             $orderTransfer->getPayolutionPayment(),

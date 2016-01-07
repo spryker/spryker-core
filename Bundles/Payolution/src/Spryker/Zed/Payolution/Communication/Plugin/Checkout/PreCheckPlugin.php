@@ -7,9 +7,9 @@
 namespace Spryker\Zed\Payolution\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
@@ -21,18 +21,18 @@ class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionI
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function checkCondition(
-        CheckoutRequestTransfer $checkoutRequestTransfer,
+        QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         $payolutionTransactionResponseTransfer = $this
             ->getFacade()
-            ->preCheckPayment($checkoutRequestTransfer);
+            ->preCheckPayment($quoteTransfer);
 
         $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransfer);
 

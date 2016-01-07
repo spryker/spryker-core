@@ -7,8 +7,8 @@
 namespace Spryker\Zed\AvailabilityCheckoutConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Checkout\CheckoutConstants;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
@@ -31,14 +31,14 @@ class ProductsAvailablePreConditionPlugin extends AbstractPlugin implements Chec
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function checkCondition(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
+    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $groupedItemQuantities = $this->groupItemsBySku($checkoutRequest->getCart()->getItems());
+        $groupedItemQuantities = $this->groupItemsBySku($quoteTransfer->getItems());
 
         foreach ($groupedItemQuantities as $sku => $quantity) {
             if (!$this->isProductSellable($sku, $quantity)) {

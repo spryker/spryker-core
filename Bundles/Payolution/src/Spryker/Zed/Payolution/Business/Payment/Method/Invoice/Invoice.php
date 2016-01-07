@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Invoice;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
@@ -47,17 +48,17 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function buildPreCheckRequest(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function buildPreCheckRequest(QuoteTransfer $quoteTransfer)
     {
-        $payolutionTransfer = $checkoutRequestTransfer->getPayolutionPayment();
+        $payolutionTransfer = $quoteTransfer->getPayment()->getPayolution();
         $addressTransfer = $payolutionTransfer->getAddress();
 
         $requestData = $this->getBaseTransactionRequest(
-            $checkoutRequestTransfer->getCart()->getTotals()->getGrandTotal(),
+            $quoteTransfer->getTotals()->getGrandTotal(),
             $payolutionTransfer->getCurrencyIso3Code(),
             $isSalesOrder = null
         );

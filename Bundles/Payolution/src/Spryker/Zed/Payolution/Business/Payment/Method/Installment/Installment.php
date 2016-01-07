@@ -126,13 +126,13 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
      *
      * @return array
      */
-    public function buildPreCheckRequest(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function buildPreCheckRequest(QuoteTransfer $quoteTransfer)
     {
-        $payolutionTransfer = $checkoutRequestTransfer->getPayolutionPayment();
+        $payolutionTransfer = $quoteTransfer->getPayment()->getPayolution();
         $addressTransfer = $payolutionTransfer->getAddress();
 
         $requestData = $this->getBaseTransactionRequest(
-            $checkoutRequestTransfer->getCart()->getTotals()->getGrandTotal(),
+            $quoteTransfer->getTotals()->getGrandTotal(),
             $payolutionTransfer->getCurrencyIso3Code(),
             $isSalesOrder = null
         );

@@ -10,7 +10,10 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountCode;
 use Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface;
@@ -46,15 +49,15 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function saveDiscounts(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function saveDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->saveOrderItemDiscounts($orderTransfer);
-        $this->saveOrderExpenseDiscounts($orderTransfer);
+        $this->saveOrderItemDiscounts($quoteTransfer);
+        $this->saveOrderExpenseDiscounts($quoteTransfer);
         $this->discountFacade->useVoucherCodes($this->voucherCodesUsed);
     }
 
@@ -63,7 +66,7 @@ class DiscountSaver implements DiscountSaverInterface
      *
      * @return void
      */
-    protected function saveOrderItemDiscounts(OrderTransfer $orderTransfer)
+    protected function saveOrderItemDiscounts(QuoteTransfer $orderTransfer)
     {
         $orderItemCollection = $orderTransfer->getItems();
         foreach ($orderItemCollection as $orderItemTransfer) {
@@ -222,16 +225,16 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    protected function saveOrderExpenseDiscounts(OrderTransfer $orderTransfer)
+    protected function saveOrderExpenseDiscounts(QuoteTransfer $quoteTransfer)
     {
-        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             foreach ($expenseTransfer->getDiscounts() as $discountTransfer) {
                 $salesDiscountEntity = $this->createSalesDiscountEntity($discountTransfer);
-                $salesDiscountEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
+                $salesDiscountEntity->setFkSalesOrder($quoteTransfer->getIdSalesOrder());
                 $salesDiscountEntity->setFkSalesExpense($expenseTransfer->getIdSalesExpense());
                 $this->saveDiscount($salesDiscountEntity, $discountTransfer);
             }

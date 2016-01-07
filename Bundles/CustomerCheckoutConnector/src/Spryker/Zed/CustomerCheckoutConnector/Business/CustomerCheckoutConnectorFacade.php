@@ -6,9 +6,8 @@
 
 namespace Spryker\Zed\CustomerCheckoutConnector\Business;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -18,36 +17,25 @@ class CustomerCheckoutConnectorFacade extends AbstractFacade implements Customer
 {
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $order
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
-     *
-     * @return void
-     */
-    public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
-    {
-        $this->getFactory()->createCustomerOrderHydrator()->hydrateOrderTransfer($order, $request);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createCustomerOrderSaver()->saveOrder($orderTransfer, $checkoutResponse);
+        $this->getFactory()->createCustomerOrderSaver()->saveOrder($quoteTransfer, $checkoutResponse);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function checkPreConditions(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
+    public function checkPreConditions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createPreConditionChecker()->checkPreConditions($checkoutRequest, $checkoutResponse);
+        $this->getFactory()->createPreConditionChecker()->checkPreConditions($quoteTransfer, $checkoutResponse);
     }
 
 }

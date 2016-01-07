@@ -8,9 +8,10 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Propel;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
-use Spryker\Shared\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConstants;
 use Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainerInterface;
 
 class ShipmentOrderSaver implements ShipmentOrderSaverInterface
@@ -30,12 +31,12 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function saveShipmentForOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function saveShipmentForOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         Propel::getConnection()->beginTransaction();
         $salesOrderEntity = $this->queryContainer->querySalesOrderById($orderTransfer->getIdSalesOrder())->findOne();
@@ -43,7 +44,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 
         $expenses = $orderTransfer->getExpenses();
         foreach ($expenses as $expenseTransfer) {
-            if (ShipmentCheckoutConnectorConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {
+            if (ShipmentConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {
                 $salesOrderExpense = new SpySalesExpense();
                 $salesOrderExpense->fromArray($expenseTransfer->toArray());
 

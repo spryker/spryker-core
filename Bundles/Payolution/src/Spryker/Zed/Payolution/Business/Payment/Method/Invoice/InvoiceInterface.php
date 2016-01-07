@@ -6,18 +6,18 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Invoice;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 interface InvoiceInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function buildPreCheckRequest(CheckoutRequestTransfer $checkoutRequestTransfer);
+    public function buildPreCheckRequest(QuoteTransfer $quoteTransfer);
 
     /**
      * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity

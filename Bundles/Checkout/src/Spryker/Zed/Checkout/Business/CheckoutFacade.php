@@ -6,7 +6,8 @@
 
 namespace Spryker\Zed\Checkout\Business;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,16 +17,16 @@ class CheckoutFacade extends AbstractFacade implements CheckoutFacadeInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
+    public function requestCheckout(QuoteTransfer $quoteTransfer)
     {
         return $this
             ->getFactory()
             ->createCheckoutWorkflow()
-            ->requestCheckout($checkoutRequest);
+            ->requestCheckout($quoteTransfer);
     }
 
 }

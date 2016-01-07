@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\CustomerCheckoutConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
@@ -19,14 +19,14 @@ class CustomerPreConditionCheckerPlugin extends AbstractPlugin implements Checko
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function checkCondition(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
+    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFacade()->checkPreConditions($checkoutRequest, $checkoutResponse);
+        $this->getFacade()->checkPreConditions($quoteTransfer, $checkoutResponse);
     }
 
 }

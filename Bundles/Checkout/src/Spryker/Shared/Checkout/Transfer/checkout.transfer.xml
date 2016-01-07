@@ -88,6 +88,11 @@
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address"/>
         <property name="customer" type="Customer" />
+        <property name="checkout" type="Checkout" />
+    </transfer>
+
+    <transfer name="CheckoutTransfer">
+        <property name="orderPlaced" type="bool" />
     </transfer>
 
 </transfers>

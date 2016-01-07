@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\CalculationCheckoutConnector\Business;
 
+use Spryker\Zed\CalculationCheckoutConnector\Business\Model\CartAmountPrecondition;
+use Spryker\Zed\CalculationCheckoutConnector\Dependency\Facade\CalculationCheckoutConnectorToCalculationInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\CalculationCheckoutConnector\CalculationCheckoutConnectorDependencyProvider;
 
@@ -16,11 +18,19 @@ class CalculationCheckoutConnectorBusinessFactory extends AbstractBusinessFactor
 {
 
     /**
-     * @return \Spryker\Zed\CalculationCheckoutConnector\Dependency\Facade\CalculationCheckoutConnectorToCalculationInterface
+     * @return CalculationCheckoutConnectorToCalculationInterface
      */
     public function getCalculationFacade()
     {
         return $this->getProvidedDependency(CalculationCheckoutConnectorDependencyProvider::FACADE_CALCULATION);
+    }
+
+    /**
+     * @return CartAmountPrecondition
+     */
+    public function createCartAmountPrecondition()
+    {
+        return new CartAmountPrecondition($this->getCalculationFacade());
     }
 
 }

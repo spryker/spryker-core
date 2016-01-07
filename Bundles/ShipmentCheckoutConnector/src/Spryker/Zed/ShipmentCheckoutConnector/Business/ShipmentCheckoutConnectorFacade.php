@@ -6,9 +6,8 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Business;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,21 +15,15 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ShipmentCheckoutConnectorFacade extends AbstractFacade implements ShipmentCheckoutConnectorFacadeInterface
 {
-
     /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponse
+     *
      * @return void
      */
-    public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
+    public function saveShipmentForOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createShipmentOrderHydrator()->hydrateOrderTransfer($order, $request);
-    }
-
-    /**
-     * @return void
-     */
-    public function saveShipmentForOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
-    {
-        $this->getFactory()->createShipmentOrderSaver()->saveShipmentForOrder($orderTransfer, $checkoutResponse);
+        $this->getFactory()->createShipmentOrderSaver()->saveShipmentForOrder($quoteTransfer, $checkoutResponse);
     }
 
 }

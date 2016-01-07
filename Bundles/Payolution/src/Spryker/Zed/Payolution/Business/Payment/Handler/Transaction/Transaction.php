@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Handler\Transaction;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface;
 use Spryker\Zed\Payolution\Business\Payment\Handler\AbstractPaymentHandler;
@@ -48,16 +49,16 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
-    public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function preCheckPayment(QuoteTransfer $quoteTransfer)
     {
-        $paymentTransfer = $checkoutRequestTransfer->getPayolutionPayment();
+        $paymentTransfer = $quoteTransfer->getPayment()->getPayolution();
         $requestData = $this
             ->getMethodMapper($paymentTransfer->getAccountBrand())
-            ->buildPreCheckRequest($checkoutRequestTransfer);
+            ->buildPreCheckRequest($quoteTransfer);
 
         return $this->sendRequest($requestData);
     }

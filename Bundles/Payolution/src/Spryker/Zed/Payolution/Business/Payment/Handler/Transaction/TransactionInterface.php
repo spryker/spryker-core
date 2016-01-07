@@ -6,50 +6,51 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Handler\Transaction;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface TransactionInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
-    public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer);
+    public function preCheckPayment(QuoteTransfer $quoteTransfer);
 
     /**
      * @param int $idPayment
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
     public function preAuthorizePayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
     public function reAuthorizePayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
     public function revertPayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
     public function capturePayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
     public function refundPayment($idPayment);
 
