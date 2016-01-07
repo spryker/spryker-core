@@ -4,6 +4,7 @@ namespace Spryker\Zed\Refund\Communication\Table;
 
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Shared\Library\DateFormatter;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Refund\Business\RefundFacade;
@@ -14,6 +15,8 @@ class RefundTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
+    const URL_REFUND_DETAILS = '/refund/details/';
+    const PARAM_ID_REFUND = 'id-refund';
 
     /**
      * @var RefundFacade
@@ -82,10 +85,7 @@ class RefundTable extends AbstractTable
                 SpyRefundTableMap::COL_CREATED_AT => $this->formatDate($item[SpyRefundTableMap::COL_CREATED_AT]),
                 SpyRefundTableMap::COL_AMOUNT => $this->formatAmount($item[SpyRefundTableMap::COL_AMOUNT]),
                 SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_COMMENT],
-                self::ACTIONS => sprintf(
-                    '<a class="btn btn-primary" href="/refund/details/?id-refund=%d">View</a>',
-                    $item[SpyRefundTableMap::COL_ID_REFUND]
-                ),
+                self::ACTIONS => implode(' ', $this->createActionUrls($item)),
             ];
         }
 
@@ -114,6 +114,24 @@ class RefundTable extends AbstractTable
     protected function formatDate($date)
     {
         return $this->dateFormatter->dateTime($date);
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function createActionUrls(array $item)
+    {
+        $urls = [];
+        $urls[] = $this->generateViewButton(
+            Url::generate(self::URL_REFUND_DETAILS, [
+                self::PARAM_ID_REFUND => $item[SpyRefundTableMap::COL_ID_REFUND],
+            ]),
+            'View'
+        );
+
+        return $urls;
     }
 
 }
