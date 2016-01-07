@@ -109,11 +109,11 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @param ItemTransfer $item
+     * @param ItemTransfer|null $item
      *
      * @return self
      */
-    public function setItem(ItemTransfer $item)
+    public function setItem(ItemTransfer $item = null)
     {
         $this->item = $item;
         $this->addModifiedProperty(self::ITEM);
