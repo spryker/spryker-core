@@ -281,11 +281,11 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param \ArrayObject|TransferInterface[]|null $transferCollection
+     * @param \ArrayObject|TransferInterface[] $transferCollection
      *
      * @return self
      */
-    public function setTransferCollection(\ArrayObject $transferCollection = null)
+    public function setTransferCollection(\ArrayObject $transferCollection)
     {
         $this->transferCollection = $transferCollection;
         $this->addModifiedProperty(self::TRANSFER_COLLECTION);
