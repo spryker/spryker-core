@@ -103,7 +103,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $fields = $this->getDefaultFormFields();
 
