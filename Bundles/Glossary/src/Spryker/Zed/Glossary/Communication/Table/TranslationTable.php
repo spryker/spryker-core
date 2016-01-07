@@ -7,6 +7,7 @@ namespace Spryker\Zed\Glossary\Communication\Table;
 
 use Propel\Runtime\Map\TableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
@@ -18,6 +19,7 @@ class TranslationTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
+    const URL_GLOSSARY_EDIT = '/glossary/edit/';
 
     /**
      * @var SpyGlossaryTranslationQuery
@@ -134,7 +136,7 @@ class TranslationTable extends AbstractTable
 
         if (!empty($result)) {
             foreach ($result as $key => $value) {
-                $result[$key][self::ACTIONS] = $this->buildLinks($value);
+                $result[$key][self::ACTIONS] = implode(' ', $this->buildLinks($value));
             }
         }
 
@@ -144,16 +146,22 @@ class TranslationTable extends AbstractTable
     /**
      * @param array $details
      *
-     * @return string
+     * @return array
      */
     private function buildLinks($details)
     {
-        $urls = '';
+        $urls = [];
 
         if (!empty($details[SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY])) {
             $idGlossaryKey = $details[SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY];
             if ($idGlossaryKey !== false) {
-                $urls = '<a href="/glossary/edit/?' . TranslationForm::URL_PARAMETER_GLOSSARY_KEY . '=' . $idGlossaryKey . '" class="btn btn-xs btn-white">Edit</a>';
+                $urls[] = $this->generateEditButton(
+                    Url::generate(self::URL_GLOSSARY_EDIT, [
+                        TranslationForm::URL_PARAMETER_GLOSSARY_KEY => $idGlossaryKey,
+                    ]),
+                    'Edit'
+                );
+
             }
         }
 
