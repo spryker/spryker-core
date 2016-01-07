@@ -10,6 +10,7 @@ use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 use Spryker\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\FilterControllerEvent;
 use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\GatewayController;
 use Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture\NotGatewayController;
@@ -128,7 +129,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $controllerCallable = $this->executeMockedListenerTest('goodAction', $transfer);
 
         $response = call_user_func($controllerCallable);
-        $this->assertInstanceOf('Symfony\\Component\\HttpFoundation\\JsonResponse', $response);
+        $this->assertInstanceOf(JsonResponse::class, $response);
     }
 
     /**
@@ -144,7 +145,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $controllerCallable = $this->executeMockedListenerTest($action, $transfer);
 
         $response = call_user_func($controllerCallable);
-        $this->assertInstanceOf('Symfony\\Component\\HttpFoundation\\JsonResponse', $response);
+        $this->assertInstanceOf(JsonResponse::class, $response);
 
         $responseContent = json_decode($response->getContent(), true);
 
@@ -163,7 +164,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
      */
     private function createRepeaterMock()
     {
-        return $this->getMockBuilder('Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater')
+        return $this->getMockBuilder(Repeater::class)
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -240,7 +241,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
      */
     private function getTransferMock()
     {
-        $transfer = $this->getMock('Spryker\Shared\Transfer\TransferInterface');
+        $transfer = $this->getMock(TransferInterface::class);
 
         return $transfer;
     }

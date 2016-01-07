@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Development\Business;
 
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
+use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
@@ -47,6 +48,17 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createCodeTester()
     {
         return new CodeTester(
+            $this->getConfig()->getPathToRoot(),
+            $this->getConfig()->getBundleDirectory()
+        );
+    }
+
+    /**
+     * @return PhpMdRunner
+     */
+    public function createPhpMdRunner()
+    {
+        return new PhpMdRunner(
             $this->getConfig()->getPathToRoot(),
             $this->getConfig()->getBundleDirectory()
         );

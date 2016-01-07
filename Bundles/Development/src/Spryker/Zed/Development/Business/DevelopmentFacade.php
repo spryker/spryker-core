@@ -48,6 +48,16 @@ class DevelopmentFacade extends AbstractFacade
     }
 
     /**
+     * @param string|null $bundle
+     *
+     * @return void
+     */
+    public function runPhpMd($bundle)
+    {
+        $this->getFactory()->createPhpMdRunner()->run($bundle);
+    }
+
+    /**
      * @param string $bundle
      * @param string $toBundle
      *
