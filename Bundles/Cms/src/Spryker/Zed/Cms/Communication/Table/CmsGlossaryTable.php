@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Cms\Communication\Table;
 
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
@@ -20,6 +21,8 @@ class CmsGlossaryTable extends AbstractTable
 
     const ACTIONS = 'Actions';
     const REQUEST_ID_MAPPING = 'id-mapping';
+    const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit/';
+    const URL_CMS_GLOSSARY_DELETE = '/cms/glossary/delete/';
 
     /**
      * @var SpyCmsGlossaryKeyMappingQuery
@@ -109,7 +112,7 @@ class CmsGlossaryTable extends AbstractTable
                 SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => $item[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER],
                 CmsQueryContainer::KEY => $item[CmsQueryContainer::KEY],
                 CmsQueryContainer::TRANS => $item[CmsQueryContainer::TRANS],
-                self::ACTIONS => $this->buildLinks($item),
+                self::ACTIONS => implode(' ', $this->buildLinks($item)),
             ];
             $mappedPlaceholders[] = $item[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER];
         }
@@ -124,17 +127,28 @@ class CmsGlossaryTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string
+     * @return array
      */
     private function buildLinks(array $item)
     {
-        $mappingParam = self::REQUEST_ID_MAPPING . '=' . $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING];
-        $pageParam = CmsPageTable::REQUEST_ID_PAGE . '=' . $this->idPage;
+        $buttons = [];
 
-        $result = '<a href="/cms/glossary/edit/?' . $mappingParam . '&' . $pageParam . '" class="btn btn-xs btn-white">Edit</a>&nbsp;
-                   <a href="/cms/glossary/delete/?' . $mappingParam . '&' . $pageParam . '" class="btn btn-xs btn-white">Delete</a>';
+        $buttons[] = $this->generateEditButton(
+            Url::generate(self::URL_CMS_GLOSSARY_EDIT, [
+                CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
+                self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
+            ]),
+            'Edit'
+        );
+        $buttons[] = $this->generateRemoveButton(
+            Url::generate(self::URL_CMS_GLOSSARY_DELETE, [
+                CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
+                self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
+            ]),
+            'Delete'
+        );
 
-        return $result;
+        return $buttons;
     }
 
     /**

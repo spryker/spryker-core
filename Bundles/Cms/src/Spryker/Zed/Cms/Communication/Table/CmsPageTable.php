@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Cms\Communication\Table;
 
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
@@ -73,7 +74,7 @@ class CmsPageTable extends AbstractTable
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
                 CmsQueryContainer::TEMPLATE_NAME => $item[CmsQueryContainer::TEMPLATE_NAME],
                 CmsQueryContainer::URL => $item[CmsQueryContainer::URL],
-                self::ACTIONS => $this->buildLinks($item),
+                self::ACTIONS => implode(' ', $this->buildLinks($item)),
             ];
         }
         unset($queryResults);
@@ -84,14 +85,26 @@ class CmsPageTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string
+     * @return array
      */
     private function buildLinks($item)
     {
-        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit placeholders</a>&nbsp;
-        <a href="/cms/page/edit/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit page</a>';
+        $buttons = [];
 
-        return $result;
+        $buttons[] = $this->generateEditButton(
+            Url::generate('/cms/glossary/', [
+                self::REQUEST_ID_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            'Edit Placeholders'
+        );
+        $buttons[] = $this->generateEditButton(
+            Url::generate('/cms/page/edit/', [
+                self::REQUEST_ID_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
+            ]),
+            'Edit Page'
+        );
+
+        return $buttons;
     }
 
 }

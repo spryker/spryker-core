@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Cms\Communication\Table;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
@@ -19,6 +20,8 @@ class CmsBlockTable extends AbstractTable
     const ACTIONS = 'Actions';
     const REQUEST_ID_BLOCK = 'id-block';
     const REQUEST_ID_PAGE = 'id-page';
+    const PARAM_CMS_GLOSSARY = '/cms/glossary/';
+    const PARAM_CMS_BLOCK_EDIT = '/cms/block/edit/';
 
     /**
      * @var SpyCmsBlockQuery
@@ -81,7 +84,7 @@ class CmsBlockTable extends AbstractTable
                 SpyCmsBlockTableMap::COL_NAME => $item[SpyCmsBlockTableMap::COL_NAME],
                 SpyCmsBlockTableMap::COL_TYPE => $item[SpyCmsBlockTableMap::COL_TYPE],
                 SpyCmsBlockTableMap::COL_VALUE => $this->buildValueItem($item),
-                self::ACTIONS => $this->buildLinks($item),
+                self::ACTIONS => implode(' ', $this->buildLinks($item)),
             ];
         }
         unset($queryResults);
@@ -92,14 +95,26 @@ class CmsBlockTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string
+     * @return array
      */
     private function buildLinks(array $item)
     {
-        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_FK_PAGE] . '" class="btn btn-xs btn-white">Edit placeholders</a>&nbsp;
-        <a href="/cms/block/edit/?' . self::REQUEST_ID_BLOCK . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK] . '" class="btn btn-xs btn-white">Edit block</a>';
+        $buttons = [];
+        $buttons[] = $this->generateEditButton(
+            Url::generate(self::PARAM_CMS_GLOSSARY, [
+                self::REQUEST_ID_PAGE => $item[SpyCmsBlockTableMap::COL_FK_PAGE],
+            ]),
+            'Edit Placeholder'
+        );
 
-        return $result;
+        $buttons[] = $this->generateEditButton(
+            Url::generate(self::PARAM_CMS_BLOCK_EDIT, [
+                self::REQUEST_ID_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK]
+            ]),
+            'Edit Block'
+        );
+
+        return $buttons;
     }
 
     private function buildValueItem(array $item)
