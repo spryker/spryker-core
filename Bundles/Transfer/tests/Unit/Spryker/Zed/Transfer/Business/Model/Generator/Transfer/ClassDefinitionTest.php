@@ -294,7 +294,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperty1'];
-        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTY1', $bundles, true);
+        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTY1', $bundles, false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
@@ -323,7 +323,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperties'];
-        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTIES', [], true);
+        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTIES', [], false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];

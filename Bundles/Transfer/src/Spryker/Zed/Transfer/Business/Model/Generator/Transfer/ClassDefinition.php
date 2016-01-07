@@ -442,7 +442,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function isCollection(array $property)
     {
-        return preg_match('/((.*?)\[\]|\[\])/', $property['type']);
+        return (bool) preg_match('/((.*?)\[\]|\[\])/', $property['type']);
     }
 
     /**
@@ -529,7 +529,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'hasDefaultNull' => null,
         ];
         $method = $this->addTypeHint($property, $method);
-        $method = $this->addDefaultNull($method['typeHint'], $method);
+        $method = $this->addDefaultNull($method['typeHint'], $property, $method);
 
         $this->methods[$methodName] = $method;
     }
@@ -583,15 +583,16 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param string $typeHint
+     * @param array $property
      * @param array $method
      *
      * @return array
      */
-    private function addDefaultNull($typeHint, array $method)
+    private function addDefaultNull($typeHint, array $property, array $method)
     {
         $method['hasDefaultNull'] = false;
 
-        if ($typeHint !== null && $typeHint !== 'array') {
+        if ($typeHint !== null && $this->isCollection($property) !== true && $this->isArray($property) !== true) {
             $method['hasDefaultNull'] = true;
         }
 
