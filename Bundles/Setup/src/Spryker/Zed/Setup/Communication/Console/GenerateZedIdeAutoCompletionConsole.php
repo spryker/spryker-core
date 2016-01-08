@@ -10,10 +10,8 @@ use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder
 use Spryker\Zed\Console\Business\Model\Console;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeBundleAutoCompletionGenerator;
-use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConsoleMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\FacadeMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\GeneratedInterfaceMethodTagBuilder;
-use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\PluginMethodTagBuilder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\QueryContainerMethodTagBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -58,7 +56,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
 
         $generator->create('');
 
-        $this->info('Generate Zed IdeAutoCompletion file');
+        $this->info('Generated Zed IdeAutoCompletion file');
     }
 
     /**
@@ -86,13 +84,11 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $generator
             ->addMethodTagBuilder(new FacadeMethodTagBuilder())
             ->addMethodTagBuilder(new QueryContainerMethodTagBuilder())
-            ->addMethodTagBuilder(new ConsoleMethodTagBuilder())
-            ->addMethodTagBuilder(new ClientMethodTagBuilder())
-            ->addMethodTagBuilder(new PluginMethodTagBuilder([PluginMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed']));
+            ->addMethodTagBuilder(new ClientMethodTagBuilder());
 
         $generator->create('');
 
-        $this->info('Generate Zed IdeBundleAutoCompletion file');
+        $this->info('Generated Zed IdeBundleAutoCompletion file');
     }
 
 }

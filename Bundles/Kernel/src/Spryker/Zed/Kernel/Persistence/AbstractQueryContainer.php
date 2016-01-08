@@ -9,6 +9,7 @@ namespace Spryker\Zed\Kernel\Persistence;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
+use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
@@ -21,15 +22,12 @@ use Spryker\Zed\Propel\Communication\Plugin\Connection;
 abstract class AbstractQueryContainer implements QueryContainerInterface
 {
 
+    use BundleDependencyProviderResolverAwareTrait;
+
     /**
      * @var PersistenceFactoryInterface
      */
     private $factory;
-
-    /**
-     * @var Container
-     */
-    protected $container;
 
     /**
      * @param Container $container
@@ -44,53 +42,10 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
-     * @deprecated Please use $this->container[$key] instead
-     *
-     * @param string $key
-     *
-     * @throws ContainerKeyNotFoundException
-     *
-     * @return mixed
-     */
-    public function getProvidedDependency($key)
-    {
-        if ($this->container === null) {
-            $dependencyProvider = $this->resolveDependencyProvider();
-            $container = new Container();
-            $this->provideExternalDependencies($dependencyProvider, $container);
-            $this->container = $container;
-        }
-
-        if ($this->container->offsetExists($key) === false) {
-            throw new ContainerKeyNotFoundException($this, $key);
-        }
-
-        return $this->container[$key];
-    }
-
-    /**
-     * @throws DependencyProviderNotFoundException
-     *
-     * @return AbstractBundleDependencyProvider
-     */
-    private function resolveDependencyProvider()
-    {
-        return $this->getDependencyProviderResolver()->resolve($this);
-    }
-
-    /**
-     * @return DependencyProviderResolver
-     */
-    private function getDependencyProviderResolver()
-    {
-        return new DependencyProviderResolver();
-    }
-
-    /**
      * @param AbstractBundleDependencyProvider $dependencyProvider
      * @param Container $container
      */
-    private function provideExternalDependencies(
+    protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
     ) {

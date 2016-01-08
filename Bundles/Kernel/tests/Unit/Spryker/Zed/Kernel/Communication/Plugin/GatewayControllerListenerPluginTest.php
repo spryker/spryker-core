@@ -153,6 +153,14 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('errorMessages', $responseContent);
         $this->assertArrayHasKey('successMessages', $responseContent);
         $this->assertArrayHasKey('success', $responseContent);
+
+        $infoMessages = $responseContent['infoMessages'];
+        $errorMessages = $responseContent['errorMessages'];
+        $successMessages = $responseContent['successMessages'];
+
+        $this->assertEquals([['message' => 'info']], $infoMessages);
+        $this->assertEquals([['message' => 'error']], $errorMessages);
+        $this->assertEquals([['message' => 'success']], $successMessages);
     }
 
     /**

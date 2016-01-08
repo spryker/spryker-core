@@ -43,7 +43,7 @@ abstract class AbstractGatewayController extends AbstractController
     /**
      * @return bool
      */
-    public function getSuccess()
+    public function isSuccess()
     {
         return $this->success;
     }

@@ -157,18 +157,12 @@ class Store
     {
         $stores = $this->getStoreSetup($currentStoreName);
         $storeArray = $stores[$currentStoreName];
-
         $vars = get_object_vars($this);
         foreach ($storeArray as $k => $v) {
-            if (array_key_exists($k, $vars)) {
-                $this->$k = $v;
-            } else {
-                // bc
-                if ($k === 'frontends') {
-                    continue;
-                }
+            if (!array_key_exists($k, $vars)) {
                 throw new \Exception('Unknown setup-key: ' . $k);
             }
+            $this->$k = $v;
         }
 
         $this->storeName = $currentStoreName;

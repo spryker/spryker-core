@@ -86,7 +86,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
             . $bundle . '/'
             . $this->options[self::OPTION_KEY_PATH_PATTERN];
 
-        $file = $this->findByNameAndPattern($bundle, $name, $pattern);
+        $file = $this->findByNameAndPattern($name, $pattern);
 
         if ($file instanceof SplFileInfo) {
             return $this->buildMethodTagFromFile(
@@ -99,13 +99,12 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
     }
 
     /**
-     * @param string $bundle
      * @param string $name
      * @param string $pattern
      *
      * @return bool|SplFileInfo
      */
-    protected function findByNameAndPattern($bundle, $name, $pattern)
+    protected function findByNameAndPattern($name, $pattern)
     {
         $pathPattern = rtrim($this->options[self::OPTION_KEY_PROJECT_PATH_PATTERN], DIRECTORY_SEPARATOR)
             . DIRECTORY_SEPARATOR

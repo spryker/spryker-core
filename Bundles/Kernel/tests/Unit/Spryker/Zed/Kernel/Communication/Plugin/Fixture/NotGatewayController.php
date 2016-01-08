@@ -23,10 +23,15 @@ class NotGatewayController
      * @param TransferInterface $foo
      * @param int $bar
      *
-     * @return void
+     * @return int
      */
     public function bazAction(TransferInterface $foo, $bar = 0)
     {
+        if ($foo) {
+            $bar = 0;
+        }
+
+        return $bar;
     }
 
 }
