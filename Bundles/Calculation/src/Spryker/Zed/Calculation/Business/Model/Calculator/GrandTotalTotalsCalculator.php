@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Library\Hash\Hash;
 
 class GrandTotalTotalsCalculator implements CalculatorInterface
 {
@@ -20,8 +21,13 @@ class GrandTotalTotalsCalculator implements CalculatorInterface
     {
         $quoteTransfer->requireTotals();
 
+        $totalsTransfer = $quoteTransfer->getTotals();
+
         $grandTotal = $this->getCalculatedGrandTotal($quoteTransfer);
-        $quoteTransfer->getTotals()->setGrandTotal($grandTotal);
+        $totalsTransfer->setGrandTotal($grandTotal);
+
+        $totalsHash = $this->generateTotalsHash($grandTotal);
+        $totalsTransfer->setHash($totalsHash);
     }
 
     /**
@@ -55,6 +61,16 @@ class GrandTotalTotalsCalculator implements CalculatorInterface
         }
 
         return $expensesTotal;
+    }
+
+    /**
+     * @param int $grandTotal
+     *
+     * @return string
+     */
+    protected function generateTotalsHash($grandTotal)
+    {
+        return Hash::hashValue(Hash::SHA256, $grandTotal);
     }
 
 }

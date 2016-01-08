@@ -44,6 +44,7 @@
         <property name="discount" type="DiscountTotals" />
         <property name="taxTotal" type="TaxTotal" />
         <property name="grandTotal" type="int" />
+        <property name="hash" type="string"/>
     </transfer>
 
     <transfer name="Order">

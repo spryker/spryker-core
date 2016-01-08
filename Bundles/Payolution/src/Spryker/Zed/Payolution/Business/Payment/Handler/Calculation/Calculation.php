@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Handler\Calculation;
 
+use Generated\Shared\Transfer\PayolutionCalculationInstallmentTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Payolution\PayolutionConstants;
@@ -25,7 +26,10 @@ class Calculation extends AbstractPaymentHandler implements CalculationInterface
             ->getMethodMapper(PayolutionConstants::BRAND_INSTALLMENT)
             ->buildCalculationRequest($quoteTransfer);
 
-        return $this->sendRequest($requestData);
+        $responseTransfer = $this->sendRequest($requestData);
+        $responseTransfer = $this->setHash($responseTransfer, $quoteTransfer->getTotals()->getHash());
+
+        return $responseTransfer;
     }
 
     /**
@@ -44,6 +48,11 @@ class Calculation extends AbstractPaymentHandler implements CalculationInterface
         $responseTransfer = $this->converter->toCalculationResponseTransfer($responseData);
 
         return $responseTransfer;
+    }
+
+    protected function setHash(PayolutionCalculationResponseTransfer $responseTransfer, $hash)
+    {
+        return $responseTransfer->setTotalsAmountHash($hash);
     }
 
 }

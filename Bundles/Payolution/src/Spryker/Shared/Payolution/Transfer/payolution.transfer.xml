@@ -87,6 +87,7 @@
         <property name="paymentDetails" type="PayolutionCalculationPaymentDetail[]" singular="paymentDetail"/>
         <property name="tacUrl" type="string"/>
         <property name="dataPrivacyConsentUrl" type="string"/>
+        <property name="totalsAmountHash" type="string"/>
     </transfer>
 
     <transfer name="PayolutionCalculationPaymentDetail">
