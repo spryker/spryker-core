@@ -10,9 +10,7 @@ use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleBusinessFactory;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
@@ -99,7 +97,6 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
      */
     public function testGetProductOption()
     {
-        /** @var $productOptionTransfer ProductOptionTransfer */
         $productOptionTransfer = $this->facade->getProductOption(
             $this->ids['idUsageLarge'],
             self::LOCALE_CODE
@@ -166,18 +163,16 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
      */
     public function testQueryValueConstraintsForValueUsage()
     {
-        $this->markTestSkipped('Ordering of result always different');
-
         $result = $this->facade
             ->getValueConstraintsForValueUsage($this->ids['idUsageGreen']);
 
         $this->assertCount(2, $result);
 
         $this->assertEquals('ALLOW', $result[0]['operator']);
-        $this->assertEquals($this->ids['idUsageSmall'], $result[0]['valueUsageId']);
+        $this->assertEquals($this->ids['idUsageSmall'], $result[1]['valueUsageId']);
 
         $this->assertEquals('ALLOW', $result[1]['operator']);
-        $this->assertEquals($this->ids['idUsageLarge'], $result[1]['valueUsageId']);
+        $this->assertEquals($this->ids['idUsageLarge'], $result[0]['valueUsageId']);
 
         $result = $this->facade
             ->getValueConstraintsForValueUsage($this->ids['idUsageBlue']);
@@ -199,14 +194,12 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
      */
     public function testQueryValueConstraintsForValueUsageByOperator()
     {
-        $this->markTestSkipped('Ordering of result always different');
-
         $result = $this->facade
             ->getValueConstraintsForValueUsageByOperator($this->ids['idUsageGreen'], 'ALLOW');
 
         $this->assertCount(2, $result);
-        $this->assertEquals($this->ids['idUsageSmall'], $result[0]);
-        $this->assertEquals($this->ids['idUsageLarge'], $result[1]);
+        $this->assertEquals($this->ids['idUsageSmall'], $result[1]);
+        $this->assertEquals($this->ids['idUsageLarge'], $result[0]);
 
         $result = $this->facade
             ->getValueConstraintsForValueUsageByOperator($this->ids['idUsageGreen'], 'NOT');
@@ -270,7 +263,6 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
             return $this->productQueryContainer;
         };
         $container[self::PROPEL_CONNECTION] = function () {
-            /* @var $locator AutoCompletion */
             return (new Connection())->get();
         };
         $this->productOptionQueryContainer->setExternalDependencies($container);

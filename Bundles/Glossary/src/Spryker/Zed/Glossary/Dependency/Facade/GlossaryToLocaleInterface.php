@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,6 +7,7 @@
 namespace Spryker\Zed\Glossary\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface GlossaryToLocaleInterface
@@ -29,5 +31,14 @@ interface GlossaryToLocaleInterface
      * @return array
      */
     public function getAvailableLocales();
+
+    /**
+     * @param string $localeName
+     *
+     * @throws LocaleExistsException
+     *
+     * @return LocaleTransfer
+     */
+    public function createLocale($localeName);
 
 }

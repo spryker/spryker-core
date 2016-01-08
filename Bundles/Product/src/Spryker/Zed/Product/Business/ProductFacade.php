@@ -39,18 +39,6 @@ class ProductFacade extends AbstractFacade
     }
 
     /**
-     * @param string $uploadedFilename
-     *
-     * @return \SplFileInfo
-     */
-    public function importUploadedFile($uploadedFilename)
-    {
-        return $this->getFactory()
-            ->createHttpFileImporter()
-            ->receiveUploadedFile($uploadedFilename);
-    }
-
-    /**
      * @param string $sku
      *
      * @throws MissingProductException

@@ -52,4 +52,14 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
         return $this->localeFacade->getAvailableLocales();
     }
 
+    /**
+     * @param string $localeName
+     *
+     * @return LocaleTransfer
+     */
+    public function createLocale($localeName)
+    {
+        return $this->localeFacade->createLocale($localeName);
+    }
+
 }

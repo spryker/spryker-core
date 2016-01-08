@@ -524,14 +524,18 @@ class ProductManager implements ProductManagerInterface
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
-        $concreteProduct = $this->productQueryContainer->queryProductWithAttributesAndAbstractProduct(
+        $concreteProductQuery = $this->productQueryContainer->queryProductWithAttributesAndAbstractProduct(
             $concreteSku, $localeTransfer->getIdLocale()
-        )->select([
+        );
+
+        $concreteProductQuery->select([
             self::COL_ID_CONCRETE_PRODUCT,
             self::COL_ABSTRACT_SKU,
             self::COL_ID_PRODUCT_ABSTRACT,
             self::COL_NAME,
-        ])->findOne();
+        ]);
+
+        $concreteProduct = $concreteProductQuery->findOne();
 
         if (!$concreteProduct) {
             throw new MissingProductException(

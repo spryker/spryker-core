@@ -171,8 +171,8 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     public function hasSuccessMessage($messageString)
     {
         $successMessages = $this->getSuccessMessages();
-        foreach ($successMessages as $sucessMessage) {
-            if ($sucessMessage->getMessage() === $messageString) {
+        foreach ($successMessages as $successMessage) {
+            if ($successMessage->getMessage() === $messageString) {
                 return true;
             }
         }

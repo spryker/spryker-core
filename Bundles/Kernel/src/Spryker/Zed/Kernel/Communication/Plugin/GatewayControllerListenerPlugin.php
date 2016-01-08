@@ -138,20 +138,17 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
         $response->addErrorMessages(
             $this->createResponseMessages(
-                $messagesTransfer->getErrorMessages(),
-                $response->getErrorMessages()
+                $messagesTransfer->getErrorMessages()
             )
         );
         $response->addInfoMessages(
             $this->createResponseMessages(
-                $messagesTransfer->getInfoMessages(),
-                $response->getInfoMessages()
+                $messagesTransfer->getInfoMessages()
             )
         );
         $response->addSuccessMessages(
             $this->createResponseMessages(
-                $messagesTransfer->getSuccessMessages(),
-                $response->getSuccessMessages()
+                $messagesTransfer->getSuccessMessages()
             )
         );
     }

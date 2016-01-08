@@ -2,6 +2,7 @@
 
 namespace Functional\Spryker\Zed\Cart\Business;
 
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Generated\Shared\Transfer\ChangeTransfer;
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\Cart\CartDependencyProvider;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
@@ -28,10 +30,9 @@ class CartFacadeTest extends AbstractFunctionalTest
     const PRICE_TYPE_DEFAULT = 'DEFAULT';
     const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
     const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
-    const DUMMY_1_PRICE = 99;
+
     const DUMMY_2_SKU_ABSTRACT_PRODUCT = 'ABSTRACT2';
     const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
-    const DUMMY_2_PRICE = 100;
 
     /**
      * @var CartFacade
@@ -70,7 +71,6 @@ class CartFacadeTest extends AbstractFunctionalTest
      */
     public function testAddToCart()
     {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE2, but it does not exist');
         $cart = new CartTransfer();
         $cartItem = new ItemTransfer();
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
@@ -107,7 +107,6 @@ class CartFacadeTest extends AbstractFunctionalTest
      */
     public function testIncreaseCartQuantity()
     {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE1, but it does not exist');
         $cart = new CartTransfer();
         $cartItem = new ItemTransfer();
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
@@ -132,7 +131,8 @@ class CartFacadeTest extends AbstractFunctionalTest
         $changedItem = $cartItems[1];
         $this->assertEquals(3, $changedItem->getQuantity());
 
-        $changedItem = $cartItems[2];
+        /** @TODO check key names */
+        $changedItem = $cartItems['CONCRETE1'];
         $this->assertEquals(1, $changedItem->getQuantity());
     }
 
@@ -141,7 +141,6 @@ class CartFacadeTest extends AbstractFunctionalTest
      */
     public function testRemoveFromCart()
     {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE2, but it does not exist');
         $cart = new CartTransfer();
         $cartItem = new ItemTransfer();
         $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
@@ -169,7 +168,6 @@ class CartFacadeTest extends AbstractFunctionalTest
      */
     public function testDecreaseCartItem()
     {
-        $this->markTestSkipped('Tried to retrieve a concrete product with sku CONCRETE1, but it does not exist');
         $cart = new CartTransfer();
         $cartItem = new ItemTransfer();
         $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
@@ -198,14 +196,21 @@ class CartFacadeTest extends AbstractFunctionalTest
      */
     protected function setTestData()
     {
-        $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(self::PRICE_TYPE_DEFAULT)->findOneOrCreate();
-        $defaultPriceType->setName(self::PRICE_TYPE_DEFAULT)->save();
+        $localeTransfer = (new LocaleFacade())->getCurrentLocale();
+        $idLocale = $localeTransfer->getIdLocale();
+
+        $defaultPriceType = SpyPriceTypeQuery::create()
+            ->findOneOrCreate();
+
+        $defaultPriceType
+            ->setName(self::PRICE_TYPE_DEFAULT)
+            ->save();
 
         $abstractProduct1 = SpyProductAbstractQuery::create()
             ->filterBySku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
             ->findOneOrCreate();
 
-        $abstractProduct1->setSku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
+        $abstractProduct1
             ->setAttributes('{}')
             ->save();
 
@@ -214,9 +219,19 @@ class CartFacadeTest extends AbstractFunctionalTest
             ->findOneOrCreate();
 
         $concreteProduct1
-            ->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setSpyProductAbstract($abstractProduct1)
             ->setAttributes('{}')
+            ->save();
+
+        $concreteProduct1LocalizedAttributes = SpyProductLocalizedAttributesQuery::create()
+            ->filterByFkProduct($concreteProduct1->getIdProduct())
+            ->filterByFkLocale($idLocale)
+            ->findOneOrCreate();
+
+        $concreteProduct1LocalizedAttributes
+            ->setName('foo')
+            ->setAttributes('bar')
+            ->setIsComplete(1)
             ->save();
 
         $abstractProduct2 = SpyProductAbstractQuery::create()
@@ -238,7 +253,18 @@ class CartFacadeTest extends AbstractFunctionalTest
             ->setAttributes('{}')
             ->save();
 
-        $priceProductConcrete1 = SpyPriceProductQuery::create()
+        $concreteProduct2LocalizedAttributes = SpyProductLocalizedAttributesQuery::create()
+            ->filterByFkProduct($concreteProduct2->getIdProduct())
+            ->filterByFkLocale($idLocale)
+            ->findOneOrCreate();
+
+        $concreteProduct2LocalizedAttributes
+            ->setName('foo')
+            ->setAttributes('bar')
+            ->setIsComplete(1)
+            ->save();
+
+        SpyPriceProductQuery::create()
             ->filterByProduct($concreteProduct1)
             ->filterBySpyProductAbstract($abstractProduct1)
             ->filterByPriceType($defaultPriceType)
@@ -246,7 +272,7 @@ class CartFacadeTest extends AbstractFunctionalTest
             ->setPrice(100)
             ->save();
 
-        $priceProductConcrete2 = SpyPriceProductQuery::create()
+        SpyPriceProductQuery::create()
             ->filterByProduct($concreteProduct2)
             ->filterBySpyProductAbstract($abstractProduct2)
             ->filterByPriceType($defaultPriceType)
