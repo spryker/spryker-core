@@ -47,7 +47,7 @@ trait QueryContainerResolverAwareTrait
      *
      * @return AbstractQueryContainer
      */
-    protected function resolveQueryContainer()
+    private function resolveQueryContainer()
     {
         return $this->getQueryContainerResolver()->resolve($this);
     }
@@ -55,7 +55,7 @@ trait QueryContainerResolverAwareTrait
     /**
      * @return QueryContainerResolver
      */
-    protected function getQueryContainerResolver()
+    private function getQueryContainerResolver()
     {
         return new QueryContainerResolver();
     }

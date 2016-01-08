@@ -32,9 +32,9 @@ class CodePhpMessDetectorConsole extends Console
         $this
             ->setName(self::COMMAND_NAME)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Run PHPMD for project or core.');
+            ->setDescription('Run PHPMD for project or core');
 
-        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run PHPMD for (or "all").');
+        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run PHPMD for (or "all")');
     }
 
     /**
