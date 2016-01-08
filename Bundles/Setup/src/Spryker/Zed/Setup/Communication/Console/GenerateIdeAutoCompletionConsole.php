@@ -21,7 +21,7 @@ class GenerateIdeAutoCompletionConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Generate ide auto completion files, for all applications [ Client, Yves, Zed ]');
+        $this->setDescription('Generate ide auto completion files.');
     }
 
     /**
@@ -34,7 +34,6 @@ class GenerateIdeAutoCompletionConsole extends Console
     {
         $dependingCommands = [
             GenerateClientIdeAutoCompletionConsole::COMMAND_NAME,
-            GenerateYvesIdeAutoCompletionConsole::COMMAND_NAME,
             GenerateZedIdeAutoCompletionConsole::COMMAND_NAME,
         ];
 

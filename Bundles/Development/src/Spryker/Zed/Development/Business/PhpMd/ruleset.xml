@@ -14,9 +14,7 @@
     <exclude-pattern>tests/_output</exclude-pattern>
     <exclude-pattern>tests/_support</exclude-pattern>
 
-    <rule ref="rulesets/cleancode.xml">
-        <exclude name="StaticAccess" />
-    </rule>
+    <rule ref="rulesets/cleancode.xml" />
 
     <rule ref="rulesets/codesize.xml" />
     <rule ref="rulesets/controversial.xml" />

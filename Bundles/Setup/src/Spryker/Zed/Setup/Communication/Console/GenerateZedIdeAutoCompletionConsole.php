@@ -6,6 +6,9 @@
 
 namespace Spryker\Zed\Setup\Communication\Console;
 
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Zed\Kernel\BundleNameFinder;
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder;
 use Spryker\Zed\Console\Business\Model\Console;
 use Spryker\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator;
@@ -20,6 +23,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
 {
 
     const COMMAND_NAME = 'setup:generate-zed-ide-auto-completion';
+    const APPLICATION_ZED = 'Zed';
 
     /**
      * @return void
@@ -64,9 +68,16 @@ class GenerateZedIdeAutoCompletionConsole extends Console
      */
     protected function getZedDefaultOptions()
     {
+        $bundleNameFinder = new BundleNameFinder([
+            BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN =>
+                Config::get(ApplicationConstants::PROJECT_NAMESPACE) . DIRECTORY_SEPARATOR,
+            BundleNameFinder::OPTION_KEY_APPLICATION => self::APPLICATION_ZED,
+        ]);
+
         $options = [
             IdeAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Zed\Ide',
             IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Zed/Ide/',
+            IdeAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => $bundleNameFinder
         ];
 
         return $options;

@@ -148,10 +148,17 @@ abstract class AbstractIdeAutoCompletionGenerator
      */
     protected function getBundles()
     {
-        /** @var BundleNameFinder $bundleNameFinder */
-        $bundleNameFinder = $this->options[self::OPTION_KEY_BUNDLE_NAME_FINDER];
+        $bundleNameFinder = $this->getBundleNameFinder();
 
         return $bundleNameFinder->getBundleNames();
+    }
+
+    /**
+     * @return BundleNameFinder
+     */
+    protected function getBundleNameFinder()
+    {
+        return $this->options[self::OPTION_KEY_BUNDLE_NAME_FINDER];
     }
 
     /**
