@@ -8,8 +8,6 @@ namespace Spryker\Zed\Kernel\Business;
 
 use Spryker\Shared\Kernel\AbstractLocator;
 use Spryker\Shared\Kernel\Locator\LocatorException;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 
 class FacadeLocator extends AbstractLocator
@@ -39,36 +37,18 @@ class FacadeLocator extends AbstractLocator
 
     /**
      * @param string $bundle
-     * @param LocatorLocatorInterface $locator
      * @param string|null $className
      *
      * @throws LocatorException
      *
      * @return object
      */
-    public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
+    public function locate($bundle, $className = null)
     {
         $facadeResolver = new FacadeResolver();
         $facade = $facadeResolver->resolve($bundle);
 
         return $facade;
-    }
-
-    /**
-     * @param string $bundle
-     *
-     * @return bool
-     */
-    public function canLocate($bundle)
-    {
-        try {
-            $facadeResolver = new FacadeResolver();
-            $facadeResolver->resolve($bundle);
-
-            return true;
-        } catch (FacadeNotFoundException $exception) {
-            return false;
-        }
     }
 
 }

@@ -6,7 +6,6 @@
 
 namespace Unit\Spryker\Shared\Kernel\Fixtures;
 
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Kernel\AbstractLocator;
 
 class LocatorWithMatcher extends AbstractLocator
@@ -29,12 +28,11 @@ class LocatorWithMatcher extends AbstractLocator
 
     /**
      * @param $bundle
-     * @param LocatorLocatorInterface $locator
      * @param string|null $className
      *
      * @return object
      */
-    public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
+    public function locate($bundle, $className = null)
     {
         return $this;
     }

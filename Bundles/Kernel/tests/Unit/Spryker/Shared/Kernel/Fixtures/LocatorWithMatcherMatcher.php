@@ -6,7 +6,6 @@
 
 namespace Unit\Spryker\Shared\Kernel\Fixtures;
 
-use Spryker\Shared\Kernel\Locator\LocatorInterface;
 use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class LocatorWithMatcherMatcher implements LocatorMatcherInterface

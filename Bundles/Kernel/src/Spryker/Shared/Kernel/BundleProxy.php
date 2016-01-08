@@ -20,11 +20,6 @@ class BundleProxy
     private $bundle;
 
     /**
-     * @var LocatorLocatorInterface
-     */
-    private $locatorLocator;
-
-    /**
      * @var LocatorInterface[]
      */
     private $locator;
@@ -33,14 +28,6 @@ class BundleProxy
      * @var LocatorMatcherInterface[]
      */
     private $locatorMatcher;
-
-    /**
-     * @param LocatorLocatorInterface $locatorLocator
-     */
-    public function __construct(LocatorLocatorInterface $locatorLocator)
-    {
-        $this->locatorLocator = $locatorLocator;
-    }
 
     /**
      * @param string $bundle
@@ -101,46 +88,11 @@ class BundleProxy
         foreach ($this->locator as $locator) {
             $matcher = $this->locatorMatcher[get_class($locator)];
             if ($matcher->match($method)) {
-                return $locator->locate($this->bundle, $this->locatorLocator, $matcher->filter($method));
+                return $locator->locate($this->bundle, $matcher->filter($method));
             }
         }
 
         throw new \LogicException(sprintf('Could not map method "%s" to a locator!', $method));
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasFacade()
-    {
-        return $this->hasItem('facade');
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasQueryContainer()
-    {
-        return $this->hasItem('queryContainer');
-    }
-
-    /**
-     * TODO Check if performance is good enough here!?
-     *
-     * @param $method
-     *
-     * @return bool
-     */
-    protected function hasItem($method)
-    {
-        foreach ($this->locator as $locator) {
-            $matcher = $this->locatorMatcher[get_class($locator)];
-            if ($matcher->match($method)) {
-                return $locator->canLocate($this->bundle);
-            }
-        }
-
-        return false;
     }
 
 }

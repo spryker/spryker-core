@@ -20,7 +20,7 @@ class Locator extends AbstractLocatorLocator
      */
     protected function getBundleProxy()
     {
-        $bundleProxy = new BundleProxy($this);
+        $bundleProxy = new BundleProxy();
         if ($this->locator === null) {
             $this->locator = [
                 new FacadeLocator(),

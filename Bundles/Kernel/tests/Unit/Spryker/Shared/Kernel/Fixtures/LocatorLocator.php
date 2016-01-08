@@ -17,7 +17,7 @@ class LocatorLocator extends AbstractLocatorLocator
      */
     protected function getBundleProxy()
     {
-        return new BundleProxy($this);
+        return new BundleProxy();
     }
 
 }
