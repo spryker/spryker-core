@@ -13,7 +13,7 @@ use Spryker\Shared\Application\Communication\Bootstrap\Extension\RouterExtension
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface;
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Library\Config;
+use Spryker\Shared\Config;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

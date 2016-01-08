@@ -9,7 +9,7 @@ namespace Spryker\Client\Storage;
 use Spryker\Client\Storage\Redis\Service;
 use Predis\Client;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\Library\Config;
+use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 
 class StorageFactory extends AbstractFactory

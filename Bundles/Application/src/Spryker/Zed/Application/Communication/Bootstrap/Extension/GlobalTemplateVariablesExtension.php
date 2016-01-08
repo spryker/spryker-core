@@ -10,7 +10,7 @@ use Spryker\Zed\Application\Communication\Plugin\Navigation;
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\GlobalTemplateVariableExtensionInterface;
 use Spryker\Shared\Application\Communication\Application;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Library\Config;
+use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 use Symfony\Component\HttpFoundation\Request;
 

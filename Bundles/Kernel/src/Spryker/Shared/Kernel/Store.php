@@ -8,7 +8,7 @@ namespace Spryker\Shared\Kernel;
 
 use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Library\Config;
+use Spryker\Shared\Config;
 use Spryker\Shared\NewRelic\Api;
 
 class Store

@@ -7,6 +7,7 @@
 namespace Spryker\Shared\Library;
 
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
 
 class Cloud
 {
