@@ -19,12 +19,39 @@ use Unit\Spryker\Zed\Kernel\ClassResolver\AbstractResolverTest;
 class FactoryResolverTest extends AbstractResolverTest
 {
 
+    /**
+     * @var string
+     */
     protected $coreClass = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelFactory';
+
+    /**
+     * @var string
+     */
     protected $projectClass = 'Unit\\Pyz\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelFactory';
+
+    /**
+     * @var string
+     */
     protected $storeClass = 'Unit\\Pyz\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelFactory';
+
+    /**
+     * @var string
+     */
     protected $classPattern = 'Unit\\%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%Factory';
+
+    /**
+     * @var string
+     */
     protected $className = 'Spryker\Zed\Kernel\Business';
+
+    /**
+     * @var string
+     */
     protected $unResolvableClassName = 'Spryker\Zed\UnResolvable\Business';
+
+    /**
+     * @var string
+     */
     protected $expectedExceptionClass = FactoryNotFoundException::class;
 
     /**

@@ -18,12 +18,39 @@ use Symfony\Component\Filesystem\Filesystem;
 abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @var string
+     */
     protected $coreClass;
+
+    /**
+     * @var string
+     */
     protected $projectClass;
+
+    /**
+     * @var string
+     */
     protected $storeClass;
+
+    /**
+     * @var string
+     */
     protected $classPattern;
+
+    /**
+     * @var string
+     */
     protected $expectedExceptionClass;
+
+    /**
+     * @var string
+     */
     protected $className = 'Kernel';
+
+    /**
+     * @var string
+     */
     protected $unResolvableClassName = 'unresolvable';
 
     /**

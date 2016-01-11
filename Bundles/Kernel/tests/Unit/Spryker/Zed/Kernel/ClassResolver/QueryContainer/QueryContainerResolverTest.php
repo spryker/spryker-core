@@ -19,10 +19,29 @@ use Unit\Spryker\Zed\Kernel\ClassResolver\AbstractResolverTest;
 class QueryContainerResolverTest extends AbstractResolverTest
 {
 
+    /**
+     * @var string
+     */
     protected $coreClass = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelQueryContainer';
+
+    /**
+     * @var string
+     */
     protected $projectClass = 'Unit\\Pyz\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelQueryContainer';
+
+    /**
+     * @var string
+     */
     protected $storeClass = 'Unit\\Pyz\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelQueryContainer';
+
+    /**
+     * @var string
+     */
     protected $classPattern = 'Unit\\%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%QueryContainer';
+
+    /**
+     * @var string
+     */
     protected $expectedExceptionClass = QueryContainerNotFoundException::class;
 
     /**

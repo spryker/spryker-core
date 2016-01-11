@@ -19,10 +19,29 @@ use Unit\Spryker\Zed\Kernel\ClassResolver\AbstractResolverTest;
 class DependencyProviderResolverTest extends AbstractResolverTest
 {
 
+    /**
+     * @var string
+     */
     protected $coreClass = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelDependencyProvider';
+
+    /**
+     * @var string
+     */
     protected $projectClass = 'Unit\\Pyz\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelDependencyProvider';
+
+    /**
+     * @var string
+     */
     protected $storeClass = 'Unit\\Pyz\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelDependencyProvider';
+
+    /**
+     * @var string
+     */
     protected $classPattern = 'Unit\\%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%DependencyProvider';
+
+    /**
+     * @var string
+     */
     protected $expectedExceptionClass = DependencyProviderNotFoundException::class;
 
     /**
