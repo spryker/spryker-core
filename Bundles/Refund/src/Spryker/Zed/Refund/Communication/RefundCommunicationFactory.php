@@ -10,6 +10,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Shared\Library\Context;
 use Spryker\Shared\Library\DateFormatter;
+use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
+use Spryker\Zed\Payone\Business\PayoneFacade;
 use Spryker\Zed\Refund\Business\RefundFacade;
 use Spryker\Zed\Refund\Communication\Form\RefundForm;
 use Spryker\Zed\Refund\Communication\Table\RefundTable;
@@ -74,6 +76,15 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
         $dateFormatter = new DateFormatter(Context::getInstance());
 
         return $dateFormatter;
+    }
+
+    /**
+     * @throws ContainerKeyNotFoundException
+     * @return PayoneFacade
+     */
+    public function getPayoneFacade()
+    {
+        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_PAYONE);
     }
 
 }

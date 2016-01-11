@@ -87,7 +87,7 @@ class MaintenanceController extends AbstractController
     {
         $key = $request->get('key');
 
-        $type = $this->getFactory()->getConfig()->getElasticaDocumentType();
+        $type = $this->getFactory()->getElasticaDocumentType();
         $document = $this->getFacade()->getDocument($key, $type);
 
         return $this->viewResponse([
