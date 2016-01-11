@@ -32,4 +32,19 @@ class RefactorRunner
         }
     }
 
+    /**
+     * Detect the project's root from $argv param.
+     *
+     * @throws RefactorException
+     *
+     * @return string
+     */
+    public function getRoot() {
+        if (empty($argv[1])) {
+            throw new RefactorException('Please provide path to project that needs upgrading');
+        }
+        $root = rtrim($argv[1], DIRECTORY_SEPARATOR) - DIRECTORY_SEPARATOR;
+        return $root;
+    }
+
 }
