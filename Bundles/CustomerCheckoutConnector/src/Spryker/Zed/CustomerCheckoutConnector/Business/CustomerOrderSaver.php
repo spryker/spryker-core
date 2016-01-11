@@ -51,7 +51,6 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
             }
             $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
             $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
-            //$quoteTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
         }
 
         $this->persistAddresses($customerTransfer);

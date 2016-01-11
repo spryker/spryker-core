@@ -3,6 +3,9 @@
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface SalesToOmsInterface
@@ -21,16 +24,11 @@ interface SalesToOmsInterface
     public function getProcessEntity($processName);
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return string
      */
-    public function selectProcess(OrderTransfer $transferOrder);
-
-    /**
-     * @return array
-     */
-    public function getOrderItemMatrix();
+    public function selectProcess(OrderTransfer $orderTransfer);
 
     /**
      * @param int $idOrderItem

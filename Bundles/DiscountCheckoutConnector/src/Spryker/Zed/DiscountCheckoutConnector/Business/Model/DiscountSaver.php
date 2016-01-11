@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\DiscountCheckoutConnector\Business\Model;
 
+use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -56,30 +56,34 @@ class DiscountSaver implements DiscountSaverInterface
      */
     public function saveDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->saveOrderItemDiscounts($quoteTransfer);
-        $this->saveOrderExpenseDiscounts($quoteTransfer);
+        $this->saveOrderItemDiscounts($quoteTransfer, $checkoutResponseTransfer);
+        $this->saveOrderExpenseDiscounts($quoteTransfer, $checkoutResponseTransfer);
         $this->discountFacade->useVoucherCodes($this->voucherCodesUsed);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    protected function saveOrderItemDiscounts(QuoteTransfer $orderTransfer)
-    {
-        $orderItemCollection = $orderTransfer->getItems();
+    protected function saveOrderItemDiscounts(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+        $orderItemCollection = $quoteTransfer->getItems();
+        $idSalesOrder = $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder();
         foreach ($orderItemCollection as $orderItemTransfer) {
-            $discountCollection = $orderItemTransfer->getDiscounts();
+            $discountCollection = $orderItemTransfer->getCalculatedDiscounts();
             foreach ($discountCollection as $discountTransfer) {
                 $salesDiscountEntity = $this->createSalesDiscountEntity($discountTransfer);
-                $salesDiscountEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
+                $salesDiscountEntity->setFkSalesOrder($idSalesOrder);
                 $salesDiscountEntity->setFkSalesOrderItem($orderItemTransfer->getIdSalesOrderItem());
                 $this->saveDiscount($salesDiscountEntity, $discountTransfer);
             }
             $this->saveOrderItemOptionDiscounts(
                 $orderItemTransfer,
-                $orderTransfer->getIdSalesOrder(),
+                $idSalesOrder,
                 $orderItemTransfer->getIdSalesOrderItem()
             );
         }
@@ -97,7 +101,7 @@ class DiscountSaver implements DiscountSaverInterface
     protected function saveOrderItemOptionDiscounts(ItemTransfer $orderItemTransfer, $idSalesOrder, $idSalesOrderItem)
     {
         foreach ($orderItemTransfer->getProductOptions() as $productOptionTransfer) {
-            foreach ($productOptionTransfer->getDiscounts() as $productOptionDiscountTransfer) {
+            foreach ($productOptionTransfer->getCalculatedDiscounts() as $productOptionDiscountTransfer) {
                 $salesDiscountEntity = $this->createSalesDiscountEntity($productOptionDiscountTransfer);
                 $salesDiscountEntity->setFkSalesOrder($idSalesOrder);
                 $salesDiscountEntity->setFkSalesOrderItem($idSalesOrderItem);
@@ -108,14 +112,14 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
      */
-    protected function createSalesDiscountEntity(DiscountTransfer $discountTransfer)
+    protected function createSalesDiscountEntity(CalculatedDiscountTransfer $calculatedDiscountTransfer)
     {
         $salesDiscountEntity = $this->getSalesDiscountEntity();
-        $salesDiscountEntity->fromArray($discountTransfer->toArray());
+        $salesDiscountEntity->fromArray($calculatedDiscountTransfer->toArray());
         $salesDiscountEntity->setName('');
 
         return $salesDiscountEntity;
@@ -123,16 +127,18 @@ class DiscountSaver implements DiscountSaverInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesDiscountEntity
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
      *
      * @return void
      */
-    protected function saveDiscount(SpySalesDiscount $salesDiscountEntity, DiscountTransfer $discountTransfer)
-    {
+    protected function saveDiscount(
+        SpySalesDiscount $salesDiscountEntity,
+        CalculatedDiscountTransfer $calculatedDiscountTransfer
+    ) {
         $this->persistSalesDiscount($salesDiscountEntity);
 
-        if ($this->haveVoucherCode($discountTransfer)) {
-            $this->saveUsedCodes($discountTransfer, $salesDiscountEntity);
+        if ($this->haveVoucherCode($calculatedDiscountTransfer)) {
+            $this->saveUsedCodes($calculatedDiscountTransfer, $salesDiscountEntity);
         }
     }
 
@@ -157,26 +163,26 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
      *
      * @return bool
      */
-    private function haveVoucherCode(DiscountTransfer $discountTransfer)
+    private function haveVoucherCode(CalculatedDiscountTransfer $calculatedDiscountTransfer)
     {
-        $voucherCode = $discountTransfer->getVoucherCode();
+        $voucherCode = $calculatedDiscountTransfer->getVoucherCode();
 
         return (!empty($voucherCode));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesDiscountEntity
      *
      * @return void
      */
-    protected function saveUsedCodes(DiscountTransfer $discountTransfer, SpySalesDiscount $salesDiscountEntity)
+    protected function saveUsedCodes(CalculatedDiscountTransfer $calculatedDiscountTransfer, SpySalesDiscount $salesDiscountEntity)
     {
-        $voucherCode = $discountTransfer->getVoucherCode();
+        $voucherCode = $calculatedDiscountTransfer->getVoucherCode();
         $discountVoucherEntity = $this->getDiscountVoucherEntityByCode($voucherCode);
         if ($discountVoucherEntity) {
             $salesDiscountCodeEntity = $this->getSalesDiscountCodeEntity();
@@ -226,17 +232,21 @@ class DiscountSaver implements DiscountSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    protected function saveOrderExpenseDiscounts(QuoteTransfer $quoteTransfer)
-    {
+    protected function saveOrderExpenseDiscounts(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+        $idSalesOrder = $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder();
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            foreach ($expenseTransfer->getDiscounts() as $discountTransfer) {
-                $salesDiscountEntity = $this->createSalesDiscountEntity($discountTransfer);
-                $salesDiscountEntity->setFkSalesOrder($quoteTransfer->getIdSalesOrder());
+            foreach ($expenseTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
+                $salesDiscountEntity = $this->createSalesDiscountEntity($calculatedDiscountTransfer);
+                $salesDiscountEntity->setFkSalesOrder($idSalesOrder);
                 $salesDiscountEntity->setFkSalesExpense($expenseTransfer->getIdSalesExpense());
-                $this->saveDiscount($salesDiscountEntity, $discountTransfer);
+                $this->saveDiscount($salesDiscountEntity, $calculatedDiscountTransfer);
             }
         }
     }

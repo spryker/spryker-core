@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Model;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Shipment\ShipmentConstants;
@@ -39,27 +39,39 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     public function saveShipmentForOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         Propel::getConnection()->beginTransaction();
-        $salesOrderEntity = $this->queryContainer->querySalesOrderById($orderTransfer->getIdSalesOrder())->findOne();
-        $salesOrderEntity->setFkShipmentMethod($orderTransfer->getIdShipmentMethod());
+        $idSalesOrder = $checkoutResponse->getSaveOrder()->getIdSalesOrder();
+        $salesOrderEntity = $this->queryContainer->querySalesOrderById($idSalesOrder)->findOne();
+        $salesOrderEntity->setFkShipmentMethod($quoteTransfer->getShipmentMethod()->getIdShipmentMethod());
 
-        $expenses = $orderTransfer->getExpenses();
-        foreach ($expenses as $expenseTransfer) {
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if (ShipmentConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {
-                $salesOrderExpense = new SpySalesExpense();
-                $salesOrderExpense->fromArray($expenseTransfer->toArray());
+                $salesOrderExpenseEntity = new SpySalesExpense();
+                $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $expenseTransfer);
+                $salesOrderExpenseEntity->save();
 
-                $taxSetTransfer = $expenseTransfer->getTaxSet();
-                if ($taxSetTransfer !== null) {
-                    $salesOrderExpense->setTaxPercentage($taxSetTransfer->getEffectiveRate());
-                }
-                $salesOrderExpense->save();
-                $expenseTransfer->setIdSalesExpense($salesOrderExpense->getIdSalesExpense());
+                $expenseTransfer->setIdSalesExpense($salesOrderExpenseEntity->getIdSalesExpense());
 
-                $salesOrderEntity->addExpense($salesOrderExpense);
+                $salesOrderEntity->addExpense($salesOrderExpenseEntity);
             }
         }
         $salesOrderEntity->save();
         Propel::getConnection()->commit();
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesExpense $salesOrderExpenseEntity
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return void
+     */
+    protected function hydrateOrderExpenseEntity(
+        SpySalesExpense $salesOrderExpenseEntity,
+        ExpenseTransfer $expenseTransfer
+    ) {
+        $salesOrderExpenseEntity->fromArray($expenseTransfer->toArray());
+        $salesOrderExpenseEntity->setGrossPrice($expenseTransfer->getUnitGrossPrice());
+        $salesOrderExpenseEntity->setPriceToPay($expenseTransfer->getUnitGrossPrice());
+        $salesOrderExpenseEntity->setTaxPercentage($expenseTransfer->getTaxRate());
     }
 
 }

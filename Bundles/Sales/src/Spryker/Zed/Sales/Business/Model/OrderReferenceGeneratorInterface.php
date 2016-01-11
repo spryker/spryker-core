@@ -2,16 +2,16 @@
 
 namespace Spryker\Zed\Sales\Business\Model;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface OrderReferenceGeneratorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
      */
-    public function generateOrderReference(OrderTransfer $orderTransfer);
+    public function generateOrderReference(QuoteTransfer $quoteTransfer);
 
 }

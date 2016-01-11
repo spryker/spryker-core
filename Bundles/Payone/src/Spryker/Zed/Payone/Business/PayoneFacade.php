@@ -27,7 +27,7 @@ use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
  */
-class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
+class PayoneFacade extends AbstractFacade
 {
 
     /**
@@ -140,7 +140,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      */
     public function isPreauthorizationApproved(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createApiLogFinder()->isPreAuthorizationApproved($orderTransfer);
+        return $this->getFactory()->createApiLogFinder()->isPreauthorizationApproved($orderTransfer);
     }
 
     /**
@@ -150,7 +150,7 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
      */
     public function isPreauthorizationRedirect(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createApiLogFinder()->isPreAuthorizationRedirect($orderTransfer);
+        return $this->getFactory()->createApiLogFinder()->isPreauthorizationRedirect($orderTransfer);
     }
 
     /**
@@ -325,16 +325,16 @@ class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         return $this->getFactory()
             ->createPaymentManager()
-            ->postSaveHook($orderTransfer, $checkoutResponse);
+            ->postSaveHook($quoteTransfer, $checkoutResponse);
     }
 
     /**

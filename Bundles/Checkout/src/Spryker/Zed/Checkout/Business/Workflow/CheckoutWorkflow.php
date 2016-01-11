@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Checkout\Business\Workflow;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
@@ -134,14 +133,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function getOrderTransfer()
-    {
-        return new OrderTransfer();
     }
 
     /**

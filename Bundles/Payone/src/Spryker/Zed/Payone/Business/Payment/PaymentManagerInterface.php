@@ -12,7 +12,13 @@ use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
+use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 
 interface PaymentManagerInterface
 {
@@ -93,12 +99,12 @@ interface PaymentManagerInterface
     public function isPaymentDataRequired(OrderTransfer $orderTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
+    public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
      * @param int $idPayment

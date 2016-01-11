@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Sales\Business\Model;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface;
 
 class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
@@ -36,11 +36,12 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
      */
-    public function generateOrderReference(OrderTransfer $orderTransfer)
+    public function generateOrderReference(QuoteTransfer $quoteTransfer)
     {
         return $this->sequenceNumberFacade->generate($this->sequenceNumberSettings);
     }

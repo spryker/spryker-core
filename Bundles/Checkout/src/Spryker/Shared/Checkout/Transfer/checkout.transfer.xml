@@ -27,7 +27,7 @@
         <property name="errors" type="CheckoutError[]" singular="error" />
         <property name="isExternalRedirect" type="bool" />
         <property name="redirectUrl" type="string" />
-        <property name="order" type="Order" />
+        <property name="saveOrder" type="SaveOrder" />
     </transfer>
 
     <transfer name="Comment">
@@ -60,17 +60,6 @@
         <property name="iso2Code" type="string" />
     </transfer>
 
-    <transfer name="CheckoutRequest">
-        <property name="isGuest" type="bool" />
-        <property name="idUser" type="int" />
-        <property name="email" type="string" />
-        <property name="customerPassword" type="string" />
-        <property name="billingAddress" type="Address" />
-        <property name="shippingAddress" type="Address" />
-        <property name="paymentMethod" type="string" />
-        <property name="cart" type="Cart" />
-    </transfer>
-
     <transfer name="ProductOption">
         <property name="idSalesOrderItemOption" type="int" />
         <property name="unitGrossPrice" type="int" />
@@ -88,11 +77,7 @@
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address"/>
         <property name="customer" type="Customer" />
-        <property name="checkout" type="Checkout" />
-    </transfer>
-
-    <transfer name="CheckoutTransfer">
-        <property name="orderPlaced" type="bool" />
+        <property name="orderReference" type="string" />
     </transfer>
 
 </transfers>
