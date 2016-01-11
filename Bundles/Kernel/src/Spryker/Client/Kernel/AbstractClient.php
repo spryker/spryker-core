@@ -15,38 +15,17 @@ abstract class AbstractClient
 {
 
     /**
-     * @var FactoryInterface
+     * @var AbstractFactory
      */
     private $factory;
 
     /**
-     * @var Container
-     */
-    private $container;
-
-    /**
-     * @param Container $container
-     *
-     * @return self
-     */
-    public function setExternalDependencies(Container $container)
-    {
-        $this->container = $container;
-
-        return $this;
-    }
-
-    /**
-     * @return FactoryInterface
+     * @return AbstractFactory
      */
     protected function getFactory()
     {
         if ($this->factory === null) {
             $this->factory = $this->resolveFactory();
-        }
-
-        if ($this->container !== null) {
-            $this->factory->setContainer($this->container);
         }
 
         return $this->factory;
@@ -55,7 +34,7 @@ abstract class AbstractClient
     /**
      * @throws FactoryNotFoundException
      *
-     * @return FactoryInterface
+     * @return AbstractFactory
      */
     private function resolveFactory()
     {

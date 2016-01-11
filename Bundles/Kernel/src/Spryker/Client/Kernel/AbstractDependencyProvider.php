@@ -2,7 +2,7 @@
 
 namespace Spryker\Client\Kernel;
 
-abstract class AbstractDependencyProvider implements DependencyProviderInterface
+abstract class AbstractDependencyProvider implements BundleDependencyProviderInterface
 {
 
     const CLIENT_ZED_REQUEST = 'zed request client';

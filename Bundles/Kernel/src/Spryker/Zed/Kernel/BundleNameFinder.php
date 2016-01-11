@@ -20,10 +20,7 @@ class BundleNameFinder extends AbstractBundle
     {
         $bundles = [];
 
-        $finder = new Finder();
-        $dirs = $this->getBundleDirectories();
-        /** @var SplFileInfo $bundleDirectory */
-        foreach ($finder->directories()->in($dirs)->depth(0) as $bundleDirectory) {
+        foreach ($this->getFinder() as $bundleDirectory) {
             $bundleName = $bundleDirectory->getRelativePathname();
             $bundles[] = $bundleName;
         }
@@ -56,6 +53,17 @@ class BundleNameFinder extends AbstractBundle
         ];
 
         return $dirs;
+    }
+
+    /**
+     * @return Finder|SplFileInfo[]
+     */
+    protected function getFinder()
+    {
+        $finder = new Finder();
+        $dirs = $this->getBundleDirectories();
+
+        return $finder->directories()->in($dirs)->depth(0);
     }
 
 }

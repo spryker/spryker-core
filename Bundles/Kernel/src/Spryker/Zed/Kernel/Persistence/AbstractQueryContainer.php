@@ -27,18 +27,6 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     private $factory;
 
     /**
-     * @param Container $container
-     *
-     * @return self
-     */
-    public function setExternalDependencies(Container $container)
-    {
-        $this->container = $container;
-
-        return $this;
-    }
-
-    /**
      * @param AbstractBundleDependencyProvider $dependencyProvider
      * @param Container $container
      */
@@ -50,16 +38,24 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
+     * @param AbstractPersistenceFactory $factory
+     *
+     * @return self
+     */
+    public function setFactory(AbstractPersistenceFactory $factory)
+    {
+        $this->factory = $factory;
+
+        return $this;
+    }
+
+    /**
      * @return AbstractPersistenceFactory
      */
     protected function getFactory()
     {
         if ($this->factory === null) {
             $this->factory = $this->resolveFactory();
-        }
-
-        if ($this->container !== null) {
-            $this->factory->setContainer($this->container);
         }
 
         return $this->factory;

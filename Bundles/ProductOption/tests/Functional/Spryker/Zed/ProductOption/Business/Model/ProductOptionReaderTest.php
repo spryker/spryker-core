@@ -14,6 +14,7 @@ use Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleBusinessFactory;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionPersistenceFactory;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory;
@@ -265,7 +266,10 @@ class ProductOptionReaderTest extends Test
         $container[self::PROPEL_CONNECTION] = function () {
             return (new Connection())->get();
         };
-        $this->productOptionQueryContainer->setExternalDependencies($container);
+
+        $persistenceFactory = new ProductOptionPersistenceFactory();
+        $persistenceFactory->setContainer($container);
+        $this->productOptionQueryContainer->setFactory($persistenceFactory);
 
         $businessFactory = new ProductOptionBusinessFactory();
 
