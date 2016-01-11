@@ -9,10 +9,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
 
-    public function __construct()
-    {
-    }
-
     /**
      * @return string
      */
@@ -32,9 +28,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param TransferInterface $foo
+     * @param CartTransfer $foo
      *
-     * @return TransferInterface
+     * @return CartTransfer
      */
     public function good2Action(CartTransfer $foo)
     {
@@ -49,6 +45,9 @@ class GatewayController extends AbstractGatewayController
      */
     public function twoTransferParametersAction(TransferInterface $foo, TransferInterface $bar)
     {
+        if ($bar) {
+        }
+
         return $foo;
     }
 
@@ -61,6 +60,9 @@ class GatewayController extends AbstractGatewayController
      */
     public function tooManyParametersAction(TransferInterface $foo, $bar, $baz)
     {
+        if ($bar && $baz) {
+        }
+
         return $foo;
     }
 

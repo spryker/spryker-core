@@ -37,13 +37,13 @@ class ClassInfo
         }
         $this->callerClassName = $callerClass;
 
+        $callerClassParts = [
+            self::KEY_BUNDLE => $callerClass,
+        ];
+
         if ($this->isFullyQualifiedClassName($callerClass)) {
             $callerClassParts = explode('\\', $callerClass);
             $callerClassParts = $this->removeTestNamespace($callerClassParts);
-        } else {
-            $callerClassParts = [
-                self::KEY_BUNDLE => $callerClass,
-            ];
         }
 
         $this->callerClassParts = $callerClassParts;

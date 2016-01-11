@@ -7,7 +7,7 @@
 namespace Spryker\Shared\Search\Provider;
 
 use Elastica\Client;
-use Spryker\Shared\Library\Config;
+use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\AbstractClientProvider;
 

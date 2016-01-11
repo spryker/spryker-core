@@ -13,12 +13,19 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 class FilterControllerEvent extends SymfonyFilterControllerEvent
 {
 
+    /**
+     * @param HttpKernelInterface|null $kernel
+     * @param null $controller
+     * @param Request|null $request
+     * @param null $requestType
+     */
     public function __construct(
         HttpKernelInterface $kernel = null,
         $controller = null,
         Request $request = null,
         $requestType = null
     ) {
+        unset($kernel, $controller, $request, $requestType);
     }
 
 }

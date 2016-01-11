@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Shared\Library\Config;
+use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;

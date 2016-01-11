@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Setup\Communication\Console;
 
 use Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ClientMethodTagBuilder;
-use Spryker\Shared\Library\Config;
+use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Console\Business\Model\Console;
 use Spryker\Zed\Kernel\BundleNameFinder;

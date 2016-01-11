@@ -8,7 +8,7 @@ namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\AfterBootExtensionInterface;
 use Spryker\Shared\Application\Communication\Application;
-use Spryker\Shared\Library\Config;
+use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
 
 class AfterBootExtension implements AfterBootExtensionInterface

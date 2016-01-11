@@ -6,6 +6,7 @@
 
 namespace Spryker\Shared\Library;
 
+use Spryker\Shared\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Shared\Application\ApplicationConstants;

@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
-use Spryker\Shared\Library\Config;
+use Spryker\Shared\Config;
 use Spryker\Shared\Library\Environment;
 use Spryker\Shared\Setup\SetupConstants;
 use Spryker\Shared\Application\ApplicationConstants;

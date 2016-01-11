@@ -6,7 +6,7 @@
 
 namespace Spryker\Yves\Application\Controller;
 
-use Generated\Yves\Ide\AutoCompletion;
+use Generated\Client\Ide\AutoCompletion;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Yves\Application\Application;

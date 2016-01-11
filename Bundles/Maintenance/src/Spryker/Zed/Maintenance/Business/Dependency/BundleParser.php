@@ -14,7 +14,6 @@ class BundleParser
 {
 
     const CONFIG_FILE = 'bundle_config.json';
-
     const ENGINE = 'engine';
 
     /**

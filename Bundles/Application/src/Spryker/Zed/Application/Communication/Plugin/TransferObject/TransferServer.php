@@ -43,11 +43,6 @@ class TransferServer
     protected $response;
 
     /**
-     * @var LocatorLocatorInterface
-     */
-    private $locator;
-
-    /**
      * @var Repeater
      */
     private $repeater;

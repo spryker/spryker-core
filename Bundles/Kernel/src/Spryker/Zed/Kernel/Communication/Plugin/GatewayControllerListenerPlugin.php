@@ -81,7 +81,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
                 throw new \LogicException('You need to specify a class for the parameter in the yves-action.');
             }
 
-            $this->validateClassIsTransferObject($class);
+            $this->validateClassIsTransferObject($class->getName());
         }
 
         return TransferServer::getInstance()->getRequest();
@@ -104,7 +104,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         $this->setGatewayControllerMessages($controller, $response);
         $this->setMessengerMessages($response);
 
-        $response->setSuccess($controller->getSuccess());
+        $response->setSuccess($controller->isSuccess());
 
         return $response;
     }
@@ -171,17 +171,17 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
-     * @param \ReflectionClass $class
+     * @param string $className
      *
      * @return bool
      */
-    protected function validateClassIsTransferObject(\ReflectionClass $class)
+    protected function validateClassIsTransferObject($className)
     {
-        if (substr($class->getName(), 0, 16) === 'Generated\Shared') {
+        if (substr($className, 0, 16) === 'Generated\Shared') {
             return true;
         }
 
-        if ($class->getName() === 'Spryker\Shared\Transfer\TransferInterface') {
+        if ($className === 'Spryker\Shared\Transfer\TransferInterface') {
             return true;
         }
 

@@ -23,7 +23,7 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddLocatorShouldAddLocatorCreateMatcherAndReturnBundleProxy()
     {
-        $bundleProxy = new BundleProxy(LocatorLocator::getInstance());
+        $bundleProxy = new BundleProxy();
 
         $this->assertInstanceOf(
             'Spryker\Shared\Kernel\BundleProxy',
@@ -38,7 +38,7 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\LogicException');
 
-        $bundleProxy = new BundleProxy(LocatorLocator::getInstance());
+        $bundleProxy = new BundleProxy();
         $bundleProxy->addLocator(new LocatorWithoutMatcher());
     }
 
@@ -47,7 +47,7 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetBundleShouldReturnBundleProxy()
     {
-        $bundleProxy = new BundleProxy(LocatorLocator::getInstance());
+        $bundleProxy = new BundleProxy();
 
         $this->assertInstanceOf('Spryker\Shared\Kernel\BundleProxy', $bundleProxy->setBundle('Foo'));
     }
@@ -57,7 +57,7 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
      */
     public function testCallShouldReturnLocatedClassIfMatcherMatchesToAGivenLocator()
     {
-        $bundleProxy = new BundleProxy(LocatorLocator::getInstance());
+        $bundleProxy = new BundleProxy();
         $locator = new LocatorWithMatcher('foo');
         $bundleProxy->addLocator($locator);
 
@@ -71,7 +71,7 @@ class BundleProxyTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\LogicException');
 
-        $bundleProxy = new BundleProxy(LocatorLocator::getInstance());
+        $bundleProxy = new BundleProxy();
         $bundleProxy->addLocator(new LocatorWithMatcher('Foo'));
 
         $bundleProxy->notMatchingTest();

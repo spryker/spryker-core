@@ -18,8 +18,7 @@ class KernelLocator extends LocatorLocator
      */
     protected function getBundleProxy()
     {
-        $bundleProxy = new BundleProxy($this);
-        $bundleProxy->addLocator(new TransferLocator());
+        $bundleProxy = new BundleProxy();
 
         return $bundleProxy;
     }
