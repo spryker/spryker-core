@@ -7,7 +7,6 @@
 namespace Functional\Spryker\Zed\Touch;
 
 use Codeception\TestCase\Test;
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Touch\Business\TouchBusinessFactory;
 use Spryker\Zed\Touch\Business\TouchFacade;

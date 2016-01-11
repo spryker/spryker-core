@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountBridge;
-use Spryker\Zed\Kernel\AbstractUnitTest;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
@@ -25,7 +24,7 @@ use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
  * @group Business
  * @group DiscountSaver
  */
-class DiscountSaverTest extends AbstractUnitTest
+class DiscountSaverTest extends \PHPUnit_Framework_TestCase 
 {
 
     const DISCOUNT_DISPLAY_NAME = 'discount';

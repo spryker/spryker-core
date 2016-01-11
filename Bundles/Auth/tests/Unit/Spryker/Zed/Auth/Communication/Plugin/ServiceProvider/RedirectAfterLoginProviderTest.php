@@ -6,7 +6,6 @@
 
 namespace Unit\Spryker\Zed\Auth\Communication\Plugin\ServiceProvider;
 
-use Spryker\Zed\Kernel\AbstractUnitTest;
 use Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +21,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * @group Communication
  * @group RedirectAfterLoginProvider
  */
-class RedirectAfterLoginProviderTest extends AbstractUnitTest
+class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
 {
 
     const VALID_REDIRECT_URL = '/valid-redirect-url';

@@ -6,13 +6,12 @@
 
 namespace Unit\Spryker\Zed\Setup\Communication;
 
-use Spryker\Zed\Kernel\AbstractUnitTest;
 use Spryker\Zed\Setup\Communication\SetupCommunicationFactory;
 
 /**
  * @method SetupCommunicationFactory getFactory()
  */
-class SetupCommunicationFactoryTest extends AbstractUnitTest
+class SetupCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
