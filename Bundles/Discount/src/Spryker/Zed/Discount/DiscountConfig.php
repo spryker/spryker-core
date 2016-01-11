@@ -42,21 +42,6 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
 
     /**
-     * @var DiscountDecisionRulePluginInterface[]
-     */
-    protected $decisionRulePlugins = [];
-
-    /**
-     * @var DiscountCalculatorPluginInterface[]
-     */
-    protected $calculatorPlugins = [];
-
-    /**
-     * @var DiscountCollectorPluginInterface[]
-     */
-    protected $collectorPlugins = [];
-
-    /**
      * @return array
      */
     public function getAvailableDecisionRulePlugins()
