@@ -6,71 +6,53 @@
 
 namespace Spryker\Yves\Application\Controller;
 
+use Generated\Yves\Ide\AutoCompletion;
+use Pyz\Yves\Application\Business\Model\FlashMessengerInterface;
+use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Yves\Application\Application;
+use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
+use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Locator;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractController
 {
 
     const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
-    const FLASH_MESSAGES_ERROR = 'flash.messages.error';
+    const FLASH_MESSAGES_ERROR= 'flash.messages.error';
     const FLASH_MESSAGES_INFO = 'flash.messages.info';
 
     /**
-     * @var \Spryker\Yves\Application\Application
+     * @var Application
      */
     private $application;
 
     /**
-     * @var \Spryker\Yves\Kernel\AbstractFactory
+     * @var AbstractFactory
      */
     private $factory;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
-     */
-    private $flashBag;
-
-    /**
-     * @var \Spryker\Client\Kernel\AbstractClient
+     * @var AbstractClient
      */
     private $client;
 
     /**
-     * @return void
-     */
-    public function initialize()
-    {
-    }
-
-    /**
-     * @param \Spryker\Yves\Application\Application $application
+     * @param Application $application
      *
      * @return $this
      */
     public function setApplication(Application $application)
     {
         $this->application = $application;
-
-        return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
-     */
-    protected function getFlashBag()
-    {
-        if ($this->flashBag === null) {
-            $this->flashBag = $this->getApplication()['request']->getSession()->getFlashBag();
-        }
-
-        return $this->flashBag;
     }
 
     /**
@@ -78,7 +60,7 @@ abstract class AbstractController
      * @param array $parameters
      * @param int $code
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     protected function redirectResponseInternal($path, $parameters = [], $code = 302)
     {
@@ -86,7 +68,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Yves\Application\Application
+     * @return Application
      */
     protected function getApplication()
     {
@@ -105,7 +87,7 @@ abstract class AbstractController
      * @param string $absoluteUrl
      * @param int $code
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     protected function redirectResponseExternal($absoluteUrl, $code = 302)
     {
@@ -117,7 +99,7 @@ abstract class AbstractController
      * @param int $status
      * @param array $headers
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     protected function jsonResponse($data = null, $status = 200, $headers = [])
     {
@@ -135,15 +117,6 @@ abstract class AbstractController
     }
 
     /**
-     * @param mixed $transferResponse
-     *
-     * @return void
-     */
-    protected function addMessagesFromZedResponse($transferResponse)
-    {
-    }
-
-    /**
      * @param string $message
      *
      * @throws \ErrorException
@@ -152,7 +125,7 @@ abstract class AbstractController
      */
     protected function addSuccessMessage($message)
     {
-        $this->addToFlashBag(self::FLASH_MESSAGES_SUCCESS, $message);
+        $this->getFlashMessenger()->addSuccessMessage($message);
 
         return $this;
     }
@@ -166,7 +139,7 @@ abstract class AbstractController
      */
     protected function addInfoMessage($message)
     {
-        $this->addToFlashBag(self::FLASH_MESSAGES_INFO, $message);
+        $this->getFlashMessenger()->addInfoMessage($message);
 
         return $this;
     }
@@ -180,32 +153,16 @@ abstract class AbstractController
      */
     protected function addErrorMessage($message)
     {
-        $this->addToFlashBag(self::FLASH_MESSAGES_ERROR, $message);
+        $this->getFlashMessenger()->addErrorMessage($message);
 
         return $this;
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     *
-     * @return $this
-     */
-    protected function addToFlashBag($key, $value)
-    {
-        $this->getFlashBag()->add($key, $value);
-
-        return $this;
-    }
-
-    /**
-     * @deprecated Create forms inside your bundle's factory with getting the form factory,
-     * e.g. FooBundleFactory.php: $this->getFormFactory()->create(new FooFormType());
-     *
-     * @param \Spryker\Shared\Gui\Form\AbstractForm $form
+     * @param AbstractForm $form
      * @param array $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
     protected function buildForm(AbstractForm $form, array $options = [])
     {
@@ -230,7 +187,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      *
      * @return string
      */
@@ -298,7 +255,7 @@ abstract class AbstractController
      * @param string $viewPath
      * @param array $parameters
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     protected function renderView($viewPath, array $parameters = [])
     {
@@ -306,7 +263,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Generated\Client\Ide\AutoCompletion
+     * @return AutoCompletion
      */
     protected function getLocator()
     {
@@ -314,7 +271,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Client\Kernel\AbstractClient
+     * @return AbstractClient
      */
     protected function getClient()
     {
@@ -326,9 +283,9 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
+     * @throws ClientNotFoundException
      *
-     * @return \Spryker\Client\Kernel\AbstractClient
+     * @return AbstractClient
      */
     private function resolveClient()
     {
@@ -336,7 +293,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Client\Kernel\ClassResolver\Client\ClientResolver
+     * @return ClientResolver
      */
     private function getClientResolver()
     {
@@ -344,7 +301,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\AbstractFactory
+     * @return AbstractFactory
      */
     protected function getFactory()
     {
@@ -356,9 +313,9 @@ abstract class AbstractController
     }
 
     /**
-     * @throws \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException
+     * @throws FactoryNotFoundException
      *
-     * @return \Spryker\Yves\Kernel\AbstractFactory
+     * @return AbstractFactory
      */
     private function resolveFactory()
     {
@@ -366,11 +323,19 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return FactoryResolver
      */
     private function getFactoryResolver()
     {
         return new FactoryResolver();
+    }
+
+    /**
+     * @return FlashMessengerInterface
+     */
+    private function getFlashMessenger()
+    {
+        return $this->application['flash_messenger'];
     }
 
 }

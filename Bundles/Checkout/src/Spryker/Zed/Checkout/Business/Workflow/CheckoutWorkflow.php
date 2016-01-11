@@ -18,30 +18,30 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
+     * @var CheckoutPreConditionInterface[]
      */
     protected $preConditionStack;
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]
+     * @var CheckoutSaveOrderInterface[]
      */
     protected $saveOrderStack;
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[]
+     * @var CheckoutPostSaveHookInterface[]
      */
     protected $postSaveHookStack;
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface
+     * @var CheckoutToOmsInterface
      */
     protected $omsFacade;
 
     /**
-     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[] $preConditionStack
-     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[] $saveOrderStack
-     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[] $postSaveHookStack
-     * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface $omsFacade
+     * @param CheckoutPreConditionInterface[] $preConditionStack
+     * @param CheckoutSaveOrderInterface[] $saveOrderStack
+     * @param CheckoutPostSaveHookInterface[] $postSaveHookStack
+     * @param CheckoutToOmsInterface $omsFacade
      */
     public function __construct(
         array $preConditionStack,
@@ -56,15 +56,15 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @todo rename to placeOrder
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return CheckoutResponseTransfer
      */
     public function placeOrder(QuoteTransfer $quoteTransfer)
     {
-        $checkoutResponse = new CheckoutResponseTransfer();
+        $checkoutResponse = $this->createCheckoutResponseTransfer();
         $checkoutResponse->setIsSuccess(false);
 
         $this->checkPreConditions($quoteTransfer, $checkoutResponse);
@@ -84,8 +84,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
@@ -97,7 +97,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
      * @return bool
      */
@@ -107,9 +107,10 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return QuoteTransfer
      *
      * @throws \Exception
      */
@@ -138,7 +139,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -154,8 +155,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
@@ -164,6 +165,14 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         foreach ($this->postSaveHookStack as $postSaveHook) {
             $postSaveHook->executeHook($quoteTransfer, $checkoutResponse);
         }
+    }
+
+    /**
+     * @return CheckoutResponseTransfer
+     */
+    protected function createCheckoutResponseTransfer()
+    {
+        return new CheckoutResponseTransfer();
     }
 
 }
