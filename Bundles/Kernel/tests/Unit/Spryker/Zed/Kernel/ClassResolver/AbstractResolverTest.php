@@ -6,6 +6,7 @@
 
 namespace Unit\Spryker\Zed\Kernel\ClassResolver;
 
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -17,7 +18,13 @@ use Symfony\Component\Filesystem\Filesystem;
 abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
 {
 
-    const UNRESOLVABLE_CLASS = 'unresolvable';
+    protected $coreClass;
+    protected $projectClass;
+    protected $storeClass;
+    protected $classPattern;
+    protected $expectedExceptionClass;
+    protected $className = 'Kernel';
+    protected $unResolvableClassName = 'unresolvable';
 
     /**
      * @var array
@@ -34,7 +41,61 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
         $this->deleteCreatedFiles();
     }
 
+    /**
+     * @param array $methods
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractClassResolver
+     */
+    abstract protected function getResolverMock(array $methods);
 
+    public function testResolveMustThrowExceptionIfClassCanNotBeResolved()
+    {
+        $this->setExpectedException($this->expectedExceptionClass);
+
+        $resolverMock = $this->getResolverMock(['canResolve']);
+        $resolverMock->method('canResolve')
+            ->willReturn(false);
+
+        $resolverMock->resolve($this->unResolvableClassName);
+    }
+
+    public function testResolveMustReturnCoreClass()
+    {
+        $this->createClass($this->coreClass);
+
+        $resolverMock = $this->getResolverMock(['getClassPattern']);
+        $resolverMock->method('getClassPattern')
+            ->willReturn($this->classPattern);
+
+        $resolved = $resolverMock->resolve($this->className);
+        $this->assertInstanceOf($this->coreClass, $resolved);
+    }
+
+    public function testResolveMustReturnProjectClass()
+    {
+        $this->createClass($this->coreClass);
+        $this->createClass($this->projectClass);
+
+        $resolverMock = $this->getResolverMock(['getClassPattern']);
+        $resolverMock->method('getClassPattern')
+            ->willReturn($this->classPattern);
+
+        $resolved = $resolverMock->resolve($this->className);
+        $this->assertInstanceOf($this->projectClass, $resolved);
+    }
+
+    public function testResolveMustReturnStoreClass()
+    {
+        $this->createClass($this->projectClass);
+        $this->createClass($this->storeClass);
+
+        $resolverMock = $this->getResolverMock(['getClassPattern']);
+        $resolverMock->method('getClassPattern')
+            ->willReturn($this->classPattern);
+
+        $resolved = $resolverMock->resolve($this->className);
+        $this->assertInstanceOf($this->storeClass, $resolved);
+    }
 
     /**
      * @return void

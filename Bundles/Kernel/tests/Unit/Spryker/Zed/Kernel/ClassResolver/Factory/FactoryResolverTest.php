@@ -19,59 +19,13 @@ use Unit\Spryker\Zed\Kernel\ClassResolver\AbstractResolverTest;
 class FactoryResolverTest extends AbstractResolverTest
 {
 
-    const CORE_CLASS_NAME = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelFactory';
-    const PROJECT_CLASS_NAME = 'Unit\\Pyz\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelFactory';
-    const STORE_CLASS_NAME = 'Unit\\Pyz\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelFactory';
-    const CLASS_PATTERN = 'Unit\\%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%Factory';
-
-    public function testResolveMustThrowExceptionIfClassCanNotBeResolved()
-    {
-        $this->setExpectedException(FactoryNotFoundException::class);
-
-        $queryContainerMock = $this->getResolverMock(['canResolve']);
-        $queryContainerMock->method('canResolve')
-            ->willReturn(false);
-
-        $queryContainerMock->resolve('Spryker\Zed\Unresolvable\Business');
-    }
-
-    public function testResolveMustReturnCoreClass()
-    {
-        $this->createClass(self::CORE_CLASS_NAME);
-
-        $resolverMock = $this->getResolverMock(['getClassPattern']);
-        $resolverMock->method('getClassPattern')
-            ->willReturn(self::CLASS_PATTERN);
-
-        $resolved = $resolverMock->resolve('Spryker\Zed\Kernel\Business');
-        $this->assertInstanceOf(self::CORE_CLASS_NAME, $resolved);
-    }
-
-    public function testResolveMustReturnProjectClass()
-    {
-        $this->createClass(self::CORE_CLASS_NAME);
-        $this->createClass(self::PROJECT_CLASS_NAME);
-
-        $resolverMock = $this->getResolverMock(['getClassPattern']);
-        $resolverMock->method('getClassPattern')
-            ->willReturn(self::CLASS_PATTERN);
-
-        $resolved = $resolverMock->resolve('Spryker\Zed\Kernel\Business');
-        $this->assertInstanceOf(self::PROJECT_CLASS_NAME, $resolved);
-    }
-
-    public function testResolveMustReturnStoreClass()
-    {
-        $this->createClass(self::PROJECT_CLASS_NAME);
-        $this->createClass(self::STORE_CLASS_NAME);
-
-        $resolverMock = $this->getResolverMock(['getClassPattern']);
-        $resolverMock->method('getClassPattern')
-            ->willReturn(self::CLASS_PATTERN);
-
-        $resolved = $resolverMock->resolve('Spryker\Zed\Kernel\Business');
-        $this->assertInstanceOf(self::STORE_CLASS_NAME, $resolved);
-    }
+    protected $coreClass = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelFactory';
+    protected $projectClass = 'Unit\\Pyz\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelFactory';
+    protected $storeClass = 'Unit\\Pyz\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelFactory';
+    protected $classPattern = 'Unit\\%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%Factory';
+    protected $className = 'Spryker\Zed\Kernel\Business';
+    protected $unResolvableClassName = 'Spryker\Zed\UnResolvable\Business';
+    protected $expectedExceptionClass = FactoryNotFoundException::class;
 
     /**
      * @param array $methods
