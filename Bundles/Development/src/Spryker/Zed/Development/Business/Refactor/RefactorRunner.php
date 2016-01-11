@@ -43,7 +43,7 @@ class RefactorRunner
         if (empty($argv[1])) {
             throw new RefactorException('Please provide path to project that needs upgrading');
         }
-        $root = rtrim($argv[1], DIRECTORY_SEPARATOR) - DIRECTORY_SEPARATOR;
+        $root = rtrim($argv[1], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         return $root;
     }
 
