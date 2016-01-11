@@ -6,6 +6,7 @@
 
 namespace Functional\Spryker\Zed\ProductOption\Business\Model;
 
+use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
@@ -32,7 +33,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
  *
  * @method ProductOptionFacade getFacade()
  */
-class DataImportWriterTest extends AbstractFunctionalTest
+class DataImportWriterTest extends Test
 {
 
     /**

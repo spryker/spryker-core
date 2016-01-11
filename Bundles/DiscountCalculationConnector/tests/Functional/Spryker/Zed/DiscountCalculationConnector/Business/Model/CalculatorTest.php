@@ -6,6 +6,7 @@
 
 namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model;
 
+use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountItemsTransfer;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -14,7 +15,10 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin;
 use Spryker\Shared\Sales\Code\ExpenseConstants;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -25,10 +29,13 @@ use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\GrandTotalWith
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
- * @group CalculatorTest
- * @group Calculation
+ * @group Spryker
+ * @group Zed
+ * @group DiscountCalculationConnector
+ * @group Business
+ * @group Calculator
  */
-class CalculatorTest extends AbstractFunctionalTest
+class CalculatorTest extends Test
 {
 
     const ITEM_GROSS_PRICE = 10000;
@@ -53,12 +60,12 @@ class CalculatorTest extends AbstractFunctionalTest
     protected function createCalculatorStack()
     {
         $stack = [
-            $this->getPluginByClassName('Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin'),
+            new ExpensePriceToPayCalculatorPlugin(),
             new DiscountCalculatorPlugin(),
-            $this->getPluginByClassName('Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin'),
-            $this->getPluginByClassName('Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin'),
-            $this->getPluginByClassName('Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin'),
-            $this->getPluginByClassName('Spryker\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin'),
+            new ExpenseTotalsCalculatorPlugin(),
+            new GrandTotalTotalsCalculatorPlugin(),
+            new ExpensePriceToPayCalculatorPlugin(),
+            new ItemPriceToPayCalculatorPlugin(),
             new GrandTotalWithDiscountsTotalsCalculatorPlugin(),
         ];
 

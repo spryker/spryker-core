@@ -51,11 +51,6 @@ abstract class AbstractController
     private $queryContainer;
 
     /**
-     * @var Container
-     */
-    private $container;
-
-    /**
      * @var MessengerFacade
      */
     private $messengerFacade;
@@ -73,40 +68,12 @@ abstract class AbstractController
     }
 
     /**
-     * @param Container $container
-     *
-     * @return self
-     */
-    public function setExternalDependencies(Container $container)
-    {
-        $this->container = $container;
-
-        return $this;
-    }
-
-    /**
-     * @return Container
-     */
-    protected function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
      * @return AbstractCommunicationFactory
      */
     protected function getFactory()
     {
         if ($this->factory === null) {
             $this->factory = $this->resolveFactory();
-        }
-
-        if ($this->queryContainer !== null) {
-            $this->factory->setQueryContainer($this->queryContainer);
-        }
-
-        if ($this->container !== null) {
-            $this->factory->setContainer($this->container);
         }
 
         return $this->factory;
@@ -158,18 +125,6 @@ abstract class AbstractController
     private function getFacadeResolver()
     {
         return new FacadeResolver();
-    }
-
-    /**
-     * @param AbstractQueryContainer $queryContainer
-     *
-     * @return self
-     */
-    public function setQueryContainer(AbstractQueryContainer $queryContainer)
-    {
-        $this->queryContainer = $queryContainer;
-
-        return $this;
     }
 
     /**

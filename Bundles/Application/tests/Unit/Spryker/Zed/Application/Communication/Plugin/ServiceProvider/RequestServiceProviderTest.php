@@ -31,7 +31,7 @@ class RequestServiceProviderTest extends AbstractUnitTest
      *
      * @return void
      */
-    public function testBeforeMustParseRequestDataAndSetModuleControllerAndActionInRequest(
+    public function testBeforeMustParseRequestDataAndSetBundleControllerAndActionInRequest(
         $givenUrl,
         $expectedBundle,
         $expectedController,
@@ -39,7 +39,7 @@ class RequestServiceProviderTest extends AbstractUnitTest
     ) {
         $application = new Application();
 
-        $requestServiceProvider = $this->getPluginByClassName('Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider');
+        $requestServiceProvider = new RequestServiceProvider();
         $requestServiceProvider->boot($application);
 
         $request = Request::create($givenUrl);

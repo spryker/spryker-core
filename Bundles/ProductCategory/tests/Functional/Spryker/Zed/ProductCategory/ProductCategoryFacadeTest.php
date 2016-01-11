@@ -6,13 +6,13 @@
 
 namespace Functional\Spryker\Zed\ProductCategory;
 
+use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Product\Business\ProductFacade;
@@ -28,7 +28,7 @@ use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
  * @group ProductCategory
  * @group ProductCategoryFacade
  */
-class ProductCategoryFacadeTest extends AbstractFunctionalTest
+class ProductCategoryFacadeTest extends Test
 {
 
     /**

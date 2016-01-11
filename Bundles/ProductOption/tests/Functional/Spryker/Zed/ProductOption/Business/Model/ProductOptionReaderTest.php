@@ -6,11 +6,11 @@
 
 namespace Functional\Spryker\Zed\ProductOption\Persistence;
 
+use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer;
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleBusinessFactory;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
@@ -29,7 +29,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
  *
  * @method ProductOptionFacade getFacade()
  */
-class ProductOptionReaderTest extends AbstractFunctionalTest
+class ProductOptionReaderTest extends Test
 {
 
     const LOCALE_CODE = 'xx_XX';
@@ -267,7 +267,21 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         };
         $this->productOptionQueryContainer->setExternalDependencies($container);
         $this->facade->setExternalDependencies($container);
-        $this->facade->setQueryContainer($this->productOptionQueryContainer);
+
+        $factoryMock = $this->getFactoryMock();
+        $this->facade->setFactory($factoryMock);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|ProductOptionBusinessFactory
+     */
+    protected function getFactoryMock()
+    {
+        $factoryMock = $this->getMock(ProductOptionBusinessFactory::class, ['getQueryContainer']);
+        $factoryMock->method('getQueryContainer')
+            ->willReturn($this->productOptionQueryContainer);
+
+        return $factoryMock;
     }
 
 }

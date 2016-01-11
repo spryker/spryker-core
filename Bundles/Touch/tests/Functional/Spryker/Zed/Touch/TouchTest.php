@@ -6,6 +6,7 @@
 
 namespace Functional\Spryker\Zed\Touch;
 
+use Codeception\TestCase\Test;
 use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Touch\Business\TouchBusinessFactory;
@@ -20,7 +21,7 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
  * @group Business
  * @group TouchTest
  */
-class TouchTest extends AbstractFunctionalTest
+class TouchTest extends Test
 {
 
     /**

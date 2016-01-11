@@ -6,8 +6,8 @@
 
 namespace Functional\Spryker\Zed\Country;
 
+use Codeception\TestCase\Test;
 use Spryker\Shared\Kernel\Messenger\MessengerInterface;
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
@@ -16,7 +16,7 @@ use Orm\Zed\Country\Persistence\SpyCountry;
 /**
  * @group Country
  */
-class CountryFacadeTest extends AbstractFunctionalTest
+class CountryFacadeTest extends Test
 {
 
     const ISO2_CODE = 'qx';

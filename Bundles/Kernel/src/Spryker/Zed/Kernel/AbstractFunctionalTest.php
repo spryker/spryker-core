@@ -11,6 +11,4 @@ use Codeception\TestCase\Test;
 abstract class AbstractFunctionalTest extends Test
 {
 
-    use InternalClassBuilderForTests;
-
 }

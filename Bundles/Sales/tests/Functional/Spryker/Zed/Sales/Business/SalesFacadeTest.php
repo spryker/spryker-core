@@ -85,7 +85,6 @@ class SalesFacadeTest extends Test
         $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
 
         $this->salesFacade = new SalesFacade();
-        $this->salesFacade->setQueryContainer(new SalesQueryContainer());
         $this->salesFacade->setExternalDependencies($container);
     }
 

@@ -42,18 +42,6 @@ abstract class AbstractFacade implements FacadeInterface
     }
 
     /**
-     * @param AbstractQueryContainer $queryContainer
-     *
-     * @return self
-     */
-    public function setQueryContainer(AbstractQueryContainer $queryContainer)
-    {
-        $this->queryContainer = $queryContainer;
-
-        return $this;
-    }
-
-    /**
      * @param Container $container
      *
      * @return self
@@ -76,10 +64,6 @@ abstract class AbstractFacade implements FacadeInterface
 
         if ($this->container !== null) {
             $this->factory->setContainer($this->container);
-        }
-
-        if ($this->queryContainer !== null) {
-            $this->factory->setQueryContainer($this->queryContainer);
         }
 
         return $this->factory;

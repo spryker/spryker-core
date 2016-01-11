@@ -6,7 +6,7 @@
 
 namespace Functional\Spryker\Zed\Availability;
 
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Codeception\TestCase\Test;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\AvailabilityBusinessFactory;
@@ -27,7 +27,7 @@ use Orm\Zed\Stock\Persistence\SpyStockQuery;
  * @group Availability
  * @group SellableTest
  */
-class SellableTest extends AbstractFunctionalTest
+class SellableTest extends Test
 {
 
     /**

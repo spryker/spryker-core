@@ -5,7 +5,7 @@
 
 namespace Functional\Spryker\Zed\ProductOptionCartConnector\Business;
 
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Codeception\TestCase\Test;
 use Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -18,7 +18,7 @@ use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
  * @group ProductOptionCartConnector
  * @group ProductOptionCartConnectorFacadeTest
  */
-class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
+class ProductOptionCartConnectorFacadeTest extends Test
 {
 
     const LOCALE_CODE = 'xx_XX';
@@ -40,7 +40,7 @@ class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
     {
         parent::setUp();
 
-        $this->facade = $this->getFacade();
+        $this->facade = new ProductOptionCartConnectorFacade();
         $this->ids = DbFixturesLoader::loadFixtures();
     }
 

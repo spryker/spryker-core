@@ -5,9 +5,9 @@
 
 namespace Functional\Spryker\Zed\Glossary\Business;
 
+use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group GlossaryFacade
  * @group Business
  */
-class GlossaryFacadeTest extends AbstractFunctionalTest
+class GlossaryFacadeTest extends Test
 {
 
     const GLOSSARY_KEY = 'glossary_key';
@@ -71,7 +71,7 @@ class GlossaryFacadeTest extends AbstractFunctionalTest
      */
     private function getGlossaryFacade()
     {
-        return $this->getFacade();
+        return new GlossaryFacade();
     }
 
     /**

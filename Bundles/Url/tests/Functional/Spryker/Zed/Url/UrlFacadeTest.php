@@ -6,9 +6,9 @@
 
 namespace Functional\Spryker\Zed\Url;
 
+use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
@@ -21,7 +21,7 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
  * @group Url
  * @group UrlFacadeTest
  */
-class UrlFacadeTest extends AbstractFunctionalTest
+class UrlFacadeTest extends Test
 {
 
     /**
@@ -50,8 +50,8 @@ class UrlFacadeTest extends AbstractFunctionalTest
     protected function setUp()
     {
         parent::setUp();
-        $this->urlFacade = $this->getFacade();
 
+        $this->urlFacade = new UrlFacade();
         $this->localeFacade = new LocaleFacade();
         $this->urlQueryContainer = new UrlQueryContainer();
         $this->touchQueryContainer = new TouchQueryContainer();

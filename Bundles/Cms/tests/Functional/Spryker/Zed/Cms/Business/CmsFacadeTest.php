@@ -341,7 +341,6 @@ class CmsFacadeTest extends Test
         };
 
         $this->glossaryFacade->setExternalDependencies($container);
-        $this->glossaryFacade->setQueryContainer($this->glossaryQueryContainer);
     }
 
 }
