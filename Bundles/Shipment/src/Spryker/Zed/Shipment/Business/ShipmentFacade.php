@@ -6,6 +6,9 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -106,6 +109,17 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
             ->createMethod();
 
         return $methodModel->updateMethod($methodTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function saveShipmentForOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        $this->getFactory()->createShipmentOrderSaver()->saveShipmentForOrder($quoteTransfer, $checkoutResponse);
     }
 
 }

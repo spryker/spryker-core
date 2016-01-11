@@ -32,8 +32,11 @@
     </transfer>
 
     <transfer name="Order">
+        <property name="idShipmentMethod" type="int" />
         <property name="shipmentMethod" type="ShipmentMethod" />
         <property name="shipmentDeliveryTime" type="int" />
+        <property name="expenses" type="Expense[]" singular="expense" />
+        <property name="shipmentMethod" type="ShipmentMethod" />
     </transfer>
 
     <transfer name="Address">
@@ -64,11 +67,6 @@
 
     <transfer name="Quote">
         <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod"/>
-    </transfer>
-
-    <transfer name="CheckoutRequest">
-        <property name="shipmentMethodId" type="int" />
-        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod" />
     </transfer>
 
 </transfers>

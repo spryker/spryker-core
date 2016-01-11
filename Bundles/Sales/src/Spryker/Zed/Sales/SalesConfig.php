@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Sales;
 
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Sales\SalesConstants;
@@ -106,6 +108,19 @@ class SalesConfig extends AbstractBundleConfig
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
 
         return $sequenceNumberSettingsTransfer;
+    }
+
+    /**
+     * This method determines state machine process from the given quote transfer and order item.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    public function determineProcessForOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
+    {
+        throw new \BadMethodCallException('You need to provide at least one state machine process for given method!');
     }
 
 }

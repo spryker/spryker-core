@@ -58,9 +58,11 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
+     * @todo rename to placeOrder
+     *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function requestCheckout(QuoteTransfer $quoteTransfer)
+    public function placeOrder(QuoteTransfer $quoteTransfer)
     {
         $checkoutResponse = new CheckoutResponseTransfer();
         $checkoutResponse->setIsSuccess(false);

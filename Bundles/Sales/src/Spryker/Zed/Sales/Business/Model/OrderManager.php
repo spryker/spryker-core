@@ -6,10 +6,12 @@
 
 namespace Spryker\Zed\Sales\Business\Model;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -23,12 +25,11 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\SalesConfig;
 
 class OrderManager
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -50,32 +51,40 @@ class OrderManager
     protected $orderReferenceGenerator;
 
     /**
+     * @var \Spryker\Zed\Sales\SalesConfig
+     */
+    private $salesConfiguration;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface $orderReferenceGenerator
+     * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToCountryInterface $countryFacade,
         SalesToOmsInterface $omsFacade,
-        OrderReferenceGeneratorInterface $orderReferenceGenerator
+        OrderReferenceGeneratorInterface $orderReferenceGenerator,
+        SalesConfig $salesConfiguration
     ) {
         $this->queryContainer = $queryContainer;
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
         $this->orderReferenceGenerator = $orderReferenceGenerator;
+        $this->salesConfiguration = $salesConfiguration;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      * @throws \Exception
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer)
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         Propel::getConnection()->beginTransaction();
 
@@ -83,19 +92,17 @@ class OrderManager
 
         try {
             $salesOrderEntity = $this->saveOrderEntity($quoteTransfer);
-            $orderTransfer->setProcess('Prepayment01');
             $orderTransfer->fromArray($salesOrderEntity->toArray(), true);
 
-            // @todo: Should detect process per item, not per order
-            $processName = $this->omsFacade->selectProcess($orderTransfer);
-            $omsOrderProcessEntity = $this->omsFacade->getProcessEntity($processName);
-
-            $this->saveOrderItems($quoteTransfer, $salesOrderEntity, $omsOrderProcessEntity, $orderTransfer);
+            $this->saveOrderItems($quoteTransfer, $salesOrderEntity, $orderTransfer);
 
             $orderTransfer->setIdSalesOrder($salesOrderEntity->getIdSalesOrder());
             $orderTransfer->setOrderReference($salesOrderEntity->getOrderReference());
 
             Propel::getConnection()->commit();
+
+            $this->populateCheckoutResponseTransfer($checkoutResponseTransfer, $orderTransfer);
+
         } catch (\Exception $e) {
             Propel::getConnection()->rollBack();
             throw $e;
@@ -112,9 +119,7 @@ class OrderManager
     protected function saveOrderEntity(QuoteTransfer $quoteTransfer)
     {
         $salesOrderEntity = $this->createSalesOrderEntity();
-
         $this->hydrateSalesOrderEntity($quoteTransfer, $salesOrderEntity);
-
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
@@ -123,7 +128,6 @@ class OrderManager
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
-     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $omsOrderProcessEntity
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -131,19 +135,18 @@ class OrderManager
     protected function saveOrderItems(
         QuoteTransfer $quoteTransfer,
         SpySalesOrder $salesOrderEntity,
-        SpyOmsOrderProcess $omsOrderProcessEntity,
         OrderTransfer $orderTransfer
     ) {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
+
+            $processName = $this->salesConfiguration->determineProcessForOrderItem($quoteTransfer, $itemTransfer);
+            $omsOrderProcessEntity = $this->omsFacade->getProcessEntity($processName);
 
             $salesOrderItemEntity = $this->createSalesOrderItemEntity();
             $this->hydrateSalesOrderItemEntity($salesOrderEntity, $omsOrderProcessEntity, $salesOrderItemEntity, $itemTransfer);
             $salesOrderItemEntity->setGrossPrice($itemTransfer->getUnitGrossPriceWithProductOptions());
             $salesOrderItemEntity->setPriceToPay($itemTransfer->getUnitGrossPriceWithProductOptions());
             $salesOrderItemEntity->save();
-
-            // @todo: Illegal direct dependency on ProductOption
-            $this->saveProductOptions($itemTransfer);
 
             $orderItemTransfer = clone $itemTransfer;
             $orderItemTransfer->setIdSalesOrderItem($salesOrderItemEntity->getIdSalesOrderItem());
@@ -166,25 +169,6 @@ class OrderManager
         $addressTransfer->setIdSalesOrderAddress($salesOrderAddressEntity->getIdSalesOrderAddress());
 
         return $salesOrderAddressEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
-     *
-     * @return void
-     */
-    protected function saveProductOptions(ItemTransfer $item)
-    {
-        foreach ($item->getProductOptions() as $productOptionTransfer) {
-            $optionEntity = new SpySalesOrderItemOption();
-
-            $optionEntity->fromArray($productOptionTransfer->toArray());
-
-            $optionEntity->setFkSalesOrderItem($item->getIdSalesOrderItem());
-            $optionEntity->setTaxPercentage($productOptionTransfer->getTaxRate());
-
-            $optionEntity->save();
-        }
     }
 
     /**
@@ -223,7 +207,7 @@ class OrderManager
             return new OrderTransfer();
         }
 
-        return (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
+        return $this->createOrderTransfer()->fromArray($orderEntity->toArray(), true);
     }
 
     /**
@@ -296,10 +280,9 @@ class OrderManager
         SpySalesOrderItem $salesOrderItemEntity,
         ItemTransfer $item
     ) {
-        $quantity = $item->getQuantity() !== null ? $item->getQuantity() : 1;
+        $quantity = $this->getQuantity($item);
 
         $salesOrderItemEntity->fromArray($item->toArray());
-
         $salesOrderItemEntity->setQuantity($quantity);
 
         $salesOrderItemEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
@@ -308,11 +291,50 @@ class OrderManager
         );
 
         $salesOrderItemEntity->setProcess($omsOrderProcessEntity);
+        $salesOrderItemEntity->setTaxPercentage($item->getTaxRate());
+    }
 
-        $taxRate = $item->getTaxRate();
-        if ($taxRate !== null) {
-            $salesOrderItemEntity->setTaxPercentage($taxRate);
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function populateCheckoutResponseTransfer(
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        OrderTransfer $orderTransfer
+    ) {
+        $saveOrderTransfer = $this->getSaveOrderTransfer($checkoutResponseTransfer);
+        $this->hydrateSaveOrderTransfer($saveOrderTransfer, $orderTransfer);
+
+        $checkoutResponseTransfer->setSaveOrder($saveOrderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function hydrateSaveOrderTransfer(SaveOrderTransfer $saveOrderTransfer, OrderTransfer $orderTransfer)
+    {
+        $saveOrderTransfer->fromArray($orderTransfer->toArray(), true);
+        $orderItems = clone $orderTransfer->getItems();
+        $saveOrderTransfer->setOrderItems($orderItems);
+    }
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    protected function getSaveOrderTransfer(CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        $saveOrderTransfer = $checkoutResponseTransfer->getSaveOrder();
+        if ($saveOrderTransfer === null) {
+            $saveOrderTransfer = $this->createSaveOrderTransfer();
         }
+
+        return $saveOrderTransfer;
     }
 
     /**
@@ -357,6 +379,24 @@ class OrderManager
     protected function createSalesOrderAddressEntity()
     {
         return new SpySalesOrderAddress();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    protected function createSaveOrderTransfer()
+    {
+        return new SaveOrderTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
+     *
+     * @return int
+     */
+    protected function getQuantity(ItemTransfer $item)
+    {
+        return $item->getQuantity() !== null ? $item->getQuantity() : 1;
     }
 
 }

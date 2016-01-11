@@ -6,10 +6,16 @@
 
 namespace Spryker\Zed\Customer\Business;
 
+use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver;
+use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
+use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 
 /**
@@ -20,6 +26,14 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
+     * @return \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
+     */
+    public function createQueryContainer()
+    {
+        return $this->getQueryContainer();
+    }
+
+    /**
      * @return \Spryker\Zed\Customer\Business\Customer\Customer
      */
     public function createCustomer()
@@ -28,7 +42,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         $senderPlugins = $this->getProvidedDependency(CustomerDependencyProvider::SENDER_PLUGINS);
 
         $customer = new Customer(
-            $this->getQueryContainer(),
+            $this->createQueryContainer(),
             $this->createCustomerReferenceGenerator(),
             $config
         );
@@ -53,7 +67,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createAddress()
     {
-        return new Address($this->getQueryContainer(), $this->getCountryFacade(), $this->getLocaleFacade());
+        return new Address($this->createQueryContainer(), $this->getCountryFacade(), $this->getLocaleFacade());
     }
 
     /**
@@ -89,6 +103,22 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     protected function getSequenceNumberFacade()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_SEQUENCE_NUMBER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Model\CustomerOrderSaver
+     */
+    public function createCustomerOrderSaver()
+    {
+        return new CustomerOrderSaver($this->createCustomer(), $this->createAddress());
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Model\PreConditionChecker
+     */
+    public function createPreConditionChecker()
+    {
+        return new PreConditionChecker($this->createCustomer());
     }
 
 }

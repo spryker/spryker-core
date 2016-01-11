@@ -23,13 +23,17 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
 class SalesBusinessFactory extends AbstractBusinessFactory
 {
 
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderManager
+     */
     public function createOrderManager()
     {
         return new OrderManager(
             $this->getQueryContainer(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_COUNTRY),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS),
-            $this->createReferenceGenerator()
+            $this->createReferenceGenerator(),
+            $this->getConfig()
         );
     }
 

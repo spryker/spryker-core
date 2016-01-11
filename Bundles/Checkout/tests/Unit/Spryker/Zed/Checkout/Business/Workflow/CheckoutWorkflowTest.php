@@ -50,7 +50,7 @@ class CheckoutWorkflowTest extends Test
 
         $checkoutWorkflow = new CheckoutWorkflow([$mock1, $mock2], [], [], [], [], $omsMock);
 
-        $checkoutWorkflow->requestCheckout($checkoutRequest);
+        $checkoutWorkflow->placeOrder($checkoutRequest);
     }
 
     /**
@@ -77,7 +77,7 @@ class CheckoutWorkflowTest extends Test
 
         $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock1, $mock2], [], [], $omsMock);
 
-        $checkoutWorkflow->requestCheckout($checkoutRequest);
+        $checkoutWorkflow->placeOrder($checkoutRequest);
     }
 
     /**
@@ -105,7 +105,7 @@ class CheckoutWorkflowTest extends Test
 
         $checkoutWorkflow = new CheckoutWorkflow([], [], [], [$mock1, $mock2], [], $omsMock);
 
-        $checkoutWorkflow->requestCheckout($checkoutRequest);
+        $checkoutWorkflow->placeOrder($checkoutRequest);
     }
 
     /**
@@ -133,7 +133,7 @@ class CheckoutWorkflowTest extends Test
 
         $checkoutWorkflow = new CheckoutWorkflow([], [], [], [], [$mock1, $mock2], $omsMock);
 
-        $checkoutWorkflow->requestCheckout($checkoutRequest);
+        $checkoutWorkflow->placeOrder($checkoutRequest);
     }
 
     /**
@@ -160,7 +160,7 @@ class CheckoutWorkflowTest extends Test
             $this->equalTo($checkoutResponse)
         );
 
-        $checkoutWorkflow->requestCheckout($checkoutRequest);
+        $checkoutWorkflow->placeOrder($checkoutRequest);
     }
 
     /**
@@ -184,7 +184,7 @@ class CheckoutWorkflowTest extends Test
 
         $mock2->expects($this->never())->method('saveOrder');
 
-        $result = $checkoutWorkflow->requestCheckout($checkoutRequest);
+        $result = $checkoutWorkflow->placeOrder($checkoutRequest);
         $this->assertEquals($checkoutResponse, $result);
     }
 
@@ -212,7 +212,7 @@ class CheckoutWorkflowTest extends Test
             $this->anything()
         );
 
-        $checkoutWorkflow->requestCheckout($checkoutRequest);
+        $checkoutWorkflow->placeOrder($checkoutRequest);
     }
 
     /**
@@ -236,7 +236,7 @@ class CheckoutWorkflowTest extends Test
 
         $mock2->expects($this->never())->method('executeHook');
 
-        $result = $checkoutWorkflow->requestCheckout($checkoutRequest);
+        $result = $checkoutWorkflow->placeOrder($checkoutRequest);
         $this->assertEquals($checkoutResponse, $result);
     }
 
@@ -258,7 +258,7 @@ class CheckoutWorkflowTest extends Test
         $checkoutWorkflow = new CheckoutWorkflow([], [], [], [], [$mock], $omsMock);
         $checkoutRequest = new CheckoutRequestTransfer();
 
-        $result = $checkoutWorkflow->requestCheckout($checkoutRequest);
+        $result = $checkoutWorkflow->placeOrder($checkoutRequest);
 
         $this->assertEquals($checkoutResponse, $result);
     }

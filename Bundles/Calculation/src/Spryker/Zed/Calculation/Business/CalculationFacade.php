@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Calculation\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Calculation\CalculationConfig;
@@ -109,6 +110,21 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     public function calculateSubtotalTotals(QuoteTransfer $quoteTransfer)
     {
         $this->getFactory()->createSubtotalTotalsCalculator()->recalculate($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function validateCheckoutGrandTotal(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+        $this->getFactory()
+            ->createCheckoutGrandTotalPrecondition()
+            ->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);
     }
 
 }

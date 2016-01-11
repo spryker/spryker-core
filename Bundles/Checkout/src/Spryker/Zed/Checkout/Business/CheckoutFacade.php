@@ -21,12 +21,12 @@ class CheckoutFacade extends AbstractFacade implements CheckoutFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function requestCheckout(QuoteTransfer $quoteTransfer)
+    public function placeOrder(QuoteTransfer $quoteTransfer)
     {
         return $this
             ->getFactory()
             ->createCheckoutWorkflow()
-            ->requestCheckout($quoteTransfer);
+            ->placeOrder($quoteTransfer);
     }
 
 }

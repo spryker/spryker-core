@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Calculation\Business;
 
+use Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPrecondition;
 use Spryker\Zed\Calculation\Business\Model\StackExecutor;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseGrossSumAmountCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
@@ -17,12 +18,10 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Calculation\CalculationConfig;
-use Generated\Zed\Ide\FactoryAutoCompletion\CalculationBusiness;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 /**
- * @method \Generated\Zed\Ide\FactoryAutoCompletion\CalculationBusiness getFactory()
  * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
 class CalculationBusinessFactory extends AbstractBusinessFactory
@@ -106,6 +105,14 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     public function createSubtotalTotalsCalculator()
     {
         return new SubtotalTotalsCalculator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPrecondition
+     */
+    public function createCheckoutGrandTotalPrecondition()
+    {
+        return new CheckoutGrandTotalPrecondition($this->createStackExecutor());
     }
 
 }

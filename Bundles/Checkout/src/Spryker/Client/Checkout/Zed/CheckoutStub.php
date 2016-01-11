@@ -32,9 +32,9 @@ class CheckoutStub implements CheckoutStubInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function requestCheckout(QuoteTransfer $quoteTransfer)
+    public function placeOrder(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedStub->call('/checkout/gateway/request-checkout', $quoteTransfer);
+        return $this->zedStub->call('/checkout/gateway/place-order', $quoteTransfer);
     }
 
 }

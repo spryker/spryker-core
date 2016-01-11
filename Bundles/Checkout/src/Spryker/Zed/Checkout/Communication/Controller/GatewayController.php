@@ -22,11 +22,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return CheckoutResponseTransfer
      */
-    public function requestCheckoutAction(QuoteTransfer $quoteTransfer)
+    public function placeOrderAction(QuoteTransfer $quoteTransfer)
     {
-        $result = $this->getFacade()->requestCheckout($quoteTransfer);
-
-        return $result;
+        return $this->getFacade()->placeOrder($quoteTransfer);
     }
 
 }

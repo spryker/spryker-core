@@ -10,4 +10,5 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CheckoutConfig extends AbstractBundleConfig
 {
+
 }

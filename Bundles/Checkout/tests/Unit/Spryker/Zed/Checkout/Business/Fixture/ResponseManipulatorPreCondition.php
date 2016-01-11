@@ -28,13 +28,13 @@ class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function checkCondition(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
+    public function checkCondition(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $checkoutResponse->fromArray($this->checkoutResponse->toArray(true), true);
+        $checkoutResponseTransfer->fromArray($this->checkoutResponse->toArray(true), true);
     }
 
 }

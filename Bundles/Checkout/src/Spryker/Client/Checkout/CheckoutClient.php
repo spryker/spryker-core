@@ -22,9 +22,9 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function requestCheckout(QuoteTransfer $quoteTransfer)
+    public function placeOrder(QuoteTransfer $quoteTransfer)
     {
-        return $this->getZedStub()->requestCheckout($quoteTransfer);
+        return $this->getZedStub()->placeOrder($quoteTransfer);
     }
 
     /**

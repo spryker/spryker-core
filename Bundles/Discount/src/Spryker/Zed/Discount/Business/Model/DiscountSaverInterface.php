@@ -3,19 +3,17 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
-namespace Spryker\Zed\Checkout\Dependency\Plugin;
+namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutPreConditionInterface
+interface DiscountSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+    public function saveDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
 }

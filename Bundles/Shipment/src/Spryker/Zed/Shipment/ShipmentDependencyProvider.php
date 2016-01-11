@@ -19,6 +19,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGINS = 'PLUGINS';
 
     const QUERY_CONTAINER_TAX = 'QUERY_CONTAINER_TAX';
+    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -58,6 +59,10 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
                 self::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins($container),
                 self::TAX_CALCULATION_PLUGINS => $this->getTaxCalculationPlugins($container),
             ];
+        };
+
+        $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
+            return $container->getLocator()->sales()->queryContainer();
         };
 
         parent::provideBusinessLayerDependencies($container);

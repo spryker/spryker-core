@@ -11,12 +11,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutWorkflowInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function requestCheckout(QuoteTransfer $quoteTransfer);
+    public function placeOrder(QuoteTransfer $quoteTransfer);
 
 }

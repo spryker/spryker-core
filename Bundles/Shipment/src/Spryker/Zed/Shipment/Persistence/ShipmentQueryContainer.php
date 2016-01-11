@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
@@ -60,5 +61,4 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
 
         return $query;
     }
-
 }

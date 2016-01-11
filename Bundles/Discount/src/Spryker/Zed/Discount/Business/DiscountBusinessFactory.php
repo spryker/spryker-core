@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Discount\Business;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\DiscountBusiness;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Discount\Business\Calculator\Fixed;
 use Spryker\Zed\Discount\Business\Calculator\Percentage;
@@ -20,6 +19,8 @@ use Spryker\Zed\Discount\Business\Model\Calculator;
 use Spryker\Zed\Discount\Business\Model\CartRule;
 use Spryker\Zed\Discount\Business\Model\CartRuleInterface;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
+use Spryker\Zed\Discount\Business\Model\DiscountOrderSaver;
+use Spryker\Zed\Discount\Business\Model\DiscountSaverInterface;
 use Spryker\Zed\Discount\Business\Model\VoucherCode;
 use Spryker\Zed\Discount\Business\Model\VoucherCodeInterface;
 use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
@@ -300,6 +301,18 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
     }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Model\DiscountSaverInterface
+     */
+    public function createDiscountSaver()
+    {
+        return new DiscountOrderSaver(
+            $this->getQueryContainer(),
+            $this->createVoucherCode()
+        );
+    }
+
 
     /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]

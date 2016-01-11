@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
@@ -20,7 +21,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 /**
  * @method \Spryker\Zed\Sales\Business\SalesBusinessFactory getFactory()
  */
-class SalesFacade extends AbstractFacade implements SalesFacadeInterface
+class SalesFacade extends AbstractFacade
 {
 
     /**
@@ -85,14 +86,15 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer)
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         return $this->getFactory()
             ->createOrderManager()
-            ->saveOrder($quoteTransfer);
+            ->saveOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**

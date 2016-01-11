@@ -22,24 +22,24 @@ class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionI
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransferTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function checkCondition(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransferTransfer
     ) {
         $payolutionTransactionResponseTransfer = $this
             ->getFacade()
             ->preCheckPayment($quoteTransfer);
 
-        $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransfer);
+        $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransferTransfer);
 
         $checkoutRequestTransfer->getPayolutionPayment()
             ->setPreCheckId($payolutionTransactionResponseTransfer->getIdentificationUniqueid());
 
-        return $checkoutResponseTransfer;
+        return $checkoutResponseTransferTransfer;
     }
 
     /**
@@ -56,7 +56,7 @@ class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionI
             || PayolutionConstants::STATUS_CODE_SUCCESS !== $payolutionTransactionResponseTransfer->getProcessingStatusCode()
             || PayolutionConstants::PAYMENT_CODE_PRE_CHECK !== $payolutionTransactionResponseTransfer->getPaymentCode()
         ) {
-            $errorCode = (int)preg_replace('/[^\d]+/', '', $payolutionTransactionResponseTransfer->getProcessingCode());
+            $errorCode = (int) preg_replace('/[^\d]+/', '', $payolutionTransactionResponseTransfer->getProcessingCode());
             $error = new CheckoutErrorTransfer();
             $error
                 ->setErrorCode($errorCode)

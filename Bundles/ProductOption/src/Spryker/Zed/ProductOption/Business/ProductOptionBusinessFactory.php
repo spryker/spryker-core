@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
+use Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\Model\ProductOptionReader;
 use Spryker\Zed\ProductOption\Business\Model\DataImportWriter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -39,6 +40,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_LOCALE)
         );
+    }
+
+    /**
+     * @return ProductOptionOrderSaver
+     */
+    public function createProductOptionOrderSaver()
+    {
+        return new ProductOptionOrderSaver();
     }
 
 }

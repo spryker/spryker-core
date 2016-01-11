@@ -13,10 +13,10 @@ interface CheckoutClientInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function requestCheckout(QuoteTransfer $quoteTransfer);
+    public function placeOrder(QuoteTransfer $quoteTransfer);
 
 }

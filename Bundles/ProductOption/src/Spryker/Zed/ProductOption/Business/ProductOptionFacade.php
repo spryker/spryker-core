@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -227,6 +229,17 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     public function flushBuffer()
     {
         $this->getFactory()->createDataImportWriterModel()->flushBuffer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function saveSaleOrderProductOptions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        $this->getFactory()->createProductOptionOrderSaver()->save($quoteTransfer, $checkoutResponse);
     }
 
 }
