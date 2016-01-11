@@ -3,6 +3,7 @@
 /**
  * (c) Spryker Systems GmbH copyright protected.
  */
+
 namespace Spryker\Shared\Kernel\ClassResolver;
 
 use Spryker\Shared\Config;

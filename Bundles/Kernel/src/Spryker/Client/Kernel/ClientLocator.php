@@ -6,9 +6,9 @@
 
 namespace Spryker\Client\Kernel;
 
+use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Kernel\AbstractLocator;
-use Spryker\Shared\Kernel\Locator\LocatorException;
 
 class ClientLocator extends AbstractLocator
 {
@@ -33,9 +33,9 @@ class ClientLocator extends AbstractLocator
     /**
      * @param string $bundle
      *
-     * @throws LocatorException
+     * @throws ClientNotFoundException
      *
-     * @return object
+     * @return AbstractClient
      */
     public function locate($bundle)
     {

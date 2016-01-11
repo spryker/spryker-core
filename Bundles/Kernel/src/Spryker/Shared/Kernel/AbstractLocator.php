@@ -7,7 +7,6 @@
 namespace Spryker\Shared\Kernel;
 
 use Spryker\Shared\Kernel\Locator\LocatorInterface;
-use Spryker\Shared\Kernel\Locator\LocatorException;
 
 abstract class AbstractLocator implements LocatorInterface
 {
@@ -33,12 +32,12 @@ abstract class AbstractLocator implements LocatorInterface
     protected $application;
 
     /**
-     * @throws LocatorException
+     * @throws \Exception
      */
     final public function __construct()
     {
         if ($this->application === null) {
-            throw new LocatorException('Properties missing for: ' . get_class($this));
+            throw new \Exception('Properties missing for: ' . get_class($this));
         }
     }
 
