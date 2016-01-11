@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Collector\Dependency\Facade;
 
-use Spryker\Zed\Locale\Business\LocaleFacade;
 
 class CollectorToLocaleBridge implements CollectorToLocaleInterface
 {
@@ -30,6 +29,18 @@ class CollectorToLocaleBridge implements CollectorToLocaleInterface
     public function getCurrentLocale()
     {
         return $this->localeFacade->getCurrentLocale();
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocale($localeName)
+    {
+        return $this->localeFacade->getLocale($localeName);
     }
 
 }

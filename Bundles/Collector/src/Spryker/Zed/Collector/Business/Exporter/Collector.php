@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
@@ -30,7 +31,7 @@ class Collector
     protected $exporter;
 
     /**
-     * @var LocaleFacade
+     * @var CollectorToLocaleInterface
      */
     protected $localeFacade;
 
@@ -39,7 +40,7 @@ class Collector
      * @param LocaleFacade $localeFacade
      * @param ExporterInterface $exporter
      */
-    public function __construct(TouchQueryContainer $touchQueryContainer, LocaleFacade $localeFacade, ExporterInterface $exporter)
+    public function __construct(TouchQueryContainer $touchQueryContainer, CollectorToLocaleInterface $localeFacade, ExporterInterface $exporter)
     {
         $this->touchQueryContainer = $touchQueryContainer;
         $this->localeFacade = $localeFacade;
