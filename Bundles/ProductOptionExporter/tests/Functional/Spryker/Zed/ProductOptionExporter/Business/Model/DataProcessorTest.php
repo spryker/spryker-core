@@ -40,7 +40,7 @@ class DataProcessorTest extends Test
     {
         parent::setUp();
 
-        $this->facade = $this->getFacade();
+        $this->facade = new ProductOptionExporterFacade();
     }
 
     /**

@@ -24,7 +24,7 @@ use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
  * @group Business
  * @group DiscountSaver
  */
-class DiscountSaverTest extends \PHPUnit_Framework_TestCase 
+class DiscountSaverTest extends \PHPUnit_Framework_TestCase
 {
 
     const DISCOUNT_DISPLAY_NAME = 'discount';

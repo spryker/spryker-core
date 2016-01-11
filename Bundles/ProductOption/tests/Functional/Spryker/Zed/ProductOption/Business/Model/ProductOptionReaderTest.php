@@ -77,7 +77,7 @@ class ProductOptionReaderTest extends Test
 
         $this->ids = DbFixturesLoader::loadFixtures();
 
-        $this->facade = $this->getFacade();
+        $this->facade = new ProductOptionFacade();
         $this->facade->setFactory(new ProductOptionBusinessFactory());
 
         $this->localeFacade = new LocaleFacade();

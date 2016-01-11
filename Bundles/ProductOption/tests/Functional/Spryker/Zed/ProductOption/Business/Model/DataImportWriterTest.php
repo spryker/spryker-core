@@ -52,7 +52,7 @@ class DataImportWriterTest extends Test
     {
         parent::setUp();
 
-        $this->facade = $this->getFacade();
+        $this->facade = new ProductOptionFacade();
     }
 
     /**

@@ -19,7 +19,7 @@ class SetupCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateSetupInstallCommandNamesMustReturnArray()
     {
-        $communicationFactory = $this->getFactory();
+        $communicationFactory = new SetupCommunicationFactory();
 
         $this->assertInternalType('array', $communicationFactory->createSetupInstallCommandNames());
     }
