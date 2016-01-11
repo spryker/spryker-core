@@ -44,10 +44,9 @@ abstract class AbstractLocator implements LocatorInterface
 
     /**
      * @param string $bundle
-     * @param string|null $className
      *
      * @return object
      */
-    abstract public function locate($bundle, $className = null);
+    abstract public function locate($bundle);
 
 }

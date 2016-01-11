@@ -13,11 +13,10 @@ class MissingPropertyLocator extends AbstractLocator
 
     /**
      * @param $bundle
-     * @param string|null $className
      *
      * @return object
      */
-    public function locate($bundle, $className = null)
+    public function locate($bundle)
     {
     }
 

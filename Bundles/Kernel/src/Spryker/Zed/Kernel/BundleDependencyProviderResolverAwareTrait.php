@@ -74,6 +74,8 @@ trait BundleDependencyProviderResolverAwareTrait
     /**
      * @param AbstractBundleDependencyProvider $dependencyProvider
      * @param Container $container
+     *
+     * @return void
      */
     abstract protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,

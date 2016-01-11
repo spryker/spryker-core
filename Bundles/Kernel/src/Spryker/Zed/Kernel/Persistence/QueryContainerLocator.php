@@ -39,13 +39,12 @@ class QueryContainerLocator extends AbstractLocator
 
     /**
      * @param string $bundle
-     * @param string|null $className
      *
      * @throws LocatorException
      *
      * @return object
      */
-    public function locate($bundle, $className = null)
+    public function locate($bundle)
     {
         return $this->getQueryContainerResolver()->resolve($bundle);
     }

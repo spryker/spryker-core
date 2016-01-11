@@ -37,13 +37,12 @@ class FacadeLocator extends AbstractLocator
 
     /**
      * @param string $bundle
-     * @param string|null $className
      *
      * @throws LocatorException
      *
      * @return object
      */
-    public function locate($bundle, $className = null)
+    public function locate($bundle)
     {
         $facadeResolver = new FacadeResolver();
         $facade = $facadeResolver->resolve($bundle);
