@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Installer\Business\Model;
 
 use Psr\Log\AbstractLogger;
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 abstract class AbstractInstaller extends AbstractLogger implements MessengerInterface
 {

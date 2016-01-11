@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Search\Business\Model;
 
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 class SearchInstaller implements SearchInstallerInterface

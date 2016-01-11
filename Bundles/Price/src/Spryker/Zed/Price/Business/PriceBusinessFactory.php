@@ -17,7 +17,7 @@ use Spryker\Zed\Price\Business\Model\ReaderInterface;
 use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
 use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Spryker\Zed\Price\Business\Internal\Install;
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Price\PriceConfig;
 use Spryker\Zed\Price\PriceDependencyProvider;
 

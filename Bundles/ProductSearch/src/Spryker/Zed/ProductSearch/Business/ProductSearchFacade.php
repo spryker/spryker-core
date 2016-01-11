@@ -7,7 +7,7 @@
 namespace Spryker\Zed\ProductSearch\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

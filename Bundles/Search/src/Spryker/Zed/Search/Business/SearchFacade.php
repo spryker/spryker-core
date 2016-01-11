@@ -8,7 +8,7 @@ namespace Spryker\Zed\Search\Business;
 
 use Elastica\Document;
 use Elastica\Response;
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

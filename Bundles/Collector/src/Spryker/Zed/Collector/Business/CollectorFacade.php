@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Collector\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;

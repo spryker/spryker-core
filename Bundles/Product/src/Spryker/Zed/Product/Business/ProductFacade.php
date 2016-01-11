@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Product\Business\Exception\AttributeExistsException;
 use Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException;

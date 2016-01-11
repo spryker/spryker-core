@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Search\Business;
 
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 use Spryker\Zed\Search\Business\Model\Search;
