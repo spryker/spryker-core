@@ -34,7 +34,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
      */
     private function getMessenger()
     {
-        return $this->getMock('Spryker\Shared\Kernel\Messenger\MessengerInterface');
+        return $this->getMock(MessengerInterface::class);
     }
 
     /**

@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Transfer\Business;
 
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
 use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
@@ -17,7 +18,6 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
 use Spryker\Zed\Transfer\TransferConfig;
-use Psr\Log\LoggerInterface;
 
 /**
  * @method TransferConfig getConfig()
@@ -26,11 +26,11 @@ class TransferBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param LoggerInterface $messenger
+     * @param MessengerInterface $messenger
      *
      * @return TransferGenerator
      */
-    public function createTransferGenerator(LoggerInterface $messenger)
+    public function createTransferGenerator(MessengerInterface $messenger)
     {
         return new TransferGenerator(
             $messenger,
