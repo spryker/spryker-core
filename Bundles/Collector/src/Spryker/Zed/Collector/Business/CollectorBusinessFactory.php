@@ -49,6 +49,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new Collector(
             $this->getTouchQueryContainer(),
+            $this->getLocaleFacade(),
             $this->createKeyValueExporter()
         );
     }
@@ -118,18 +119,6 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     public function createKeyValueMarker()
     {
         return new ExportMarker(
-            $this->createKeyValueWriter(),
-            $this->createRedisReader(),
-            $this->createKvMarkerKeyBuilder()
-        );
-    }
-
-    /**
-     * @return UpdaterInterface
-     */
-    public function createKeyValueExportUpdaterMarker()
-    {
-        return new ExportUpdater(
             $this->createKeyValueWriter(),
             $this->createRedisReader(),
             $this->createKvMarkerKeyBuilder()

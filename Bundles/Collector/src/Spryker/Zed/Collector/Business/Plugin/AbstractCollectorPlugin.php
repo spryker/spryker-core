@@ -4,21 +4,21 @@ ds<?php
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Plugin;
+namespace Spryker\Zed\Collector\Business\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
-use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
-use SprykerFeature\Zed\Collector\Business\Exporter\Exception\DependencyException;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
-use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
-use SprykerFeature\Zed\Collector\Business\Model\CountableIteratorInterface;
-use SprykerFeature\Zed\Collector\CollectorConfig;
-use SprykerFeature\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
+use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
+use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
+use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Collector\Business\Model\CountableIteratorInterface;
+use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 

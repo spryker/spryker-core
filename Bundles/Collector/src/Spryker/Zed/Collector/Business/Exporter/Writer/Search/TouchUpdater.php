@@ -8,10 +8,6 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchSearch;
-use Orm\Zed\Touch\Persistence\SpyTouchSearchQuery;
-use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
-use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
-use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater;
 

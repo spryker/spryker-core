@@ -11,18 +11,18 @@ use Elastica\Index;
 use Elastica\Type\Mapping;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
-class ElasticsearchMarkerWriter implements WriterInterface
+class ElasticSearchMarkerWriter implements WriterInterface
 {
 
     const WRITER_NAME = 'elasticsearch-marker-writer';
 
     /**
-     * @var \Elastica\Client
+     * @var Client
      */
     protected $client;
 
     /**
-     * @var \Elastica\Index
+     * @var Index
      */
     protected $index;
 
@@ -39,7 +39,7 @@ class ElasticsearchMarkerWriter implements WriterInterface
     protected $metaData = [];
 
     /**
-     * @param \Elastica\Client $searchClient
+     * @param Client $searchClient
      * @param string $indexName
      * @param string $type
      */

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue;
+namespace Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue;
 
 use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchStorage;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater;
-use SprykerFeature\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater;
+use Spryker\Zed\Collector\CollectorConfig;
 
 class TouchUpdater extends AbstractTouchUpdater
 {

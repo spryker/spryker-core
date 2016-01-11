@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter;
+namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\Formatter\AbstractFormatter;
-use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
-use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
-use SprykerFeature\Zed\Collector\Business\Model\FailedResultInterface;
-use SprykerFeature\Zed\Collector\CollectorConfig;
-use SprykerFeature\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
-use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
+use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Collector\Business\Model\FailedResultInterface;
+use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
+use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractExporter implements ExporterInterface

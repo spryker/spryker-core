@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Plugin;
+namespace Spryker\Zed\Collector\Business\Plugin;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use SprykerFeature\Zed\Collector\Business\Exporter\Exception\DependencyException;
-use SprykerFeature\Zed\Collector\Business\Model\CountableIteratorInterface;
-use SprykerFeature\Zed\Collector\CollectorConfig;
-use SprykerFeature\Zed\Collector\Persistence\Exporter\AbstractPdoCollectorQuery;
-use SprykerFeature\Zed\Collector\Persistence\PdoBatchIterator;
+use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
+use Spryker\Zed\Collector\Business\Model\CountableIteratorInterface;
+use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Collector\Persistence\Exporter\AbstractPdoCollectorQuery;
+use Spryker\Zed\Collector\Persistence\PdoBatchIterator;
 
 abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
 {

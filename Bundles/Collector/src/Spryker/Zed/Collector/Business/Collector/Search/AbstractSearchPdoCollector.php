@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Collector\Search;
+namespace Spryker\Zed\Collector\Business\Collector\Search;
 
-use SprykerFeature\Zed\Collector\Business\Plugin\AbstractPdoCollectorPlugin;
-use SprykerFeature\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Collector\Business\Plugin\AbstractPdoCollectorPlugin;
+use Spryker\Zed\Collector\CollectorConfig;
 
 abstract class AbstractSearchPdoCollector extends AbstractPdoCollectorPlugin
 {

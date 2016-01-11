@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Plugin;
+namespace Spryker\Zed\Collector\Business\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use SprykerFeature\Zed\Collector\Business\Exporter\Exception\DependencyException;
-use SprykerFeature\Zed\Collector\Business\Model\CountableIteratorInterface;
-use SprykerFeature\Zed\Collector\Persistence\Exporter\AbstractPropelCollectorQuery;
-use SprykerFeature\Zed\Collector\Persistence\PropelBatchIterator;
+use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
+use Spryker\Zed\Collector\Business\Model\CountableIteratorInterface;
+use Spryker\Zed\Collector\Persistence\Exporter\AbstractPropelCollectorQuery;
+use Spryker\Zed\Collector\Persistence\PropelBatchIterator;
 
 abstract class AbstractPropelCollectorPlugin extends AbstractCollectorPlugin
 {

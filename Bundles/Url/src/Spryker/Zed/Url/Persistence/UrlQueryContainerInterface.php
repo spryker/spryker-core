@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Url\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface UrlQueryContainerInterface extends QueryContainerInterface
 {

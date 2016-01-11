@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter\Writer\Search;
+namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Elastica\Client;
 use Elastica\Index;
 use Elastica\Type\Mapping;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class ElasticSearchMarkerWriter implements WriterInterface
 {

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Persistence\Exporter;
+namespace Spryker\Zed\Collector\Persistence\Exporter;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 

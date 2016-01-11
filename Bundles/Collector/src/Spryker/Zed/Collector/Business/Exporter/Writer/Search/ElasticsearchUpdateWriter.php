@@ -11,16 +11,16 @@ use Elastica\Document;
 use Elastica\Index;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
-class ElasticsearchUpdateWriter implements WriterInterface
+class ElasticSearchUpdateWriter implements WriterInterface
 {
 
     /**
-     * @var \Elastica\Client
+     * @var Client
      */
     protected $client;
 
     /**
-     * @var \Elastica\Index
+     * @var Index
      */
     protected $index;
 
@@ -30,7 +30,7 @@ class ElasticsearchUpdateWriter implements WriterInterface
     protected $type;
 
     /**
-     * @param \Elastica\Client $searchClient
+     * @param Client $searchClient
      * @param string $indexName
      * @param string $type
      */
@@ -66,7 +66,7 @@ class ElasticsearchUpdateWriter implements WriterInterface
     /**
      * @param array $dataSet
      *
-     * @return \Elastica\Document[]
+     * @return Document[]
      */
     protected function createDocuments(array $dataSet)
     {

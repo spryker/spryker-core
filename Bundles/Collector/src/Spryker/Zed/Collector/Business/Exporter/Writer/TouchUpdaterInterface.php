@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter\Writer;
+namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
-use SprykerFeature\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
+use Spryker\Zed\Collector\CollectorConfig;
 
 interface TouchUpdaterInterface
 {

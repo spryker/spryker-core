@@ -19,7 +19,7 @@ class CollectorFacade extends AbstractFacade
 
     public function exportKeyValueByStorage(OutputInterface $output = null)
     {
-        $exporter = $this->getDependencyContainer()->createYvesKeyValueExporter();
+        $exporter = $this->getFactory()->createYvesKeyValueExporter();
 
         return $exporter->exportForStorage($output);
     }

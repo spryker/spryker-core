@@ -9,36 +9,38 @@ namespace Spryker\Zed\Collector\Communication\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
-use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use Spryker\Zed\Collector\Business\CollectorFacade;
+use Spryker\Zed\Collector\Communication\CollectorCommunicationFactory;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Collector\Business\CollectorFacade getFacade()
- * @method \Spryker\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
+ * @method CollectorFacade getFacade()
+ * @method CollectorCommunicationFactory getFactory()
  */
 abstract class AbstractCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
 
     /**
-     * @var \Symfony\Component\Console\Output\OutputInterface
+     * @var OutputInterface
      */
     protected $output;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
+     * @var WriterInterface
      */
     protected $dataWriter;
 
     /**
-     * @var \SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
+     * @var TouchUpdaterInterface
      */
     protected $touchUpdater;
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param OutputInterface $output
      *
      * @return void
      */
@@ -48,7 +50,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
+     * @return WriterInterface
      */
     public function getDataWriter()
     {
@@ -56,9 +58,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     }
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
-     *
-     * @return void
+     * @param WriterInterface $dataWriter
      */
     public function setDataWriter(WriterInterface $dataWriter)
     {
@@ -66,7 +66,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     }
 
     /**
-     * @return \SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
+     * @return TouchUpdaterInterface
      */
     public function getTouchUpdater()
     {
@@ -74,9 +74,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     }
 
     /**
-     * @param \SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
-     *
-     * @return void
+     * @param TouchUpdaterInterface $touchUpdater
      */
     public function setTouchUpdater(TouchUpdaterInterface $touchUpdater)
     {
@@ -84,9 +82,9 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     }
 
     /**
-     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param SpyTouchQuery $baseQuery
+     * @param LocaleTransfer $locale
+     * @param BatchResultInterface $result
      *
      * @return void
      */
@@ -97,9 +95,9 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     );
 
     /**
-     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param SpyTouchQuery $baseQuery
+     * @param LocaleTransfer $locale
+     * @param BatchResultInterface $result
      *
      * @return void
      */

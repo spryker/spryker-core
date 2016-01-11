@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Business\Exporter\Reader\Search;
+namespace Spryker\Zed\Collector\Business\Exporter\Reader\Search;
 
 use Elastica\Client;
 use Elastica\Exception\ResponseException;
 use Elastica\Index;
-use SprykerFeature\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
+use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 
 class ElasticSearchMarkerReader implements ReaderInterface
 {

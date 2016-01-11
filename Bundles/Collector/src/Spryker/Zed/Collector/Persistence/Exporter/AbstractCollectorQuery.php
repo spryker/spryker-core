@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Collector\Persistence\Exporter;
+namespace Spryker\Zed\Collector\Persistence\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
