@@ -46,13 +46,22 @@ interface CustomerClientInterface
      * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerTransfer
+     *
+     * @deprecated Use forgottenPassword() instead
      */
     public function forgotPassword(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
+     */
+    public function forgottenPassword(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return CustomerResponseTransfer
      */
     public function restorePassword(CustomerTransfer $customerTransfer);
 
@@ -78,7 +87,7 @@ interface CustomerClientInterface
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerTransfer|null
      */
     public function login(CustomerTransfer $customerTransfer);
 

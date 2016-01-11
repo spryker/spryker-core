@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\AddressTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Propel\PropelFilterCriteria;
@@ -209,24 +210,16 @@ class OrderManager
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
-        $filter = $orderListTransfer->getFilter();
-        $criteria = new Criteria();
+        $orderListTransfer->setOrders(new \ArrayObject());
 
-        if ($filter !== null) {
-            $criteria = (new PropelFilterCriteria($filter))
-                ->toCriteria();
+        $orderCollection = $this->getOrderCollection($orderListTransfer);
+
+        foreach ($orderCollection as $order) {
+            $orderTransfer = new OrderTransfer();
+            $orderTransfer->fromArray($order->toArray(), true);
+
+            $orderListTransfer->addOrder($orderTransfer);
         }
-
-        $ordersQuery = $this->queryContainer->querySalesOrdersByCustomerId($orderListTransfer->getIdCustomer(), $criteria)
-            ->find();
-
-        $result = [];
-        foreach ($ordersQuery as $order) {
-            $result[] = (new OrderTransfer())
-                ->fromArray($order->toArray(), true);
-        }
-
-        $orderListTransfer->setOrders(new \ArrayObject($result));
 
         return $orderListTransfer;
     }
@@ -247,6 +240,42 @@ class OrderManager
         }
 
         return (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
+    }
+
+    /**
+     * @param OrderListTransfer $orderListTransfer
+     *
+     * @return SpySalesOrder[]|ObjectCollection
+     */
+    protected function getOrderCollection(OrderListTransfer $orderListTransfer)
+    {
+        $ordersQuery = $this->createOrderListQuery($orderListTransfer);
+
+        $orderCollection = $ordersQuery->find();
+
+        return $orderCollection;
+    }
+
+    /**
+     * @param OrderListTransfer $orderListTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function createOrderListQuery(OrderListTransfer $orderListTransfer)
+    {
+        $filter = $orderListTransfer->getFilter();
+        $criteria = new Criteria();
+
+        if ($filter !== null) {
+            $criteria = (new PropelFilterCriteria($filter))
+                ->toCriteria();
+        }
+
+        $ordersQuery = $this
+            ->queryContainer
+            ->querySalesOrdersByCustomerId($orderListTransfer->getIdCustomer(), $criteria);
+
+        return $ordersQuery;
     }
 
 }

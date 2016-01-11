@@ -20,6 +20,7 @@ interface Messages
     const CUSTOMER_ADDRESS_DELETE_SUCCESS = 'customer.address.delete.success';
     const CUSTOMER_ADDRESS_DELETE_FAILED = 'customer.address.delete.failed';
     const CUSTOMER_PASSWORD_RECOVERY_MAIL_SENT = 'customer.password.recovery.mail.sent';
+    const CUSTOMER_PASSWORD_CHANGED = 'customer.password.changed';
     const CUSTOMER_DELETE_FAILED = 'customer.delete.failed';
     const CUSTOMER_AUTHORIZATION_SUCCESS = 'customer.authorization.success';
     const CUSTOMER_AUTHORIZATION_FAILED = 'customer.authorization.failed';

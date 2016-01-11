@@ -546,7 +546,7 @@ class Address
 
         $fkCountry = $this->retrieveFkCountry($addressTransfer);
 
-        $addressEntity->fromArray($addressTransfer->toArray());
+        $addressEntity->fromArray($addressTransfer->modifiedToArray());
         $addressEntity->setCustomer($customer);
         $addressEntity->setFkCountry($fkCountry);
         $addressEntity->save();

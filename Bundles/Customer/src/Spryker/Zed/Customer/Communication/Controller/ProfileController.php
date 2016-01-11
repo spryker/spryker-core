@@ -106,7 +106,7 @@ class ProfileController extends AbstractController
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($request->query->get('id'));
         $this->getFacade()
-            ->forgotPassword($customerTransfer);
+            ->forgottenPassword($customerTransfer);
 
         return $this->redirectResponse('/customer/profile?id=' . $request->query->get('id'));
     }
