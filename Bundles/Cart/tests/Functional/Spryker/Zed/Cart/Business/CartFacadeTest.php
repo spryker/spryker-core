@@ -51,16 +51,7 @@ class CartFacadeTest extends Test
     {
         parent::setUp();
 
-        $container = new Container();
-
-        $dependencyProvider = new CartDependencyProvider();
-        $dependencyProvider->provideBusinessLayerDependencies($container);
-        $dependencyProvider->provideCommunicationLayerDependencies($container);
-        $dependencyProvider->providePersistenceLayerDependencies($container);
-
         $this->cartFacade = new CartFacade();
-        $this->cartFacade->setExternalDependencies($container);
-
         $this->priceFacade = new PriceFacade();
 
         $this->setTestData();

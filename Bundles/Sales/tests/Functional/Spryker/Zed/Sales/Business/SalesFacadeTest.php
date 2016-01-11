@@ -19,6 +19,7 @@ use Orm\Zed\Country\Persistence\SpyCountry;
 use Spryker\Zed\Oms\OmsConfig;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
+use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -85,7 +86,9 @@ class SalesFacadeTest extends Test
         $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
 
         $this->salesFacade = new SalesFacade();
-        $this->salesFacade->setExternalDependencies($container);
+        $businessFactory = new SalesBusinessFactory();
+        $businessFactory->setContainer($container);
+        $this->salesFacade->setFactory($businessFactory);
     }
 
     /**

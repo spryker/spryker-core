@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
+use Spryker\Zed\Glossary\Business\GlossaryBusinessFactory;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Cms\Business\CmsFacade;
@@ -74,13 +75,7 @@ class CmsFacadeTest extends Test
     {
         parent::setUp();
 
-        $container = new Container();
-        $container = (new CmsDependencyProvider())
-            ->provideBusinessLayerDependencies($container);
-
         $this->cmsFacade = new CmsFacade();
-        $this->cmsFacade->setExternalDependencies($container);
-
         $this->urlFacade = new UrlFacade();
 
         $this->localeFacade = new LocaleFacade();
@@ -340,7 +335,10 @@ class CmsFacadeTest extends Test
             return $this->localeFacade;
         };
 
-        $this->glossaryFacade->setExternalDependencies($container);
+        $factory = new GlossaryBusinessFactory();
+        $factory->setContainer($container);
+
+        $this->glossaryFacade->setFactory($factory);
     }
 
 }

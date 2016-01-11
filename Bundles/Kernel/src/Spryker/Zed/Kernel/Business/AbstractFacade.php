@@ -8,26 +8,14 @@ namespace Spryker\Zed\Kernel\Business;
 
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
-abstract class AbstractFacade implements FacadeInterface
+abstract class AbstractFacade
 {
 
     /**
      * @var BusinessFactoryInterface
      */
     private $factory;
-
-    /**
-     * @var AbstractQueryContainer
-     */
-    private $queryContainer;
-
-    /**
-     * @var Container
-     */
-    private $container;
 
     /**
      * @param AbstractBusinessFactory $factory
@@ -42,28 +30,12 @@ abstract class AbstractFacade implements FacadeInterface
     }
 
     /**
-     * @param Container $container
-     *
-     * @return self
-     */
-    public function setExternalDependencies(Container $container)
-    {
-        $this->container = $container;
-
-        return $this;
-    }
-
-    /**
      * @return BusinessFactoryInterface
      */
     protected function getFactory()
     {
         if ($this->factory === null) {
             $this->factory = $this->resolveFactory();
-        }
-
-        if ($this->container !== null) {
-            $this->factory->setContainer($this->container);
         }
 
         return $this->factory;

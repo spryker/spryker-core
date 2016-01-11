@@ -266,22 +266,13 @@ class ProductOptionReaderTest extends Test
             return (new Connection())->get();
         };
         $this->productOptionQueryContainer->setExternalDependencies($container);
-        $this->facade->setExternalDependencies($container);
 
-        $factoryMock = $this->getFactoryMock();
-        $this->facade->setFactory($factoryMock);
-    }
+        $businessFactory = new ProductOptionBusinessFactory();
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductOptionBusinessFactory
-     */
-    protected function getFactoryMock()
-    {
-        $factoryMock = $this->getMock(ProductOptionBusinessFactory::class, ['getQueryContainer']);
-        $factoryMock->method('getQueryContainer')
-            ->willReturn($this->productOptionQueryContainer);
+        $businessFactory->setContainer($container);
+        $businessFactory->setQueryContainer($this->productOptionQueryContainer);
 
-        return $factoryMock;
+        $this->facade->setFactory($businessFactory);
     }
 
 }

@@ -13,14 +13,12 @@ use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
  * @group Spryker
@@ -72,13 +70,6 @@ class ProductCategoryFacadeTest extends Test
         $this->productFacade = new ProductFacade();
         $this->categoryFacade = new CategoryFacade();
         $this->productCategoryFacade = new ProductCategoryFacade();
-
-        $container = new Container();
-        $dependencyProvider = new ProductCategoryDependencyProvider();
-        $dependencyProvider->provideBusinessLayerDependencies($container);
-        $dependencyProvider->provideCommunicationLayerDependencies($container);
-
-        $this->productCategoryFacade->setExternalDependencies($container);
         $this->productCategoryQueryContainer = new ProductQueryContainer();
     }
 
