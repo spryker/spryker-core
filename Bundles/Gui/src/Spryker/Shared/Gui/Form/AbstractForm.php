@@ -7,7 +7,6 @@
 namespace Spryker\Shared\Gui\Form;
 
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -16,11 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 abstract class AbstractForm implements FormTypeInterface
 {
-
-    /**
-     * @var ConstraintsPlugin
-     */
-    protected $constraintsPlugin;
 
     /**
      * Builds the form.
@@ -57,18 +51,6 @@ abstract class AbstractForm implements FormTypeInterface
         if ($this->getDataClass() instanceof TransferInterface && !($this->getDataClass() instanceof NullFormTransfer)) {
             $resolver->setDefault('data_class', get_class($this->getDataClass()));
         }
-    }
-
-    /**
-     * @return ConstraintsPlugin
-     */
-    public function getConstraints()
-    {
-        if ($this->constraintsPlugin === null) {
-            $this->constraintsPlugin = new ConstraintsPlugin();
-        }
-
-        return $this->constraintsPlugin;
     }
 
     /**
