@@ -5,7 +5,7 @@
 
 namespace Spryker\Zed\User\Communication\Form;
 
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword;
 use Symfony\Component\Form\FormBuilderInterface;

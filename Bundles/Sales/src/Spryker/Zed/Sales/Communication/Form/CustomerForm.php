@@ -4,7 +4,7 @@ namespace Spryker\Zed\Sales\Communication\Form;
 
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CustomerForm extends AbstractForm

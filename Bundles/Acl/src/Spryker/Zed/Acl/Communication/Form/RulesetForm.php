@@ -6,7 +6,7 @@
 namespace Spryker\Zed\Acl\Communication\Form;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RulesetForm extends AbstractForm

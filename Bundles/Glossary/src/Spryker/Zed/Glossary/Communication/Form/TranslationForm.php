@@ -13,7 +13,7 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\FormBuilderInterface;
 

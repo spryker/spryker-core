@@ -4,7 +4,7 @@ namespace Spryker\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;

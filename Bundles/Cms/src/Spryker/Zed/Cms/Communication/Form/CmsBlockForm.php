@@ -8,7 +8,7 @@ namespace Spryker\Zed\Cms\Communication\Form;
 
 use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Context\ExecutionContext;
 

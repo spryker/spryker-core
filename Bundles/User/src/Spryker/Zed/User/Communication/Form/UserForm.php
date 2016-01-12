@@ -6,7 +6,7 @@
 namespace Spryker\Zed\User\Communication\Form;
 
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 

@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;

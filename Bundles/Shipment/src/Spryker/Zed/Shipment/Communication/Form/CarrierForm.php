@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Shipment\Communication\Form;
 
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\FormBuilderInterface;
 
