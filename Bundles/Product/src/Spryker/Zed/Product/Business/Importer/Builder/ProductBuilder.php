@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Product\Business\Importer\Builder;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Builder\ProductBuilderInterface;
 
 class ProductBuilder implements ProductBuilderInterface
@@ -23,7 +23,7 @@ class ProductBuilder implements ProductBuilderInterface
     /**
      * @param array $data
      *
-     * @return ProductAbstractTransfer|ConcreteProductTransfer
+     * @return ProductAbstractTransfer|ProductConcreteTransfer
      */
     public function buildProduct(array $data)
     {
@@ -75,14 +75,14 @@ class ProductBuilder implements ProductBuilderInterface
     /**
      * @param array $data
      *
-     * @return ProductAbstractTransfer|ConcreteProductTransfer
+     * @return ProductAbstractTransfer|ProductConcreteTransfer
      */
     protected function generateTypedProduct(array &$data)
     {
         if (empty($data[self::PRODUCT_ABSTRACT_REFERENCE])) {
             $product = new ProductAbstractTransfer();
         } else {
-            $product = new ConcreteProductTransfer();
+            $product = new ProductConcreteTransfer();
             $product->setProductAbstractSku($data[self::PRODUCT_ABSTRACT_REFERENCE]);
         }
 

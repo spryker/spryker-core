@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Wishlist\Business\Storage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -84,12 +84,12 @@ class Propel implements StorageInterface
             $wishlistItemEntity = $this->getWishlistItemEntity($wishlistItemTransfer, $wishlistEntity->getIdWishlist());
 
             if (empty($wishlistItemEntity)) {
-                $concreteProductTransfer = $this->facadeProduct->getConcreteProduct($wishlistItemTransfer->getSku());
+                $productConcreteTransfer = $this->facadeProduct->getProductConcrete($wishlistItemTransfer->getSku());
 
                 $this->createNewWishlistItem(
                     $wishlistItemTransfer,
                     $wishlistEntity->getIdWishlist(),
-                    $concreteProductTransfer
+                    $productConcreteTransfer
                 );
             } else {
                 $this->updateWishlistItem($wishlistItemEntity, $wishlistItemTransfer);
@@ -156,19 +156,19 @@ class Propel implements StorageInterface
     /**
      * @param ItemTransfer $wishlistItemTransfer
      * @param int $idWishlist
-     * @param ConcreteProductTransfer $concreteProductTransfer
+     * @param ProductConcreteTransfer $productConcreteTransfer
      *
      * @return SpyWishlistItem
      */
     protected function createNewWishlistItem(
         ItemTransfer $wishlistItemTransfer,
         $idWishlist,
-        ConcreteProductTransfer $concreteProductTransfer
+        ProductConcreteTransfer $productConcreteTransfer
     ) {
         $wishlistItemEntity = new SpyWishlistItem();
         $wishlistItemEntity->setGroupKey($wishlistItemTransfer->getGroupKey());
-        $wishlistItemEntity->setFkProduct($concreteProductTransfer->getIdConcreteProduct());
-        $wishlistItemEntity->setFkProductAbstract($concreteProductTransfer->getIdProductAbstract());
+        $wishlistItemEntity->setFkProduct($productConcreteTransfer->getIdProductConcrete());
+        $wishlistItemEntity->setFkProductAbstract($productConcreteTransfer->getIdProductAbstract());
         $wishlistItemEntity->setFkWishlist($idWishlist);
         $wishlistItemEntity->setQuantity($wishlistItemTransfer->getQuantity());
         $wishlistItemEntity->setAddedAt(new \DateTime());
@@ -193,9 +193,9 @@ class Propel implements StorageInterface
         }
 
         if (empty($wishlistItemEntity)) {
-            $idConcreteProduct = $this->facadeProduct->getConcreteProductIdBySku($wishlistItemTransfer->getSku());
+            $idProductConcrete = $this->facadeProduct->getProductConcreteIdBySku($wishlistItemTransfer->getSku());
             $wishlistItemEntity = $this->wishlistQueryContainer
-                ->queryCustomerWishlistByProductId($idWishlist, $idConcreteProduct)
+                ->queryCustomerWishlistByProductId($idWishlist, $idProductConcrete)
                 ->findOne();
         }
 

@@ -62,11 +62,11 @@ class IndexController extends AbstractController
             ->querySkuFromProductAbstractById($idProductAbstract)
             ->findOne();
 
-        $concreteProductCollection = $this->getQueryContainer()
-            ->queryConcreteProductByProductAbstract($productAbstract)
+        $productConcreteCollection = $this->getQueryContainer()
+            ->queryProductConcreteByProductAbstract($productAbstract)
             ->find();
 
-        $concreteProducts = $this->createConcreteProductsCollection($concreteProductCollection);
+        $productConcreteCollection = $this->createProductConcreteCollectionCollection($productConcreteCollection);
 
         $currentLocale = $this->getCurrentLocale();
 
@@ -86,7 +86,7 @@ class IndexController extends AbstractController
 
         return $this->viewResponse([
             'productAbstract' => $productAbstract,
-            'concreteProducts' => $concreteProducts,
+            'productConcreteCollection' => $productConcreteCollection,
             'attributes' => $attributes,
             'categories' => $categories,
         ]);
@@ -132,31 +132,31 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param ObjectCollection|SpyProduct[] $concreteProductsCollection
+     * @param ObjectCollection|SpyProduct[] $productConcreteCollectionCollection
      *
      * @return array
      */
-    protected function createConcreteProductsCollection(ObjectCollection $concreteProductsCollection)
+    protected function createProductConcreteCollectionCollection(ObjectCollection $productConcreteCollectionCollection)
     {
-        $concreteProducts = [];
-        foreach ($concreteProductsCollection as $concreteProduct) {
+        $productConcreteCollection = [];
+        foreach ($productConcreteCollectionCollection as $productConcrete) {
             $productOptions = $this->getFactory()
                 ->createProductOptionsFacade()
                 ->getProductOptionsByIdProduct(
-                    $concreteProduct->getIdProduct(),
+                    $productConcrete->getIdProduct(),
                     $this->getCurrentLocale()->getIdLocale()
                 );
 
-            $concreteProducts[] = [
-                'sku' => $concreteProduct->getSku(),
-                'idProduct' => $concreteProduct->getIdProduct(),
-                'isActive' => $concreteProduct->getIsActive(),
-                'priceList' => $this->getProductPriceList($concreteProduct),
+            $productConcreteCollection[] = [
+                'sku' => $productConcrete->getSku(),
+                'idProduct' => $productConcrete->getIdProduct(),
+                'isActive' => $productConcrete->getIsActive(),
+                'priceList' => $this->getProductPriceList($productConcrete),
                 'productOptions' => $productOptions,
             ];
         }
 
-        return $concreteProducts;
+        return $productConcreteCollection;
     }
 
     /**

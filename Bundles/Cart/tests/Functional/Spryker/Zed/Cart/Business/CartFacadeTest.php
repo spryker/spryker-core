@@ -29,10 +29,10 @@ class CartFacadeTest extends Test
 
     const PRICE_TYPE_DEFAULT = 'DEFAULT';
     const DUMMY_1_SKU_PRODUCT_ABSTRACT = 'ABSTRACT1';
-    const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
+    const DUMMY_1_SKU_PRODUCT_CONCRETE = 'CONCRETE1';
 
     const DUMMY_2_SKU_PRODUCT_ABSTRACT = 'ABSTRACT2';
-    const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
+    const DUMMY_2_SKU_PRODUCT_CONCRETE = 'CONCRETE2';
 
     /**
      * @var CartFacade
@@ -64,13 +64,13 @@ class CartFacadeTest extends Test
     {
         $cart = new CartTransfer();
         $cartItem = new ItemTransfer();
-        $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $cartItem->setSku(self::DUMMY_1_SKU_PRODUCT_CONCRETE);
         $cartItem->setQuantity(3);
 
         $cart->addItem($cartItem);
 
         $newItem = new ItemTransfer();
-        $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $newItem->setSku(self::DUMMY_2_SKU_PRODUCT_CONCRETE);
         $newItem->setQuantity(1);
 
         $cartChange = new ChangeTransfer();
@@ -100,14 +100,14 @@ class CartFacadeTest extends Test
     {
         $cart = new CartTransfer();
         $cartItem = new ItemTransfer();
-        $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $cartItem->setSku(self::DUMMY_1_SKU_PRODUCT_CONCRETE);
         $cartItem->setQuantity(3);
 
         $cart->addItem($cartItem);
 
         $newItem = new ItemTransfer();
-        $newItem->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
-        $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $newItem->setId(self::DUMMY_1_SKU_PRODUCT_CONCRETE);
+        $newItem->setSku(self::DUMMY_1_SKU_PRODUCT_CONCRETE);
         $newItem->setQuantity(1);
 
         $cartChange = new ChangeTransfer();
@@ -134,15 +134,15 @@ class CartFacadeTest extends Test
     {
         $cart = new CartTransfer();
         $cartItem = new ItemTransfer();
-        $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
-        $cartItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $cartItem->setId(self::DUMMY_2_SKU_PRODUCT_CONCRETE);
+        $cartItem->setSku(self::DUMMY_2_SKU_PRODUCT_CONCRETE);
         $cartItem->setQuantity(1);
 
         $cart->addItem($cartItem);
 
         $newItem = new ItemTransfer();
-        $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
-        $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $newItem->setId(self::DUMMY_2_SKU_PRODUCT_CONCRETE);
+        $newItem->setSku(self::DUMMY_2_SKU_PRODUCT_CONCRETE);
         $newItem->setQuantity(1);
 
         $cartChange = new ChangeTransfer();
@@ -161,13 +161,13 @@ class CartFacadeTest extends Test
     {
         $cart = new CartTransfer();
         $cartItem = new ItemTransfer();
-        $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $cartItem->setSku(self::DUMMY_1_SKU_PRODUCT_CONCRETE);
         $cartItem->setQuantity(3);
 
         $cart->addItem($cartItem);
 
         $newItem = new ItemTransfer();
-        $newItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $newItem->setSku(self::DUMMY_1_SKU_PRODUCT_CONCRETE);
         $newItem->setQuantity(1);
 
         $cartChange = new ChangeTransfer();
@@ -205,21 +205,21 @@ class CartFacadeTest extends Test
             ->setAttributes('{}')
             ->save();
 
-        $concreteProduct1 = SpyProductQuery::create()
-            ->filterBySku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+        $productConcrete1 = SpyProductQuery::create()
+            ->filterBySku(self::DUMMY_1_SKU_PRODUCT_CONCRETE)
             ->findOneOrCreate();
 
-        $concreteProduct1
+        $productConcrete1
             ->setSpyProductAbstract($productAbstract1)
             ->setAttributes('{}')
             ->save();
 
-        $concreteProduct1LocalizedAttributes = SpyProductLocalizedAttributesQuery::create()
-            ->filterByFkProduct($concreteProduct1->getIdProduct())
+        $productConcrete1LocalizedAttributes = SpyProductLocalizedAttributesQuery::create()
+            ->filterByFkProduct($productConcrete1->getIdProduct())
             ->filterByFkLocale($idLocale)
             ->findOneOrCreate();
 
-        $concreteProduct1LocalizedAttributes
+        $productConcrete1LocalizedAttributes
             ->setName('foo')
             ->setAttributes('bar')
             ->setIsComplete(1)
@@ -234,29 +234,29 @@ class CartFacadeTest extends Test
             ->setAttributes('{}')
             ->save();
 
-        $concreteProduct2 = SpyProductQuery::create()
-            ->filterBySku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
+        $productConcrete2 = SpyProductQuery::create()
+            ->filterBySku(self::DUMMY_2_SKU_PRODUCT_CONCRETE)
             ->findOneOrCreate();
 
-        $concreteProduct2
-            ->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
+        $productConcrete2
+            ->setSku(self::DUMMY_2_SKU_PRODUCT_CONCRETE)
             ->setSpyProductAbstract($productAbstract2)
             ->setAttributes('{}')
             ->save();
 
-        $concreteProduct2LocalizedAttributes = SpyProductLocalizedAttributesQuery::create()
-            ->filterByFkProduct($concreteProduct2->getIdProduct())
+        $productConcrete2LocalizedAttributes = SpyProductLocalizedAttributesQuery::create()
+            ->filterByFkProduct($productConcrete2->getIdProduct())
             ->filterByFkLocale($idLocale)
             ->findOneOrCreate();
 
-        $concreteProduct2LocalizedAttributes
+        $productConcrete2LocalizedAttributes
             ->setName('foo')
             ->setAttributes('bar')
             ->setIsComplete(1)
             ->save();
 
         SpyPriceProductQuery::create()
-            ->filterByProduct($concreteProduct1)
+            ->filterByProduct($productConcrete1)
             ->filterBySpyProductAbstract($productAbstract1)
             ->filterByPriceType($defaultPriceType)
             ->findOneOrCreate()
@@ -264,7 +264,7 @@ class CartFacadeTest extends Test
             ->save();
 
         SpyPriceProductQuery::create()
-            ->filterByProduct($concreteProduct2)
+            ->filterByProduct($productConcrete2)
             ->filterBySpyProductAbstract($productAbstract2)
             ->filterByPriceType($defaultPriceType)
             ->findOneOrCreate()

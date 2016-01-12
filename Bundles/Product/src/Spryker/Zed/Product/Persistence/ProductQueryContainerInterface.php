@@ -47,7 +47,7 @@ interface ProductQueryContainerInterface
      *
      * @return SpyProductQuery
      */
-    public function queryConcreteProductBySku($sku);
+    public function queryProductConcreteBySku($sku);
 
     /**
      * @param string $sku
@@ -79,19 +79,19 @@ interface ProductQueryContainerInterface
     public function queryProductAbstractAttributeCollection($idProductAbstract, $fkCurrentLocale);
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idProductConcrete
      * @param int $fkCurrentLocale
      *
      * @return SpyProductLocalizedAttributesQuery
      */
-    public function queryConcreteProductAttributeCollection($idConcreteProduct, $fkCurrentLocale);
+    public function queryProductConcreteAttributeCollection($idProductConcrete, $fkCurrentLocale);
 
     /**
      * @param ModelCriteria $expandableQuery
      *
      * @return self
      */
-    public function joinConcreteProducts(ModelCriteria $expandableQuery);
+    public function joinProductConcreteCollection(ModelCriteria $expandableQuery);
 
     /**
      * @param ModelCriteria $expandableQuery

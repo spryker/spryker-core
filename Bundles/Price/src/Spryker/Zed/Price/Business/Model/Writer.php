@@ -87,10 +87,10 @@ class Writer implements WriterInterface
         $priceProductTransfer = $this->setPriceType($priceProductTransfer);
         if (
             !$this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
-            && !$this->isPriceTypeExistingForConcreteProduct($priceProductTransfer)
+            && !$this->isPriceTypeExistingForProductConcrete($priceProductTransfer)
         ) {
             $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
-            $this->loadConcreteProductIdForPriceProductTransfer($priceProductTransfer);
+            $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
 
             $entity = new SpyPriceProduct();
             $newPrice = $this->savePriceProductEntity($priceProductTransfer, $entity);
@@ -116,11 +116,11 @@ class Writer implements WriterInterface
         $priceProductTransfer = $this->setPriceType($priceProductTransfer);
 
         if (
-            $this->isPriceTypeExistingForConcreteProduct($priceProductTransfer)
+            $this->isPriceTypeExistingForProductConcrete($priceProductTransfer)
             || $this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
         ) {
             $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
-            $this->loadConcreteProductIdForPriceProductTransfer($priceProductTransfer);
+            $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
 
             $priceProductEntity = $this->getPriceProductById($priceProductTransfer->getIdPriceProduct());
             $this->savePriceProductEntity($priceProductTransfer, $priceProductEntity);
@@ -152,14 +152,14 @@ class Writer implements WriterInterface
      *
      * @return void
      */
-    protected function loadConcreteProductIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
+    protected function loadProductConcreteIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
     {
         if (
             $transferPriceProduct->getIdProduct() === null &&
-            $this->reader->hasConcreteProduct($transferPriceProduct->getSkuProduct())
+            $this->reader->hasProductConcrete($transferPriceProduct->getSkuProduct())
         ) {
             $transferPriceProduct->setIdProduct(
-                $this->reader->getConcreteProductIdBySku($transferPriceProduct->getSkuProduct())
+                $this->reader->getProductConcreteIdBySku($transferPriceProduct->getSkuProduct())
             );
         }
     }
@@ -248,17 +248,17 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idProductConcrete
      * @param string $priceType
      * @param \DateTime $date
      *
      * @return SpyPriceProduct
      */
-    protected function getPriceEntityForConcreteProduct($idConcreteProduct, $priceType, \DateTime $date)
+    protected function getPriceEntityForProductConcrete($idProductConcrete, $priceType, \DateTime $date)
     {
         $idPriceType = $this->reader->getPriceTypeByName($priceType)->getIdPriceType();
 
-        return $this->queryContainer->queryPriceEntityForConcreteProduct($idConcreteProduct, $date, $idPriceType)->findOne();
+        return $this->queryContainer->queryPriceEntityForProductConcrete($idProductConcrete, $date, $idPriceType)->findOne();
     }
 
     /**
@@ -266,11 +266,11 @@ class Writer implements WriterInterface
      *
      * @return bool
      */
-    protected function isPriceTypeExistingForConcreteProduct(PriceProductTransfer $transferPriceProduct)
+    protected function isPriceTypeExistingForProductConcrete(PriceProductTransfer $transferPriceProduct)
     {
         $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
         $priceEntities = $this->queryContainer
-            ->queryPriceEntityForConcreteProduct($transferPriceProduct->getSkuProduct(), $priceType);
+            ->queryPriceEntityForProductConcrete($transferPriceProduct->getSkuProduct(), $priceType);
 
         return $priceEntities->count() > 0;
     }

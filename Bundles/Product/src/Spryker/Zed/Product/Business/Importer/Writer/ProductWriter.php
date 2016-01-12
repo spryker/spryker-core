@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Product\Business\Importer\Writer;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\Product\Model\ProductAbstractInterface;
 
 class ProductWriter implements ProductWriterInterface
@@ -19,20 +19,20 @@ class ProductWriter implements ProductWriterInterface
     protected $productAbstractWriter;
 
     /**
-     * @var ConcreteProductWriterInterface
+     * @var ProductConcreteWriterInterface
      */
     protected $productWriter;
 
     /**
      * @param ProductAbstractWriterInterface $productAbstractWriter
-     * @param ConcreteProductWriterInterface $concreteProductWriter
+     * @param ProductConcreteWriterInterface $productConcreteWriter
      */
     public function __construct(
         ProductAbstractWriterInterface $productAbstractWriter,
-        ConcreteProductWriterInterface $concreteProductWriter
+        ProductConcreteWriterInterface $productConcreteWriter
     ) {
         $this->productAbstractWriter = $productAbstractWriter;
-        $this->productWriter = $concreteProductWriter;
+        $this->productWriter = $productConcreteWriter;
     }
 
     /**
@@ -42,7 +42,7 @@ class ProductWriter implements ProductWriterInterface
      */
     public function writeProduct($product)
     {
-        if ($product instanceof ConcreteProductTransfer) {
+        if ($product instanceof ProductConcreteTransfer) {
             return $this->productWriter->writeProduct($product);
         } elseif ($product instanceof ProductAbstractTransfer) {
             return $this->productAbstractWriter->writeProductAbstract($product);

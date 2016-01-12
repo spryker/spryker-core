@@ -26,7 +26,7 @@ class ReaderTest extends Test
     const DUMMY_PRICE_TYPE_1 = 'TYPE1';
     const DUMMY_PRICE_TYPE_2 = 'TYPE2';
     const DUMMY_SKU_PRODUCT_ABSTRACT = 'ABSTRACT';
-    const DUMMY_SKU_CONCRETE_PRODUCT = 'CONCRETE';
+    const DUMMY_SKU_PRODUCT_CONCRETE = 'CONCRETE';
     const DUMMY_PRICE_1 = 99;
     const DUMMY_PRICE_2 = 100;
 
@@ -91,7 +91,7 @@ class ReaderTest extends Test
      */
     public function testHasValidPriceFalse()
     {
-        $hasValidPrice = $this->priceFacade->hasValidPrice(self::DUMMY_SKU_CONCRETE_PRODUCT, self::DUMMY_PRICE_TYPE_2);
+        $hasValidPrice = $this->priceFacade->hasValidPrice(self::DUMMY_SKU_PRODUCT_CONCRETE, self::DUMMY_PRICE_TYPE_2);
         $this->assertTrue($hasValidPrice);
     }
 
@@ -116,9 +116,9 @@ class ReaderTest extends Test
     /**
      * @return void
      */
-    public function testGetPriceForConcreteProduct()
+    public function testGetPriceForProductConcrete()
     {
-        $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_CONCRETE_PRODUCT, self::DUMMY_PRICE_TYPE_2);
+        $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_PRODUCT_CONCRETE, self::DUMMY_PRICE_TYPE_2);
         $this->assertEquals(999, $price);
     }
 
@@ -173,20 +173,20 @@ class ReaderTest extends Test
             ->setAttributes('{}')
             ->save();
 
-        $concreteProduct = SpyProductQuery::create()
-            ->filterBySku(self::DUMMY_SKU_CONCRETE_PRODUCT)
+        $productConcrete = SpyProductQuery::create()
+            ->filterBySku(self::DUMMY_SKU_PRODUCT_CONCRETE)
             ->findOne();
 
-        if ($concreteProduct === null) {
-            $concreteProduct = new SpyProduct();
+        if ($productConcrete === null) {
+            $productConcrete = new SpyProduct();
         }
-        $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
+        $productConcrete->setSku(self::DUMMY_SKU_PRODUCT_CONCRETE)
             ->setSpyProductAbstract($productAbstract)
             ->setAttributes('{}')
             ->save();
 
-        $this->deletePriceEntitiesConcrete($concreteProduct);
-        $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
+        $this->deletePriceEntitiesConcrete($productConcrete);
+        $productConcrete->setSku(self::DUMMY_SKU_PRODUCT_CONCRETE)
             ->setSpyProductAbstract($productAbstract)
             ->setAttributes('{}')
             ->save();
@@ -199,7 +199,7 @@ class ReaderTest extends Test
             ->save();
 
         (new SpyPriceProduct())
-            ->setProduct($concreteProduct)
+            ->setProduct($productConcrete)
             ->setPriceType($priceType2)
             ->setPrice(999)
 

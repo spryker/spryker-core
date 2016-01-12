@@ -156,8 +156,8 @@ class CheckoutFacadeTest extends Test
         $productAbstract1
             ->setSku('AOSB1339')
             ->setAttributes('{}');
-        $concreteProduct1 = new SpyProduct();
-        $concreteProduct1
+        $productConcrete1 = new SpyProduct();
+        $productConcrete1
             ->setSku('OSB1339')
             ->setAttributes('{}')
             ->setSpyProductAbstract($productAbstract1)
@@ -171,7 +171,7 @@ class CheckoutFacadeTest extends Test
         $stock1
             ->setQuantity(1)
             ->setStock($stock)
-            ->setSpyProduct($concreteProduct1)
+            ->setSpyProduct($productConcrete1)
             ->save();
 
         $item = new ItemTransfer();
@@ -229,8 +229,8 @@ class CheckoutFacadeTest extends Test
         $productAbstract1
             ->setSku('AOSB1337')
             ->setAttributes('{}');
-        $concreteProduct1 = new SpyProduct();
-        $concreteProduct1
+        $productConcrete1 = new SpyProduct();
+        $productConcrete1
             ->setSku('OSB1337')
             ->setAttributes('{}')
             ->setSpyProductAbstract($productAbstract1)
@@ -240,8 +240,8 @@ class CheckoutFacadeTest extends Test
         $productAbstract2
             ->setSku('AOSB1338')
             ->setAttributes('{}');
-        $concreteProduct2 = new SpyProduct();
-        $concreteProduct2
+        $productConcrete2 = new SpyProduct();
+        $productConcrete2
             ->setSku('OSB1338')
             ->setSpyProductAbstract($productAbstract2)
             ->setAttributes('{}')
@@ -255,14 +255,14 @@ class CheckoutFacadeTest extends Test
         $stock1
             ->setQuantity(1)
             ->setStock($stock)
-            ->setSpyProduct($concreteProduct1)
+            ->setSpyProduct($productConcrete1)
             ->save();
 
         $stock2 = new SpyStockProduct();
         $stock2
             ->setQuantity(1)
             ->setStock($stock)
-            ->setSpyProduct($concreteProduct2)
+            ->setSpyProduct($productConcrete2)
             ->save();
 
         $item1 = new ItemTransfer();

@@ -72,7 +72,7 @@ interface ReaderInterface
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku);
+    public function getProductConcreteIdBySku($sku);
 
     /**
      * @param int $idStockType

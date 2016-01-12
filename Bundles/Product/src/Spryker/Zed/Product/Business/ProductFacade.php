@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Product\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -57,9 +57,9 @@ class ProductFacade extends AbstractFacade
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku)
+    public function getProductConcreteIdBySku($sku)
     {
-        return $this->getFactory()->createProductManager()->getConcreteProductIdBySku($sku);
+        return $this->getFactory()->createProductManager()->getProductConcreteIdBySku($sku);
     }
 
     /**
@@ -81,9 +81,9 @@ class ProductFacade extends AbstractFacade
      *
      * @return float
      */
-    public function getEffectiveTaxRateForConcreteProduct($sku)
+    public function getEffectiveTaxRateForProductConcrete($sku)
     {
-        return $this->getFactory()->createProductManager()->getEffectiveTaxRateForConcreteProduct($sku);
+        return $this->getFactory()->createProductManager()->getEffectiveTaxRateForProductConcrete($sku);
     }
 
     /**
@@ -172,24 +172,24 @@ class ProductFacade extends AbstractFacade
      *
      * @return bool
      */
-    public function hasConcreteProduct($sku)
+    public function hasProductConcrete($sku)
     {
         $productManager = $this->getFactory()->createProductManager();
 
-        return $productManager->hasConcreteProduct($sku);
+        return $productManager->hasProductConcrete($sku);
     }
 
     /**
-     * @param ConcreteProductTransfer $concreteProductTransfer
+     * @param ProductConcreteTransfer $productConcreteTransfer
      * @param int $idProductAbstract
      *
      * @return int
      */
-    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idProductAbstract)
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract)
     {
         $productManager = $this->getFactory()->createProductManager();
 
-        return $productManager->createConcreteProduct($concreteProductTransfer, $idProductAbstract);
+        return $productManager->createProductConcrete($productConcreteTransfer, $idProductAbstract);
     }
 
     /**
@@ -251,19 +251,19 @@ class ProductFacade extends AbstractFacade
      *
      * @return string
      */
-    public function getAbstractSkuFromConcreteProduct($sku)
+    public function getAbstractSkuFromProductConcrete($sku)
     {
-        return $this->getFactory()->createProductManager()->getAbstractSkuFromConcreteProduct($sku);
+        return $this->getFactory()->createProductManager()->getAbstractSkuFromProductConcrete($sku);
     }
 
     /**
      * @param string $concreteSku
      *
-     * @return ConcreteProductTransfer
+     * @return ProductConcreteTransfer
      */
-    public function getConcreteProduct($concreteSku)
+    public function getProductConcrete($concreteSku)
     {
-        return $this->getFactory()->createProductManager()->getConcreteProduct($concreteSku);
+        return $this->getFactory()->createProductManager()->getProductConcrete($concreteSku);
     }
 
 }

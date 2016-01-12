@@ -45,9 +45,9 @@ class StockToProductBridge implements StockToProductInterface
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku)
+    public function getProductConcreteIdBySku($sku)
     {
-        return $this->productFacade->getConcreteProductIdBySku($sku);
+        return $this->productFacade->getProductConcreteIdBySku($sku);
     }
 
     /**
@@ -55,9 +55,9 @@ class StockToProductBridge implements StockToProductInterface
      *
      * @return bool
      */
-    public function hasConcreteProduct($sku)
+    public function hasProductConcrete($sku)
     {
-        return $this->productFacade->hasConcreteProduct($sku);
+        return $this->productFacade->hasProductConcrete($sku);
     }
 
 }

@@ -7,14 +7,14 @@
 namespace Spryker\Zed\Product\Business\Importer\Writer\Db;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Propel\Runtime\Propel;
-use Spryker\Zed\Product\Business\Importer\Writer\ConcreteProductWriterInterface;
+use Spryker\Zed\Product\Business\Importer\Writer\ProductConcreteWriterInterface;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 
-class ConcreteProductWriter implements ConcreteProductWriterInterface
+class ProductConcreteWriter implements ProductConcreteWriterInterface
 {
 
     /**
@@ -43,25 +43,25 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
     }
 
     /**
-     * @param ConcreteProductTransfer $product
+     * @param ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool
      */
-    public function writeProduct(ConcreteProductTransfer $product)
+    public function writeProduct(ProductConcreteTransfer $productConcreteTransfer)
     {
         $this->productStatement->execute(
             [
-                ':sku' => $product->getSku(),
-                ':isActive' => (int) $product->getIsActive(),
-                ':attributes' => json_encode($product->getAttributes()),
-                ':productAbstractSku' => $product->getProductAbstractSku(),
+                ':sku' => $productConcreteTransfer->getSku(),
+                ':isActive' => (int) $productConcreteTransfer->getIsActive(),
+                ':attributes' => json_encode($productConcreteTransfer->getAttributes()),
+                ':productAbstractSku' => $productConcreteTransfer->getProductAbstractSku(),
             ]
         );
 
-        foreach ($product->getLocalizedAttributes() as $localizedAttributes) {
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $this->attributesStatement->execute(
                 [
-                    ':productSku' => $product->getSku(),
+                    ':productSku' => $productConcreteTransfer->getSku(),
                     ':name' => $localizedAttributes->getName(),
                     ':attributes' => json_encode($localizedAttributes->getAttributes()),
                     ':fkLocale' => $this->localeTransfer->getIdLocale(),

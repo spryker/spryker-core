@@ -3,8 +3,8 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="ConcreteProduct">
-        <property name="idConcreteProduct" type="int" />
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int" />
         <property name="sku" type="string" />
         <property name="productImageUrl" type="string" />
         <property name="productAbstractSku" type="string" />

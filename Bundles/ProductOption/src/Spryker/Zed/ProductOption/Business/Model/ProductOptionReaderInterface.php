@@ -25,7 +25,7 @@ interface ProductOptionReaderInterface
      *
      * @return array
      */
-    public function getTypeUsagesForConcreteProduct($idProduct, $idLocale);
+    public function getTypeUsagesForProductConcrete($idProduct, $idLocale);
 
     /**
      * @param int $idProductAttributeTypeUsage
@@ -62,7 +62,7 @@ interface ProductOptionReaderInterface
      *
      * @return array
      */
-    public function getConfigPresetsForConcreteProduct($idProduct);
+    public function getConfigPresetsForProductConcrete($idProduct);
 
     /**
      * @param int $idConfigPreset

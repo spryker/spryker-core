@@ -7,12 +7,12 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
-use Spryker\Zed\Product\Business\Exception\ConcreteProductExistsException;
+use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
@@ -45,21 +45,21 @@ interface ProductManagerInterface
     public function getProductAbstractIdBySku($sku);
 
     /**
-     * @param ConcreteProductTransfer $concreteProductTransfer
+     * @param ProductConcreteTransfer $productConcreteTransfer
      * @param int $idProductAbstract
      *
-     * @throws ConcreteProductExistsException
+     * @throws ProductConcreteExistsException
      *
      * @return int
      */
-    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idProductAbstract);
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract);
 
     /**
      * @param string $sku
      *
      * @return bool
      */
-    public function hasConcreteProduct($sku);
+    public function hasProductConcrete($sku);
 
     /**
      * @param string $sku
@@ -68,7 +68,7 @@ interface ProductManagerInterface
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku);
+    public function getProductConcreteIdBySku($sku);
 
     /**
      * @param int $idProductAbstract
@@ -134,7 +134,7 @@ interface ProductManagerInterface
      *
      * @return float
      */
-    public function getEffectiveTaxRateForConcreteProduct($sku);
+    public function getEffectiveTaxRateForProductConcrete($sku);
 
     /**
      * @param string $sku
@@ -152,13 +152,13 @@ interface ProductManagerInterface
      *
      * @return string
      */
-    public function getAbstractSkuFromConcreteProduct($sku);
+    public function getAbstractSkuFromProductConcrete($sku);
 
     /**
      * @param string $concreteSku
      *
-     * @return ConcreteProductTransfer
+     * @return ProductConcreteTransfer
      */
-    public function getConcreteProduct($concreteSku);
+    public function getProductConcrete($concreteSku);
 
 }

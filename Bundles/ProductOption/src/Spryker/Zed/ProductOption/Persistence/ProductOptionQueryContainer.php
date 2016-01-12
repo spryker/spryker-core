@@ -267,7 +267,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return SpyProductOptionConfigurationPresetQuery
      */
-    public function queryPresetConfigurationsForConcreteProduct($idProduct)
+    public function queryPresetConfigurationsForProductConcrete($idProduct)
     {
         return SpyProductOptionConfigurationPresetQuery::create()
             ->filterByFkProduct($idProduct)
@@ -321,7 +321,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return array
      */
-    public function queryTypeUsagesForConcreteProduct($idProduct, $idLocale)
+    public function queryTypeUsagesForProductConcrete($idProduct, $idLocale)
     {
         $query = SpyProductOptionTypeUsageQuery::create()
             ->withColumn(SpyProductOptionTypeUsageTableMap::COL_ID_PRODUCT_OPTION_TYPE_USAGE, self::ID_TYPE_USAGE)
@@ -466,7 +466,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return array
      */
-    public function queryConfigPresetsForConcreteProduct($idProduct)
+    public function queryConfigPresetsForProductConcrete($idProduct)
     {
         $query = SpyProductOptionConfigurationPresetQuery::create()
             ->withColumn(SpyProductOptionConfigurationPresetTableMap::COL_IS_DEFAULT, self::IS_DEFAULT)

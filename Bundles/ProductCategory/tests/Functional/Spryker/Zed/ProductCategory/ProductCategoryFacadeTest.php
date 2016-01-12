@@ -9,7 +9,7 @@ namespace Functional\Spryker\Zed\ProductCategory;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
@@ -99,12 +99,12 @@ class ProductCategoryFacadeTest extends Test
         $productAbstractTransfer->addLocalizedAttributes($localizedAttributes);
         $idProductAbstract = $this->productFacade->createProductAbstract($productAbstractTransfer);
 
-        $concreteProductTransfer = new ConcreteProductTransfer();
-        $concreteProductTransfer->setSku($concreteSku);
-        $concreteProductTransfer->setAttributes([]);
-        $concreteProductTransfer->addLocalizedAttributes($localizedAttributes);
-        $concreteProductTransfer->setIsActive(true);
-        $this->productFacade->createConcreteProduct($concreteProductTransfer, $idProductAbstract);
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setSku($concreteSku);
+        $productConcreteTransfer->setAttributes([]);
+        $productConcreteTransfer->addLocalizedAttributes($localizedAttributes);
+        $productConcreteTransfer->setIsActive(true);
+        $this->productFacade->createProductConcrete($productConcreteTransfer, $idProductAbstract);
 
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setName($categoryName);

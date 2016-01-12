@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Wishlist\Dependency\Facade;
 
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 interface WishlistToProductInterface
@@ -15,9 +15,9 @@ interface WishlistToProductInterface
     /**
      * @param string $concreteSku
      *
-     * @return ConcreteProductTransfer
+     * @return ProductConcreteTransfer
      */
-    public function getConcreteProduct($concreteSku);
+    public function getProductConcrete($concreteSku);
 
     /**
      * @param string $sku
@@ -26,6 +26,6 @@ interface WishlistToProductInterface
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku);
+    public function getProductConcreteIdBySku($sku);
 
 }

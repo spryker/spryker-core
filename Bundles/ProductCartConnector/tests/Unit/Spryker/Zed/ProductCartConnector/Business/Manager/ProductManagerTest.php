@@ -7,7 +7,7 @@ namespace Unit\Spryker\Zed\ProductCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
@@ -37,14 +37,14 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     {
         $changeTransfer = $this->getChangeTransfer();
 
-        $concreteProductTransfer = new ConcreteProductTransfer();
-        $concreteProductTransfer->setIdConcreteProduct(self::ID_PRODUCT_CONCRETE);
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setIdProductConcrete(self::ID_PRODUCT_CONCRETE);
 
-        $productManager = $this->getProductManager($concreteProductTransfer);
+        $productManager = $this->getProductManager($productConcreteTransfer);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
-        $this->assertSame($concreteProductTransfer->getIdConcreteProduct(), $changedItemTransfer->getId());
+        $this->assertSame($productConcreteTransfer->getIdProductConcrete(), $changedItemTransfer->getId());
     }
 
     /**
@@ -54,14 +54,14 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     {
         $changeTransfer = $this->getChangeTransfer();
 
-        $concreteProductTransfer = new ConcreteProductTransfer();
-        $concreteProductTransfer->setProductAbstractSku(self::ABSTRACT_SKU);
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setProductAbstractSku(self::ABSTRACT_SKU);
 
-        $productManager = $this->getProductManager($concreteProductTransfer);
+        $productManager = $this->getProductManager($productConcreteTransfer);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
-        $this->assertSame($concreteProductTransfer->getProductAbstractSku(), $changedItemTransfer->getAbstractSku());
+        $this->assertSame($productConcreteTransfer->getProductAbstractSku(), $changedItemTransfer->getAbstractSku());
     }
 
     /**
@@ -71,14 +71,14 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     {
         $changeTransfer = $this->getChangeTransfer();
 
-        $concreteProductTransfer = new ConcreteProductTransfer();
-        $concreteProductTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
 
-        $productManager = $this->getProductManager($concreteProductTransfer);
+        $productManager = $this->getProductManager($productConcreteTransfer);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
-        $this->assertSame($concreteProductTransfer->getIdProductAbstract(), $changedItemTransfer->getIdProductAbstract());
+        $this->assertSame($productConcreteTransfer->getIdProductAbstract(), $changedItemTransfer->getIdProductAbstract());
     }
 
     /**
@@ -88,14 +88,14 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     {
         $changeTransfer = $this->getChangeTransfer();
 
-        $concreteProductTransfer = new ConcreteProductTransfer();
-        $concreteProductTransfer->setName(self::PRODUCT_NAME);
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setName(self::PRODUCT_NAME);
 
-        $productManager = $this->getProductManager($concreteProductTransfer);
+        $productManager = $this->getProductManager($productConcreteTransfer);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
-        $this->assertSame($concreteProductTransfer->getName(), $changedItemTransfer->getName());
+        $this->assertSame($productConcreteTransfer->getName(), $changedItemTransfer->getName());
     }
 
     /**
@@ -105,12 +105,12 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     {
         $changeTransfer = $this->getChangeTransfer();
 
-        $concreteProductTransfer = new ConcreteProductTransfer();
+        $productConcreteTransfer = new ProductConcreteTransfer();
         $taxSetTransfer = new TaxSetTransfer();
         $taxSetTransfer->setName(self::TAX_SET_NAME);
-        $concreteProductTransfer->setTaxSet($taxSetTransfer);
+        $productConcreteTransfer->setTaxSet($taxSetTransfer);
 
-        $productManager = $this->getProductManager($concreteProductTransfer);
+        $productManager = $this->getProductManager($productConcreteTransfer);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
@@ -132,15 +132,15 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param ConcreteProductTransfer $returnValue
+     * @param ProductConcreteTransfer $returnValue
      *
      * @return ProductManager
      */
-    public function getProductManager(ConcreteProductTransfer $returnValue)
+    public function getProductManager(ProductConcreteTransfer $returnValue)
     {
         $mockProductFacade = $this->getMockProductFacade();
         $mockProductFacade->expects($this->once())
-            ->method('getConcreteProduct')
+            ->method('getProductConcrete')
             ->will($this->returnValue($returnValue));
 
         $productManager = new ProductManager($mockProductFacade);
@@ -153,7 +153,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
      */
     private function getMockProductFacade()
     {
-        return $this->getMock(ProductCartConnectorToProductInterface::class, ['getConcreteProduct'], [], '', false);
+        return $this->getMock(ProductCartConnectorToProductInterface::class, ['getProductConcrete'], [], '', false);
     }
 
 }

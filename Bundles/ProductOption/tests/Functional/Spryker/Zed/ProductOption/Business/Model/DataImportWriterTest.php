@@ -102,7 +102,7 @@ class DataImportWriterTest extends Test
      */
     public function testTouchUpdatedWhenUpdatingProductOptionType()
     {
-        $product = $this->createConcreteProduct();
+        $product = $this->createProductConcrete();
         $optionType = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $this->createProductOptionTypeUsage($product, $optionType);
 
@@ -117,7 +117,7 @@ class DataImportWriterTest extends Test
      */
     public function testTouchUpdatedWhenUpdatingProductOptionValue()
     {
-        $product = $this->createConcreteProduct();
+        $product = $this->createProductConcrete();
         $optionType = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionTypeUsage = $this->createProductOptionTypeUsage($product, $optionType);
         $optionValueUsage = (new SpyProductOptionValueUsage())
@@ -137,7 +137,7 @@ class DataImportWriterTest extends Test
      */
     public function testImportProductOptionTypeUsage()
     {
-        $product = $this->createConcreteProduct();
+        $product = $this->createProductConcrete();
 
         $optionType = (new SpyProductOptionType())->setImportKey('SHADE');
         $optionType->save();
@@ -161,7 +161,7 @@ class DataImportWriterTest extends Test
      */
     public function testImportProductOptionValueUsage()
     {
-        $product = $this->createConcreteProduct();
+        $product = $this->createProductConcrete();
         $optionType = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $productOptionTypeUsage = $this->createProductOptionTypeUsage($product, $optionType);
 
@@ -184,7 +184,7 @@ class DataImportWriterTest extends Test
      */
     public function testImportProductOptionTypeUsageExclusion()
     {
-        $product = $this->createConcreteProduct();
+        $product = $this->createProductConcrete();
         $optionShadeViolet = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionFittingClassic = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
@@ -210,7 +210,7 @@ class DataImportWriterTest extends Test
      */
     public function testImportProductOptionValueUsageConstraint()
     {
-        $product = $this->createConcreteProduct();
+        $product = $this->createProductConcrete();
 
         $optionShadeViolet = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionFittingClassic = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
@@ -240,7 +240,7 @@ class DataImportWriterTest extends Test
      */
     public function testImportProductOptionPresetConfiguration()
     {
-        $product = $this->createConcreteProduct();
+        $product = $this->createProductConcrete();
         $optionShade = $this->createOptionTypeWithValue('SHADE', 'VIOLET');
         $optionFitting = $this->createOptionTypeWithValue('FITTING', 'CLASSIC');
 
@@ -275,7 +275,7 @@ class DataImportWriterTest extends Test
         $this->performAssertionOnTouchTable($product->getFkProductAbstract());
     }
 
-    private function createConcreteProduct()
+    private function createProductConcrete()
     {
         $productAbstract = (new SpyProductAbstract())
             ->setSku('ABC123')

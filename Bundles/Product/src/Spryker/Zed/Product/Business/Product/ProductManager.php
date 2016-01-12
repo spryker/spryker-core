@@ -7,15 +7,15 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
-use Spryker\Zed\Product\Business\Exception\ConcreteProductAttributesExistException;
-use Spryker\Zed\Product\Business\Exception\ConcreteProductExistsException;
+use Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException;
+use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
@@ -31,7 +31,7 @@ use Generated\Shared\Transfer\TaxRateTransfer;
 class ProductManager implements ProductManagerInterface
 {
 
-    const COL_ID_CONCRETE_PRODUCT = 'SpyProduct.IdProduct';
+    const COL_ID_PRODUCT_CONCRETE = 'SpyProduct.IdProduct';
 
     const COL_ABSTRACT_SKU = 'SpyProductAbstract.Sku';
 
@@ -67,7 +67,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @var SpyProduct[]
      */
-    protected $concreteProductsBySkuCache = [];
+    protected $productConcreteCollectionBySkuCache = [];
 
     /**
      * @param ProductQueryContainerInterface $productQueryContainer
@@ -243,48 +243,48 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ConcreteProductTransfer $concreteProductTransfer
+     * @param ProductConcreteTransfer $productConcreteTransfer
      * @param int $idProductAbstract
      *
-     * @throws ConcreteProductExistsException
+     * @throws ProductConcreteExistsException
      * @throws PropelException
      *
      * @return int
      */
-    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idProductAbstract)
+    public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer, $idProductAbstract)
     {
-        $sku = $concreteProductTransfer->getSku();
+        $sku = $productConcreteTransfer->getSku();
 
-        $this->checkConcreteProductDoesNotExist($sku);
-        $encodedAttributes = $this->encodeAttributes($concreteProductTransfer->getAttributes());
+        $this->checkProductConcreteDoesNotExist($sku);
+        $encodedAttributes = $this->encodeAttributes($productConcreteTransfer->getAttributes());
 
-        $concreteProductEntity = new SpyProduct();
-        $concreteProductEntity
+        $productConcreteEntity = new SpyProduct();
+        $productConcreteEntity
             ->setSku($sku)
             ->setFkProductAbstract($idProductAbstract)
             ->setAttributes($encodedAttributes)
-            ->setIsActive($concreteProductTransfer->getIsActive());
+            ->setIsActive($productConcreteTransfer->getIsActive());
 
-        $concreteProductEntity->save();
+        $productConcreteEntity->save();
 
-        $idConcreteProduct = $concreteProductEntity->getPrimaryKey();
-        $concreteProductTransfer->setIdConcreteProduct($idConcreteProduct);
-        $this->createConcreteProductAttributes($concreteProductTransfer);
+        $idProductConcrete = $productConcreteEntity->getPrimaryKey();
+        $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
+        $this->createProductConcreteAttributes($productConcreteTransfer);
 
-        return $idConcreteProduct;
+        return $idProductConcrete;
     }
 
     /**
      * @param string $sku
      *
-     * @throws ConcreteProductExistsException
+     * @throws ProductConcreteExistsException
      *
      * @return void
      */
-    protected function checkConcreteProductDoesNotExist($sku)
+    protected function checkProductConcreteDoesNotExist($sku)
     {
-        if ($this->hasConcreteProduct($sku)) {
-            throw new ConcreteProductExistsException(
+        if ($this->hasProductConcrete($sku)) {
+            throw new ProductConcreteExistsException(
                 sprintf(
                     'Tried to create a concrete product with sku %s, but it already exists',
                     $sku
@@ -298,9 +298,9 @@ class ProductManager implements ProductManagerInterface
      *
      * @return bool
      */
-    public function hasConcreteProduct($sku)
+    public function hasProductConcrete($sku)
     {
-        return $this->productQueryContainer->queryConcreteProductBySku($sku)->count() > 0;
+        return $this->productQueryContainer->queryProductConcreteBySku($sku)->count() > 0;
     }
 
     /**
@@ -310,12 +310,12 @@ class ProductManager implements ProductManagerInterface
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku)
+    public function getProductConcreteIdBySku($sku)
     {
-        if (!isset($this->concreteProductsBySkuCache[$sku])) {
-            $concreteProduct = $this->productQueryContainer->queryConcreteProductBySku($sku)->findOne();
+        if (!isset($this->productConcreteCollectionBySkuCache[$sku])) {
+            $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
 
-            if (!$concreteProduct) {
+            if (!$productConcrete) {
                 throw new MissingProductException(
                     sprintf(
                         'Tried to retrieve a concrete product with sku %s, but it does not exist',
@@ -324,32 +324,32 @@ class ProductManager implements ProductManagerInterface
                 );
             }
 
-            $this->concreteProductsBySkuCache[$sku] = $concreteProduct;
+            $this->productConcreteCollectionBySkuCache[$sku] = $productConcrete;
         }
 
-        return $this->concreteProductsBySkuCache[$sku]->getPrimaryKey();
+        return $this->productConcreteCollectionBySkuCache[$sku]->getPrimaryKey();
     }
 
     /**
-     * @param ConcreteProductTransfer $concreteProductTransfer
+     * @param ProductConcreteTransfer $productConcreteTransfer
      *
-     * @throws ConcreteProductAttributesExistException
+     * @throws ProductConcreteAttributesExistException
      * @throws PropelException
      *
      * @return void
      */
-    protected function createConcreteProductAttributes(ConcreteProductTransfer $concreteProductTransfer)
+    protected function createProductConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $idConcreteProduct = $concreteProductTransfer->getIdConcreteProduct();
+        $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();
 
-        foreach ($concreteProductTransfer->getLocalizedAttributes() as $localizedAttributes) {
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
-            $this->checkConcreteProductAttributesDoNotExist($idConcreteProduct, $locale);
+            $this->checkProductConcreteAttributesDoNotExist($idProductConcrete, $locale);
             $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
 
             $productAttributeEntity = new SpyProductLocalizedAttributes();
             $productAttributeEntity
-                ->setFkProduct($idConcreteProduct)
+                ->setFkProduct($idProductConcrete)
                 ->setFkLocale($locale->getIdLocale())
                 ->setName($localizedAttributes->getName())
                 ->setAttributes($encodedAttributes);
@@ -359,20 +359,20 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idProductConcrete
      * @param LocaleTransfer $locale
      *
-     * @throws ConcreteProductAttributesExistException
+     * @throws ProductConcreteAttributesExistException
      *
      * @return void
      */
-    protected function checkConcreteProductAttributesDoNotExist($idConcreteProduct, LocaleTransfer $locale)
+    protected function checkProductConcreteAttributesDoNotExist($idProductConcrete, LocaleTransfer $locale)
     {
-        if ($this->hasConcreteProductAttributes($idConcreteProduct, $locale)) {
-            throw new ConcreteProductAttributesExistException(
+        if ($this->hasProductConcreteAttributes($idProductConcrete, $locale)) {
+            throw new ProductConcreteAttributesExistException(
                 sprintf(
                     'Tried to create concrete product attributes for product id %s, locale id %s, but they exist',
-                    $idConcreteProduct,
+                    $idProductConcrete,
                     $locale->getIdLocale()
                 )
             );
@@ -380,15 +380,15 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idProductConcrete
      * @param LocaleTransfer $locale
      *
      * @return bool
      */
-    protected function hasConcreteProductAttributes($idConcreteProduct, LocaleTransfer $locale)
+    protected function hasProductConcreteAttributes($idProductConcrete, LocaleTransfer $locale)
     {
-        $query = $this->productQueryContainer->queryConcreteProductAttributeCollection(
-            $idConcreteProduct,
+        $query = $this->productQueryContainer->queryProductConcreteAttributeCollection(
+            $idProductConcrete,
             $locale->getIdLocale()
         );
 
@@ -484,11 +484,11 @@ class ProductManager implements ProductManagerInterface
      *
      * @return float
      */
-    public function getEffectiveTaxRateForConcreteProduct($sku)
+    public function getEffectiveTaxRateForProductConcrete($sku)
     {
-        $concreteProduct = $this->productQueryContainer->queryConcreteProductBySku($sku)->findOne();
+        $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
 
-        if (!$concreteProduct) {
+        if (!$productConcrete) {
             throw new MissingProductException(
                 sprintf(
                     'Tried to retrieve a concrete product with sku %s, but it does not exist.',
@@ -497,7 +497,7 @@ class ProductManager implements ProductManagerInterface
             );
         }
 
-        $productAbstract = $concreteProduct->getSpyProductAbstract();
+        $productAbstract = $productConcrete->getSpyProductAbstract();
 
         $effectiveTaxRate = 0;
 
@@ -518,26 +518,26 @@ class ProductManager implements ProductManagerInterface
      *
      * @throws MissingProductException
      *
-     * @return ConcreteProductTransfer
+     * @return ProductConcreteTransfer
      */
-    public function getConcreteProduct($concreteSku)
+    public function getProductConcrete($concreteSku)
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
-        $concreteProductQuery = $this->productQueryContainer->queryProductWithAttributesAndProductAbstract(
+        $productConcreteQuery = $this->productQueryContainer->queryProductWithAttributesAndProductAbstract(
             $concreteSku, $localeTransfer->getIdLocale()
         );
 
-        $concreteProductQuery->select([
-            self::COL_ID_CONCRETE_PRODUCT,
+        $productConcreteQuery->select([
+            self::COL_ID_PRODUCT_CONCRETE,
             self::COL_ABSTRACT_SKU,
             self::COL_ID_PRODUCT_ABSTRACT,
             self::COL_NAME,
         ]);
 
-        $concreteProduct = $concreteProductQuery->findOne();
+        $productConcrete = $productConcreteQuery->findOne();
 
-        if (!$concreteProduct) {
+        if (!$productConcrete) {
             throw new MissingProductException(
                 sprintf(
                     'Tried to retrieve a concrete product with sku %s, but it does not exist.',
@@ -546,27 +546,27 @@ class ProductManager implements ProductManagerInterface
             );
         }
 
-        $concreteProductTransfer = new ConcreteProductTransfer();
-        $concreteProductTransfer->setSku($concreteSku)
-            ->setIdConcreteProduct($concreteProduct[self::COL_ID_CONCRETE_PRODUCT])
-            ->setProductAbstractSku($concreteProduct[self::COL_ABSTRACT_SKU])
-            ->setIdProductAbstract($concreteProduct[self::COL_ID_PRODUCT_ABSTRACT])
-            ->setName($concreteProduct[self::COL_NAME]);
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setSku($concreteSku)
+            ->setIdProductConcrete($productConcrete[self::COL_ID_PRODUCT_CONCRETE])
+            ->setProductAbstractSku($productConcrete[self::COL_ABSTRACT_SKU])
+            ->setIdProductAbstract($productConcrete[self::COL_ID_PRODUCT_ABSTRACT])
+            ->setName($productConcrete[self::COL_NAME]);
 
-        $this->addTaxesToProductTransfer($concreteProductTransfer);
+        $this->addTaxesToProductTransfer($productConcreteTransfer);
 
-        return $concreteProductTransfer;
+        return $productConcreteTransfer;
     }
 
     /**
-     * @param ConcreteProductTransfer $concreteProductTransfer
+     * @param ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
-    private function addTaxesToProductTransfer(ConcreteProductTransfer $concreteProductTransfer)
+    private function addTaxesToProductTransfer(ProductConcreteTransfer $productConcreteTransfer)
     {
         $taxSetEntity = $this->productQueryContainer
-            ->queryTaxSetForProductAbstract($concreteProductTransfer->getIdProductAbstract())
+            ->queryTaxSetForProductAbstract($productConcreteTransfer->getIdProductAbstract())
             ->findOne();
 
         if ($taxSetEntity === null) {
@@ -586,7 +586,7 @@ class ProductManager implements ProductManagerInterface
             $taxTransfer->addTaxRate($taxRateTransfer);
         }
 
-        $concreteProductTransfer->setTaxSet($taxTransfer);
+        $productConcreteTransfer->setTaxSet($taxTransfer);
     }
 
     /**
@@ -598,9 +598,9 @@ class ProductManager implements ProductManagerInterface
      */
     public function getProductAbstractIdByConcreteSku($sku)
     {
-        $concreteProduct = $this->productQueryContainer->queryConcreteProductBySku($sku)->findOne();
+        $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
 
-        if (!$concreteProduct) {
+        if (!$productConcrete) {
             throw new MissingProductException(
                 sprintf(
                     'Tried to retrieve a concrete product with sku %s, but it does not exist.',
@@ -609,7 +609,7 @@ class ProductManager implements ProductManagerInterface
             );
         }
 
-        return $concreteProduct->getFkProductAbstract();
+        return $productConcrete->getFkProductAbstract();
     }
 
     /**
@@ -619,11 +619,11 @@ class ProductManager implements ProductManagerInterface
      *
      * @return string
      */
-    public function getAbstractSkuFromConcreteProduct($sku)
+    public function getAbstractSkuFromProductConcrete($sku)
     {
-        $concreteProduct = $this->productQueryContainer->queryConcreteProductBySku($sku)->findOne();
+        $productConcrete = $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
 
-        if (!$concreteProduct) {
+        if (!$productConcrete) {
             throw new MissingProductException(
                 sprintf(
                     'Tried to retrieve a concrete product with sku %s, but it does not exist.',
@@ -632,7 +632,7 @@ class ProductManager implements ProductManagerInterface
             );
         }
 
-        return $concreteProduct->getSpyProductAbstract()->getSku();
+        return $productConcrete->getSpyProductAbstract()->getSku();
     }
 
     /**

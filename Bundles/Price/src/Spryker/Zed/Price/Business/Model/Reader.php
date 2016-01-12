@@ -119,7 +119,7 @@ class Reader implements ReaderInterface
         $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
         $priceType = $this->getPriceTypeByName($priceTypeName);
 
-        if ($this->hasPriceForConcreteProduct($sku, $priceType)
+        if ($this->hasPriceForProductConcrete($sku, $priceType)
             || $this->hasPriceForProductAbstract($sku, $priceType)) {
             return true;
         }
@@ -132,9 +132,9 @@ class Reader implements ReaderInterface
      *
      * @return bool
      */
-    public function hasConcreteProduct($sku)
+    public function hasProductConcrete($sku)
     {
-        return $this->productFacade->hasConcreteProduct($sku);
+        return $this->productFacade->hasProductConcrete($sku);
     }
 
     /**
@@ -157,9 +157,9 @@ class Reader implements ReaderInterface
     {
         $priceType = $this->getPriceTypeByName($priceTypeName);
 
-        if ($this->hasPriceForConcreteProduct($sku, $priceType)) {
+        if ($this->hasPriceForProductConcrete($sku, $priceType)) {
             return $this->queryContainer
-                ->queryPriceEntityForConcreteProduct($sku, $priceType)
+                ->queryPriceEntityForProductConcrete($sku, $priceType)
                 ->findOne()
                 ->getIdPriceProduct();
         }
@@ -180,13 +180,13 @@ class Reader implements ReaderInterface
      */
     protected function getPriceEntity($sku, SpyPriceType $priceType)
     {
-        if ($this->hasPriceForConcreteProduct($sku, $priceType)) {
-            return $this->getPriceEntityForConcreteProduct($sku, $priceType);
+        if ($this->hasPriceForProductConcrete($sku, $priceType)) {
+            return $this->getPriceEntityForProductConcrete($sku, $priceType);
         }
         if ($this->hasPriceForProductAbstract($sku, $priceType)) {
             return $this->getPriceEntityForProductAbstract($sku, $priceType);
         }
-        $abstractSku = $this->productFacade->getAbstractSkuFromConcreteProduct($sku);
+        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         if (!$this->hasProductAbstract($sku)
             || !$this->hasPriceForProductAbstract($abstractSku, $priceType)
         ) {
@@ -202,10 +202,10 @@ class Reader implements ReaderInterface
      *
      * @return bool
      */
-    protected function hasPriceForConcreteProduct($sku, SpyPriceType $priceType)
+    protected function hasPriceForProductConcrete($sku, SpyPriceType $priceType)
     {
         $priceProductCount = $this->queryContainer
-            ->queryPriceEntityForConcreteProduct($sku, $priceType)
+            ->queryPriceEntityForProductConcrete($sku, $priceType)
             ->count();
 
         return $priceProductCount > 0;
@@ -232,10 +232,10 @@ class Reader implements ReaderInterface
      *
      * @return SpyPriceProduct
      */
-    protected function getPriceEntityForConcreteProduct($sku, $priceType)
+    protected function getPriceEntityForProductConcrete($sku, $priceType)
     {
         return $this->queryContainer
-            ->queryPriceEntityForConcreteProduct($sku, $priceType)
+            ->queryPriceEntityForProductConcrete($sku, $priceType)
             ->findOne();
     }
 
@@ -285,9 +285,9 @@ class Reader implements ReaderInterface
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku)
+    public function getProductConcreteIdBySku($sku)
     {
-        return $this->productFacade->getConcreteProductIdBySku($sku);
+        return $this->productFacade->getProductConcreteIdBySku($sku);
     }
 
 }

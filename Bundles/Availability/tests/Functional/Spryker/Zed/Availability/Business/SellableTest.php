@@ -94,8 +94,8 @@ class SellableTest extends Test
             ->setSku('AP1337')
             ->setAttributes('{}');
 
-        $concreteProduct = new SpyProduct();
-        $concreteProduct
+        $productConcrete = new SpyProduct();
+        $productConcrete
             ->setSku('P1337')
             ->setSpyProductAbstract($productAbstract)
             ->setAttributes('{}');
@@ -107,7 +107,7 @@ class SellableTest extends Test
         $stockProduct = new SpyStockProduct();
         $stockProduct
             ->setStock($stock)
-            ->setSpyProduct($concreteProduct)
+            ->setSpyProduct($productConcrete)
             ->setQuantity(5)
             ->save();
 

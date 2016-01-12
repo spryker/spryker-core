@@ -201,7 +201,7 @@ class DataImportWriter implements DataImportWriterInterface
      */
     public function importProductOptionTypeUsage($sku, $importKeyProductOptionType, $isOptional = false, $sequence = null)
     {
-        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
+        $idProduct = $this->productFacade->getProductConcreteIdBySku($sku);
 
         $idProductOptionType = $this->getIdProductOptionType($importKeyProductOptionType);
 
@@ -265,7 +265,7 @@ class DataImportWriter implements DataImportWriterInterface
      */
     public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB)
     {
-        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
+        $idProduct = $this->productFacade->getProductConcreteIdBySku($sku);
 
         $idProductOptionTypeA = $this->getIdProductOptionType($importKeyProductOptionTypeA);
         $idProductOptionTypeB = $this->getIdProductOptionType($importKeyProductOptionTypeB);
@@ -300,7 +300,7 @@ class DataImportWriter implements DataImportWriterInterface
      */
     public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator)
     {
-        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
+        $idProduct = $this->productFacade->getProductConcreteIdBySku($sku);
         $this->checkHasProductOptionValue($idProductOptionValueUsageSource);
 
         $productOptionValueB = $this->getProductOptionValue($importKeyProductOptionValueTarget);
@@ -336,7 +336,7 @@ class DataImportWriter implements DataImportWriterInterface
      */
     public function importPresetConfiguration($sku, array $importKeysProductOptionValues, $isDefault = false, $sequence = null)
     {
-        $idProduct = $this->productFacade->getConcreteProductIdBySku($sku);
+        $idProduct = $this->productFacade->getProductConcreteIdBySku($sku);
 
         $presetConfig = (new SpyProductOptionConfigurationPreset())
             ->setFkProduct($idProduct)

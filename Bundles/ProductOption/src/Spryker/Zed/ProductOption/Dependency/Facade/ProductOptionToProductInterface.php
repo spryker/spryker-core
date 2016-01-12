@@ -18,7 +18,7 @@ interface ProductOptionToProductInterface
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku);
+    public function getProductConcreteIdBySku($sku);
 
     /**
      * @param string $sku

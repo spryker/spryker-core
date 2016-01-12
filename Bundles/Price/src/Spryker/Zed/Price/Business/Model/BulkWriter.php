@@ -28,7 +28,7 @@ class BulkWriter extends Writer implements BulkWriterInterface
         $priceProductTransfer = $this->setPriceType($priceProductTransfer);
 
         $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
-        $this->loadConcreteProductIdForPriceProductTransfer($priceProductTransfer);
+        $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
 
         $entity = new SpyPriceProduct();
         $newPrice = $this->savePriceProductEntity($priceProductTransfer, $entity);
@@ -52,7 +52,7 @@ class BulkWriter extends Writer implements BulkWriterInterface
         $priceProductTransfer = $this->setPriceType($priceProductTransfer);
 
         $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
-        $this->loadConcreteProductIdForPriceProductTransfer($priceProductTransfer);
+        $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
 
         $priceProductEntity = $this->getPriceProductById($priceProductTransfer->getIdPriceProduct());
         $this->savePriceProductEntity($priceProductTransfer, $priceProductEntity);

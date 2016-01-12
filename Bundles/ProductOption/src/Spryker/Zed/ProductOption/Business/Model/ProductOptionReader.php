@@ -177,9 +177,9 @@ class ProductOptionReader implements ProductOptionReaderInterface
      *
      * @return array
      */
-    public function getTypeUsagesForConcreteProduct($idProduct, $idLocale)
+    public function getTypeUsagesForProductConcrete($idProduct, $idLocale)
     {
-        return $this->queryContainer->queryTypeUsagesForConcreteProduct($idProduct, $idLocale);
+        return $this->queryContainer->queryTypeUsagesForProductConcrete($idProduct, $idLocale);
     }
 
     /**
@@ -229,9 +229,9 @@ class ProductOptionReader implements ProductOptionReaderInterface
      *
      * @return array
      */
-    public function getConfigPresetsForConcreteProduct($idProduct)
+    public function getConfigPresetsForProductConcrete($idProduct)
     {
-        return $this->queryContainer->queryConfigPresetsForConcreteProduct($idProduct);
+        return $this->queryContainer->queryConfigPresetsForProductConcrete($idProduct);
     }
 
     /**

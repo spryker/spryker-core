@@ -26,7 +26,7 @@ class WriterTest extends Test
     const DUMMY_PRICE_TYPE_1 = 'TYPE1';
     const DUMMY_PRICE_TYPE_2 = 'TYPE2';
     const DUMMY_SKU_PRODUCT_ABSTRACT = 'ABSTRACT';
-    const DUMMY_SKU_CONCRETE_PRODUCT = 'CONCRETE';
+    const DUMMY_SKU_PRODUCT_CONCRETE = 'CONCRETE';
     const DUMMY_NEW_PRICE_1 = 99;
     const DUMMY_NEW_PRICE_2 = 100;
 
@@ -88,22 +88,22 @@ class WriterTest extends Test
     /**
      * @return void
      */
-    public function testCreatePriceForConcreteProduct()
+    public function testCreatePriceForProductConcrete()
     {
-        $concreteProduct = SpyProductQuery::create()->filterBySku(self::DUMMY_SKU_CONCRETE_PRODUCT)->findOne();
+        $productConcrete = SpyProductQuery::create()->filterBySku(self::DUMMY_SKU_PRODUCT_CONCRETE)->findOne();
         $priceType2 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_2)->findOne();
 
-        $request = SpyPriceProductQuery::create()->filterByProduct($concreteProduct)->find();
+        $request = SpyPriceProductQuery::create()->filterByProduct($productConcrete)->find();
         $this->assertEquals(0, count($request));
 
         $transferPriceProduct = $this->setTransferPriceProduct(
-            self::DUMMY_SKU_CONCRETE_PRODUCT,
+            self::DUMMY_SKU_PRODUCT_CONCRETE,
             self::DUMMY_SKU_PRODUCT_ABSTRACT,
             self::DUMMY_PRICE_TYPE_2
         );
         $this->priceFacade->createPriceForProduct($transferPriceProduct);
 
-        $request = $this->findPriceEntitiesConcreteProduct($concreteProduct, $priceType2);
+        $request = $this->findPriceEntitiesProductConcrete($productConcrete, $priceType2);
         $this->assertEquals(1, count($request));
     }
 
@@ -171,10 +171,10 @@ class WriterTest extends Test
             ->find();
     }
 
-    protected function findPriceEntitiesConcreteProduct($concreteProduct, $priceType)
+    protected function findPriceEntitiesProductConcrete($productConcrete, $priceType)
     {
         return SpyPriceProductQuery::create()
-            ->filterByProduct($concreteProduct)
+            ->filterByProduct($productConcrete)
             ->filterByPriceType($priceType)
             ->find();
     }
@@ -218,20 +218,20 @@ class WriterTest extends Test
             ->setAttributes('{}')
             ->save();
 
-        $concreteProduct = SpyProductQuery::create()
-            ->filterBySku(self::DUMMY_SKU_CONCRETE_PRODUCT)
+        $productConcrete = SpyProductQuery::create()
+            ->filterBySku(self::DUMMY_SKU_PRODUCT_CONCRETE)
             ->findOne();
 
-        if ($concreteProduct === null) {
-            $concreteProduct = new SpyProduct();
+        if ($productConcrete === null) {
+            $productConcrete = new SpyProduct();
         }
-        $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
+        $productConcrete->setSku(self::DUMMY_SKU_PRODUCT_CONCRETE)
             ->setAttributes('{}')
             ->setSpyProductAbstract($productAbstract)
             ->save();
 
-        $this->deletePriceEntitiesConcrete($concreteProduct);
-        $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
+        $this->deletePriceEntitiesConcrete($productConcrete);
+        $productConcrete->setSku(self::DUMMY_SKU_PRODUCT_CONCRETE)
             ->setAttributes('{}')
             ->setSpyProductAbstract($productAbstract)
             ->save();

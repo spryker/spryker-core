@@ -161,7 +161,7 @@ interface ProductOptionQueryContainerInterface
      *
      * @return array
      */
-    public function queryTypeUsagesForConcreteProduct($idProduct, $idLocale);
+    public function queryTypeUsagesForProductConcrete($idProduct, $idLocale);
 
     /**
      * @param int $idProductAttributeTypeUsage
@@ -198,7 +198,7 @@ interface ProductOptionQueryContainerInterface
      *
      * @return array
      */
-    public function queryConfigPresetsForConcreteProduct($idProduct);
+    public function queryConfigPresetsForProductConcrete($idProduct);
 
     /**
      * @param int $idConfigPreset

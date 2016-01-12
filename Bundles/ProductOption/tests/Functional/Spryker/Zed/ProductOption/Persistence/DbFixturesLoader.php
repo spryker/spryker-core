@@ -75,7 +75,7 @@ class DbFixturesLoader
             ->setFkProductAbstract($ids['idProductAbstract'])
             ->setAttributes('{}');
         $productEntity->save();
-        $ids['idConcreteProduct'] = $productEntity->getIdProduct();
+        $ids['idProductConcrete'] = $productEntity->getIdProduct();
 
         $productOptionTypeEntity = new SpyProductOptionType();
         $productOptionTypeEntity->save();
@@ -171,7 +171,7 @@ class DbFixturesLoader
         $productOptionTypeUsageEntity = new SpyProductOptionTypeUsage();
         $productOptionTypeUsageEntity->setIsOptional(0)
             ->setSequence(1)
-            ->setFkProduct($ids['idConcreteProduct'])
+            ->setFkProduct($ids['idProductConcrete'])
             ->setFkProductOptionType($ids['idTypeColor']);
         $productOptionTypeUsageEntity->save();
         $ids['idUsageColor'] = $productOptionTypeUsageEntity->getIdProductOptionTypeUsage();
@@ -179,7 +179,7 @@ class DbFixturesLoader
         $productOptionTypeUsageEntity = new SpyProductOptionTypeUsage();
         $productOptionTypeUsageEntity->setIsOptional(0)
             ->setSequence(1)
-            ->setFkProduct($ids['idConcreteProduct'])
+            ->setFkProduct($ids['idProductConcrete'])
             ->setFkProductOptionType($ids['idTypeSize']);
         $productOptionTypeUsageEntity->save();
         $ids['idUsageSize'] = $productOptionTypeUsageEntity->getIdProductOptionTypeUsage();
@@ -277,14 +277,14 @@ class DbFixturesLoader
         $productOptionConfigurationPresetEntity = new SpyProductOptionConfigurationPreset();
         $productOptionConfigurationPresetEntity->setIsDefault(true)
             ->setSequence(1)
-            ->setFkProduct($ids['idConcreteProduct']);
+            ->setFkProduct($ids['idProductConcrete']);
         $productOptionConfigurationPresetEntity->save();
         $ids['idConfigPresetA'] = $productOptionConfigurationPresetEntity->getIdProductOptionConfigurationPreset();
 
         $productOptionConfigurationPresetEntity = new SpyProductOptionConfigurationPreset();
         $productOptionConfigurationPresetEntity->setIsDefault(false)
             ->setSequence(2)
-            ->setFkProduct($ids['idConcreteProduct']);
+            ->setFkProduct($ids['idProductConcrete']);
         $productOptionConfigurationPresetEntity->save();
         $ids['idConfigPresetB'] = $productOptionConfigurationPresetEntity->getIdProductOptionConfigurationPreset();
 

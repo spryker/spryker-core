@@ -7,7 +7,7 @@
 namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
 use Spryker\Zed\Product\Business\ProductFacade;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductCartConnectorToProductBridge implements ProductCartConnectorToProductInterface
 {
@@ -28,11 +28,11 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     /**
      * @param string $concreteSku
      *
-     * @return ConcreteProductTransfer
+     * @return ProductConcreteTransfer
      */
-    public function getConcreteProduct($concreteSku)
+    public function getProductConcrete($concreteSku)
     {
-        return $this->productFacade->getConcreteProduct($concreteSku);
+        return $this->productFacade->getProductConcrete($concreteSku);
     }
 
 }

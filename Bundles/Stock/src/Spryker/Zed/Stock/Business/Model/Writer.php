@@ -112,7 +112,7 @@ class Writer implements WriterInterface
         Propel::getConnection()->beginTransaction();
 
         $idStockType = $this->reader->getStockTypeIdByName($transferStockProduct->getStockType());
-        $idProduct = $this->reader->getConcreteProductIdBySku($transferStockProduct->getSku());
+        $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
         $this->reader->checkStockDoesNotExist($idStockType, $idProduct);
         $idStockProduct = $this->saveStockProduct($transferStockProduct, $idStockType, $idProduct);
 
@@ -133,7 +133,7 @@ class Writer implements WriterInterface
     {
         Propel::getConnection()->beginTransaction();
 
-        $idProduct = $this->reader->getConcreteProductIdBySku($transferStockProduct->getSku());
+        $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
         $idStock = $this->reader->getStockTypeIdByName($transferStockProduct->getStockType());
         $stockProductEntity = $this->reader->getStockProductById($transferStockProduct->getIdStockProduct());
 
@@ -160,7 +160,7 @@ class Writer implements WriterInterface
     public function decrementStock($sku, $stockType, $decrementBy = 1)
     {
         Propel::getConnection()->beginTransaction();
-        $idProduct = $this->reader->getConcreteProductIdBySku($sku);
+        $idProduct = $this->reader->getProductConcreteIdBySku($sku);
         $idStock = $this->reader->getStockTypeIdByName($stockType);
         $stockProductEntity = $this->queryContainer->queryStockProductByStockAndProduct(
             $idStock,
@@ -182,7 +182,7 @@ class Writer implements WriterInterface
     public function incrementStock($sku, $stockType, $incrementBy = 1)
     {
         Propel::getConnection()->beginTransaction();
-        $idProduct = $this->reader->getConcreteProductIdBySku($sku);
+        $idProduct = $this->reader->getProductConcreteIdBySku($sku);
         $idStock = $this->reader->getStockTypeIdByName($stockType);
         $stockProductEntity = $this->queryContainer->queryStockProductByStockAndProduct(
             $idStock,
