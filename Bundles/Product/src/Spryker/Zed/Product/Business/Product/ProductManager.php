@@ -142,7 +142,7 @@ class ProductManager implements ProductManagerInterface
             if (!$productAbstract) {
                 throw new MissingProductException(
                     sprintf(
-                        'Tried to retrieve an abstract product with sku %s, but it does not exist.',
+                        'Tried to retrieve an product abstract with sku %s, but it does not exist.',
                         $sku
                     )
                 );
@@ -166,7 +166,7 @@ class ProductManager implements ProductManagerInterface
         if ($this->hasProductAbstract($sku)) {
             throw new ProductAbstractExistsException(
                 sprintf(
-                    'Tried to create an abstract product with sku %s that already exists',
+                    'Tried to create an product abstract with sku %s that already exists',
                     $sku
                 )
             );
@@ -218,7 +218,7 @@ class ProductManager implements ProductManagerInterface
         if ($this->hasProductAbstractAttributes($idProductAbstract, $locale)) {
             throw new ProductAbstractAttributesExistException(
                 sprintf(
-                    'Tried to create abstract attributes for abstract product %s, locale id %s, but it already exists',
+                    'Tried to create abstract attributes for product abstract %s, locale id %s, but it already exists',
                     $idProductAbstract,
                     $locale->getIdLocale()
                 )
@@ -286,7 +286,7 @@ class ProductManager implements ProductManagerInterface
         if ($this->hasProductConcrete($sku)) {
             throw new ProductConcreteExistsException(
                 sprintf(
-                    'Tried to create a concrete product with sku %s, but it already exists',
+                    'Tried to create a product concrete with sku %s, but it already exists',
                     $sku
                 )
             );
@@ -318,7 +318,7 @@ class ProductManager implements ProductManagerInterface
             if (!$productConcrete) {
                 throw new MissingProductException(
                     sprintf(
-                        'Tried to retrieve a concrete product with sku %s, but it does not exist',
+                        'Tried to retrieve a product concrete with sku %s, but it does not exist',
                         $sku
                     )
                 );
@@ -371,7 +371,7 @@ class ProductManager implements ProductManagerInterface
         if ($this->hasProductConcreteAttributes($idProductConcrete, $locale)) {
             throw new ProductConcreteAttributesExistException(
                 sprintf(
-                    'Tried to create concrete product attributes for product id %s, locale id %s, but they exist',
+                    'Tried to create product concrete attributes for product id %s, locale id %s, but they exist',
                     $idProductConcrete,
                     $locale->getIdLocale()
                 )
@@ -491,7 +491,7 @@ class ProductManager implements ProductManagerInterface
         if (!$productConcrete) {
             throw new MissingProductException(
                 sprintf(
-                    'Tried to retrieve a concrete product with sku %s, but it does not exist.',
+                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
                     $sku
                 )
             );
@@ -540,7 +540,7 @@ class ProductManager implements ProductManagerInterface
         if (!$productConcrete) {
             throw new MissingProductException(
                 sprintf(
-                    'Tried to retrieve a concrete product with sku %s, but it does not exist.',
+                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
                     $concreteSku
                 )
             );
@@ -603,7 +603,7 @@ class ProductManager implements ProductManagerInterface
         if (!$productConcrete) {
             throw new MissingProductException(
                 sprintf(
-                    'Tried to retrieve a concrete product with sku %s, but it does not exist.',
+                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
                     $sku
                 )
             );
@@ -626,7 +626,7 @@ class ProductManager implements ProductManagerInterface
         if (!$productConcrete) {
             throw new MissingProductException(
                 sprintf(
-                    'Tried to retrieve a concrete product with sku %s, but it does not exist.',
+                    'Tried to retrieve a product concrete with sku %s, but it does not exist.',
                     $sku
                 )
             );

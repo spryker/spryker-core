@@ -30,9 +30,9 @@ use Spryker\Zed\Url\Business\UrlFacade;
 class ProductFacadeTest extends Test
 {
 
-    const SKU_PRODUCT_ABSTRACT = 'Abstract product sku';
+    const SKU_PRODUCT_ABSTRACT = 'Product abstract sku';
 
-    const SKU_PRODUCT_CONCRETE = 'Concrete product sku';
+    const SKU_PRODUCT_CONCRETE = 'Product concrete sku';
 
     const TAX_SET_NAME = 'Sales Tax';
 
@@ -40,7 +40,7 @@ class ProductFacadeTest extends Test
 
     const TAX_RATE_PERCENTAGE = 10;
 
-    const PRODUCT_CONCRETE_NAME = 'Concrete product name';
+    const PRODUCT_CONCRETE_NAME = 'Product concrete name';
 
     /**
      * @var ProductFacade

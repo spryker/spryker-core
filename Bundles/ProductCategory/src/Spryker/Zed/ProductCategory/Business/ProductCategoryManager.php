@@ -214,7 +214,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping->delete();
 
             //yes, Active is correct, it should update touch items, not mark them to delete
-            //it's just a change to the mappings and not an actual abstract product
+            //it's just a change to the mappings and not an actual product abstract
             $this->touchProductAbstractActive($idProduct);
         }
     }

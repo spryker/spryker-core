@@ -25,7 +25,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
 
     const CONCRETE_SKU = 'concrete sku';
     const ABSTRACT_SKU = 'abstract sku';
-    const ID_PRODUCT_CONCRETE = 'id concrete product';
+    const ID_PRODUCT_CONCRETE = 'id product concrete';
     const ID_PRODUCT_ABSTRACT = 'id product abstract';
     const PRODUCT_NAME = 'product name';
     const TAX_SET_NAME = 'tax set name';
