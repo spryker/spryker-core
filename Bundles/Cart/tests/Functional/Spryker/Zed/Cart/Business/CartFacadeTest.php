@@ -28,10 +28,10 @@ class CartFacadeTest extends Test
 {
 
     const PRICE_TYPE_DEFAULT = 'DEFAULT';
-    const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
+    const DUMMY_1_SKU_PRODUCT_ABSTRACT = 'ABSTRACT1';
     const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
 
-    const DUMMY_2_SKU_ABSTRACT_PRODUCT = 'ABSTRACT2';
+    const DUMMY_2_SKU_PRODUCT_ABSTRACT = 'ABSTRACT2';
     const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
 
     /**
@@ -198,7 +198,7 @@ class CartFacadeTest extends Test
             ->save();
 
         $abstractProduct1 = SpyProductAbstractQuery::create()
-            ->filterBySku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
+            ->filterBySku(self::DUMMY_1_SKU_PRODUCT_ABSTRACT)
             ->findOneOrCreate();
 
         $abstractProduct1
@@ -226,11 +226,11 @@ class CartFacadeTest extends Test
             ->save();
 
         $abstractProduct2 = SpyProductAbstractQuery::create()
-            ->filterBySku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)
+            ->filterBySku(self::DUMMY_2_SKU_PRODUCT_ABSTRACT)
             ->findOneOrCreate();
 
         $abstractProduct2
-            ->setSku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)
+            ->setSku(self::DUMMY_2_SKU_PRODUCT_ABSTRACT)
             ->setAttributes('{}')
             ->save();
 

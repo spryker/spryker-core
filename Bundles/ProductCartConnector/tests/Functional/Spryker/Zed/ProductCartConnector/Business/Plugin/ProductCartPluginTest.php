@@ -28,7 +28,7 @@ use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 class ProductCartPluginTest extends Test
 {
 
-    const SKU_ABSTRACT_PRODUCT = 'Abstract product sku';
+    const SKU_PRODUCT_ABSTRACT = 'Abstract product sku';
     const SKU_CONCRETE_PRODUCT = 'Concrete product sku';
     const TAX_SET_NAME = 'Sales Tax';
     const TAX_RATE_NAME = 'VAT';
@@ -75,7 +75,7 @@ class ProductCartPluginTest extends Test
         $abstractProductEntity = new SpyProductAbstract();
         $abstractProductEntity->setSpyTaxSet($taxSetEntity)
             ->setAttributes('')
-            ->setSku(self::SKU_ABSTRACT_PRODUCT);
+            ->setSku(self::SKU_PRODUCT_ABSTRACT);
 
         $localizedAttributesEntity = new SpyProductLocalizedAttributes();
         $localizedAttributesEntity->setName(self::CONCRETE_PRODUCT_NAME)
@@ -98,7 +98,7 @@ class ProductCartPluginTest extends Test
 
         $expandedItemTransfer = $changeTransfer->getItems()[0];
 
-        $this->assertEquals(self::SKU_ABSTRACT_PRODUCT, $expandedItemTransfer->getAbstractSku());
+        $this->assertEquals(self::SKU_PRODUCT_ABSTRACT, $expandedItemTransfer->getAbstractSku());
         $this->assertEquals(self::SKU_CONCRETE_PRODUCT, $expandedItemTransfer->getSku());
         $this->assertEquals($abstractProductEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
         $this->assertEquals($concreteProductEntity->getIdProduct(), $expandedItemTransfer->getId());

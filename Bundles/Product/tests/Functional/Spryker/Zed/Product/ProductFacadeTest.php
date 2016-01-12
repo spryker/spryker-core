@@ -30,7 +30,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
 class ProductFacadeTest extends Test
 {
 
-    const SKU_ABSTRACT_PRODUCT = 'Abstract product sku';
+    const SKU_PRODUCT_ABSTRACT = 'Abstract product sku';
 
     const SKU_CONCRETE_PRODUCT = 'Concrete product sku';
 
@@ -302,7 +302,7 @@ class ProductFacadeTest extends Test
         $this->assertFalse($this->productFacade->hasConcreteProduct(self::SKU_CONCRETE_PRODUCT));
 
         $abstractProduct = new AbstractProductTransfer();
-        $abstractProduct->setSku(self::SKU_ABSTRACT_PRODUCT);
+        $abstractProduct->setSku(self::SKU_PRODUCT_ABSTRACT);
         $abstractProduct->setAttributes([]);
         $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
@@ -317,7 +317,7 @@ class ProductFacadeTest extends Test
 
         $this->assertTrue($this->productFacade->hasConcreteProduct(self::SKU_CONCRETE_PRODUCT));
 
-        $this->assertEquals($this->productFacade->getAbstractSkuFromConcreteProduct(self::SKU_CONCRETE_PRODUCT), self::SKU_ABSTRACT_PRODUCT);
+        $this->assertEquals($this->productFacade->getAbstractSkuFromConcreteProduct(self::SKU_CONCRETE_PRODUCT), self::SKU_PRODUCT_ABSTRACT);
     }
 
     /**
@@ -341,7 +341,7 @@ class ProductFacadeTest extends Test
         $abstractProductEntity = new SpyProductAbstract();
         $abstractProductEntity->setSpyTaxSet($taxSetEntity)
             ->setAttributes('')
-            ->setSku(self::SKU_ABSTRACT_PRODUCT);
+            ->setSku(self::SKU_PRODUCT_ABSTRACT);
 
         $localizedAttributesEntity = new SpyProductLocalizedAttributes();
         $localizedAttributesEntity->setName(self::CONCRETE_PRODUCT_NAME)
@@ -358,7 +358,7 @@ class ProductFacadeTest extends Test
         $concreteProductTransfer = $this->productFacade->getConcreteProduct($concreteProductEntity->getSku());
         $this->assertEquals(self::CONCRETE_PRODUCT_NAME, $concreteProductTransfer->getName());
         $this->assertEquals(self::SKU_CONCRETE_PRODUCT, $concreteProductTransfer->getSku());
-        $this->assertEquals(self::SKU_ABSTRACT_PRODUCT, $concreteProductTransfer->getAbstractProductSku());
+        $this->assertEquals(self::SKU_PRODUCT_ABSTRACT, $concreteProductTransfer->getAbstractProductSku());
         $this->assertEquals($concreteProductEntity->getIdProduct(), $concreteProductTransfer->getIdConcreteProduct());
         $this->assertEquals($abstractProductEntity->getIdProductAbstract(), $concreteProductTransfer->getIdProductAbstract());
 

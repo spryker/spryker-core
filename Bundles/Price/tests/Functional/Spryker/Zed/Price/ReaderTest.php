@@ -25,7 +25,7 @@ class ReaderTest extends Test
 
     const DUMMY_PRICE_TYPE_1 = 'TYPE1';
     const DUMMY_PRICE_TYPE_2 = 'TYPE2';
-    const DUMMY_SKU_ABSTRACT_PRODUCT = 'ABSTRACT';
+    const DUMMY_SKU_PRODUCT_ABSTRACT = 'ABSTRACT';
     const DUMMY_SKU_CONCRETE_PRODUCT = 'CONCRETE';
     const DUMMY_PRICE_1 = 99;
     const DUMMY_PRICE_2 = 100;
@@ -82,7 +82,7 @@ class ReaderTest extends Test
      */
     public function testHasValidPriceTrue()
     {
-        $hasValidPrice = $this->priceFacade->hasValidPrice(self::DUMMY_SKU_ABSTRACT_PRODUCT, self::DUMMY_PRICE_TYPE_1);
+        $hasValidPrice = $this->priceFacade->hasValidPrice(self::DUMMY_SKU_PRODUCT_ABSTRACT, self::DUMMY_PRICE_TYPE_1);
         $this->assertTrue($hasValidPrice);
     }
 
@@ -100,7 +100,7 @@ class ReaderTest extends Test
      */
     public function testGetPriceForAbstractProduct()
     {
-        $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT, self::DUMMY_PRICE_TYPE_1);
+        $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_PRODUCT_ABSTRACT, self::DUMMY_PRICE_TYPE_1);
         $this->assertEquals(100, $price);
     }
 
@@ -109,7 +109,7 @@ class ReaderTest extends Test
      */
     public function testGetPrice()
     {
-        $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT, self::DUMMY_PRICE_TYPE_1);
+        $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_PRODUCT_ABSTRACT, self::DUMMY_PRICE_TYPE_1);
         $this->assertEquals(100, $price);
     }
 
@@ -162,14 +162,14 @@ class ReaderTest extends Test
         $priceType2->setName(self::DUMMY_PRICE_TYPE_2)->save();
 
         $abstractProduct = SpyProductAbstractQuery::create()
-            ->filterBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT)
+            ->filterBySku(self::DUMMY_SKU_PRODUCT_ABSTRACT)
             ->findOne();
 
         if ($abstractProduct === null) {
             $abstractProduct = new SpyProductAbstract();
         }
 
-        $abstractProduct->setSku(self::DUMMY_SKU_ABSTRACT_PRODUCT)
+        $abstractProduct->setSku(self::DUMMY_SKU_PRODUCT_ABSTRACT)
             ->setAttributes('{}')
             ->save();
 
