@@ -28,7 +28,6 @@ class ProductOptionOrderSaver
                 $salesOrderItemOptionEntity->fromArray($productOptionTransfer->toArray());
 
                 $salesOrderItemOptionEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
-                $salesOrderItemOptionEntity->setTaxPercentage($productOptionTransfer->getTaxRate());
 
                 $salesOrderItemOptionEntity->save();
 

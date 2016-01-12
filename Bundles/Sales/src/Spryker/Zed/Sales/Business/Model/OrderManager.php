@@ -145,7 +145,6 @@ class OrderManager
             $salesOrderItemEntity = $this->createSalesOrderItemEntity();
             $this->hydrateSalesOrderItemEntity($salesOrderEntity, $omsOrderProcessEntity, $salesOrderItemEntity, $itemTransfer);
             $salesOrderItemEntity->setGrossPrice($itemTransfer->getUnitGrossPriceWithProductOptions());
-            $salesOrderItemEntity->setPriceToPay($itemTransfer->getUnitGrossPriceWithProductOptions());
             $salesOrderItemEntity->save();
 
             $orderItemTransfer = clone $itemTransfer;
@@ -291,7 +290,6 @@ class OrderManager
         );
 
         $salesOrderItemEntity->setProcess($omsOrderProcessEntity);
-        $salesOrderItemEntity->setTaxPercentage($item->getTaxRate());
     }
 
     /**
@@ -346,7 +344,9 @@ class OrderManager
     protected function hydrateSalesOrderAddress(AddressTransfer $addresTransfer, SpySalesOrderAddress $salesOrderAddressEntity)
     {
         $salesOrderAddressEntity->fromArray($addresTransfer->toArray());
-        $salesOrderAddressEntity->setFkCountry($this->countryFacade->getIdCountryByIso2Code($addresTransfer->getIso2Code()));
+        $salesOrderAddressEntity->setFkCountry(
+            $this->countryFacade->getIdCountryByIso2Code($addresTransfer->getIso2Code())
+        );
     }
 
     /**

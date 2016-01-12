@@ -32,7 +32,6 @@
                 <th>{{ "SKU" | trans }}</th>
                 <th>{{ 'qty' | trans }}</th>
                 <th>{{ "Gross price" | trans }}</th>
-                <th>{{ "Price to pay" | trans }}</th>
                 <th>{{ "Current state" | trans }}</th>
                 <th>{{ "History" | trans }}</th>
                 <th>{{ "Trigger event" | trans }}</th>
@@ -46,7 +45,6 @@
                     <td>{{ orderItem.Sku }}</td>
                     <td><a href="javascript:void(0);" onclick="$('#split_form_row_{{ orderItem.IdSalesOrderItem }}').toggle();">{{ orderItem.quantity }}</a></td>
                     <td>{{ orderItem.GrossPrice | currency }}</td>
-                    <td>{{ orderItem.PriceToPay | currency }}</td>
                     <td>{{ orderItem.State.Name }}</td>
                     <td>
                         {% for stateHistory in orderItem.StateHistories | slice(0, 3) %}

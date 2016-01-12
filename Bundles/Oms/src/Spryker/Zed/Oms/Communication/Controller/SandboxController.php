@@ -156,17 +156,14 @@ class SandboxController extends AbstractController
         $orderItem->setState($state);
         $orderItem->setProcess($process);
         $orderItem->setGrossPrice($price);
-        $orderItem->setPriceToPay($price);
         $orderItem->setSku($sku);
         $orderItem->setName('Answering Machine');
         $orderItem->save();
 
         $orderExpense = new SpySalesExpense();
         $orderExpense->setFkSalesOrder($order->getIdSalesOrder());
-        $orderExpense->setFkSalesOrderItem($orderItem->getIdSalesOrderItem());
         $orderExpense->setType('sale');
         $orderExpense->setName('Expense Demo');
-        $orderExpense->setPriceToPay($price);
         $orderExpense->setGrossPrice($price);
         $orderExpense->save();
     }

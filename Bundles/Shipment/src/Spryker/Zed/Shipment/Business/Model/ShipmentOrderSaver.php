@@ -71,8 +71,6 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     ) {
         $salesOrderExpenseEntity->fromArray($expenseTransfer->toArray());
         $salesOrderExpenseEntity->setGrossPrice($expenseTransfer->getUnitGrossPrice());
-        $salesOrderExpenseEntity->setPriceToPay($expenseTransfer->getUnitGrossPrice());
-        $salesOrderExpenseEntity->setTaxPercentage($expenseTransfer->getTaxRate());
     }
 
 }

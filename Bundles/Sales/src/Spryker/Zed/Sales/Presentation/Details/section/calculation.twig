@@ -16,14 +16,13 @@
                         {% for orderItemOption in orderItem.options %}
                             <tr>
                                 <td> + {{ orderItemOption.LabelOptionType }}</td>
-                                <td class="text-right">{{ orderItemOption.PriceToPay | currency  }}</td>
+                                <td class="text-right">{{ orderItemOption.grossPrice | currency  }}</td>
                                 <td>{{ 'option price' | trans }}</td>
                             </tr>
                         {% endfor %}
                         <tr>
                             <th>&nbsp;</th>
-                            <td class="text-right">{{ orderItem.Quantity }} x {{ orderItem.PriceToPay | currency  }}</td>
-                            <td>{{ 'price to pay' | trans }}</td>
+                            <td class="text-right">{{ orderItem.Quantity }} x {{ orderItem.grossPrice | currency  }}</td>
                         </tr>
                     {% endfor %}
                     <tr>

@@ -97,8 +97,6 @@ class Dummy implements DummyInterface
             $item->setName('Testproduct');
             $item->setSku('12345ABC');
             $item->setGrossPrice(10);
-            $item->setPriceToPay(5);
-            $item->setVariety('Single');
 
             $orders[$orderItemArray['orderId']]->addItem($item);
 

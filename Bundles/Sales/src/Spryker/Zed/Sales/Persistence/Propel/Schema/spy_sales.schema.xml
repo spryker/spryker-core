@@ -112,8 +112,8 @@
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" description="/price for one unit including tax, without shipping, coupons/"/>
-        <column name="price_to_pay" type="INTEGER" required="true" description="/value that the customer has to pay./"/>
-        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="false"/>
+        <column name="canceled_amount" type="INTEGER" required="true" default="0"/>
+        <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="false"/>
         <column name="quantity" type="INTEGER" unsigned="true" default="1" required="true" description="/Quantity ordered for item/"/>
         <column name="group_key" type="VARCHAR" size="255" required="false" description=""/>
 
@@ -143,8 +143,8 @@
         <column name="label_option_type" type="VARCHAR" required="true"/>
         <column name="label_option_value" type="VARCHAR" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" default="0"/>
-        <column name="price_to_pay" type="INTEGER" required="true" default="0"/>
-        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="true"/>
+        <column name="canceled_amount" type="INTEGER" required="true" default="0"/>
+        <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="true"/>
 
         <behavior name="timestampable"/>
 
@@ -191,8 +191,7 @@
         <column name="type" type="VARCHAR" size="150"/>
         <column name="name" type="VARCHAR" size="255"/>
         <column name="gross_price" type="INTEGER" required="true"/>
-        <column name="price_to_pay" type="INTEGER" required="true"/>
-        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="false"/>
+        <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="false"/>
 
         <behavior name="timestampable"/>
 
@@ -261,8 +260,7 @@
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" description="/price for one unit including tax, without shipping, coupons/"/>
-        <column name="price_to_pay" type="INTEGER" required="true" description="/value that the customer has to pay./"/>
-        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="false"/>
+        <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="false"/>
         <column name="bundle_type" type="ENUM" valueSet="NonSplitBundle, SplitBundle" required="true"/>
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_sales_order_item_bundle_pk_seq"/>
@@ -275,7 +273,7 @@
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true"/>
-        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="false"/>
+        <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="false"/>
         <column name="variety" type="ENUM" valueSet="Single, Config, Simple, Bundle" required="true"/>
         <behavior name="timestampable"/>
         <foreign-key name="spy_sales_order_item_bundle_item-fk_sales_order_item_bundle" foreignTable="spy_sales_order_item_bundle" phpName="SalesOrderItemBundle" refPhpName="SalesOrderItemBundleItem">
