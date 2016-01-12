@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace Spryker\Shared\Currency;
+namespace Spryker\Shared\Library\Currency;
 
 interface CurrencyConstants
 {

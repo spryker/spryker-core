@@ -9,6 +9,10 @@ namespace Spryker\Shared\EventJournal;
 interface EventJournalConstants
 {
 
+    const TYPE = 'file';
+
+    const OPTION_LOG_PATH = 'log_path';
+
     const WRITERS = 'EVENT_JOURNAL_WRITERS';
 
     const COLLECTORS = 'EVENT_JOURNAL_COLLECTORS';
@@ -20,5 +24,9 @@ interface EventJournalConstants
     const COLLECTOR_OPTIONS = 'EVENT_JOURNAL_COLLECTOR_OPTIONS';
 
     const FILTER_OPTIONS = 'EVENT_JOURNAL_FILTER_OPTIONS';
+
+    const LOCK_OPTIONS = 'LOCK_OPTIONS';
+
+    const NO_LOCK = 'NO_LOCK';
 
 }

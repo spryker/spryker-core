@@ -6,13 +6,13 @@
 
 namespace Spryker\Shared\EventJournal\Model\Writer;
 
+use Spryker\Shared\Config;
+use Spryker\Shared\EventJournal\EventJournalConstants;
 use Spryker\Shared\EventJournal\Model\EventInterface;
+use Spryker\Shared\Library\DataDirectory;
 
 class File extends AbstractWriter
 {
-
-    const TYPE = 'file';
-    const OPTION_LOG_PATH = 'log_path';
 
     /**
      * @var resource[]
@@ -61,6 +61,14 @@ class File extends AbstractWriter
     {
         for ($i = 0; $i <= 9; $i++) {
             $handle = $this->getOrCreateRandomFileHandle();
+            $config = Config::get(EventJournalConstants::LOCK_OPTIONS);
+            if (!empty($config[EventJournalConstants::NO_LOCK])) {
+                self::$preferredHandle = $handle;
+                fwrite($handle, $content);
+
+                return true;
+            }
+
             if ($this->acquireNonBlockingLock($handle)) {
                 self::$preferredHandle = $handle;
                 fwrite($handle, $content);
@@ -112,7 +120,10 @@ class File extends AbstractWriter
      */
     protected function getLogPath()
     {
-        return $this->options[self::OPTION_LOG_PATH];
+        if (!isset($this->options[EventJournalConstants::OPTION_LOG_PATH])) {
+            return DataDirectory::getLocalCommonPath('event_journal');
+        }
+        return $this->options[EventJournalConstants::OPTION_LOG_PATH];
     }
 
     /**
