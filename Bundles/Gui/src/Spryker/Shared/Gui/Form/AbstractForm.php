@@ -6,28 +6,15 @@
 
 namespace Spryker\Shared\Gui\Form;
 
-use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 abstract class AbstractForm implements FormTypeInterface
 {
-
-    /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
-     * @var ConstraintsPlugin
-     */
-    protected $constraintsPlugin;
 
     /**
      * Builds the form.
@@ -67,18 +54,6 @@ abstract class AbstractForm implements FormTypeInterface
     }
 
     /**
-     * @return ConstraintsPlugin
-     */
-    public function getConstraints()
-    {
-        if ($this->constraintsPlugin === null) {
-            $this->constraintsPlugin = new ConstraintsPlugin();
-        }
-
-        return $this->constraintsPlugin;
-    }
-
-    /**
      * @param array $array
      *
      * @return array
@@ -86,28 +61,6 @@ abstract class AbstractForm implements FormTypeInterface
     public function getEnumSet(array $array)
     {
         return array_combine($array, $array);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return void
-     */
-    public function setRequest($request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     * @return Request
-     */
-    protected function getRequest()
-    {
-        if ($this->request === null) {
-            $this->request = (new Pimple())->getApplication()['request'];
-        }
-
-        return $this->request;
     }
 
     /**

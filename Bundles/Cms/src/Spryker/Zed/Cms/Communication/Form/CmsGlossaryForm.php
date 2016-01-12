@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Symfony\Component\Form\FormBuilderInterface;

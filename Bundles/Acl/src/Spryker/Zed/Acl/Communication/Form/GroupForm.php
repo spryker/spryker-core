@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Acl\Communication\Controller\GroupController;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Symfony\Component\Form\FormBuilderInterface;

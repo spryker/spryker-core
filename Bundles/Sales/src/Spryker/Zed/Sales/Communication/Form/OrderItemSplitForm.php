@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Sales\Communication\Form;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 

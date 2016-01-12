@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Auth\Communication\Form;
 
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class LoginForm extends AbstractForm
