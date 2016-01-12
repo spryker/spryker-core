@@ -8,6 +8,7 @@
         <property name="fkSalesOrder" type="int" />
         <property name="accountBrand" type="string" />
         <property name="clientIp" type="string" />
+        <property name="email" type="string"/>
         <property name="gender" type="string"/>
         <property name="dateOfBirth" type="string"/>
         <property name="languageIso2Code" type="string"/>

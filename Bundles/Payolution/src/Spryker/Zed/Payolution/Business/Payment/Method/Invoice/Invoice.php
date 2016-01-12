@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Invoice;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
@@ -76,7 +75,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
                 ApiConstants::ADDRESS_ZIP => $addressTransfer->getZipCode(),
                 ApiConstants::ADDRESS_CITY => $addressTransfer->getCity(),
                 ApiConstants::ADDRESS_COUNTRY => $addressTransfer->getIso2Code(),
-                ApiConstants::CONTACT_EMAIL => $addressTransfer->getEmail(),
+                ApiConstants::CONTACT_EMAIL => $payolutionTransfer->getEmail(),
                 ApiConstants::CONTACT_PHONE => $addressTransfer->getPhone(),
                 ApiConstants::CONTACT_MOBILE => $addressTransfer->getCellPhone(),
                 ApiConstants::CONTACT_IP => $payolutionTransfer->getClientIp(),

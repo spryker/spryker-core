@@ -150,7 +150,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::ADDRESS_ZIP => $addressTransfer->getZipCode(),
                 ApiConstants::ADDRESS_CITY => $addressTransfer->getCity(),
                 ApiConstants::ADDRESS_COUNTRY => $addressTransfer->getIso2Code(),
-                ApiConstants::CONTACT_EMAIL => $addressTransfer->getEmail(),
+                ApiConstants::CONTACT_EMAIL => $payolutionTransfer->getEmail(),
                 ApiConstants::CONTACT_PHONE => $addressTransfer->getPhone(),
                 ApiConstants::CONTACT_MOBILE => $addressTransfer->getCellPhone(),
                 ApiConstants::CONTACT_IP => $payolutionTransfer->getClientIp(),
