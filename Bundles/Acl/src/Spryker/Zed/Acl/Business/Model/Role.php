@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RolesTransfer;
+use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Orm\Zed\Acl\Persistence\SpyAclRole;
@@ -71,7 +72,7 @@ class Role implements RoleInterface
         $aclRoleEntity = new SpyAclRole();
         if (!empty($roleTransfer->getIdAclRole())) {
             $aclRoleEntity = $this->queryContainer->queryRoleById($roleTransfer->getIdAclRole())->findOne();
-            if ($aclRoleEntity->getName() === AclConfig::ROOT_ROLE) {
+            if ($aclRoleEntity->getName() === AclConstants::ROOT_ROLE) {
                 throw new RootNodeModificationException('Could not modify root role node!');
             }
         }

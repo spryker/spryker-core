@@ -6,19 +6,18 @@
 
 namespace Spryker\Zed\Price;
 
+use Spryker\Shared\Price\PriceConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceConfig extends AbstractBundleConfig
 {
-
-    const DEFAULT_PRICE_TYPE = 'DEFAULT';
 
     /**
      * @return string
      */
     public function getPriceTypeDefaultName()
     {
-        return self::DEFAULT_PRICE_TYPE;
+        return PriceConstants::DEFAULT_PRICE_TYPE;
     }
 
 }

@@ -113,9 +113,9 @@ class VoucherPoolTable extends AbstractTable
     protected function getEditUrl(SpyDiscountVoucherPool $discountVoucherPool)
     {
         return Url::generate(
-            DiscountConfig::URL_DISCOUNT_POOL_EDIT,
+            DiscountConstants::URL_DISCOUNT_POOL_EDIT,
             [
-                DiscountConfig::PARAM_ID_POOL => $discountVoucherPool->getIdDiscountVoucherPool(),
+                DiscountConstants::PARAM_ID_POOL => $discountVoucherPool->getIdDiscountVoucherPool(),
             ]
         );
     }

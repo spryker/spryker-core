@@ -9,10 +9,6 @@ namespace Spryker\Shared\Library\Currency;
 interface CurrencyInterface
 {
 
-    const PLACEHOLDER_VALUE = '{v}';
-
-    const PLACEHOLDER_SYMBOL = '{s}';
-
     public function getIsoCode();
 
     public function getSymbol();

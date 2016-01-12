@@ -111,7 +111,7 @@ class DiscountsTable extends AbstractTable
      */
     protected function getDiscountAmountType(SpyDiscount $discount)
     {
-        if ($discount->getCalculatorPlugin() === DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE) {
+        if ($discount->getCalculatorPlugin() === DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE) {
             return 'percentage';
         }
 

@@ -110,7 +110,7 @@ class Auth implements AuthInterface
      */
     protected function getSessionKey($token)
     {
-        return sprintf(AuthConfig::AUTH_CURRENT_USER_KEY, AuthConfig::AUTH_SESSION_KEY, $token);
+        return sprintf(AuthConstants::AUTH_CURRENT_USER_KEY, AuthConstants::AUTH_SESSION_KEY, $token);
     }
 
     /**
@@ -315,9 +315,9 @@ class Auth implements AuthInterface
     {
         $ignorable = $this->authConfig->getIgnorable();
         foreach ($ignorable as $ignore) {
-            if (($bundle === $ignore['bundle'] || $ignore['bundle'] === AuthConfig::AUTHORIZATION_WILDCARD) &&
-                ($controller === $ignore['controller'] || $ignore['controller'] === AuthConfig::AUTHORIZATION_WILDCARD) &&
-                ($action === $ignore['action'] || $ignore['action'] === AuthConfig::AUTHORIZATION_WILDCARD)
+            if (($bundle === $ignore['bundle'] || $ignore['bundle'] === AuthConstants::AUTHORIZATION_WILDCARD) &&
+                ($controller === $ignore['controller'] || $ignore['controller'] === AuthConstants::AUTHORIZATION_WILDCARD) &&
+                ($action === $ignore['action'] || $ignore['action'] === AuthConstants::AUTHORIZATION_WILDCARD)
             ) {
                 return true;
             }

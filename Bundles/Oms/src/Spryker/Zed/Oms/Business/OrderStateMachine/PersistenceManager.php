@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use Propel\Runtime\Exception\PropelException;
+use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\OmsConfig;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
@@ -77,7 +78,7 @@ class PersistenceManager implements PersistenceManagerInterface
      */
     public function getInitialStateEntity()
     {
-        return $this->getStateEntity(OmsConfig::INITIAL_STATUS);
+        return $this->getStateEntity(OmsConstants::INITIAL_STATUS);
     }
 
 }

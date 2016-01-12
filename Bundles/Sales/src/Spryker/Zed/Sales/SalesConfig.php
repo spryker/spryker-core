@@ -14,8 +14,6 @@ use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 class SalesConfig extends AbstractBundleConfig
 {
 
-    const NAME_ORDER_REFERENCE = 'OrderReference';
-
     /**
      * @return string
      */

@@ -13,10 +13,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 interface DiscountConfigInterface
 {
 
-    const KEY_VOUCHER_CODE_CONSONANTS = 'consonants';
-    const KEY_VOUCHER_CODE_VOWELS = 'vowels';
-    const KEY_VOUCHER_CODE_NUMBERS = 'numbers';
-
     /**
      * @throws \ErrorException
      *

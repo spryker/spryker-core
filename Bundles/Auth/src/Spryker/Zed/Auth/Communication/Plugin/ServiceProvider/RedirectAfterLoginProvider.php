@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Auth\Communication\Plugin\ServiceProvider;
 
+use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -105,8 +106,8 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
             $token = $facadeAuth->getCurrentUserToken();
         }
 
-        if ($request->headers->get(AuthConfig::AUTH_TOKEN)) {
-            $token = $request->headers->get(AuthConfig::AUTH_TOKEN);
+        if ($request->headers->get(AuthConstants::AUTH_TOKEN)) {
+            $token = $request->headers->get(AuthConstants::AUTH_TOKEN);
         }
 
         if (!$facadeAuth->isAuthenticated($token)) {

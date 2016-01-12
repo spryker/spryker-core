@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Kernel\Communication\Plugin;
 
+use Spryker\Shared\Messenger\MessengerConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\ZedRequest\Client\Message;
@@ -41,7 +42,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
         $newController = function () use ($controller, $action) {
 
-            MessengerConfig::setMessageTray(MessengerConfig::IN_MEMORY_TRAY);
+            MessengerConfig::setMessageTray(MessengerConstants::IN_MEMORY_TRAY);
 
             $requestTransfer = $this->getRequestTransfer($controller, $action);
             $result = $controller->$action($requestTransfer->getTransfer(), $requestTransfer);
@@ -59,8 +60,9 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      * @param AbstractGatewayController $controller
      * @param string $action
      *
-     * @return Request
      * @throw \LogicException
+     *
+     * @return Request
      */
     private function getRequestTransfer(AbstractGatewayController $controller, $action)
     {

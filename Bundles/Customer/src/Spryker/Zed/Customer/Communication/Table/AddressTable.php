@@ -7,6 +7,7 @@ namespace Spryker\Zed\Customer\Communication\Table;
 
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
+use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -143,8 +144,8 @@ class AddressTable extends AbstractTable
             : null;
 
         if ($idCustomerAddress !== null) {
-            $buttons[] = $this->generateEditButton(sprintf('/customer/address/edit/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'Edit');
-            $buttons[] = $this->generateViewButton(sprintf('/customer/address/view/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'View');
+            $buttons[] = $this->generateEditButton(sprintf('/customer/address/edit/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'Edit');
+            $buttons[] = $this->generateViewButton(sprintf('/customer/address/view/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'View');
         }
 
         return implode(' ', $buttons);

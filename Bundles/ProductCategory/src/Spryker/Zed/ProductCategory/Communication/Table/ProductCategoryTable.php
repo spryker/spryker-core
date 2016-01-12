@@ -7,6 +7,7 @@ namespace Spryker\Zed\ProductCategory\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -46,7 +47,7 @@ class ProductCategoryTable extends AbstractTable
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->locale = $locale;
         $this->idCategory = $idCategory;
-        $this->defaultUrl = sprintf('product-category-table?%s=%d', ProductCategoryConfig::PARAM_ID_CATEGORY, $this->idCategory);
+        $this->defaultUrl = sprintf('product-category-table?%s=%d', ProductCategoryConstants::PARAM_ID_CATEGORY, $this->idCategory);
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 
@@ -114,7 +115,7 @@ class ProductCategoryTable extends AbstractTable
     protected function getProductOptionsComboBoxItems($productCategory)
     {
         $preConfigQuery = $this->productCategoryQueryContainer
-            ->queryProductCategoryPreconfig($this->idCategory, $productCategory['id_product_abstract'])
+            ->queryProductCategoryPreConfig($this->idCategory, $productCategory['id_product_abstract'])
             ->orderByFormat();
 
         $preconfigItems = $preConfigQuery->find();

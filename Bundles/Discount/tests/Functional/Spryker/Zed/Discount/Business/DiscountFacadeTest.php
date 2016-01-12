@@ -153,10 +153,10 @@ class DiscountFacadeTest extends Test
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_6);
         $discount = $this->initializeDiscount(
             'TEST-DISCOUNT',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             self::DISCOUNT_AMOUNT_PERCENTAGE_50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM
         );
 
         $discount->setVoucherPool($voucherPool);
@@ -176,10 +176,10 @@ class DiscountFacadeTest extends Test
     {
         $discount = $this->initializeDiscount(
             self::DISCOUNT_NAME_MINIMUM_CART_SUBTOTAL,
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             self::DISCOUNT_AMOUNT_PERCENTAGE_50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM
         );
 
         $decisionRule = new SpyDiscountDecisionRule();
@@ -187,7 +187,7 @@ class DiscountFacadeTest extends Test
             ->setName(self::DECISION_RULE_MINIMUM_CART_SUBTOTAL_AMOUNT)
             ->setValue(self::MINIMUM_CART_AMOUNT_1000)
             ->setDiscount($discount)
-            ->setDecisionRulePlugin(DiscountConfig::PLUGIN_DECISION_RULE_VOUCHER)
+            ->setDecisionRulePlugin(DiscountConstants::PLUGIN_DECISION_RULE_VOUCHER)
             ->save();
 
         $order = $this->getOrderWithFixtureData();

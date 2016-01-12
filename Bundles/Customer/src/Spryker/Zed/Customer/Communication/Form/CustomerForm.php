@@ -4,8 +4,8 @@ namespace Spryker\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
-use Spryker\Zed\Customer\CustomerConfig;
+use Spryker\Shared\Customer\CustomerConstants;
+use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,7 +42,7 @@ class CustomerForm extends AbstractForm
      */
     public function populateFormFields()
     {
-        $idCustomer = $this->getRequest()->query->getInt(CustomerConfig::PARAM_ID_CUSTOMER);
+        $idCustomer = $this->getRequest()->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
         $customerTransfer = $this->getDataClass();
 
         if (empty($idCustomer)) {
