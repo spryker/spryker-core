@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Business\Model;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\AddressTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -259,7 +260,7 @@ class OrderManager
     /**
      * @param OrderListTransfer $orderListTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     * @return SpySalesOrderQuery
      */
     protected function createOrderListQuery(OrderListTransfer $orderListTransfer)
     {

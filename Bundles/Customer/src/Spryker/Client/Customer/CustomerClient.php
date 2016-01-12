@@ -81,11 +81,11 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @return CustomerResponseTransfer
      *
-     * @deprecated Use forgottenPassword() instead
+     * @deprecated Use sendPasswordRestoreMail() instead
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
-        return $this->forgottenPassword($customerTransfer);
+        return $this->sendPasswordRestoreMail($customerTransfer);
     }
 
     /**
@@ -93,11 +93,11 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @return CustomerResponseTransfer
      */
-    public function forgottenPassword(CustomerTransfer $customerTransfer)
+    public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer)
     {
         return $this->getFactory()
             ->createZedCustomerStub()
-            ->forgottenPassword($customerTransfer);
+            ->sendPasswordRestoreMail($customerTransfer);
     }
 
     /**

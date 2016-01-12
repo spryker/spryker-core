@@ -49,11 +49,11 @@ class GatewayController extends AbstractGatewayController
      *
      * @return CustomerResponseTransfer
      *
-     * @deprecated Use forgottenPasswordAction() instead.
+     * @deprecated Use sendPasswordRestoreMailAction() instead.
      */
     public function forgotPasswordAction(CustomerTransfer $customerTransfer)
     {
-        return $this->forgottenPasswordAction($customerTransfer);
+        return $this->sendPasswordRestoreMailAction($customerTransfer);
     }
 
     /**
@@ -61,10 +61,10 @@ class GatewayController extends AbstractGatewayController
      *
      * @return CustomerResponseTransfer
      */
-    public function forgottenPasswordAction(CustomerTransfer $customerTransfer)
+    public function sendPasswordRestoreMailAction(CustomerTransfer $customerTransfer)
     {
         return $this->getFacade()
-            ->forgottenPassword($customerTransfer);
+            ->sendPasswordRestoreMail($customerTransfer);
     }
 
     /**

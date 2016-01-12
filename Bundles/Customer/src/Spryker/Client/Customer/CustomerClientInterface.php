@@ -47,7 +47,7 @@ interface CustomerClientInterface
      *
      * @return CustomerTransfer
      *
-     * @deprecated Use forgottenPassword() instead
+     * @deprecated Use sendPasswordRestoreMail() instead
      */
     public function forgotPassword(CustomerTransfer $customerTransfer);
 
@@ -56,7 +56,7 @@ interface CustomerClientInterface
      *
      * @return CustomerResponseTransfer
      */
-    public function forgottenPassword(CustomerTransfer $customerTransfer);
+    public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer

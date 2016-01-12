@@ -175,7 +175,7 @@ class CustomerFacadeTest extends Test
         $customerTransfer = $this->createTestCustomerTransfer();
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
         $customerTransfer = $this->customerFacade->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
-        $customerResponseTransfer = $this->customerFacade->forgottenPassword($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->sendPasswordRestoreMail($customerTransfer);
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
     }
 
@@ -186,7 +186,7 @@ class CustomerFacadeTest extends Test
         $customerTransfer = $this->createTestCustomerTransfer();
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
         $customerTransfer = $this->customerFacade->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
-        $this->customerFacade->forgottenPassword($customerTransfer);
+        $this->customerFacade->sendPasswordRestoreMail($customerTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
         $customerResponseTransfer = $this->customerFacade->restorePassword($customerTransfer);
         $this->assertTrue($customerResponseTransfer->getIsSuccess());

@@ -263,7 +263,7 @@ class Customer
      *
      * @return CustomerResponseTransfer
      */
-    public function forgottenPassword(CustomerTransfer $customerTransfer)
+    public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer)
     {
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
 
