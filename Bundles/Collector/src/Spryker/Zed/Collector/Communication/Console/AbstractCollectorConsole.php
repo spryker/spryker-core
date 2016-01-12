@@ -27,6 +27,7 @@ abstract class AbstractCollectorConsole extends Console
 
         $summary = PHP_EOL;
 
+        ksort($resultData);
         foreach ($resultData as $type => $result) {
             $summary .= sprintf(
                 '<fg=green>%s</fg=green><fg=yellow> </fg=yellow><fg=yellow></fg=yellow>' . PHP_EOL .
@@ -65,7 +66,7 @@ abstract class AbstractCollectorConsole extends Console
             $summary .= $this->buildSummary($summaryData);
         }
 
-        $summary .= PHP_EOL . 'Export finished.' . PHP_EOL;
+        $summary .= PHP_EOL . 'All done.' . PHP_EOL;
 
         return $summary;
     }
