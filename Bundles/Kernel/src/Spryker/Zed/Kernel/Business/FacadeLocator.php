@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Kernel\Business;
 
 use Spryker\Shared\Kernel\AbstractLocator;
-use Spryker\Shared\Kernel\Locator\LocatorException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 
 class FacadeLocator extends AbstractLocator
@@ -38,9 +37,9 @@ class FacadeLocator extends AbstractLocator
     /**
      * @param string $bundle
      *
-     * @throws LocatorException
+     * @throws FacadeNotFoundException
      *
-     * @return object
+     * @return AbstractFacade
      */
     public function locate($bundle)
     {

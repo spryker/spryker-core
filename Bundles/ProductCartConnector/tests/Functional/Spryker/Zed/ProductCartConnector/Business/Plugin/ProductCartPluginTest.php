@@ -6,10 +6,10 @@
 
 namespace Functional\Spryker\Zed\ProductCartConnector\Business\Plugin;
 
+use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
@@ -25,19 +25,14 @@ use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
  * @group Business
  * @group ProductCartPlugin
  */
-class ProductCartPluginTest extends AbstractFunctionalTest
+class ProductCartPluginTest extends Test
 {
 
     const SKU_ABSTRACT_PRODUCT = 'Abstract product sku';
-
     const SKU_CONCRETE_PRODUCT = 'Concrete product sku';
-
     const TAX_SET_NAME = 'Sales Tax';
-
     const TAX_RATE_NAME = 'VAT';
-
     const TAX_RATE_PERCENTAGE = 10;
-
     const CONCRETE_PRODUCT_NAME = 'Concrete product name';
 
     /**
@@ -58,7 +53,7 @@ class ProductCartPluginTest extends AbstractFunctionalTest
         parent::setUp();
 
         $this->localeFacade = new LocaleFacade();
-        $this->productCartConnectorFacade = $this->getFacade();
+        $this->productCartConnectorFacade = new ProductCartConnectorFacade();
     }
 
     /**

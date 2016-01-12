@@ -6,7 +6,7 @@
 
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Transfer\Business\TransferFacade;
 use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Finder\Finder;
@@ -34,7 +34,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
      */
     private function getMessenger()
     {
-        return $this->getMock('Spryker\Shared\Kernel\Messenger\MessengerInterface');
+        return $this->getMock(MessengerInterface::class);
     }
 
     /**

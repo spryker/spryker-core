@@ -58,25 +58,8 @@ class AclTest extends Test
         parent::setUp();
 
         $this->rolesTransfer = new RolesTransfer();
-
-        $container = new Container();
-
-        $dependencyProvider = new AclDependencyProvider();
-        $dependencyProvider->provideBusinessLayerDependencies($container);
-        $dependencyProvider->provideCommunicationLayerDependencies($container);
-        $dependencyProvider->providePersistenceLayerDependencies($container);
-
         $this->facade = new AclFacade();
-        $this->facade->setQueryContainer(new AclQueryContainer());
-        $this->facade->setExternalDependencies($container);
-
-        $userDependencyProvider = new UserDependencyProvider();
-        $userDependencyProvider->provideBusinessLayerDependencies($container);
-        $userDependencyProvider->provideCommunicationLayerDependencies($container);
-
         $this->userFacade = new UserFacade();
-        $this->userFacade->setQueryContainer(new UserQueryContainer());
-        $this->userFacade->setExternalDependencies($container);
     }
 
     /**

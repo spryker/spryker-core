@@ -46,4 +46,12 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(SearchDependencyProvider::FACADE_COLLECTOR);
     }
 
+    /**
+     * @return string
+     */
+    public function getElasticaDocumentType()
+    {
+        return $this->getConfig()->getElasticaDocumentType();
+    }
+
 }

@@ -30,6 +30,7 @@ use Spryker\Zed\Discount\Business\Writer\DiscountWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Discount\Business\DecisionRule\Voucher;
 use Spryker\Zed\Discount\Business\Writer\VoucherCodesWriter;
@@ -334,6 +335,24 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     protected function getStoreConfig()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDecisionRulePluginNames()
+    {
+        return $this->getConfig()->getDecisionRulePluginNames();
+    }
+
+    /**
+     * @param $pluginName
+     *
+     * @return DiscountCalculatorPluginInterface
+     */
+    public function getCalculatorPluginByName($pluginName)
+    {
+        return $this->getConfig()->getCalculatorPluginByName($pluginName);
     }
 
 }

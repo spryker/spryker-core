@@ -10,7 +10,7 @@ use Spryker\Client\ZedRequest\ZedRequestClient;
 use Spryker\Client\Storage\StorageClient;
 use Spryker\Client\Search\SearchClient;
 
-abstract class AbstractFactory implements FactoryInterface
+abstract class AbstractFactory
 {
 
     /**

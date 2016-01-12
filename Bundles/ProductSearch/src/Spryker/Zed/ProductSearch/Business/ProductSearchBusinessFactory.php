@@ -27,7 +27,7 @@ use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorInterfac
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\ProductSearch\ProductSearchConfig;
 use Spryker\Zed\ProductSearch\Business\Operation\AddToResult;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet;

@@ -8,7 +8,7 @@ namespace Spryker\Zed\Console\Business\Model;
 
 use Psr\Log\LoggerInterface;
 use Silex\Application;
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;

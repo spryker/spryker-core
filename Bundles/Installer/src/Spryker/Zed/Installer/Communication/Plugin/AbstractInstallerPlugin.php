@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Installer\Communication\Plugin;
 
 use Psr\Log\LogLevel;
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Installer\Business\InstallerFacade;
 use Spryker\Zed\Installer\Communication\InstallerCommunicationFactory;

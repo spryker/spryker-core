@@ -25,19 +25,7 @@ class CalculationFacade extends AbstractFacade
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {
-        $calculatorStack = $this->getFactory()->getConfig()->getCalculatorStack();
-
-        return $this->getFactory()->createStackExecutor()->recalculate($calculatorStack, $calculableContainer);
-    }
-
-    /**
-     * @param CalculableInterface $calculableContainer
-     *
-     * @return CalculableInterface
-     */
-    public function performSoftRecalculation(CalculableInterface $calculableContainer)
-    {
-        $calculatorStack = $this->getFactory()->getConfig()->getSoftCalculatorStack();
+        $calculatorStack = $this->getFactory()->getCalculatorStack();
 
         return $this->getFactory()->createStackExecutor()->recalculate($calculatorStack, $calculableContainer);
     }
@@ -52,7 +40,7 @@ class CalculationFacade extends AbstractFacade
         CalculableInterface $calculableContainer,
         $calculableItems = null
     ) {
-        $calculatorStack = $this->getFactory()->getConfig()->getCalculatorStack();
+        $calculatorStack = $this->getFactory()->getCalculatorStack();
 
         return $this->getFactory()->createStackExecutor()->recalculateTotals(
             $calculatorStack,

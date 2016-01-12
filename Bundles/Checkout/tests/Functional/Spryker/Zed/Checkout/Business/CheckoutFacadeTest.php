@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Shared\Checkout\CheckoutConstants;
 use Spryker\Zed\AvailabilityCheckoutConnector\Communication\Plugin\ProductsAvailablePreConditionPlugin;
@@ -57,43 +58,9 @@ class CheckoutFacadeTest extends Test
         parent::setUp();
 
         $this->checkoutFacade = new CheckoutFacade();
-        $container = new Container();
 
-        $container[CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
-            return [
-                new CustomerPreConditionCheckerPlugin(),
-                new ProductsAvailablePreConditionPlugin(),
-            ];
-        };
-
-        $container[CheckoutDependencyProvider::CHECKOUT_ORDER_HYDRATORS] = function (Container $container) {
-            return [
-                new OrderCustomerHydrationPlugin(),
-                new OrderCartHydrationPlugin(),
-                new MockOmsOrderHydrator(),
-            ];
-        };
-
-        $container[CheckoutDependencyProvider::CHECKOUT_PRE_HYDRATOR] = function (Container $container) {
-            return [];
-        };
-
-        $container[CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
-            return [
-                new SalesOrderSaverPlugin(),
-                new OrderCustomerSavePlugin(),
-            ];
-        };
-
-        $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) {
-            return [];
-        };
-
-        $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
-            return new CheckoutToOmsBridge($container->getLocator()->oms()->facade());
-        };
-
-        $this->checkoutFacade->setExternalDependencies($container);
+        $factoryMock = $this->getFactory();
+        $this->checkoutFacade->setFactory($factoryMock);
     }
 
     /**
@@ -361,6 +328,62 @@ class CheckoutFacadeTest extends Test
             ->setPaymentMethod('creditcard');
 
         return $checkoutRequest;
+    }
+
+    /**
+     * @return Container
+     */
+    protected function getContainer()
+    {
+        $container = new Container();
+
+        $container[CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
+            return [
+                new CustomerPreConditionCheckerPlugin(),
+                new ProductsAvailablePreConditionPlugin(),
+            ];
+        };
+
+        $container[CheckoutDependencyProvider::CHECKOUT_ORDER_HYDRATORS] = function (Container $container) {
+            return [
+                new OrderCustomerHydrationPlugin(),
+                new OrderCartHydrationPlugin(),
+                new MockOmsOrderHydrator(),
+            ];
+        };
+
+        $container[CheckoutDependencyProvider::CHECKOUT_PRE_HYDRATOR] = function (Container $container) {
+            return [];
+        };
+
+        $container[CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
+            return [
+                new SalesOrderSaverPlugin(),
+                new OrderCustomerSavePlugin(),
+            ];
+        };
+
+        $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) {
+            return [];
+        };
+
+        $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
+            return new CheckoutToOmsBridge($container->getLocator()->oms()->facade());
+        };
+        return $container;
+    }
+
+    /**
+     * @return CheckoutBusinessFactory
+     */
+    protected function getFactory()
+    {
+        $container = $this->getContainer();
+
+        $factory = new CheckoutBusinessFactory();
+        $factory->setContainer($container);
+
+        return $factory;
     }
 
 }

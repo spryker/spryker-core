@@ -17,7 +17,7 @@ abstract class AbstractBusinessFactory extends AbstractFactory implements Busine
      * @param AbstractBundleDependencyProvider $dependencyProvider
      * @param Container $container
      *
-     * @return Container
+     * @return void
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,

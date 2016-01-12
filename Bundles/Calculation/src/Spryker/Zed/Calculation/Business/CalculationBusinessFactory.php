@@ -19,6 +19,8 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
+use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
+use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Calculation\CalculationConfig;
 
@@ -172,6 +174,14 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
         $priceCalculationHelper = new PriceCalculationHelper();
 
         return $priceCalculationHelper;
+    }
+
+    /**
+     * @return CalculatorPluginInterface[]|TotalsCalculatorPluginInterface[]
+     */
+    public function getCalculatorStack()
+    {
+        return $this->getConfig()->getCalculatorStack();
     }
 
 }

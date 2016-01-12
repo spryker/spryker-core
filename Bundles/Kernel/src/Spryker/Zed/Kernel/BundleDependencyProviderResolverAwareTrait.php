@@ -41,7 +41,7 @@ trait BundleDependencyProviderResolverAwareTrait
     {
         if ($this->container === null) {
             $dependencyProvider = $this->resolveDependencyProvider();
-            $container = new Container();
+            $container = $this->getContainer();
             $this->provideExternalDependencies($dependencyProvider, $container);
             $this->container = $container;
         }
@@ -81,5 +81,13 @@ trait BundleDependencyProviderResolverAwareTrait
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
     );
+
+    /**
+     * @return Container
+     */
+    protected function getContainer()
+    {
+        return new Container();
+    }
 
 }

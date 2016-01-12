@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Country\Business;
 
 use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use Spryker\Zed\Country\Business\Internal\Install;

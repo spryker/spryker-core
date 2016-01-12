@@ -6,14 +6,15 @@
 
 namespace Functional\Spryker\Zed\ProductOption\Persistence;
 
+use Codeception\TestCase\Test;
 use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductFacade;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Functional\Spryker\Zed\ProductOption\Mock\ProductQueryContainer;
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleBusinessFactory;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionPersistenceFactory;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory;
@@ -29,7 +30,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
  *
  * @method ProductOptionFacade getFacade()
  */
-class ProductOptionReaderTest extends AbstractFunctionalTest
+class ProductOptionReaderTest extends Test
 {
 
     const LOCALE_CODE = 'xx_XX';
@@ -77,7 +78,7 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
 
         $this->ids = DbFixturesLoader::loadFixtures();
 
-        $this->facade = $this->getFacade();
+        $this->facade = new ProductOptionFacade();
         $this->facade->setFactory(new ProductOptionBusinessFactory());
 
         $this->localeFacade = new LocaleFacade();
@@ -265,9 +266,17 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $container[self::PROPEL_CONNECTION] = function () {
             return (new Connection())->get();
         };
-        $this->productOptionQueryContainer->setExternalDependencies($container);
-        $this->facade->setExternalDependencies($container);
-        $this->facade->setQueryContainer($this->productOptionQueryContainer);
+
+        $persistenceFactory = new ProductOptionPersistenceFactory();
+        $persistenceFactory->setContainer($container);
+        $this->productOptionQueryContainer->setFactory($persistenceFactory);
+
+        $businessFactory = new ProductOptionBusinessFactory();
+
+        $businessFactory->setContainer($container);
+        $businessFactory->setQueryContainer($this->productOptionQueryContainer);
+
+        $this->facade->setFactory($businessFactory);
     }
 
 }

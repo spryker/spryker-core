@@ -6,7 +6,7 @@
 
 namespace Functional\Spryker\Zed\ProductOptionExporter\Business\Model;
 
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
 use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
 use Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
@@ -20,7 +20,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
  *
  * @method ProductOptionExporterFacade getFacade()
  */
-class DataProcessorTest extends AbstractFunctionalTest
+class DataProcessorTest extends Test
 {
 
     /**
@@ -40,7 +40,7 @@ class DataProcessorTest extends AbstractFunctionalTest
     {
         parent::setUp();
 
-        $this->facade = $this->getFacade();
+        $this->facade = new ProductOptionExporterFacade();
     }
 
     /**

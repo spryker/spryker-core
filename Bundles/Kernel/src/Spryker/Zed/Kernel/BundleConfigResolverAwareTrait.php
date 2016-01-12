@@ -47,7 +47,7 @@ trait BundleConfigResolverAwareTrait
      *
      * @return AbstractBundleConfig
      */
-    protected function resolveBundleConfig()
+    private function resolveBundleConfig()
     {
         $resolver = new BundleConfigResolver();
 

@@ -90,14 +90,6 @@ abstract class AbstractPlugin
             $this->factory = $this->resolveFactory();
         }
 
-        if ($this->container !== null) {
-            $this->factory->setContainer($this->container);
-        }
-
-        if ($this->queryContainer !== null) {
-            $this->factory->setQueryContainer($this->queryContainer);
-        }
-
         return $this->factory;
     }
 

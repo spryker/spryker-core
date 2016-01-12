@@ -6,7 +6,6 @@
 
 namespace Unit\Spryker\Zed\Kernel\Communication;
 
-use Spryker\Zed\Kernel\AbstractUnitTest;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
@@ -23,7 +22,7 @@ use Unit\Spryker\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlug
  * @group Communication
  * @group AbstractPlugin
  */
-class AbstractPluginTest extends AbstractUnitTest
+class AbstractPluginTest extends \PHPUnit_Framework_TestCase
 {
 
     /**

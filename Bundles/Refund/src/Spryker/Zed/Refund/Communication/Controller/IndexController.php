@@ -73,17 +73,17 @@ class IndexController extends AbstractController
 
         $form->handleRequest();
 
-        $isPaymentDataRequired = $this->getFactory()
-            ->getConfig()
-            ->getPaymentDataPlugin()
-            ->isPaymentDataRequired($orderTransfer);
+        $payoneFacade = $this->getFactory()->getPayoneFacade();
+        $isPaymentDataRequired = $payoneFacade->isPaymentDataRequired($orderTransfer);
 
         if ($form->isValid()) {
             $formData = $form->getData();
 
             if ($isPaymentDataRequired) {
-                $paymentDataTransfer = (new PaymentDataTransfer())->fromArray($formData, true);
-                $this->getFactory()->getConfig()->getPaymentDataPlugin()
+                $paymentDataTransfer = new PaymentDataTransfer();
+                $paymentDataTransfer = $paymentDataTransfer->fromArray($formData, true);
+                $this->getFactory()
+                    ->getPayoneFacade()
                     ->updatePaymentDetail($paymentDataTransfer, $idOrder);
             }
 

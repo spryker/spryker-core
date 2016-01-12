@@ -5,9 +5,9 @@
  */
 namespace Functional\Spryker\Zed\Customer\Business;
 
+use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
 use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\Customer\Business\CustomerFacade;
  * @group Business
  * @group Facade
  */
-class CustomerFacadeTest extends AbstractFunctionalTest
+class CustomerFacadeTest extends Test
 {
 
     const TESTER_EMAIL = 'tester@spryker.com';
@@ -39,7 +39,7 @@ class CustomerFacadeTest extends AbstractFunctionalTest
     public function setUp()
     {
         parent::setUp();
-        $this->customerFacade = $this->getFacade();
+        $this->customerFacade = new CustomerFacade();
     }
 
     /**

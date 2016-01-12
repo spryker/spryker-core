@@ -220,20 +220,7 @@ class NewsletterFacadeTest extends Test
      */
     protected function setNewsletterFacade()
     {
-        $container = new Container();
-
-        $container[QueryContainerLocator::PROPEL_CONNECTION] = (new Connection())->get();
-
-        $dependencyProvider = new NewsletterDependencyProvider();
-        $dependencyProvider->provideBusinessLayerDependencies($container);
-        $dependencyProvider->provideCommunicationLayerDependencies($container);
-        $dependencyProvider->providePersistenceLayerDependencies($container);
-
         $this->newsletterFacade = new NewsletterFacade();
-        $queryContainer = new NewsletterQueryContainer();
-        $queryContainer->setExternalDependencies($container);
-        $this->newsletterFacade->setQueryContainer($queryContainer);
-        $this->newsletterFacade->setExternalDependencies($container);
     }
 
     /**

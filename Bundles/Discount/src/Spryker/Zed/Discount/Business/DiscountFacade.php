@@ -133,7 +133,7 @@ class DiscountFacade extends AbstractFacade
      */
     public function getDecisionRulePluginNames()
     {
-        return $this->getFactory()->getConfig()->getDecisionRulePluginNames();
+        return $this->getFactory()->getDecisionRulePluginNames();
     }
 
     /**
@@ -298,7 +298,7 @@ class DiscountFacade extends AbstractFacade
      */
     public function getCalculatorPluginByName($pluginName)
     {
-        return $this->getFactory()->getConfig()->getCalculatorPluginByName($pluginName);
+        return $this->getFactory()->getCalculatorPluginByName($pluginName);
     }
 
     /**

@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Spryker\Zed\Kernel\AbstractUnitTest;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;
@@ -22,7 +21,7 @@ use Spryker\Zed\Sales\Business\Model\CalculableContainer;
  * @group Business
  * @group Expense
  */
-class ExpenseTest extends AbstractUnitTest
+class ExpenseTest extends \PHPUnit_Framework_TestCase
 {
 
     const EXPENSE_1000 = 1000;

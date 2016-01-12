@@ -9,7 +9,7 @@ namespace Spryker\Zed\Price\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceType;
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
  * @method PriceBusinessFactory getFactory()

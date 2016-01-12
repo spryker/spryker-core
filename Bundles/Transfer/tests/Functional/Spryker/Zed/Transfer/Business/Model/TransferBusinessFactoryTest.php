@@ -6,7 +6,7 @@
 
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
-use Spryker\Shared\Kernel\Messenger\MessengerInterface;
+use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
 
 /**
@@ -32,7 +32,7 @@ class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
      */
     private function getMessenger()
     {
-        return $this->getMock('Spryker\Shared\Kernel\Messenger\MessengerInterface');
+        return $this->getMock(MessengerInterface::class);
     }
 
     /**

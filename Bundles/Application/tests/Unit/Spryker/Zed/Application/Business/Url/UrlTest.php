@@ -6,7 +6,7 @@
 
 namespace Functional\Spryker\Zed\Application\Business\Url;
 
-use Spryker\Zed\Kernel\AbstractFunctionalTest;
+use Codeception\TestCase\Test;
 use Spryker\Zed\Application\Business\Url\Url;
 
 /**
@@ -15,7 +15,7 @@ use Spryker\Zed\Application\Business\Url\Url;
  * @group Url
  * @group UrlTest
  */
-class UrlTest extends AbstractFunctionalTest
+class UrlTest extends Test
 {
 
     /**

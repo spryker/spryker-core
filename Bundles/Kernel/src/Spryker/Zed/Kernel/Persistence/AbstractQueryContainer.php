@@ -12,10 +12,7 @@ use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
-use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 
@@ -30,18 +27,6 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     private $factory;
 
     /**
-     * @param Container $container
-     *
-     * @return self
-     */
-    public function setExternalDependencies(Container $container)
-    {
-        $this->container = $container;
-
-        return $this;
-    }
-
-    /**
      * @param AbstractBundleDependencyProvider $dependencyProvider
      * @param Container $container
      */
@@ -53,16 +38,24 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
+     * @param AbstractPersistenceFactory $factory
+     *
+     * @return self
+     */
+    public function setFactory(AbstractPersistenceFactory $factory)
+    {
+        $this->factory = $factory;
+
+        return $this;
+    }
+
+    /**
      * @return AbstractPersistenceFactory
      */
     protected function getFactory()
     {
         if ($this->factory === null) {
             $this->factory = $this->resolveFactory();
-        }
-
-        if ($this->container !== null) {
-            $this->factory->setContainer($this->container);
         }
 
         return $this->factory;
