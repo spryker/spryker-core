@@ -42,7 +42,7 @@ class TaxChangeTouchPlugin implements TaxChangePluginInterface
      */
     public function handleTaxRateChange($idTaxRate)
     {
-        $productAbstractIds = $this->queryContainer->getAbstractProductIdsForTaxRate($idTaxRate)->find();
+        $productAbstractIds = $this->queryContainer->getAbstractAbstractIdsForTaxRate($idTaxRate)->find();
         foreach ($productAbstractIds as $id) {
             $this->productFacade->touchProductActive((int) $id);
         }
@@ -55,7 +55,7 @@ class TaxChangeTouchPlugin implements TaxChangePluginInterface
      */
     public function handleTaxSetChange($idTaxSet)
     {
-        $productAbstractIds = $this->queryContainer->getAbstractProductIdsForTaxSet($idTaxSet)->find();
+        $productAbstractIds = $this->queryContainer->getProductAbstractIdsForTaxSet($idTaxSet)->find();
         foreach ($productAbstractIds as $id) {
             $this->productFacade->touchProductActive((int) $id);
         }

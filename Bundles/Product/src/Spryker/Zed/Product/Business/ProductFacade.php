@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Product\Business;
 
-use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -45,9 +45,9 @@ class ProductFacade extends AbstractFacade
      *
      * @return int
      */
-    public function getAbstractProductIdBySku($sku)
+    public function getProductAbstractIdBySku($sku)
     {
-        return $this->getFactory()->createProductManager()->getAbstractProductIdBySku($sku);
+        return $this->getFactory()->createProductManager()->getProductAbstractIdBySku($sku);
     }
 
     /**
@@ -69,9 +69,9 @@ class ProductFacade extends AbstractFacade
      *
      * @return int
      */
-    public function getAbstractProductIdByConcreteSku($sku)
+    public function getProductAbstractIdByConcreteSku($sku)
     {
-        return $this->getFactory()->createProductManager()->getAbstractProductIdByConcreteSku($sku);
+        return $this->getFactory()->createProductManager()->getProductAbstractIdByConcreteSku($sku);
     }
 
     /**
@@ -148,23 +148,23 @@ class ProductFacade extends AbstractFacade
      *
      * @return bool
      */
-    public function hasAbstractProduct($sku)
+    public function hasProductAbstract($sku)
     {
         $productManager = $this->getFactory()->createProductManager();
 
-        return $productManager->hasAbstractProduct($sku);
+        return $productManager->hasProductAbstract($sku);
     }
 
     /**
-     * @param AbstractProductTransfer $productAbstractTransfer
+     * @param ProductAbstractTransfer $productAbstractTransfer
      *
      * @return int
      */
-    public function createAbstractProduct(AbstractProductTransfer $productAbstractTransfer)
+    public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
         $productManager = $this->getFactory()->createProductManager();
 
-        return $productManager->createAbstractProduct($productAbstractTransfer);
+        return $productManager->createProductAbstract($productAbstractTransfer);
     }
 
     /**

@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductCategory\Business;
 
-use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -60,15 +60,15 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param AbstractProductTransfer $productAbstractTransfer
+     * @param ProductAbstractTransfer $productAbstractTransfer
      *
      * @return ProductCategoryTransfer[]
      */
-    public function getCategoriesByAbstractProduct(AbstractProductTransfer $productAbstractTransfer)
+    public function getCategoriesByProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
         $entities = $this->getFactory()
             ->createProductCategoryManager()
-            ->getCategoriesByAbstractProduct($productAbstractTransfer);
+            ->getCategoriesByProductAbstract($productAbstractTransfer);
 
         return $this->getFactory()
             ->createProductCategoryTransferGenerator()

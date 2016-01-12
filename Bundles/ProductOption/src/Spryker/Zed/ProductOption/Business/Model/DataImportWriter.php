@@ -73,12 +73,12 @@ class DataImportWriter implements DataImportWriterInterface
 
         $this->createOrUpdateOptionTypeTranslations($productOptionTypeEntity, $localizedNames);
 
-        $associatedAbstractProductIds = $this->queryContainer
-            ->queryAssociatedAbstractProductIdsForProductOptionType($productOptionTypeEntity->getIdProductOptionType())
+        $associatedProductAbstractIds = $this->queryContainer
+            ->queryAssociatedProductAbstractIdsForProductOptionType($productOptionTypeEntity->getIdProductOptionType())
             ->find();
 
-        foreach ($associatedAbstractProductIds as $idProductAbstract) {
-            $this->touchAbstractProductById($idProductAbstract);
+        foreach ($associatedProductAbstractIds as $idProductAbstract) {
+            $this->touchProductAbstractById($idProductAbstract);
         }
 
         return $productOptionTypeEntity->getIdProductOptionType();
@@ -150,12 +150,12 @@ class DataImportWriter implements DataImportWriterInterface
 
         $productOptionValueEntity->save();
 
-        $associatedAbstractProductIds = $this->queryContainer
-            ->queryAssociatedAbstractProductIdsForProductOptionValue($productOptionValueEntity->getIdProductOptionValue())
+        $associatedProductAbstractIds = $this->queryContainer
+            ->queryAssociatedProductAbstractIdsForProductOptionValue($productOptionValueEntity->getIdProductOptionValue())
             ->find();
 
-        foreach ($associatedAbstractProductIds as $idProductAbstract) {
-            $this->touchAbstractProductById($idProductAbstract);
+        foreach ($associatedProductAbstractIds as $idProductAbstract) {
+            $this->touchProductAbstractById($idProductAbstract);
         }
 
         return $productOptionValueEntity->getIdProductOptionValue();
@@ -214,7 +214,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->setSequence($sequence)
             ->save();
 
-        $this->touchAbstractProductByConcreteSku($sku);
+        $this->touchProductAbstractByConcreteSku($sku);
 
         return $productOptionTypeUsageEntity->getIdProductOptionTypeUsage();
     }
@@ -244,11 +244,11 @@ class DataImportWriter implements DataImportWriterInterface
             ->save();
 
         $idProductAbstract = $this->queryContainer
-            ->queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage)
+            ->queryProductAbstractIdForProductOptionTypeUsage($idProductOptionTypeUsage)
             ->findOne()
             ->getIdProductAbstract();
 
-        $this->touchAbstractProductById($idProductAbstract);
+        $this->touchProductAbstractById($idProductAbstract);
 
         return $productOptionValueUsageEntity->getIdProductOptionValueUsage();
     }
@@ -283,7 +283,7 @@ class DataImportWriter implements DataImportWriterInterface
 
         $optionTypeExclusionEntity->save();
 
-        $this->touchAbstractProductByConcreteSku($sku);
+        $this->touchProductAbstractByConcreteSku($sku);
     }
 
     /**
@@ -319,7 +319,7 @@ class DataImportWriter implements DataImportWriterInterface
 
         $optionValueConstraintEntity->save();
 
-        $this->touchAbstractProductByConcreteSku($sku);
+        $this->touchProductAbstractByConcreteSku($sku);
     }
 
     /**
@@ -357,7 +357,7 @@ class DataImportWriter implements DataImportWriterInterface
 
         $presetConfig->save();
 
-        $this->touchAbstractProductByConcreteSku($sku);
+        $this->touchProductAbstractByConcreteSku($sku);
 
         return $presetConfig->getIdProductOptionConfigurationPreset();
     }
@@ -375,7 +375,7 @@ class DataImportWriter implements DataImportWriterInterface
      *
      * @return void
      */
-    protected function touchAbstractProductById($idProductAbstract)
+    protected function touchProductAbstractById($idProductAbstract)
     {
         $this->productFacade->touchProductActive($idProductAbstract);
     }
@@ -385,9 +385,9 @@ class DataImportWriter implements DataImportWriterInterface
      *
      * @return void
      */
-    protected function touchAbstractProductByConcreteSku($concreteSku)
+    protected function touchProductAbstractByConcreteSku($concreteSku)
     {
-        $idProductAbstract = $this->productFacade->getAbstractProductIdByConcreteSku($concreteSku);
+        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($concreteSku);
         $this->productFacade->touchProductActive($idProductAbstract);
     }
 

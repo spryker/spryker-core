@@ -18,7 +18,7 @@ interface StockToProductInterface
      *
      * @return int
      */
-    public function getAbstractProductIdBySku($sku);
+    public function getProductAbstractIdBySku($sku);
 
     /**
      * @param string $sku

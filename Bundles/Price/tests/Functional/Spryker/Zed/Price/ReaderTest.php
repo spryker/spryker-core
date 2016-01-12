@@ -98,7 +98,7 @@ class ReaderTest extends Test
     /**
      * @return void
      */
-    public function testGetPriceForAbstractProduct()
+    public function testGetPriceForProductAbstract()
     {
         $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_PRODUCT_ABSTRACT, self::DUMMY_PRICE_TYPE_1);
         $this->assertEquals(100, $price);

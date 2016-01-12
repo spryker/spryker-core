@@ -55,13 +55,13 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
         $changeTransfer = $this->getChangeTransfer();
 
         $concreteProductTransfer = new ConcreteProductTransfer();
-        $concreteProductTransfer->setAbstractProductSku(self::ABSTRACT_SKU);
+        $concreteProductTransfer->setProductAbstractSku(self::ABSTRACT_SKU);
 
         $productManager = $this->getProductManager($concreteProductTransfer);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
-        $this->assertSame($concreteProductTransfer->getAbstractProductSku(), $changedItemTransfer->getAbstractSku());
+        $this->assertSame($concreteProductTransfer->getProductAbstractSku(), $changedItemTransfer->getAbstractSku());
     }
 
     /**

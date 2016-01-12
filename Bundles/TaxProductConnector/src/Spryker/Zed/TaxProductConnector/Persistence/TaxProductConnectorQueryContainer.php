@@ -22,7 +22,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @return SpyProductAbstractQuery
      */
-    public function getAbstractProductIdsForTaxRate($idTaxRate)
+    public function getAbstractAbstractIdsForTaxRate($idTaxRate)
     {
         return SpyProductAbstractQuery::create()
             ->select([
@@ -44,7 +44,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @return SpyProductAbstractQuery
      */
-    public function getAbstractProductIdsForTaxSet($idTaxSet)
+    public function getProductAbstractIdsForTaxSet($idTaxSet)
     {
         return SpyProductAbstractQuery::create()
             ->addJoin(

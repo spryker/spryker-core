@@ -124,21 +124,21 @@ interface ProductOptionQueryContainerInterface
      *
      * @return SpyProductAbstractQuery
      */
-    public function queryAssociatedAbstractProductIdsForProductOptionType($idProductOptionType);
+    public function queryAssociatedProductAbstractIdsForProductOptionType($idProductOptionType);
 
     /**
      * @param int $idProductOptionValue
      *
      * @return SpyProductAbstractQuery
      */
-    public function queryAssociatedAbstractProductIdsForProductOptionValue($idProductOptionValue);
+    public function queryAssociatedProductAbstractIdsForProductOptionValue($idProductOptionValue);
 
     /**
      * @param int $idProductOptionTypeUsage
      *
      * @return SpyProductAbstractQuery
      */
-    public function queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage);
+    public function queryProductAbstractIdForProductOptionTypeUsage($idProductOptionTypeUsage);
 
     /**
      * @param int $idProductOptionValueUsage

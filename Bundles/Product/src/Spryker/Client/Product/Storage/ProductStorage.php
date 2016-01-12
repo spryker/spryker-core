@@ -38,7 +38,7 @@ class ProductStorage implements ProductStorageInterface
         $this->locale = $localeName;
     }
 
-    public function getAbstractProductFromStorageById($idProductAbstract)
+    public function getProductAbstractFromStorageById($idProductAbstract)
     {
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
         $product = $this->storage->get($key);

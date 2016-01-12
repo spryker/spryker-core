@@ -59,11 +59,11 @@ class IndexController extends AbstractController
         $idProductAbstract = $request->query->getInt(self::ID_PRODUCT_ABSTRACT);
 
         $productAbstract = $this->getQueryContainer()
-            ->querySkuFromAbstractProductById($idProductAbstract)
+            ->querySkuFromProductAbstractById($idProductAbstract)
             ->findOne();
 
         $concreteProductCollection = $this->getQueryContainer()
-            ->queryConcreteProductByAbstractProduct($productAbstract)
+            ->queryConcreteProductByProductAbstract($productAbstract)
             ->find();
 
         $concreteProducts = $this->createConcreteProductsCollection($concreteProductCollection);
@@ -71,7 +71,7 @@ class IndexController extends AbstractController
         $currentLocale = $this->getCurrentLocale();
 
         $attributesCollection = $this->getQueryContainer()
-            ->queryAbstractProductAttributeCollection($productAbstract->getIdProductAbstract(), $currentLocale->getIdLocale())
+            ->queryProductAbstractAttributeCollection($productAbstract->getIdProductAbstract(), $currentLocale->getIdLocale())
             ->findOne();
 
         $attributes = [
@@ -85,7 +85,7 @@ class IndexController extends AbstractController
         $categories = $this->getProductCategories($productAbstract, $currentLocale->getIdLocale());
 
         return $this->viewResponse([
-            'abstractProduct' => $productAbstract,
+            'productAbstract' => $productAbstract,
             'concreteProducts' => $concreteProducts,
             'attributes' => $attributes,
             'categories' => $categories,

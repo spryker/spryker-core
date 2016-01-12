@@ -18,7 +18,7 @@ interface PriceToProductInterface
      *
      * @return int
      */
-    public function getAbstractProductIdBySku($sku);
+    public function getProductAbstractIdBySku($sku);
 
     /**
      * @param string $sku
@@ -34,7 +34,7 @@ interface PriceToProductInterface
      *
      * @return bool
      */
-    public function hasAbstractProduct($sku);
+    public function hasProductAbstract($sku);
 
     /**
      * @param string $sku

@@ -83,7 +83,7 @@ class TaxChangeTouchPluginTest extends Test
         $this->assertEquals(2, $query->count());
 
         foreach ($query as $touchEntity) {
-            $this->assertContains($touchEntity->getItemId(), $this->abstractProductIds);
+            $this->assertContains($touchEntity->getItemId(), $this->productAbstractIds);
         }
     }
 
@@ -116,14 +116,14 @@ class TaxChangeTouchPluginTest extends Test
             ->setSpyTaxSet($taxSet)
             ->setAttributes('{}')
             ->save();
-        $this->abstractProductIds[] = $product1->getIdProductAbstract();
+        $this->productAbstractIds[] = $product1->getIdProductAbstract();
 
         $product2 = new SpyProductAbstract();
         $product2->setSku('Product2')
             ->setSpyTaxSet($taxSet)
             ->setAttributes('{}')
             ->save();
-        $this->abstractProductIds[] = $product2->getIdProductAbstract();
+        $this->productAbstractIds[] = $product2->getIdProductAbstract();
     }
 
 }

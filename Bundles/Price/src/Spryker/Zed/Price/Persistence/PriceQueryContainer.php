@@ -49,7 +49,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      *
      * @return Propel\SpyPriceProductQuery
      */
-    public function queryPriceEntityForAbstractProduct($sku, SpyPriceType $priceType)
+    public function queryPriceEntityForProductAbstract($sku, SpyPriceType $priceType)
     {
         return SpyPriceProductQuery::create()
             ->filterByPriceType($priceType)
@@ -92,9 +92,9 @@ class PriceQueryContainer extends AbstractQueryContainer
      *
      * @throws PropelException
      *
-     * @return Propel\SpyPriceProductQuery
+     * @return SpyPriceProductQuery
      */
-    public function querySpecificPriceForAbstractProduct(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType)
+    public function querySpecificPriceForProductAbstract(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType)
     {
         return SpyPriceProductQuery::create()
             ->filterByPrice($transferPriceProduct->getPrice())

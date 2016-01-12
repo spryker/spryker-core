@@ -6,14 +6,14 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
-use Spryker\Zed\Product\Business\Exception\AbstractProductExistsException;
+use Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException;
+use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Business\Exception\ConcreteProductAttributesExistException;
 use Spryker\Zed\Product\Business\Exception\ConcreteProductExistsException;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
@@ -92,22 +92,22 @@ class ProductManager implements ProductManagerInterface
      *
      * @return bool
      */
-    public function hasAbstractProduct($sku)
+    public function hasProductAbstract($sku)
     {
-        $productAbstractQuery = $this->productQueryContainer->queryAbstractProductBySku($sku);
+        $productAbstractQuery = $this->productQueryContainer->queryProductAbstractBySku($sku);
 
         return $productAbstractQuery->count() > 0;
     }
 
     /**
-     * @param AbstractProductTransfer $productAbstractTransfer
+     * @param ProductAbstractTransfer $productAbstractTransfer
      *
-     * @throws AbstractProductExistsException
+     * @throws ProductAbstractExistsException
      * @throws PropelException
      *
      * @return int
      */
-    public function createAbstractProduct(AbstractProductTransfer $productAbstractTransfer)
+    public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
         $sku = $productAbstractTransfer->getSku();
 
@@ -122,7 +122,7 @@ class ProductManager implements ProductManagerInterface
 
         $idProductAbstract = $productAbstract->getPrimaryKey();
         $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-        $this->createAbstractProductAttributes($productAbstractTransfer);
+        $this->createProductAbstractAttributes($productAbstractTransfer);
 
         return $idProductAbstract;
     }
@@ -134,10 +134,10 @@ class ProductManager implements ProductManagerInterface
      *
      * @return int
      */
-    public function getAbstractProductIdBySku($sku)
+    public function getProductAbstractIdBySku($sku)
     {
-        if (!isset($this->abstractProductsBySkuCache[$sku])) {
-            $productAbstract = $this->productQueryContainer->queryAbstractProductBySku($sku)->findOne();
+        if (!isset($this->productAbstractsBySkuCache[$sku])) {
+            $productAbstract = $this->productQueryContainer->queryProductAbstractBySku($sku)->findOne();
 
             if (!$productAbstract) {
                 throw new MissingProductException(
@@ -148,23 +148,23 @@ class ProductManager implements ProductManagerInterface
                 );
             }
 
-            $this->abstractProductsBySkuCache[$sku] = $productAbstract;
+            $this->productAbstractsBySkuCache[$sku] = $productAbstract;
         }
 
-        return $this->abstractProductsBySkuCache[$sku]->getPrimaryKey();
+        return $this->productAbstractsBySkuCache[$sku]->getPrimaryKey();
     }
 
     /**
      * @param string $sku
      *
-     * @throws AbstractProductExistsException
+     * @throws ProductAbstractExistsException
      *
      * @return void
      */
-    protected function checkAbstractProductDoesNotExist($sku)
+    protected function checkProductAbstractDoesNotExist($sku)
     {
-        if ($this->hasAbstractProduct($sku)) {
-            throw new AbstractProductExistsException(
+        if ($this->hasProductAbstract($sku)) {
+            throw new ProductAbstractExistsException(
                 sprintf(
                     'Tried to create an abstract product with sku %s that already exists',
                     $sku
@@ -174,20 +174,20 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param AbstractProductTransfer $productAbstractTransfer
+     * @param ProductAbstractTransfer $productAbstractTransfer
      *
-     * @throws AbstractProductAttributesExistException
+     * @throws ProductAbstractAttributesExistException
      * @throws PropelException
      *
      * @return void
      */
-    protected function createAbstractProductAttributes(AbstractProductTransfer $productAbstractTransfer)
+    protected function createProductAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer)
     {
         $idProductAbstract = $productAbstractTransfer->getIdProductAbstract();
 
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
-            if ($this->hasAbstractProductAttributes($idProductAbstract, $locale)) {
+            if ($this->hasProductAbstractAttributes($idProductAbstract, $locale)) {
                 continue;
             }
             $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
@@ -207,16 +207,16 @@ class ProductManager implements ProductManagerInterface
      * @param int $idProductAbstract
      * @param LocaleTransfer $locale
      *
-     * @deprecated Use hasAbstractProductAttributes() instead.
+     * @deprecated Use hasProductAbstractAttributes() instead.
      *
-     * @throws AbstractProductAttributesExistException
+     * @throws ProductAbstractAttributesExistException
      *
      * @return void
      */
-    protected function checkAbstractProductAttributesDoNotExist($idProductAbstract, $locale)
+    protected function checkProductAbstractAttributesDoNotExist($idProductAbstract, $locale)
     {
-        if ($this->hasAbstractProductAttributes($idProductAbstract, $locale)) {
-            throw new AbstractProductAttributesExistException(
+        if ($this->hasProductAbstractAttributes($idProductAbstract, $locale)) {
+            throw new ProductAbstractAttributesExistException(
                 sprintf(
                     'Tried to create abstract attributes for abstract product %s, locale id %s, but it already exists',
                     $idProductAbstract,
@@ -232,9 +232,9 @@ class ProductManager implements ProductManagerInterface
      *
      * @return bool
      */
-    protected function hasAbstractProductAttributes($idProductAbstract, LocaleTransfer $locale)
+    protected function hasProductAbstractAttributes($idProductAbstract, LocaleTransfer $locale)
     {
-        $query = $this->productQueryContainer->queryAbstractProductAttributeCollection(
+        $query = $this->productQueryContainer->queryProductAbstractAttributeCollection(
             $idProductAbstract,
             $locale->getIdLocale()
         );
@@ -418,7 +418,7 @@ class ProductManager implements ProductManagerInterface
      */
     public function createProductUrl($sku, $url, LocaleTransfer $locale)
     {
-        $idProductAbstract = $this->getAbstractProductIdBySku($sku);
+        $idProductAbstract = $this->getProductAbstractIdBySku($sku);
 
         return $this->createProductUrlByIdProduct($idProductAbstract, $url, $locale);
     }
@@ -524,7 +524,7 @@ class ProductManager implements ProductManagerInterface
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
-        $concreteProductQuery = $this->productQueryContainer->queryProductWithAttributesAndAbstractProduct(
+        $concreteProductQuery = $this->productQueryContainer->queryProductWithAttributesAndProductAbstract(
             $concreteSku, $localeTransfer->getIdLocale()
         );
 
@@ -549,7 +549,7 @@ class ProductManager implements ProductManagerInterface
         $concreteProductTransfer = new ConcreteProductTransfer();
         $concreteProductTransfer->setSku($concreteSku)
             ->setIdConcreteProduct($concreteProduct[self::COL_ID_CONCRETE_PRODUCT])
-            ->setAbstractProductSku($concreteProduct[self::COL_ABSTRACT_SKU])
+            ->setProductAbstractSku($concreteProduct[self::COL_ABSTRACT_SKU])
             ->setIdProductAbstract($concreteProduct[self::COL_ID_PRODUCT_ABSTRACT])
             ->setName($concreteProduct[self::COL_NAME]);
 
@@ -566,7 +566,7 @@ class ProductManager implements ProductManagerInterface
     private function addTaxesToProductTransfer(ConcreteProductTransfer $concreteProductTransfer)
     {
         $taxSetEntity = $this->productQueryContainer
-            ->queryTaxSetForAbstractProduct($concreteProductTransfer->getIdProductAbstract())
+            ->queryTaxSetForProductAbstract($concreteProductTransfer->getIdProductAbstract())
             ->findOne();
 
         if ($taxSetEntity === null) {
@@ -596,7 +596,7 @@ class ProductManager implements ProductManagerInterface
      *
      * @return int
      */
-    public function getAbstractProductIdByConcreteSku($sku)
+    public function getProductAbstractIdByConcreteSku($sku)
     {
         $concreteProduct = $this->productQueryContainer->queryConcreteProductBySku($sku)->findOne();
 

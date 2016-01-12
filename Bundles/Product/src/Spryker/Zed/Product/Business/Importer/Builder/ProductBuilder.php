@@ -6,14 +6,14 @@
 
 namespace Spryker\Zed\Product\Business\Importer\Builder;
 
-use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Spryker\Zed\Product\Business\Builder\ProductBuilderInterface;
 
 class ProductBuilder implements ProductBuilderInterface
 {
 
-    const ABSTRACT_PRODUCT_REFERENCE = 'refSku';
+    const PRODUCT_ABSTRACT_REFERENCE = 'refSku';
     const BUNDLED_PRODUCTS_REFERENCES = 'refBundleSkus';
     const PRODUCT_URL_FIELD = 'url';
     const PRODUCT_NAME_FIELD = 'name';
@@ -23,7 +23,7 @@ class ProductBuilder implements ProductBuilderInterface
     /**
      * @param array $data
      *
-     * @return AbstractProductTransfer|ConcreteProductTransfer
+     * @return ProductAbstractTransfer|ConcreteProductTransfer
      */
     public function buildProduct(array $data)
     {
@@ -75,18 +75,18 @@ class ProductBuilder implements ProductBuilderInterface
     /**
      * @param array $data
      *
-     * @return AbstractProductTransfer|ConcreteProductTransfer
+     * @return ProductAbstractTransfer|ConcreteProductTransfer
      */
     protected function generateTypedProduct(array &$data)
     {
-        if (empty($data[self::ABSTRACT_PRODUCT_REFERENCE])) {
-            $product = new AbstractProductTransfer();
+        if (empty($data[self::PRODUCT_ABSTRACT_REFERENCE])) {
+            $product = new ProductAbstractTransfer();
         } else {
             $product = new ConcreteProductTransfer();
-            $product->setAbstractProductSku($data[self::ABSTRACT_PRODUCT_REFERENCE]);
+            $product->setProductAbstractSku($data[self::PRODUCT_ABSTRACT_REFERENCE]);
         }
 
-        unset($data[self::ABSTRACT_PRODUCT_REFERENCE]);
+        unset($data[self::PRODUCT_ABSTRACT_REFERENCE]);
         unset($data[self::BUNDLED_PRODUCTS_REFERENCES]); //@todo handle bundle creation
 
         return $product;

@@ -26,11 +26,11 @@ class TaxProductConnectorToProductBridge implements TaxProductConnectorToProduct
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      */
-    public function touchProductActive($idAbstractProduct)
+    public function touchProductActive($idProductAbstract)
     {
-        $this->productFacade->touchProductActive($idAbstractProduct);
+        $this->productFacade->touchProductActive($idProductAbstract);
     }
 
 }

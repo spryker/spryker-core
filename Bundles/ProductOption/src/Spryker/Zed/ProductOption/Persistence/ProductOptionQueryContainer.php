@@ -211,7 +211,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return SpyProductAbstractQuery
      */
-    public function queryAssociatedAbstractProductIdsForProductOptionType($idProductOptionType)
+    public function queryAssociatedProductAbstractIdsForProductOptionType($idProductOptionType)
     {
         return SpyProductAbstractQuery::create()
             ->useSpyProductQuery()
@@ -230,7 +230,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return SpyProductAbstractQuery
      */
-    public function queryAssociatedAbstractProductIdsForProductOptionValue($idProductOptionValue)
+    public function queryAssociatedProductAbstractIdsForProductOptionValue($idProductOptionValue)
     {
         return SpyProductAbstractQuery::create()
             ->useSpyProductQuery()
@@ -251,7 +251,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return SpyProductAbstractQuery
      */
-    public function queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage)
+    public function queryProductAbstractIdForProductOptionTypeUsage($idProductOptionTypeUsage)
     {
         return SpyProductAbstractQuery::create()
             ->useSpyProductQuery()

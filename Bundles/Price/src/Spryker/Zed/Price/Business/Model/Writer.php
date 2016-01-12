@@ -86,10 +86,10 @@ class Writer implements WriterInterface
     {
         $priceProductTransfer = $this->setPriceType($priceProductTransfer);
         if (
-            !$this->isPriceTypeExistingForAbstractProduct($priceProductTransfer)
+            !$this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
             && !$this->isPriceTypeExistingForConcreteProduct($priceProductTransfer)
         ) {
-            $this->loadAbstractProductIdForPriceProductTransfer($priceProductTransfer);
+            $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
             $this->loadConcreteProductIdForPriceProductTransfer($priceProductTransfer);
 
             $entity = new SpyPriceProduct();
@@ -117,9 +117,9 @@ class Writer implements WriterInterface
 
         if (
             $this->isPriceTypeExistingForConcreteProduct($priceProductTransfer)
-            || $this->isPriceTypeExistingForAbstractProduct($priceProductTransfer)
+            || $this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
         ) {
-            $this->loadAbstractProductIdForPriceProductTransfer($priceProductTransfer);
+            $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
             $this->loadConcreteProductIdForPriceProductTransfer($priceProductTransfer);
 
             $priceProductEntity = $this->getPriceProductById($priceProductTransfer->getIdPriceProduct());
@@ -138,11 +138,11 @@ class Writer implements WriterInterface
      *
      * @return void
      */
-    protected function loadAbstractProductIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
+    protected function loadProductAbstractIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
     {
         if ($transferPriceProduct->getIdProductAbstract() === null) {
             $transferPriceProduct->setIdProductAbstract(
-                $this->reader->getAbstractProductIdBySku($transferPriceProduct->getSkuAbstractProduct())
+                $this->reader->getProductAbstractIdBySku($transferPriceProduct->getSkuProductAbstract())
             );
         }
     }
@@ -238,11 +238,11 @@ class Writer implements WriterInterface
      *
      * @return bool
      */
-    protected function isPriceTypeExistingForAbstractProduct(PriceProductTransfer $transferPriceProduct)
+    protected function isPriceTypeExistingForProductAbstract(PriceProductTransfer $transferPriceProduct)
     {
         $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
         $priceEntities = $this->queryContainer
-            ->queryPriceEntityForAbstractProduct($transferPriceProduct->getSkuAbstractProduct(), $priceType);
+            ->queryPriceEntityForProductAbstract($transferPriceProduct->getSkuProductAbstract(), $priceType);
 
         return $priceEntities->count() > 0;
     }

@@ -11,7 +11,7 @@
         <property name="idProduct" type="int" />
         <property name="skuProduct" type="string" />
         <property name="idProductAbstract" type="int" />
-        <property name="skuAbstractProduct" type="string" />
+        <property name="skuProductAbstract" type="string" />
     </transfer>
 
 </transfers>

@@ -29,9 +29,9 @@ class PriceToProductBridge implements PriceToProductInterface
      *
      * @return int
      */
-    public function getAbstractProductIdBySku($sku)
+    public function getProductAbstractIdBySku($sku)
     {
-        return $this->productFacade->getAbstractProductIdBySku($sku);
+        return $this->productFacade->getProductAbstractIdBySku($sku);
     }
 
     /**
@@ -49,9 +49,9 @@ class PriceToProductBridge implements PriceToProductInterface
      *
      * @return bool
      */
-    public function hasAbstractProduct($sku)
+    public function hasProductAbstract($sku)
     {
-        return $this->productFacade->hasAbstractProduct($sku);
+        return $this->productFacade->hasProductAbstract($sku);
     }
 
     /**

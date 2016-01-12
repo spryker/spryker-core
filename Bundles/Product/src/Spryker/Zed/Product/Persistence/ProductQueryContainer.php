@@ -62,7 +62,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return SpyProductQuery
      */
-    public function queryProductWithAttributesAndAbstractProduct($concreteSku, $idLocale)
+    public function queryProductWithAttributesAndProductAbstract($concreteSku, $idLocale)
     {
         $query = SpyProductQuery::create();
 
@@ -81,7 +81,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return SpyTaxSetQuery
      */
-    public function queryTaxSetForAbstractProduct($idProductAbstract)
+    public function queryTaxSetForProductAbstract($idProductAbstract)
     {
         return SpyTaxSetQuery::create()
             ->useSpyProductAbstractQuery()
@@ -92,7 +92,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     /**
      * @return SpyProductAbstractQuery
      */
-    public function queryAbstractProducts()
+    public function queryProductAbstract()
     {
         return SpyProductAbstractQuery::create();
     }
@@ -113,7 +113,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return SpyProductAbstractQuery
      */
-    public function queryAbstractProductBySku($sku)
+    public function queryProductAbstractBySku($sku)
     {
         return SpyProductAbstractQuery::create()
             ->filterBySku($sku);
@@ -124,7 +124,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return SpyProductAbstractQuery
      */
-    public function querySkuFromAbstractProductById($idProductAbstract)
+    public function querySkuFromProductAbstractById($idProductAbstract)
     {
         return SpyProductAbstractQuery::create()
             ->filterByIdProductAbstract($idProductAbstract);
@@ -194,7 +194,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return SpyProductAbstractLocalizedAttributesQuery
      */
-    public function queryAbstractProductAttributeCollection($idProductAbstract, $fkCurrentLocale)
+    public function queryProductAbstractAttributeCollection($idProductAbstract, $fkCurrentLocale)
     {
         $query = SpyProductAbstractLocalizedAttributesQuery::create();
         $query
@@ -353,7 +353,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
     // @todo refactor queries from below
 
-    public function queryConcreteProductByAbstractProduct(SpyProductAbstract $productAbstract)
+    public function queryConcreteProductByProductAbstract(SpyProductAbstract $productAbstract)
     {
         return SpyProductQuery::create()
             ->filterByFkProductAbstract($productAbstract->getIdProductAbstract());

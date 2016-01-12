@@ -44,7 +44,7 @@ class WishlistStorage implements WishlistStorageInterface
         foreach ($wishlist->getItems() as $item) {
             $productData = $this
                 ->productClient
-                ->getAbstractProductFromStorageByIdForCurrentLocale($item->getIdProductAbstract());
+                ->getProductAbstractFromStorageByIdForCurrentLocale($item->getIdProductAbstract());
 
             foreach ($productData['concrete_products'] as $product) {
                 if ($product['sku'] !== $item->getSku()) {

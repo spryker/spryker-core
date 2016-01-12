@@ -68,11 +68,11 @@ class DbFixturesLoader
             ->setFkTaxSet($ids['idTaxSet'])
             ->setAttributes('{}');
         $productAbstractEntity->save();
-        $ids['idAbstractProduct'] = $productAbstractEntity->getIdProductAbstract();
+        $ids['idProductAbstract'] = $productAbstractEntity->getIdProductAbstract();
 
         $productEntity = new SpyProduct();
         $productEntity->setSku('DEF456')
-            ->setFkProductAbstract($ids['idAbstractProduct'])
+            ->setFkProductAbstract($ids['idProductAbstract'])
             ->setAttributes('{}');
         $productEntity->save();
         $ids['idConcreteProduct'] = $productEntity->getIdProduct();

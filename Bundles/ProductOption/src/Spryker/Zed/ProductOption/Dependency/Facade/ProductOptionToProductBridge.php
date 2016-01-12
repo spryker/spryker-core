@@ -45,17 +45,17 @@ class ProductOptionToProductBridge implements ProductOptionToProductInterface
      *
      * @return int
      */
-    public function getAbstractProductIdByConcreteSku($sku)
+    public function getProductAbstractIdByConcreteSku($sku)
     {
-        return $this->productFacade->getAbstractProductIdByConcreteSku($sku);
+        return $this->productFacade->getProductAbstractIdByConcreteSku($sku);
     }
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      */
-    public function touchProductActive($idAbstractProduct)
+    public function touchProductActive($idProductAbstract)
     {
-        $this->productFacade->touchProductActive($idAbstractProduct);
+        $this->productFacade->touchProductActive($idProductAbstract);
     }
 
 }

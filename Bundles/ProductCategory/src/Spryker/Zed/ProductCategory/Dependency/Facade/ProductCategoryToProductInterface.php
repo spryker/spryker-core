@@ -16,7 +16,7 @@ interface ProductCategoryToProductInterface
      *
      * @return bool
      */
-    public function hasAbstractProduct($sku);
+    public function hasProductAbstract($sku);
 
     /**
      * @param string $sku
@@ -25,6 +25,6 @@ interface ProductCategoryToProductInterface
      *
      * @return int
      */
-    public function getAbstractProductIdBySku($sku);
+    public function getProductAbstractIdBySku($sku);
 
 }

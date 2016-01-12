@@ -7,7 +7,7 @@
 namespace Functional\Spryker\Zed\ProductCategory;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
@@ -89,7 +89,7 @@ class ProductCategoryFacadeTest extends Test
 
         $locale = $this->localeFacade->createLocale($localeName);
 
-        $productAbstractTransfer = new AbstractProductTransfer();
+        $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setSku($abstractSku);
         $productAbstractTransfer->setAttributes([]);
         $localizedAttributes = new LocalizedAttributesTransfer();
@@ -97,7 +97,7 @@ class ProductCategoryFacadeTest extends Test
         $localizedAttributes->setLocale($locale);
         $localizedAttributes->setName($abstractName);
         $productAbstractTransfer->addLocalizedAttributes($localizedAttributes);
-        $idProductAbstract = $this->productFacade->createAbstractProduct($productAbstractTransfer);
+        $idProductAbstract = $this->productFacade->createProductAbstract($productAbstractTransfer);
 
         $concreteProductTransfer = new ConcreteProductTransfer();
         $concreteProductTransfer->setSku($concreteSku);

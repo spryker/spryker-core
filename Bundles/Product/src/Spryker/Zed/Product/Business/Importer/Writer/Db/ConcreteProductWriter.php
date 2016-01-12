@@ -54,7 +54,7 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
                 ':sku' => $product->getSku(),
                 ':isActive' => (int) $product->getIsActive(),
                 ':attributes' => json_encode($product->getAttributes()),
-                ':abstractProductSku' => $product->getAbstractProductSku(),
+                ':productAbstractSku' => $product->getProductAbstractSku(),
             ]
         );
 
@@ -85,7 +85,7 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
             sprintf(
                 'INSERT INTO %1$s
                   (%2$s, %3$s, %4$s , %5$s) VALUES
-                  (:sku, :isActive, (SELECT %6$s FROM %7$s WHERE %8$s = :abstractProductSku), :attributes)
+                  (:sku, :isActive, (SELECT %6$s FROM %7$s WHERE %8$s = :productAbstractSku), :attributes)
                   ON DUPLICATE KEY UPDATE
                       %2$s=VALUES(%2$s),
                       %3$s=VALUES(%3$s),
