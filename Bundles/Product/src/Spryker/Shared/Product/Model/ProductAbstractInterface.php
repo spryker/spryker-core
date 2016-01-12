@@ -6,7 +6,7 @@
 
 namespace Spryker\Shared\Product\Model;
 
-interface AbstractProductInterface
+interface ProductAbstractInterface
 {
 
     /**
