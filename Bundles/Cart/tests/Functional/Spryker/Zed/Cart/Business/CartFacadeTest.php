@@ -122,7 +122,7 @@ class CartFacadeTest extends Test
         $changedItem = $cartItems[1];
         $this->assertEquals(3, $changedItem->getQuantity());
 
-        /* @TODO check key names */
+        /* @TODO check key names https://github.com/spryker/spryker/issues/1128 */
         $changedItem = $cartItems['CONCRETE1'];
         $this->assertEquals(1, $changedItem->getQuantity());
     }
