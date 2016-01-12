@@ -7,12 +7,12 @@
 namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Intl\Locale;
@@ -37,7 +37,7 @@ class Collector
 
     /**
      * @param TouchQueryContainer $touchQueryContainer
-     * @param LocaleFacade $localeFacade
+     * @param CollectorToLocaleInterface $localeFacade
      * @param ExporterInterface $exporter
      */
     public function __construct(TouchQueryContainer $touchQueryContainer, CollectorToLocaleInterface $localeFacade, ExporterInterface $exporter)
@@ -61,13 +61,11 @@ class Collector
         if (isset($output)) {
             $output->writeln('');
             $output->writeln(
-                sprintf('<fg=white>%s</fg=white>: <fg=yellow>%d out of %d collectors available:</fg=yellow>',
-                    $locale->getLocaleName(),
-                    count($types),
-                    count($availableTypes)
+                sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>',
+                    $locale->getLocaleName()
                 )
             );
-            $output->writeln('');
+            $output->writeln('<fg=yellow>-------------</fg=yellow>');
         }
 
         foreach ($availableTypes as $type) {
@@ -106,6 +104,14 @@ class Collector
 
         $results = [];
 
+        $types = array_keys($this->exporter->getCollectorPlugins());
+        $availableTypes = $this->touchQueryContainer->queryExportTypes()->find();
+
+        sprintf('<fg=yellow>%d out of %d collectors available:</fg=yellow>',
+            count($types),
+            count($availableTypes)
+        );
+
         foreach ($locales as $locale) {
             $localeTransfer = $this->localeFacade->getLocale($locale);
             $results[$locale] = $this->exportForLocale($localeTransfer, $output);
@@ -141,6 +147,26 @@ class Collector
                 )
             );
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllCollectorTypes()
+    {
+        return $this->touchQueryContainer
+            ->queryExportTypes()
+            ->setFormatter(new SimpleArrayFormatter())
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    public function getEnabledCollectorTypes()
+    {
+        return array_keys($this->exporter->getCollectorPlugins());
     }
 
 }

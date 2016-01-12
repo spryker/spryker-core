@@ -107,4 +107,24 @@ class CollectorFacade extends AbstractFacade
         return $this->getFactory()->createKeyValueMarker()->deleteTimestamps($keys);
     }
 
+    /**
+     * @return array
+     */
+    public function getAllCollectorTypes()
+    {
+        $exporter = $this->getFactory()->createYvesKeyValueExporter();
+
+        return $exporter->getAllCollectorTypes();
+    }
+
+    /**
+     * @return array
+     */
+    public function getEnabledCollectorTypes()
+    {
+        $exporter = $this->getFactory()->createYvesKeyValueExporter();
+
+        return $exporter->getEnabledCollectorTypes();
+    }
+
 }

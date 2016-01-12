@@ -22,26 +22,28 @@ abstract class AbstractCollectorConsole extends Console
     protected function buildSummary(array $resultData)
     {
         if (empty($resultData)) {
-            return '';
+            return PHP_EOL . '<fg=yellow>Nothing exported.</fg=yellow>' . PHP_EOL;
         }
 
         $summary = PHP_EOL;
 
         foreach ($resultData as $type => $result) {
             $summary .= sprintf(
-                '<fg=yellow>Export details for</fg=yellow> <fg=green>%s</fg=green><fg=yellow>:</fg=yellow>' . PHP_EOL .
+                '<fg=green>%s</fg=green><fg=yellow> </fg=yellow><fg=yellow></fg=yellow>' . PHP_EOL .
                 '<fg=white>Total: %d</fg=white>' . PHP_EOL .
                 '<fg=white>Processed: %d</fg=white>' . PHP_EOL .
                 '<fg=white>Succeeded: %s</fg=white>' . PHP_EOL .
                 '<fg=white>Deleted: %s</fg=white>' . PHP_EOL .
                 '<fg=white>Failed: %s </fg=white>' . PHP_EOL,
-                $type,
+                mb_strtoupper($type),
                 $result->getTotalCount(),
                 $result->getProcessedCount(),
                 $result->getSuccessCount() > 0 ? '<fg=green>' . $result->getSuccessCount() . '</fg=green>' : $result->getSuccessCount(),
                 $result->getDeletedCount() > 0 ? '<fg=yellow>' . $result->getDeletedCount() . '</fg=yellow>' : $result->getDeletedCount(),
                 $result->isFailed() ? '<fg=red>' . $result->getFailedCount() . '</fg=red>' : $result->getFailedCount()
             );
+
+            $summary .= PHP_EOL;
         }
 
         return $summary . PHP_EOL;
@@ -57,13 +59,13 @@ abstract class AbstractCollectorConsole extends Console
         $summary = '';
         foreach ($results as $localeName => $summaryData) {
             $summary .= PHP_EOL;
-            $summary .= sprintf('Locale: <fg=white>%s</fg=white>', $localeName);
+            $summary .= sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>', $localeName);
             $summary .= PHP_EOL;
-            $summary .= '-------------';
+            $summary .= '<fg=yellow>-------------</fg=yellow>';
             $summary .= $this->buildSummary($summaryData);
         }
 
-        $summary .= PHP_EOL . 'Export to Yves finished.' . PHP_EOL;
+        $summary .= PHP_EOL . 'Export finished.' . PHP_EOL;
 
         return $summary;
     }

@@ -101,6 +101,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->addSelectColumn(SpyTouchTableMap::COL_ITEM_TYPE)
             ->setDistinct()
+            ->orderBy(SpyTouchTableMap::COL_ITEM_TYPE)
             ->setFormatter(new PropelArraySetFormatter());
 
         return $query;
