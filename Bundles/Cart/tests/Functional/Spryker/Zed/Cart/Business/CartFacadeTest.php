@@ -197,11 +197,11 @@ class CartFacadeTest extends Test
             ->setName(self::PRICE_TYPE_DEFAULT)
             ->save();
 
-        $abstractProduct1 = SpyProductAbstractQuery::create()
+        $productAbstract1 = SpyProductAbstractQuery::create()
             ->filterBySku(self::DUMMY_1_SKU_PRODUCT_ABSTRACT)
             ->findOneOrCreate();
 
-        $abstractProduct1
+        $productAbstract1
             ->setAttributes('{}')
             ->save();
 
@@ -210,7 +210,7 @@ class CartFacadeTest extends Test
             ->findOneOrCreate();
 
         $concreteProduct1
-            ->setSpyProductAbstract($abstractProduct1)
+            ->setSpyProductAbstract($productAbstract1)
             ->setAttributes('{}')
             ->save();
 
@@ -225,11 +225,11 @@ class CartFacadeTest extends Test
             ->setIsComplete(1)
             ->save();
 
-        $abstractProduct2 = SpyProductAbstractQuery::create()
+        $productAbstract2 = SpyProductAbstractQuery::create()
             ->filterBySku(self::DUMMY_2_SKU_PRODUCT_ABSTRACT)
             ->findOneOrCreate();
 
-        $abstractProduct2
+        $productAbstract2
             ->setSku(self::DUMMY_2_SKU_PRODUCT_ABSTRACT)
             ->setAttributes('{}')
             ->save();
@@ -240,7 +240,7 @@ class CartFacadeTest extends Test
 
         $concreteProduct2
             ->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
-            ->setSpyProductAbstract($abstractProduct2)
+            ->setSpyProductAbstract($productAbstract2)
             ->setAttributes('{}')
             ->save();
 
@@ -257,7 +257,7 @@ class CartFacadeTest extends Test
 
         SpyPriceProductQuery::create()
             ->filterByProduct($concreteProduct1)
-            ->filterBySpyProductAbstract($abstractProduct1)
+            ->filterBySpyProductAbstract($productAbstract1)
             ->filterByPriceType($defaultPriceType)
             ->findOneOrCreate()
             ->setPrice(100)
@@ -265,7 +265,7 @@ class CartFacadeTest extends Test
 
         SpyPriceProductQuery::create()
             ->filterByProduct($concreteProduct2)
-            ->filterBySpyProductAbstract($abstractProduct2)
+            ->filterBySpyProductAbstract($productAbstract2)
             ->filterByPriceType($defaultPriceType)
             ->findOneOrCreate()
             ->setPrice(100)

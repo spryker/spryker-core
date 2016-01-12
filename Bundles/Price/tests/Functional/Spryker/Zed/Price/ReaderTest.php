@@ -161,15 +161,15 @@ class ReaderTest extends Test
         $priceType2 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_2)->findOneOrCreate();
         $priceType2->setName(self::DUMMY_PRICE_TYPE_2)->save();
 
-        $abstractProduct = SpyProductAbstractQuery::create()
+        $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku(self::DUMMY_SKU_PRODUCT_ABSTRACT)
             ->findOne();
 
-        if ($abstractProduct === null) {
-            $abstractProduct = new SpyProductAbstract();
+        if ($productAbstract === null) {
+            $productAbstract = new SpyProductAbstract();
         }
 
-        $abstractProduct->setSku(self::DUMMY_SKU_PRODUCT_ABSTRACT)
+        $productAbstract->setSku(self::DUMMY_SKU_PRODUCT_ABSTRACT)
             ->setAttributes('{}')
             ->save();
 
@@ -181,19 +181,19 @@ class ReaderTest extends Test
             $concreteProduct = new SpyProduct();
         }
         $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
-            ->setSpyProductAbstract($abstractProduct)
+            ->setSpyProductAbstract($productAbstract)
             ->setAttributes('{}')
             ->save();
 
         $this->deletePriceEntitiesConcrete($concreteProduct);
         $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
-            ->setSpyProductAbstract($abstractProduct)
+            ->setSpyProductAbstract($productAbstract)
             ->setAttributes('{}')
             ->save();
 
-        $this->deletePriceEntitiesAbstract($abstractProduct);
+        $this->deletePriceEntitiesAbstract($productAbstract);
         (new SpyPriceProduct())
-            ->setSpyProductAbstract($abstractProduct)
+            ->setSpyProductAbstract($productAbstract)
             ->setPriceType($priceType1)
             ->setPrice(100)
             ->save();

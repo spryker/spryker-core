@@ -172,14 +172,14 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param AbstractProductTransfer $abstractProductTransfer
+     * @param AbstractProductTransfer $productAbstractTransfer
      *
      * @return SpyProductCategory[]
      */
-    public function getCategoriesByAbstractProduct(AbstractProductTransfer $abstractProductTransfer)
+    public function getCategoriesByAbstractProduct(AbstractProductTransfer $productAbstractTransfer)
     {
         return $this->productCategoryQueryContainer
-            ->queryLocalizedProductCategoryMappingByIdProduct($abstractProductTransfer->getIdProductAbstract())
+            ->queryLocalizedProductCategoryMappingByIdProduct($productAbstractTransfer->getIdProductAbstract())
             ->find();
     }
 

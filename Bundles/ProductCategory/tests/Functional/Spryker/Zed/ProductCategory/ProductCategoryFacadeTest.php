@@ -89,15 +89,15 @@ class ProductCategoryFacadeTest extends Test
 
         $locale = $this->localeFacade->createLocale($localeName);
 
-        $abstractProductTransfer = new AbstractProductTransfer();
-        $abstractProductTransfer->setSku($abstractSku);
-        $abstractProductTransfer->setAttributes([]);
+        $productAbstractTransfer = new AbstractProductTransfer();
+        $productAbstractTransfer->setSku($abstractSku);
+        $productAbstractTransfer->setAttributes([]);
         $localizedAttributes = new LocalizedAttributesTransfer();
         $localizedAttributes->setAttributes([]);
         $localizedAttributes->setLocale($locale);
         $localizedAttributes->setName($abstractName);
-        $abstractProductTransfer->addLocalizedAttributes($localizedAttributes);
-        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProductTransfer);
+        $productAbstractTransfer->addLocalizedAttributes($localizedAttributes);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($productAbstractTransfer);
 
         $concreteProductTransfer = new ConcreteProductTransfer();
         $concreteProductTransfer->setSku($concreteSku);

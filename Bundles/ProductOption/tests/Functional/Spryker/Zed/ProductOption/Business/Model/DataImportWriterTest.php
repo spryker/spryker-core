@@ -277,16 +277,16 @@ class DataImportWriterTest extends Test
 
     private function createConcreteProduct()
     {
-        $abstractProduct = (new SpyProductAbstract())
+        $productAbstract = (new SpyProductAbstract())
             ->setSku('ABC123')
             ->setAttributes('{}');
-        $abstractProduct->save();
+        $productAbstract->save();
 
         $product = (new SpyProduct())
             ->setSku('ABC123')
             ->setAttributes('{}')
             ->setIsActive(true)
-            ->setSpyProductAbstract($abstractProduct);
+            ->setSpyProductAbstract($productAbstract);
 
         $product->save();
 

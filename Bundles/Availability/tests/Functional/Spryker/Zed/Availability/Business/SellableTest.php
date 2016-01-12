@@ -89,15 +89,15 @@ class SellableTest extends Test
     {
         $this->setTestData();
 
-        $abstractProduct = new SpyProductAbstract();
-        $abstractProduct
+        $productAbstract = new SpyProductAbstract();
+        $productAbstract
             ->setSku('AP1337')
             ->setAttributes('{}');
 
         $concreteProduct = new SpyProduct();
         $concreteProduct
             ->setSku('P1337')
-            ->setSpyProductAbstract($abstractProduct)
+            ->setSpyProductAbstract($productAbstract)
             ->setAttributes('{}');
 
         $stock = new SpyStock();
@@ -119,21 +119,21 @@ class SellableTest extends Test
      */
     protected function setTestData()
     {
-        $abstractProduct = SpyProductAbstractQuery::create()
+        $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku('test2')
             ->findOne();
 
-        if (!$abstractProduct) {
-            $abstractProduct = new SpyProductAbstract();
+        if (!$productAbstract) {
+            $productAbstract = new SpyProductAbstract();
         }
 
-        $abstractProduct
+        $productAbstract
             ->setSku('test2')
             ->setAttributes('{}')
             ->save();
 
         $productEntity = SpyProductQuery::create()
-            ->filterByFkProductAbstract($abstractProduct->getIdProductAbstract())
+            ->filterByFkProductAbstract($productAbstract->getIdProductAbstract())
             ->filterBySku('test1')
             ->findOne();
 
@@ -142,7 +142,7 @@ class SellableTest extends Test
         }
 
         $productEntity
-            ->setFkProductAbstract($abstractProduct->getIdProductAbstract())
+            ->setFkProductAbstract($productAbstract->getIdProductAbstract())
             ->setSku('test1')
             ->setAttributes('{}')
             ->save();

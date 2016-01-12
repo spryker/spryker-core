@@ -27,13 +27,13 @@ interface ProductManagerInterface
     public function hasAbstractProduct($sku);
 
     /**
-     * @param AbstractProductTransfer $abstractProductTransfer
+     * @param AbstractProductTransfer $productAbstractTransfer
      *
      * @throws AbstractProductExistsException
      *
      * @return int
      */
-    public function createAbstractProduct(AbstractProductTransfer $abstractProductTransfer);
+    public function createAbstractProduct(AbstractProductTransfer $productAbstractTransfer);
 
     /**
      * @param string $sku

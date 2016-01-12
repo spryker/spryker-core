@@ -353,10 +353,10 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
     // @todo refactor queries from below
 
-    public function queryConcreteProductByAbstractProduct(SpyProductAbstract $abstractProduct)
+    public function queryConcreteProductByAbstractProduct(SpyProductAbstract $productAbstract)
     {
         return SpyProductQuery::create()
-            ->filterByFkProductAbstract($abstractProduct->getIdProductAbstract());
+            ->filterByFkProductAbstract($productAbstract->getIdProductAbstract());
     }
 
 }

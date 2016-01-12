@@ -72,8 +72,8 @@ class ProductCartPluginTest extends Test
         $taxSetEntity->addSpyTaxRate($taxRateEntity)
             ->setName(self::TAX_SET_NAME);
 
-        $abstractProductEntity = new SpyProductAbstract();
-        $abstractProductEntity->setSpyTaxSet($taxSetEntity)
+        $productAbstractEntity = new SpyProductAbstract();
+        $productAbstractEntity->setSpyTaxSet($taxSetEntity)
             ->setAttributes('')
             ->setSku(self::SKU_PRODUCT_ABSTRACT);
 
@@ -83,7 +83,7 @@ class ProductCartPluginTest extends Test
             ->setFkLocale($localeTransfer->getIdLocale());
 
         $concreteProductEntity = new SpyProduct();
-        $concreteProductEntity->setSpyProductAbstract($abstractProductEntity)
+        $concreteProductEntity->setSpyProductAbstract($productAbstractEntity)
             ->setAttributes('')
             ->addSpyProductLocalizedAttributes($localizedAttributesEntity)
             ->setSku(self::SKU_CONCRETE_PRODUCT)
@@ -100,7 +100,7 @@ class ProductCartPluginTest extends Test
 
         $this->assertEquals(self::SKU_PRODUCT_ABSTRACT, $expandedItemTransfer->getAbstractSku());
         $this->assertEquals(self::SKU_CONCRETE_PRODUCT, $expandedItemTransfer->getSku());
-        $this->assertEquals($abstractProductEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
+        $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
         $this->assertEquals($concreteProductEntity->getIdProduct(), $expandedItemTransfer->getId());
         $expandedTSetTransfer = $expandedItemTransfer->getTaxSet();
         $this->assertNotNull($expandedTSetTransfer);

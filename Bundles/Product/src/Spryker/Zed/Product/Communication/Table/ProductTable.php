@@ -87,16 +87,16 @@ class ProductTable extends AbstractTable
     {
         $queryResults = $this->runQuery($this->productQuery, $config);
 
-        $abstractProducts = [];
+        $productAbstractCollection = [];
         foreach ($queryResults as $item) {
-            $abstractProducts[] = [
+            $productAbstractCollection[] = [
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 SpyProductAbstractTableMap::COL_SKU => $item[SpyProductAbstractTableMap::COL_SKU],
                 self::OPTIONS => implode(' ', $this->createActionColumn($item)),
             ];
         }
 
-        return $abstractProducts;
+        return $productAbstractCollection;
     }
 
     /**

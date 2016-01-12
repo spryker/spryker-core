@@ -52,11 +52,11 @@ interface ProductCategoryManagerInterface
     public function getProductsByCategory($idCategory, LocaleTransfer $locale);
 
     /**
-     * @param AbstractProductTransfer $abstractProductTransfer
+     * @param AbstractProductTransfer $productAbstractTransfer
      *
      * @return SpyProductCategory[]
      */
-    public function getCategoriesByAbstractProduct(AbstractProductTransfer $abstractProductTransfer);
+    public function getCategoriesByAbstractProduct(AbstractProductTransfer $productAbstractTransfer);
 
     /**
      * @param int $idCategory

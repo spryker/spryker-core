@@ -152,15 +152,15 @@ class CheckoutFacadeTest extends Test
     public function testCheckoutResponseContainsErrorIfStockNotSufficient()
     {
         $checkoutRequest = $this->getBaseCheckoutTransfer();
-        $abstractProduct1 = new SpyProductAbstract();
-        $abstractProduct1
+        $productAbstract1 = new SpyProductAbstract();
+        $productAbstract1
             ->setSku('AOSB1339')
             ->setAttributes('{}');
         $concreteProduct1 = new SpyProduct();
         $concreteProduct1
             ->setSku('OSB1339')
             ->setAttributes('{}')
-            ->setSpyProductAbstract($abstractProduct1)
+            ->setSpyProductAbstract($productAbstract1)
             ->save();
 
         $stock = new SpyStock();
@@ -225,25 +225,25 @@ class CheckoutFacadeTest extends Test
             ->setIso2Code('xi')
             ->save();
 
-        $abstractProduct1 = new SpyProductAbstract();
-        $abstractProduct1
+        $productAbstract1 = new SpyProductAbstract();
+        $productAbstract1
             ->setSku('AOSB1337')
             ->setAttributes('{}');
         $concreteProduct1 = new SpyProduct();
         $concreteProduct1
             ->setSku('OSB1337')
             ->setAttributes('{}')
-            ->setSpyProductAbstract($abstractProduct1)
+            ->setSpyProductAbstract($productAbstract1)
             ->save();
 
-        $abstractProduct2 = new SpyProductAbstract();
-        $abstractProduct2
+        $productAbstract2 = new SpyProductAbstract();
+        $productAbstract2
             ->setSku('AOSB1338')
             ->setAttributes('{}');
         $concreteProduct2 = new SpyProduct();
         $concreteProduct2
             ->setSku('OSB1338')
-            ->setSpyProductAbstract($abstractProduct2)
+            ->setSpyProductAbstract($productAbstract2)
             ->setAttributes('{}')
             ->save();
 

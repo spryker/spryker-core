@@ -147,19 +147,19 @@ class ProductFacadeTest extends Test
      */
     public function testCreateAbstractProductCreatesAndReturnsId()
     {
-        $abstractProductQuery = $this->productQueryContainer->queryAbstractProductBySku('AnAbstractProductSku');
+        $productAbstractQuery = $this->productQueryContainer->queryAbstractProductBySku('AnAbstractProductSku');
 
-        $this->assertEquals(0, $abstractProductQuery->count());
+        $this->assertEquals(0, $productAbstractQuery->count());
 
-        $abstractProduct = new AbstractProductTransfer();
-        $abstractProduct->setSku('AnAbstractProductSku');
-        $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
+        $productAbstract = new AbstractProductTransfer();
+        $productAbstract->setSku('AnAbstractProductSku');
+        $productAbstract->setAttributes([]);
+        $productAbstract->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
-        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($productAbstract);
 
-        $this->assertEquals(1, $abstractProductQuery->count());
-        $this->assertEquals($idProductAbstract, $abstractProductQuery->findOne()->getIdProductAbstract());
+        $this->assertEquals(1, $productAbstractQuery->count());
+        $this->assertEquals($idProductAbstract, $productAbstractQuery->findOne()->getIdProductAbstract());
     }
 
     /**
@@ -173,12 +173,12 @@ class ProductFacadeTest extends Test
 
         $this->assertEquals(0, $concreteProductQuery->count());
 
-        $abstractProduct = new AbstractProductTransfer();
-        $abstractProduct->setSku('AnAbstractProductSku');
-        $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
+        $productAbstract = new AbstractProductTransfer();
+        $productAbstract->setSku('AnAbstractProductSku');
+        $productAbstract->setAttributes([]);
+        $productAbstract->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
-        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($productAbstract);
 
         $concreteProduct = new ConcreteProductTransfer();
         $concreteProduct->setSku('AConcreteProductSku');
@@ -202,12 +202,12 @@ class ProductFacadeTest extends Test
     {
         $this->assertFalse($this->productFacade->hasAbstractProduct('AProductSku'));
 
-        $abstractProduct = new AbstractProductTransfer();
-        $abstractProduct->setSku('AProductSku');
-        $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
+        $productAbstract = new AbstractProductTransfer();
+        $productAbstract->setSku('AProductSku');
+        $productAbstract->setAttributes([]);
+        $productAbstract->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
-        $this->productFacade->createAbstractProduct($abstractProduct);
+        $this->productFacade->createAbstractProduct($productAbstract);
 
         $this->assertTrue($this->productFacade->hasAbstractProduct('AProductSku'));
     }
@@ -223,11 +223,11 @@ class ProductFacadeTest extends Test
 
         $this->assertEquals(0, $concreteProductQuery->count());
 
-        $abstractProduct = new AbstractProductTransfer();
-        $abstractProduct->setSku('AnAbstractProductSku');
-        $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
-        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
+        $productAbstract = new AbstractProductTransfer();
+        $productAbstract->setSku('AnAbstractProductSku');
+        $productAbstract->setAttributes([]);
+        $productAbstract->setLocalizedAttributes(new LocalizedAttributesTransfer());
+        $idProductAbstract = $this->productFacade->createAbstractProduct($productAbstract);
 
         $concreteProduct = new ConcreteProductTransfer();
         $concreteProduct->setSku('AConcreteProductSku');
@@ -249,12 +249,12 @@ class ProductFacadeTest extends Test
     {
         $this->assertFalse($this->productFacade->hasConcreteProduct('AConcreteProductSku'));
 
-        $abstractProduct = new AbstractProductTransfer();
-        $abstractProduct->setSku('AnAbstractProductSku');
-        $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
+        $productAbstract = new AbstractProductTransfer();
+        $productAbstract->setSku('AnAbstractProductSku');
+        $productAbstract->setAttributes([]);
+        $productAbstract->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
-        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($productAbstract);
 
         $concreteProduct = new ConcreteProductTransfer();
         $concreteProduct->setSku('AConcreteProductSku');
@@ -276,11 +276,11 @@ class ProductFacadeTest extends Test
         $urlString = '/someUrl';
         $locale = $this->localeFacade->createLocale('ABCDE');
 
-        $abstractProduct = new AbstractProductTransfer();
-        $abstractProduct->setSku('AnAbstractProductSku');
-        $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
-        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
+        $productAbstract = new AbstractProductTransfer();
+        $productAbstract->setSku('AnAbstractProductSku');
+        $productAbstract->setAttributes([]);
+        $productAbstract->setLocalizedAttributes(new LocalizedAttributesTransfer());
+        $idProductAbstract = $this->productFacade->createAbstractProduct($productAbstract);
         $url = $this->productFacade->createProductUrl('AnAbstractProductSku', $urlString, $locale);
 
         $this->assertTrue($this->urlFacade->hasUrl($urlString));
@@ -301,12 +301,12 @@ class ProductFacadeTest extends Test
     {
         $this->assertFalse($this->productFacade->hasConcreteProduct(self::SKU_CONCRETE_PRODUCT));
 
-        $abstractProduct = new AbstractProductTransfer();
-        $abstractProduct->setSku(self::SKU_PRODUCT_ABSTRACT);
-        $abstractProduct->setAttributes([]);
-        $abstractProduct->setLocalizedAttributes(new LocalizedAttributesTransfer());
+        $productAbstract = new AbstractProductTransfer();
+        $productAbstract->setSku(self::SKU_PRODUCT_ABSTRACT);
+        $productAbstract->setAttributes([]);
+        $productAbstract->setLocalizedAttributes(new LocalizedAttributesTransfer());
 
-        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProduct);
+        $idProductAbstract = $this->productFacade->createAbstractProduct($productAbstract);
 
         $concreteProduct = new ConcreteProductTransfer();
         $concreteProduct->setSku(self::SKU_CONCRETE_PRODUCT);
@@ -338,8 +338,8 @@ class ProductFacadeTest extends Test
         $taxSetEntity->addSpyTaxRate($taxRateEntity)
             ->setName(self::TAX_SET_NAME);
 
-        $abstractProductEntity = new SpyProductAbstract();
-        $abstractProductEntity->setSpyTaxSet($taxSetEntity)
+        $productAbstractEntity = new SpyProductAbstract();
+        $productAbstractEntity->setSpyTaxSet($taxSetEntity)
             ->setAttributes('')
             ->setSku(self::SKU_PRODUCT_ABSTRACT);
 
@@ -349,7 +349,7 @@ class ProductFacadeTest extends Test
             ->setFkLocale($localeTransfer->getIdLocale());
 
         $concreteProductEntity = new SpyProduct();
-        $concreteProductEntity->setSpyProductAbstract($abstractProductEntity)
+        $concreteProductEntity->setSpyProductAbstract($productAbstractEntity)
             ->setAttributes('')
             ->addSpyProductLocalizedAttributes($localizedAttributesEntity)
             ->setSku(self::SKU_CONCRETE_PRODUCT)
@@ -360,7 +360,7 @@ class ProductFacadeTest extends Test
         $this->assertEquals(self::SKU_CONCRETE_PRODUCT, $concreteProductTransfer->getSku());
         $this->assertEquals(self::SKU_PRODUCT_ABSTRACT, $concreteProductTransfer->getAbstractProductSku());
         $this->assertEquals($concreteProductEntity->getIdProduct(), $concreteProductTransfer->getIdConcreteProduct());
-        $this->assertEquals($abstractProductEntity->getIdProductAbstract(), $concreteProductTransfer->getIdProductAbstract());
+        $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $concreteProductTransfer->getIdProductAbstract());
 
         $taxSetTransfer = $concreteProductTransfer->getTaxSet();
         $this->assertEquals(self::TAX_SET_NAME, $taxSetTransfer->getName());

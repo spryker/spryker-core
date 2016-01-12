@@ -62,7 +62,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @var SpyProductAbstract[]
      */
-    protected $abstractProductsBySkuCache = [];
+    protected $productAbstractCollectionBySkuCache = [];
 
     /**
      * @var SpyProduct[]
@@ -94,35 +94,35 @@ class ProductManager implements ProductManagerInterface
      */
     public function hasAbstractProduct($sku)
     {
-        $abstractProductQuery = $this->productQueryContainer->queryAbstractProductBySku($sku);
+        $productAbstractQuery = $this->productQueryContainer->queryAbstractProductBySku($sku);
 
-        return $abstractProductQuery->count() > 0;
+        return $productAbstractQuery->count() > 0;
     }
 
     /**
-     * @param AbstractProductTransfer $abstractProductTransfer
+     * @param AbstractProductTransfer $productAbstractTransfer
      *
      * @throws AbstractProductExistsException
      * @throws PropelException
      *
      * @return int
      */
-    public function createAbstractProduct(AbstractProductTransfer $abstractProductTransfer)
+    public function createAbstractProduct(AbstractProductTransfer $productAbstractTransfer)
     {
-        $sku = $abstractProductTransfer->getSku();
+        $sku = $productAbstractTransfer->getSku();
 
-        $encodedAttributes = $this->encodeAttributes($abstractProductTransfer->getAttributes());
+        $encodedAttributes = $this->encodeAttributes($productAbstractTransfer->getAttributes());
 
-        $abstractProduct = new SpyProductAbstract();
-        $abstractProduct
+        $productAbstract = new SpyProductAbstract();
+        $productAbstract
             ->setAttributes($encodedAttributes)
             ->setSku($sku);
 
-        $abstractProduct->save();
+        $productAbstract->save();
 
-        $idProductAbstract = $abstractProduct->getPrimaryKey();
-        $abstractProductTransfer->setIdProductAbstract($idProductAbstract);
-        $this->createAbstractProductAttributes($abstractProductTransfer);
+        $idProductAbstract = $productAbstract->getPrimaryKey();
+        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $this->createAbstractProductAttributes($productAbstractTransfer);
 
         return $idProductAbstract;
     }
@@ -137,9 +137,9 @@ class ProductManager implements ProductManagerInterface
     public function getAbstractProductIdBySku($sku)
     {
         if (!isset($this->abstractProductsBySkuCache[$sku])) {
-            $abstractProduct = $this->productQueryContainer->queryAbstractProductBySku($sku)->findOne();
+            $productAbstract = $this->productQueryContainer->queryAbstractProductBySku($sku)->findOne();
 
-            if (!$abstractProduct) {
+            if (!$productAbstract) {
                 throw new MissingProductException(
                     sprintf(
                         'Tried to retrieve an abstract product with sku %s, but it does not exist.',
@@ -148,7 +148,7 @@ class ProductManager implements ProductManagerInterface
                 );
             }
 
-            $this->abstractProductsBySkuCache[$sku] = $abstractProduct;
+            $this->abstractProductsBySkuCache[$sku] = $productAbstract;
         }
 
         return $this->abstractProductsBySkuCache[$sku]->getPrimaryKey();
@@ -174,32 +174,32 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param AbstractProductTransfer $abstractProductTransfer
+     * @param AbstractProductTransfer $productAbstractTransfer
      *
      * @throws AbstractProductAttributesExistException
      * @throws PropelException
      *
      * @return void
      */
-    protected function createAbstractProductAttributes(AbstractProductTransfer $abstractProductTransfer)
+    protected function createAbstractProductAttributes(AbstractProductTransfer $productAbstractTransfer)
     {
-        $idProductAbstract = $abstractProductTransfer->getIdProductAbstract();
+        $idProductAbstract = $productAbstractTransfer->getIdProductAbstract();
 
-        foreach ($abstractProductTransfer->getLocalizedAttributes() as $localizedAttributes) {
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
             if ($this->hasAbstractProductAttributes($idProductAbstract, $locale)) {
                 continue;
             }
             $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
 
-            $abstractProductAttributesEntity = new SpyProductAbstractLocalizedAttributes();
-            $abstractProductAttributesEntity
+            $productAbstractAttributesEntity = new SpyProductAbstractLocalizedAttributes();
+            $productAbstractAttributesEntity
                 ->setFkProductAbstract($idProductAbstract)
                 ->setFkLocale($locale->getIdLocale())
                 ->setName($localizedAttributes->getName())
                 ->setAttributes($encodedAttributes);
 
-            $abstractProductAttributesEntity->save();
+            $productAbstractAttributesEntity->save();
         }
     }
 
@@ -497,11 +497,11 @@ class ProductManager implements ProductManagerInterface
             );
         }
 
-        $abstractProduct = $concreteProduct->getSpyProductAbstract();
+        $productAbstract = $concreteProduct->getSpyProductAbstract();
 
         $effectiveTaxRate = 0;
 
-        $taxSetEntity = $abstractProduct->getSpyTaxSet();
+        $taxSetEntity = $productAbstract->getSpyTaxSet();
         if ($taxSetEntity === null) {
             return $effectiveTaxRate;
         }

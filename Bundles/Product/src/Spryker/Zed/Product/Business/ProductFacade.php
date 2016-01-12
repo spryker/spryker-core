@@ -156,15 +156,15 @@ class ProductFacade extends AbstractFacade
     }
 
     /**
-     * @param AbstractProductTransfer $abstractProductTransfer
+     * @param AbstractProductTransfer $productAbstractTransfer
      *
      * @return int
      */
-    public function createAbstractProduct(AbstractProductTransfer $abstractProductTransfer)
+    public function createAbstractProduct(AbstractProductTransfer $productAbstractTransfer)
     {
         $productManager = $this->getFactory()->createProductManager();
 
-        return $productManager->createAbstractProduct($abstractProductTransfer);
+        return $productManager->createAbstractProduct($productAbstractTransfer);
     }
 
     /**

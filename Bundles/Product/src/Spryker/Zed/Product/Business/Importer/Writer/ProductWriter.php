@@ -16,7 +16,7 @@ class ProductWriter implements ProductWriterInterface
     /**
      * @var AbstractProductWriterInterface
      */
-    protected $abstractProductWriter;
+    protected $productAbstractWriter;
 
     /**
      * @var ConcreteProductWriterInterface
@@ -24,14 +24,14 @@ class ProductWriter implements ProductWriterInterface
     protected $productWriter;
 
     /**
-     * @param AbstractProductWriterInterface $abstractProductWriter
+     * @param AbstractProductWriterInterface $productAbstractWriter
      * @param ConcreteProductWriterInterface $concreteProductWriter
      */
     public function __construct(
-        AbstractProductWriterInterface $abstractProductWriter,
+        AbstractProductWriterInterface $productAbstractWriter,
         ConcreteProductWriterInterface $concreteProductWriter
     ) {
-        $this->abstractProductWriter = $abstractProductWriter;
+        $this->abstractProductWriter = $productAbstractWriter;
         $this->productWriter = $concreteProductWriter;
     }
 

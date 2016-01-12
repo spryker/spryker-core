@@ -63,12 +63,12 @@ class DbFixturesLoader
             ->setFkTaxRate($ids['idTaxRate2']);
         $taxSetTaxEntity->save();
 
-        $abstractProductEntity = new SpyProductAbstract();
-        $abstractProductEntity->setSku('ABC123')
+        $productAbstractEntity = new SpyProductAbstract();
+        $productAbstractEntity->setSku('ABC123')
             ->setFkTaxSet($ids['idTaxSet'])
             ->setAttributes('{}');
-        $abstractProductEntity->save();
-        $ids['idAbstractProduct'] = $abstractProductEntity->getIdProductAbstract();
+        $productAbstractEntity->save();
+        $ids['idAbstractProduct'] = $productAbstractEntity->getIdProductAbstract();
 
         $productEntity = new SpyProduct();
         $productEntity->setSku('DEF456')

@@ -27,7 +27,7 @@ class TaxChangeTouchPluginTest extends Test
 
     private $taxSetId = null;
 
-    private $abstractProductIds = [];
+    private $productAbstractIds = [];
 
     /**
      * @var TaxProductConnectorFacade

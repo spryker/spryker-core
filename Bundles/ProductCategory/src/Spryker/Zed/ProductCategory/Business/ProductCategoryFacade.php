@@ -60,15 +60,15 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param AbstractProductTransfer $abstractProductTransfer
+     * @param AbstractProductTransfer $productAbstractTransfer
      *
      * @return ProductCategoryTransfer[]
      */
-    public function getCategoriesByAbstractProduct(AbstractProductTransfer $abstractProductTransfer)
+    public function getCategoriesByAbstractProduct(AbstractProductTransfer $productAbstractTransfer)
     {
         $entities = $this->getFactory()
             ->createProductCategoryManager()
-            ->getCategoriesByAbstractProduct($abstractProductTransfer);
+            ->getCategoriesByAbstractProduct($productAbstractTransfer);
 
         return $this->getFactory()
             ->createProductCategoryTransferGenerator()

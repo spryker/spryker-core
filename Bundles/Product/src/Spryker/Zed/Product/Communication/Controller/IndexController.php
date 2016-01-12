@@ -58,12 +58,12 @@ class IndexController extends AbstractController
     {
         $idProductAbstract = $request->query->getInt(self::ID_PRODUCT_ABSTRACT);
 
-        $abstractProduct = $this->getQueryContainer()
+        $productAbstract = $this->getQueryContainer()
             ->querySkuFromAbstractProductById($idProductAbstract)
             ->findOne();
 
         $concreteProductCollection = $this->getQueryContainer()
-            ->queryConcreteProductByAbstractProduct($abstractProduct)
+            ->queryConcreteProductByAbstractProduct($productAbstract)
             ->find();
 
         $concreteProducts = $this->createConcreteProductsCollection($concreteProductCollection);
@@ -71,21 +71,21 @@ class IndexController extends AbstractController
         $currentLocale = $this->getCurrentLocale();
 
         $attributesCollection = $this->getQueryContainer()
-            ->queryAbstractProductAttributeCollection($abstractProduct->getIdProductAbstract(), $currentLocale->getIdLocale())
+            ->queryAbstractProductAttributeCollection($productAbstract->getIdProductAbstract(), $currentLocale->getIdLocale())
             ->findOne();
 
         $attributes = [
             'name' => $attributesCollection->getName(),
             'attributes' => $this->mergeAttributes(
                 json_decode($attributesCollection->getAttributes(), true),
-                json_decode($abstractProduct->getAttributes(), true)
+                json_decode($productAbstract->getAttributes(), true)
             ),
         ];
 
-        $categories = $this->getProductCategories($abstractProduct, $currentLocale->getIdLocale());
+        $categories = $this->getProductCategories($productAbstract, $currentLocale->getIdLocale());
 
         return $this->viewResponse([
-            'abstractProduct' => $abstractProduct,
+            'abstractProduct' => $productAbstract,
             'concreteProducts' => $concreteProducts,
             'attributes' => $attributes,
             'categories' => $categories,
@@ -160,16 +160,16 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param SpyProductAbstract $abstractProduct
+     * @param SpyProductAbstract $productAbstract
      * @param int $idLocale
      *
      * @return array
      */
-    protected function getProductCategories(SpyProductAbstract $abstractProduct, $idLocale)
+    protected function getProductCategories(SpyProductAbstract $productAbstract, $idLocale)
     {
         $productCategoryEntityList = $this->getFactory()
             ->createProductCategoryQueryContainer()
-            ->queryLocalizedProductCategoryMappingByIdProduct($abstractProduct->getIdProductAbstract())
+            ->queryLocalizedProductCategoryMappingByIdProduct($productAbstract->getIdProductAbstract())
             ->find();
 
         $categories = [];
