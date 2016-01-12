@@ -121,7 +121,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param VoucherCodesTransfer $voucherCodesTransfer
      *
-     * @return self
+     * @return VoucherPoolTransfer
      */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
     {
