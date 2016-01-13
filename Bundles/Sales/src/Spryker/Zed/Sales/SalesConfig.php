@@ -8,6 +8,7 @@ namespace Spryker\Zed\Sales;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 
@@ -127,7 +128,7 @@ class SalesConfig extends AbstractBundleConfig
     {
         $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();
 
-        $sequenceNumberSettingsTransfer->setName(self::NAME_ORDER_REFERENCE);
+        $sequenceNumberSettingsTransfer->setName(SalesConstants::NAME_ORDER_REFERENCE);
 
         $sequenceNumberPrefixParts = [];
         $sequenceNumberPrefixParts[] = Store::getInstance()->getStoreName();

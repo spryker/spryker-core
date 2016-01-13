@@ -23,6 +23,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\DiscountConfig;

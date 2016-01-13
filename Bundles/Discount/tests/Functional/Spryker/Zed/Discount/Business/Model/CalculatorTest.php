@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;

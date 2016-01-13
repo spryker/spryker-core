@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfigInterface;
@@ -220,9 +221,9 @@ class VoucherEngine
         $allowedCharacters = $this->settings->getVoucherCodeCharacters();
         srand((double) microtime() * 1000000);
 
-        $consonants = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_CONSONANTS];
-        $vowels = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_VOWELS];
-        $numbers = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_NUMBERS];
+        $consonants = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_CONSONANTS];
+        $vowels = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_VOWELS];
+        $numbers = $allowedCharacters[DiscountConstants::KEY_VOUCHER_CODE_NUMBERS];
 
         $code = '';
 
