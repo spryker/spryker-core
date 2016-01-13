@@ -81,7 +81,7 @@ abstract class AbstractPaymentMethod
             ApiConstants::SECURITY_SENDER => $this->getConfig()->getTransactionSecuritySender(),
             ApiConstants::USER_LOGIN => $this->getConfig()->getTransactionUserLogin(),
             ApiConstants::USER_PWD => $this->getConfig()->getTransactionUserPassword(),
-            ApiConstants::PRESENTATION_AMOUNT => $this->convertCentsToDecimal($grandTotal),
+            ApiConstants::PRESENTATION_AMOUNT => $this->getCurrencyManager()->convertCentToDecimal($grandTotal),
             ApiConstants::PRESENTATION_USAGE => $idOrder,
             ApiConstants::PRESENTATION_CURRENCY => $currency,
             ApiConstants::IDENTIFICATION_TRANSACTIONID => $idOrder,
@@ -175,7 +175,7 @@ abstract class AbstractPaymentMethod
      *
      * @todo: use currency/money bundle #989
      */
-    protected function getCurrencyManger()
+    protected function getCurrencyManager()
     {
         return CurrencyManager::getInstance();
     }

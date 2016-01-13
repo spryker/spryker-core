@@ -14,18 +14,18 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 /**
  * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
  */
-class SaveOrderPlugin extends BaseAbstractPlugin implements CheckoutSaveOrderInterface
+class PayolutionSaveOrderPlugin extends BaseAbstractPlugin implements CheckoutSaveOrderInterface
 {
 
     /**
      * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFacade()->saveOrderPayment($quoteTransfer);
+        $this->getFacade()->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
     }
 
 }

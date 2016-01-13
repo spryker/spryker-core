@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Payolution\Business;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationRequestTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -20,20 +20,23 @@ class PayolutionFacade extends AbstractFacade
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $orderTransfer
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
      */
-    public function saveOrderPayment(QuoteTransfer $quoteTransfer)
+    public function saveOrderPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        return $this
-            ->getFactory()
-            ->createOrderSaver()
-            ->saveOrderPayment($quoteTransfer);
+         $this
+             ->getFactory()
+             ->createOrderSaver()
+             ->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
     public function preCheckPayment(QuoteTransfer $quoteTransfer)
     {
@@ -48,7 +51,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -61,7 +64,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
     public function reAuthorizePayment($idPayment)
     {
@@ -74,7 +77,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
     public function revertPayment($idPayment)
     {
@@ -87,7 +90,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
     public function capturePayment($idPayment)
     {
@@ -100,7 +103,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
+     * @return PayolutionTransactionResponseTransfer
      */
     public function refundPayment($idPayment)
     {
@@ -111,9 +114,9 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
+     * @return PayolutionCalculationResponseTransfer
      */
     public function calculateInstallmentPayments(QuoteTransfer $quoteTransfer)
     {

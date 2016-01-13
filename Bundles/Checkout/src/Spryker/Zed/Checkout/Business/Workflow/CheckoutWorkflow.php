@@ -58,8 +58,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     /**
      * @param QuoteTransfer $quoteTransfer
      *
-     * @todo rename to placeOrder
-     *
      * @return CheckoutResponseTransfer
      */
     public function placeOrder(QuoteTransfer $quoteTransfer)
@@ -72,7 +70,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         if (!$this->hasErrors($checkoutResponse)) {
             $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponse);
             if (!$this->hasErrors($checkoutResponse)) {
-                $this->triggerStateMachine($quoteTransfer);
+                $this->triggerStateMachine($checkoutResponse);
                 $this->executePostHooks($quoteTransfer, $checkoutResponse);
 
                 $isSuccess = !$this->hasErrors($checkoutResponse);
@@ -139,15 +137,15 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    protected function triggerStateMachine(QuoteTransfer $quoteTransfer)
+    protected function triggerStateMachine(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $itemIds = [];
 
-        foreach ($quoteTransfer->getItems() as $item) {
+        foreach ($checkoutResponseTransfer->getSaveOrder()->getOrderItems() as $item) {
             $itemIds[] = $item->getIdSalesOrderItem();
         }
 

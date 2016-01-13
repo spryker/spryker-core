@@ -17,34 +17,30 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 /**
  * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
  */
-class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionInterface
+class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransferTransfer
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return CheckoutResponseTransfer
      */
     public function checkCondition(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer $checkoutResponseTransferTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        $payolutionTransactionResponseTransfer = $this
-            ->getFacade()
-            ->preCheckPayment($quoteTransfer);
-
-        $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransferTransfer);
-
-        $checkoutRequestTransfer->getPayolutionPayment()
+        $payolutionTransactionResponseTransfer = $this->getFacade()->preCheckPayment($quoteTransfer);
+        $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransfer);
+        $quoteTransfer->getPayment()->getPayolution()
             ->setPreCheckId($payolutionTransactionResponseTransfer->getIdentificationUniqueid());
 
-        return $checkoutResponseTransferTransfer;
+        return $checkoutResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
