@@ -70,6 +70,11 @@ class ProductManager implements ProductManagerInterface
     protected $productConcreteCollectionBySkuCache = [];
 
     /**
+     * @var array
+     */
+    protected $productAbstractsBySkuCache;
+
+    /**
      * @param ProductQueryContainerInterface $productQueryContainer
      * @param ProductToTouchInterface $touchFacade
      * @param ProductToUrlInterface $urlFacade
