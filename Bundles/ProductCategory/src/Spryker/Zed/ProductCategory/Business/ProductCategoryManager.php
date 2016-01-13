@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
+use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
@@ -471,7 +472,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     protected function touchProductAbstractActive($idProductAbstract)
     {
-        $this->touchFacade->touchActive(ProductCategoryConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchActive(ProductCategoryConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
     }
 
     /**
@@ -481,7 +482,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     protected function touchProductAbstractDeleted($idProductAbstract)
     {
-        $this->touchFacade->touchDeleted(ProductCategoryConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchDeleted(ProductCategoryConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
     }
 
 }

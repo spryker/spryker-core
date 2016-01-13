@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Acl\Communication\Table;
 
+use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
 use Spryker\Zed\Application\Business\Url\Url;
@@ -95,7 +96,7 @@ class RoleTable extends AbstractTable
             'Edit'
         );
 
-        if ($rule[SpyAclRoleTableMap::COL_NAME] !== AclConfig::ROOT_ROLE) {
+        if ($rule[SpyAclRoleTableMap::COL_NAME] !== AclConstants::ROOT_ROLE) {
             $buttons[] = $this->generateRemoveButton(
                 Url::generate(self::DELETE_ROLE_URL, [self::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]]),
                 'Delete'

@@ -6,6 +6,7 @@
 
 namespace Spryker\Shared\Library\Currency;
 
+use Spryker\Shared\Library\Currency\CurrencyConstants;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -166,7 +167,7 @@ class CurrencyManager
 
         if ($includeSymbol === true) {
             $value = str_replace(
-                [CurrencyInterface::PLACEHOLDER_VALUE, CurrencyInterface::PLACEHOLDER_SYMBOL],
+                [CurrencyConstants::PLACEHOLDER_VALUE, CurrencyConstants::PLACEHOLDER_SYMBOL],
                 [$value, $currency->getSymbol()],
                 $currency->getFormatPattern()
             );

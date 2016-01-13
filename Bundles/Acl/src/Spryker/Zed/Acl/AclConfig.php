@@ -14,16 +14,6 @@ use Spryker\Shared\Config;
 class AclConfig extends AbstractBundleConfig
 {
 
-    const VALIDATOR_WILDCARD = '*';
-
-    const ACL_SESSION_KEY = 'acl';
-    const ACL_CREDENTIALS_KEY = 'credentials';
-    const ACL_DEFAULT_KEY = 'default';
-    const ACL_DEFAULT_RULES_KEY = 'rules';
-    const ROOT_GROUP = 'root_group';
-    const ROOT_ROLE = 'root_role';
-    const ALLOW = 'allow';
-
     /**
      * @var AutoCompletion
      */
@@ -85,11 +75,11 @@ class AclConfig extends AbstractBundleConfig
     {
         return [
             [
-                'bundle' => self::VALIDATOR_WILDCARD,
-                'controller' => self::VALIDATOR_WILDCARD,
-                'action' => self::VALIDATOR_WILDCARD,
-                'type' => self::ALLOW,
-                'role' => self::ROOT_ROLE,
+                'bundle' => AclConstants::VALIDATOR_WILDCARD,
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+                'role' => AclConstants::ROOT_ROLE,
                 //this is related to the installer_data only and will not interact with existing data if any
             ],
         ];
@@ -102,8 +92,8 @@ class AclConfig extends AbstractBundleConfig
     {
         return [
             [
-                'name' => self::ROOT_ROLE,
-                'group' => self::ROOT_GROUP,
+                'name' => AclConstants::ROOT_ROLE,
+                'group' => AclConstants::ROOT_GROUP,
                 //this is related to the installer_data only and will not interact with existing data if any
             ],
         ];
@@ -116,7 +106,7 @@ class AclConfig extends AbstractBundleConfig
     {
         return [
             [
-                'name' => self::ROOT_GROUP,
+                'name' => AclConstants::ROOT_GROUP,
             ],
         ];
     }
@@ -125,7 +115,7 @@ class AclConfig extends AbstractBundleConfig
     {
         return [
             'admin@spryker.com' => [
-                'group' => self::ROOT_GROUP,
+                'group' => AclConstants::ROOT_GROUP,
             ],
             //this is related to existent username and will be searched into the database
         ];

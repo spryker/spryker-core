@@ -8,6 +8,7 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
@@ -28,7 +29,7 @@ class ViewController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->get(CustomerConfig::PARAM_ID_CUSTOMER);
+        $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
 
         $customerTransfer = $this->createCustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);

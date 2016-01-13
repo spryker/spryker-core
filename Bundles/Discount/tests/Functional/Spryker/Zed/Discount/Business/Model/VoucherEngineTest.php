@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
@@ -60,10 +61,10 @@ class VoucherEngineTest extends Test
     {
         $discount = $this->initializeDiscount(
             'name 1',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
@@ -84,19 +85,19 @@ class VoucherEngineTest extends Test
     {
         $discount1 = $this->initializeDiscount(
             'name 1',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
         $discount2 = $this->initializeDiscount(
             'name 2',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
@@ -115,28 +116,28 @@ class VoucherEngineTest extends Test
     {
         $discount1 = $this->initializeDiscount(
             'name 1',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
         $discount2 = $this->initializeDiscount(
             'name 2',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount3 = $this->initializeDiscount(
             'name 3',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
@@ -157,37 +158,37 @@ class VoucherEngineTest extends Test
     {
         $discount1 = $this->initializeDiscount(
             'name 1',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
         $discount2 = $this->initializeDiscount(
             'name 2',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount3 = $this->initializeDiscount(
             'name 3',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount4 = $this->initializeDiscount(
             'name 4',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             70,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
@@ -206,46 +207,46 @@ class VoucherEngineTest extends Test
     {
         $discount1 = $this->initializeDiscount(
             'name 1',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
         $discount2 = $this->initializeDiscount(
             'name 2',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount3 = $this->initializeDiscount(
             'name 3',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount4 = $this->initializeDiscount(
             'name 4',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             70,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
         $discount5 = $this->initializeDiscount(
             'name 5',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             80,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
 

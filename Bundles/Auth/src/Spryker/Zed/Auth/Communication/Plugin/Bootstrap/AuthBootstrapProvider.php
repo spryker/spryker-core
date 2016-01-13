@@ -6,10 +6,10 @@
 
 namespace Spryker\Zed\Auth\Communication\Plugin\Bootstrap;
 
+use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\AuthFacade;
 use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,8 +55,8 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
                 $token = $facadeAuth->getCurrentUserToken();
             }
 
-            if ($request->headers->get(AuthConfig::AUTH_TOKEN)) {
-                $token = $request->headers->get(AuthConfig::AUTH_TOKEN);
+            if ($request->headers->get(AuthConstants::AUTH_TOKEN)) {
+                $token = $request->headers->get(AuthConstants::AUTH_TOKEN);
             }
 
             if (!$facadeAuth->isAuthenticated($token)) {

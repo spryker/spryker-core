@@ -76,7 +76,7 @@ class VoucherCodesForm extends AbstractRuleForm
      */
     public function populateFormFields()
     {
-        $idPool = $this->getRequest()->query->getInt(DiscountConfig::PARAM_ID_POOL);
+        $idPool = $this->getRequest()->query->getInt(DiscountConstants::PARAM_ID_POOL);
 
         if ($idPool > 0) {
             $voucherCodesTransfer = $this->getVoucherCodesTransfer($idPool);

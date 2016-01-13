@@ -7,6 +7,7 @@
 namespace Spryker\Zed\ProductCategory\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -44,7 +45,7 @@ class ProductTable extends AbstractTable
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->locale = $locale;
         $this->idCategory = (int) $idCategory;
-        $this->defaultUrl = sprintf('product-table?%s=%d', ProductCategoryConfig::PARAM_ID_CATEGORY, $this->idCategory);
+        $this->defaultUrl = sprintf('product-table?%s=%d', ProductCategoryConstants::PARAM_ID_CATEGORY, $this->idCategory);
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 

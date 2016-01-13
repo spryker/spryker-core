@@ -8,6 +8,7 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
@@ -30,7 +31,7 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->query->getInt(CustomerConfig::PARAM_ID_CUSTOMER);
+        $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
 
         $form = $this->getFactory()
             ->createCustomerForm(CustomerForm::UPDATE);
@@ -55,7 +56,7 @@ class EditController extends AbstractController
             }
 
             return $this->redirectResponse(
-                sprintf('/customer/view/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer)
+                sprintf('/customer/view/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
             );
         }
 

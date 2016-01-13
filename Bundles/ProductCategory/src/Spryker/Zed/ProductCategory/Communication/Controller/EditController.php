@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Spryker\Zed\ProductCategory\ProductCategoryConfig;
@@ -34,7 +35,7 @@ class EditController extends AddController
      */
     public function indexAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
+        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
 
         $currentCategory = $this->getFactory()
             ->createCategoryQueryContainer()

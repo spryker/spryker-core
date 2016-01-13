@@ -8,6 +8,7 @@ namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory;
@@ -32,7 +33,7 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idParentNode = $request->get(ProductCategoryConfig::PARAM_ID_PARENT_NODE);
+        $idParentNode = $request->get(ProductCategoryConstants::PARAM_ID_PARENT_NODE);
 
         $form = $this->getFactory()
             ->createCategoryFormAdd($idParentNode);
@@ -66,7 +67,7 @@ class AddController extends AbstractController
      */
     public function productCategoryTableAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
+        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
         $locale = $this->getFactory()
             ->createCurrentLocale();
 
@@ -85,7 +86,7 @@ class AddController extends AbstractController
      */
     public function productTableAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
+        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
         $locale = $this->getFactory()
             ->createCurrentLocale();
 

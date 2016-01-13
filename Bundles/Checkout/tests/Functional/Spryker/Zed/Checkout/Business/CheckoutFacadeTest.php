@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Shared\Checkout\CheckoutConstants;
@@ -211,7 +212,7 @@ class CheckoutFacadeTest extends Test
         $this->assertNotNull($orderItem1);
         $this->assertNotNull($orderItem2);
 
-        $this->assertNotEquals(OmsConfig::INITIAL_STATUS, $orderItem1->getState()->getName());
+        $this->assertNotEquals(OmsConstants::INITIAL_STATUS, $orderItem1->getState()->getName());
         $this->assertEquals('waiting for payment', $orderItem2->getState()->getName());
     }
 

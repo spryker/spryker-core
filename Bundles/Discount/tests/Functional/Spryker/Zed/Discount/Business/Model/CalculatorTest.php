@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
@@ -51,10 +52,10 @@ class CalculatorTest extends Test
         $discountCollection = [];
         $discountCollection[] = $discount = $this->initializeDiscount(
             'name 1',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
 
@@ -81,18 +82,18 @@ class CalculatorTest extends Test
         $discountCollection = [];
         $discountCollection[] = $this->initializeDiscount(
             'name 1',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 2',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
@@ -118,26 +119,26 @@ class CalculatorTest extends Test
         $discountCollection = [];
         $discountCollection[] = $this->initializeDiscount(
             'name 1',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 2',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 3',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
@@ -162,34 +163,34 @@ class CalculatorTest extends Test
         $discountCollection = [];
         $discountCollection[] = $this->initializeDiscount(
             'name 1',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 2',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 3',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 4',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             70,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 
@@ -214,34 +215,34 @@ class CalculatorTest extends Test
         $discountCollection = [];
         $discountCollection[] = $this->initializeDiscount(
             'name 1',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 2',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             true
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 3',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
         $discountCollection[] = $this->initializeDiscount(
             'name 4',
-            DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
+            DiscountConstants::PLUGIN_CALCULATOR_PERCENTAGE,
             70,
             true,
-            DiscountConfig::PLUGIN_COLLECTOR_ITEM,
+            DiscountConstants::PLUGIN_COLLECTOR_ITEM,
             false
         );
 

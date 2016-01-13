@@ -9,6 +9,7 @@ namespace Spryker\Zed\Acl\Persistence;
 use Generated\Shared\Transfer\RolesTransfer;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\Exception\PropelException;
+use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -172,7 +173,7 @@ class AclQueryContainer extends AbstractQueryContainer
         $join = new Join();
 
         $join->addCondition(
-            SpyUserTableMap::COL_ID_USER_USER,
+            SpyUserTableMap::COL_ID_USER,
             SpyAclUserHasGroupTableMap::COL_FK_USER
         );
 
@@ -266,21 +267,21 @@ class AclQueryContainer extends AbstractQueryContainer
      */
     public function queryRuleByPathAndRoles(
         RolesTransfer $roles,
-        $bundle = AclConfig::VALIDATOR_WILDCARD,
-        $controller = AclConfig::VALIDATOR_WILDCARD,
-        $action = AclConfig::VALIDATOR_WILDCARD
+        $bundle = AclConstants::VALIDATOR_WILDCARD,
+        $controller = AclConstants::VALIDATOR_WILDCARD,
+        $action = AclConstants::VALIDATOR_WILDCARD
     ) {
         $query = $this->getFactory()->createRuleQuery();
 
-        if ($bundle !== AclConfig::VALIDATOR_WILDCARD) {
+        if ($bundle !== AclConstants::VALIDATOR_WILDCARD) {
             $query->filterByBundle($bundle);
         }
 
-        if ($controller !== AclConfig::VALIDATOR_WILDCARD) {
+        if ($controller !== AclConstants::VALIDATOR_WILDCARD) {
             $query->filterByController($controller);
         }
 
-        if ($action !== AclConfig::VALIDATOR_WILDCARD) {
+        if ($action !== AclConstants::VALIDATOR_WILDCARD) {
             $query->filterByAction($action);
         }
 

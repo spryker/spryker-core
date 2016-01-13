@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\PriceCartConnector;
 
+use Spryker\Shared\Price\PriceConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Zed\Price\PriceConfig;
 
 class PriceCartConnectorConfig extends AbstractBundleConfig
 {
@@ -19,7 +19,7 @@ class PriceCartConnectorConfig extends AbstractBundleConfig
      */
     public function getGrossPriceType()
     {
-        return PriceConfig::DEFAULT_PRICE_TYPE;
+        return PriceConstants::DEFAULT_PRICE_TYPE;
     }
 
 }

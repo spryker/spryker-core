@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RulesTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
@@ -163,9 +164,9 @@ class Rule implements RuleInterface
      */
     public function findByRoles(
         RolesTransfer $roles,
-        $bundle = AclConfig::VALIDATOR_WILDCARD,
-        $controller = AclConfig::VALIDATOR_WILDCARD,
-        $action = AclConfig::VALIDATOR_WILDCARD
+        $bundle = AclConstants::VALIDATOR_WILDCARD,
+        $controller = AclConstants::VALIDATOR_WILDCARD,
+        $action = AclConstants::VALIDATOR_WILDCARD
     ) {
         $results = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();
 

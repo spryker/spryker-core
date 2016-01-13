@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Customer;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 use Spryker\Shared\Application\ApplicationConstants;
@@ -14,10 +15,6 @@ use Spryker\Shared\Kernel\Store;
 
 class CustomerConfig extends AbstractBundleConfig
 {
-
-    const NAME_CUSTOMER_REFERENCE = 'CustomerReference';
-    const PARAM_ID_CUSTOMER = 'id-customer';
-    const PARAM_ID_CUSTOMER_ADDRESS = 'id-customer-address';
 
     /**
      * @return string
@@ -54,7 +51,7 @@ class CustomerConfig extends AbstractBundleConfig
     {
         $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();
 
-        $sequenceNumberSettingsTransfer->setName(self::NAME_CUSTOMER_REFERENCE);
+        $sequenceNumberSettingsTransfer->setName(CustomerConstants::NAME_CUSTOMER_REFERENCE);
 
         $sequenceNumberPrefixParts = [];
         $sequenceNumberPrefixParts[] = Store::getInstance()->getStoreName();

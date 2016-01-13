@@ -3,8 +3,8 @@
 namespace Spryker\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
-use Spryker\Zed\Customer\CustomerConfig;
+use Spryker\Shared\Customer\CustomerConstants;
+use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
@@ -41,7 +41,7 @@ class AddressForm extends AbstractForm
      */
     public function populateFormFields()
     {
-        $idCustomerAddress = $this->getRequest()->query->getInt(CustomerConfig::PARAM_ID_CUSTOMER_ADDRESS);
+        $idCustomerAddress = $this->getRequest()->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS);
 
         if ($idCustomerAddress === 0) {
             return $this->getDataClass();

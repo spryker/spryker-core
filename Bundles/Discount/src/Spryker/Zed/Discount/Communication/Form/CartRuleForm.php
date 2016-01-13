@@ -48,7 +48,7 @@ class CartRuleForm extends AbstractRuleForm
      */
     public function populateFormFields()
     {
-        $idDiscount = $this->getRequest()->query->getInt(DiscountConfig::PARAM_ID_DISCOUNT);
+        $idDiscount = $this->getRequest()->query->getInt(DiscountConstants::PARAM_ID_DISCOUNT);
 
         if ($idDiscount > 0) {
             $cartRuleDefaultData = $this->discountFacade->getCurrentCartRulesDetailsByIdDiscount($idDiscount);

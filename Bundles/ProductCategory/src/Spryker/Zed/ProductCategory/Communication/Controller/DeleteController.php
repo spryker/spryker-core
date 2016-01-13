@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
+use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
 use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 use Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory;
@@ -29,7 +30,7 @@ class DeleteController extends EditController
      */
     public function indexAction(Request $request)
     {
-        $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
+        $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
 
         if (!$this->categoryExists($idCategory)) {
             $this->addErrorMessage(sprintf('The category with id "%s" does not exist.', $idCategory));

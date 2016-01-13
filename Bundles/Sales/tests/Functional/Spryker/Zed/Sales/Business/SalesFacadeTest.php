@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Kernel\Container;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Spryker\Zed\Oms\OmsConfig;
@@ -68,7 +69,7 @@ class SalesFacadeTest extends Test
             ->will($this->returnValue('CheckoutTest01'));
 
         $initialStateEntity = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConfig::INITIAL_STATUS)
+            ->filterByName(OmsConstants::INITIAL_STATUS)
             ->findOneOrCreate();
         $initialStateEntity->save();
 
@@ -216,7 +217,7 @@ class SalesFacadeTest extends Test
         $orderTransfer = $this->getValidBaseOrderTransfer();
 
         $initialState = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConfig::INITIAL_STATUS)
+            ->filterByName(OmsConstants::INITIAL_STATUS)
             ->findOneOrCreate();
         $initialState->save();
 
@@ -283,7 +284,7 @@ class SalesFacadeTest extends Test
         $orderTransfer = $this->getValidBaseOrderTransfer();
 
         $initialState = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConfig::INITIAL_STATUS)
+            ->filterByName(OmsConstants::INITIAL_STATUS)
             ->findOneOrCreate();
         $initialState->save();
         $this->assertNotNull($initialState->getIdOmsOrderItemState());

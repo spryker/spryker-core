@@ -6,6 +6,8 @@
 
 namespace Spryker\Shared\EventJournal\Model\Writer;
 
+use Spryker\Shared\EventJournal\EventJournalConstants;
+
 abstract class AbstractWriter implements WriterInterface
 {
 
@@ -27,7 +29,7 @@ abstract class AbstractWriter implements WriterInterface
      */
     public function getType()
     {
-        return static::TYPE;
+        return EventJournalConstants::TYPE;
     }
 
 }
