@@ -17,7 +17,7 @@ class ProductResourceKeyBuilder extends SharedResourceKeyBuilder
      */
     protected function getResourceType()
     {
-        return ProductConstants::RESOURCE_TYPE_ABSTRACT_PRODUCT;
+        return ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT;
     }
 
 }

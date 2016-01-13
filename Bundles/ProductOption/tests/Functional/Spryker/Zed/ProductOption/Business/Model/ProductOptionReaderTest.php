@@ -119,10 +119,10 @@ class ProductOptionReaderTest extends Test
     /**
      * @return void
      */
-    public function testQueryTypeUsagesForConcreteProduct()
+    public function testQueryTypeUsagesForProductConcrete()
     {
         $result = $this->facade
-            ->getTypeUsagesForConcreteProduct($this->ids['idConcreteProduct'], $this->ids['idLocale']);
+            ->getTypeUsagesForProductConcrete($this->ids['idProductConcrete'], $this->ids['idLocale']);
 
         $this->assertCount(2, $result);
         $this->assertEquals('Color', $result[0]['label']);
@@ -210,10 +210,10 @@ class ProductOptionReaderTest extends Test
     /**
      * @return void
      */
-    public function testQueryConfigPresetsForConcreteProduct()
+    public function testQueryConfigPresetsForProductConcrete()
     {
         $result = $this->facade
-            ->getConfigPresetsForConcreteProduct($this->ids['idConcreteProduct']);
+            ->getConfigPresetsForProductConcrete($this->ids['idProductConcrete']);
 
         $this->assertCount(2, $result);
         $this->assertEquals(1, $result[0]['isDefault']);

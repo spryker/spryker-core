@@ -29,7 +29,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductTable()
     {
-        $productQuery = $this->getQueryContainer()->queryAbstractProducts();
+        $productQuery = $this->getQueryContainer()->queryProductAbstract();
         $localeTransfer = $this->createLocaleTransfer();
 
         return new ProductTable(

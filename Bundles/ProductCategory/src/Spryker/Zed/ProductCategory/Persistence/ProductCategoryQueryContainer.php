@@ -186,7 +186,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      *
      * @return SpyProductAbstractQuery
      */
-    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null)
+    public function queryProductAbstractCollectionBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null)
     {
         $idExcludedCategory = (int) $idExcludedCategory;
         $query = SpyProductAbstractQuery::create();

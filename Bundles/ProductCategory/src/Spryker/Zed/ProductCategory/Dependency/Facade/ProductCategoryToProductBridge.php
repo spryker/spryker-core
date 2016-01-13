@@ -30,9 +30,9 @@ class ProductCategoryToProductBridge implements ProductCategoryToProductInterfac
      *
      * @return bool
      */
-    public function hasAbstractProduct($sku)
+    public function hasProductAbstract($sku)
     {
-        return $this->productFacade->hasAbstractProduct($sku);
+        return $this->productFacade->hasProductAbstract($sku);
     }
 
     /**
@@ -40,9 +40,9 @@ class ProductCategoryToProductBridge implements ProductCategoryToProductInterfac
      *
      * @return int
      */
-    public function getAbstractProductIdBySku($sku)
+    public function getProductAbstractIdBySku($sku)
     {
-        return $this->productFacade->getAbstractProductIdBySku($sku);
+        return $this->productFacade->getProductAbstractIdBySku($sku);
     }
 
 }

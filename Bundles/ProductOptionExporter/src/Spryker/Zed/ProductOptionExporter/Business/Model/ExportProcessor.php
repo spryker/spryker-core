@@ -51,8 +51,8 @@ class ExportProcessor implements ExportProcessorInterface
     public function processDataForExport(array &$resultSet, array $processedResultSet, LocaleTransfer $locale)
     {
         foreach ($resultSet as $index => $productRawData) {
-            if (isset($processedResultSet[$index], $processedResultSet[$index]['concrete_products'])) {
-                $this->processVariants($processedResultSet[$index]['concrete_products'], $locale->getIdLocale());
+            if (isset($processedResultSet[$index], $processedResultSet[$index]['product_concrete_collection'])) {
+                $this->processVariants($processedResultSet[$index]['product_concrete_collection'], $locale->getIdLocale());
             }
         }
 
@@ -60,18 +60,18 @@ class ExportProcessor implements ExportProcessorInterface
     }
 
     /**
-     * @param array $concreteProducts
+     * @param array $productConcreteCollection
      * @param int $idLocale
      *
      * @return array
      */
-    protected function processVariants(array &$concreteProducts, $idLocale)
+    protected function processVariants(array &$productConcreteCollection, $idLocale)
     {
-        foreach ($concreteProducts as $index => $concreteProduct) {
-            $idProduct = $this->productFacade->getConcreteProductIdBySku($concreteProduct['sku']);
+        foreach ($productConcreteCollection as $index => $productConcrete) {
+            $idProduct = $this->productFacade->getProductConcreteIdBySku($productConcrete['sku']);
 
-            $concreteProducts[$index]['configs'] = $this->processConfigs($idProduct);
-            $concreteProducts[$index]['options'] = $this->processOptions($concreteProduct['sku'], $idProduct, $idLocale);
+            $productConcreteCollection[$index]['configs'] = $this->processConfigs($idProduct);
+            $productConcreteCollection[$index]['options'] = $this->processOptions($productConcrete['sku'], $idProduct, $idLocale);
         }
     }
 
@@ -83,7 +83,7 @@ class ExportProcessor implements ExportProcessorInterface
     protected function processConfigs($idProduct)
     {
         $configs = [];
-        $configPresets = $this->productOptionFacade->getConfigPresetsForConcreteProduct($idProduct);
+        $configPresets = $this->productOptionFacade->getConfigPresetsForProductConcrete($idProduct);
         foreach ($configPresets as $configPreset) {
             $configs[] = [
                 'values' => $this->processConfigValues($configPreset['presetId']),
@@ -117,7 +117,7 @@ class ExportProcessor implements ExportProcessorInterface
      */
     protected function processOptions($sku, $idProduct, $idLocale)
     {
-        $typeUsages = $this->productOptionFacade->getTypeUsagesForConcreteProduct($idProduct, $idLocale);
+        $typeUsages = $this->productOptionFacade->getTypeUsagesForProductConcrete($idProduct, $idLocale);
 
         $options = [];
         foreach ($typeUsages as $typeUsage) {
@@ -162,7 +162,7 @@ class ExportProcessor implements ExportProcessorInterface
 
         if ($typeUsageTaxRate === null) {
             $typeUsageTaxRate = $this->productFacade
-               ->getEffectiveTaxRateForConcreteProduct($sku);
+               ->getEffectiveTaxRateForProductConcrete($sku);
         }
 
         return (float) $typeUsageTaxRate;

@@ -46,7 +46,7 @@ class DataProcessorTest extends Test
     /**
      * @return void
      */
-    public function testFetchProductOptionDataForConcreteProduct()
+    public function testFetchProductOptionDataForProductConcrete()
     {
         $ids = DbFixturesLoader::loadFixtures();
 
@@ -56,7 +56,7 @@ class DataProcessorTest extends Test
 
         $processedResultSetFixture = [
             'xx.xx_xx.dummyIndex1' => [
-                'concrete_products' => [
+                'product_concrete_collection' => [
                     [
                         'sku' => 'DEF456',
                     ],
@@ -69,7 +69,7 @@ class DataProcessorTest extends Test
         $processedResultSet = $this->facade->processDataForExport($resultSetFixture, $processedResultSetFixture, $localeTransfer);
 
         $this->assertCount(1, $processedResultSet);
-        $product = $processedResultSet['xx.xx_xx.dummyIndex1']['concrete_products'][0];
+        $product = $processedResultSet['xx.xx_xx.dummyIndex1']['product_concrete_collection'][0];
         $this->assertEquals('DEF456', $product['sku']);
 
         $this->assertCount(2, $product['configs']);

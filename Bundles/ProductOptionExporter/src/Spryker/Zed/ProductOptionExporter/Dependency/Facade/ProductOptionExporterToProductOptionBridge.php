@@ -31,9 +31,9 @@ class ProductOptionExporterToProductOptionBridge implements ProductOptionExporte
      *
      * @return array
      */
-    public function getTypeUsagesForConcreteProduct($idProduct, $idLocale)
+    public function getTypeUsagesForProductConcrete($idProduct, $idLocale)
     {
-        return $this->productOptionFacade->getTypeUsagesForConcreteProduct($idProduct, $idLocale);
+        return $this->productOptionFacade->getTypeUsagesForProductConcrete($idProduct, $idLocale);
     }
 
     /**
@@ -83,9 +83,9 @@ class ProductOptionExporterToProductOptionBridge implements ProductOptionExporte
      *
      * @return array
      */
-    public function getConfigPresetsForConcreteProduct($idProduct)
+    public function getConfigPresetsForProductConcrete($idProduct)
     {
-        return $this->productOptionFacade->getConfigPresetsForConcreteProduct($idProduct);
+        return $this->productOptionFacade->getConfigPresetsForProductConcrete($idProduct);
     }
 
     /**

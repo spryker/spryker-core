@@ -21,6 +21,6 @@
         <property name="sku" type="string" />
         <property name="groupKey" type="string" />
         <property name="options" type="ProductOption[]" singular="option" />
-        <property name="concreteProduct" type="ConcreteProduct" />
+        <property name="productConcrete" type="ProductConcrete" />
     </transfer>
 </transfers>

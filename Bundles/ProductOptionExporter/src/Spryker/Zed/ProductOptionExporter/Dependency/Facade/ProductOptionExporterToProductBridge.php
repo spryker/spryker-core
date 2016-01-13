@@ -30,9 +30,9 @@ class ProductOptionExporterToProductBridge implements ProductOptionExporterToPro
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku)
+    public function getProductConcreteIdBySku($sku)
     {
-        return $this->productFacade->getConcreteProductIdBySku($sku);
+        return $this->productFacade->getProductConcreteIdBySku($sku);
     }
 
     /**
@@ -40,9 +40,9 @@ class ProductOptionExporterToProductBridge implements ProductOptionExporterToPro
      *
      * @return float
      */
-    public function getEffectiveTaxRateForConcreteProduct($sku)
+    public function getEffectiveTaxRateForProductConcrete($sku)
     {
-        return $this->productFacade->getEffectiveTaxRateForConcreteProduct($sku);
+        return $this->productFacade->getEffectiveTaxRateForProductConcrete($sku);
     }
 
 }

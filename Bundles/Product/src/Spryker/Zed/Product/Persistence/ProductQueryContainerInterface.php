@@ -33,28 +33,28 @@ interface ProductQueryContainerInterface
      *
      * @return SpyProductQuery
      */
-    public function queryProductWithAttributesAndAbstractProduct($concreteSku, $idLocale);
+    public function queryProductWithAttributesAndProductAbstract($concreteSku, $idLocale);
 
     /**
      * @param $idProductAbstract
      *
      * @return SpyTaxSetQuery
      */
-    public function queryTaxSetForAbstractProduct($idProductAbstract);
+    public function queryTaxSetForProductAbstract($idProductAbstract);
 
     /**
      * @param string $sku
      *
      * @return SpyProductQuery
      */
-    public function queryConcreteProductBySku($sku);
+    public function queryProductConcreteBySku($sku);
 
     /**
      * @param string $sku
      *
      * @return SpyProductAbstractQuery
      */
-    public function queryAbstractProductBySku($sku);
+    public function queryProductAbstractBySku($sku);
 
     /**
      * @param string $attributeName
@@ -76,22 +76,22 @@ interface ProductQueryContainerInterface
      *
      * @return SpyProductAbstractLocalizedAttributesQuery
      */
-    public function queryAbstractProductAttributeCollection($idProductAbstract, $fkCurrentLocale);
+    public function queryProductAbstractAttributeCollection($idProductAbstract, $fkCurrentLocale);
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idProductConcrete
      * @param int $fkCurrentLocale
      *
      * @return SpyProductLocalizedAttributesQuery
      */
-    public function queryConcreteProductAttributeCollection($idConcreteProduct, $fkCurrentLocale);
+    public function queryProductConcreteAttributeCollection($idProductConcrete, $fkCurrentLocale);
 
     /**
      * @param ModelCriteria $expandableQuery
      *
      * @return self
      */
-    public function joinConcreteProducts(ModelCriteria $expandableQuery);
+    public function joinProductConcreteCollection(ModelCriteria $expandableQuery);
 
     /**
      * @param ModelCriteria $expandableQuery

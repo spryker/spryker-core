@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductCategory\Business;
 
-use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -121,7 +121,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         $this->checkMappingDoesNotExist($sku, $categoryName, $locale);
 
-        $idProductAbstract = $this->productFacade->getAbstractProductIdBySku($sku);
+        $idProductAbstract = $this->productFacade->getProductAbstractIdBySku($sku);
         $idCategory = $this->categoryFacade->getCategoryIdentifier($categoryName, $locale);
 
         $mappingEntity = new SpyProductCategory();
@@ -172,14 +172,14 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param AbstractProductTransfer $abstractProductTransfer
+     * @param ProductAbstractTransfer $productAbstractTransfer
      *
      * @return SpyProductCategory[]
      */
-    public function getCategoriesByAbstractProduct(AbstractProductTransfer $abstractProductTransfer)
+    public function getCategoriesByProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->productCategoryQueryContainer
-            ->queryLocalizedProductCategoryMappingByIdProduct($abstractProductTransfer->getIdProductAbstract())
+            ->queryLocalizedProductCategoryMappingByIdProduct($productAbstractTransfer->getIdProductAbstract())
             ->find();
     }
 
@@ -214,8 +214,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping->delete();
 
             //yes, Active is correct, it should update touch items, not mark them to delete
-            //it's just a change to the mappings and not an actual abstract product
-            $this->touchAbstractProductActive($idProduct);
+            //it's just a change to the mappings and not an actual product abstract
+            $this->touchProductAbstractActive($idProduct);
         }
     }
 
@@ -241,7 +241,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping->setFkProductAbstract($idProduct);
             $mapping->save();
 
-            $this->touchAbstractProductActive($idProduct);
+            $this->touchProductAbstractActive($idProduct);
         }
     }
 
@@ -268,7 +268,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping->setProductOrder($order);
             $mapping->save();
 
-            $this->touchAbstractProductActive($idProduct);
+            $this->touchProductAbstractActive($idProduct);
         }
     }
 
@@ -297,7 +297,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping->setFkPreconfigProduct($idPreconfigProduct);
             $mapping->save();
 
-            $this->touchAbstractProductActive($idProduct);
+            $this->touchProductAbstractActive($idProduct);
         }
     }
 
@@ -469,9 +469,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      *
      * @return void
      */
-    protected function touchAbstractProductActive($idProductAbstract)
+    protected function touchProductAbstractActive($idProductAbstract)
     {
-        $this->touchFacade->touchActive(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idProductAbstract);
+        $this->touchFacade->touchActive(ProductCategoryConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
     }
 
     /**
@@ -479,9 +479,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      *
      * @return void
      */
-    protected function touchAbstractProductDeleted($idProductAbstract)
+    protected function touchProductAbstractDeleted($idProductAbstract)
     {
-        $this->touchFacade->touchDeleted(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idProductAbstract);
+        $this->touchFacade->touchDeleted(ProductCategoryConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
     }
 
 }

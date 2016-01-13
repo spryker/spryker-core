@@ -5,7 +5,7 @@
 
 namespace Bundles\Wishlist\tests\Unit\Spryker\Zed\Wishlist\Business\Storage;
 
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
@@ -253,13 +253,13 @@ class PropelTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $concreteProduct = new ConcreteProductTransfer();
-        $concreteProduct->setIdProductAbstract(1);
-        $concreteProduct->setIdConcreteProduct(1);
+        $productConcrete = new ProductConcreteTransfer();
+        $productConcrete->setIdProductAbstract(1);
+        $productConcrete->setIdProductConcrete(1);
         $productFacadeMock
             ->expects($this->any())
-            ->method('getConcreteProduct')
-            ->will($this->returnValue($concreteProduct));
+            ->method('getProductConcrete')
+            ->will($this->returnValue($productConcrete));
 
         return $productFacadeMock;
     }

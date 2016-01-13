@@ -149,9 +149,9 @@ class ProductOptionFacade extends AbstractFacade
      *
      * @return array
      */
-    public function getTypeUsagesForConcreteProduct($idProduct, $idLocale)
+    public function getTypeUsagesForProductConcrete($idProduct, $idLocale)
     {
-        return $this->getFactory()->createProductOptionReaderModel()->getTypeUsagesForConcreteProduct($idProduct, $idLocale);
+        return $this->getFactory()->createProductOptionReaderModel()->getTypeUsagesForProductConcrete($idProduct, $idLocale);
     }
 
     /**
@@ -201,9 +201,9 @@ class ProductOptionFacade extends AbstractFacade
      *
      * @return array
      */
-    public function getConfigPresetsForConcreteProduct($idProduct)
+    public function getConfigPresetsForProductConcrete($idProduct)
     {
-        return $this->getFactory()->createProductOptionReaderModel()->getConfigPresetsForConcreteProduct($idProduct);
+        return $this->getFactory()->createProductOptionReaderModel()->getConfigPresetsForProductConcrete($idProduct);
     }
 
     /**

@@ -14,13 +14,13 @@ interface ProductOptionExporterToProductInterface
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku);
+    public function getProductConcreteIdBySku($sku);
 
     /**
      * @param string $sku
      *
      * @return float
      */
-    public function getEffectiveTaxRateForConcreteProduct($sku);
+    public function getEffectiveTaxRateForProductConcrete($sku);
 
 }

@@ -62,7 +62,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return SpyProductQuery
      */
-    public function queryProductWithAttributesAndAbstractProduct($concreteSku, $idLocale)
+    public function queryProductWithAttributesAndProductAbstract($concreteSku, $idLocale)
     {
         $query = SpyProductQuery::create();
 
@@ -81,7 +81,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return SpyTaxSetQuery
      */
-    public function queryTaxSetForAbstractProduct($idProductAbstract)
+    public function queryTaxSetForProductAbstract($idProductAbstract)
     {
         return SpyTaxSetQuery::create()
             ->useSpyProductAbstractQuery()
@@ -92,7 +92,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     /**
      * @return SpyProductAbstractQuery
      */
-    public function queryAbstractProducts()
+    public function queryProductAbstract()
     {
         return SpyProductAbstractQuery::create();
     }
@@ -102,7 +102,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return SpyProductQuery
      */
-    public function queryConcreteProductBySku($sku)
+    public function queryProductConcreteBySku($sku)
     {
         return SpyProductQuery::create()
             ->filterBySku($sku);
@@ -113,7 +113,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return SpyProductAbstractQuery
      */
-    public function queryAbstractProductBySku($sku)
+    public function queryProductAbstractBySku($sku)
     {
         return SpyProductAbstractQuery::create()
             ->filterBySku($sku);
@@ -124,7 +124,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return SpyProductAbstractQuery
      */
-    public function querySkuFromAbstractProductById($idProductAbstract)
+    public function querySkuFromProductAbstractById($idProductAbstract)
     {
         return SpyProductAbstractQuery::create()
             ->filterByIdProductAbstract($idProductAbstract);
@@ -194,7 +194,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return SpyProductAbstractLocalizedAttributesQuery
      */
-    public function queryAbstractProductAttributeCollection($idProductAbstract, $fkCurrentLocale)
+    public function queryProductAbstractAttributeCollection($idProductAbstract, $fkCurrentLocale)
     {
         $query = SpyProductAbstractLocalizedAttributesQuery::create();
         $query
@@ -205,16 +205,16 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * @param int $idConcreteProduct
+     * @param int $idProductConcrete
      * @param int $fkCurrentLocale
      *
      * @return SpyProductLocalizedAttributesQuery
      */
-    public function queryConcreteProductAttributeCollection($idConcreteProduct, $fkCurrentLocale)
+    public function queryProductConcreteAttributeCollection($idProductConcrete, $fkCurrentLocale)
     {
         $query = SpyProductLocalizedAttributesQuery::create();
         $query
-            ->filterByFkProduct($idConcreteProduct)
+            ->filterByFkProduct($idProductConcrete)
             ->filterByFkLocale($fkCurrentLocale);
 
         return $query;
@@ -225,7 +225,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      *
      * @return self
      */
-    public function joinConcreteProducts(ModelCriteria $expandableQuery)
+    public function joinProductConcreteCollection(ModelCriteria $expandableQuery)
     {
         $expandableQuery
             ->addJoinObject(
@@ -234,11 +234,11 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
                     SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
                     Criteria::LEFT_JOIN
                 ),
-                'concreteProductJoin'
+                'productConcreteJoin'
             );
 
         $expandableQuery->addJoinCondition(
-            'concreteProductJoin',
+            'productConcreteJoin',
             SpyProductTableMap::COL_IS_ACTIVE,
             true,
             Criteria::EQUAL
@@ -353,10 +353,10 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
     // @todo refactor queries from below
 
-    public function queryConcreteProductByAbstractProduct(SpyProductAbstract $abstractProduct)
+    public function queryProductConcreteByProductAbstract(SpyProductAbstract $productAbstract)
     {
         return SpyProductQuery::create()
-            ->filterByFkProductAbstract($abstractProduct->getIdProductAbstract());
+            ->filterByFkProductAbstract($productAbstract->getIdProductAbstract());
     }
 
 }

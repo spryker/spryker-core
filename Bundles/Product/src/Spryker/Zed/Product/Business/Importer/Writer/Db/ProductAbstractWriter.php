@@ -7,13 +7,13 @@
 namespace Spryker\Zed\Product\Business\Importer\Writer\Db;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Propel\Runtime\Propel;
-use Spryker\Zed\Product\Business\Importer\Writer\AbstractProductWriterInterface;
+use Spryker\Zed\Product\Business\Importer\Writer\ProductAbstractWriterInterface;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 
-class AbstractProductWriter implements AbstractProductWriterInterface
+class ProductAbstractWriter implements ProductAbstractWriterInterface
 {
 
     /**
@@ -42,11 +42,11 @@ class AbstractProductWriter implements AbstractProductWriterInterface
     }
 
     /**
-     * @param AbstractProductTransfer $product
+     * @param ProductAbstractTransfer $product
      *
      * @return bool
      */
-    public function writeAbstractProduct(AbstractProductTransfer $product)
+    public function writeProductAbstract(ProductAbstractTransfer $product)
     {
         $this->productStatement->execute(
             [
@@ -60,7 +60,7 @@ class AbstractProductWriter implements AbstractProductWriterInterface
                 [
                     ':attributes' => json_encode($localizedAttributes->getAttributes()),
                     ':name' => $localizedAttributes->getName(),
-                    ':abstractProductSku' => $product->getSku(),
+                    ':productAbstractSku' => $product->getSku(),
                     ':fkLocale' => $this->localeTransfer->getIdLocale(),
                 ]
             );
@@ -97,7 +97,7 @@ class AbstractProductWriter implements AbstractProductWriterInterface
         $this->attributesStatement = $connection->prepare(
             sprintf(
                 'INSERT INTO %1$s (%2$s, %3$s, %4$s, %5$s) VALUES(
-                    (SELECT %6$s FROM %7$s WHERE %8$s = :abstractProductSku),
+                    (SELECT %6$s FROM %7$s WHERE %8$s = :productAbstractSku),
                     :fkLocale,
                     :name,
                     :attributes

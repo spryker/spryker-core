@@ -6,7 +6,7 @@
 
 namespace Spryker\Client\Wishlist\Storage;
 
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Product\ProductClientInterface;
 use Spryker\Client\Storage\StorageClientInterface;
@@ -20,7 +20,7 @@ class WishlistStorage implements WishlistStorageInterface
     private $storageClient;
 
     /**
-     * @var ProductClient
+     * @var ProductClientInterface
      */
     private $productClient;
 
@@ -44,17 +44,17 @@ class WishlistStorage implements WishlistStorageInterface
         foreach ($wishlist->getItems() as $item) {
             $productData = $this
                 ->productClient
-                ->getAbstractProductFromStorageByIdForCurrentLocale($item->getIdProductAbstract());
+                ->getProductAbstractFromStorageByIdForCurrentLocale($item->getIdProductAbstract());
 
-            foreach ($productData['concrete_products'] as $product) {
+            foreach ($productData['product_concrete_collection'] as $product) {
                 if ($product['sku'] !== $item->getSku()) {
                     continue;
                 }
-                $concreteProduct = new ConcreteProductTransfer();
-                $concreteProduct->setName($product['name']);
-                $concreteProduct->setSku($product['sku']);
-                $concreteProduct->setAttributes($product['attributes']);
-                $item->setConcreteProduct($concreteProduct);
+                $productConcrete = new ProductConcreteTransfer();
+                $productConcrete->setName($product['name']);
+                $productConcrete->setSku($product['sku']);
+                $productConcrete->setAttributes($product['attributes']);
+                $item->setProductConcrete($productConcrete);
             }
         }
     }

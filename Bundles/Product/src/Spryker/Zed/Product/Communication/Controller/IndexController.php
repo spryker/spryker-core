@@ -58,35 +58,35 @@ class IndexController extends AbstractController
     {
         $idProductAbstract = $request->query->getInt(self::ID_PRODUCT_ABSTRACT);
 
-        $abstractProduct = $this->getQueryContainer()
-            ->querySkuFromAbstractProductById($idProductAbstract)
+        $productAbstract = $this->getQueryContainer()
+            ->querySkuFromProductAbstractById($idProductAbstract)
             ->findOne();
 
-        $concreteProductCollection = $this->getQueryContainer()
-            ->queryConcreteProductByAbstractProduct($abstractProduct)
+        $productConcreteCollection = $this->getQueryContainer()
+            ->queryProductConcreteByProductAbstract($productAbstract)
             ->find();
 
-        $concreteProducts = $this->createConcreteProductsCollection($concreteProductCollection);
+        $productConcreteCollection = $this->createProductConcreteCollectionCollection($productConcreteCollection);
 
         $currentLocale = $this->getCurrentLocale();
 
         $attributesCollection = $this->getQueryContainer()
-            ->queryAbstractProductAttributeCollection($abstractProduct->getIdProductAbstract(), $currentLocale->getIdLocale())
+            ->queryProductAbstractAttributeCollection($productAbstract->getIdProductAbstract(), $currentLocale->getIdLocale())
             ->findOne();
 
         $attributes = [
             'name' => $attributesCollection->getName(),
             'attributes' => $this->mergeAttributes(
                 json_decode($attributesCollection->getAttributes(), true),
-                json_decode($abstractProduct->getAttributes(), true)
+                json_decode($productAbstract->getAttributes(), true)
             ),
         ];
 
-        $categories = $this->getProductCategories($abstractProduct, $currentLocale->getIdLocale());
+        $categories = $this->getProductCategories($productAbstract, $currentLocale->getIdLocale());
 
         return $this->viewResponse([
-            'abstractProduct' => $abstractProduct,
-            'concreteProducts' => $concreteProducts,
+            'productAbstract' => $productAbstract,
+            'productConcreteCollection' => $productConcreteCollection,
             'attributes' => $attributes,
             'categories' => $categories,
         ]);
@@ -132,44 +132,44 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param ObjectCollection|SpyProduct[] $concreteProductsCollection
+     * @param ObjectCollection|SpyProduct[] $productConcreteCollectionCollection
      *
      * @return array
      */
-    protected function createConcreteProductsCollection(ObjectCollection $concreteProductsCollection)
+    protected function createProductConcreteCollectionCollection(ObjectCollection $productConcreteCollectionCollection)
     {
-        $concreteProducts = [];
-        foreach ($concreteProductsCollection as $concreteProduct) {
+        $productConcreteCollection = [];
+        foreach ($productConcreteCollectionCollection as $productConcrete) {
             $productOptions = $this->getFactory()
                 ->createProductOptionsFacade()
                 ->getProductOptionsByIdProduct(
-                    $concreteProduct->getIdProduct(),
+                    $productConcrete->getIdProduct(),
                     $this->getCurrentLocale()->getIdLocale()
                 );
 
-            $concreteProducts[] = [
-                'sku' => $concreteProduct->getSku(),
-                'idProduct' => $concreteProduct->getIdProduct(),
-                'isActive' => $concreteProduct->getIsActive(),
-                'priceList' => $this->getProductPriceList($concreteProduct),
+            $productConcreteCollection[] = [
+                'sku' => $productConcrete->getSku(),
+                'idProduct' => $productConcrete->getIdProduct(),
+                'isActive' => $productConcrete->getIsActive(),
+                'priceList' => $this->getProductPriceList($productConcrete),
                 'productOptions' => $productOptions,
             ];
         }
 
-        return $concreteProducts;
+        return $productConcreteCollection;
     }
 
     /**
-     * @param SpyProductAbstract $abstractProduct
+     * @param SpyProductAbstract $productAbstract
      * @param int $idLocale
      *
      * @return array
      */
-    protected function getProductCategories(SpyProductAbstract $abstractProduct, $idLocale)
+    protected function getProductCategories(SpyProductAbstract $productAbstract, $idLocale)
     {
         $productCategoryEntityList = $this->getFactory()
             ->createProductCategoryQueryContainer()
-            ->queryLocalizedProductCategoryMappingByIdProduct($abstractProduct->getIdProductAbstract())
+            ->queryLocalizedProductCategoryMappingByIdProduct($productAbstract->getIdProductAbstract())
             ->find();
 
         $categories = [];

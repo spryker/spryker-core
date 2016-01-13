@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Product\Business\Importer;
 
-use Generated\Shared\Transfer\AbstractProductTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Builder\ProductBuilderInterface;
 use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 use Spryker\Zed\Product\Business\Importer\Reader\File;
@@ -126,7 +126,7 @@ class FileImporter implements FileImporterInterface
     /**
      * @param array $data
      *
-     * @return AbstractProductTransfer|ConcreteProductTransfer
+     * @return ProductAbstractTransfer|ProductConcreteTransfer
      */
     protected function process(array $data)
     {

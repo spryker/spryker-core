@@ -64,16 +64,16 @@ class CalculatorTest extends Test
      */
     protected function setTestData()
     {
-        $abstractProduct = SpyProductAbstractQuery::create()
+        $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku('test')
             ->findOne();
 
-        if ($abstractProduct === null) {
-            $abstractProduct = new SpyProductAbstract();
-            $abstractProduct->setSku('test');
+        if ($productAbstract === null) {
+            $productAbstract = new SpyProductAbstract();
+            $productAbstract->setSku('test');
         }
 
-        $abstractProduct->setAttributes('{}')
+        $productAbstract->setAttributes('{}')
             ->save();
 
         $product = SpyProductQuery::create()
@@ -85,7 +85,7 @@ class CalculatorTest extends Test
             $product->setSku('test2');
         }
 
-        $product->setFkProductAbstract($abstractProduct->getIdProductAbstract())
+        $product->setFkProductAbstract($productAbstract->getIdProductAbstract())
             ->setAttributes('{}')
             ->save();
 

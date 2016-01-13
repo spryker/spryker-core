@@ -16,13 +16,13 @@ interface TaxProductConnectorQueryContainerInterface
      *
      * @return SpyProductAbstractQuery
      */
-    public function getAbstractProductIdsForTaxRate($idTaxRate);
+    public function getAbstractAbstractIdsForTaxRate($idTaxRate);
 
     /**
      * @param int $idTaxSet
      *
      * @return SpyProductAbstractQuery
      */
-    public function getAbstractProductIdsForTaxSet($idTaxSet);
+    public function getProductAbstractIdsForTaxSet($idTaxSet);
 
 }

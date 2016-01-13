@@ -73,7 +73,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
 
                 $concreteSkus = explode(',', $productData['concrete_skus']);
                 $concreteNames = explode(',', $productData['concrete_names']);
-                $productData['concrete_products'] = [];
+                $productData['product_concrete_collection'] = [];
 
                 $lastSku = '';
                 for ($i = 0, $l = count($concreteSkus); $i < $l; $i++) {
@@ -91,7 +91,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                     $mergedAttributes = array_merge($encodedAttributes, $encodedLocalizedAttributes);
 
                     $lastSku = $concreteSkus[$i];
-                    $productData['concrete_products'][] = [
+                    $productData['product_concrete_collection'][] = [
                         'sku' => $concreteSkus[$i],
                         'attributes' => $mergedAttributes,
                         'name' => $concreteNames[$i],

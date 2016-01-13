@@ -45,14 +45,14 @@ interface ReaderInterface
      *
      * @return bool
      */
-    public function hasAbstractProduct($sku);
+    public function hasProductAbstract($sku);
 
     /**
      * @param string $sku
      *
      * @return bool
      */
-    public function hasConcreteProduct($sku);
+    public function hasProductConcrete($sku);
 
     /**
      * @param string $sku
@@ -61,7 +61,7 @@ interface ReaderInterface
      *
      * @return int
      */
-    public function getAbstractProductIdBySku($sku);
+    public function getProductAbstractIdBySku($sku);
 
     /**
      * @param string $sku
@@ -70,7 +70,7 @@ interface ReaderInterface
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku);
+    public function getProductConcreteIdBySku($sku);
 
     /**
      * @param string $sku

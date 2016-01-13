@@ -18,7 +18,7 @@ interface StockToProductInterface
      *
      * @return int
      */
-    public function getAbstractProductIdBySku($sku);
+    public function getProductAbstractIdBySku($sku);
 
     /**
      * @param string $sku
@@ -27,13 +27,13 @@ interface StockToProductInterface
      *
      * @return int
      */
-    public function getConcreteProductIdBySku($sku);
+    public function getProductConcreteIdBySku($sku);
 
     /**
      * @param string $sku
      *
      * @return bool
      */
-    public function hasConcreteProduct($sku);
+    public function hasProductConcrete($sku);
 
 }

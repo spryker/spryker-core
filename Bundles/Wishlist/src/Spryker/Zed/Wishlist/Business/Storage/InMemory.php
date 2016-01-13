@@ -48,8 +48,8 @@ class InMemory implements StorageInterface
                 $existingItem = $this->wishlistTransfer->getItems()[$key];
                 $existingItem->setQuantity($wishlistItem->getQuantity() + $existingItem->getQuantity());
             } else {
-                $concreteProduct = $this->facadeProduct->getConcreteProduct($wishlistItem->getSku());
-                $wishlistItem->setIdProductAbstract($concreteProduct->getIdProductAbstract());
+                $productConcrete = $this->facadeProduct->getProductConcrete($wishlistItem->getSku());
+                $wishlistItem->setIdProductAbstract($productConcrete->getIdProductAbstract());
                 $this->wishlistTransfer->addItem($wishlistItem);
             }
         }

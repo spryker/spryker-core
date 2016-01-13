@@ -6,7 +6,7 @@
 
 namespace Spryker\Shared\Product\Model;
 
-interface AbstractProductInterface
+interface ProductAbstractInterface
 {
 
     /**
@@ -22,12 +22,12 @@ interface AbstractProductInterface
     /**
      * @return array
      */
-    public function getConcreteProducts();
+    public function getProductConcreteCollection();
 
     /**
      * @param array $products
      */
-    public function setConcreteProducts(array $products);
+    public function setProductConcreteCollection(array $products);
 
     /**
      * @return bool

@@ -7,9 +7,9 @@
 namespace Functional\Spryker\Zed\ProductCategory;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
@@ -89,22 +89,22 @@ class ProductCategoryFacadeTest extends Test
 
         $locale = $this->localeFacade->createLocale($localeName);
 
-        $abstractProductTransfer = new AbstractProductTransfer();
-        $abstractProductTransfer->setSku($abstractSku);
-        $abstractProductTransfer->setAttributes([]);
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setSku($abstractSku);
+        $productAbstractTransfer->setAttributes([]);
         $localizedAttributes = new LocalizedAttributesTransfer();
         $localizedAttributes->setAttributes([]);
         $localizedAttributes->setLocale($locale);
         $localizedAttributes->setName($abstractName);
-        $abstractProductTransfer->addLocalizedAttributes($localizedAttributes);
-        $idProductAbstract = $this->productFacade->createAbstractProduct($abstractProductTransfer);
+        $productAbstractTransfer->addLocalizedAttributes($localizedAttributes);
+        $idProductAbstract = $this->productFacade->createProductAbstract($productAbstractTransfer);
 
-        $concreteProductTransfer = new ConcreteProductTransfer();
-        $concreteProductTransfer->setSku($concreteSku);
-        $concreteProductTransfer->setAttributes([]);
-        $concreteProductTransfer->addLocalizedAttributes($localizedAttributes);
-        $concreteProductTransfer->setIsActive(true);
-        $this->productFacade->createConcreteProduct($concreteProductTransfer, $idProductAbstract);
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setSku($concreteSku);
+        $productConcreteTransfer->setAttributes([]);
+        $productConcreteTransfer->addLocalizedAttributes($localizedAttributes);
+        $productConcreteTransfer->setIsActive(true);
+        $this->productFacade->createProductConcrete($productConcreteTransfer, $idProductAbstract);
 
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setName($categoryName);

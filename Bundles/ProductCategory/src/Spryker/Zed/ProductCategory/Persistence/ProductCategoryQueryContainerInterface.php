@@ -68,6 +68,6 @@ interface ProductCategoryQueryContainerInterface
      *
      * @return SpyProductAbstractQuery
      */
-    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null);
+    public function queryProductAbstractCollectionBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null);
 
 }

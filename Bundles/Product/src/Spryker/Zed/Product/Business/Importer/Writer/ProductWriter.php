@@ -6,46 +6,46 @@
 
 namespace Spryker\Zed\Product\Business\Importer\Writer;
 
-use Generated\Shared\Transfer\AbstractProductTransfer;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
-use Spryker\Shared\Product\Model\AbstractProductInterface;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\Product\Model\ProductAbstractInterface;
 
 class ProductWriter implements ProductWriterInterface
 {
 
     /**
-     * @var AbstractProductWriterInterface
+     * @var ProductAbstractWriterInterface
      */
-    protected $abstractProductWriter;
+    protected $productAbstractWriter;
 
     /**
-     * @var ConcreteProductWriterInterface
+     * @var ProductConcreteWriterInterface
      */
     protected $productWriter;
 
     /**
-     * @param AbstractProductWriterInterface $abstractProductWriter
-     * @param ConcreteProductWriterInterface $concreteProductWriter
+     * @param ProductAbstractWriterInterface $productAbstractWriter
+     * @param ProductConcreteWriterInterface $productConcreteWriter
      */
     public function __construct(
-        AbstractProductWriterInterface $abstractProductWriter,
-        ConcreteProductWriterInterface $concreteProductWriter
+        ProductAbstractWriterInterface $productAbstractWriter,
+        ProductConcreteWriterInterface $productConcreteWriter
     ) {
-        $this->abstractProductWriter = $abstractProductWriter;
-        $this->productWriter = $concreteProductWriter;
+        $this->productAbstractWriter = $productAbstractWriter;
+        $this->productWriter = $productConcreteWriter;
     }
 
     /**
-     * @param AbstractProductInterface $product
+     * @param ProductAbstractInterface $product
      *
      * @return bool
      */
     public function writeProduct($product)
     {
-        if ($product instanceof ConcreteProductTransfer) {
+        if ($product instanceof ProductConcreteTransfer) {
             return $this->productWriter->writeProduct($product);
-        } elseif ($product instanceof AbstractProductTransfer) {
-            return $this->abstractProductWriter->writeAbstractProduct($product);
+        } elseif ($product instanceof ProductAbstractTransfer) {
+            return $this->productAbstractWriter->writeProductAbstract($product);
         }
 
         return false;

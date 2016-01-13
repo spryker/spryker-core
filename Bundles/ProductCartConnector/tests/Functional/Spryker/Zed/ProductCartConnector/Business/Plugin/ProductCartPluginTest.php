@@ -28,12 +28,12 @@ use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 class ProductCartPluginTest extends Test
 {
 
-    const SKU_ABSTRACT_PRODUCT = 'Abstract product sku';
-    const SKU_CONCRETE_PRODUCT = 'Concrete product sku';
+    const SKU_PRODUCT_ABSTRACT = 'Product abstract sku';
+    const SKU_PRODUCT_CONCRETE = 'Product concrete sku';
     const TAX_SET_NAME = 'Sales Tax';
     const TAX_RATE_NAME = 'VAT';
     const TAX_RATE_PERCENTAGE = 10;
-    const CONCRETE_PRODUCT_NAME = 'Concrete product name';
+    const PRODUCT_CONCRETE_NAME = 'Product concrete name';
 
     /**
      * @var ProductCartConnectorFacade
@@ -72,36 +72,36 @@ class ProductCartPluginTest extends Test
         $taxSetEntity->addSpyTaxRate($taxRateEntity)
             ->setName(self::TAX_SET_NAME);
 
-        $abstractProductEntity = new SpyProductAbstract();
-        $abstractProductEntity->setSpyTaxSet($taxSetEntity)
+        $productAbstractEntity = new SpyProductAbstract();
+        $productAbstractEntity->setSpyTaxSet($taxSetEntity)
             ->setAttributes('')
-            ->setSku(self::SKU_ABSTRACT_PRODUCT);
+            ->setSku(self::SKU_PRODUCT_ABSTRACT);
 
         $localizedAttributesEntity = new SpyProductLocalizedAttributes();
-        $localizedAttributesEntity->setName(self::CONCRETE_PRODUCT_NAME)
+        $localizedAttributesEntity->setName(self::PRODUCT_CONCRETE_NAME)
             ->setAttributes('')
             ->setFkLocale($localeTransfer->getIdLocale());
 
-        $concreteProductEntity = new SpyProduct();
-        $concreteProductEntity->setSpyProductAbstract($abstractProductEntity)
+        $productConcreteEntity = new SpyProduct();
+        $productConcreteEntity->setSpyProductAbstract($productAbstractEntity)
             ->setAttributes('')
             ->addSpyProductLocalizedAttributes($localizedAttributesEntity)
-            ->setSku(self::SKU_CONCRETE_PRODUCT)
+            ->setSku(self::SKU_PRODUCT_CONCRETE)
             ->save();
 
         $changeTransfer = new ChangeTransfer();
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku(self::SKU_CONCRETE_PRODUCT);
+        $itemTransfer->setSku(self::SKU_PRODUCT_CONCRETE);
         $changeTransfer->addItem($itemTransfer);
 
         $this->productCartConnectorFacade->expandItems($changeTransfer);
 
         $expandedItemTransfer = $changeTransfer->getItems()[0];
 
-        $this->assertEquals(self::SKU_ABSTRACT_PRODUCT, $expandedItemTransfer->getAbstractSku());
-        $this->assertEquals(self::SKU_CONCRETE_PRODUCT, $expandedItemTransfer->getSku());
-        $this->assertEquals($abstractProductEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
-        $this->assertEquals($concreteProductEntity->getIdProduct(), $expandedItemTransfer->getId());
+        $this->assertEquals(self::SKU_PRODUCT_ABSTRACT, $expandedItemTransfer->getAbstractSku());
+        $this->assertEquals(self::SKU_PRODUCT_CONCRETE, $expandedItemTransfer->getSku());
+        $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
+        $this->assertEquals($productConcreteEntity->getIdProduct(), $expandedItemTransfer->getId());
         $expandedTSetTransfer = $expandedItemTransfer->getTaxSet();
         $this->assertNotNull($expandedTSetTransfer);
         $this->assertEquals(self::TAX_SET_NAME, $expandedTSetTransfer->getName());

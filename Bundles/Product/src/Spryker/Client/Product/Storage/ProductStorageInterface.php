@@ -13,6 +13,6 @@ interface ProductStorageInterface
      *
      * @return mixed
      */
-    public function getAbstractProductFromStorageById($idProductAbstract);
+    public function getProductAbstractFromStorageById($idProductAbstract);
 
 }

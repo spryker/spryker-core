@@ -5,7 +5,7 @@
 
 namespace Bundles\Wishlist\tests\Unit\Spryker\Zed\Wishlist\Business\Storage;
 
-use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -26,7 +26,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
         $wishlistItem->setQuantity(1);
         $wishlistTransfer->addItem($wishlistItem);
 
-        $productFacadeMock = $this->createProductFacadeConcreteProductMock();
+        $productFacadeMock = $this->createProductFacadeProductConcreteMock();
 
         $inMemory = new InMemory($wishlistTransfer, $productFacadeMock);
 
@@ -49,7 +49,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddNewItem()
     {
-        $productFacadeMock = $this->createProductFacadeConcreteProductMock();
+        $productFacadeMock = $this->createProductFacadeProductConcreteMock();
         $wishlistTransfer = new WishlistTransfer();
         $inMemory = new InMemory($wishlistTransfer, $productFacadeMock);
 
@@ -72,7 +72,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testReduceExistingItem()
     {
-        $productFacadeMock = $this->createProductFacadeConcreteProductMock();
+        $productFacadeMock = $this->createProductFacadeProductConcreteMock();
         $wishlistTransfer = new WishlistTransfer();
         $wishlistItem = new ItemTransfer();
         $wishlistItem->setGroupKey(123);
@@ -99,7 +99,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testReduceIfLastExisting()
     {
-        $productFacadeMock = $this->createProductFacadeConcreteProductMock();
+        $productFacadeMock = $this->createProductFacadeProductConcreteMock();
         $wishlistTransfer = new WishlistTransfer();
         $wishlistItem = new ItemTransfer();
         $wishlistItem->setGroupKey(123);
@@ -124,7 +124,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemoveItem()
     {
-        $productFacadeMock = $this->createProductFacadeConcreteProductMock();
+        $productFacadeMock = $this->createProductFacadeProductConcreteMock();
         $wishlistTransfer = new WishlistTransfer();
         $wishlistItem = new ItemTransfer();
         $wishlistItem->setGroupKey(123);
@@ -149,7 +149,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testIncreaseItem()
     {
-        $productFacadeMock = $this->createProductFacadeConcreteProductMock();
+        $productFacadeMock = $this->createProductFacadeProductConcreteMock();
         $wishlistTransfer = new WishlistTransfer();
         $wishlistItem = new ItemTransfer();
         $wishlistItem->setGroupKey(123);
@@ -174,9 +174,9 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    public function createProductFacadeConcreteProductMock()
+    public function createProductFacadeProductConcreteMock()
     {
-        $concreateProductTransfer = new ConcreteProductTransfer();
+        $concreateProductTransfer = new ProductConcreteTransfer();
         $concreateProductTransfer->setIdProductAbstract(1);
 
         $productFacadeMock = $this
@@ -184,7 +184,7 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $productFacadeMock->expects($this->any())->method('getConcreteProduct')
+        $productFacadeMock->expects($this->any())->method('getProductConcrete')
             ->will($this->returnValue($concreateProductTransfer));
 
         return $productFacadeMock;

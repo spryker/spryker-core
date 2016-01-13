@@ -8,8 +8,8 @@ namespace Spryker\Zed\Product\Business;
 
 use Spryker\Zed\Product\Business\Attribute\AttributeManager;
 use Spryker\Zed\Product\Business\Model\ProductBatchResult;
-use Spryker\Zed\Product\Business\Importer\Writer\Db\ConcreteProductWriter;
-use Spryker\Zed\Product\Business\Importer\Writer\Db\AbstractProductWriter;
+use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductConcreteWriter;
+use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductAbstractWriter;
 use Spryker\Zed\Product\Business\Importer\Writer\ProductWriter;
 use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
 use Spryker\Zed\Product\Business\Importer\Reader\File\CsvReader;
@@ -21,8 +21,8 @@ use Spryker\Zed\Product\Business\Importer\FileImporter;
 use Spryker\Zed\Product\Business\Importer\Reader\File\IteratorReaderInterface;
 use Spryker\Zed\Product\Business\Importer\Upload\UploadedFileImporter;
 use Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator;
-use Spryker\Zed\Product\Business\Importer\Writer\AbstractProductWriterInterface;
-use Spryker\Zed\Product\Business\Importer\Writer\ConcreteProductWriterInterface;
+use Spryker\Zed\Product\Business\Importer\Writer\ProductAbstractWriterInterface;
+use Spryker\Zed\Product\Business\Importer\Writer\ProductConcreteWriterInterface;
 use Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface;
 use Spryker\Zed\Product\Business\Internal\Install;
 use Spryker\Zed\Product\Business\Model\ProductBatchResultInterface;
@@ -112,27 +112,27 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function createProductWriter()
     {
         return new ProductWriter(
-            $this->createAbstractProductWriter(),
-            $this->createConcreteProductWriter()
+            $this->createProductAbstractWriter(),
+            $this->createProductConcreteWriter()
         );
     }
 
     /**
-     * @return AbstractProductWriterInterface
+     * @return ProductAbstractWriterInterface
      */
-    protected function createAbstractProductWriter()
+    protected function createProductAbstractWriter()
     {
-        return new AbstractProductWriter(
+        return new ProductAbstractWriter(
             $this->getCurrentLocale()
         );
     }
 
     /**
-     * @return ConcreteProductWriterInterface
+     * @return ProductConcreteWriterInterface
      */
-    protected function createConcreteProductWriter()
+    protected function createProductConcreteWriter()
     {
-        return new ConcreteProductWriter(
+        return new ProductConcreteWriter(
             $this->getCurrentLocale()
         );
     }

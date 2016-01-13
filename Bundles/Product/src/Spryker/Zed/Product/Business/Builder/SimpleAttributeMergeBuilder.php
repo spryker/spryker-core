@@ -16,7 +16,7 @@ class SimpleAttributeMergeBuilder
     const CONCRETE_LOCALIZED_ATTRIBUTES = 'concrete_localized_attributes';
     const CONCRETE_SKUS = 'concrete_skus';
     const CONCRETE_NAMES = 'concrete_names';
-    const CONCRETE_PRODUCTS = 'concrete_products';
+    const PRODUCT_CONCRETE_COLLECTION = 'product_concrete_collection';
     const NAME = 'name';
     const SKU = 'sku';
     const ATTRIBUTES = 'attributes';
@@ -40,7 +40,7 @@ class SimpleAttributeMergeBuilder
 
             $concreteSkus = explode(',', $productData[self::CONCRETE_SKUS]);
             $concreteNames = explode(',', $productData[self::CONCRETE_NAMES]);
-            $productData[self::CONCRETE_PRODUCTS] = [];
+            $productData[self::PRODUCT_CONCRETE_COLLECTION] = [];
 
             $processedConcreteSkus = [];
             for ($i = 0, $l = count($concreteSkus); $i < $l; $i++) {
@@ -51,7 +51,7 @@ class SimpleAttributeMergeBuilder
                 $mergedAttributes = $this->mergeAttributes($concreteAttributes[$i], $concreteLocalizedAttributes[$i]);
 
                 $processedConcreteSkus[$concreteSkus[$i]] = true;
-                $productData[self::CONCRETE_PRODUCTS][] = [
+                $productData[self::PRODUCT_CONCRETE_COLLECTION][] = [
                     self::NAME => $concreteNames[$i],
                     self::SKU => $concreteSkus[$i],
                     self::ATTRIBUTES => $mergedAttributes,

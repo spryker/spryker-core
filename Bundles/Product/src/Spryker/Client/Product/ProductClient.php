@@ -19,11 +19,11 @@ class ProductClient extends AbstractClient implements ProductClientInterface
      *
      * @return array
      */
-    public function getAbstractProductFromStorageByIdForCurrentLocale($idProductAbstract)
+    public function getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract)
     {
         $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
         $productStorage = $this->getFactory()->createProductStorage($locale);
-        $product = $productStorage->getAbstractProductFromStorageById($idProductAbstract);
+        $product = $productStorage->getProductAbstractFromStorageById($idProductAbstract);
 
         return $product;
     }
@@ -34,10 +34,10 @@ class ProductClient extends AbstractClient implements ProductClientInterface
      *
      * @return array
      */
-    public function getAbstractProductFromStorageById($idProductAbstract, $locale)
+    public function getProductAbstractFromStorageById($idProductAbstract, $locale)
     {
         $productStorage = $this->getFactory()->createProductStorage($locale);
-        $product = $productStorage->getAbstractProductFromStorageById($idProductAbstract);
+        $product = $productStorage->getProductAbstractFromStorageById($idProductAbstract);
 
         return $product;
     }
