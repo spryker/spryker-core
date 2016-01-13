@@ -26,7 +26,7 @@ interface CustomerStubInterface
      *
      * @return CustomerResponseTransfer
      */
-    public function forgotPassword(CustomerTransfer $customerTransfer);
+    public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer

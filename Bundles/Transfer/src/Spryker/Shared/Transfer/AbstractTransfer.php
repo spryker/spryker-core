@@ -83,7 +83,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     {
         $returnData = [];
         foreach ($this->modifiedProperties as $modifiedProperty) {
-            $key = $modifiedProperty;
+            $key = $this->transformUnderscoreArrayKey($modifiedProperty);
             $getterName = 'get' . ucfirst($modifiedProperty);
             $value = $this->$getterName();
             if (is_object($value)) {

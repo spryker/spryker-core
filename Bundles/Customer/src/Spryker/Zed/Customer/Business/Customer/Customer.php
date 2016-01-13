@@ -263,7 +263,7 @@ class Customer
      *
      * @return CustomerResponseTransfer
      */
-    public function forgotPassword(CustomerTransfer $customerTransfer)
+    public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer)
     {
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
 
@@ -364,7 +364,7 @@ class Customer
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
         $customerEntity = $this->getCustomer($customerTransfer);
-        $customerEntity->fromArray($customerTransfer->toArray());
+        $customerEntity->fromArray($customerTransfer->modifiedToArray());
 
         if (!$this->isEmailAvailableForCustomer($customerEntity)) {
             $customerResponseTransfer = $this->createCustomerEmailAlreadyUsedResponse();
@@ -445,11 +445,12 @@ class Customer
         }
 
         $customerTransfer = $this->encryptNewPassword($customerTransfer);
-        $customerTransfer->setPassword($customerTransfer->getNewPassword());
 
-        $customerEntity->fromArray($customerTransfer->toArray());
+        $customerEntity->setPassword($customerTransfer->getNewPassword());
 
         $changedRows = $customerEntity->save();
+
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         $customerResponseTransfer
             ->setIsSuccess($changedRows > 0)

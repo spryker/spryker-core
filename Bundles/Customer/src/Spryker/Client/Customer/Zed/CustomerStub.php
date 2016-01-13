@@ -44,9 +44,9 @@ class CustomerStub implements CustomerStubInterface
      *
      * @return CustomerResponseTransfer
      */
-    public function forgotPassword(CustomerTransfer $customerTransfer)
+    public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/forgot-password', $customerTransfer);
+        return $this->zedStub->call('/customer/gateway/send-password-restore-mail', $customerTransfer);
     }
 
     /**

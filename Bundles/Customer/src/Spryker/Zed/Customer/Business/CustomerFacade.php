@@ -58,12 +58,24 @@ class CustomerFacade extends AbstractFacade
      * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
+     *
+     * @deprecated Use sendPasswordRestoreMail() instead
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
+        return $this->sendPasswordRestoreMail($customerTransfer);
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer)
+    {
         return $this->getFactory()
             ->createCustomer()
-            ->forgotPassword($customerTransfer);
+            ->sendPasswordRestoreMail($customerTransfer);
     }
 
     /**

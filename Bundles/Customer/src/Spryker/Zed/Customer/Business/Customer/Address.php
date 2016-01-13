@@ -81,7 +81,11 @@ class Address
     {
         $idCustomer = $addressTransfer->getFkCustomer();
 
-        return $this->getAddressTransferById($addressTransfer->getIdCustomerAddress(), $idCustomer);
+        $addressTransfer = $this->getAddressTransferById($addressTransfer->getIdCustomerAddress(), $idCustomer);
+
+        $this->setDefaultAddressFlags($addressTransfer);
+
+        return $addressTransfer;
     }
 
     /**
@@ -108,6 +112,36 @@ class Address
         $addressTransfer->setIso2Code($addressEntity->getCountry()->getIso2Code());
 
         return $addressTransfer;
+    }
+
+    /**
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return void
+     */
+    protected function setDefaultAddressFlags(AddressTransfer $addressTransfer)
+    {
+        $customerEntity = $this->getCustomerFromAddressTransfer($addressTransfer);
+
+        if ($addressTransfer !== null) {
+            $addressTransfer->setIsDefaultBilling(
+                $this->isDefaultAddress($addressTransfer->getIdCustomerAddress(), $customerEntity->getDefaultBillingAddress())
+            );
+            $addressTransfer->setIsDefaultShipping(
+                $this->isDefaultAddress($addressTransfer->getIdCustomerAddress(), $customerEntity->getDefaultShippingAddress())
+            );
+        }
+    }
+
+    /**
+     * @param int $idCustomerAddress
+     * @param int $idDefaultAddress
+     *
+     * @return bool
+     */
+    protected function isDefaultAddress($idCustomerAddress, $idDefaultAddress)
+    {
+        return ((int) $idCustomerAddress === (int) $idDefaultAddress);
     }
 
     /**
@@ -546,7 +580,7 @@ class Address
 
         $fkCountry = $this->retrieveFkCountry($addressTransfer);
 
-        $addressEntity->fromArray($addressTransfer->toArray());
+        $addressEntity->fromArray($addressTransfer->modifiedToArray());
         $addressEntity->setCustomer($customer);
         $addressEntity->setFkCountry($fkCountry);
         $addressEntity->save();
