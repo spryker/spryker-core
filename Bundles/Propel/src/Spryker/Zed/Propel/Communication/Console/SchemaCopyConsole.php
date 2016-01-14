@@ -38,7 +38,9 @@ class SchemaCopyConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->info('Clean schema directory');
         $this->getFacade()->cleanPropelSchemaDirectory();
+        $this->info('Copy and merge schema files');
         $this->getFacade()->copySchemaFilesToTargetDirectory();
     }
 

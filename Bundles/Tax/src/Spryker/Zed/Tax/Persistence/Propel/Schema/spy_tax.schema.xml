@@ -10,7 +10,7 @@
     <table name="spy_tax_rate" idMethod="native" allowPkInsert="true" phpName="SpyTaxRate">
         <column name="id_tax_rate" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="rate" type="DECIMAL" size="8" scale="2" required="true" default="0.0"/>
+        <column name="rate" type="DECIMAL" size="8" scale="2" required="true" />
         <id-method-parameter value="spy_tax_rate_pk_seq"/>
     </table>
 

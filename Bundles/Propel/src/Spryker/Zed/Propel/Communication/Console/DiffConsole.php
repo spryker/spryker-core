@@ -39,6 +39,8 @@ class DiffConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->runDependingCommand(SchemaCopyConsole::COMMAND_NAME);
+
         $this->info('Create diff');
 
         $config = Config::get(ApplicationConstants::PROPEL);

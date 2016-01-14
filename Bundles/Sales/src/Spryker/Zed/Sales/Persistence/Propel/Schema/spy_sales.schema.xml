@@ -144,7 +144,7 @@
         <column name="label_option_value" type="VARCHAR" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" default="0"/>
         <column name="price_to_pay" type="INTEGER" required="true" default="0"/>
-        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="true" default="0.0"/>
+        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="true"/>
 
         <behavior name="timestampable"/>
 
