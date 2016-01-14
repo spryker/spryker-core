@@ -20,7 +20,6 @@ use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Symfony\Component\Finder\Finder;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 
@@ -32,20 +31,12 @@ class CmsBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CmsQueryContainerInterface
-     */
-    protected function getCmsQueryContainer()
-    {
-        return $this->getQueryContainer();
-    }
-
-    /**
      * @return PageManagerInterface
      */
     public function createPageManager()
     {
         return new PageManager(
-            $this->getCmsQueryContainer(),
+            $this->getQueryContainer(),
             $this->createTemplateManager(),
             $this->createBlockManager(),
             $this->getGlossaryFacade(),
@@ -60,7 +51,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     public function createTemplateManager()
     {
         return new TemplateManager(
-            $this->getCmsQueryContainer(),
+            $this->getQueryContainer(),
             $this->getConfig(),
             $this->createFinder()
         );
@@ -72,7 +63,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     public function createBlockManager()
     {
         return new BlockManager(
-            $this->getCmsQueryContainer(),
+            $this->getQueryContainer(),
             $this->getTouchFacade(),
             $this->getProvidedDependency(CmsDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
@@ -85,7 +76,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new GlossaryKeyMappingManager(
             $this->getGlossaryFacade(),
-            $this->getCmsQueryContainer(),
+            $this->getQueryContainer(),
             $this->createTemplateManager(),
             $this->createPageManager(),
             $this->getProvidedDependency(CmsDependencyProvider::PLUGIN_PROPEL_CONNECTION)
