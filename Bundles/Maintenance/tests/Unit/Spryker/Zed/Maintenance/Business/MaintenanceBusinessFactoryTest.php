@@ -7,6 +7,8 @@
 namespace Functional\Spryker\Zed\Maintenance\Business\Model;
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use Spryker\Zed\Maintenance\Business\MaintenanceBusinessFactory;
 
 /**
@@ -16,7 +18,7 @@ use Spryker\Zed\Maintenance\Business\MaintenanceBusinessFactory;
  * @group Business
  * @group MaintenanceBusinessFactory
  */
-class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
+class MaintenanceBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -33,7 +35,7 @@ class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
     public function testCreatePackageCollectorShouldReturnFullConfiguredInstance()
     {
         $this->assertInstanceOf(
-            'Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface',
+            InstalledPackageCollectorInterface::class,
             $this->getFactory()->createPackageCollector()
         );
     }
@@ -44,7 +46,7 @@ class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
     public function testCreateMarkDownWriterShouldReturnFullConfiguredInstance()
     {
         $this->assertInstanceOf(
-            'Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter',
+            MarkDownWriter::class,
             $this->getFactory()->createMarkDownWriter(new InstalledPackagesTransfer())
         );
     }
