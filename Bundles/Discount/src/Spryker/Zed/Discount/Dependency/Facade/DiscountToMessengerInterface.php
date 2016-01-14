@@ -18,4 +18,18 @@ interface DiscountToMessengerInterface
      */
     public function addSuccessMessage(MessageTransfer $message);
 
+    /**
+     * @param MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addErrorMessage(MessageTransfer $message);
+
+    /**
+     * @param MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addInfoMessage(MessageTransfer $message);
+
 }

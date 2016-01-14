@@ -72,6 +72,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param DataTablesTransfer $dataTablesTransfer
      * @param int $idPool
      * @param int $batchValue
      *
@@ -149,18 +150,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return DecisionRuleForm
      */
-    public function createDecisionRuleFormType()
-    {
-        return new DecisionRuleForm($this->getConfig()->getAvailableDecisionRulePlugins());
-    }
-
-    /**
-     * @return DecisionRuleForm
-     */
     public function createDecisionRuleForm()
     {
         $decisionRulesForm = new DecisionRuleForm(
-            $this->getConfig()->getAvailableDecisionRulePlugins()
+            $this->getConfig()
         );
 
         return $this->createForm($decisionRulesForm);
