@@ -155,14 +155,14 @@ class ProductOptionFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductOptionTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function getValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale)
+    public function getValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale)
     {
-        return $this->getFactory()->createProductOptionReaderModel()->getValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale);
+        return $this->getFactory()->createProductOptionReaderModel()->getValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale);
     }
 
     /**

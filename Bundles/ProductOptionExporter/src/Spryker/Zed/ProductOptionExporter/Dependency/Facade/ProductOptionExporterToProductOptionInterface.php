@@ -18,12 +18,12 @@ interface ProductOptionExporterToProductOptionInterface
     public function getTypeUsagesForProductConcrete($idProduct, $idLocale);
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductAttributeProductOptionTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function getValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale);
+    public function getValueUsagesForTypeUsage($idProductAttributeProductOptionTypeUsage, $idLocale);
 
     /**
      * @param int $idProductAttributeTypeUsage
