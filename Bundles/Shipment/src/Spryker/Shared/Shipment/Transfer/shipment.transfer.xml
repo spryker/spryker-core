@@ -3,32 +3,28 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="Shipment">
-        <property name="methods" type="ShipmentMethod[]" singular="method" />
-    </transfer>
-
     <transfer name="ShipmentCarrier">
         <property name="idShipmentCarrier" type="int" />
-        <property name="glossaryKeyName" type="string" />
         <property name="name" type="string" />
         <property name="isActive" type="bool" />
+    </transfer>
+
+    <transfer name="ShipmentMethods">
+        <property name="methods" type="ShipmentMethod[]" singular="method" />
     </transfer>
 
     <transfer name="ShipmentMethod">
         <property name="idShipmentMethod" type="int" />
         <property name="fkShipmentCarrier" type="int" />
         <property name="fkTaxSet" type="int" />
-        <property name="glossaryKeyName" type="string" />
-        <property name="glossaryKeyDescription" type="string" />
         <property name="availabilityPlugin" type="string" />
-        <property name="priceCalculationPlugin" type="string" />
+        <property name="pricePlugin" type="string" />
         <property name="deliveryTimePlugin" type="string" />
-        <property name="taxCalculationPlugin" type="string" />
         <property name="name" type="string" />
-        <property name="price" type="int" />
+        <property name="defaultPrice" type="int" />
         <property name="taxRate" type="float" />
         <property name="isActive" type="bool" />
-        <property name="time" type="string" />
+        <property name="deliveryTime" type="string" />
     </transfer>
 
     <transfer name="Order">
@@ -61,12 +57,14 @@
         <property name="iso2Code" type="string" />
     </transfer>
 
-    <transfer name="ShipmentMethodAvailability">
-        <property name="quote" type="Quote" />
+    <transfer name="Shipment">
+        <property name="carrier" type="ShipmentCarrier"/>
+        <property name="method" type="ShipmentMethod"/>
+        <property name="shipmentSelection" type="string"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
 </transfers>

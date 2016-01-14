@@ -42,7 +42,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         Propel::getConnection()->beginTransaction();
         $idSalesOrder = $checkoutResponse->getSaveOrder()->getIdSalesOrder();
         $salesOrderEntity = $this->queryContainer->querySalesOrderById($idSalesOrder)->findOne();
-        $salesOrderEntity->setFkShipmentMethod($quoteTransfer->getShipmentMethod()->getIdShipmentMethod());
+        $salesOrderEntity->setFkShipmentMethod($quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod());
 
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if (ShipmentConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {

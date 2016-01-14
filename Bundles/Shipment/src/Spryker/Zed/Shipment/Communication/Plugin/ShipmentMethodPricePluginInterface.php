@@ -8,14 +8,14 @@ namespace Spryker\Zed\Shipment\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ShipmentMethodAvailabilityPluginInterface
+interface ShipmentMethodPricePluginInterface
 {
 
     /**
      * @param QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return int
      */
-    public function isAvailable(QuoteTransfer $quoteTransfer);
+    public function getPrice(QuoteTransfer $quoteTransfer);
 
 }

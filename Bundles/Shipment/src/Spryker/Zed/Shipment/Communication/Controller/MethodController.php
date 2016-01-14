@@ -8,12 +8,14 @@ namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Shipment\Business\ShipmentFacade;
+use Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
- * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
+ * @method ShipmentCommunicationFactory getFactory()
+ * @method ShipmentFacade getFacade()
  */
 class MethodController extends AbstractController
 {
@@ -27,14 +29,8 @@ class MethodController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $dataProvider = $this->getFactory()->createMethodFormDataProvider();
-        $form = $this
-            ->getFactory()
-            ->createMethodForm(
-                $dataProvider->getData(),
-                $dataProvider->getOptions()
-            )
-            ->handleRequest($request);
+        $form = $this->getFactory()->createMethodForm();
+        $form->handleRequest();
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -63,14 +59,9 @@ class MethodController extends AbstractController
         $idMethod = $request->query->get(self::ID_METHOD_PARAMETER);
 
         if ($this->getFacade()->hasMethod($idMethod)) {
-            $dataProvider = $this->getFactory()->createMethodFormDataProvider();
-            $form = $this
-                ->getFactory()
-                ->createMethodForm(
-                    $dataProvider->getData($idMethod),
-                    $dataProvider->getOptions()
-                )
-                ->handleRequest($request);
+            $form = $this->getFactory()
+                ->createMethodForm($idMethod);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $data = $form->getData();

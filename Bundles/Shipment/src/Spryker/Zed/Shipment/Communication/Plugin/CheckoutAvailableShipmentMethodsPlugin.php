@@ -6,24 +6,24 @@
 
 namespace Spryker\Zed\Shipment\Communication\Plugin;
 
-use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
 /**
- * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
+ * @method ShipmentFacade getFacade()
  */
 class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
 {
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     * @return ShipmentMethodsTransfer
      */
-    public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()->getAvailableMethods($shipmentMethodAvailabilityTransfer);
+        return $this->getFacade()->getAvailableMethods($quoteTransfer);
     }
 
 }
