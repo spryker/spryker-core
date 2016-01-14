@@ -40,7 +40,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return Form
      */
-    public function createVoucherForm($allowMultiple=false)
+    public function createVoucherForm($allowMultiple = false)
     {
         $voucherForm = new VoucherForm(
             $this->getQueryContainer(),
@@ -119,7 +119,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createCollectorPluginForm()
     {
         $collectorPluginForm = new CollectorPluginForm(
-            $this->getConfig()->getAvailableCollectorPlugins()
+            $this->getConfig()
         );
 
         return $this->createForm($collectorPluginForm);

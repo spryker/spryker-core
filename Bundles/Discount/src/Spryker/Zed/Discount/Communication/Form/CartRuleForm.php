@@ -33,6 +33,11 @@ class CartRuleForm extends AbstractRuleForm
      */
     protected $discountFacade;
 
+    /**
+     * @var DiscountConfig
+     */
+    protected $discountConfig;
+
     public function __construct(DiscountConfig $config, DiscountFacade $discountFacade)
     {
         parent::__construct(
@@ -41,6 +46,7 @@ class CartRuleForm extends AbstractRuleForm
             $config->getAvailableDecisionRulePlugins()
         );
 
+        $this->discountConfig = $config;
         $this->discountFacade = $discountFacade;
     }
 
@@ -113,7 +119,7 @@ class CartRuleForm extends AbstractRuleForm
                 'placeholder' => false,
             ])
             ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-                'type' => new CollectorPluginForm($this->availableCollectorPlugins),
+                'type' => new CollectorPluginForm($this->discountConfig),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -133,7 +139,7 @@ class CartRuleForm extends AbstractRuleForm
                 'label' => 'Is Active',
             ])
             ->add(self::FIELD_DECISION_RULES, 'collection', [
-                'type' => new DecisionRuleForm($this->availableDecisionRulePlugins),
+                'type' => new DecisionRuleForm($this->discountConfig),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,

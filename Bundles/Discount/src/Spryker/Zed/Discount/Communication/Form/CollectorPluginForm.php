@@ -2,6 +2,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
+use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CollectorPluginForm extends AbstractRuleForm
@@ -13,18 +14,15 @@ class CollectorPluginForm extends AbstractRuleForm
     const FIELD_REMOVE = 'remove';
 
     /**
-     * @var array
+     * @param DiscountConfig $config
      */
-    protected $availableCollectorPlugins;
-
-    /**
-     * DecisionRuleType constructor.
-     *
-     * @param array $availableCollectorPlugins
-     */
-    public function __construct(array $availableCollectorPlugins)
+    public function __construct(DiscountConfig $config)
     {
-        $this->availableCollectorPlugins = $availableCollectorPlugins;
+        parent::__construct(
+            $config->getAvailableCalculatorPlugins(),
+            $config->getAvailableCollectorPlugins(),
+            $config->getAvailableDecisionRulePlugins()
+        );
     }
 
     /**
@@ -56,7 +54,7 @@ class CollectorPluginForm extends AbstractRuleForm
             ->add(self::FIELD_COLLECTOR_PLUGIN, 'choice', [
                 'label' => 'Collector Plugin',
                 'multiple' => false,
-                'choices' => $this->getCollectorPluginsOptions(),
+                'choices' => $this->getAvailableCollectorPlugins(),
                 'constraints' => [
                     $this->getConstraints()->createConstraintRequired(),
                 ],
@@ -73,26 +71,11 @@ class CollectorPluginForm extends AbstractRuleForm
     }
 
     /**
-     * @return array
-     */
-    protected function getCollectorPluginsOptions()
-    {
-        $decisionRules = [];
-        $decisionRulesKeys = array_keys($this->availableCollectorPlugins);
-
-        foreach ($decisionRulesKeys as $key) {
-            $decisionRules[$key] = $this->filterChoicesLabels($key);
-        }
-
-        return $decisionRules;
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
-        return 'decision_rule';
+        return 'collector_plugin';
     }
 
 }

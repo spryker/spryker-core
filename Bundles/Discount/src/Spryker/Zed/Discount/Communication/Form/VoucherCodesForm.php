@@ -186,7 +186,7 @@ class VoucherCodesForm extends AbstractRuleForm
                 'label' => 'Active',
             ])
             ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-                'type' => new CollectorPluginForm($this->config->getAvailableCollectorPlugins()),
+                'type' => new CollectorPluginForm($this->config),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -198,7 +198,7 @@ class VoucherCodesForm extends AbstractRuleForm
                 'required' => true,
             ])
             ->add(self::FIELD_DECISION_RULES, 'collection', [
-                'type' => new DecisionRuleForm($this->config->getAvailableDecisionRulePlugins()),
+                'type' => new DecisionRuleForm($this->config),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,
