@@ -52,7 +52,7 @@ class AclFacade extends AbstractFacade
 
     /**
      * @param GroupTransfer $transfer
-     * @param array $rolesTransfer
+     * @param RolesTransfer $rolesTransfer
      *
      * @return GroupTransfer
      */
@@ -101,6 +101,22 @@ class AclFacade extends AbstractFacade
         return $this->getFactory()
             ->createGroupModel()
             ->getAllGroups();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCurrentUser()
+    {
+        return $this->getFactory()->getUserFacade()->hasCurrentUser();
+    }
+
+    /**
+     * @return UserTransfer
+     */
+    public function getCurrentUser()
+    {
+        return $this->getFactory()->getUserFacade()->getCurrentUser();
     }
 
     /**

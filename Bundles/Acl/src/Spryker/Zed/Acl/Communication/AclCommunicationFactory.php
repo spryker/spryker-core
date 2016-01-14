@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Acl\Communication;
 
+use Generated\Shared\Transfer\RoleTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Acl\Communication\Table\GroupTable;
 use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\AclDependencyProvider;
@@ -18,6 +20,8 @@ use Spryker\Zed\Acl\Communication\Table\RoleTable;
 use Spryker\Zed\Acl\Communication\Table\RulesetTable;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Spryker\Zed\User\Business\UserFacade;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,6 +33,9 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
+     * @deprecated will be removed, if you need the UserFacade
+     * in your Communication Layer add a getUserFacade() method
+     *
      * @return UserFacade
      */
     public function createUserFacade()
@@ -47,20 +54,20 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int $idGroup
+     * @param int $idAclGroup
      *
      * @return array
      */
-    public function createGroupRoleListByGroupId($idGroup)
+    public function createGroupRoleListByGroupId($idAclGroup)
     {
         $roleCollection = $this->getQueryContainer()
-            ->queryGroupRoles($idGroup)
+            ->queryGroupRoles($idAclGroup)
             ->find()
             ->toArray();
 
         return [
             'code' => Response::HTTP_OK,
-            'idGroup' => $idGroup,
+            'idGroup' => $idAclGroup,
             'data' => $roleCollection,
         ];
     }
@@ -103,33 +110,38 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return RoleForm
+     * @param RoleTransfer $roleTransfer
+     *
+     * @return Form
      */
-    public function createRoleForm()
+    public function createRoleForm(RoleTransfer $roleTransfer)
     {
-        $form = new RoleForm();
+        $form = $this->getFormFactory()
+            ->create(new RoleForm(), $roleTransfer);
 
-        return $this->createForm($form);
+        return $form;
     }
 
     /**
-     * @return RulesetForm
+     * @param RuleTransfer $ruleTransfer
+     *
+     * @return Form|FormInterface
      */
-    public function createRulesetForm()
+    public function createRulesetForm(RuleTransfer $ruleTransfer)
     {
-        $form = new RulesetForm();
+        $form = $this->getFormFactory()->create(new RulesetForm(), $ruleTransfer);
 
-        return $this->createForm($form);
+        return $form;
     }
 
     /**
-     * @param int $idRole
+     * @param int $idAclRole
      *
      * @return RulesetTable
      */
-    public function createRulesetTable($idRole)
+    public function createRulesetTable($idAclRole)
     {
-        return new RulesetTable($this->getQueryContainer(), $idRole);
+        return new RulesetTable($this->getQueryContainer(), $idAclRole);
     }
 
 }
