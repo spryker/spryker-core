@@ -2,6 +2,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\FormBuilderInterface;

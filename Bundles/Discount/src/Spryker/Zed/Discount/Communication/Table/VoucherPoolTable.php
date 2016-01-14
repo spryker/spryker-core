@@ -3,6 +3,7 @@
 namespace Spryker\Zed\Discount\Communication\Table;
 
 use Generated\Shared\Transfer\DiscountTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Discount\DiscountConfig;
@@ -92,10 +93,14 @@ class VoucherPoolTable extends AbstractTable
 
         /** @var SpyDiscountVoucherPool $discountVoucherPool */
         foreach ($queryResults as $discountVoucherPool) {
+            $categoryName = null;
+            if ($discountVoucherPool->getVoucherPoolCategory() !== null) {
+                $categoryName = $discountVoucherPool->getVoucherPoolCategory()->getName();
+            }
             $results[] = [
                 SpyDiscountVoucherPoolTableMap::COL_CREATED_AT => $discountVoucherPool->getCreatedAt(self::DATE_FORMAT),
                 SpyDiscountVoucherPoolTableMap::COL_NAME => $discountVoucherPool->getName(),
-                self::COL_CATEGORY_NAME => $discountVoucherPool->getVoucherPoolCategory()->getName(),
+                self::COL_CATEGORY_NAME => $categoryName,
                 self::COL_AMOUNT => $this->getDiscountVoucherPoolDisplayName($discountVoucherPool),
                 self::COL_VOUCHERS_COUNT => $discountVoucherPool->getDiscountVouchers()->count(),
                 self::COL_OPTIONS => $this->createRowOptions($discountVoucherPool),
