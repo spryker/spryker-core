@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Sales\Communication\Controller;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
@@ -27,57 +28,56 @@ class DetailsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idOrder = $request->query->get('id-sales-order');
+        $idSalesOrder = $request->get('id-sales-order');
 
-        $orderEntity = $this->getQueryContainer()
-            ->querySalesOrderById($idOrder)
+        $salesOrderEntity = $this->getQueryContainer()
+            ->querySalesOrderById($idSalesOrder)
             ->findOne();
 
-        if ($orderEntity === null) {
-            throw new NotFoundHttpException('Record not found');
+        if ($salesOrderEntity === null) {
+            throw new NotFoundHttpException(sprintf('Sales order with id "%d" not found!', $idSalesOrder));
         }
 
-        $orderItems = $this->getQueryContainer()
-            ->querySalesOrderItemsWithState($idOrder)
-            ->find();
-
-        foreach ($orderItems as $orderItem) {
+        foreach ($salesOrderEntity->getItems() as $orderItem) {
             $criteria = new Criteria();
             $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);
             $orderItem->getStateHistoriesJoinState($criteria);
             $orderItem->resetPartialStateHistories(false);
         }
 
-        $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderItems);
 
-        $events = $this->getFacade()->getArrayWithManualEvents($idOrder);
+        $orderItemSplitFormCollection = $this->getFactory()->getOrderItemSplitFormCollection($salesOrderEntity->getItems());
+        $events = $this->getFacade()->getArrayWithManualEvents($idSalesOrder);
         $allEvents = $this->groupEvents($events);
+
         $expenses = $this->getQueryContainer()
-            ->querySalesExpensesByOrderId($idOrder)
+            ->querySalesExpensesByOrderId($idSalesOrder)
             ->find();
+
         $shippingAddress = $this->getQueryContainer()
-            ->querySalesOrderAddressById($orderEntity->getFkSalesOrderAddressShipping())
+            ->querySalesOrderAddressById($salesOrderEntity->getFkSalesOrderAddressShipping())
             ->findOne();
-        if ($orderEntity->getFkSalesOrderAddressShipping() === $orderEntity->getFkSalesOrderAddressBilling()) {
+
+        if ($salesOrderEntity->getFkSalesOrderAddressShipping() === $salesOrderEntity->getFkSalesOrderAddressBilling()) {
             $billingAddress = $shippingAddress;
         } else {
             $billingAddress = $this->getQueryContainer()
-                ->querySalesOrderAddressById($orderEntity->getFkSalesOrderAddressBilling())
+                ->querySalesOrderAddressById($salesOrderEntity->getFkSalesOrderAddressBilling())
                 ->findOne();
         }
 
-        $logs = $this->getFacade()->getPaymentLogs($idOrder);
+        $logs = $this->getFacade()->getPaymentLogs($idSalesOrder);
 
-        $refunds = $this->getFacade()->getRefunds($idOrder);
+        $refunds = $this->getFacade()->getRefunds($idSalesOrder);
 
-        $itemsInProgress = $this->getFactory()->getOmsFacade()->getItemsWithFlag($orderEntity, 'in progress');
-        $itemsPaid = $this->getFactory()->getOmsFacade()->getItemsWithFlag($orderEntity, 'paid');
-        $itemsCancelled = $this->getFactory()->getOmsFacade()->getItemsWithFlag($orderEntity, 'cancelled');
+        $itemsInProgress = $this->getFactory()->getOmsFacade()->getItemsWithFlag($salesOrderEntity, 'in progress');
+        $itemsPaid = $this->getFactory()->getOmsFacade()->getItemsWithFlag($salesOrderEntity, 'paid');
+        $itemsCancelled = $this->getFactory()->getOmsFacade()->getItemsWithFlag($salesOrderEntity, 'cancelled');
 
         return [
-            'idOrder' => $idOrder,
-            'orderDetails' => $orderEntity,
-            'orderItems' => $orderItems,
+            'idOrder' => $idSalesOrder,
+            'orderDetails' => $salesOrderEntity,
+            'orderItems' => $salesOrderEntity->getItems(),
             'events' => $events,
             'allEvents' => $allEvents,
             'expenses' => $expenses,

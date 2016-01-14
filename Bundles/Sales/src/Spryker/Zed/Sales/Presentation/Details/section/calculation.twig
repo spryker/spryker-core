@@ -27,7 +27,7 @@
                     {% endfor %}
                     <tr>
                         <th>{{ 'Sub total' | trans }}</th>
-                        <td class="text-right">{{ orderDetails.subTotal | currency  }}</td>
+                        <td class="text-right">-</td>
                     </tr>
                     {% for expense in expenses %}
                     <tr>
@@ -37,7 +37,7 @@
                     {% endfor %}
                     <tr>
                         <th>{{ 'Grand total' | trans }}</th>
-                        <td class="text-right">{{ orderDetails.grandTotal | currency  }}</td>
+                        <td class="text-right">-</td>
                     </tr>
                     </tbody>
                 </table>

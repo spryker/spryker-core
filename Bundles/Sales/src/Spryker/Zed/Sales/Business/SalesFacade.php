@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
@@ -192,6 +193,106 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getFactory()->getFacadeRefund()
             ->getRefundsByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return int
+     */
+    public function getTaxAmountByIdSalesOrderItem($idSalesOrderItem)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->getTaxAmountByIdSalesOrderItem($idSalesOrderItem);
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return CalculatedDiscountTransfer[]
+     */
+    public function getDiscountsByIdSalesOrderItem($idSalesOrderItem)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->getDiscountsByIdSalesOrderItem($idSalesOrderItem);
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return int
+     */
+    public function getItemTotalAmountByIdSalesOrderItem($idSalesOrderItem)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->getItemTotalAmountByIdSalesOrderItem($idSalesOrderItem);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return int
+     */
+    public function getGrandTotalByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->getGrandTotalByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return int
+     */
+    public function getSubtotalByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->getSubtotalByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return int
+     */
+    public function getSubtotalByIdSalesOrderWithExpenses($idSalesOrder)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->getSubtotalByIdSalesOrderWithExpenses($idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return CalculatedDiscountTransfer[]
+     */
+    public function getDiscountTotalsByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->getDiscountTotalsByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return CalculatedDiscountTransfer[]
+     */
+    public function getDiscountTotalAmountByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->getDiscountTotalAmountByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return int
+     */
+    public function getExpensesTotalAmountByIdSalesOrder($idSalesOrderItem)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->getExpensesTotalAmountByIdSalesOrder($idSalesOrderItem);
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return int
+     */
+    public function getItemTotalAmountByIdSalesOrderItemAfterDiscounts($idSalesOrderItem)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->getItemTotalAmountByIdSalesOrderItemAfterDiscounts($idSalesOrderItem);
     }
 
 }

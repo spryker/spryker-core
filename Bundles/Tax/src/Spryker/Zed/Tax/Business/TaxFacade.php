@@ -199,4 +199,15 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
         $this->getFactory()->createTaxCalculator()->recalculate($quoteTransfer);
     }
 
+    /**
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return int
+     */
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate)
+    {
+        return $this->getFactory()->createPriceCalculationHelper()->getTaxValueFromPrice($grossPrice, $taxRate);
+    }
+
 }

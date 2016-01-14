@@ -21,6 +21,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_REFUND = 'FACADE_REFUND';
     const FACADE_LOCALE = 'LOCALE_FACADE';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+    const FACADE_TAX = 'FACADE_TAX';
 
     const PLUGINS_PAYMENT_LOGS = 'PLUGINS_PAYMENT_LOGS';
 
@@ -45,6 +46,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_REFUND] = function (Container $container) {
             return new SalesToRefundBridge($container->getLocator()->refund()->facade());
+        };
+
+        $container[self::FACADE_TAX] = function (Container $container) {
+            return $container->getLocator()->tax()->facade();
         };
 
         $container[self::PLUGINS_PAYMENT_LOGS] = function (Container $container) {

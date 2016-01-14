@@ -65,7 +65,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     /**
      * @return PriceCalculationHelperInterface
      */
-    protected function createPriceCalculationHelper()
+    public function createPriceCalculationHelper()
     {
         return new PriceCalculationHelper();
     }

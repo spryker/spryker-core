@@ -83,8 +83,6 @@
         <column name="first_name" required="false" size="100" type="VARCHAR"/>
         <column name="last_name" required="false" size="100" type="VARCHAR"/>
         <column name="order_reference" type="VARCHAR" size="45" required="true"/>
-        <column name="grand_total" type="INTEGER" required="true"/>
-        <column name="subtotal" type="INTEGER" required="true"/>
         <column name="is_test" type="BOOLEAN" required="true" default="false"/>
 
         <behavior name="timestampable"/>
