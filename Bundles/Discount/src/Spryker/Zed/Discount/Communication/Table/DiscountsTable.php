@@ -2,6 +2,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Table;
 
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
