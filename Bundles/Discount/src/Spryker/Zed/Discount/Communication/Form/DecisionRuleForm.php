@@ -14,14 +14,14 @@ class DecisionRuleForm extends AbstractRuleForm
     const FIELD_ID_DISCOUNT_DECISION_RULE = 'id_discount_decision_rule';
 
     /**
-     * @param DiscountConfig $config
+     * @param DiscountConfig $discountConfig
      */
-    public function __construct(DiscountConfig $config)
+    public function __construct(DiscountConfig $discountConfig)
     {
         parent::__construct(
-            $config->getAvailableCalculatorPlugins(),
-            $config->getAvailableCollectorPlugins(),
-            $config->getAvailableDecisionRulePlugins()
+            $discountConfig->getAvailableCalculatorPlugins(),
+            $discountConfig->getAvailableCollectorPlugins(),
+            $discountConfig->getAvailableDecisionRulePlugins()
         );
     }
 

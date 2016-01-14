@@ -14,14 +14,14 @@ class CollectorPluginForm extends AbstractRuleForm
     const FIELD_REMOVE = 'remove';
 
     /**
-     * @param DiscountConfig $config
+     * @param DiscountConfig $discountConfig
      */
-    public function __construct(DiscountConfig $config)
+    public function __construct(DiscountConfig $discountConfig)
     {
         parent::__construct(
-            $config->getAvailableCalculatorPlugins(),
-            $config->getAvailableCollectorPlugins(),
-            $config->getAvailableDecisionRulePlugins()
+            $discountConfig->getAvailableCalculatorPlugins(),
+            $discountConfig->getAvailableCollectorPlugins(),
+            $discountConfig->getAvailableDecisionRulePlugins()
         );
     }
 

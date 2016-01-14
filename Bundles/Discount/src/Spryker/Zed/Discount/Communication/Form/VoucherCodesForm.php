@@ -39,7 +39,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @var DiscountConfig
      */
-    protected $config;
+    protected $discountConfig;
 
     /**
      * @var CamelCaseToUnderscore
@@ -52,22 +52,22 @@ class VoucherCodesForm extends AbstractRuleForm
     protected $discountQueryContainer;
 
     /**
-     * @param DiscountConfig $config
+     * @param DiscountConfig $discountConfig
      * @param CamelCaseToUnderscore $camelCaseToUnderscore
      * @param DiscountQueryContainer $discountQueryContainer
      */
     public function __construct(
-        DiscountConfig $config,
+        DiscountConfig $discountConfig,
         CamelCaseToUnderscore $camelCaseToUnderscore,
         DiscountQueryContainer $discountQueryContainer
     ) {
         parent::__construct(
-            $config->getAvailableCalculatorPlugins(),
-            $config->getAvailableCollectorPlugins(),
-            $config->getAvailableDecisionRulePlugins()
+            $discountConfig->getAvailableCalculatorPlugins(),
+            $discountConfig->getAvailableCollectorPlugins(),
+            $discountConfig->getAvailableDecisionRulePlugins()
         );
 
-        $this->config = $config;
+        $this->discountConfig = $discountConfig;
         $this->camelCaseToUnderscore = $camelCaseToUnderscore;
         $this->discountQueryContainer = $discountQueryContainer;
     }
@@ -131,7 +131,9 @@ class VoucherCodesForm extends AbstractRuleForm
         $discountVoucherPool = $discountVoucherPoolEntity->toArray();
         $discountVoucherPool[CartRuleForm::FIELD_COLLECTOR_PLUGINS] = $discountCollectorEntities->toArray();
 
-        $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($discountVoucherPool, true);
+        $voucherCodesTransfer = new VoucherCodesTransfer();
+        $voucherCodesTransfer->fromArray($discountVoucherPool, true);
+
         $voucherCodesTransfer->setDecisionRules($decisionRuleEntities->toArray());
         $voucherCodesTransfer->setCalculatorPlugin($discountEntity->getCalculatorPlugin());
 
@@ -186,7 +188,7 @@ class VoucherCodesForm extends AbstractRuleForm
                 'label' => 'Active',
             ])
             ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-                'type' => new CollectorPluginForm($this->config),
+                'type' => new CollectorPluginForm($this->discountConfig),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -198,7 +200,7 @@ class VoucherCodesForm extends AbstractRuleForm
                 'required' => true,
             ])
             ->add(self::FIELD_DECISION_RULES, 'collection', [
-                'type' => new DecisionRuleForm($this->config),
+                'type' => new DecisionRuleForm($this->discountConfig),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -214,7 +216,7 @@ class VoucherCodesForm extends AbstractRuleForm
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addModelTransformer(new DecisionRulesFormTransformer($this->config, $this->camelCaseToUnderscore));
+            ->addModelTransformer(new DecisionRulesFormTransformer($this->discountConfig, $this->camelCaseToUnderscore));
     }
 
     /**
