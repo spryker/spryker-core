@@ -48,15 +48,25 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     public function createYvesKeyValueExporter()
     {
         return new Collector(
-            $this->createTouchQueryContainer(),
+            $this->getTouchQueryContainer(),
             $this->createKeyValueExporter()
         );
     }
 
     /**
+     * @deprecated Use getTouchQueryContainer() instead
+     *
      * @return TouchQueryContainer
      */
     protected function createTouchQueryContainer()
+    {
+        return $this->getTouchQueryContainer();
+    }
+
+    /**
+     * @return TouchQueryContainer
+     */
+    protected function getTouchQueryContainer()
     {
         return $this->getProvidedDependency(CollectorDependencyProvider::QUERY_CONTAINER_TOUCH);
     }
@@ -67,7 +77,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     protected function createKeyValueExporter()
     {
         $keyValueExporter = new KeyValueCollector(
-            $this->createTouchQueryContainer(),
+            $this->getTouchQueryContainer(),
             $this->createKeyValueWriter(),
             $this->createKeyValueMarker(),
             $this->createFailedResultModel(),
@@ -163,7 +173,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         $searchWriter = $this->createSearchWriter();
 
         return new Collector(
-            $this->createTouchQueryContainer(),
+            $this->getTouchQueryContainer(),
             $this->createElasticsearchExporter(
                 $searchWriter,
                 $config
@@ -177,7 +187,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     public function createYvesSearchUpdateExporter()
     {
         return new Collector(
-            $this->createTouchQueryContainer(),
+            $this->getTouchQueryContainer(),
             $this->createElasticsearchExporter(
                 $this->createSearchUpdateWriter(),
                 $this->getConfig()
@@ -194,7 +204,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     protected function createElasticsearchExporter(WriterInterface $searchWriter, CollectorConfig $config)
     {
         $searchExporter = new SearchCollector(
-            $this->createTouchQueryContainer(),
+            $this->getTouchQueryContainer(),
             $searchWriter,
             $this->createSearchMarker(),
             $this->createFailedResultModel(),
