@@ -37,14 +37,14 @@ class ProductOptionExporterToProductOptionBridge implements ProductOptionExporte
     }
 
     /**
-     * @param int $idTypeUsage
+     * @param int $idProductOptionTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function getValueUsagesForTypeUsage($idTypeUsage, $idLocale)
+    public function getValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale)
     {
-        return $this->productOptionFacade->getValueUsagesForTypeUsage($idTypeUsage, $idLocale);
+        return $this->productOptionFacade->getValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale);
     }
 
     /**

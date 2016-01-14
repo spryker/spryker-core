@@ -164,34 +164,34 @@ interface ProductOptionQueryContainerInterface
     public function queryTypeUsagesForProductConcrete($idProduct, $idLocale);
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductOptionTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function queryValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale);
+    public function queryValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale);
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductOptionTypeUsage
      *
      * @return array
      */
-    public function queryTypeExclusionsForTypeUsage($idProductAttributeTypeUsage);
+    public function queryTypeExclusionsForTypeUsage($idProductOptionTypeUsage);
 
     /**
-     * @param int $idValueUsage
+     * @param int $idProductOptionValueUsage
      *
      * @return array
      */
-    public function queryValueConstraintsForValueUsage($idValueUsage);
+    public function queryValueConstraintsForValueUsage($idProductOptionValueUsage);
 
     /**
-     * @param int $idValueUsage
+     * @param int $idProductOptionValueUsage
      * @param string $operator
      *
      * @return array
      */
-    public function queryValueConstraintsForValueUsageByOperator($idValueUsage, $operator);
+    public function queryValueConstraintsForValueUsageByOperator($idProductOptionValueUsage, $operator);
 
     /**
      * @param int $idProduct
@@ -201,17 +201,17 @@ interface ProductOptionQueryContainerInterface
     public function queryConfigPresetsForProductConcrete($idProduct);
 
     /**
-     * @param int $idConfigPreset
+     * @param int $idProductOptionConfigurationPreset
      *
      * @return array
      */
-    public function queryValueUsagesForConfigPreset($idConfigPreset);
+    public function queryValueUsagesForConfigPreset($idProductOptionConfigurationPreset);
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductOptionTypeUsage
      *
      * @return string|null
      */
-    public function queryEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage);
+    public function queryEffectiveTaxRateForTypeUsage($idProductOptionTypeUsage);
 
 }

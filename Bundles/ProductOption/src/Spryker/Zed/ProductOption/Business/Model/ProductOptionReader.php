@@ -183,24 +183,24 @@ class ProductOptionReader implements ProductOptionReaderInterface
     }
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductOptionTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function getValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale)
+    public function getValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale)
     {
-        return $this->queryContainer->queryValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale);
+        return $this->queryContainer->queryValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale);
     }
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductOptionTypeUsage
      *
      * @return array
      */
-    public function getTypeExclusionsForTypeUsage($idProductAttributeTypeUsage)
+    public function getTypeExclusionsForTypeUsage($idProductOptionTypeUsage)
     {
-        return $this->queryContainer->queryTypeExclusionsForTypeUsage($idProductAttributeTypeUsage);
+        return $this->queryContainer->queryTypeExclusionsForTypeUsage($idProductOptionTypeUsage);
     }
 
     /**

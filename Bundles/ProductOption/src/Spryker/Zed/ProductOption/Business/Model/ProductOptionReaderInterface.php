@@ -28,19 +28,19 @@ interface ProductOptionReaderInterface
     public function getTypeUsagesForProductConcrete($idProduct, $idLocale);
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductOptionTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function getValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale);
+    public function getValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale);
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductOptionTypeUsage
      *
      * @return array
      */
-    public function getTypeExclusionsForTypeUsage($idProductAttributeTypeUsage);
+    public function getTypeExclusionsForTypeUsage($idProductOptionTypeUsage);
 
     /**
      * @param int $idValueUsage

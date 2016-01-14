@@ -345,12 +345,12 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductOptionTypeUsage
      * @param int $idLocale
      *
      * @return array
      */
-    public function queryValueUsagesForTypeUsage($idProductAttributeTypeUsage, $idLocale)
+    public function queryValueUsagesForTypeUsage($idProductOptionTypeUsage, $idLocale)
     {
         $query = SpyProductOptionValueUsageQuery::create()
             ->withColumn(SpyProductOptionValueUsageTableMap::COL_ID_PRODUCT_OPTION_VALUE_USAGE, self::ID_VALUE_USAGE)
@@ -366,7 +366,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->endUse()
             ->endUse()
             ->useSpyProductOptionTypeUsageQuery()
-                ->filterByIdProductOptionTypeUsage($idProductAttributeTypeUsage)
+                ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage)
             ->endUse()
             ->orderByIdProductOptionValueUsage()
             ->select([self::ID_VALUE_USAGE, self::SEQUENCE, self::LABEL, self::PRICE])
@@ -378,21 +378,21 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductOptionTypeUsage
      *
      * @return array
      */
-    public function queryTypeExclusionsForTypeUsage($idProductAttributeTypeUsage)
+    public function queryTypeExclusionsForTypeUsage($idProductOptionTypeUsage)
     {
         $queryA = SpyProductOptionTypeUsageExclusionQuery::create()
             ->withColumn(SpyProductOptionTypeUsageExclusionTableMap::COL_FK_PRODUCT_OPTION_TYPE_USAGE_B, self::EXCLUDES)
-            ->filterByFkProductOptionTypeUsageA($idProductAttributeTypeUsage)
+            ->filterByFkProductOptionTypeUsageA($idProductOptionTypeUsage)
             ->select([self::EXCLUDES])
             ->find();
 
         $queryB = SpyProductOptionTypeUsageExclusionQuery::create()
             ->withColumn(SpyProductOptionTypeUsageExclusionTableMap::COL_FK_PRODUCT_OPTION_TYPE_USAGE_A, self::EXCLUDES)
-            ->filterByFkProductOptionTypeUsageB($idProductAttributeTypeUsage)
+            ->filterByFkProductOptionTypeUsageB($idProductOptionTypeUsage)
             ->select([self::EXCLUDES])
             ->find();
 
@@ -402,22 +402,22 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $idValueUsage
+     * @param int $idProductOptionValueUsage
      *
      * @return array
      */
-    public function queryValueConstraintsForValueUsage($idValueUsage)
+    public function queryValueConstraintsForValueUsage($idProductOptionValueUsage)
     {
         $queryA = SpyProductOptionValueUsageConstraintQuery::create()
             ->withColumn(SpyProductOptionValueUsageConstraintTableMap::COL_FK_PRODUCT_OPTION_VALUE_USAGE_B, self::VALUE_USAGE_ID)
-            ->filterByFkProductOptionValueUsageA($idValueUsage)
+            ->filterByFkProductOptionValueUsageA($idProductOptionValueUsage)
             ->orderByOperator()
             ->select([self::OPERATOR])
             ->find();
 
         $queryB = SpyProductOptionValueUsageConstraintQuery::create()
             ->withColumn(SpyProductOptionValueUsageConstraintTableMap::COL_FK_PRODUCT_OPTION_VALUE_USAGE_A, self::VALUE_USAGE_ID)
-            ->filterByFkProductOptionValueUsageB($idValueUsage)
+            ->filterByFkProductOptionValueUsageB($idProductOptionValueUsage)
             ->orderByOperator()
             ->select([self::OPERATOR])
             ->find();
@@ -428,23 +428,23 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $idValueUsage
+     * @param int $idProductOptionValueUsage
      * @param string $operator
      *
      * @return array
      */
-    public function queryValueConstraintsForValueUsageByOperator($idValueUsage, $operator)
+    public function queryValueConstraintsForValueUsageByOperator($idProductOptionValueUsage, $operator)
     {
         $queryA = SpyProductOptionValueUsageConstraintQuery::create()
             ->withColumn(SpyProductOptionValueUsageConstraintTableMap::COL_FK_PRODUCT_OPTION_VALUE_USAGE_B, self::VALUE_USAGE_ID)
-            ->filterByFkProductOptionValueUsageA($idValueUsage)
+            ->filterByFkProductOptionValueUsageA($idProductOptionValueUsage)
             ->filterByOperator($operator)
             ->select([self::OPERATOR])
             ->find();
 
         $queryB = SpyProductOptionValueUsageConstraintQuery::create()
             ->withColumn(SpyProductOptionValueUsageConstraintTableMap::COL_FK_PRODUCT_OPTION_VALUE_USAGE_A, self::VALUE_USAGE_ID)
-            ->filterByFkProductOptionValueUsageB($idValueUsage)
+            ->filterByFkProductOptionValueUsageB($idProductOptionValueUsage)
             ->filterByOperator($operator)
             ->select([self::OPERATOR])
             ->find();
@@ -482,15 +482,15 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $idConfigPreset
+     * @param int $idProductOptionConfigurationPreset
      *
      * @return array
      */
-    public function queryValueUsagesForConfigPreset($idConfigPreset)
+    public function queryValueUsagesForConfigPreset($idProductOptionConfigurationPreset)
     {
         $query = SpyProductOptionConfigurationPresetValueQuery::create()
             ->withColumn(SpyProductOptionConfigurationPresetValueTableMap::COL_FK_PRODUCT_OPTION_VALUE_USAGE, self::VALUE_USAGE_ID)
-            ->filterByFkProductOptionConfigurationPreset($idConfigPreset)
+            ->filterByFkProductOptionConfigurationPreset($idProductOptionConfigurationPreset)
             ->select([self::VALUE_USAGE_ID])
             ->find();
 
@@ -514,11 +514,11 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param int $idProductAttributeTypeUsage
+     * @param int $idProductOptionTypeUsage
      *
      * @return string|null
      */
-    public function queryEffectiveTaxRateForTypeUsage($idProductAttributeTypeUsage)
+    public function queryEffectiveTaxRateForTypeUsage($idProductOptionTypeUsage)
     {
         $query = SpyProductOptionTypeUsageQuery::create()
             ->withColumn('SUM(' . SpyTaxRateTableMap::COL_RATE . ')', self::TAX_RATE)
@@ -530,7 +530,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->filterByIdProductOptionTypeUsage($idProductAttributeTypeUsage)
+            ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage)
             ->select([self::TAX_RATE])
             ->find();
 
