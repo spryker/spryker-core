@@ -23,7 +23,7 @@ class SequenceNumberConfig extends AbstractBundleConfig
         $defaultSettings->setName($this->getSequenceName());
         $defaultSettings->setIncrementMinimum($this->getNumberIncrementMin());
         $defaultSettings->setIncrementMaximum($this->getNumberIncrementMax());
-        $defaultSettings->setMinimumNumber($this->getNumberMinimum());
+        $defaultSettings->setOffset($this->getOffset() ?: $this->getNumberMinimum());
 
         if ($settings === null) {
             return $defaultSettings;
@@ -61,10 +61,17 @@ class SequenceNumberConfig extends AbstractBundleConfig
 
     /**
      * @return int
+     *
+     * @deprecated Use getOffset instead.
      */
     public function getNumberMinimum()
     {
-        return 1;
+        return $this->getOffset();
+    }
+
+    public function getOffset()
+    {
+        return 0;
     }
 
     /**
