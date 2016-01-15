@@ -42,13 +42,13 @@ class SequenceNumberTest extends Test
     {
         $customSettings = new SequenceNumberSettingsTransfer();
         $customSettings->setIncrementMinimum(2);
-        $customSettings->setMinimumNumber(null);
+        $customSettings->setOffset(null);
 
         $config = $this->generateConfig();
         $sequenceNumberSettings = $config->getDefaultSettings($customSettings);
 
         $this->assertSame(2, $sequenceNumberSettings->getIncrementMinimum());
-        $this->assertSame(1, $sequenceNumberSettings->getMinimumNumber());
+        $this->assertSame(0, $sequenceNumberSettings->getOffset());
     }
 
     /**
@@ -65,11 +65,11 @@ class SequenceNumberTest extends Test
         $number = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
         $this->assertSame('2', $number);
 
-        $sequenceNumberSettings->setMinimumNumber(100);
+        $sequenceNumberSettings->setOffset(100);
         $number = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
         $this->assertSame('100', $number);
 
-        $sequenceNumberSettings->setMinimumNumber(10);
+        $sequenceNumberSettings->setOffset(10);
         $number = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
         $this->assertSame('101', $number);
     }
@@ -96,7 +96,7 @@ class SequenceNumberTest extends Test
 
         $config = $this->generateConfig();
         $sequenceNumberSettings = $config->getDefaultSettings();
-        $sequenceNumberSettings->setMinimumNumber(10);
+        $sequenceNumberSettings->setOffset(10);
         $sequenceNumberSettings->setPadding(3);
 
         $sequenceNumber = new SequenceNumber(
@@ -106,7 +106,7 @@ class SequenceNumberTest extends Test
         );
 
         $number = $sequenceNumber->generate();
-        $this->assertSame('010', $number);
+        $this->assertSame('011', $number);
 
         $config = $this->generateConfig();
         $sequenceNumberSettings = $config->getDefaultSettings();
@@ -120,10 +120,10 @@ class SequenceNumberTest extends Test
         );
 
         $number = $sequenceNumberOther->generate();
-        $this->assertSame('2', $number);
+        $this->assertSame('3', $number);
 
         $number = $sequenceNumber->generate();
-        $this->assertSame('011', $number);
+        $this->assertSame('012', $number);
     }
 
     /**
