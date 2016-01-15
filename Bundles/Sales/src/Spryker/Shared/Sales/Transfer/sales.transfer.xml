@@ -85,7 +85,7 @@
     <transfer name="Item">
         <property name="idSalesOrderItem" type="int" />
         <property name="fkSalesOrder" type="int" />
-        <property name="fkOmsOrderItemStatus" type="int" />
+        <property name="fkOmsOrderItemState" type="int" />
         <property name="name" type="string" />
         <property name="sku" type="string" />
         <property name="groupKey" type="string"/>
@@ -98,7 +98,7 @@
         <property name="unitGrossPrice" type="int" />
         <property name="unitPriceToPay" type="int" />
         <property name="variety" type="string" />
-        <property name="status" type="OrderItemStatus[]" />
+        <property name="status" type="OrderItemState[]" />
     </transfer>
 
     <transfer name="TaxSet">
@@ -125,8 +125,8 @@
         <property name="priceToPay" type="int" />
     </transfer>
 
-    <transfer name="OrderItemStatus">
-        <property name="idOmsOrderItemStatus" type="int" />
+    <transfer name="OrderItemState">
+        <property name="idOmsOrderItemState" type="int" />
         <property name="name" type="string" />
         <property name="description" type="string" />
     </transfer>
