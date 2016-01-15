@@ -14,7 +14,6 @@ use Spryker\Zed\User\Communication\UserCommunicationFactory;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
-use Spryker\Zed\User\Communication\Form\UserCreateForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 
@@ -29,7 +28,9 @@ class EditController extends AbstractController
     const USER_LISTING_URL = '/user';
 
     /**
-     * @return array
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -39,10 +40,10 @@ class EditController extends AbstractController
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
             $userTransfer = $this->getFacade()->addUser(
-                $formData[UserCreateForm::FIRST_NAME],
-                $formData[UserCreateForm::LAST_NAME],
-                $formData[UserCreateForm::USERNAME],
-                $formData[UserCreateForm::PASSWORD]
+                $formData[UserForm::FIELD_FIRST_NAME],
+                $formData[UserForm::FIELD_LAST_NAME],
+                $formData[UserForm::FIELD_USERNAME],
+                $formData[UserForm::FIELD_PASSWORD]
             );
 
             if ($userTransfer->getIdUser()) {
@@ -58,9 +59,9 @@ class EditController extends AbstractController
             }
         }
 
-        return [
+        return $this->viewResponse([
             'userForm' => $userForm->createView(),
-        ];
+        ]);
     }
 
     /**
@@ -95,10 +96,10 @@ class EditController extends AbstractController
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
-        return [
+        return $this->viewResponse([
             'userForm' => $userForm->createView(),
             'idUser' => $idUser,
-        ];
+        ]);
     }
 
     /**
@@ -180,6 +181,8 @@ class EditController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
      * @return array
      */
     public function passwordResetAction(Request $request)
@@ -200,9 +203,9 @@ class EditController extends AbstractController
             }
         }
 
-        return [
+        return $this->viewResponse([
             'resetPasswordForm' => $resetPasswordForm->createView(),
-        ];
+        ]);
     }
 
     /**

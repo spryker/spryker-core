@@ -43,6 +43,8 @@ class UserUpdateForm extends UserForm
     {
         parent::buildForm($builder, $options);
 
+        $builder->remove(self::FIELD_PASSWORD);
+
         $builder->add(self::FIELD_STATUS, 'choice', [
             'choices' => $this->getStatusSelectChoices(),
         ]);
