@@ -5,7 +5,6 @@
     defaultIdMethod="native"
     defaultPhpNamingMethod="underscore"
     xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-    identifierQuoting="true"
     namespace="Orm\Zed\Payolution\Persistence"
     package="src.Orm.Zed.Payolution.Persistence"
 >
