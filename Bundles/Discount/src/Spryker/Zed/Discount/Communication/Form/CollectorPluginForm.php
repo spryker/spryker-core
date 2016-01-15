@@ -13,21 +13,6 @@ class CollectorPluginForm extends AbstractRuleForm
     const FIELD_REMOVE = 'remove';
 
     /**
-     * @var array
-     */
-    protected $availableCollectorPlugins;
-
-    /**
-     * DecisionRuleType constructor.
-     *
-     * @param array $availableCollectorPlugins
-     */
-    public function __construct(array $availableCollectorPlugins)
-    {
-        $this->availableCollectorPlugins = $availableCollectorPlugins;
-    }
-
-    /**
      * @return array
      */
     public function populateFormFields()
@@ -56,7 +41,7 @@ class CollectorPluginForm extends AbstractRuleForm
             ->add(self::FIELD_COLLECTOR_PLUGIN, 'choice', [
                 'label' => 'Collector Plugin',
                 'multiple' => false,
-                'choices' => $this->getCollectorPluginsOptions(),
+                'choices' => $this->getAvailableCollectorPlugins(),
                 'constraints' => [
                     $this->getConstraints()->createConstraintRequired(),
                 ],
@@ -73,26 +58,11 @@ class CollectorPluginForm extends AbstractRuleForm
     }
 
     /**
-     * @return array
-     */
-    protected function getCollectorPluginsOptions()
-    {
-        $decisionRules = [];
-        $decisionRulesKeys = array_keys($this->availableCollectorPlugins);
-
-        foreach ($decisionRulesKeys as $key) {
-            $decisionRules[$key] = $this->filterChoicesLabels($key);
-        }
-
-        return $decisionRules;
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
-        return 'decision_rule';
+        return 'collector_plugin';
     }
 
 }

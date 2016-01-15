@@ -13,21 +13,6 @@ class DecisionRuleForm extends AbstractRuleForm
     const FIELD_ID_DISCOUNT_DECISION_RULE = 'id_discount_decision_rule';
 
     /**
-     * @var array
-     */
-    protected $availableDecisionRulePlugins;
-
-    /**
-     * DecisionRuleType constructor.
-     *
-     * @param array $availableDecisionRulePlugins
-     */
-    public function __construct(array $availableDecisionRulePlugins)
-    {
-        $this->availableDecisionRulePlugins = $availableDecisionRulePlugins;
-    }
-
-    /**
      * @return array
      */
     public function populateFormFields()
@@ -56,7 +41,7 @@ class DecisionRuleForm extends AbstractRuleForm
             ->add(self::FIELD_DECISION_RULE_PLUGIN, 'choice', [
                 'label' => 'Decision Rule',
                 'multiple' => false,
-                'choices' => $this->getDecisionRuleOptions(),
+                'choices' => $this->getAvailableDecisionRulePlugins(),
             ])
             ->add(self::FIELD_VALUE, 'text', [
                 'label' => 'Value',
@@ -66,21 +51,6 @@ class DecisionRuleForm extends AbstractRuleForm
                 'class' => 'btn btn-xs btn-danger remove-form-collection',
             ],
         ]);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDecisionRuleOptions()
-    {
-        $decisionRules = [];
-        $decisionRulesKeys = array_keys($this->availableDecisionRulePlugins);
-
-        foreach ($decisionRulesKeys as $key) {
-            $decisionRules[$key] = $this->filterChoicesLabels($key);
-        }
-
-        return $decisionRules;
     }
 
     /**

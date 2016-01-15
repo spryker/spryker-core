@@ -40,7 +40,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return Form
      */
-    public function createVoucherForm($allowMultiple=false)
+    public function createVoucherForm($allowMultiple = false)
     {
         $voucherForm = new VoucherForm(
             $this->getQueryContainer(),
@@ -72,6 +72,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param DataTablesTransfer $dataTablesTransfer
      * @param int $idPool
      * @param int $batchValue
      *
@@ -118,7 +119,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createCollectorPluginForm()
     {
         $collectorPluginForm = new CollectorPluginForm(
-            $this->getConfig()->getAvailableCollectorPlugins()
+            $this->getConfig()
         );
 
         return $this->createForm($collectorPluginForm);
@@ -149,18 +150,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return DecisionRuleForm
      */
-    public function createDecisionRuleFormType()
-    {
-        return new DecisionRuleForm($this->getConfig()->getAvailableDecisionRulePlugins());
-    }
-
-    /**
-     * @return DecisionRuleForm
-     */
     public function createDecisionRuleForm()
     {
         $decisionRulesForm = new DecisionRuleForm(
-            $this->getConfig()->getAvailableDecisionRulePlugins()
+            $this->getConfig()
         );
 
         return $this->createForm($decisionRulesForm);

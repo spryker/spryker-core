@@ -1,16 +1,17 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Spryker\Client\Lumberjack;
 
-use Spryker\Client\Kernel\AbstractDependencyContainer;
+use Spryker\Client\Kernel\AbstractFactory;
 
 /**
  * @deprecated Lumberjack is deprecated use EventJournal instead.
  */
-class LumberjackFactory extends AbstractDependencyContainer
+class LumberjackFactory extends AbstractFactory
 {
 
     /**

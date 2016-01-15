@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Copyright Spryker Systems GmbH 2015
  */
@@ -10,6 +11,8 @@ use Spryker\Shared\Lumberjack\Model\EventInterface;
 
 /**
  * @deprecated Lumberjack is deprecated use EventJournal instead.
+ *
+ * @method LumberjackFactory getFactory()
  */
 class LumberjackClient extends AbstractClient
 {
@@ -21,7 +24,7 @@ class LumberjackClient extends AbstractClient
      */
     public function saveEvent(EventInterface $event)
     {
-        $this->getDependencyContainer()->createEventJournalClient()->saveEvent($event);
+        $this->getFactory()->createEventJournalClient()->saveEvent($event);
     }
 
 }

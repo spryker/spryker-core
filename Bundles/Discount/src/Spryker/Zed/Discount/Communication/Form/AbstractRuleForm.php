@@ -84,6 +84,21 @@ abstract class AbstractRuleForm extends AbstractForm
     }
 
     /**
+     * @return array
+     */
+    protected function getAvailableDecisionRulePlugins()
+    {
+        $plugins = [];
+        $availablePlugins = array_keys($this->availableDecisionRulePlugins);
+
+        foreach ($availablePlugins as $plugin) {
+            $plugins[$plugin] = $this->filterChoicesLabels($plugin);
+        }
+
+        return $plugins;
+    }
+
+    /**
      * @return array|string[]
      */
     protected function getCollectorLogicalOperators()

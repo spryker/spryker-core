@@ -13,6 +13,6 @@ use Orm\Zed\Product\Persistence\Base\SpyProductAttributeTypeValue as BaseSpyProd
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyTypeValue extends BaseSpyProductAttributeTypeValue
+abstract class AbstractSpyProductAttributeTypeValue extends BaseSpyProductAttributeTypeValue
 {
 }

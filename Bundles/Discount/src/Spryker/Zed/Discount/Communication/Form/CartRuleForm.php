@@ -33,14 +33,24 @@ class CartRuleForm extends AbstractRuleForm
      */
     protected $discountFacade;
 
-    public function __construct(DiscountConfig $config, DiscountFacade $discountFacade)
+    /**
+     * @var DiscountConfig
+     */
+    protected $discountConfig;
+
+    /**
+     * @param DiscountConfig $discountConfig
+     * @param DiscountFacade $discountFacade
+     */
+    public function __construct(DiscountConfig $discountConfig, DiscountFacade $discountFacade)
     {
         parent::__construct(
-            $config->getAvailableCalculatorPlugins(),
-            $config->getAvailableCollectorPlugins(),
-            $config->getAvailableDecisionRulePlugins()
+            $discountConfig->getAvailableCalculatorPlugins(),
+            $discountConfig->getAvailableCollectorPlugins(),
+            $discountConfig->getAvailableDecisionRulePlugins()
         );
 
+        $this->discountConfig = $discountConfig;
         $this->discountFacade = $discountFacade;
     }
 
@@ -113,7 +123,7 @@ class CartRuleForm extends AbstractRuleForm
                 'placeholder' => false,
             ])
             ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-                'type' => new CollectorPluginForm($this->availableCollectorPlugins),
+                'type' => new CollectorPluginForm($this->discountConfig),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -133,7 +143,7 @@ class CartRuleForm extends AbstractRuleForm
                 'label' => 'Is Active',
             ])
             ->add(self::FIELD_DECISION_RULES, 'collection', [
-                'type' => new DecisionRuleForm($this->availableDecisionRulePlugins),
+                'type' => new DecisionRuleForm($this->discountConfig),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,

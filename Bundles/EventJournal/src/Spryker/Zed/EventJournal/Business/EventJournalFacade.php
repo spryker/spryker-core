@@ -10,7 +10,7 @@ use Spryker\Shared\EventJournal\Model\EventInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method EventJournalDependencyContainer getDependencyContainer()
+ * @method EventJournalFactory getFactory()
  */
 class EventJournalFacade extends AbstractFacade
 {
@@ -22,7 +22,7 @@ class EventJournalFacade extends AbstractFacade
      */
     public function saveEvent(EventInterface $event)
     {
-        $this->getDependencyContainer()
+        $this->getFactory()
              ->createEventJournal()
              ->saveEvent($event);
     }

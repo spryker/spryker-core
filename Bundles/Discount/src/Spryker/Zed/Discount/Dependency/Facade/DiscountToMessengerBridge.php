@@ -35,4 +35,24 @@ class DiscountToMessengerBridge implements DiscountToMessengerInterface
         $this->messengerFacade->addSuccessMessage($message);
     }
 
+    /**
+     * @param MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addErrorMessage(MessageTransfer $message)
+    {
+        $this->messengerFacade->addErrorMessage($message);
+    }
+
+    /**
+     * @param MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addInfoMessage(MessageTransfer $message)
+    {
+        $this->messengerFacade->addInfoMessage($message);
+    }
+
 }
