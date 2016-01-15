@@ -2,7 +2,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class DecisionRuleForm extends AbstractRuleForm
@@ -12,18 +11,6 @@ class DecisionRuleForm extends AbstractRuleForm
     const FIELD_VALUE = 'value';
     const FIELD_REMOVE = 'remove';
     const FIELD_ID_DISCOUNT_DECISION_RULE = 'id_discount_decision_rule';
-
-    /**
-     * @param DiscountConfig $discountConfig
-     */
-    public function __construct(DiscountConfig $discountConfig)
-    {
-        parent::__construct(
-            $discountConfig->getAvailableCalculatorPlugins(),
-            $discountConfig->getAvailableCollectorPlugins(),
-            $discountConfig->getAvailableDecisionRulePlugins()
-        );
-    }
 
     /**
      * @return array

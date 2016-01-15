@@ -2,7 +2,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CollectorPluginForm extends AbstractRuleForm
@@ -12,18 +11,6 @@ class CollectorPluginForm extends AbstractRuleForm
     const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
     const FIELD_VALUE = 'value';
     const FIELD_REMOVE = 'remove';
-
-    /**
-     * @param DiscountConfig $discountConfig
-     */
-    public function __construct(DiscountConfig $discountConfig)
-    {
-        parent::__construct(
-            $discountConfig->getAvailableCalculatorPlugins(),
-            $discountConfig->getAvailableCollectorPlugins(),
-            $discountConfig->getAvailableDecisionRulePlugins()
-        );
-    }
 
     /**
      * @return array
