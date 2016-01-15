@@ -20,6 +20,7 @@ class UsersTable extends AbstractTable
     const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
     const ACTIVATE_USER_URL = '/user/edit/activate-user';
     const DELETE_USER_URL = '/user/edit/delete';
+    const RESET_PASSWORD_URL = '/user/edit/password-reset';
     const PARAM_ID_USER = 'id-user';
 
     /**
@@ -119,6 +120,12 @@ class UsersTable extends AbstractTable
                 self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
             ]),
             'Activate'
+        );
+        $urls[] = $this->generateViewButton(
+            Url::generate(self::RESET_PASSWORD_URL, [
+                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+            ]),
+            'Reset Password'
         );
         $urls[] = $this->generateRemoveButton(
             Url::generate(self::DELETE_USER_URL, [

@@ -204,6 +204,7 @@ class EditController extends AbstractController
         }
 
         return $this->viewResponse([
+            'username' => $currentUserTransfer->getUsername(),
             'resetPasswordForm' => $resetPasswordForm->createView(),
         ]);
     }

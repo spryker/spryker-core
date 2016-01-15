@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 /**
- * @method UserCommunicationFactory getCommunicationFactory
+ * @method UserCommunicationFactory getFactory()
  * @method UserFacade getFacade()
  * @method UserQueryContainer getQueryContainer()
  */
