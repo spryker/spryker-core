@@ -258,7 +258,6 @@ class OrderManager
         $orderEntity->fromArray($quoteTransfer->getCustomer()->toArray());
 
         $orderEntity->setFkShipmentMethod($quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod());
-        $orderEntity->setShipmentDeliveryTime($quoteTransfer->getShipment()->getMethod()->getDeliveryTime());
 
         $orderEntity->setBillingAddress($this->saveSalesOrderAddress($quoteTransfer->getBillingAddress()));
         $orderEntity->setShippingAddress($this->saveSalesOrderAddress($quoteTransfer->getShippingAddress()));
