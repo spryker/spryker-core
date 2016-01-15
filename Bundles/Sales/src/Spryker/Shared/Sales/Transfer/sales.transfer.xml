@@ -85,7 +85,7 @@
     <transfer name="Item">
         <property name="idSalesOrderItem" type="int" />
         <property name="fkSalesOrder" type="int" />
-        <property name="fkOmsOrderItemStatus" type="int" />
+        <property name="fkOmsOrderItemState" type="int" />
         <property name="name" type="string" />
         <property name="sku" type="string" />
         <property name="groupKey" type="string"/>
@@ -126,7 +126,7 @@
     </transfer>
 
     <transfer name="OrderItemStatus">
-        <property name="idOmsOrderItemStatus" type="int" />
+        <property name="idOmsOrderItemState" type="int" />
         <property name="name" type="string" />
         <property name="description" type="string" />
     </transfer>
