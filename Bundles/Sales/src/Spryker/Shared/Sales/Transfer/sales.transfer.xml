@@ -98,7 +98,7 @@
         <property name="unitGrossPrice" type="int" />
         <property name="unitPriceToPay" type="int" />
         <property name="variety" type="string" />
-        <property name="status" type="OrderItemStatus[]" />
+        <property name="status" type="OrderItemState[]" />
     </transfer>
 
     <transfer name="TaxSet">
@@ -125,7 +125,7 @@
         <property name="priceToPay" type="int" />
     </transfer>
 
-    <transfer name="OrderItemStatus">
+    <transfer name="OrderItemState">
         <property name="idOmsOrderItemState" type="int" />
         <property name="name" type="string" />
         <property name="description" type="string" />
