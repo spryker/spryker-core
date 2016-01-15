@@ -37,10 +37,9 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
     public function boot(Application $app)
     {
         $facadeAcl = $this->getFacade();
-        $facadeUser = $this->getFactory()->createUserFacade();
         $config = $this->getFactory()->getConfig();
 
-        $app->before(function (Request $request) use ($app, $facadeAcl, $facadeUser, $config) {
+        $app->before(function (Request $request) use ($app, $facadeAcl, $config) {
             $bundle = $request->attributes->get('module');
             $controller = $request->attributes->get('controller');
             $action = $request->attributes->get('action');
@@ -49,11 +48,11 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
                 return true;
             }
 
-            if (!$facadeUser->hasCurrentUser()) {
+            if (!$facadeAcl->hasCurrentUser()) {
                 return $app->redirect($config->getAccessDeniedUri());
             }
 
-            $user = $facadeUser->getCurrentUser();
+            $user = $facadeAcl->getCurrentUser();
             if (!$facadeAcl->checkAccess($user, $bundle, $controller, $action)) {
                 return $app->redirect($config->getAccessDeniedUri());
             }

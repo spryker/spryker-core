@@ -38,9 +38,9 @@ class RoleController extends AbstractController
     {
         $roleTable = $this->getFactory()->createRoleTable();
 
-        return [
+        return $this->viewResponse([
             'roleTable' => $roleTable->render(),
-        ];
+        ]);
     }
 
     /**
@@ -62,14 +62,14 @@ class RoleController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $ruleForm = $this->getFactory()->createRoleForm();
+        $ruleForm = $this->getFactory()->createRoleForm(new RoleTransfer());
         $ruleForm->handleRequest($request);
 
         if ($ruleForm->isValid()) {
             $formData = $ruleForm->getData();
 
             try {
-                $roleTransfer = $this->getFacade()->addRole($formData[RoleForm::FIELD_NAME]);
+                $roleTransfer = $this->getFacade()->addRole($formData->getName());
                 $this->addSuccessMessage('Role successfully added.');
 
                 return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $roleTransfer->getIdAclRole()));
@@ -80,9 +80,9 @@ class RoleController extends AbstractController
             }
         }
 
-        return [
+        return $this->viewResponse([
             'roleForm' => $ruleForm->createView(),
-        ];
+        ]);
     }
 
     /**
@@ -137,27 +137,28 @@ class RoleController extends AbstractController
      */
     public function updateAction(Request $request)
     {
-        $idRole = $request->get('id-role');
+        $idAclRole = $request->query->getInt('id-role');
 
-        if (empty($idRole)) {
+        if (empty($idAclRole)) {
             $this->addErrorMessage('Missing role id!');
 
             return $this->redirectResponse(self::ACL_ROLE_LIST_URL);
         }
 
-        $roleTransfer = $this->getFacade()->getRoleById($idRole);
+        $roleTransfer = $this->getFacade()->getRoleById($idAclRole);
+        $roleForm = $this->getFactory()->createRoleForm($roleTransfer);
+        $this->handleRoleForm($request, $roleForm);
 
-        $roleForm = $this->getFactory()->createRoleForm();
-        $this->handleRoleForm($request, $roleForm, $roleTransfer);
-
-        $rulesetForm = $this->getFactory()->createRulesetForm();
-        $this->handleRulesetForm($request, $rulesetForm, $idRole);
+        $ruleTransfer = new RuleTransfer();
+        $ruleTransfer->setFkAclRole($idAclRole);
+        $rulesetForm = $this->getFactory()->createRulesetForm($ruleTransfer);
+        $this->handleRulesetForm($request, $rulesetForm, $idAclRole);
 
         if ($rulesetForm->isSubmitted() && $rulesetForm->isValid()) {
-            return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idRole));
+            return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idAclRole));
         }
 
-        $rulesetTable = $this->getFactory()->createRulesetTable($idRole);
+        $rulesetTable = $this->getFactory()->createRulesetTable($idAclRole);
 
         return [
             'roleForm' => $roleForm->createView(),
@@ -176,13 +177,8 @@ class RoleController extends AbstractController
     {
         $rulesetForm->handleRequest($request);
         if ($rulesetForm->isValid()) {
-            $formData = $rulesetForm->getData();
-
-            $ruleTransfer = new RuleTransfer();
-            $ruleTransfer->setFkAclRole($idRole);
-            $ruleTransfer->fromArray($formData, true);
-
-            $ruleTransfer = $this->getFacade()->addRule($ruleTransfer);
+            $ruleTransfer = $this->getFacade()
+                ->addRule($rulesetForm->getData());
 
             if ($ruleTransfer->getIdAclRule()) {
                 $this->addSuccessMessage('Ruleset successfully added.');
@@ -195,19 +191,13 @@ class RoleController extends AbstractController
     /**
      * @param Request $request
      * @param Form $roleForm
-     * @param RoleTransfer $roleTransfer
      */
-    protected function handleRoleForm(Request $request, Form $roleForm, RoleTransfer $roleTransfer)
+    protected function handleRoleForm(Request $request, Form $roleForm)
     {
         $roleForm->handleRequest($request);
-        if (!$roleForm->isSubmitted()) {
-            $roleForm->setData($roleTransfer->toArray());
-        }
 
         if ($roleForm->isValid()) {
-            $formData = $roleForm->getData();
-            $roleTransfer = new RoleTransfer();
-            $roleTransfer->fromArray($formData, true);
+            $roleTransfer = $roleForm->getData();
 
             try {
                 $this->getFacade()->updateRole($roleTransfer);

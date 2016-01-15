@@ -8,6 +8,7 @@ namespace Spryker\Zed\Acl\Business;
 
 use Spryker\Zed\Acl\Business\Model\Role;
 use Spryker\Zed\Acl\Business\Model\Group;
+use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\Business\Model\GroupInterface;
@@ -80,6 +81,14 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return AclToUserInterface
+     */
+    public function getUserFacade()
+    {
+        return $this->getProvidedDependency(AclDependencyProvider::FACADE_USER);
     }
 
 }
