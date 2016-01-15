@@ -38,6 +38,10 @@ class CartRuleForm extends AbstractRuleForm
      */
     protected $discountConfig;
 
+    /**
+     * @param DiscountConfig $discountConfig
+     * @param DiscountFacade $discountFacade
+     */
     public function __construct(DiscountConfig $discountConfig, DiscountFacade $discountFacade)
     {
         parent::__construct(
