@@ -237,10 +237,12 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 ->addJoin(
                     SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
                     SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
-                    Criteria::INNER_JOIN
+                    Criteria::LEFT_JOIN
                 )
                 ->_and()
-                ->where(SpyProductCategoryTableMap::COL_FK_CATEGORY . ' <> ?', $idExcludedCategory, \PDO::PARAM_INT);
+                ->where(SpyProductCategoryTableMap::COL_FK_CATEGORY . ' <> ?', $idExcludedCategory, \PDO::PARAM_INT)
+                ->_or()
+                ->where(SpyProductCategoryTableMap::COL_FK_CATEGORY . ' IS NULL');
         }
 
         return $query;
