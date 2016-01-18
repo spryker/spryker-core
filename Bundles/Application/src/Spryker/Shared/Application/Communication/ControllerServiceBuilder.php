@@ -31,6 +31,7 @@ class ControllerServiceBuilder
         $service = function () use ($application, $controllerResolver, $bundleControllerAction) {
             $controller = $controllerResolver->resolve($bundleControllerAction);
             $controller->setApplication($application);
+            $controller->initialize();
 
             return $controller;
         };
