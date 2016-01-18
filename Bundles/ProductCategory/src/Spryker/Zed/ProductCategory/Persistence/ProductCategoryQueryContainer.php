@@ -183,9 +183,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductAbstractCollectionBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null)
+    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale)
     {
-        $idExcludedCategory = (int) $idExcludedCategory;
         $query = $this->getFactory()->createProductAbstractQuery();
 
         $query->addJoin(
@@ -230,19 +229,6 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
             $query->where('UPPER(' . SpyProductAbstractTableMap::COL_SKU . ') LIKE ?', $term, \PDO::PARAM_STR)
                 ->_or()
                 ->where('UPPER(' . SpyProductAbstractLocalizedAttributesTableMap::COL_NAME . ') LIKE ?', $term, \PDO::PARAM_STR);
-        }
-
-        if ($idExcludedCategory > 0) {
-            $query
-                ->addJoin(
-                    SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                    SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
-                    Criteria::LEFT_JOIN
-                )
-                ->_and()
-                ->where(SpyProductCategoryTableMap::COL_FK_CATEGORY . ' <> ?', $idExcludedCategory, \PDO::PARAM_INT)
-                ->_or()
-                ->where(SpyProductCategoryTableMap::COL_FK_CATEGORY . ' IS NULL');
         }
 
         return $query;
