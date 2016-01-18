@@ -408,4 +408,43 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         $this->getFactory()->createDiscountSaver()->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
     }
 
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderTotalDiscountAmount(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createOrderDiscountTotalAmount()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderTotalDiscounts(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createSalesOrderTotalsAggregator()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateItemDiscounts(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createItemTotalOrderAggregator()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateGrandTotalWithDiscounts(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createSalesOrderGrandTotalAggregator()->aggregate($orderTransfer);
+    }
 }

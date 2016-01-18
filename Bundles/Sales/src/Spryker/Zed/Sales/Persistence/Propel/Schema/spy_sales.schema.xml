@@ -203,56 +203,6 @@
         <id-method-parameter value="spy_sales_expense_pk_seq"/>
     </table>
 
-    <table name="spy_sales_discount" phpName="SpySalesDiscount">
-        <column name="id_sales_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_sales_order" type="INTEGER" required="false"/>
-        <column name="fk_sales_order_item" type="INTEGER" required="false"/>
-        <column name="fk_sales_expense" type="INTEGER" required="false"/>
-        <column name="fk_sales_order_item_option" type="INTEGER" required="false"/>
-
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="description" type="VARCHAR" size="510" default="NULL"/>
-        <column name="display_name" type="VARCHAR" size="255" required="true"/>
-        <column name="amount" type="INTEGER" required="true"/>
-
-        <behavior name="timestampable"/>
-
-        <foreign-key name="spy_sales_discount-fk_sales_order" foreignTable="spy_sales_order" phpName="Order" refPhpName="Discount">
-            <reference local="fk_sales_order" foreign="id_sales_order"/>
-        </foreign-key>
-
-        <foreign-key name="spy_sales_discount-fk_sales_order_item" foreignTable="spy_sales_order_item" phpName="OrderItem" refPhpName="Discount">
-            <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
-        </foreign-key>
-
-        <foreign-key name="spy_sales_discount-fk_sales_expense" foreignTable="spy_sales_expense" phpName="Expense" refPhpName="Discount">
-            <reference local="fk_sales_expense" foreign="id_sales_expense"/>
-        </foreign-key>
-
-        <foreign-key name="spy_sales_discount-fk_sales_order_item_option" foreignTable="spy_sales_order_item_option" phpName="Option" refPhpName="Discount">
-            <reference local="fk_sales_order_item_option" foreign="id_sales_order_item_option"/>
-        </foreign-key>
-        <id-method-parameter value="spy_sales_discount_pk_seq"/>
-    </table>
-
-    <table name="spy_sales_discount_code" phpName="SpySalesDiscountCode">
-        <column name="id_sales_discount_code" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_sales_discount" type="INTEGER" required="true"/>
-
-        <column name="code" type="VARCHAR" size="255" required="true"/>
-        <column name="codepool_name" type="VARCHAR" size="255" required="true"/>
-        <column name="is_reusable" type="BOOLEAN" default="false"/>
-        <column name="is_once_per_customer" type="BOOLEAN" default="true"/>
-        <column name="is_refundable" type="BOOLEAN" default="false"/>
-
-        <behavior name="timestampable"/>
-
-        <foreign-key name="spy_sales_discount_code-fk_sales_discount" foreignTable="spy_sales_discount" phpName="Discount" refPhpName="DiscountCode">
-            <reference local="fk_sales_discount" foreign="id_sales_discount"/>
-        </foreign-key>
-        <id-method-parameter value="spy_sales_discount_code_pk_seq"/>
-    </table>
-
     <table name="spy_sales_order_item_bundle" phpName="SpySalesOrderItemBundle">
         <column name="id_sales_order_item_bundle" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>

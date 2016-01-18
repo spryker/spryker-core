@@ -8,6 +8,7 @@ namespace Spryker\Zed\Sales;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundBridge;
@@ -21,9 +22,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_REFUND = 'FACADE_REFUND';
     const FACADE_LOCALE = 'LOCALE_FACADE';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
-    const FACADE_TAX = 'FACADE_TAX';
 
     const PLUGINS_PAYMENT_LOGS = 'PLUGINS_PAYMENT_LOGS';
+    const PLUGINS_ORDER_AMOUNT_AGGREGATION =  'PLUGINS_ORDER_AMOUNT_AGGREGATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -48,12 +49,12 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
             return new SalesToRefundBridge($container->getLocator()->refund()->facade());
         };
 
-        $container[self::FACADE_TAX] = function (Container $container) {
-            return $container->getLocator()->tax()->facade();
-        };
-
         $container[self::PLUGINS_PAYMENT_LOGS] = function (Container $container) {
             return $this->getPaymentLogPlugins($container);
+        };
+
+        $container[self::PLUGINS_ORDER_AMOUNT_AGGREGATION] = function (Container $container) {
+            return $this->getOrderAmountAggregationPlugins($container);
         };
 
         return $container;
@@ -79,6 +80,16 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return array
      */
     protected function getPaymentLogPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return array|OrderTotalsAggregatePluginInterface[]
+     */
+    protected function getOrderAmountAggregationPlugins(Container $container)
     {
         return [];
     }

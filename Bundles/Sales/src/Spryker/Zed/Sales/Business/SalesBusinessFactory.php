@@ -6,6 +6,11 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ExpenseTotal;
+use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\GrandTotal;
+use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\Item;
+use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ProductOption;
+use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\Subtotal;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Sales\Business\Model\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\OrderTotalsAggregator;
@@ -19,6 +24,8 @@ use Spryker\Zed\Sales\Business\Model\OrderDetailsManager;
 use Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface;
 use Spryker\Zed\Sales\Business\Model\Split\ItemInterface;
 use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
+use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\GrandTotalAggregatorPlugin;
+use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
@@ -135,7 +142,55 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderTotalsAggregator()
     {
-        return new OrderTotalsAggregator($this->getQueryContainer(), $this->getTaxFacade());
+        return new OrderTotalsAggregator($this->getOrderTotalAggregatorPlugins(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return OrderTotalsAggregatePluginInterface[]
+     */
+    protected function getOrderTotalAggregatorPlugins()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_AMOUNT_AGGREGATION);
+    }
+
+    /**
+     * @return ExpenseTotal
+     */
+    public function createExpenseOrderTotalAggregator()
+    {
+        return new ExpenseTotal($this->getQueryContainer());
+    }
+
+    /**
+     * @return GrandTotalAggregatorPlugin
+     */
+    public function createGrandTotalOrderTotalAggregator()
+    {
+        return new GrandTotal();
+    }
+
+    /**
+     * @return Item
+     */
+    public function createItemOrderOrderAggregator()
+    {
+        return new Item();
+    }
+
+    /**
+     * @return ProductOption
+     */
+    public function createItemProductOptionOrderAggregator()
+    {
+        return new ProductOption();
+    }
+
+    /**
+     * @return Subtotal
+     */
+    public function createSubtotalOrderAggregator()
+    {
+        return new Subtotal();
     }
 
     /**

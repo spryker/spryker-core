@@ -23,4 +23,14 @@
         <property name="rate" type="float" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="unitTaxAmountWithProductOptionAndDiscountAmounts" type="int" />
+        <property name="sumTaxAmountWithProductOptionAndDiscountAmounts" type="int" />
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="unitTaxAmount" type="int" />
+        <property name="sumTaxAmount" type="int" />
+    </transfer>
+
 </transfers>

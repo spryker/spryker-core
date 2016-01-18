@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Sales\Business;
 
-use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
@@ -196,103 +195,61 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idSalesOrderItem
+     * @param OrderTransfer $orderTransfer
      *
-     * @return int
+     * @return void
      */
-    public function getTaxAmountByIdSalesOrderItem($idSalesOrderItem)
+    public function aggregateOrderExpenseAmounts(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createOrderTotalsAggregator()->getTaxAmountByIdSalesOrderItem($idSalesOrderItem);
+        $this->getFactory()->createExpenseOrderTotalAggregator()->aggregate($orderTransfer);
     }
 
     /**
-     * @param int $idSalesOrderItem
+     * @param OrderTransfer $orderTransfer
      *
-     * @return CalculatedDiscountTransfer[]
+     * @return void
      */
-    public function getDiscountsByIdSalesOrderItem($idSalesOrderItem)
+    public function aggregateOrderGrandTotal(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createOrderTotalsAggregator()->getDiscountsByIdSalesOrderItem($idSalesOrderItem);
+        $this->getFactory()->createGrandTotalOrderTotalAggregator()->aggregate($orderTransfer);
     }
 
     /**
-     * @param int $idSalesOrderItem
+     * @param OrderTransfer $orderTransfer
      *
-     * @return int
+     * @return void
      */
-    public function getItemTotalAmountByIdSalesOrderItem($idSalesOrderItem)
+    public function aggregateOrderItemAmounts(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createOrderTotalsAggregator()->getItemTotalAmountByIdSalesOrderItem($idSalesOrderItem);
+        $this->getFactory()->createItemOrderOrderAggregator()->aggregate($orderTransfer);
     }
 
     /**
-     * @param int $idSalesOrder
-     *
-     * @return int
+     * @param OrderTransfer $orderTransfer
      */
-    public function getGrandTotalByIdSalesOrder($idSalesOrder)
+    public function aggregateOrderItemProductOptionAmounts(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createOrderTotalsAggregator()->getGrandTotalByIdSalesOrder($idSalesOrder);
+        $this->getFactory()->createItemProductOptionOrderAggregator()->aggregate($orderTransfer);
     }
 
     /**
-     * @param int $idSalesOrder
+     * @param OrderTransfer $orderTransfer
      *
-     * @return int
+     * @return void
      */
-    public function getSubtotalByIdSalesOrder($idSalesOrder)
+    public function aggregateOrderSubtotal(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createOrderTotalsAggregator()->getSubtotalByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return int
-     */
-    public function getSubtotalByIdSalesOrderWithExpenses($idSalesOrder)
-    {
-        return $this->getFactory()->createOrderTotalsAggregator()->getSubtotalByIdSalesOrderWithExpenses($idSalesOrder);
+        $this->getFactory()->createSubtotalOrderAggregator()->aggregate($orderTransfer);
     }
 
     /**
      * @param int $idSalesOrder
      *
-     * @return CalculatedDiscountTransfer[]
+     * @return OrderTransfer
      */
-    public function getDiscountTotalsByIdSalesOrder($idSalesOrder)
+    public function getOrderTotalsByIdSalesOrder($idSalesOrder)
     {
-        return $this->getFactory()->createOrderTotalsAggregator()->getDiscountTotalsByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return CalculatedDiscountTransfer[]
-     */
-    public function getDiscountTotalAmountByIdSalesOrder($idSalesOrder)
-    {
-        return $this->getFactory()->createOrderTotalsAggregator()->getDiscountTotalAmountByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
-     * @param int $idSalesOrderItem
-     *
-     * @return int
-     */
-    public function getExpensesTotalAmountByIdSalesOrder($idSalesOrderItem)
-    {
-        return $this->getFactory()->createOrderTotalsAggregator()->getExpensesTotalAmountByIdSalesOrder($idSalesOrderItem);
-    }
-
-    /**
-     * @param int $idSalesOrderItem
-     *
-     * @return int
-     */
-    public function getItemTotalAmountByIdSalesOrderItemAfterDiscounts($idSalesOrderItem)
-    {
-        return $this->getFactory()->createOrderTotalsAggregator()->getItemTotalAmountByIdSalesOrderItemAfterDiscounts($idSalesOrderItem);
+        return $this->getFactory()->createOrderTotalsAggregator()->aggregateByIdSalesOrder($idSalesOrder);
     }
 
 }

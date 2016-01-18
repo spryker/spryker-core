@@ -6,6 +6,10 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
+use Orm\Zed\Sales\Persistence\Base\SpySalesDiscount;
+use Orm\Zed\Sales\Persistence\SpySalesDiscountCode;
+use Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery;
+use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 /**
@@ -81,5 +85,15 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
     public function queryVoucherPoolByVoucherCodes(array $codes);
+
+    /**
+     * @return SpySalesDiscountQuery
+     */
+    public function querySalesDisount();
+
+    /**
+     * @return SpySalesDiscountCodeQuery
+     */
+    public function querySalesDisountCode();
 
 }

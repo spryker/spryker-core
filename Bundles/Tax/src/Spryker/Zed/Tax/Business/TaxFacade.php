@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Tax\Business;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\TaxRateTransfer;
@@ -208,6 +209,14 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate)
     {
         return $this->getFactory()->createPriceCalculationHelper()->getTaxValueFromPrice($grossPrice, $taxRate);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     */
+    public function aggregateOrderItemTaxAmount(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createOrderItemTaxAmountAggregator()->aggregate($orderTransfer);
     }
 
 }

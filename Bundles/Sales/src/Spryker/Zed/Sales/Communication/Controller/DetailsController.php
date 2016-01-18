@@ -30,6 +30,8 @@ class DetailsController extends AbstractController
     {
         $idSalesOrder = $request->get('id-sales-order');
 
+        $orderTransfer = $this->getFacade()->getOrderTotalsByIdSalesOrder($idSalesOrder);
+
         $salesOrderEntity = $this->getQueryContainer()
             ->querySalesOrderById($idSalesOrder)
             ->findOne();

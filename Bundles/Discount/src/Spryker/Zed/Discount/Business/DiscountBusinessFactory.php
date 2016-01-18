@@ -21,6 +21,10 @@ use Spryker\Zed\Discount\Business\Model\CartRuleInterface;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
 use Spryker\Zed\Discount\Business\Model\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Model\DiscountSaverInterface;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderDiscounts;
 use Spryker\Zed\Discount\Business\Model\VoucherCode;
 use Spryker\Zed\Discount\Business\Model\VoucherCodeInterface;
 use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
@@ -351,6 +355,38 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     protected function getStoreConfig()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
+    }
+
+    /**
+     * @return DiscountTotalAmount
+     */
+    public function createOrderDiscountTotalAmount()
+    {
+        return new DiscountTotalAmount($this->getQueryContainer());
+    }
+
+    /**
+     * @return ItemDiscounts
+     */
+    public function createItemTotalOrderAggregator()
+    {
+        return new ItemDiscounts($this->getQueryContainer());
+    }
+
+    /**
+     * @return OrderDiscounts
+     */
+    public function createSalesOrderTotalsAggregator()
+    {
+        return new OrderDiscounts($this->getQueryContainer());
+    }
+
+    /**
+     * @return GrandTotalWithDiscounts
+     */
+    public function createSalesOrderGrandTotalAggregator()
+    {
+        return new GrandTotalWithDiscounts();
     }
 
 }

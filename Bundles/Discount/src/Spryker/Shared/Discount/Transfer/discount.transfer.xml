@@ -7,6 +7,7 @@
         <property name="items" type="Item[]"  singular="item" />
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="totals" type="Totals" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
     </transfer>
 
     <transfer name="OrderItems">
@@ -16,6 +17,7 @@
     <transfer name="Discount">
         <property name="idDiscount" type="int" />
         <property name="fkDiscountVoucherPool" type="int" />
+        <property name="idSalesDiscount" type="int" />
         <property name="displayName" type="string" />
         <property name="description" type="string" />
         <property name="amount" type="int" />
