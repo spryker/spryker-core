@@ -27,17 +27,12 @@ class AuthTest extends Test
     /**
      * @var AuthFacade
      */
-    private $authFacade;
+    protected $authFacade;
 
     /**
      * @var UserFacade
      */
-    private $userFacade;
-
-    /**
-     * @var AutoCompletion
-     */
-    private $locator;
+    protected $userFacade;
 
     /**
      * @return void
@@ -47,7 +42,6 @@ class AuthTest extends Test
         parent::setUp();
 
         $this->userFacade = new UserFacade();
-
         $this->authFacade = new AuthFacade();
     }
 

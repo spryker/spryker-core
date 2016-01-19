@@ -162,18 +162,20 @@ class Group implements GroupInterface
     }
 
     /**
+     * @deprecated since 0.19.0 to be removed in 1.0.0
+     *
      * @param int $idUser
      *
      * @return GroupTransfer
      */
     public function getUserGroup($idUser)
     {
-        $entity = $this->queryContainer->queryUserGroupByIdUser($idUser)->findOne();
+        $groupEntity = $this->queryContainer->queryUserGroupByIdUser($idUser)->findOne();
 
-        $transfer = new GroupTransfer();
-        $transfer = Copy::entityToTransfer($transfer, $entity);
+        $groupTransfer = new GroupTransfer();
+        $groupTransfer->fromArray($groupEntity->toArray(), true);
 
-        return $transfer;
+        return $groupTransfer;
     }
 
     /**
@@ -189,7 +191,9 @@ class Group implements GroupInterface
 
         foreach ($groupEntities as $groupEntity) {
             $groupTransfer = new GroupTransfer();
-            $groupsTransfer->addGroup(Copy::entityToTransfer($groupTransfer, $groupEntity));
+            $groupTransfer->fromArray($groupEntity->toArray(), true);
+
+            $groupsTransfer->addGroup($groupTransfer);
         }
 
         return $groupsTransfer;

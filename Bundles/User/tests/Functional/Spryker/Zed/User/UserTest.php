@@ -22,12 +22,7 @@ class UserTest extends Test
     /**
      * @var UserFacade
      */
-    private $userFacade;
-
-    /**
-     * @var AutoCompletion
-     */
-    private $locator;
+    protected $userFacade;
 
     /**
      * @return void

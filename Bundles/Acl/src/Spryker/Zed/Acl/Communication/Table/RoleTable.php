@@ -25,7 +25,7 @@ class RoleTable extends AbstractTable
     /**
      * @var AclQueryContainer
      */
-    private $aclQueryContainer;
+    protected $aclQueryContainer;
 
     /**
      * @param AclQueryContainer $aclQueryContainer

@@ -19,22 +19,22 @@ class Installer implements InstallerInterface
     /**
      * @var Group
      */
-    private $group;
+    protected $group;
 
     /**
      * @var Role
      */
-    private $role;
+    protected $role;
 
     /**
      * @var Rule
      */
-    private $rule;
+    protected $rule;
 
     /**
      * @var AclToUserInterface
      */
-    private $facadeUser;
+    protected $facadeUser;
 
     /**
      * @var AclConfig
