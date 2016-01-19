@@ -29,10 +29,10 @@ class NoPrivateMethodsSniff implements \PHP_CodeSniffer_Sniff
     {
         if ($this->isFactory($phpCsFile) && $this->isMethodPrivate($phpCsFile, $stackPointer)) {
             $classMethod = $this->getClassMethod($phpCsFile, $stackPointer);
-            $phpCsFile->addError(
-                $classMethod . ' is private.',
-                $stackPointer
-            );
+            $fix = $phpCsFile->addFixableError($classMethod . ' is private.', $stackPointer);
+            if ($fix) {
+                $this->makePrivateMethodProtected($phpCsFile, $stackPointer);
+            }
         }
     }
 
@@ -112,6 +112,19 @@ class NoPrivateMethodsSniff implements \PHP_CodeSniffer_Sniff
         $classMethod = $className . '::' . $methodName;
 
         return $classMethod;
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     * @param int $stackPointer
+     *
+     * @return void
+     */
+    private function makePrivateMethodProtected(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
+    {
+        $phpCsFile->fixer->beginChangeset();
+        $phpCsFile->fixer->replaceToken($stackPointer - 2, 'protected');
+        $phpCsFile->fixer->endChangeset();
     }
 
 }
