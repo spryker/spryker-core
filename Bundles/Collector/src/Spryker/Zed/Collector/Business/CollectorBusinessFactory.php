@@ -6,21 +6,22 @@
 
 namespace Spryker\Zed\Collector\Business;
 
-use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
+use Spryker\Zed\Collector\Business\Exporter\KeyValueExporter;
+use Spryker\Zed\Collector\Business\Exporter\SearchExporter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdater as KeyValueTouchUpdater;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticSearchUpdateWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\TouchUpdater;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
 use Spryker\Zed\Collector\Business\Exporter\ExportMarker;
 use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\RedisWriter;
-use Spryker\Zed\Collector\Business\Exporter\KeyValueCollector;
+use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Collector\Business\Exporter\Collector;
 use Spryker\Zed\Collector\Business\Exporter\Reader\KeyValue\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader;
-use Spryker\Zed\Collector\Business\Exporter\SearchCollector;
 use Spryker\Zed\Collector\Business\Exporter\ExporterInterface;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
@@ -75,9 +76,9 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return LocaleFacade
+     * @return CollectorToLocaleInterface
      */
-    protected function createLocaleFacade()
+    protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(CollectorDependencyProvider::FACADE_LOCALE);
     }
@@ -185,7 +186,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
 
         return new Collector(
             $this->getTouchQueryContainer(),
-            $this->createLocaleFacade(),
+            $this->getLocaleFacade(),
             $this->createElasticSearchExporter(
                 $searchWriter,
                 $config
@@ -200,7 +201,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new Collector(
             $this->getTouchQueryContainer(),
-            $this->createLocaleFacade(),
+            $this->getLocaleFacade(),
             $this->createElasticSearchExporter(
                 $this->createSearchUpdateWriter(),
                 $this->getConfig()
