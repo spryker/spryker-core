@@ -44,11 +44,7 @@ class CartRuleForm extends AbstractRuleForm
      */
     public function __construct(DiscountConfig $discountConfig, DiscountFacade $discountFacade)
     {
-        parent::__construct(
-            $discountConfig->getAvailableCalculatorPlugins(),
-            $discountConfig->getAvailableCollectorPlugins(),
-            $discountConfig->getAvailableDecisionRulePlugins()
-        );
+        parent::__construct($discountConfig);
 
         $this->discountConfig = $discountConfig;
         $this->discountFacade = $discountFacade;

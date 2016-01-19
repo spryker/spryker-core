@@ -27,7 +27,7 @@ class Rule implements RuleInterface
     /**
      * @var Group
      */
-    private $group;
+    protected $group;
 
     /**
      * @var AclQueryContainer
@@ -37,7 +37,7 @@ class Rule implements RuleInterface
     /**
      * @var UserFacade
      */
-    private $facadeUser;
+    protected $facadeUser;
 
     /**
      * @var RuleValidator

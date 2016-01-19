@@ -33,22 +33,17 @@ class AclTest extends Test
     /**
      * @var AclFacade
      */
-    private $facade;
+    protected $facade;
 
     /**
      * @var UserFacade
      */
-    private $userFacade;
+    protected $userFacade;
 
     /**
      * @var RolesTransfer
      */
-    private $rolesTransfer;
-
-    /**
-     * @var AutoCompletion
-     */
-    private $locator;
+    protected $rolesTransfer;
 
     /**
      * @return void

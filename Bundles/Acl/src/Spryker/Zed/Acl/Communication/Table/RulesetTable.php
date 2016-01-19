@@ -22,12 +22,12 @@ class RulesetTable extends AbstractTable
     /**
      * @var AclQueryContainer
      */
-    private $aclQueryContainer;
+    protected $aclQueryContainer;
 
     /**
      * @var int
      */
-    private $idRole;
+    protected $idRole;
 
     /**
      * @param AclQueryContainer $aclQueryContainer

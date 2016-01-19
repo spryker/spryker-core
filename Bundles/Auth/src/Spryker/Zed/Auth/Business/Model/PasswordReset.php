@@ -18,22 +18,22 @@ class PasswordReset
     /**
      * @var AuthQueryContainer
      */
-    private $authQueryContainer;
+    protected $authQueryContainer;
 
     /**
      * @var AuthPasswordResetSenderInterface
      */
-    private $userPasswordResetNotificationSender;
+    protected $userPasswordResetNotificationSender;
 
     /**
      * @var AuthToUserBridge
      */
-    private $facadeUser;
+    protected $facadeUser;
 
     /**
      * @var AuthConfig
      */
-    private $authConfig;
+    protected $authConfig;
 
     /**
      * @param AuthQueryContainer $authQueryContainer
