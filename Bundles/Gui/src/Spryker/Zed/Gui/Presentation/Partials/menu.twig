@@ -51,13 +51,11 @@
 
 {%- macro getNodeIcon(node) -%}
     {%- set defaultIcon = 'fa-angle-double-right' -%}
-    <div class="icon-holder">
     {%- if node.icon is defined and node.icon != '' -%}
-        <span class="fa {{ node.icon }}"></span>
+        <i class="fa {{ node.icon }}"></i>
     {%- else -%}
-        <span class="fa {{ defaultIcon }}"></span>
+        <i class="fa {{ defaultIcon }}"></i>
     {%- endif -%}
-    </div>
 {%- endmacro -%}
 
 {%- import _self as menu -%}
