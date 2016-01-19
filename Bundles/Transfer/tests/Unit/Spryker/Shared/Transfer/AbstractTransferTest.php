@@ -237,7 +237,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
             'int' => 2,
             'bool' => null,
             'array' => [],
-            'transfer' => $innerTransfer->toArray(false),
+            'transfer' => $innerTransfer,
             'transfer_collection' => new \ArrayObject(),
         ];
 

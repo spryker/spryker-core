@@ -28,26 +28,46 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     private static $filterUnderscoreToCamelCase;
 
     /**
-     * @param bool $recursive
+     * @param bool $isRecursive
      *
      * @return array
      */
-    public function toArray($recursive = true)
+    public function toArray($isRecursive = true)
+    {
+        return $this->propertiesToArray($this->getPropertyNames(), $isRecursive, 'toArray');
+    }
+
+    /**
+     * @param bool $isRecursive
+     *
+     * @return array
+     */
+    public function modifiedToArray($isRecursive = true)
+    {
+        return $this->propertiesToArray($this->modifiedProperties, $isRecursive, 'modifiedToArray');
+    }
+
+    /**
+     * @param array $properties
+     * @param bool $isRecursive
+     * @param string $childConvertMethodName
+     *
+     * @return array
+     */
+    private function propertiesToArray(array $properties, $isRecursive, $childConvertMethodName)
     {
         $values = [];
-        $propertyNames = $this->getPropertyNames();
 
-        $recursive = true;
-        foreach ($propertyNames as $property) {
+        foreach ($properties as $property) {
             $value = $this->callGetMethod($property);
 
             $arrayKey = $this->transformUnderscoreArrayKey($property);
 
             if (is_object($value)) {
-                if ($recursive && $value instanceof TransferInterface) {
-                    $values[$arrayKey] = $value->toArray($recursive);
-                } elseif ($recursive && $this->isCollection($property) && count($value) >= 1) {
-                    $values = $this->addValuesToCollection($recursive, $value, $values, $arrayKey);
+                if ($isRecursive && $value instanceof TransferInterface) {
+                    $values[$arrayKey] = $value->$childConvertMethodName($isRecursive);
+                } elseif ($isRecursive && $this->isCollection($property) && count($value) >= 1) {
+                    $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName);
                 } else {
                     $values[$arrayKey] = $value;
                 }
@@ -72,32 +92,6 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
         unset($classVars['filterUnderscoreToCamelCase']);
 
         return array_keys($classVars);
-    }
-
-    /**
-     * @param bool $recursive
-     *
-     * @return array
-     */
-    public function modifiedToArray($recursive = true)
-    {
-        $returnData = [];
-        foreach ($this->modifiedProperties as $modifiedProperty) {
-            $key = $this->transformUnderscoreArrayKey($modifiedProperty);
-            $getterName = 'get' . ucfirst($modifiedProperty);
-            $value = $this->$getterName();
-            if (is_object($value)) {
-                if ($recursive && $value instanceof TransferInterface) {
-                    $returnData[$key] = $value->modifiedToArray($recursive);
-                } else {
-                    $returnData[$key] = $value;
-                }
-            } else {
-                $returnData[$key] = $value;
-            }
-        }
-
-        return $returnData;
     }
 
     /**
@@ -395,20 +389,21 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     }
 
     /**
-     * @param bool $recursive
      * @param mixed $value
      * @param array $values
      * @param string $arrayKey
+     * @param bool $isRecursive
+     * @param string $childConvertMethodName
      *
      * @return array
      */
-    private function addValuesToCollection($recursive, $value, $values, $arrayKey)
+    private function addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName)
     {
         foreach ($value as $elementKey => $arrayElement) {
             if (is_array($arrayElement) || is_scalar($arrayElement)) {
                 $values[$arrayKey][$elementKey] = $arrayElement;
             } else {
-                $values[$arrayKey][$elementKey] = $arrayElement->toArray($recursive);
+                $values[$arrayKey][$elementKey] = $arrayElement->$childConvertMethodName($isRecursive);
             }
         }
 

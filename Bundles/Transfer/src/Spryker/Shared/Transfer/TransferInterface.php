@@ -10,18 +10,18 @@ interface TransferInterface
 {
 
     /**
-     * @param bool $recursive
+     * @param bool $isRecursive
      *
      * @return array
      */
-    public function toArray($recursive = true);
+    public function toArray($isRecursive = true);
 
     /**
-     * @param bool $recursive
+     * @param bool $isRecursive
      *
      * @return array
      */
-    public function modifiedToArray($recursive = true);
+    public function modifiedToArray($isRecursive = true);
 
     /**
      * @param array $values
