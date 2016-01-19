@@ -4,7 +4,7 @@ namespace Spryker\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Shared\Gui\Form\AbstractForm;
+use Spryker\Zed\Gui\Communication\Form\AbstractForm;;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
