@@ -9,6 +9,7 @@ namespace Spryker\Zed\Collector\Business\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Spryker\Zed\Collector\Business\Model\ProgressBarBuilder;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
@@ -125,8 +126,8 @@ abstract class AbstractCollectorPlugin
     }
 
     /**
-     * @param $data
-     * @param $localeName
+     * @param mixed $data
+     * @param string $localeName
      * @param array $collectedItemData
      *
      * @return string
@@ -329,7 +330,7 @@ abstract class AbstractCollectorPlugin
     }
 
     /**
-     * @param $itemType
+     * @param string $itemType
      *
      * @throws \Exception
      *
@@ -408,6 +409,7 @@ abstract class AbstractCollectorPlugin
     {
         $result = [];
         $baseParameters = $baseQuery->getParams();
+
         foreach ($baseParameters as $parameter) {
             $key = sprintf('%s.%s', $parameter['table'], $parameter['column']);
             $value = $parameter['value'];
@@ -438,21 +440,6 @@ abstract class AbstractCollectorPlugin
         return 'resource';
     }
 
-    protected function setupProgressBar()
-    {
-        ProgressBar::setFormatDefinition('normal', ' <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>%percent%% (%current%/%max%) %elapsed:6s%</fg=yellow>');
-        ProgressBar::setFormatDefinition('normal_nomax', ' <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>(%max%)</fg=yellow>');
-
-        ProgressBar::setFormatDefinition('verbose', " <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>[%bar%] %percent%% (%current%/%max%) %elapsed:6s% %memory:6s%</fg=yellow>\x0D");
-        ProgressBar::setFormatDefinition('verbose_nomax', ' <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>(%max%)</fg=yellow>');
-
-        ProgressBar::setFormatDefinition('very_verbose', " <fg=yellow>*</fg=yellow> <fg=green>%collectorType:-20s%</fg=green> %bar% <fg=yellow>%percent%% (%current%/%max%) %memory% (%elapsed%/%remaining%)</fg=yellow>\x0D");
-        ProgressBar::setFormatDefinition('very_verbose_nomax', ' <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>(%max%)</fg=yellow>');
-
-        ProgressBar::setFormatDefinition('debug', " <fg=yellow>*</fg=yellow> <fg=green>%collectorType:-20s%</fg=green> %bar% <fg=yellow>%percent:20s%% [%current%/%max%] Memory: %memory%, Elapsed: %elapsed%, Remaining: %remaining%</fg=yellow>\x0D");
-        ProgressBar::setFormatDefinition('debug_nomax', ' <fg=yellow>*</fg=yellow> <fg=green>%collectorType%</fg=green> <fg=yellow>(%max%)</fg=yellow>');
-    }
-
     /**
      * @param OutputInterface $output
      * @param int $count
@@ -461,20 +448,9 @@ abstract class AbstractCollectorPlugin
      */
     protected function generateProgressBar(OutputInterface $output, $count)
     {
-        $this->setupProgressBar();
+        $builder = new ProgressBarBuilder($output, $count, $this->collectResourceType());
 
-        $progressBar = new ProgressBar($output, $count);
-        $progressBar->setMessage($this->collectResourceType(), 'collectorType');
-        $progressBar->setBarWidth(20);
-
-        if ($output->getVerbosity() > OutputInterface::VERBOSITY_VERBOSE) {
-            $progressBar->setBarCharacter($done = "\033[32m●\033[0m");
-            $progressBar->setEmptyBarCharacter($empty = "\033[31m●\033[0m");
-            $progressBar->setProgressCharacter($progress = "\033[32m►\033[0m");
-            $progressBar->setBarWidth(50);
-        }
-
-        return $progressBar;
+        return $builder->build();
     }
 
     /**
@@ -486,8 +462,9 @@ abstract class AbstractCollectorPlugin
      */
     protected function displayProgressWhileCountingBatchCollectionSize(OutputInterface $output)
     {
-        $progressBar = new ProgressBar($output, 1);
-        $progressBar->setMessage($this->collectResourceType(), 'collectorType');
+        $builder = new ProgressBarBuilder($output, 1, $this->collectResourceType());
+        $progressBar = $builder->build();
+
         $progressBar->setFormat(" * %collectorType%\x0D ");
         $progressBar->start();
         $progressBar->advance();
