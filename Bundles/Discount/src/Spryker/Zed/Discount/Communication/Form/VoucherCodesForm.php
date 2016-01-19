@@ -61,11 +61,7 @@ class VoucherCodesForm extends AbstractRuleForm
         CamelCaseToUnderscore $camelCaseToUnderscore,
         DiscountQueryContainer $discountQueryContainer
     ) {
-        parent::__construct(
-            $discountConfig->getAvailableCalculatorPlugins(),
-            $discountConfig->getAvailableCollectorPlugins(),
-            $discountConfig->getAvailableDecisionRulePlugins()
-        );
+        parent::__construct($discountConfig);
 
         $this->discountConfig = $discountConfig;
         $this->camelCaseToUnderscore = $camelCaseToUnderscore;
