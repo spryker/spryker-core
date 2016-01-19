@@ -56,7 +56,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
      *
      * @return DirectoryRemoverInterface
      */
-    private function createDirectoryRemover($path)
+    protected function createDirectoryRemover($path)
     {
         return new DirectoryRemover($path);
     }

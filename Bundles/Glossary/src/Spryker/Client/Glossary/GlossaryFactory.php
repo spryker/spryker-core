@@ -32,7 +32,7 @@ class GlossaryFactory extends AbstractFactory
     /**
      * @return StorageClientInterface
      */
-    private function getStorage()
+    protected function getStorage()
     {
         return $this->getProvidedDependency(GlossaryDependencyProvider::KV_STORAGE);
     }
@@ -40,7 +40,7 @@ class GlossaryFactory extends AbstractFactory
     /**
      * @return KeyBuilderInterface
      */
-    private function getKeyBuilder()
+    protected function getKeyBuilder()
     {
         return new GlossaryKeyBuilder();
     }

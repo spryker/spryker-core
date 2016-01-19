@@ -34,7 +34,7 @@ class ProductFactory extends AbstractFactory
     /**
      * @return StorageClientInterface
      */
-    private function getStorage()
+    protected function getStorage()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::KV_STORAGE);
     }
@@ -42,7 +42,7 @@ class ProductFactory extends AbstractFactory
     /**
      * @return KeyBuilderInterface
      */
-    private function getKeyBuilder()
+    protected function getKeyBuilder()
     {
         return new ProductResourceKeyBuilder();
     }

@@ -57,7 +57,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      *
      * @return ComposerInstalledPackageFinder
      */
-    private function createComposerInstalledPackageFinder(InstalledPackagesTransfer $collection)
+    protected function createComposerInstalledPackageFinder(InstalledPackagesTransfer $collection)
     {
         return new ComposerInstalledPackageFinder(
             $collection,
@@ -71,7 +71,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      *
      * @return InstalledPackageFinder
      */
-    private function createNodePackageManagerInstalledPackageFinder(InstalledPackagesTransfer $collection, $path)
+    protected function createNodePackageManagerInstalledPackageFinder(InstalledPackagesTransfer $collection, $path)
     {
         return new InstalledPackageFinder(
             $collection,
@@ -83,7 +83,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     /**
      * @return Process
      */
-    private function createNpmListProcess()
+    protected function createNpmListProcess()
     {
         return new Process('npm list -json -long');
     }

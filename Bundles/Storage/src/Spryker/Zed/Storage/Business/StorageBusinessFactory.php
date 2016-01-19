@@ -31,7 +31,7 @@ class StorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return StorageClient
      */
-    private function createStorageClient()
+    protected function createStorageClient()
     {
         return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORAGE);
     }

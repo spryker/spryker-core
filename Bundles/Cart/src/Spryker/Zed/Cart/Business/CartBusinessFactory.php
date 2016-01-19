@@ -162,7 +162,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
      *
      * @return OperatorInterface
      */
-    private function configureCartOperator(OperatorInterface $operator)
+    protected function configureCartOperator(OperatorInterface $operator)
     {
         $bundleConfig = $this->getConfig();
 

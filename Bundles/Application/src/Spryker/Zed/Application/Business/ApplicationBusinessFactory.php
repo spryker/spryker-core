@@ -264,7 +264,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return NavigationCacheInterface
      */
-    private function createNavigationCache()
+    protected function createNavigationCache()
     {
         return new NavigationCache(
             $this->getConfig()->getCacheFile(),
@@ -275,7 +275,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return NavigationCollectorInterface
      */
-    private function createCachedNavigationCollector()
+    protected function createCachedNavigationCollector()
     {
         return new NavigationCollectorCacheDecorator(
             $this->createNavigationCollector(),
