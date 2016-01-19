@@ -2,6 +2,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
+use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 
 abstract class AbstractRuleForm extends AbstractForm
@@ -26,15 +27,13 @@ abstract class AbstractRuleForm extends AbstractForm
     protected $availableDecisionRulePlugins;
 
     /**
-     * @param array $availableCalculatorPlugins
-     * @param array $availableCollectorPlugins
-     * @param array $availableDecisionRulePlugins
+     * @param DiscountConfig $discountConfig
      */
-    public function __construct(array $availableCalculatorPlugins, array $availableCollectorPlugins, array $availableDecisionRulePlugins)
+    public function __construct(DiscountConfig $discountConfig)
     {
-        $this->availableCalculatorPlugins = $availableCalculatorPlugins;
-        $this->availableCollectorPlugins = $availableCollectorPlugins;
-        $this->availableDecisionRulePlugins = $availableDecisionRulePlugins;
+        $this->availableCalculatorPlugins = $discountConfig->getAvailableCalculatorPlugins();
+        $this->availableCollectorPlugins = $discountConfig->getAvailableCollectorPlugins();
+        $this->availableDecisionRulePlugins = $discountConfig->getAvailableDecisionRulePlugins();
     }
 
     /**
