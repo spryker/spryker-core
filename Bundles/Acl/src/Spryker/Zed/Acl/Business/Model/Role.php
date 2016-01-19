@@ -8,10 +8,8 @@ namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RolesTransfer;
 use Spryker\Shared\Acl\AclConstants;
-use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Orm\Zed\Acl\Persistence\SpyAclRole;
-use Spryker\Zed\Library\Copy;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
 use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
@@ -30,7 +28,7 @@ class Role implements RoleInterface
     /**
      * @var GroupInterface
      */
-    private $group;
+    protected $group;
 
     /**
      * @param GroupInterface $group
@@ -87,7 +85,7 @@ class Role implements RoleInterface
         $aclRoleEntity->save();
 
         $roleTransfer = new RoleTransfer();
-        $roleTransfer = Copy::entityToTransfer($roleTransfer, $aclRoleEntity);
+        $roleTransfer->fromArray($aclRoleEntity->toArray(), true);
 
         return $roleTransfer;
     }
@@ -123,9 +121,28 @@ class Role implements RoleInterface
      */
     public function getUserRoles($idUser)
     {
-        $groupTransfer = $this->group->getUserGroup($idUser);
+        $groupsTransfer = $this->group->getUserGroups($idUser);
 
-        return $this->getGroupRoles($groupTransfer->getIdAclGroup());
+        $rolesTransfer = new RolesTransfer();
+        foreach ($groupsTransfer->getGroups() as $groupTransfer) {
+            $this->addGroupRoles($rolesTransfer, $groupTransfer->getIdAclGroup());
+        }
+
+        return $rolesTransfer;
+    }
+
+    /**
+     * @param RolesTransfer $rolesTransfer
+     * @param int $idAclGroup
+     *
+     * @return void
+     */
+    protected function addGroupRoles(RolesTransfer $rolesTransfer, $idAclGroup)
+    {
+        $groupRoles = $this->getGroupRoles($idAclGroup);
+        foreach ($groupRoles as $groupRole) {
+            $rolesTransfer->addRole($groupRole);
+        }
     }
 
     /**
@@ -137,13 +154,14 @@ class Role implements RoleInterface
      */
     public function getGroupRoles($idGroup)
     {
-        $aclRoleEntity = $this->queryContainer->queryGroupRoles($idGroup)->find();
+        $aclRoleEntities = $this->queryContainer->queryGroupRoles($idGroup)->find();
 
         $rolesTransfer = new RolesTransfer();
 
-        foreach ($aclRoleEntity as $result) {
+        foreach ($aclRoleEntities as $aclRoleEntity) {
             $roleTransfer = new RoleTransfer();
-            Copy::entityToTransfer($roleTransfer, $result);
+            $rolesTransfer->fromArray($aclRoleEntity->toArray(), true);
+
             $rolesTransfer->addRole($roleTransfer);
         }
 
@@ -166,7 +184,7 @@ class Role implements RoleInterface
         }
 
         $roleTransfer = new RoleTransfer();
-        $roleTransfer = Copy::entityToTransfer($roleTransfer, $aclRoleEntity);
+        $roleTransfer->fromArray($aclRoleEntity->toArray(), true);
 
         return $roleTransfer;
     }
@@ -202,7 +220,7 @@ class Role implements RoleInterface
         $aclRoleEntity = $this->queryContainer->queryRoleByName($name)->findOne();
 
         $roleTransfer = new RoleTransfer();
-        $roleTransfer = Copy::entityToTransfer($roleTransfer, $aclRoleEntity);
+        $roleTransfer->fromArray($aclRoleEntity->toArray(), true);
 
         return $roleTransfer;
     }

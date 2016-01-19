@@ -25,7 +25,7 @@ class UsersTable extends AbstractTable
     /**
      * @var UserQueryContainer
      */
-    private $userQueryContainer;
+    protected $userQueryContainer;
 
     /**
      * @param UserQueryContainer $userQueryContainer

@@ -15,7 +15,7 @@ class UserUpdateForm extends UserForm
     /**
      * @var int
      */
-    private $idUser;
+    protected $idUser;
 
     /**
      * @var UserFacade
