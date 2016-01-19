@@ -15,17 +15,17 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
 {
 
     /**
-     * @param CartChangeTransfer $change
+     * @param CartChangeTransfer $cartChangeTransfer
      *
      * @return CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $change)
+    public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
-        foreach ($change->getItems() as $cartItem) {
+        foreach ($cartChangeTransfer->getItems() as $cartItem) {
             $cartItem->setGroupKey($this->buildGroupKey($cartItem));
         }
 
-        return $change;
+        return $cartChangeTransfer;
     }
 
     /**

@@ -17,15 +17,15 @@ class CartItemProductOptionPlugin extends AbstractPlugin implements ItemExpander
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     * @return CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $change)
+    public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $this->getFacade()->expandProductOptions($change);
+        $this->getFacade()->expandProductOptions($cartChangeTransfer);
 
-        return $change;
+        return $cartChangeTransfer;
     }
 
 }

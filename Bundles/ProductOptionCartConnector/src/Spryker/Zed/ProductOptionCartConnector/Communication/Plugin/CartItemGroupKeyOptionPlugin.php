@@ -17,13 +17,13 @@ class CartItemGroupKeyOptionPlugin extends AbstractPlugin implements ItemExpande
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     * @return CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $change)
+    public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->expandGroupKey($change);
+        return $this->getFacade()->expandGroupKey($cartChangeTransfer);
     }
 
 }

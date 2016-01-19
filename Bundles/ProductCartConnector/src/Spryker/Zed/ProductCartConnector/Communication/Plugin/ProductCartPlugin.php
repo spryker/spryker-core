@@ -18,15 +18,15 @@ class ProductCartPlugin extends AbstractPlugin implements ItemExpanderPluginInte
 {
 
     /**
-     * @param CartChangeTransfer $change
+     * @param CartChangeTransfer $cartChangeTransfer
      *
      * @return CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $change)
+    public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $this->getFacade()->expandItems($change);
+        $this->getFacade()->expandItems($cartChangeTransfer);
 
-        return $change;
+        return $cartChangeTransfer;
     }
 
 }

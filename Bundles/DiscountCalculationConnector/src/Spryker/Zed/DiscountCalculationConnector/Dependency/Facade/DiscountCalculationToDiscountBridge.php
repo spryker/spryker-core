@@ -5,19 +5,20 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscountInterface
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Business\DiscountFacade
+     * @var DiscountFacade
      */
     protected $discountFacade;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
+     * @param DiscountFacade $discountFacade
      */
     public function __construct($discountFacade)
     {
@@ -25,13 +26,13 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
     }
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param QuoteTransfer $quoteTransfer
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
+     * @return SpyDiscount[]
      */
-    public function calculateDiscounts(CalculableInterface $calculableContainer)
+    public function calculateDiscounts(QuoteTransfer $quoteTransfer)
     {
-        return $this->discountFacade->calculateDiscounts($calculableContainer);
+        return $this->discountFacade->calculateDiscounts($quoteTransfer);
     }
 
 }

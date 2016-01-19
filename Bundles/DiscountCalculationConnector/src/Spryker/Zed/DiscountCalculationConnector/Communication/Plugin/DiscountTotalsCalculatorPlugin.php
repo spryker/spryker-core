@@ -7,12 +7,12 @@
 namespace Spryker\Zed\DiscountCalculationConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
+use Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade;
 
 /**
- * @method DiscountCalculationConnectorCommunicationFactory getFactory()
+ * @method DiscountCalculationConnectorFacade getFacade()
  */
 class DiscountTotalsCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
@@ -24,7 +24,7 @@ class DiscountTotalsCalculatorPlugin extends AbstractPlugin implements Calculato
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->getDiscountCalculationFacade()->calculateDiscountTotals($quoteTransfer);
+        $this->getFacade()->calculateDiscountTotals($quoteTransfer);
     }
 
 }

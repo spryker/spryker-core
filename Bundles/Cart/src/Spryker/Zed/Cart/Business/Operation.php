@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
+use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
+use Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface;
 
 class Operation
 {
@@ -24,41 +26,41 @@ class Operation
     const DECREASE_ITEMS_SUCCESS = 'cart.decrease.items.success';
 
     /**
-     * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
+     * @var StorageProviderInterface
      */
     protected $cartStorageProvider;
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\CalculationFacade
+     * @var CalculationFacade
      */
     protected $calculationFacade;
 
     /**
-     * @var \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade
+     * @var ItemGrouperFacade
      */
     protected $itemGrouperFacade;
 
     /**
-     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
+     * @var MessengerFacade
      */
     protected $messengerFacade;
 
     /**
-     * @var \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
+     * @var ItemExpanderPluginInterface[]
      */
     protected $itemExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
-     * @param \Spryker\Zed\Calculation\Business\CalculationFacade $calculationFacade
-     * @param \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade $itemGrouperFacade
-     * @param \Spryker\Zed\Messenger\Business\MessengerFacade $messengerFacade
-     * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param StorageProviderInterface $cartStorageProvider
+     * @param CartToCalculationInterface $calculationFacade
+     * @param CartToItemGrouperInterface $itemGrouperFacade
+     * @param MessengerFacade $messengerFacade
+     * @param ItemExpanderPluginInterface[] $itemExpanderPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
-        CalculationFacade $calculationFacade,
-        ItemGrouperFacade $itemGrouperFacade,
+        CartToCalculationInterface $calculationFacade,
+        CartToItemGrouperInterface $itemGrouperFacade,
         MessengerFacade $messengerFacade,
         array $itemExpanderPlugins
     ) {
@@ -70,9 +72,9 @@ class Operation
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return QuoteTransfer
      */
     public function add(CartChangeTransfer $cartChangeTransfer)
     {
@@ -85,9 +87,9 @@ class Operation
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return QuoteTransfer
      */
     public function increase(CartChangeTransfer $cartChangeTransfer)
     {
@@ -100,9 +102,9 @@ class Operation
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return QuoteTransfer
      */
     public function decrease(CartChangeTransfer $cartChangeTransfer)
     {
@@ -114,9 +116,9 @@ class Operation
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return QuoteTransfer
      */
     public function remove(CartChangeTransfer $cartChangeTransfer)
     {
@@ -128,9 +130,9 @@ class Operation
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     * @return CartChangeTransfer
      */
     protected function expandChangedItems(CartChangeTransfer $cartChangeTransfer)
     {
@@ -144,7 +146,7 @@ class Operation
     /**
      * @param string $message
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer
+     * @return MessageTransfer
      */
     protected function createMessengerMessageTransfer($message)
     {
@@ -156,9 +158,9 @@ class Operation
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return QuoteTransfer
      */
     protected function recalculate(QuoteTransfer $quoteTransfer)
     {
@@ -166,9 +168,9 @@ class Operation
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return QuoteTransfer
      */
     protected function getGroupedCartItems(QuoteTransfer $quoteTransfer)
     {

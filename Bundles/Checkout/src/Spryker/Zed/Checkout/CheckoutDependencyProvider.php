@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Checkout;
 
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
@@ -20,7 +21,6 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     const CHECKOUT_ORDER_SAVERS = 'checkout_order_savers';
 
     const FACADE_OMS = 'oms facade';
-    const FACADE_CALCULATION = 'calculation facade';
 
     /**
      * @param Container $container
@@ -42,11 +42,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_OMS] = function (Container $container) {
-            return $container->getLocator()->oms()->facade();
-        };
-
-        $container[self::FACADE_CALCULATION] = function (Container $container) {
-            return $container->getLocator()->calculation()->facade();
+            return new CheckoutToOmsBridge($container->getLocator()->oms()->facade());
         };
 
         return $container;

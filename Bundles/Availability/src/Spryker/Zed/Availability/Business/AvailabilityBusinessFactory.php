@@ -50,7 +50,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductsAvailablePreCondition()
     {
-        return new ProductsAvailableCheckoutPreCondition($this->getSellableModel());
+        return new ProductsAvailableCheckoutPreCondition($this->createSellableModel());
     }
 
 }

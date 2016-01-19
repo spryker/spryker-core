@@ -48,7 +48,7 @@ class DetailsController extends AbstractController
         }
 
 
-        $orderItemSplitFormCollection = $this->getFactory()->getOrderItemSplitFormCollection($salesOrderEntity->getItems());
+        $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($salesOrderEntity->getItems());
         $events = $this->getFacade()->getArrayWithManualEvents($idSalesOrder);
         $allEvents = $this->groupEvents($events);
 

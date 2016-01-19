@@ -9,15 +9,15 @@ namespace Spryker\Zed\DiscountCalculationConnector\Business;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator;
-use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
 
 class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator
+     * @return DiscountTotalsCalculator
      */
     public function getDiscountTotalsCalculator()
     {
@@ -25,7 +25,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator
+     * @return GrandTotalWithDiscountsCalculator
      */
     public function getGrandTotalWithDiscountsCalculator()
     {
@@ -33,19 +33,10 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator
+     * @return RemoveAllCalculatedDiscountsCalculator
      */
     public function getRemoveAllCalculatedDiscountsCalculator()
     {
         return new RemoveAllCalculatedDiscountsCalculator();
     }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\CalculationFacade
-     */
-    public function getCalculationFacade()
-    {
-        return $this->getLocator()->calculation()->facade();
-    }
-
 }

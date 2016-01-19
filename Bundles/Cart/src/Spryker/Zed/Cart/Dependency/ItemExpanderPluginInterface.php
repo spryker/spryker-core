@@ -12,10 +12,10 @@ interface ItemExpanderPluginInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
+     * @param CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     * @return CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $change);
+    public function expandItems(CartChangeTransfer $cartChangeTransfer);
 
 }
