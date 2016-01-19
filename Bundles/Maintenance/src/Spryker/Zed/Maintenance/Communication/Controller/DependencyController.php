@@ -20,11 +20,9 @@ class DependencyController extends AbstractController
     const QUERY_BUNDLE = 'bundle';
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $bundles = $this->getFacade()->getAllBundles();
 
