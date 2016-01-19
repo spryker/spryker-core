@@ -9,17 +9,22 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Payolution\Communication\Table\Payments;
 use Spryker\Zed\Payolution\Communication\Table\RequestLog;
 use Spryker\Zed\Payolution\Communication\Table\StatusLog;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToGlossaryInterface;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMailInterface;
+use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToSalesInterface;
+use Spryker\Zed\Payolution\PayolutionConfig;
+use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use Spryker\Zed\Payolution\PayolutionDependencyProvider;
 
 /**
- * @method \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Payolution\PayolutionConfig getConfig()
+ * @method PayolutionQueryContainerInterface getQueryContainer()
+ * @method PayolutionConfig getConfig()
  */
 class PayolutionCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\Payolution\Communication\Table\Payments
+     * @return Payments
      */
     public function createPaymentsTable()
     {
@@ -31,7 +36,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idPayment
      *
-     * @return \Spryker\Zed\Payolution\Communication\Table\RequestLog
+     * @return RequestLog
      */
     public function createRequestLogTable($idPayment)
     {
@@ -43,7 +48,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idPayment
      *
-     * @return \Spryker\Zed\Payolution\Communication\Table\StatusLog
+     * @return StatusLog
      */
     public function createStatusLogTable($idPayment)
     {
@@ -53,7 +58,15 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMailInterface
+     * @return PayolutionToSalesInterface
+     */
+    public function getSalesFacade()
+    {
+        return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return PayolutionToMailInterface
      */
     public function getMailFacade()
     {
@@ -61,7 +74,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToGlossaryInterface
+     * @return PayolutionToGlossaryInterface
      */
     public function getGlossaryFacade()
     {

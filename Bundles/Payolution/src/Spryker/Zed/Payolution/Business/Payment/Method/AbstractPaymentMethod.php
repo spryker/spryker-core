@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method;
 
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Payolution\Business\Exception\GenderNotDefinedException;
@@ -26,12 +28,12 @@ abstract class AbstractPaymentMethod
     ];
 
     /**
-     * @var \Spryker\Zed\Payolution\PayolutionConfig
+     * @var PayolutionConfig
      */
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Payolution\PayolutionConfig $config
+     * @param PayolutionConfig $config
      */
     public function __construct(PayolutionConfig $config)
     {
@@ -39,7 +41,7 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @return \Spryker\Zed\Payolution\PayolutionConfig
+     * @return PayolutionConfig
      */
     protected function getConfig()
     {
@@ -95,23 +97,23 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
+     * @param OrderTransfer $orderTransfer
+     * @param SpyPaymentPayolution $paymentEntity
      * @param string $paymentCode
      * @param string $uniqueId
      *
      * @return array
      */
     protected function getBaseTransactionRequestForPayment(
+        OrderTransfer $orderTransfer,
         SpyPaymentPayolution $paymentEntity,
         $paymentCode,
         $uniqueId
     ) {
-        $orderEntity = $paymentEntity->getSpySalesOrder();
-
         $requestData = $this->getBaseTransactionRequest(
-            $orderEntity->getGrandTotal(),
+            $orderTransfer->getTotals()->getGrandTotal(),
             $paymentEntity->getCurrencyIso3Code(),
-            $orderEntity->getIdSalesOrder()
+            $orderTransfer->getIdSalesOrder()
         );
 
         $this->addRequestData(
@@ -142,7 +144,7 @@ abstract class AbstractPaymentMethod
     /**
      * @param string $gender
      *
-     * @throws \Spryker\Zed\Payolution\Business\Exception\GenderNotDefinedException
+     * @throws GenderNotDefinedException
      *
      * @return string
      */
@@ -156,7 +158,7 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
      * @return string
      */

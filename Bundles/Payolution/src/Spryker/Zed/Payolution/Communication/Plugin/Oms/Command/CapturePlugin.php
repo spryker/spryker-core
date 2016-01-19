@@ -6,37 +6,60 @@
 
 namespace Spryker\Zed\Payolution\Communication\Plugin\Oms\Command;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
+use Spryker\Zed\Payolution\Business\PayolutionFacade;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
- * @method \Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory getFactory()
+ * @method PayolutionFacade getFacade()
+ * @method PayolutionCommunicationFactory getFactory()
  */
 class CapturePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
+     * @param SpySalesOrderItem[] $orderItems
+     * @param SpySalesOrder $orderEntity
+     * @param ReadOnlyArrayObject $data
      *
      * @return array
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
+        $orderTransfer = $this->getOrderTransfer($orderEntity);
         $paymentEntity = $this->getPaymentEntity($orderEntity);
-        $this->getFacade()->capturePayment($paymentEntity->getIdPaymentPayolution());
+
+        $this->getFacade()->capturePayment(
+            $orderTransfer,
+            $paymentEntity->getIdPaymentPayolution()
+        );
 
         return [];
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param SpySalesOrder $orderEntity
      *
-     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
+     * @return OrderTransfer
+     */
+    protected function getOrderTransfer(SpySalesOrder $orderEntity)
+    {
+        return $this
+            ->getFactory()
+            ->getSalesFacade()
+            ->getOrderTotalsByIdSalesOrder($orderEntity->getIdSalesOrder());
+    }
+
+    /**
+     * @param SpySalesOrder $orderEntity
+     *
+     * @return SpyPaymentPayolution
      */
     protected function getPaymentEntity(SpySalesOrder $orderEntity)
     {

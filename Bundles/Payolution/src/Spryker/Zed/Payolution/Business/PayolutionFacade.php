@@ -49,68 +49,73 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return PayolutionTransactionResponseTransfer
      */
-    public function preAuthorizePayment($idPayment)
+    public function preAuthorizePayment(OrderTransfer $orderTransfer, $idPayment)
     {
         return $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->preAuthorizePayment($idPayment);
+            ->preAuthorizePayment($orderTransfer, $idPayment);
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return PayolutionTransactionResponseTransfer
      */
-    public function reAuthorizePayment($idPayment)
+    public function reAuthorizePayment(OrderTransfer $orderTransfer, $idPayment)
     {
         return $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->reAuthorizePayment($idPayment);
+            ->reAuthorizePayment($orderTransfer, $idPayment);
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return PayolutionTransactionResponseTransfer
      */
-    public function revertPayment($idPayment)
+    public function revertPayment(OrderTransfer $orderTransfer, $idPayment)
     {
         return $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->revertPayment($idPayment);
+            ->revertPayment($orderTransfer, $idPayment);
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return PayolutionTransactionResponseTransfer
      */
-    public function capturePayment($idPayment)
+    public function capturePayment(OrderTransfer $orderTransfer, $idPayment)
     {
         return $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->capturePayment($idPayment);
+            ->capturePayment($orderTransfer, $idPayment);
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
      * @param int $idPayment
      *
      * @return PayolutionTransactionResponseTransfer
      */
-    public function refundPayment($idPayment)
+    public function refundPayment(OrderTransfer $orderTransfer, $idPayment)
     {
         return $this
             ->getFactory()
             ->createPaymentTransactionHandler()
-            ->refundPayment($idPayment);
+            ->refundPayment($orderTransfer, $idPayment);
     }
 
     /**

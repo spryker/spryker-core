@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Installment;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
@@ -122,7 +122,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return array
      */
@@ -170,13 +170,15 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
      * @param SpyPaymentPayolution $paymentEntity
      *
      * @return array
      */
-    public function buildPreAuthorizationRequest(SpyPaymentPayolution $paymentEntity)
+    public function buildPreAuthorizationRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity)
     {
         $requestData = $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
             null);
@@ -213,56 +215,76 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
      * @param SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildReAuthorizationRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildReAuthorizationRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
             $uniqueId);
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
      * @param SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildRevertRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildRevertRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REVERSAL,
             $uniqueId);
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
      * @param SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildCaptureRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildCaptureRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
             $uniqueId);
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
      * @param SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildRefundRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
+    public function buildRefundRequest(
+        OrderTransfer $orderTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        $uniqueId
+    ) {
         return $this->getBaseTransactionRequestForPayment(
+            $orderTransfer,
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_REFUND,
             $uniqueId);

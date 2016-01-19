@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method\Invoice;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
@@ -13,50 +14,55 @@ interface InvoiceInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return array
      */
     public function buildPreCheckRequest(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
+     * @param OrderTransfer $orderTransfer
+     * @param SpyPaymentPayolution $paymentEntity
      *
      * @return array
      */
-    public function buildPreAuthorizationRequest(SpyPaymentPayolution $paymentEntity);
+    public function buildPreAuthorizationRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity);
 
     /**
-     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
+     * @param OrderTransfer $orderTransfer
+     * @param SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildReAuthorizationRequest(SpyPaymentPayolution $paymentEntity, $uniqueId);
+    public function buildReAuthorizationRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity, $uniqueId);
 
     /**
-     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
-     * @param int $uniqueId
-     *
-     * @return array
-     */
-    public function buildRevertRequest(SpyPaymentPayolution $paymentEntity, $uniqueId);
-
-    /**
-     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
+     * @param OrderTransfer $orderTransfer
+     * @param SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
      */
-    public function buildCaptureRequest(SpyPaymentPayolution $paymentEntity, $uniqueId);
+    public function buildRevertRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity, $uniqueId);
 
     /**
-     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
-     * @param int $uniqueId
+     * @param OrderTransfer $orderTransfer
+     * @param SpyPaymentPayolution $paymentEntity
+     * @param string $uniqueId
      *
      * @return array
      */
-    public function buildRefundRequest(SpyPaymentPayolution $paymentEntity, $uniqueId);
+    public function buildCaptureRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity, $uniqueId);
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     * @param SpyPaymentPayolution $paymentEntity
+     * @param string $uniqueId
+     *
+     * @return array
+     */
+    public function buildRefundRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity, $uniqueId);
 
     /**
      * @return string
