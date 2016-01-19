@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Shared\ProductCategory\ProductCategoryConstants;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface;
@@ -429,8 +429,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             }
 
             $nodeExists = $this->categoryQueryContainer
-                ->queryNodeById($node->getIdCategoryNode())
-                ->count() > 0;
+                    ->queryNodeById($node->getIdCategoryNode())
+                    ->count() > 0;
 
             if ($nodeExists) {
                 $this->categoryFacade->deleteNode($node->getIdCategoryNode(), $localeTransfer, true);
@@ -467,7 +467,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     protected function touchProductAbstractActive($idProductAbstract)
     {
-        $this->touchFacade->touchActive(ProductCategoryConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchActive(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
     }
 
     /**
@@ -477,7 +477,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     protected function touchProductAbstractDeleted($idProductAbstract)
     {
-        $this->touchFacade->touchDeleted(ProductCategoryConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
+        $this->touchFacade->touchDeleted(ProductConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
     }
 
 }
