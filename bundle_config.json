@@ -2,6 +2,7 @@
     "Auth": "engine",
     "Config": "engine",
     "Console": "engine",
+    "Gui": "engine",
     "Installer": "engine",
     "Kernel": "engine",
     "Library": "engine",
