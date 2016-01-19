@@ -316,7 +316,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $event = new Event();
         $responseTransfer = $transfer->getTransfer();
         if ($responseTransfer instanceof TransferInterface) {
-            $event->setField(self::EVENT_FIELD_TRANSFER_DATA, $responseTransfer->toArray());
+            $event->setField(self::EVENT_FIELD_TRANSFER_DATA, $responseTransfer->modifiedToArray(true));
             $event->setField(self::EVENT_FIELD_TRANSFER_CLASS, get_class($responseTransfer));
         } else {
             $event->setField(self::EVENT_FIELD_TRANSFER_DATA, null);

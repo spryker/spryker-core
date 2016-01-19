@@ -32,30 +32,17 @@ abstract class AbstractObject implements ObjectInterface
         $values = $this->values;
 
         foreach ($values as $key => $value) {
-            if ($value === null || is_array($value) && empty($value)) {
-                unset($values[$key]);
+            if (is_array($value) === false) {
                 continue;
             }
 
-            if (is_array($value)) {
-                foreach ($value as $subKey => $subValue) {
-                    if ($subValue === null || is_array($subValue) && empty($subValue)) {
-                        unset($value[$subKey]);
-                        continue;
-                    }
-
-                    if (is_object($subValue) && method_exists($subValue, 'toArray')) {
-                        /* @var ObjectInterface $subValue */
-                        $value[$subKey] = $subValue->toArray(false);
-                    }
+            foreach ($value as $subKey => $subValue) {
+                if (is_object($subValue) && method_exists($subValue, 'toArray')) {
+                    /* @var ObjectInterface $subValue */
+                    $value[$subKey] = $subValue->toArray(false);
                 }
-                if (empty($value)) {
-                    unset($values[$key]);
-                } else {
-                    $values[$key] = $value;
-                }
-                continue;
             }
+            $values[$key] = $value;
         }
 
         return $values;

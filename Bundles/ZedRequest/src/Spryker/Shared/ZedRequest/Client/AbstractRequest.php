@@ -175,7 +175,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
      */
     public function setTransfer(TransferInterface $transferObject)
     {
-        $this->values['transfer'] = $transferObject->toArray(true);
+        $this->values['transfer'] = $transferObject->modifiedToArray(true);
         $this->values['transferClassName'] = get_class($transferObject);
 
         return $this;

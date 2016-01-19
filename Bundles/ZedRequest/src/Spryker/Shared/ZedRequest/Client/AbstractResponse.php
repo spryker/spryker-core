@@ -263,7 +263,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      */
     public function setTransfer(TransferInterface $transferObject)
     {
-        $this->values[ResponseInterface::TRANSFER] = $transferObject->toArray();
+        $this->values[ResponseInterface::TRANSFER] = $transferObject->modifiedToArray();
         $this->values[ResponseInterface::TRANSFER_CLASSNAME] = get_class($transferObject);
 
         return $this;
