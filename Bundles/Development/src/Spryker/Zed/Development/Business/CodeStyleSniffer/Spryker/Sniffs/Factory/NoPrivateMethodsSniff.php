@@ -44,8 +44,6 @@ class NoPrivateMethodsSniff implements \PHP_CodeSniffer_Sniff
      */
     protected function isMethodPrivate(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
     {
-        $tokens = $phpCsFile->getTokens();
-
         $privateTokenPointer = $phpCsFile->findFirstOnLine(T_PRIVATE, $stackPointer);
         if ($privateTokenPointer) {
             return true;
@@ -120,7 +118,7 @@ class NoPrivateMethodsSniff implements \PHP_CodeSniffer_Sniff
      *
      * @return void
      */
-    private function makePrivateMethodProtected(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
+    protected function makePrivateMethodProtected(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
     {
         $phpCsFile->fixer->beginChangeset();
         $phpCsFile->fixer->replaceToken($stackPointer - 2, 'protected');
