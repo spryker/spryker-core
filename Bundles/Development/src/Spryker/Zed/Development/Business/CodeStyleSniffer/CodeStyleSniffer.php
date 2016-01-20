@@ -17,6 +17,7 @@ class CodeStyleSniffer
     const OPTION_FIX = 'fix';
     const OPTION_PRINT_DIFF_REPORT = 'report-diff';
     const OPTION_DRY_RUN = 'dry-run';
+    const OPTION_SNIFFS = 'sniffs';
     const OPTION_VERBOSE = 'verbose';
 
     /**
@@ -118,6 +119,10 @@ class CodeStyleSniffer
         $config = ' --standard=' . __DIR__ . '/Spryker/ruleset.xml';
         if ($options[self::OPTION_VERBOSE]) {
             $config .= ' -v';
+        }
+
+        if ($options[self::OPTION_SNIFFS]) {
+            $config .= ' --sniffs=' . $options[self::OPTION_SNIFFS];
         }
 
         $command = $options[self::OPTION_FIX] ? 'phpcbf' : 'phpcs';

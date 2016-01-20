@@ -20,6 +20,7 @@ class CodeStyleSnifferConsole extends Console
 
     const COMMAND_NAME = 'code:sniff';
     const OPTION_BUNDLE = 'bundle';
+    const OPTION_SNIFFS = 'sniffs';
     const OPTION_DRY_RUN = 'dry-run';
     const OPTION_FIX = 'fix';
     const OPTION_BUNDLE_ALL = 'all';
@@ -37,6 +38,7 @@ class CodeStyleSnifferConsole extends Console
             ->setDescription('Sniff and fix code style for project or core');
 
         $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to fix code style for (or "all")');
+        $this->addOption(self::OPTION_SNIFFS, 's', InputOption::VALUE_OPTIONAL, 'Specific sniffs to run, comma separated list of codes');
         $this->addOption(self::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
         $this->addOption(self::OPTION_FIX, 'f', InputOption::VALUE_NONE, 'Automatically fix errors that can be fixed');
     }

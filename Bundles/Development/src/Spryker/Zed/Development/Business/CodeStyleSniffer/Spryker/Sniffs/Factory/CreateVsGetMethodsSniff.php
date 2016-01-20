@@ -36,9 +36,13 @@ class CreateVsGetMethodsSniff implements \PHP_CodeSniffer_Sniff
             return;
         }
 
-        $methodName = $this->getMethodName($phpCsFile, $stackPointer);
+        $markedAsDeprecated = $this->isMarkedAsDeprecated($tokens, $stackPointer);
+        if ($markedAsDeprecated) {
+            return;
+        }
 
-        $containsNew = $this->containsNew($tokens, $stackPointer);
+        $methodName = $this->getMethodName($phpCsFile, $stackPointer);
+        $requiresCreatePrefix = $this->containsNew($tokens, $stackPointer) || $this->containsCreateMethod($tokens, $stackPointer);
 
         $startsWithCreate = preg_match('/create[A-Z]/', $methodName);
         $startsWithGet = preg_match('/get[A-Z]/', $methodName);
@@ -49,14 +53,17 @@ class CreateVsGetMethodsSniff implements \PHP_CodeSniffer_Sniff
 
         $classMethod = $this->getClassMethod($phpCsFile, $stackPointer);
 
-        if ($startsWithGet && $containsNew) {
+        if ($startsWithGet && $requiresCreatePrefix) {
+            // Skip for now, too many false positives
+            return;
+
             $newMethodName = preg_replace('/^(get)([A-Z])/', 'create\2', $methodName);
 
             $fix = $phpCsFile->addFixableError($classMethod . ' is called get...(), should be create...()', $stackPointer);
             if ($fix) {
                 $this->correctMethodName($phpCsFile, $stackPointer, $newMethodName);
             }
-        } elseif ($startsWithCreate && !$containsNew) {
+        } elseif ($startsWithCreate && !$requiresCreatePrefix) {
             $newMethodName = preg_replace('/^(create)([A-Z])/', 'get\2', $methodName);
 
             $fix = $phpCsFile->addFixableError($classMethod . ' is called create...(), should be get...()', $stackPointer);
@@ -160,6 +167,54 @@ class CreateVsGetMethodsSniff implements \PHP_CodeSniffer_Sniff
 
             if ($token['code'] === T_NEW) {
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     * @param int $stackPointer
+     *
+     * @return bool
+     */
+    protected function containsCreateMethod($tokens, $stackPointer)
+    {
+        $begin = $tokens[$stackPointer]['scope_opener'] + 1;
+        $end = $tokens[$stackPointer]['scope_closer'] - 1;
+
+        for ($i = $begin; $i <= $end; $i++) {
+            $token = $tokens[$i];
+
+            if ($token['code'] === T_OBJECT_OPERATOR && $tokens[$i + 1]['code'] === T_STRING) {
+                if (strpos($tokens[$i + 1]['content'], 'create') === 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     * @param int $stackPointer
+     *
+     * @return bool
+     */
+    protected function isMarkedAsDeprecated($tokens, $stackPointer)
+    {
+        $begin = $tokens[$stackPointer]['scope_opener'] + 1;
+        $end = $tokens[$stackPointer]['scope_closer'] - 1;
+
+        for ($i = $begin; $i <= $end; $i++) {
+            $token = $tokens[$i];
+
+            if ($token['code'] === T_CONSTANT_ENCAPSED_STRING) {
+                if (strpos($token['content'], 'Deprecated') !== false) {
+                    return true;
+                }
             }
         }
 
