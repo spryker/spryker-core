@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
@@ -84,7 +85,7 @@ class Discount
      * @param DecisionRuleInterface $decisionRule
      * @param CalculatorInterface $calculator
      * @param DistributorInterface $distributor
-     * @param MessengerFacade $messengerFacade
+     * @param DiscountToMessengerInterface $messengerFacade
      * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      */
     public function __construct(
@@ -93,7 +94,7 @@ class Discount
         DecisionRuleInterface $decisionRule,
         CalculatorInterface $calculator,
         DistributorInterface $distributor,
-        MessengerFacade $messengerFacade,
+        DiscountToMessengerInterface $messengerFacade,
         array $decisionRulePlugins
     ) {
         $this->queryContainer = $queryContainer;

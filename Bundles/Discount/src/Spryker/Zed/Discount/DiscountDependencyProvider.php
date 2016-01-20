@@ -14,6 +14,7 @@ use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\OrderExpense;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
@@ -58,7 +59,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::FACADE_MESSENGER] = function (Container $container) {
-            return $container->getLocator()->messenger()->facade();
+            return new DiscountToMessengerBridge($container->getLocator()->messenger()->facade());
         };
 
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
