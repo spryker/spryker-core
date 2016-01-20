@@ -11,7 +11,7 @@ use Spryker\Client\Cms\Storage\CmsBlockStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Cms\Storage\CmsBlockStorageInterface;
 use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class CmsFactory extends AbstractFactory
 {
@@ -23,7 +23,7 @@ class CmsFactory extends AbstractFactory
     {
         return new CmsBlockStorage(
             $this->getStorage(),
-            $this->getKeyBuilder()
+            $this->createKeyBuilder()
         );
     }
 
@@ -38,7 +38,7 @@ class CmsFactory extends AbstractFactory
     /**
      * @return KeyBuilderInterface
      */
-    protected function getKeyBuilder()
+    protected function createKeyBuilder()
     {
         return new CmsBlockKeyBuilder();
     }
