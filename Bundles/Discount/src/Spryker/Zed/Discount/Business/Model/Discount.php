@@ -20,7 +20,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Generated\Shared\Transfer\MessageTransfer;
 
 class Discount
@@ -70,7 +69,7 @@ class Discount
     protected $distributor;
 
     /**
-     * @var MessengerFacade
+     * @var DiscountToMessengerInterface
      */
     protected $messengerFacade;
 

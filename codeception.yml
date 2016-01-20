@@ -14,11 +14,9 @@ include:
  - Bundles/Console
  - Bundles/Country
  - Bundles/Customer
- - Bundles/CustomerCheckoutConnector
  - Bundles/CustomerMailConnector
  - Bundles/Discount
  - Bundles/DiscountCalculationConnector
- - Bundles/DiscountCheckoutConnector
  - Bundles/Git
  - Bundles/Glossary
  - Bundles/Heartbeat
@@ -33,7 +31,6 @@ include:
  - Bundles/Maintenance
  - Bundles/Newsletter
  - Bundles/Oms
- - Bundles/OmsCheckoutConnector
  - Bundles/Payone
  - Bundles/Price
  - Bundles/PriceCartConnector
@@ -42,7 +39,6 @@ include:
  - Bundles/ProductCategory
  - Bundles/ProductOption
  - Bundles/ProductOptionCartConnector
- - Bundles/ProductOptionCheckoutConnector
  - Bundles/ProductOptionExporter
  - Bundles/ProductSearch
  - Bundles/Propel

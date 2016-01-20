@@ -9,7 +9,6 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreCheckAdapterMock;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
@@ -58,7 +57,7 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CheckoutRequestTransfer
+     * @return QuoteTransfer
      */
     private function getCheckoutRequestTransfer()
     {
@@ -122,7 +121,7 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
             ->setAccountBrand(PayolutionConstants::BRAND_INVOICE)
             ->setAddress($paymentAddressTransfer);
 
-        $checkoutRequestTransfer = new CheckoutRequestTransfer();
+        $checkoutRequestTransfer = new QuoteTransfer();
         $checkoutRequestTransfer
             ->setIdUser(null)
             ->setShippingAddress($shippingAddressTransfer)

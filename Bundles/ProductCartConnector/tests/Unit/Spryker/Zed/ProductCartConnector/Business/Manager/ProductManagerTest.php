@@ -8,7 +8,7 @@ namespace Unit\Spryker\Zed\ProductCartConnector\Business\Manager;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
+use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
@@ -104,17 +104,15 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     {
         $changeTransfer = $this->getChangeTransfer();
 
+        $productTaxRate = 19;
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $taxSetTransfer = new TaxSetTransfer();
-        $taxSetTransfer->setName(self::TAX_SET_NAME);
-        $productConcreteTransfer->setTaxSet($taxSetTransfer);
+        $productConcreteTransfer->setTaxRate($productTaxRate);
 
         $productManager = $this->getProductManager($productConcreteTransfer);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
-        $expandedTaxSet = $changedItemTransfer->getTaxSet();
-        $this->assertSame($taxSetTransfer, $expandedTaxSet);
+        $this->assertSame($productConcreteTransfer->getTaxRate(), $changedItemTransfer->getTaxRate());
     }
 
     /**

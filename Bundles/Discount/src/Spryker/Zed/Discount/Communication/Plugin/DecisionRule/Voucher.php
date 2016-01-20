@@ -8,12 +8,12 @@ namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use Spryker\Zed\Kernel\Business\ModelResult;
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 
 /**
- * @method DiscountCommunicationFactory getFactory()
+ * @method DiscountFacade getFacade()
  */
 class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePluginInterface
 {
@@ -34,9 +34,7 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
             return $voucherCodeValidationResults;
         }
 
-        $voucherValidation = $this->getFactory()
-            ->getDiscountFacade()
-            ->isVoucherUsable($discountTransfer->getVoucherCode());
+        $voucherValidation = $this->getFacade()->isVoucherUsable($discountTransfer->getVoucherCode());
 
         $voucherCodeValidationResults->addErrors($voucherValidation->getErrors());
 

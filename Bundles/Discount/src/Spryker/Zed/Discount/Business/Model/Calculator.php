@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
@@ -41,7 +40,7 @@ class Calculator implements CalculatorInterface
     protected $calculatorPlugins;
 
     /**
-     * @var MessengerFacade
+     * @var DiscountToMessengerInterface
      */
     protected $messengerFacade;
 
@@ -52,9 +51,9 @@ class Calculator implements CalculatorInterface
      */
     public function __construct(
         CollectorResolver $collectorResolver,
-        DiscountToMessengerInterface $messengerFacade,
-        array $calculatorPlugins
-    ) {
+        DiscountToMessengerInterface  $messengerFacade,
+        array $calculatorPlugins)
+    {
         $this->collectorResolver = $collectorResolver;
         $this->calculatorPlugins = $calculatorPlugins;
         $this->messengerFacade = $messengerFacade;

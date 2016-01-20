@@ -362,13 +362,9 @@ class ProductFacadeTest extends Test
         $this->assertEquals($productConcreteEntity->getIdProduct(), $productConcreteTransfer->getIdProductConcrete());
         $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $productConcreteTransfer->getIdProductAbstract());
 
-        $taxSetTransfer = $productConcreteTransfer->getTaxSet();
-        $this->assertEquals(self::TAX_SET_NAME, $taxSetTransfer->getName());
+        $taxRate = $productConcreteTransfer->getTaxRate();
 
-        $this->assertNotEmpty($taxSetTransfer->getTaxRates());
-        $taxRateTransfer = $taxSetTransfer->getTaxRates()[0];
-        $this->assertEquals(self::TAX_RATE_NAME, $taxRateTransfer->getName());
-        $this->assertEquals(self::TAX_RATE_PERCENTAGE, $taxRateTransfer->getRate());
+        $this->assertEquals(self::TAX_RATE_PERCENTAGE, $taxRate);
     }
 
 }

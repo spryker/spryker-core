@@ -221,13 +221,11 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         $spySalesOrderItem->setName('123');
         $spySalesOrderItem->setSku('A');
         $spySalesOrderItem->setGrossPrice(100);
-        $spySalesOrderItem->setPriceToPay(125);
 
         $spySalesOrderItemOption = new OrderItemOptionSpy();
         $spySalesOrderItemOption->setLabelOptionType('X');
         $spySalesOrderItemOption->setLabelOptionValue('Y');
         $spySalesOrderItemOption->setGrossPrice(5);
-        $spySalesOrderItemOption->setPriceToPay(15);
 
         $spySalesOrderItem->addOption($spySalesOrderItemOption);
 
@@ -235,8 +233,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         $spySalesOrderItemOption->setLabelOptionType('XX');
         $spySalesOrderItemOption->setLabelOptionValue('YY');
         $spySalesOrderItemOption->setGrossPrice(30);
-        $spySalesOrderItemOption->setPriceToPay(35);
-        $spySalesOrderItemOption->setTaxPercentage(15);
+        $spySalesOrderItemOption->setTaxRate(15);
 
         $spySalesOrderItem->addOption($spySalesOrderItemOption);
 

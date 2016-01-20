@@ -8,7 +8,6 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -145,7 +144,7 @@ class PayolutionFacadeGatewayTest extends Test
             ->setLanguageIso2Code('de')
             ->setCurrencyIso3Code('EUR');
 
-        $checkoutRequestTransfer = new CheckoutRequestTransfer();
+        $checkoutRequestTransfer = new QuoteTransfer();
         $checkoutRequestTransfer
             ->setCart($cartTransfer)
             ->setPayolutionPayment($paymentTransfer);

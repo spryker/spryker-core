@@ -7,19 +7,19 @@
 namespace Unit\Spryker\Zed\Checkout\Business\Fixture;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
 class MockOrderSaver implements CheckoutSaveOrderInterface
 {
 
     /**
-     * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @var CheckoutResponseTransfer
      */
     private $checkoutResponse;
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param CheckoutResponseTransfer $checkoutResponse
      */
     public function __construct(CheckoutResponseTransfer $checkoutResponse)
     {
@@ -27,12 +27,12 @@ class MockOrderSaver implements CheckoutSaveOrderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $checkoutResponse->fromArray($this->checkoutResponse->toArray(true), true);
     }

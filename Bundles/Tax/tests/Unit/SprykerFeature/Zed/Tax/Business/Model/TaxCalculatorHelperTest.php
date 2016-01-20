@@ -5,7 +5,7 @@
 
 namespace Unit\SprykerFeature\Zed\Tax\Business\Model\Calculator;
 
-use SprykerFeature\Zed\Tax\Business\Model\PriceCalculationHelper;
+use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 
 class TaxCalculatorHelperTest extends \PHPUnit_Framework_TestCase
 {

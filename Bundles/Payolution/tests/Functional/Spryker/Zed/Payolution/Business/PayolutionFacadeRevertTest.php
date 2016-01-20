@@ -18,6 +18,8 @@ class PayolutionFacadeRevertTest extends AbstractFacadeTest
      */
     public function testRevertPaymentWithSuccessResponse()
     {
+        $this->markTestSkipped();
+
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();
         $preAuthorizationAdapterMock = new PreAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($preAuthorizationAdapterMock);
@@ -62,6 +64,8 @@ class PayolutionFacadeRevertTest extends AbstractFacadeTest
      */
     public function testRevertPaymentWithFailureResponse()
     {
+        $this->markTestSkipped();
+
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();
         $adapterMock = new PreAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($adapterMock);

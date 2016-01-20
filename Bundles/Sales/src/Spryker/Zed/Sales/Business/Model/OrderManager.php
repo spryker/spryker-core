@@ -17,7 +17,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\AddressTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;

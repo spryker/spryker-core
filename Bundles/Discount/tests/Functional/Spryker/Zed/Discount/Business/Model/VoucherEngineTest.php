@@ -15,6 +15,7 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\Item;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -317,7 +318,7 @@ class VoucherEngineTest extends Test
         $collectorPlugins[DiscountDependencyProvider::PLUGIN_COLLECTOR_ITEM] = new Item();
 
         $collectorResolver = new CollectorResolver($collectorPlugins);
-        $messengerFacade = $locator->messenger()->facade();
+        $messengerFacade = new DiscountToMessengerBridge($locator->messenger()->facade());
         $calculator = new Calculator($collectorResolver, $messengerFacade, $calculatorPlugins);
 
         return $calculator;

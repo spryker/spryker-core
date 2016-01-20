@@ -67,15 +67,9 @@ class ProductOptionCartConnectorFacadeTest extends Test
         $this->assertEquals(self::LOCALE_CODE, $productOptionTransfer->getLocaleCode());
         $this->assertEquals('Size', $productOptionTransfer->getLabelOptionType());
         $this->assertEquals('Large', $productOptionTransfer->getLabelOptionValue());
-        $this->assertEquals(199, $productOptionTransfer->getGrossPrice());
+        $this->assertEquals(199, $productOptionTransfer->getUnitGrossPrice());
 
-        $taxSetTransfer = $productOptionTransfer->getTaxSet();
-
-        $this->assertEquals('Baz', $taxSetTransfer->getName());
-
-        $taxRateTransfer = $taxSetTransfer->getTaxRates()[0];
-        $this->assertEquals('Foo', $taxRateTransfer->getName());
-        $this->assertEquals('10', $taxRateTransfer->getRate());
+        $this->assertEquals('15', $productOptionTransfer->getTaxRate());
     }
 
 }

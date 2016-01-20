@@ -8,6 +8,7 @@ namespace Spryker\Zed\Checkout\Business\Workflow;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
@@ -170,7 +171,10 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     protected function createCheckoutResponseTransfer()
     {
-        return new CheckoutResponseTransfer();
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $checkoutResponseTransfer->setSaveOrder(new SaveOrderTransfer());
+
+        return $checkoutResponseTransfer;
     }
 
 }

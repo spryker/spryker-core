@@ -6,20 +6,20 @@
 
 namespace Unit\Spryker\Zed\Checkout\Business\Fixture;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
 class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
 {
 
     /**
-     * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @var CheckoutResponseTransfer
      */
     protected $checkoutResponse;
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param CheckoutResponseTransfer $checkoutResponse
      */
     public function __construct(CheckoutResponseTransfer $checkoutResponse)
     {
@@ -27,12 +27,12 @@ class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function checkCondition(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $checkoutResponseTransfer->fromArray($this->checkoutResponse->toArray(true), true);
     }
