@@ -61,7 +61,7 @@ class RefundFacade extends AbstractFacade
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->getFactory()
-            ->createSalesFacade()
+            ->getSalesFacade()
             ->getOrderByIdSalesOrder($idSalesOrder);
     }
 

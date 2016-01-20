@@ -24,14 +24,14 @@ class StorageBusinessFactory extends AbstractBusinessFactory
     public function createStorage()
     {
         return new Storage(
-            $this->createStorageClient()
+            $this->getStorageClient()
         );
     }
 
     /**
      * @return StorageClient
      */
-    protected function createStorageClient()
+    protected function getStorageClient()
     {
         return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORAGE);
     }

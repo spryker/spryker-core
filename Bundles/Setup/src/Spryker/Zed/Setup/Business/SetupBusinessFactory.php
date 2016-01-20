@@ -44,11 +44,23 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     /**
      * @return DirectoryRemoverInterface
      */
-    public function createModelGeneratedDirectoryRemover()
+    public function getModelGeneratedDirectoryRemover()
     {
         return $this->createDirectoryRemover(
             $this->getConfig()->getGeneratedDirectory()
         );
+    }
+
+    /**
+     * @deprecated Use getModelGeneratedDirectoryRemover() instead.
+     *
+     * @return DirectoryRemoverInterface
+     */
+    public function createModelGeneratedDirectoryRemover()
+    {
+        trigger_error('Deprecated, use getModelGeneratedDirectoryRemover() instead.', E_USER_DEPRECATED);
+
+        return $this->getModelGeneratedDirectoryRemover();
     }
 
     /**
@@ -66,9 +78,21 @@ class SetupBusinessFactory extends AbstractBusinessFactory
      *
      * @return Repeater
      */
-    public function createTransferObjectRepeater()
+    public function getTransferObjectRepeater()
     {
         return $this->getProvidedDependency(SetupDependencyProvider::PLUGIN_TRANSFER_OBJECT_REPEATER);
+    }
+
+    /**
+     * @deprecated Use getTransferObjectRepeater() instead.
+     *
+     * @return Repeater
+     */
+    public function createTransferObjectRepeater()
+    {
+        trigger_error('Deprecated, use getTransferObjectRepeater() instead.', E_USER_DEPRECATED);
+
+        return $this->getTransferObjectRepeater();
     }
 
     /**

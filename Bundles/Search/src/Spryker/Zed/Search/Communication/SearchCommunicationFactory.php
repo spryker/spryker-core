@@ -25,7 +25,7 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSearchTable()
     {
-        $searchClient = $this->createSearchClient();
+        $searchClient = $this->getSearchClient();
 
         return new SearchTable($searchClient);
     }
@@ -33,17 +33,41 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return SearchClient
      */
-    public function createSearchClient()
+    public function getSearchClient()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::CLIENT_SEARCH);
     }
 
     /**
+     * @deprecated Use getSearchClient() instead.
+     *
+     * @return SearchClient
+     */
+    public function createSearchClient()
+    {
+        trigger_error('Deprecated, use getSearchClient() instead.', E_USER_DEPRECATED);
+
+        return $this->getSearchClient();
+    }
+
+    /**
+     * @return CollectorFacade
+     */
+    public function getCollectorFacade()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::FACADE_COLLECTOR);
+    }
+
+    /**
+     * @deprecated Use getCollectorFacade() instead.
+     *
      * @return CollectorFacade
      */
     public function createCollectorFacade()
     {
-        return $this->getProvidedDependency(SearchDependencyProvider::FACADE_COLLECTOR);
+        trigger_error('Deprecated, use getCollectorFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getCollectorFacade();
     }
 
     /**

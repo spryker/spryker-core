@@ -28,9 +28,9 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     public function createRefundModel()
     {
         return new Refund(
-            $this->createSalesFacade(),
-            $this->createOmsFacade(),
-            $this->createSalesQueryContainer()
+            $this->getSalesFacade(),
+            $this->getOmsFacade(),
+            $this->getSalesQueryContainer()
         );
     }
 
@@ -41,32 +41,68 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     {
         return new RefundManager(
             $this->getQueryContainer(),
-            $this->createSalesQueryContainer()
+            $this->getSalesQueryContainer()
         );
     }
 
     /**
      * @return RefundToSalesInterface
      */
-    public function createSalesFacade()
+    public function getSalesFacade()
     {
         return $this->getProvidedDependency(RefundDependencyProvider::FACADE_SALES);
     }
 
     /**
+     * @deprecated Use getSalesFacade() instead.
+     *
+     * @return RefundToSalesInterface
+     */
+    protected function createSalesFacade()
+    {
+        trigger_error('Deprecated, use getSalesFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getSalesFacade();
+    }
+
+    /**
      * @return RefundToOmsInterface
      */
-    protected function createOmsFacade()
+    protected function getOmsFacade()
     {
         return $this->getProvidedDependency(RefundDependencyProvider::FACADE_OMS);
     }
 
     /**
+     * @deprecated Use getOmsFacade() instead.
+     *
+     * @return RefundToOmsInterface
+     */
+    protected function createOmsFacade()
+    {
+        trigger_error('Deprecated, use getOmsFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getOmsFacade();
+    }
+
+    /**
+     * @return SalesQueryContainer
+     */
+    protected function getSalesQueryContainer()
+    {
+        return $this->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_SALES);
+    }
+
+    /**
+     * @deprecated Use getSalesQueryContainer() instead.
+     *
      * @return SalesQueryContainer
      */
     protected function createSalesQueryContainer()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_SALES);
+        trigger_error('Deprecated, use getSalesQueryContainer() instead.', E_USER_DEPRECATED);
+
+        return $this->getSalesQueryContainer();
     }
 
 }
