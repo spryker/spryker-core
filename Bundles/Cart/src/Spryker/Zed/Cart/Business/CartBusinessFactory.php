@@ -36,7 +36,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return $this->configureCartOperator(
             new AddOperator(
                 $this->createStorageProvider(),
-                $this->createCartCalculator(),
+                $this->getCartCalculator(),
                 $this->getItemGrouper()
                 //@todo messenger
             )
@@ -51,7 +51,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return $this->configureCartOperator(
             new IncreaseOperator(
                 $this->createStorageProvider(),
-                $this->createCartCalculator(),
+                $this->getCartCalculator(),
                 $this->getItemGrouper()
                 //@todo messenger
             )
@@ -66,7 +66,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return $this->configureCartOperator(
             new RemoveOperator(
                 $this->createStorageProvider(),
-                $this->createCartCalculator(),
+                $this->getCartCalculator(),
                 $this->getItemGrouper()
                 //@todo messenger
             )
@@ -81,7 +81,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return $this->configureCartOperator(
             new DecreaseOperator(
                 $this->createStorageProvider(),
-                $this->createCartCalculator(),
+                $this->getCartCalculator(),
                 $this->getItemGrouper()
                 //@todo messenger
             )
@@ -96,7 +96,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return $this->configureCartOperator(
             new CouponCodeAddOperator(
                 $this->createStorageProvider(),
-                $this->createCartCalculator(),
+                $this->getCartCalculator(),
                 $this->getItemGrouper()
                 //@todo messenger
             )
@@ -111,7 +111,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return $this->configureCartOperator(
             new CouponCodeRemoveOperator(
                 $this->createStorageProvider(),
-                $this->createCartCalculator(),
+                $this->getCartCalculator(),
                 $this->getItemGrouper()
                 //@todo messenger
             )
@@ -126,7 +126,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return $this->configureCartOperator(
             new CouponCodeClearOperator(
                 $this->createStorageProvider(),
-                $this->createCartCalculator(),
+                $this->getCartCalculator(),
                 $this->getItemGrouper()
                 //@todo messenger
             )
@@ -149,10 +149,23 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(CartDependencyProvider::FACADE_ITEM_GROUPER);
     }
 
+
     /**
+     * @deprecated, Use getCartCalculator() instead.
+     *
      * @return CartToCalculationInterface
      */
     public function createCartCalculator()
+    {
+        trigger_error('Deprecated, use getCartCalculator() instead.', E_USER_DEPRECATED);
+
+        return $this->getCartCalculator();
+    }
+
+    /**
+     * @return CartToCalculationInterface
+     */
+    public function getCartCalculator()
     {
         return $this->getProvidedDependency(CartDependencyProvider::FACADE_CALCULATION);
     }

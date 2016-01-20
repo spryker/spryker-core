@@ -29,19 +29,35 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated, Use getEnabledLocales() instead.
+     *
      * @return array
      */
     public function createEnabledLocales()
+    {
+        trigger_error('Deprecated, use getEnabledLocales() instead.', E_USER_DEPRECATED);
+
+        return $this->getEnabledLocales();
+    }
+
+    /**
+     * @return array
+     */
+    public function getEnabledLocales()
     {
         return $this->getLocaleFacade()
             ->getAvailableLocales();
     }
 
     /**
+     * @deprecated, Use getQueryContainer() instead.
+     *
      * @return GlossaryQueryContainerInterface
      */
     public function createQueryContainer()
     {
+        trigger_error('Deprecated, use getQueryContainer() instead.', E_USER_DEPRECATED);
+
         return $this->getQueryContainer();
     }
 

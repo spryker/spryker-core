@@ -18,9 +18,21 @@ class CollectorCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
+     * @deprecated, Use getLocaleFacade() instead.
+     *
      * @return CollectorToLocaleInterface
      */
     public function createLocaleFacade()
+    {
+        trigger_error('Deprecated, use getLocaleFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getLocaleFacade();
+    }
+
+    /**
+     * @return CollectorToLocaleInterface
+     */
+    public function getLocaleFacade()
     {
         return $this->getProvidedDependency(CollectorDependencyProvider::FACADE_LOCALE);
     }

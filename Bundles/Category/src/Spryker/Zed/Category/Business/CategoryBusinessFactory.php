@@ -44,7 +44,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createClosureTableWriter(),
             $this->createCategoryTreeReader(),
             $this->createNodeUrlManager(),
-            $this->createTouchFacade(),
+            $this->getTouchFacade(),
             $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }
@@ -75,7 +75,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     public function createCategoryTreeRenderer()
     {
-        $locale = $this->createLocaleFacade()->getCurrentLocale();
+        $locale = $this->getLocaleFacade()->getCurrentLocale();
 
         return new CategoryTreeRenderer(
             $this->getQueryContainer(),
@@ -121,7 +121,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new NodeUrlManager(
             $this->createCategoryTreeReader(),
             $this->createUrlPathGenerator(),
-            $this->createUrlFacade()
+            $this->getUrlFacade()
         );
     }
 
@@ -134,25 +134,61 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated, Use getTouchFacade() instead.
+     *
      * @return CategoryToTouchInterface
      */
     protected function createTouchFacade()
+    {
+        trigger_error('Deprecated, use getTouchFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getTouchFacade();
+    }
+
+    /**
+     * @return CategoryToTouchInterface
+     */
+    protected function getTouchFacade()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_TOUCH);
     }
 
     /**
+     * @deprecated, Use getLocaleFacade() instead.
+     *
      * @return CategoryToLocaleInterface
      */
     protected function createLocaleFacade()
+    {
+        trigger_error('Deprecated, use getLocaleFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getLocaleFacade();
+    }
+
+    /**
+     * @return CategoryToLocaleInterface
+     */
+    protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE);
     }
 
     /**
+     * @deprecated, Use getUrlFacade() instead.
+     *
      * @return CategoryToUrlInterface
      */
     protected function createUrlFacade()
+    {
+        trigger_error('Deprecated, use getUrlFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getUrlFacade();
+    }
+
+    /**
+     * @return CategoryToUrlInterface
+     */
+    protected function getUrlFacade()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_URL);
     }

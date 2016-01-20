@@ -26,10 +26,14 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
+     * @deprecated, Use getQueryContainer() instead.
+     *
      * @return CustomerQueryContainerInterface
      */
     public function createQueryContainer()
     {
+        trigger_error('Deprecated, use getQueryContainer() instead.', E_USER_DEPRECATED);
+
         return $this->getQueryContainer();
     }
 
@@ -42,7 +46,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         $senderPlugins = $this->getProvidedDependency(CustomerDependencyProvider::SENDER_PLUGINS);
 
         $customer = new Customer(
-            $this->createQueryContainer(),
+            $this->getQueryContainer(),
             $this->createCustomerReferenceGenerator(),
             $config
         );
@@ -67,21 +71,45 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createAddress()
     {
-        return new Address($this->createQueryContainer(), $this->createCountryFacade(), $this->createLocaleFacade());
+        return new Address($this->getQueryContainer(), $this->getCountryFacade(), $this->getLocaleFacade());
+    }
+
+    /**
+     * @deprecated, Use getCountryFacade() instead.
+     *
+     * @return CustomerToCountryInterface
+     */
+    protected function createCountryFacade()
+    {
+        trigger_error('Deprecated, use getCountryFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getCountryFacade();
     }
 
     /**
      * @return CustomerToCountryInterface
      */
-    protected function createCountryFacade()
+    protected function getCountryFacade()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY);
     }
 
     /**
+     * @deprecated, Use getLocaleFacade() instead.
+     *
      * @return CustomerToLocaleInterface
      */
     protected function createLocaleFacade()
+    {
+        trigger_error('Deprecated, use getLocaleFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getLocaleFacade();
+    }
+
+    /**
+     * @return CustomerToLocaleInterface
+     */
+    protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_LOCALE);
     }
@@ -92,15 +120,27 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     protected function createCustomerReferenceGenerator()
     {
         return new CustomerReferenceGenerator(
-            $this->createSequenceNumberFacade(),
+            $this->getSequenceNumberFacade(),
             $this->getConfig()->getCustomerReferenceDefaults()
         );
     }
 
     /**
+     * @deprecated, Use getSequenceNumberFacade() instead.
+     *
      * @return CustomerToSequenceNumberInterface
      */
     protected function createSequenceNumberFacade()
+    {
+        trigger_error('Deprecated, use getSequenceNumberFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getSequenceNumberFacade();
+    }
+
+    /**
+     * @return CustomerToSequenceNumberInterface
+     */
+    protected function getSequenceNumberFacade()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_SEQUENCE_NUMBER);
     }

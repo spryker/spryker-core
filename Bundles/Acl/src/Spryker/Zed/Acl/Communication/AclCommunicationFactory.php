@@ -33,12 +33,22 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated will be removed, if you need the UserFacade
-     * in your Communication Layer add a getUserFacade() method
+     * @deprecated, Use getUserFacade() instead.
      *
      * @return UserFacade
      */
     public function createUserFacade()
+    {
+        trigger_error('Deprecated, use getUserFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getUserFacade();
+    }
+
+    /**
+     *
+     * @return UserFacade
+     */
+    public function getUserFacade()
     {
         return $this->getProvidedDependency(AclDependencyProvider::FACADE_USER);
     }
@@ -54,11 +64,25 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int $idAclGroup
+     * @deprecated, Use getGroupRoleListByGroupId() instead.
+     *
+     * @param $idAclGroup
      *
      * @return array
      */
     public function createGroupRoleListByGroupId($idAclGroup)
+    {
+        trigger_error('Deprecated, use getGroupRoleListByGroupId() instead.', E_USER_DEPRECATED);
+
+        return $this->getGroupRoleListByGroupId($idAclGroup);
+    }
+
+    /**
+     * @param int $idAclGroup
+     *
+     * @return array
+     */
+    public function getGroupRoleListByGroupId($idAclGroup)
     {
         $roleCollection = $this->getQueryContainer()
             ->queryGroupRoles($idAclGroup)

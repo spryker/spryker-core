@@ -55,7 +55,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
         $paymentManager = new PaymentManager(
             $this->createExecutionAdapter(),
             $this->getQueryContainer(),
-            $this->createStandardParameter(),
+            $this->getStandardParameter(),
             $this->createKeyHashGenerator(),
             $this->createSequenceNumberProvider(),
             $this->createModeDetector()
@@ -85,7 +85,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     {
         return new TransactionStatusUpdateManager(
             $this->getQueryContainer(),
-            $this->createStandardParameter(),
+            $this->getStandardParameter(),
             $this->createKeyHashGenerator()
         );
     }
@@ -106,7 +106,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     protected function createExecutionAdapter()
     {
         return new Guzzle(
-            $this->createStandardParameter()->getPaymentGatewayUrl()
+            $this->getStandardParameter()->getPaymentGatewayUrl()
         );
     }
 
@@ -182,9 +182,21 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated, Use getStandardParameter() instead.
+     *
      * @return PayoneStandardParameterTransfer
      */
     protected function createStandardParameter()
+    {
+        trigger_error('Deprecated, use getStandardParameter() instead.', E_USER_DEPRECATED);
+
+        return $this->getStandardParameter();
+    }
+
+    /**
+     * @return PayoneStandardParameterTransfer
+     */
+    protected function getStandardParameter()
     {
         if ($this->standardParameter === null) {
             $this->standardParameter = $this->getConfig()->getRequestStandardParameter();

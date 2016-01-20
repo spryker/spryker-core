@@ -109,17 +109,41 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated, Use getAvailableCalculatorPlugins() instead.
+     *
      * @return CalculatorInterface[]
      */
     public function createAvailableCalculatorPlugins()
+    {
+        trigger_error('Deprecated, use getAvailableCalculatorPlugins() instead.', E_USER_DEPRECATED);
+
+        $this->getAvailableCalculatorPlugins();
+    }
+
+    /**
+     * @return CalculatorInterface[]
+     */
+    public function getAvailableCalculatorPlugins()
     {
         return $this->getConfig()->getAvailableCalculatorPlugins();
     }
 
     /**
+     * @deprecated, Use getAvailableCollectorPlugins() instead.
+     *
      * @return CollectorInterface[]
      */
     public function createAvailableCollectorPlugins()
+    {
+        trigger_error('Deprecated, use getAvailableCollectorPlugins() instead.', E_USER_DEPRECATED);
+
+        return $this->getAvailableCollectorPlugins();
+    }
+
+    /**
+     * @return CollectorInterface[]
+     */
+    public function getAvailableCollectorPlugins()
     {
         return $this->getConfig()->getAvailableCollectorPlugins();
     }

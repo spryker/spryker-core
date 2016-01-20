@@ -18,9 +18,21 @@ class OmsDiscountConnectorCommunicationFactory extends AbstractCommunicationFact
 {
 
     /**
+     * @deprecated, Use getDiscountFacade() instead.
+     *
      * @return OmsDiscountConnectorToDiscountInterface
      */
     public function createDiscountFacade()
+    {
+        trigger_error('Deprecated, use getDiscountFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getDiscountFacade();
+    }
+
+    /**
+     * @return OmsDiscountConnectorToDiscountInterface
+     */
+    public function getDiscountFacade()
     {
         return $this->getProvidedDependency(OmsDiscountConnectorDependencyProvider::FACADE_DISCOUNT);
     }

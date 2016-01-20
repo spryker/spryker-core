@@ -52,10 +52,22 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
         return $this->createForm($form);
     }
 
+
     /**
+     * @deprecated, Use getUserFacade() instead.
+     *
      * @return UserFacade
      */
     public function createUserFacade()
+    {
+        trigger_error('Deprecated, use getUserFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getUserFacade();
+    }
+    /**
+     * @return UserFacade
+     */
+    public function getUserFacade()
     {
         return $this->getProvidedDependency(AuthDependencyProvider::FACADE_USER);
     }

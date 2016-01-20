@@ -17,9 +17,20 @@ class AuthMailConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
+     * @deprecated, Use getMailFacade() instead.
+     *
      * @return AuthMailConnectorToMailInterface
      */
     public function createMailFacade()
+    {
+        trigger_error('Deprecated, use getMailFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getMailFacade();
+    }
+    /**
+     * @return AuthMailConnectorToMailInterface
+     */
+    public function getMailFacade()
     {
         return $this->getProvidedDependency(AuthMailConnectorDependencyProvider::FACADE_MAIL);
     }
