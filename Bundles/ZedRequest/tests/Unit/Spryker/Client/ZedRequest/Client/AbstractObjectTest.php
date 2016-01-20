@@ -21,7 +21,12 @@ class AbstractObjectTest extends \PHPUnit_Framework_TestCase
     {
         $object = new CommunicationObject();
 
-        $this->assertEquals([], $object->toArray());
+        $this->assertEquals([
+            'test1' => null,
+            'test2' => null,
+            'test3' => [],
+            'test4' => [null],
+        ], $object->toArray());
     }
 
     /**
@@ -33,7 +38,12 @@ class AbstractObjectTest extends \PHPUnit_Framework_TestCase
 
         $object = new CommunicationObject($data);
 
-        $this->assertEquals($data, $object->toArray());
+        $this->assertEquals([
+            'test1' => 1,
+            'test2' => null,
+            'test3' => [],
+            'test4' => [null],
+        ], $object->toArray());
     }
 
     /**
@@ -46,7 +56,12 @@ class AbstractObjectTest extends \PHPUnit_Framework_TestCase
         $object = new CommunicationObject();
         $object->fromArray($data);
 
-        $this->assertEquals($data, $object->toArray());
+        $this->assertEquals([
+            'test1' => 1,
+            'test2' => 'hund',
+            'test3' => [],
+            'test4' => [null],
+        ], $object->toArray());
     }
 
     /**
@@ -59,7 +74,12 @@ class AbstractObjectTest extends \PHPUnit_Framework_TestCase
         $object = new CommunicationObject();
         $object->fromArray($data);
 
-        $this->assertEquals([], $object->toArray());
+        $this->assertEquals([
+            'test1' => null,
+            'test2' => null,
+            'test3' => [],
+            'test4' => [null],
+        ], $object->toArray());
     }
 
     /**
@@ -72,7 +92,12 @@ class AbstractObjectTest extends \PHPUnit_Framework_TestCase
         $object = new CommunicationObject();
         $object->fromArray($data);
 
-        $this->assertEquals(['test2' => 3], $object->toArray());
+        $this->assertEquals([
+            'test1' => null,
+            'test2' => 3,
+            'test3' => [],
+            'test4' => [null],
+        ], $object->toArray());
     }
 
 }
