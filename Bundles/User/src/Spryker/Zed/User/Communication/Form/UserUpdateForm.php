@@ -62,6 +62,10 @@ class UserUpdateForm extends UserForm
         $formData = $userTransfer->toArray();
         $formData = $this->populateSelectedAclGroups($formData);
 
+        if (array_key_exists(self::FIELD_PASSWORD, $formData)) {
+            unset($formData[self::FIELD_PASSWORD]);
+        }
+
         return $formData;
     }
 
