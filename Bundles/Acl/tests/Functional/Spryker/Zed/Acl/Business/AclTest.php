@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\Spryker\Zed\Acl;
+namespace Functional\Spryker\Zed\Acl\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\RolesTransfer;

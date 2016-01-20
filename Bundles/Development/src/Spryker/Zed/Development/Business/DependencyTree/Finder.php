@@ -103,8 +103,8 @@ class Finder
             $this->layer = null;
         }
         return [
-            __DIR__ . '/../vendor/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
-            __DIR__ . '/../vendor/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
         ];
     }
 
@@ -114,8 +114,8 @@ class Finder
     private function getYvesDirectories()
     {
         return [
-            __DIR__ . '/../vendor/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Yves/' . $this->bundle,
-            __DIR__ . '/../vendor/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Yves/' . $this->bundle,
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Yves/' . $this->bundle,
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Yves/' . $this->bundle,
         ];
     }
 
@@ -125,8 +125,8 @@ class Finder
     private function getClientDirectories()
     {
         return [
-            __DIR__ . '/../vendor/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Client/' . $this->bundle,
-            __DIR__ . '/../vendor/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Client/' . $this->bundle,
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Client/' . $this->bundle,
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Client/' . $this->bundle,
         ];
     }
 
@@ -136,8 +136,8 @@ class Finder
     private function getSharedDirectories()
     {
         return [
-            __DIR__ . '/../vendor/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Shared/' . $this->bundle . '/',
-            __DIR__ . '/../vendor/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Shared/' . $this->bundle . '/',
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Shared/' . $this->bundle . '/',
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Shared/' . $this->bundle . '/',
         ];
     }
 

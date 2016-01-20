@@ -1,32 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace Spryker\Zed\Development\Business\DependencyTree;
 
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\AbstractDependencyFilter;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\AbstractDependencyChecker;
-use Symfony\Component\Finder\SplFileInfo;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\AbstractDependencyFinder;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyReport\AbstractDependencyReport;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeWriter\DependencyTreeWriterInterface;
 
 class DependencyTreeBuilder
 {
-
-    /**
-     * @var array
-     */
-    private $dependencyTree = [];
-
-    /**
-     * @var AbstractDependencyChecker[]
-     */
-    private $dependencyChecker = [];
-
-    /**
-     * @var AbstractDependencyFilter[]
-     */
-    private $dependencyFilter = [];
 
     /**
      * @var Finder
@@ -34,22 +19,34 @@ class DependencyTreeBuilder
     private $finder;
 
     /**
-     * @var FileInfoExtractor
+     * @var AbstractDependencyReport
      */
-    private $fileInfoExtractor;
+    private $report;
+
+    /**
+     * @var DependencyTreeWriterInterface
+     */
+    private $writer;
+
+    /**
+     * @var AbstractDependencyFinder[]
+     */
+    private $dependencyChecker = [];
 
     /**
      * @param Finder $finder
-     * @param FileInfoExtractor $fileInfoExtractor
+     * @param AbstractDependencyReport $report
+     * @param DependencyTreeWriterInterface $writer
      */
-    public function __construct(Finder $finder, FileInfoExtractor $fileInfoExtractor)
+    public function __construct(Finder $finder, AbstractDependencyReport $report, DependencyTreeWriterInterface $writer)
     {
         $this->finder = $finder;
-        $this->fileInfoExtractor = $fileInfoExtractor;
+        $this->report = $report;
+        $this->writer = $writer;
     }
 
     /**
-     * @param AbstractDependencyChecker|array $dependencyChecker
+     * @param AbstractDependencyFinder|array $dependencyChecker
      *
      * @return self
      */
@@ -69,22 +66,6 @@ class DependencyTreeBuilder
     }
 
     /**
-     * @param AbstractDependencyFilter|array $dependencyFilter
-     *
-     * @return void
-     */
-    public function addFilter($dependencyFilter)
-    {
-        if (is_array($dependencyFilter)) {
-            foreach ($dependencyFilter as $filter) {
-                $this->addDependencyChecker($filter);
-            }
-        }
-
-        $this->dependencyFilter[] = $dependencyFilter;
-    }
-
-    /**
      * @throws \Exception
      *
      * @return array
@@ -92,78 +73,13 @@ class DependencyTreeBuilder
     public function buildDependencyTree()
     {
         foreach ($this->finder->getFiles() as $fileInfo) {
-            $bundle = $this->fileInfoExtractor->getBundleNameFromFileInfo($fileInfo);
             foreach ($this->dependencyChecker as $dependencyChecker) {
-                $dependencyChecker->checkDependencies($fileInfo, $bundle);
-                if ($dependencyChecker->foundDependency()) {
-                    $this->addDependency($fileInfo, $dependencyChecker, $bundle);
-                }
+                $dependencyChecker->setReport($this->report);
+                $dependencyChecker->findDependencies($fileInfo);
             }
         }
 
-        return $this->dependencyTree;
-    }
-
-    /**
-     * @param SplFileInfo $fileInfo
-     * @param AbstractDependencyChecker $dependencyChecker
-     * @param string $bundle
-     *
-     * @throws \Exception
-     *
-     * @return void
-     */
-    private function addDependency(SplFileInfo $fileInfo, AbstractDependencyChecker $dependencyChecker, $bundle)
-    {
-        $toBundle = $dependencyChecker->getDependency();
-
-        if (!$this->acceptBundle($toBundle)) {
-            return;
-        }
-
-        $application = $this->fileInfoExtractor->getApplicationNameFromFileInfo($fileInfo);
-        $layer = $this->fileInfoExtractor->getLayerNameFromFileInfo($fileInfo);
-
-        $checker = get_class($dependencyChecker);
-
-        $meta = [
-            'file' => $fileInfo->getFilename(),
-            'depends' => $toBundle,
-            'application' => $application,
-            'bundle' => $toBundle,
-            'layer' => $layer,
-        ];
-
-        if (!array_key_exists($application, $this->dependencyTree)) {
-            $this->dependencyTree[$application] = [];
-        }
-        if (!array_key_exists($bundle, $this->dependencyTree[$application])) {
-            $this->dependencyTree[$application][$bundle] = [];
-        }
-        if (!array_key_exists($toBundle, $this->dependencyTree[$application][$bundle])) {
-            $this->dependencyTree[$application][$bundle][$toBundle] = [];
-        }
-        if (!array_key_exists($checker, $this->dependencyTree[$application][$bundle][$toBundle])) {
-            $this->dependencyTree[$application][$bundle][$toBundle][$checker] = [];
-        }
-
-        $this->dependencyTree[$application][$bundle][$toBundle][$checker][] = $meta;
-    }
-
-    /**
-     * @param string $bundle
-     *
-     * @return bool
-     */
-    protected function acceptBundle($bundle)
-    {
-        foreach ($this->dependencyFilter as $filter) {
-            if ($filter->filter($bundle)) {
-                return false;
-            }
-        }
-
-        return true;
+        $this->writer->write($this->report->getTree());
     }
 
 }

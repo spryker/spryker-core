@@ -31,6 +31,8 @@ config/accumulated-config.json
 /src/Generated
 /vendor/
 
+dependencyTree.json
+
 /data
 
 # grunt stuff

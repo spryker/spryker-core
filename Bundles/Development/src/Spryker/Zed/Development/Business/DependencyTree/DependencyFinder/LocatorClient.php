@@ -6,19 +6,22 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
 
+use Spryker\Zed\Development\Business\DependencyTree\DependencyReport\DependencyReport;
 use Symfony\Component\Finder\SplFileInfo;
 
-class LocatorClient extends AbstractDependencyChecker
+class LocatorClient extends AbstractDependencyFinder
 {
+
+    const NO_LAYER = 'noLayer';
 
     /**
      * @param SplFileInfo $fileInfo
-     * @param string $bundle
      *
      * @throws \Exception
+     *
      * @return void
      */
-    public function checkDependencies(SplFileInfo $fileInfo, $bundle)
+    public function findDependencies(SplFileInfo $fileInfo)
     {
         $content = $fileInfo->getContents();
 
@@ -32,9 +35,8 @@ class LocatorClient extends AbstractDependencyChecker
                 }
 
                 $toBundle = ucfirst($toBundle);
-                if ($toBundle !== $bundle) {
-                    $this->addDependency($toBundle);
-                }
+
+                $this->addDependency($fileInfo, $toBundle, [DependencyReport::META_DEPENDS_LAYER => self::NO_LAYER]);
             }
         }
     }

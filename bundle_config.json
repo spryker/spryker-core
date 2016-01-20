@@ -1,4 +1,5 @@
 {
+    "Application": "engine",
     "Auth": "engine",
     "Config": "engine",
     "Console": "engine",

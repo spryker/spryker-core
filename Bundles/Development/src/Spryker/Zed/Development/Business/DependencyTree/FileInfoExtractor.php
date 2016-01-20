@@ -10,6 +10,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class FileInfoExtractor
 {
+    const NO_LAYER = 'noLayer';
 
     /**
      * @param SplFileInfo $fileInfo
@@ -55,7 +56,7 @@ class FileInfoExtractor
             return $layer;
         }
 
-        return 'no layer';
+        return self::NO_LAYER;
     }
 
     /**

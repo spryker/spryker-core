@@ -7,10 +7,16 @@
 namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
 
 use Spryker\Zed\Development\Business\DependencyTree\DependencyReport\AbstractDependencyReport;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyReport\DependencyReport;
 use Symfony\Component\Finder\SplFileInfo;
 
-abstract class AbstractDependencyChecker
+abstract class AbstractDependencyFinder
 {
+
+    const DEPENDS_LAYER = 'dependsLayer';
+    const LAYER_BUSINESS = 'Business';
+    const LAYER_PERSISTENCE = 'Persistence';
+    const LAYER_COMMUNICATION = 'Communication';
 
     /**
      * @var string
@@ -44,38 +50,22 @@ abstract class AbstractDependencyChecker
 
     /**
      * @param SplFileInfo $fileInfo
-     * @param string $bundle
      *
      * @return void
      */
-    abstract public function checkDependencies(SplFileInfo $fileInfo, $bundle);
+    abstract public function findDependencies(SplFileInfo $fileInfo);
 
     /**
-     * @param $toBundle
+     * @param SplFileInfo $fileInfo
+     * @param string $to
+     * @param array $meta
      *
      * @return void
      */
-    protected function addDependency($toBundle)
+    protected function addDependency(SplFileInfo $fileInfo, $to, array $meta = [])
     {
-        $this->bundle = $toBundle;
-    }
+        $meta[DependencyReport::META_FINDER] = get_class($this);
 
-    /**
-     * @return bool
-     */
-    public function foundDependency()
-    {
-        return ($this->bundle !== null);
-    }
-
-    /**
-     * @return string
-     */
-    public function getDependency()
-    {
-        $dependentBundle = $this->bundle;
-        $this->bundle = null;
-
-        return $dependentBundle;
+        $this->report->addDependency($fileInfo, $to, $meta);
     }
 }

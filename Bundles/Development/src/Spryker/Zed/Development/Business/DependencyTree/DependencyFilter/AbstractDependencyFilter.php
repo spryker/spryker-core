@@ -10,10 +10,11 @@ abstract class AbstractDependencyFilter
 {
 
     /**
-     * @param $bundle
+     * @param string $bundle
+     * @param array $context
      *
      * @return bool
      */
-    abstract public function filter($bundle);
+    abstract public function filter($bundle, array $context);
 
 }
