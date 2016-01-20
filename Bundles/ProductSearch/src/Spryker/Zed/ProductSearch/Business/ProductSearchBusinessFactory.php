@@ -49,7 +49,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductAttributesTransformer()
     {
         return new ProductAttributesTransformer(
-            $this->createProductSearchQueryContainer(),
+            $this->getProductSearchQueryContainer(),
             $this->createOperationLocator(),
             $this->createDefaultOperation()
         );
@@ -124,30 +124,66 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     protected function createOperationManager()
     {
         return new OperationManager(
-            $this->createProductSearchQueryContainer()
+            $this->getProductSearchQueryContainer()
         );
+    }
+
+    /**
+     * @deprecated, Use getProductSearchQueryContainer() instead.
+     *
+     * @return ProductSearchQueryContainerInterface
+     */
+    protected function createProductSearchQueryContainer()
+    {
+        trigger_error('Deprecated, use getProductSearchQueryContainer() instead.', E_USER_DEPRECATED);
+
+        return $this->getProductSearchQueryContainer();
     }
 
     /**
      * @return ProductSearchQueryContainerInterface
      */
-    protected function createProductSearchQueryContainer()
+    protected function getProductSearchQueryContainer()
     {
         return $this->getQueryContainer();
     }
 
     /**
+     * @deprecated, Use getLocaleFacade() instead.
+     *
      * @return ProductSearchToLocaleInterface
      */
     protected function createLocaleFacade()
+    {
+        trigger_error('Deprecated, use getLocaleFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getLocaleFacade();
+    }
+
+    /**
+     * @return ProductSearchToLocaleInterface
+     */
+    protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_LOCALE);
     }
 
     /**
+     * @deprecated, Use getTouchFacade() instead.
+     *
      * @return ProductSearchToTouchInterface
      */
     protected function createTouchFacade()
+    {
+        trigger_error('Deprecated, use getTouchFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getTouchFacade();
+    }
+
+    /**
+     * @return ProductSearchToTouchInterface
+     */
+    protected function getTouchFacade()
     {
         return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_TOUCH);
     }
