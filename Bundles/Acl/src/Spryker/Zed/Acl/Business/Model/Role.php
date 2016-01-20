@@ -117,7 +117,7 @@ class Role implements RoleInterface
     /**
      * @param int $idUser
      *
-     * @return RoleTransfer
+     * @return RolesTransfer
      */
     public function getUserRoles($idUser)
     {
@@ -160,7 +160,7 @@ class Role implements RoleInterface
 
         foreach ($aclRoleEntities as $aclRoleEntity) {
             $roleTransfer = new RoleTransfer();
-            $rolesTransfer->fromArray($aclRoleEntity->toArray(), true);
+            $roleTransfer->fromArray($aclRoleEntity->toArray(), true);
 
             $rolesTransfer->addRole($roleTransfer);
         }
