@@ -100,7 +100,7 @@ class SaverTest extends Test
 
         $paymentAddressTransfer = new AddressTransfer();
         $paymentAddressTransfer
-            ->setIso2Code('de')
+            ->setIso2Code('DE')
             ->setEmail('testst@tewst.com')
             ->setFirstName('John')
             ->setLastName('Doe')
@@ -118,7 +118,7 @@ class SaverTest extends Test
             ->setDateOfBirth('1970-01-02')
             ->setClientIp('127.0.0.1')
             ->setAccountBrand(PayolutionConstants::BRAND_INVOICE)
-            ->setLanguageIso2Code('de')
+            ->setLanguageIso2Code('DE')
             ->setCurrencyIso3Code('EUR')
             ->setAddress($paymentAddressTransfer);
 

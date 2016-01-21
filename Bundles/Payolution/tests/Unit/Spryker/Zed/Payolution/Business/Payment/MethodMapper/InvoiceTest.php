@@ -54,7 +54,7 @@ class InvoiceTest extends Test
             ->setLastName('Doe')
             ->setSalutation('Mr')
             ->setCity('Berlin')
-            ->setIso2Code('de')
+            ->setIso2Code('DE')
             ->setAddress1('Straße des 17. Juni')
             ->setAddress2('135')
             ->setZipCode('10623');
@@ -196,7 +196,7 @@ class InvoiceTest extends Test
             ->setEmail('john@doe.com')
             ->setSalutation('Mr')
             ->setDateOfBirth('1970-01-01')
-            ->setCountryIso2Code('de')
+            ->setCountryIso2Code('DE')
             ->setCity('Berlin')
             ->setStreet('Straße des 17. Juni 135')
             ->setZipCode('10623')
