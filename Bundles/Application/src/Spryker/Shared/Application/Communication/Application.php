@@ -45,6 +45,8 @@ class Application extends \Silex\Application
      */
     public function createForm($type = 'form', $data = null, array $options = [])
     {
+        trigger_error('Deprecated, use buildForm() instead.', E_USER_DEPRECATED);
+
         /** @var FormInterface $form */
         $form = $this['form.factory']->create($type, $data, $options);
         $request = ($this[self::REQUEST_STACK]) ? $this[self::REQUEST_STACK]->getCurrentRequest() : $this[self::REQUEST];

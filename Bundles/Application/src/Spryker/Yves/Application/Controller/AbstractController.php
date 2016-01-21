@@ -218,6 +218,8 @@ abstract class AbstractController
      */
     protected function createForm($type = 'form', $data = null, array $options = [])
     {
+        trigger_error('Deprecated, use buildForm() instead.', E_USER_DEPRECATED);
+
         return $this->getApplication()->createForm($type, $data, $options);
     }
 

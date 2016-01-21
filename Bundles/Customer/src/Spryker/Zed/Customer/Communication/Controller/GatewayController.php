@@ -53,6 +53,8 @@ class GatewayController extends AbstractGatewayController
      */
     public function forgotPasswordAction(CustomerTransfer $customerTransfer)
     {
+        trigger_error('Deprecated, use sendPasswordRestoreMail() instead.', E_USER_DEPRECATED);
+
         return $this->sendPasswordRestoreMailAction($customerTransfer);
     }
 

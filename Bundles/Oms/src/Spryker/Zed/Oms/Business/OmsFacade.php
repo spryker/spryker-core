@@ -178,6 +178,8 @@ class OmsFacade extends AbstractFacade
      */
     public function getProcess($processName)
     {
+        trigger_error('Deprecated, will be removed. Use createProcess() directly', E_USER_DEPRECATED);
+
         return $this->getFactory()
             ->createOrderStateMachineBuilder()
             ->createProcess($processName);
@@ -190,6 +192,8 @@ class OmsFacade extends AbstractFacade
      */
     public function getDummy()
     {
+        trigger_error('Deprecated, will be removed.', E_USER_DEPRECATED);
+
         return $this->getFactory()
             ->createModelDummy();
     }

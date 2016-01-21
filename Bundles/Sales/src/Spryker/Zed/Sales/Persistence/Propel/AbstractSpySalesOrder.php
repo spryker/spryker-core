@@ -32,6 +32,8 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      */
     public function setIncrementId($v)
     {
+        trigger_error('Deprecated, use setOrderReference() instead.', E_USER_DEPRECATED);
+
         $this->setOrderReference($v);
     }
 
@@ -44,6 +46,8 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      */
     public function getIncrementId()
     {
+        trigger_error('Deprecated, use getOrderReference() instead.', E_USER_DEPRECATED);
+
         return $this->getOrderReference();
     }
 

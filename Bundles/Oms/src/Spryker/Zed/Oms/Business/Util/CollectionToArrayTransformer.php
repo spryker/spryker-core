@@ -21,6 +21,8 @@ class CollectionToArrayTransformer implements CollectionToArrayTransformerInterf
      */
     public function transformCollectionToArray(ObjectCollection $orderItems)
     {
+        trigger_error('Deprecated, will be removed.', E_USER_DEPRECATED);
+
         $orderItemsArray = [];
         foreach ($orderItems as $orderItem) {
             $orderItemsArray[] = $orderItem;
