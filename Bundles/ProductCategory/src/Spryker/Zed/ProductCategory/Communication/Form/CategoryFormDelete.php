@@ -39,7 +39,7 @@ class CategoryFormDelete extends CategoryFormEdit
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function populateFormFields()
     {
         $fields = parent::populateFormFields();
         $fields[self::FK_PARENT_CATEGORY_NODE] = null;
