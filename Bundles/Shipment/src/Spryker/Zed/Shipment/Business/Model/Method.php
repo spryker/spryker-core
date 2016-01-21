@@ -63,13 +63,14 @@ class Method
         $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
         $methods = $this->queryContainer->queryActiveMethods()->find();
 
-        foreach ($methods as $method) {
+        foreach ($methods as $shipmentMethodEntity) {
             $shipmentMethodTransfer = new ShipmentMethodTransfer();
-            $shipmentMethodTransfer->fromArray($method->toArray());
+            $shipmentMethodTransfer->setTaxRate($this->getEffectiveTaxRate($shipmentMethodEntity));
+            $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray());
 
-            if ($this->isAvailable($method, $quoteTransfer)) {
-                $shipmentMethodTransfer->setDefaultPrice($this->getPrice($method, $quoteTransfer));
-                $shipmentMethodTransfer->setDeliveryTime($this->getDeliveryTime($method, $quoteTransfer));
+            if ($this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
+                $shipmentMethodTransfer->setDefaultPrice($this->getPrice($shipmentMethodEntity, $quoteTransfer));
+                $shipmentMethodTransfer->setDeliveryTime($this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer));
 
                 $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
             }
@@ -234,6 +235,24 @@ class Method
     protected function getDeliveryTimePlugin(SpyShipmentMethod $method, $deliveryTimePlugins)
     {
         return $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
+    }
+
+    /**
+     * @param SpyShipmentMethod $shipmentMethodEntity
+     *
+     * @return int
+     */
+    protected function getEffectiveTaxRate(SpyShipmentMethod $shipmentMethodEntity)
+    {
+        if (empty($shipmentMethodEntity->getTaxSet())) {
+            return 0;
+        }
+
+        $effectiveTaxRate = 0;
+        foreach ($shipmentMethodEntity->getTaxSet()->getSpyTaxRates() as $taxRate) {
+            $effectiveTaxRate = $taxRate->getRate();
+        }
+        return $effectiveTaxRate;
     }
 
 }
