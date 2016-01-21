@@ -228,8 +228,8 @@
         $(document).ready(function () {
             productOrder = {};
             //productCategoryPreconfig = {};
-            allProductsTable = new TableHandler($('#product-table'), $('#selectedProductsTable'), 'all_products_checkbox_', 'Products to be assigned', 'assigned-tab-label', 'selectedProductClickRemoveSelected', 'form_products_to_be_assigned');
-            productCategoryTable = new TableHandler($('#product-category-table'), $('#deselectedProductsTable'), 'product_category_checkbox_', 'Products to be deassigned', 'deassigned-tab-label', 'categoryTableClickRemoveSelected', 'form_products_to_be_de_assigned');
+            allProductsTable = new TableHandler($('#product-table'), $('#selectedProductsTable'), 'all_products_checkbox_', 'Products to be assigned', 'assigned-tab-label', 'selectedProductClickRemoveSelected', 'category_products_to_be_assigned');
+            productCategoryTable = new TableHandler($('#product-category-table'), $('#deselectedProductsTable'), 'product_category_checkbox_', 'Products to be deassigned', 'deassigned-tab-label', 'categoryTableClickRemoveSelected', 'category_products_to_be_de_assigned');
 
             $('#product-table').dataTable({
                 destroy: true,
