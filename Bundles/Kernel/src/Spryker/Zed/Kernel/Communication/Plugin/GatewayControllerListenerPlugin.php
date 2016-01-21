@@ -131,7 +131,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      */
     protected function setMessengerMessages(Response $response)
     {
-        $messengerFacade = $this->getFactory()->createMessengerFacade();
+        $messengerFacade = $this->getFactory()->getMessengerFacade();
 
         $messagesTransfer = $messengerFacade->getStoredMessages();
         if ($messagesTransfer === null) {

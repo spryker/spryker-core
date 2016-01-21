@@ -208,16 +208,6 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CalculatorPluginInterface[]|TotalsCalculatorPluginInterface[]
-     * @deprecated?
-     */
-    public function getSoftCalculatorStack()
-    {
-        return [
-        ];
-    }
-
-    /**
      * @return RemoveTotalsCalculatorPlugin
      */
     protected function createRemoveTotalsCalculatorPlugin()

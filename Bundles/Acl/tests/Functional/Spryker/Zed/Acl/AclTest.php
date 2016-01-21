@@ -370,7 +370,7 @@ class AclTest extends Test
     /**
      * @return void
      */
-    public function testGetUserGroup()
+    public function testGetUserGroups()
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -386,10 +386,13 @@ class AclTest extends Test
         $added = $this->facade->addUserToGroup($userDto->getIdUser(), $groupDto->getIdAclGroup());
         $this->assertEquals($added, 1);
 
-        $userGroupDto = $this->facade->getUserGroup($userDto->getIdUser());
-        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $userGroupDto);
-        $this->assertNotNull($groupDto->getIdAclGroup());
-        $this->assertEquals($groupData['name'], $groupDto->getName());
+        $userGroupDto = $this->facade->getUserGroups($userDto->getIdUser());
+        $this->assertInstanceOf('\Generated\Shared\Transfer\GroupsTransfer', $userGroupDto);
+
+        $groups = $userGroupDto->toArray();
+        $group = $groups['groups'][0];
+        $this->assertNotNull($group['id_acl_group']);
+        $this->assertEquals($groupData['name'], $group['name']);
     }
 
     /**

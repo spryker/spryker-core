@@ -57,7 +57,7 @@ class SetupFacade extends AbstractFacade
      */
     public function getRepeatData(Request $request)
     {
-        return $this->getFactory()->createTransferObjectRepeater()
+        return $this->getFactory()->getTransferObjectRepeater()
             ->getRepeatData($request->query->get('mvc', null));
     }
 

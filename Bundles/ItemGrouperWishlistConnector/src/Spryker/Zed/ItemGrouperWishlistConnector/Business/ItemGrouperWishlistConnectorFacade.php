@@ -22,7 +22,7 @@ class ItemGrouperWishlistConnectorFacade extends AbstractFacade
      */
     public function groupOrderItems(GroupableContainerTransfer $items)
     {
-        return $this->getFactory()->createItemGrouperFacade()->groupItemsByKey($items);
+        return $this->getFactory()->getItemGrouperFacade()->groupItemsByKey($items);
     }
 
 }

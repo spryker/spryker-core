@@ -85,6 +85,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
+        trigger_error('Deprecated, use sendPasswordRestoreMail() instead.', E_USER_DEPRECATED);
+
         return $this->sendPasswordRestoreMail($customerTransfer);
     }
 

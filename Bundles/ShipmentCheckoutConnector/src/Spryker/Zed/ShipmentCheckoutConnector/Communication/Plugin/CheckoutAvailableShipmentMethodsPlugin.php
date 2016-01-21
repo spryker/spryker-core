@@ -26,7 +26,7 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
-        return $this->getFactory()->createShipmentFacade()->getAvailableMethods($shipmentMethodAvailabilityTransfer);
+        return $this->getFactory()->getShipmentFacade()->getAvailableMethods($shipmentMethodAvailabilityTransfer);
     }
 
 }

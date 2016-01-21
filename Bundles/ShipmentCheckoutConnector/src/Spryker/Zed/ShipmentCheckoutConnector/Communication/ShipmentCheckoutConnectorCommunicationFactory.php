@@ -22,11 +22,23 @@ class ShipmentCheckoutConnectorCommunicationFactory extends AbstractCommunicatio
     /**
      * @return ShipmentFacade
      */
-    public function createShipmentFacade()
+    public function getShipmentFacade()
     {
         return $this->getProvidedDependency(
             ShipmentCheckoutConnectorDependencyProvider::FACADE_SHIPMENT
         );
+    }
+
+    /**
+     * @deprecated Use getShipmentFacade() instead.
+     *
+     * @return ShipmentFacade
+     */
+    public function createShipmentFacade()
+    {
+        trigger_error('Deprecated, use getShipmentFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getShipmentFacade();
     }
 
 }

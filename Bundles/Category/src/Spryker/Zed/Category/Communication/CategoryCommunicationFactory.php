@@ -27,12 +27,15 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     protected $currentLocale;
 
     /**
+     * @deprecated Use getCurrentLocale() instead.
+     *
      * @return LocaleTransfer
      */
     public function createCurrentLocale()
     {
-        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE)
-            ->getCurrentLocale();
+        trigger_error('Deprecated, use getCurrentLocale() instead.', E_USER_DEPRECATED);
+
+        return $this->getCurrentLocale();
     }
 
     /**
@@ -41,7 +44,8 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     public function getCurrentLocale()
     {
         if ($this->currentLocale === null) {
-            $this->currentLocale = $this->createCurrentLocale();
+            $this->currentLocale = $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE)
+                ->getCurrentLocale();
         }
 
         return $this->currentLocale;
@@ -73,7 +77,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
         $categoryQueryContainer = $this->getQueryContainer();
         $categoryAttributesQuery = $categoryQueryContainer->queryAttributeByCategoryIdAndLocale(
             $categoryNode->getFkCategory(),
-            $this->createCurrentLocale()->getIdLocale()
+            $this->getCurrentLocale()->getIdLocale()
         );
 
         return new CategoryAttributeTable($categoryAttributesQuery);

@@ -80,7 +80,7 @@ class CountryManager implements CountryManagerInterface
      * @param string $iso2code
      * @param array $countryData
      *
-     * @deprecated
+     * @deprecated Use saveCountry() instead.
      *
      * @throws CountryExistsException
      *

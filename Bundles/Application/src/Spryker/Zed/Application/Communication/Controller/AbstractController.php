@@ -56,6 +56,14 @@ abstract class AbstractController
     private $messengerFacade;
 
     /**
+     * @return void
+     */
+    public function initialize()
+    {
+
+    }
+
+    /**
      * @param Application $application
      *
      * @return self

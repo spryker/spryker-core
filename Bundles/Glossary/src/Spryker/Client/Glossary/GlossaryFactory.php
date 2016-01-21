@@ -24,7 +24,7 @@ class GlossaryFactory extends AbstractFactory
     {
         return new GlossaryStorage(
             $this->getStorage(),
-            $this->getKeyBuilder(),
+            $this->createKeyBuilder(),
             $locale
         );
     }
@@ -40,9 +40,21 @@ class GlossaryFactory extends AbstractFactory
     /**
      * @return KeyBuilderInterface
      */
-    protected function getKeyBuilder()
+    protected function createKeyBuilder()
     {
         return new GlossaryKeyBuilder();
+    }
+
+    /**
+     * @deprecated Use createKeyBuilder() instead.
+     *
+     * @return KeyBuilderInterface
+     */
+    protected function getKeyBuilder()
+    {
+        trigger_error('Deprecated, use createKeyBuilder() instead.', E_USER_DEPRECATED);
+
+        return $this->createKeyBuilder();
     }
 
 }

@@ -51,7 +51,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserForm()
     {
-        $form = new UserForm($this->createAclFacade());
+        $form = new UserForm($this->getAclFacade());
 
         return $this->createForm($form);
     }
@@ -64,7 +64,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUpdateUserForm($idUser, UserFacade $userFacade)
     {
-        $form = new UserUpdateForm($idUser, $userFacade, $this->createAclFacade());
+        $form = new UserUpdateForm($idUser, $userFacade, $this->getAclFacade());
 
         return $this->createForm($form);
     }
@@ -72,9 +72,20 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return UserToAclInterface
      */
-    public function createAclFacade()
+    public function getAclFacade()
     {
         return $this->getProvidedDependency(UserDependencyProvider::FACADE_ACL);
+    }
+
+    /**
+     * @deprecated Use getAclFacade() instead.
+     *
+     * @return UserToAclInterface
+     */
+    public function createAclFacade() {
+        trigger_error('Deprecated, use getAclFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getAclFacade();
     }
 
 }

@@ -21,11 +21,11 @@ class SetupCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testCreateSetupInstallCommandNamesMustReturnArray()
+    public function testGetSetupInstallCommandNamesMustReturnArray()
     {
         $communicationFactory = new SetupCommunicationFactory();
 
-        $this->assertInternalType('array', $communicationFactory->createSetupInstallCommandNames());
+        $this->assertInternalType('array', $communicationFactory->getSetupInstallCommandNames());
     }
 
 }

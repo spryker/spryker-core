@@ -36,7 +36,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderManager()
     {
         return new OrderManager(
-            $this->createSalesQueryContainer(),
+            $this->getQueryContainer(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_COUNTRY),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS),
             $this->createReferenceGenerator()
@@ -49,7 +49,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createCommentsManager()
     {
         return new CommentManager(
-            $this->createSalesQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
@@ -59,17 +59,21 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderDetailsManager()
     {
         return new OrderDetailsManager(
-            $this->createSalesQueryContainer(),
+            $this->getQueryContainer(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS),
             $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_PAYMENT_LOGS)
         );
     }
 
     /**
-     * @return SalesQueryContainerInterface
+     * @deprecated Use getQueryContainer() directly instead.
+     *
+     * @return SalesQueryContainer
      */
     public function createSalesQueryContainer()
     {
+        trigger_error('Deprecated, use getQueryContainer() directly instead.', E_USER_DEPRECATED);
+
         return $this->getQueryContainer();
     }
 
@@ -80,7 +84,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderItem(
             $this->createSplitValidator(),
-            $this->createSalesQueryContainer(),
+            $this->getQueryContainer(),
             $this->createCalculator()
         );
     }
@@ -103,7 +107,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         $sequenceNumberSettings = $this->getConfig()->getOrderReferenceDefaults();
 
         return new OrderReferenceGenerator(
-            $this->createSequenceNumberFacade(),
+            $this->getSequenceNumberFacade(),
             $sequenceNumberSettings
         );
     }
@@ -111,9 +115,21 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @return SalesToSequenceNumberInterface
      */
-    protected function createSequenceNumberFacade()
+    protected function getSequenceNumberFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SEQUENCE_NUMBER);
+    }
+
+    /**
+     * @deprecated Use getSequenceNumberFacade() instead.
+     *
+     * @return SalesToSequenceNumberInterface
+     */
+    protected function createSequenceNumberFacade()
+    {
+        trigger_error('Deprecated, use getSequenceNumberFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getSequenceNumberFacade();
     }
 
     /**

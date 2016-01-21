@@ -27,7 +27,7 @@ abstract class AbstractController
 {
 
     const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
-    const FLASH_MESSAGES_ERROR= 'flash.messages.error';
+    const FLASH_MESSAGES_ERROR = 'flash.messages.error';
     const FLASH_MESSAGES_INFO = 'flash.messages.info';
 
     /**
@@ -49,6 +49,14 @@ abstract class AbstractController
      * @var AbstractClient
      */
     private $client;
+
+    /**
+     * @return void
+     */
+    public function initialize()
+    {
+
+    }
 
     /**
      * @param Application $application
@@ -210,6 +218,8 @@ abstract class AbstractController
      */
     protected function createForm($type = 'form', $data = null, array $options = [])
     {
+        trigger_error('Deprecated, use buildForm() instead.', E_USER_DEPRECATED);
+
         return $this->getApplication()->createForm($type, $data, $options);
     }
 

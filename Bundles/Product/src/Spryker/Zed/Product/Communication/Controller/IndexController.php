@@ -141,7 +141,7 @@ class IndexController extends AbstractController
         $productConcreteCollection = [];
         foreach ($productConcreteCollectionCollection as $productConcrete) {
             $productOptions = $this->getFactory()
-                ->createProductOptionsFacade()
+                ->getProductOptionsFacade()
                 ->getProductOptionsByIdProduct(
                     $productConcrete->getIdProduct(),
                     $this->getCurrentLocale()->getIdLocale()
@@ -168,7 +168,7 @@ class IndexController extends AbstractController
     protected function getProductCategories(SpyProductAbstract $productAbstract, $idLocale)
     {
         $productCategoryEntityList = $this->getFactory()
-            ->createProductCategoryQueryContainer()
+            ->getProductCategoryQueryContainer()
             ->queryLocalizedProductCategoryMappingByIdProduct($productAbstract->getIdProductAbstract())
             ->find();
 
@@ -194,7 +194,7 @@ class IndexController extends AbstractController
     protected function getCurrentLocale()
     {
         return $this->getFactory()
-            ->createLocaleFacade()
+            ->getLocaleFacade()
             ->getCurrentLocale();
     }
 

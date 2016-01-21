@@ -24,6 +24,8 @@ class LumberjackFacade extends AbstractFacade
      */
     public function saveEvent(EventInterface $event)
     {
+        trigger_error('Deprecated, will be removed.', E_USER_DEPRECATED);
+
         $this->getFactory()
              ->createEventJournal()
              ->saveEvent($event);

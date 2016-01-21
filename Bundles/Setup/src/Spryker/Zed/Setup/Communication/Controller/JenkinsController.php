@@ -14,7 +14,7 @@ use Spryker\Shared\Setup\SetupConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 /**
- * @deprecated
+ * @deprecated Will be removed in 1.0.0.
  */
 class JenkinsController extends AbstractController
 {

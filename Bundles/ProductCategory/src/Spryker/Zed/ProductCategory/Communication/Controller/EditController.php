@@ -122,7 +122,7 @@ class EditController extends AddController
             $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
 
             $this->getFactory()
-                ->createCategoryFacade()
+                ->getCategoryFacade()
                 ->updateCategoryNode($categoryNodeTransfer, $locale);
         } else {
             $newData = $categoryNodeTransfer->toArray();
@@ -131,7 +131,7 @@ class EditController extends AddController
             $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($newData);
 
             $this->getFactory()
-                ->createCategoryFacade()
+                ->getCategoryFacade()
                 ->createCategoryNode($categoryNodeTransfer, $locale);
         }
     }
@@ -149,13 +149,13 @@ class EditController extends AddController
         array $parentIdList
     ) {
         $existingParents = $this->getFactory()
-            ->createCategoryFacade()
+            ->getCategoryFacade()
             ->getNotMainNodesByIdCategory($categoryTransfer->getIdCategory());
 
         foreach ($existingParents as $parent) {
             if (!array_key_exists($parent->getFkParentCategoryNode(), $parentIdList)) {
                 $this->getFactory()
-                    ->createCategoryFacade()
+                    ->getCategoryFacade()
                     ->deleteNode($parent->getIdCategoryNode(), $locale);
             }
         }
@@ -228,7 +228,7 @@ class EditController extends AddController
         $currentCategoryTransfer = $this->createCategoryTransferFromData($data);
 
         $this->getFactory()
-            ->createCategoryFacade()
+            ->getCategoryFacade()
             ->updateCategory($currentCategoryTransfer, $locale);
 
         return $currentCategoryTransfer;
@@ -316,7 +316,7 @@ class EditController extends AddController
             ->find();
 
         $path['url'] = $this->getFactory()
-            ->createCategoryFacade()
+            ->getCategoryFacade()
             ->generatePath($pathTokens);
 
         $path['view_node_name'] = 'child';
@@ -412,7 +412,7 @@ class EditController extends AddController
     {
         $blockList = [];
         $blocks = $this->getFactory()
-            ->createCmsFacade()
+            ->getCmsFacade()
             ->getCmsBlocksByIdCategoryNode($node->getIdCategoryNode());
 
         foreach ($blocks as $blockTransfer) {

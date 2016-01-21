@@ -43,7 +43,7 @@ class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPa
         ]);
 
         $this->getFactory()
-            ->createMailFacade()
+            ->getMailFacade()
             ->sendMail($mailTransfer);
     }
 

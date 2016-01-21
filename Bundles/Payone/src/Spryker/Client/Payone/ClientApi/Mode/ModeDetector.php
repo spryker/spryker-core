@@ -20,6 +20,8 @@ class ModeDetector implements ModeDetectorInterface
      */
     public function getMode()
     {
+        trigger_error('Deprecated, will be removed.', E_USER_DEPRECATED);
+
         if (Environment::isNotProduction()) {
             return self::MODE_TEST;
         }

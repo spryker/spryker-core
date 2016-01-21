@@ -221,7 +221,7 @@ class EditController extends AbstractController
             return false;
         }
 
-        $aclFacade = $this->getFactory()->createAclFacade();
+        $aclFacade = $this->getFactory()->getAclFacade();
         foreach ($formData[UserForm::FIELD_GROUP] as $idGroup) {
             $aclFacade->addUserToGroup($userTransfer->getIdUser(), $idGroup);
         }
@@ -236,7 +236,7 @@ class EditController extends AbstractController
      */
     protected function deleteAclGroups($idUser)
     {
-        $aclFacade = $this->getFactory()->createAclFacade();
+        $aclFacade = $this->getFactory()->getAclFacade();
         $userAclGroups = $aclFacade->getUserGroups($idUser);
         foreach ($userAclGroups->getGroups() as $aclGroupTransfer) {
             $aclFacade->removeUserFromGroup($idUser, $aclGroupTransfer->getIdAclGroup());

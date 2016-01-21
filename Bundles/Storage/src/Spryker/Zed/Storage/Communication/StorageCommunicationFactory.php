@@ -24,7 +24,7 @@ class StorageCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createStorageTable()
     {
-        $storageClient = $this->createStorageClient();
+        $storageClient = $this->getStorageClient();
 
         return new StorageTable($storageClient);
     }
@@ -32,15 +32,25 @@ class StorageCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return StorageClientInterface
      */
-    public function createStorageClient()
+    public function getStorageClient()
     {
         return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORAGE);
     }
 
     /**
+     * @return StorageClientInterface
+     */
+    public function createStorageClient()
+    {
+        trigger_error('Deprecated, use getStorageClient() instead.', E_USER_DEPRECATED);
+
+        return $this->getStorageClient();
+    }
+
+    /**
      * @return CollectorFacade
      */
-    public function createCollectorFacade()
+    public function getCollectorFacade()
     {
         return $this->getProvidedDependency(StorageDependencyProvider::FACADE_COLLECTOR);
     }

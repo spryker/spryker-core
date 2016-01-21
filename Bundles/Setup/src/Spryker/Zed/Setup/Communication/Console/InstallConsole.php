@@ -39,7 +39,7 @@ class InstallConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $setupInstallCommandNames = $this->getFactory()->createSetupInstallCommandNames();
+        $setupInstallCommandNames = $this->getFactory()->getSetupInstallCommandNames();
 
         foreach ($setupInstallCommandNames as $key => $value) {
             if (is_array($value)) {

@@ -26,7 +26,7 @@ class ProductFactory extends AbstractFactory
     {
         return new ProductStorage(
             $this->getStorage(),
-            $this->getKeyBuilder(),
+            $this->createKeyBuilder(),
             $locale
         );
     }
@@ -42,7 +42,7 @@ class ProductFactory extends AbstractFactory
     /**
      * @return KeyBuilderInterface
      */
-    protected function getKeyBuilder()
+    protected function createKeyBuilder()
     {
         return new ProductResourceKeyBuilder();
     }

@@ -36,14 +36,26 @@ class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new DiscountSaver(
             $this->getProvidedDependency(DiscountCheckoutConnectorDependencyProvider::QUERY_CONTAINER_DISCOUNT),
-            $this->createDiscountFacade()
+            $this->getDiscountFacade()
         );
+    }
+
+    /**
+     * @deprecated Use getDiscountFacade() instead.
+     *
+     * @return DiscountCheckoutConnectorToDiscountInterface
+     */
+    public function createDiscountFacade()
+    {
+        trigger_error('Deprecated, use getDiscountFacade() instead.', E_USER_DEPRECATED);
+
+        return $this->getDiscountFacade();
     }
 
     /**
      * @return DiscountCheckoutConnectorToDiscountInterface
      */
-    public function createDiscountFacade()
+    public function getDiscountFacade()
     {
         return $this->getProvidedDependency(DiscountCheckoutConnectorDependencyProvider::FACADE_DISCOUNT);
     }

@@ -60,6 +60,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createTouchQueryContainer()
     {
+        trigger_error('Deprecated, use getTouchQueryContainer() instead.', E_USER_DEPRECATED);
+
         return $this->getTouchQueryContainer();
     }
 

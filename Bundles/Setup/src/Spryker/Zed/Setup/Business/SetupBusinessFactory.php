@@ -66,9 +66,21 @@ class SetupBusinessFactory extends AbstractBusinessFactory
      *
      * @return Repeater
      */
-    public function createTransferObjectRepeater()
+    public function getTransferObjectRepeater()
     {
         return $this->getProvidedDependency(SetupDependencyProvider::PLUGIN_TRANSFER_OBJECT_REPEATER);
+    }
+
+    /**
+     * @deprecated Use getTransferObjectRepeater() instead.
+     *
+     * @return Repeater
+     */
+    public function createTransferObjectRepeater()
+    {
+        trigger_error('Deprecated, use getTransferObjectRepeater() instead.', E_USER_DEPRECATED);
+
+        return $this->getTransferObjectRepeater();
     }
 
     /**

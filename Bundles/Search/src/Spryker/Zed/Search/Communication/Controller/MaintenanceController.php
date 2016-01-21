@@ -39,7 +39,7 @@ class MaintenanceController extends AbstractController
      */
     public function dropTimestampsAction()
     {
-        $this->getFactory()->createCollectorFacade()->deleteSearchTimestamps();
+        $this->getFactory()->getCollectorFacade()->deleteSearchTimestamps();
 
         return $this->redirectResponse(self::URL_SEARCH_MAINTENANCE);
     }
