@@ -53,23 +53,8 @@ class CreateVsGetMethodsSniff implements \PHP_CodeSniffer_Sniff
 
         $classMethod = $this->getClassMethod($phpCsFile, $stackPointer);
 
-        if ($startsWithGet && $requiresCreatePrefix) {
-            // Skip for now, too many false positives
-            return;
-
-            $newMethodName = preg_replace('/^(get)([A-Z])/', 'create\2', $methodName);
-
-            $fix = $phpCsFile->addFixableError($classMethod . ' is called get...(), should be create...()', $stackPointer);
-            if ($fix) {
-                $this->correctMethodName($phpCsFile, $stackPointer, $newMethodName);
-            }
-        } elseif ($startsWithCreate && !$requiresCreatePrefix) {
-            $newMethodName = preg_replace('/^(create)([A-Z])/', 'get\2', $methodName);
-
-            $fix = $phpCsFile->addFixableError($classMethod . ' is called create...(), should be get...()', $stackPointer);
-            if ($fix) {
-                $this->correctMethodName($phpCsFile, $stackPointer, $newMethodName);
-            }
+        if ($startsWithCreate && !$requiresCreatePrefix) {
+            $phpCsFile->addError($classMethod . ' is called create...(), should be get...()', $stackPointer);
         }
     }
 
