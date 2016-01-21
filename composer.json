@@ -8,12 +8,6 @@
   "config": {
     "use-include-path": true
   },
-  "autoload": {
-    "files": ["Autoload/autoload.php"],
-    "psr-0": {
-      "Spryker\\Shared\\Library": "Bundles/Library/src/"
-    }
-  },
   "bin": [
     "Bundles/Console/bin/console"
   ]
