@@ -47,7 +47,7 @@ class SetupFacade extends AbstractFacade
      */
     public function removeGeneratedDirectory()
     {
-        $this->getFactory()->getModelGeneratedDirectoryRemover()->execute();
+        $this->getFactory()->createModelGeneratedDirectoryRemover()->execute();
     }
 
     /**
