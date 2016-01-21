@@ -42,7 +42,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     /**
      * @return ClassGenerator
      */
-    private function createClassGenerator()
+    protected function createClassGenerator()
     {
         return new ClassGenerator(
             $this->getConfig()->getClassTargetDirectory()
@@ -52,7 +52,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     /**
      * @return TransferDefinitionBuilder|DefinitionBuilderInterface
      */
-    private function createTransferDefinitionBuilder()
+    protected function createTransferDefinitionBuilder()
     {
         return new TransferDefinitionBuilder(
             $this->createLoader(),
@@ -64,7 +64,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     /**
      * @return TransferDefinitionLoader
      */
-    private function createLoader()
+    protected function createLoader()
     {
         return new TransferDefinitionLoader(
             $this->createDefinitionNormalizer(),

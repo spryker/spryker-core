@@ -30,7 +30,7 @@ class CmsFactory extends AbstractFactory
     /**
      * @return StorageClientInterface
      */
-    private function getStorage()
+    protected function getStorage()
     {
         return $this->getProvidedDependency(CmsDependencyProvider::KV_STORAGE);
     }
@@ -38,7 +38,7 @@ class CmsFactory extends AbstractFactory
     /**
      * @return KeyBuilderInterface
      */
-    private function getKeyBuilder()
+    protected function getKeyBuilder()
     {
         return new CmsBlockKeyBuilder();
     }

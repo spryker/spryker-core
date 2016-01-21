@@ -35,7 +35,7 @@ class StorageFactory extends AbstractFactory
      *
      * @return array
      */
-    private function getConfig()
+    protected function getConfig()
     {
         return [
             'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),

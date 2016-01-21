@@ -85,7 +85,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
      *
      * @return UserQueryContainer
      */
-    private function createUserQueryContainer()
+    protected function createUserQueryContainer()
     {
         return $this->getProvidedDependency(AclDependencyProvider::QUERY_CONTAINER_USER);
     }
