@@ -8,10 +8,10 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreCheckAdapterMock;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Payolution\PayolutionConstants;
 
@@ -65,21 +65,8 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
         $itemTransfer
             ->setSku('1234567890')
             ->setQuantity(1)
-            ->setPriceToPay(10000)
-            ->setGrossPrice(10000 * 1.19)
-            ->setName('Socken')
-            ->setTaxSet(new TaxSetTransfer());
-
-        $totalsTransfer = new TotalsTransfer();
-        $totalsTransfer
-            ->setGrandTotal(10000)
-            ->setGrandTotalWithDiscounts(10000)
-            ->setSubtotal(10000);
-
-        $cartTransfer = new QuoteTransfer();
-        $cartTransfer
-            ->addItem($itemTransfer)
-            ->setTotals($totalsTransfer);
+            ->setUnitGrossPriceWithProductOptions(10000)
+            ->setName('Socken');
 
         $billingAddressTransfer = new AddressTransfer();
         $billingAddressTransfer
@@ -114,23 +101,32 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
             ->setAddress2('135')
             ->setZipCode('10623');
 
-        $paymentTransfer = (new PayolutionPaymentTransfer())
+        $payolutionPaymentTransfer = (new PayolutionPaymentTransfer())
             ->setGender('Male')
             ->setDateOfBirth('1970-01-01')
             ->setClientIp('127.0.0.1')
             ->setAccountBrand(PayolutionConstants::BRAND_INVOICE)
             ->setAddress($paymentAddressTransfer);
 
-        $checkoutRequestTransfer = new QuoteTransfer();
-        $checkoutRequestTransfer
-            ->setIdUser(null)
-            ->setShippingAddress($shippingAddressTransfer)
-            ->setBillingAddress($billingAddressTransfer)
-            ->setPaymentMethod('invoice')
-            ->setCart($cartTransfer)
-            ->setPayolutionPayment($paymentTransfer);
+        $quoteTransfer = new QuoteTransfer();
 
-        return $checkoutRequestTransfer;
+        $totalsTransfer = new TotalsTransfer();
+        $totalsTransfer
+            ->setGrandTotal(10000)
+            ->setSubtotal(10000);
+
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        $paymentTransfer = new PaymentTransfer();
+        $paymentTransfer->setPaymentSelection('no_payment');
+        $paymentTransfer->setPayolution($payolutionPaymentTransfer);
+        $quoteTransfer->setPayment($paymentTransfer);
+
+        $quoteTransfer
+            ->setShippingAddress($shippingAddressTransfer)
+            ->setBillingAddress($billingAddressTransfer);
+
+        return $quoteTransfer;
     }
 
 }

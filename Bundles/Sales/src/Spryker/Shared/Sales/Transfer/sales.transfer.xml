@@ -185,7 +185,7 @@
     <transfer name="SaveOrder">
         <property name="idSalesOrder" type="int" />
         <property name="orderReference" type="string" />
-        <property name="orderItems" type="Item[]" />
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
 </transfers>

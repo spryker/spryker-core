@@ -7,7 +7,9 @@
 namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
@@ -92,14 +94,27 @@ class AbstractFacadeTest extends Test
 
         $this->orderEntity = (new SpySalesOrder())
             ->setEmail('john@doe.com')
-            ->setGrandTotal(1000)
-            ->setSubtotal(1000)
             ->setIsTest(true)
             ->setFkSalesOrderAddressBilling($billingAddress->getIdSalesOrderAddress())
             ->setFkSalesOrderAddressShipping($billingAddress->getIdSalesOrderAddress())
             ->setCustomer($customer)
             ->setOrderReference('foo-bar-baz-2');
+
         $this->orderEntity->save();
+    }
+
+    /**
+     * @return OrderTransfer
+     */
+    protected function createOrderTransfer()
+    {
+        $orderTransfer = new OrderTransfer();
+        $totalTransfer = new TotalsTransfer();
+        $totalTransfer->setGrandTotal(1000);
+        $orderTransfer->setTotals($totalTransfer);
+        $orderTransfer->setIdSalesOrder($this->orderEntity->getIdSalesOrder());
+
+        return $orderTransfer;
     }
 
     /**

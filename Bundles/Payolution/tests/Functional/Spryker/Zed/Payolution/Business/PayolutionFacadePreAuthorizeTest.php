@@ -7,6 +7,8 @@
 namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
@@ -17,9 +19,11 @@ class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
      */
     public function testPreAuthorizePaymentWithSuccessResponse()
     {
+        $orderTransfer = $this->createOrderTransfer();
+
         $adapterMock = new PreAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($adapterMock);
-        $response = $facade->preAuthorizePayment($this->getPaymentEntity()->getIdPaymentPayolution());
+        $response = $facade->preAuthorizePayment($orderTransfer, $this->getPaymentEntity()->getIdPaymentPayolution());
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
@@ -36,7 +40,7 @@ class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(1, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION, $requestLog->getPaymentCode());
-        $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
+        $this->assertEquals($orderTransfer->getTotals()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertNull($requestLog->getReferenceId());
 
         /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $statusLog */
@@ -52,9 +56,10 @@ class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
      */
     public function testPreAuthorizationWithFailureResponse()
     {
+        $orderTransfer = $this->createOrderTransfer();
         $adapterMock = (new PreAuthorizationAdapterMock())->expectFailure();
         $facade = $this->getFacadeMock($adapterMock);
-        $response = $facade->preAuthorizePayment($this->getPaymentEntity()->getIdPaymentPayolution());
+        $response = $facade->preAuthorizePayment($orderTransfer, $this->getPaymentEntity()->getIdPaymentPayolution());
 
         $expectedResponseData = $adapterMock->getFailureResponse();
         $expectedResponse = $this->getResponseConverter()->toTransactionResponseTransfer($expectedResponseData);

@@ -7,9 +7,12 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
@@ -94,12 +97,18 @@ class PayolutionFacadeGatewayTest extends Test
             ->setCurrencyIso3Code('EUR');
 
         // PayolutionCheckoutConnector-HydrateOrderPlugin emulation
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer->setIdSalesOrder($this->orderEntity->getIdSalesOrder());
-        $orderTransfer->setPayolutionPayment($paymentTransfer);
+        $quoteTransfer = new QuoteTransfer();
+
+        $paymentTransfer = new PaymentTransfer();
+        $paymentTransfer->setPayolution($paymentTransfer);
+
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $saveOrderTransfer = new SaveOrderTransfer();
+        $saveOrderTransfer->setIdSalesOrder($this->orderEntity->getIdSalesOrder());
+        $checkoutResponseTransfer->setSaveOrder($saveOrderTransfer);
 
         $facade = $this->payolutionFacade;
-        $facade->saveOrderPayment($orderTransfer);
+        $facade->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
 
         $paymentEntity = $this->orderEntity->getSpyPaymentPayolutions()->getFirst();
 

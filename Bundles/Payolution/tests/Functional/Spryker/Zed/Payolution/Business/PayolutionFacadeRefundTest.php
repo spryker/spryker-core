@@ -19,18 +19,19 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
      */
     public function testRefundPaymentWithSuccessResponse()
     {
+        $orderTransfer = $this->createOrderTransfer();
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();
         $preAuthorizationAdapterMock = new PreAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($preAuthorizationAdapterMock);
-        $preAuthorizationResponse = $facade->preAuthorizePayment($idPayment);
+        $preAuthorizationResponse = $facade->preAuthorizePayment($orderTransfer, $idPayment);
 
         $captureAdapterMock = new CaptureAdapterMock();
         $facade = $this->getFacadeMock($captureAdapterMock);
-        $captureResponse = $facade->capturePayment($idPayment);
+        $captureResponse = $facade->capturePayment($orderTransfer, $idPayment);
 
         $adapterMock = new RefundAdapterMock();
         $facade = $this->getFacadeMock($adapterMock);
-        $response = $facade->refundPayment($idPayment);
+        $response = $facade->refundPayment($orderTransfer, $idPayment);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
@@ -51,7 +52,7 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(3, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_REFUND, $requestLog->getPaymentCode());
-        $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
+        $this->assertEquals($orderTransfer->getTotals()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
         /** @var \Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog $statusLog */
@@ -67,19 +68,20 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
      */
     public function testRefundPaymentWithFailureResponse()
     {
+        $orderTransfer = $this->createOrderTransfer();
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();
         $preAuthorizationAdapterMock = new PreAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($preAuthorizationAdapterMock);
-        $preAuthorizationResponse = $facade->preAuthorizePayment($idPayment);
+        $preAuthorizationResponse = $facade->preAuthorizePayment($orderTransfer, $idPayment);
 
         $captureAdapterMock = new CaptureAdapterMock();
         $facade = $this->getFacadeMock($captureAdapterMock);
-        $captureResponse = $facade->capturePayment($idPayment);
+        $captureResponse = $facade->capturePayment($orderTransfer, $idPayment);
 
         $adapterMock = new RefundAdapterMock();
         $adapterMock->expectFailure();
         $facade = $this->getFacadeMock($adapterMock);
-        $response = $facade->refundPayment($idPayment);
+        $response = $facade->refundPayment($orderTransfer, $idPayment);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
@@ -100,7 +102,7 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(3, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_REFUND, $requestLog->getPaymentCode());
-        $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
+        $this->assertEquals($orderTransfer->getTotals()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
         /** @var \Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog $statusLog */

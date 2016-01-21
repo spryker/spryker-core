@@ -270,14 +270,14 @@ class CheckoutFacadeTest extends Test
         $item1
             ->setSku('OSB1337')
             ->setQuantity(1)
-            ->setUnitGrossPrice(3000)
+            ->setUnitGrossPriceWithProductOptions(3000)
             ->setName('Product1');
 
         $item2 = new ItemTransfer();
         $item2
             ->setSku('OSB1338')
             ->setQuantity(1)
-            ->setUnitGrossPrice(4000)
+            ->setUnitGrossPriceWithProductOptions(4000)
             ->setName('Product2');
 
 
@@ -330,10 +330,8 @@ class CheckoutFacadeTest extends Test
         $quoteTransfer->setShipment($shipment);
 
         $paymentTransfer = new PaymentTransfer();
-        $paymentTransfer->setPaymentSelection('payment');
+        $paymentTransfer->setPaymentSelection('no_payment');
         $quoteTransfer->setPayment($paymentTransfer);
-
-
 
         return $quoteTransfer;
     }

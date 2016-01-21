@@ -104,7 +104,7 @@ class ProductOptionReaderTest extends Test
         $this->assertEquals('Large', $productOptionTransfer->getLabelOptionValue());
         $this->assertEquals(199, $productOptionTransfer->getUnitGrossPrice());
 
-        $this->assertEquals('10', $productOptionTransfer->getTaxRate());
+        $this->assertEquals('15', $productOptionTransfer->getTaxRate());
     }
 
     /**

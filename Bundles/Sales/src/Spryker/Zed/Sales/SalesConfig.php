@@ -17,6 +17,13 @@ class SalesConfig extends AbstractBundleConfig
 {
 
     /**
+     * @var array|string[]
+     */
+    protected static $stateMachineMapper = [
+        'invoice' => 'Invoice01',
+        'no_payment' => 'Nopayment01',
+    ];
+    /**
      * @return string
      */
     public function getInvoiceIncrementPrefix()

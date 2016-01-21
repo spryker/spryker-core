@@ -8,6 +8,10 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\CaptureAdapterMock;
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 /**
@@ -24,14 +28,16 @@ class PayolutionFacadeCaptureTest extends AbstractFacadeTest
      */
     public function testCapturePaymentWithSuccessResponse()
     {
+        $orderTransfer = $this->createOrderTransfer();
+
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();
         $adapterMock = new PreAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($adapterMock);
-        $preAuthorizationResponse = $facade->preAuthorizePayment($idPayment);
+        $preAuthorizationResponse = $facade->preAuthorizePayment($orderTransfer, $idPayment);
 
         $adapterMock = new CaptureAdapterMock();
         $facade = $this->getFacadeMock($adapterMock);
-        $response = $facade->capturePayment($idPayment);
+        $response = $facade->capturePayment($orderTransfer, $idPayment);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
@@ -48,14 +54,14 @@ class PayolutionFacadeCaptureTest extends AbstractFacadeTest
             $expectedResponse->getIdentificationReferenceid()
         );
 
-        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog $requestLog */
+        /** @var SpyPaymentPayolutionTransactionRequestLog $requestLog */
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_CAPTURE, $requestLog->getPaymentCode());
-        $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
+        $this->assertEquals($orderTransfer->getTotals()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
-        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $statusLog */
+        /** @var SpyPaymentPayolutionTransactionStatusLog $statusLog */
         $statusLog = $this->getStatusLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getStatusLogCollectionForPayment()->count());
         $this->matchStatusLogWithResponse($statusLog, $expectedResponse);
@@ -68,15 +74,16 @@ class PayolutionFacadeCaptureTest extends AbstractFacadeTest
      */
     public function testCapturePaymentWithFailureResponse()
     {
+        $orderTransfer = $this->createOrderTransfer();
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();
         $adapterMock = new PreAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($adapterMock);
-        $preAuthorizationResponse = $facade->preAuthorizePayment($idPayment);
+        $preAuthorizationResponse = $facade->preAuthorizePayment($orderTransfer, $idPayment);
 
         $adapterMock = new CaptureAdapterMock();
         $adapterMock->expectFailure();
         $facade = $this->getFacadeMock($adapterMock);
-        $response = $facade->capturePayment($idPayment);
+        $response = $facade->capturePayment($orderTransfer, $idPayment);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
@@ -93,14 +100,14 @@ class PayolutionFacadeCaptureTest extends AbstractFacadeTest
             $expectedResponse->getIdentificationReferenceid()
         );
 
-        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog $requestLog */
+        /** @var SpyPaymentPayolutionTransactionRequestLog $requestLog */
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_CAPTURE, $requestLog->getPaymentCode());
-        $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
+        $this->assertEquals($orderTransfer->getTotals()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
-        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $statusLog */
+        /** @var SpyPaymentPayolutionTransactionStatusLog $statusLog */
         $statusLog = $this->getStatusLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getStatusLogCollectionForPayment()->count());
         $this->matchStatusLogWithResponse($statusLog, $expectedResponse);

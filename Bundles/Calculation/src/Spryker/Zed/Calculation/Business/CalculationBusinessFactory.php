@@ -13,7 +13,6 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalculator;
-use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -22,13 +21,13 @@ use Spryker\Zed\Calculation\CalculationDependencyProvider;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 /**
- * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
+ * @method CalculationConfig getConfig()
  */
 class CalculationBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\StackExecutor
+     * @return StackExecutor
      */
     public function createStackExecutor()
     {
@@ -36,7 +35,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @return CalculatorPluginInterface[]
      */
     protected function getProvidedCalculatorStack()
     {
@@ -44,7 +43,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseGrossSumAmountCalculator
+     * @return ExpenseGrossSumAmountCalculator
      */
     public function createExpenseGrossSumAmount()
     {
@@ -52,7 +51,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator
+     * @return ExpenseTotalsCalculator
      */
     public function createExpenseTotalsCalculator()
     {
@@ -60,7 +59,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator
+     * @return GrandTotalTotalsCalculator
      */
     public function createGrandTotalsCalculator()
     {
@@ -68,7 +67,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemGrossAmountsCalculator
+     * @return ItemGrossAmountsCalculator
      */
     public function createItemGrossSumCalculator()
     {
@@ -76,7 +75,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionGrossSumCalculator
+     * @return ProductOptionGrossSumCalculator
      */
     public function createOptionGrossSumCalculator()
     {
@@ -84,15 +83,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculator
-     */
-    public function getRemoveAllExpensesCalculator()
-    {
-        return new RemoveAllExpensesCalculator();
-    }
-
-    /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator
+     * @return RemoveTotalsCalculator
      */
     public function createRemoveTotalsCalculator()
     {
@@ -100,7 +91,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator
+     * @return SubtotalTotalsCalculator
      */
     public function createSubtotalTotalsCalculator()
     {
@@ -108,7 +99,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPrecondition
+     * @return CheckoutGrandTotalPrecondition
      */
     public function createCheckoutGrandTotalPrecondition()
     {

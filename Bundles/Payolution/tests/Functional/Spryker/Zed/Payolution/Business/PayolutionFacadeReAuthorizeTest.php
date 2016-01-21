@@ -8,6 +8,8 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\ReAuthorizationAdapterMock;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 class PayolutionFacadeReAuthorizeTest extends AbstractFacadeTest
@@ -18,13 +20,17 @@ class PayolutionFacadeReAuthorizeTest extends AbstractFacadeTest
      */
     public function testReAuthorizePaymentWithSuccessResponse()
     {
+        $orderTransfer = $this->createOrderTransfer();
         $adapterMock = new PreAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($adapterMock);
-        $preAuthorizationResponse = $facade->preAuthorizePayment($this->getPaymentEntity()->getIdPaymentPayolution());
+        $preAuthorizationResponse = $facade->preAuthorizePayment(
+            $orderTransfer,
+            $this->getPaymentEntity()->getIdPaymentPayolution()
+        );
 
         $adapterMock = new ReAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($adapterMock);
-        $response = $facade->reAuthorizePayment($this->getPaymentEntity()->getIdPaymentPayolution());
+        $response = $facade->reAuthorizePayment($orderTransfer, $this->getPaymentEntity()->getIdPaymentPayolution());
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
@@ -45,7 +51,7 @@ class PayolutionFacadeReAuthorizeTest extends AbstractFacadeTest
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION, $requestLog->getPaymentCode());
-        $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
+        $this->assertEquals($orderTransfer->getTotals()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
         /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $statusLog */
@@ -61,14 +67,21 @@ class PayolutionFacadeReAuthorizeTest extends AbstractFacadeTest
      */
     public function testPreAuthorizationWithFailureResponse()
     {
+        $orderTransfer = $this->createOrderTransfer();
         $adapterMock = new PreAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($adapterMock);
-        $preAuthorizationResponse = $facade->preAuthorizePayment($this->getPaymentEntity()->getIdPaymentPayolution());
+        $preAuthorizationResponse = $facade->preAuthorizePayment(
+            $orderTransfer,
+            $this->getPaymentEntity()->getIdPaymentPayolution()
+        );
 
         $adapterMock = new ReAuthorizationAdapterMock();
         $adapterMock->expectFailure();
         $facade = $this->getFacadeMock($adapterMock);
-        $response = $facade->reAuthorizePayment($this->getPaymentEntity()->getIdPaymentPayolution());
+        $response = $facade->reAuthorizePayment(
+            $orderTransfer,
+            $this->getPaymentEntity()->getIdPaymentPayolution()
+        );
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
@@ -89,7 +102,7 @@ class PayolutionFacadeReAuthorizeTest extends AbstractFacadeTest
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION, $requestLog->getPaymentCode());
-        $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
+        $this->assertEquals($orderTransfer->getTotals()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
         /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $statusLog */

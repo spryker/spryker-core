@@ -646,11 +646,8 @@ class ProductManager implements ProductManagerInterface
             $taxRate += $taxRateEntity->getRate();
         }
 
-        if (empty($taxRate)) {
-            return 0;
-        }
+        return $taxRate;
 
-        return $taxRate / count($taxRates);
     }
 
 }
