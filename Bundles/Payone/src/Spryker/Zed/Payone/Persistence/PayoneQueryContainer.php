@@ -42,7 +42,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $transactionId
      *
-     * @return Propel\SpyPaymentPayoneQuery
+     * @return SpyPaymentPayoneQuery
      */
     public function getPaymentByTransactionIdQuery($transactionId)
     {
