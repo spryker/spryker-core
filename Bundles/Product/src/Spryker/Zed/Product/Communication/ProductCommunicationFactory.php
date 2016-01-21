@@ -41,7 +41,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getLocaleFacade() instead.
+     * @deprecated Use getLocaleFacade() instead.
      *
      * @return ProductToLocaleInterface
      */
@@ -61,7 +61,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getProductOptionsFacade() instead.
+     * @deprecated Use getProductOptionsFacade() instead.
      *
      * @return ProductToProductOptionInterface
      */
@@ -81,7 +81,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getUrlFacade() instead.
+     * @deprecated Use getUrlFacade() instead.
      *
      * @return ProductToUrlInterface
      */
@@ -101,7 +101,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getProductCategoryQueryContainer() instead.
+     * @deprecated Use getProductCategoryQueryContainer() instead.
      *
      * @return ProductCategoryQueryContainerInterface
      */

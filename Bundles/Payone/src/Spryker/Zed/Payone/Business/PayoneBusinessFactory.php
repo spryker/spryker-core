@@ -182,7 +182,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getStandardParameter() instead.
+     * @deprecated Use getStandardParameter() instead.
      *
      * @return PayoneStandardParameterTransfer
      */

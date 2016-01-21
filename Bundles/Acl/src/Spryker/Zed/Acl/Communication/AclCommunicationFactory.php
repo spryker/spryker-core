@@ -33,7 +33,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated, Use getUserFacade() instead.
+     * @deprecated Use getUserFacade() instead.
      *
      * @return UserFacade
      */
@@ -64,7 +64,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getGroupRoleListByGroupId() instead.
+     * @deprecated Use getGroupRoleListByGroupId() instead.
      *
      * @param $idAclGroup
      *

@@ -41,7 +41,7 @@ class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getDiscountFacade() instead.
+     * @deprecated Use getDiscountFacade() instead.
      *
      * @return DiscountCheckoutConnectorToDiscountInterface
      */

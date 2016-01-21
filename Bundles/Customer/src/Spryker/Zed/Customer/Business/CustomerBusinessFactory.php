@@ -26,7 +26,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @deprecated, Use getQueryContainer() instead.
+     * @deprecated Use getQueryContainer() instead.
      *
      * @return CustomerQueryContainerInterface
      */
@@ -75,7 +75,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getCountryFacade() instead.
+     * @deprecated Use getCountryFacade() instead.
      *
      * @return CustomerToCountryInterface
      */
@@ -95,7 +95,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getLocaleFacade() instead.
+     * @deprecated Use getLocaleFacade() instead.
      *
      * @return CustomerToLocaleInterface
      */
@@ -126,7 +126,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getSequenceNumberFacade() instead.
+     * @deprecated Use getSequenceNumberFacade() instead.
      *
      * @return CustomerToSequenceNumberInterface
      */

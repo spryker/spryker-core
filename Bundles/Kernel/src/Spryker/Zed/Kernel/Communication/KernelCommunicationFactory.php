@@ -13,7 +13,7 @@ class KernelCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated, Use getMessengerFacade() instead.
+     * @deprecated Use getMessengerFacade() instead.
      *
      * @return KernelToMessengerInterface
      */

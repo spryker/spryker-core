@@ -18,7 +18,7 @@ class CollectorCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated, Use getLocaleFacade() instead.
+     * @deprecated Use getLocaleFacade() instead.
      *
      * @return CollectorToLocaleInterface
      */

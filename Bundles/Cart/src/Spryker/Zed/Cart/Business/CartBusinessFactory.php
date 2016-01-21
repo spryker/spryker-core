@@ -151,7 +151,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
 
 
     /**
-     * @deprecated, Use getCartCalculator() instead.
+     * @deprecated Use getCartCalculator() instead.
      *
      * @return CartToCalculationInterface
      */

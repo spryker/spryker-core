@@ -25,7 +25,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated, Use getQueryContainer() instead.
+     * @deprecated Use getQueryContainer() instead.
      *
      * @return CustomerQueryContainerInterface
      */

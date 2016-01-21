@@ -21,7 +21,7 @@ class PayoneCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated, Use getOmsFacade() instead.
+     * @deprecated Use getOmsFacade() instead.
      *
      * @return PayoneToOmsInterface
      */
@@ -41,7 +41,7 @@ class PayoneCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getRefundFacade() instead.
+     * @deprecated Use getRefundFacade() instead.
      *
      * @return PayoneToRefundInterface
      */

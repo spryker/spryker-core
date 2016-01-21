@@ -109,7 +109,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getAvailableCalculatorPlugins() instead.
+     * @deprecated Use getAvailableCalculatorPlugins() instead.
      *
      * @return CalculatorInterface[]
      */
@@ -129,7 +129,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getAvailableCollectorPlugins() instead.
+     * @deprecated Use getAvailableCollectorPlugins() instead.
      *
      * @return CollectorInterface[]
      */

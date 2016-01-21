@@ -17,7 +17,7 @@ class AuthMailConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated, Use getMailFacade() instead.
+     * @deprecated Use getMailFacade() instead.
      *
      * @return AuthMailConnectorToMailInterface
      */

@@ -18,7 +18,7 @@ class ItemGrouperCheckoutConnectorBusinessFactory extends AbstractBusinessFactor
 {
 
     /**
-     * @deprecated, Use getItemGrouperFacade() instead.
+     * @deprecated Use getItemGrouperFacade() instead.
      *
      * @return ItemGrouperCheckoutConnectorToItemGrouperInterface
      */

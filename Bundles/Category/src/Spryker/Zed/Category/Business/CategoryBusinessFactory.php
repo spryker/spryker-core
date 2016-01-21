@@ -134,7 +134,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getTouchFacade() instead.
+     * @deprecated Use getTouchFacade() instead.
      *
      * @return CategoryToTouchInterface
      */
@@ -154,7 +154,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getLocaleFacade() instead.
+     * @deprecated Use getLocaleFacade() instead.
      *
      * @return CategoryToLocaleInterface
      */
@@ -174,7 +174,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getUrlFacade() instead.
+     * @deprecated Use getUrlFacade() instead.
      *
      * @return CategoryToUrlInterface
      */

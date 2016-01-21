@@ -54,7 +54,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
 
 
     /**
-     * @deprecated, Use getUserFacade() instead.
+     * @deprecated Use getUserFacade() instead.
      *
      * @return UserFacade
      */

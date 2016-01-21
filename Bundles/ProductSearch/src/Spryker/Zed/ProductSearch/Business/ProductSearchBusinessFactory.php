@@ -129,7 +129,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getProductSearchQueryContainer() instead.
+     * @deprecated Use getProductSearchQueryContainer() instead.
      *
      * @return ProductSearchQueryContainerInterface
      */
@@ -149,7 +149,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getLocaleFacade() instead.
+     * @deprecated Use getLocaleFacade() instead.
      *
      * @return ProductSearchToLocaleInterface
      */
@@ -169,7 +169,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getTouchFacade() instead.
+     * @deprecated Use getTouchFacade() instead.
      *
      * @return ProductSearchToTouchInterface
      */

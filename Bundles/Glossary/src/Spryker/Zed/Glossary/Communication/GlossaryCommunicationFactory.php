@@ -29,7 +29,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getEnabledLocales() instead.
+     * @deprecated Use getEnabledLocales() instead.
      *
      * @return array
      */
@@ -50,7 +50,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getQueryContainer() instead.
+     * @deprecated Use getQueryContainer() instead.
      *
      * @return GlossaryQueryContainerInterface
      */

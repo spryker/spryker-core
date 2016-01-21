@@ -59,7 +59,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated, Use getYvesUrl() instead.
+     * @deprecated Use getYvesUrl() instead.
      *
      * @return string
      */

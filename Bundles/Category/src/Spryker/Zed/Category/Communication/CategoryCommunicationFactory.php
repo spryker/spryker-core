@@ -27,7 +27,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     protected $currentLocale;
 
     /**
-     * @deprecated, Use getCurrentLocale() instead.
+     * @deprecated Use getCurrentLocale() instead.
      *
      * @return LocaleTransfer
      */

@@ -18,7 +18,7 @@ class OmsDiscountConnectorCommunicationFactory extends AbstractCommunicationFact
 {
 
     /**
-     * @deprecated, Use getDiscountFacade() instead.
+     * @deprecated Use getDiscountFacade() instead.
      *
      * @return OmsDiscountConnectorToDiscountInterface
      */

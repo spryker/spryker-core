@@ -31,7 +31,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated, Use getCurrentLocale() instead.
+     * @deprecated Use getCurrentLocale() instead.
      *
      * @return LocaleTransfer
      */
@@ -52,7 +52,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getProductFacade() instead.
+     * @deprecated Use getProductFacade() instead.
      *
      * @throws \ErrorException
      *
@@ -76,7 +76,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getCategoryFacade() instead.
+     * @deprecated Use getCategoryFacade() instead.
      *
      * @throws \ErrorException
      *
@@ -100,7 +100,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getCmsFacade() instead.
+     * @deprecated Use getCmsFacade() instead.
      *
      * @throws \ErrorException
      *
@@ -126,7 +126,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getCategoryQueryContainer() instead.
+     * @deprecated Use getCategoryQueryContainer() instead.
      *
      * @return CategoryQueryContainerInterface
      */
@@ -146,7 +146,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getProductQueryContainer() instead.
+     * @deprecated Use getProductQueryContainer() instead.
      *
      * @return ProductQueryContainerInterface
      */
@@ -242,7 +242,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated, Use getPropelConnection() instead.
+     * @deprecated Use getPropelConnection() instead.
      *
      * @throws \ErrorException
      *
