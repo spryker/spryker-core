@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Development\Business\DependencyTree\DependencyTreeWriter;
+namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeWriter;
 
 use Symfony\Component\Filesystem\Filesystem;
 

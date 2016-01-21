@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Development\Business\DependencyTree\DependencyGraph;
+namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\AbstractDependencyFilter;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorFacade;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\UseStatement;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyReport\DependencyReport;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\AbstractDependencyFilter;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\UseStatement;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Library\Service\GraphViz;
 
 class GraphBuilder
@@ -154,9 +154,9 @@ class GraphBuilder
     {
         $groupNameElements = [
             $bundle,
-            $dependencyInformation[DependencyReport::META_LAYER],
+            $dependencyInformation[DependencyTree::META_LAYER],
             $dependentBundle,
-            $dependencyInformation[DependencyReport::META_DEPENDS_LAYER],
+            $dependencyInformation[DependencyTree::META_FOREIGN_LAYER],
         ];
 
         return implode(':', $groupNameElements);
@@ -169,7 +169,7 @@ class GraphBuilder
      */
     private function getFoundIn(array $dependencyInformation)
     {
-        return substr($dependencyInformation[DependencyReport::META_FILE], 0, -4);
+        return substr($dependencyInformation[DependencyTree::META_FILE], 0, -4);
     }
 
     /**
@@ -184,10 +184,10 @@ class GraphBuilder
     {
         $idElements = [
             $bundle,
-            $dependencyInformation[DependencyReport::META_LAYER],
+            $dependencyInformation[DependencyTree::META_LAYER],
             $foundIn,
             $dependentBundle,
-            $dependencyInformation[DependencyReport::META_DEPENDS_LAYER],
+            $dependencyInformation[DependencyTree::META_FOREIGN_LAYER],
         ];
 
         return implode(':', $idElements);
@@ -213,7 +213,7 @@ class GraphBuilder
      */
     private function getFoundBy(array $dependencyInformation)
     {
-        return $this->getDependentInfo($dependencyInformation[DependencyReport::META_FINDER]);
+        return $this->getDependentInfo($dependencyInformation[DependencyTree::META_FINDER]);
     }
 
     /**
@@ -228,7 +228,7 @@ class GraphBuilder
     {
         $idElements = [
             $dependentBundle,
-            $dependencyInformation[DependencyReport::META_DEPENDS_LAYER],
+            $dependencyInformation[DependencyTree::META_FOREIGN_LAYER],
             $foundBy,
             $foundIn,
         ];
@@ -311,10 +311,10 @@ class GraphBuilder
     {
         $groupLabelElements = [
             $bundle,
-            ($dependencyInfo[DependencyReport::META_LAYER] === 'noLayer') ? 'Default' : $dependencyInfo[DependencyReport::META_LAYER],
+            ($dependencyInfo[DependencyTree::META_LAYER] === 'noLayer') ? 'Default' : $dependencyInfo[DependencyTree::META_LAYER],
             '=>',
             $dependentBundle,
-            ($dependencyInfo[DependencyReport::META_DEPENDS_LAYER] === 'noLayer') ? 'Default' : $dependencyInfo[DependencyReport::META_DEPENDS_LAYER]
+            ($dependencyInfo[DependencyTree::META_FOREIGN_LAYER] === 'noLayer') ? 'Default' : $dependencyInfo[DependencyTree::META_FOREIGN_LAYER]
         ];
 
         return implode(' ', $groupLabelElements);

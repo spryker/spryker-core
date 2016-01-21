@@ -4,11 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace Spryker\Zed\Development\Business\DependencyTree;
+namespace Spryker\Zed\Maintenance\Business\DependencyTree;
 
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\AbstractDependencyFinder;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyReport\AbstractDependencyReport;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeWriter\DependencyTreeWriterInterface;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\AbstractDependencyFinder;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeWriter\DependencyTreeWriterInterface;
 
 class DependencyTreeBuilder
 {
@@ -19,9 +18,9 @@ class DependencyTreeBuilder
     private $finder;
 
     /**
-     * @var AbstractDependencyReport
+     * @var AbstractDependencyTree
      */
-    private $report;
+    private $dependencyTree;
 
     /**
      * @var DependencyTreeWriterInterface
@@ -35,13 +34,13 @@ class DependencyTreeBuilder
 
     /**
      * @param Finder $finder
-     * @param AbstractDependencyReport $report
+     * @param AbstractDependencyTree $report
      * @param DependencyTreeWriterInterface $writer
      */
-    public function __construct(Finder $finder, AbstractDependencyReport $report, DependencyTreeWriterInterface $writer)
+    public function __construct(Finder $finder, AbstractDependencyTree $report, DependencyTreeWriterInterface $writer)
     {
         $this->finder = $finder;
-        $this->report = $report;
+        $this->dependencyTree = $report;
         $this->writer = $writer;
     }
 
@@ -74,12 +73,12 @@ class DependencyTreeBuilder
     {
         foreach ($this->finder->getFiles() as $fileInfo) {
             foreach ($this->dependencyChecker as $dependencyChecker) {
-                $dependencyChecker->setReport($this->report);
+                $dependencyChecker->setDependencyTree($this->dependencyTree);
                 $dependencyChecker->findDependencies($fileInfo);
             }
         }
 
-        $this->writer->write($this->report->getTree());
+        $this->writer->write($this->dependencyTree->getDependencyTree());
     }
 
 }

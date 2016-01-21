@@ -4,18 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Development\Business\DependencyTree\DependencyReport;
+namespace Spryker\Zed\Maintenance\Business\DependencyTree;
 
-use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
 use Symfony\Component\Finder\SplFileInfo;
 
-class DependencyReport extends AbstractDependencyReport
+class DependencyTree extends AbstractDependencyTree
 {
 
     const META_FINDER = 'finder';
     const META_FILE = 'file';
-    const META_DEPENDS = 'depends';
-    const META_DEPENDS_LAYER = 'dependsLayer';
+    const META_FOREIGN_BUNDLE = 'foreign bundle';
+    const META_FOREIGN_LAYER = 'foreign layer';
     const META_APPLICATION = 'application';
     const META_BUNDLE = 'bundle';
     const META_LAYER = 'layer';
@@ -52,23 +51,23 @@ class DependencyReport extends AbstractDependencyReport
 
         $meta = $meta + [
             self::META_FILE => $fileInfo->getFilename(),
-            self::META_DEPENDS => $to,
+            self::META_FOREIGN_BUNDLE => $to,
             self::META_APPLICATION => $application,
             self::META_BUNDLE => $bundle,
             self::META_LAYER => $layer,
         ];
 
-        if (!array_key_exists($application, $this->dependencyReport)) {
-            $this->dependencyReport[$application] = [];
+        if (!array_key_exists($application, $this->dependencyTree)) {
+            $this->dependencyTree[$application] = [];
         }
-        if (!array_key_exists($bundle, $this->dependencyReport[$application])) {
-            $this->dependencyReport[$application][$bundle] = [];
+        if (!array_key_exists($bundle, $this->dependencyTree[$application])) {
+            $this->dependencyTree[$application][$bundle] = [];
         }
-        if (!array_key_exists($to, $this->dependencyReport[$application][$bundle])) {
-            $this->dependencyReport[$application][$bundle][$to] = [];
+        if (!array_key_exists($to, $this->dependencyTree[$application][$bundle])) {
+            $this->dependencyTree[$application][$bundle][$to] = [];
         }
 
-        $this->dependencyReport[$application][$bundle][$to][] = $meta;
+        $this->dependencyTree[$application][$bundle][$to][] = $meta;
     }
 
 

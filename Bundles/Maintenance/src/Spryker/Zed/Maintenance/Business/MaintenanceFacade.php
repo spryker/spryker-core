@@ -76,4 +76,26 @@ class MaintenanceFacade extends AbstractFacade
         return $this->getFactory()->createDependencyManager()->collectAllBundles();
     }
 
+    /**
+     * @param string $application
+     * @param string $bundle
+     * @param string $layer
+     *
+     * @return void
+     */
+    public function buildDependencyTree($application, $bundle, $layer)
+    {
+        $this->getFactory()->createDependencyTreeBuilder($application, $bundle, $layer)->buildDependencyTree();
+    }
+
+    /**
+     * @return bool
+     */
+    public function drawDependencyTreeGraph()
+    {
+        return $this->getFactory()->createDependencyGraphBuilder()->build(
+            $this->getFactory()->createDependencyTreeReader()->read()
+        );
+    }
+
 }

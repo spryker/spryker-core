@@ -4,33 +4,33 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Development\Business\DependencyTree\DependencyReport;
+namespace Spryker\Zed\Maintenance\Business\DependencyTree;
 
 use Symfony\Component\Finder\SplFileInfo;
 
-abstract class AbstractDependencyReport
+abstract class AbstractDependencyTree
 {
 
     /**
      * @var array
      */
-    protected $dependencyReport = [];
+    protected $dependencyTree = [];
 
     /**
      * @param SplFileInfo $fileInfo
      * @param string $to
      * @param array $meta
      *
-     * @return mixed
+     * @return void
      */
     abstract public function addDependency(SplFileInfo $fileInfo, $to, array $meta = []);
 
     /**
      * @return array
      */
-    public function getTree()
+    public function getDependencyTree()
     {
-        return $this->dependencyReport;
+        return $this->dependencyTree;
     }
 
 }

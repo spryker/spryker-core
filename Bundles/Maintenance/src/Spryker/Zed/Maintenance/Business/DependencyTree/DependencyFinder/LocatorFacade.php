@@ -4,15 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
+namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder;
 
-use Spryker\Zed\Development\Business\DependencyTree\DependencyReport\DependencyReport;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 use Symfony\Component\Finder\SplFileInfo;
 
-class LocatorClient extends AbstractDependencyFinder
+class LocatorFacade extends AbstractDependencyFinder
 {
-
-    const NO_LAYER = 'noLayer';
 
     /**
      * @param SplFileInfo $fileInfo
@@ -25,7 +23,7 @@ class LocatorClient extends AbstractDependencyFinder
     {
         $content = $fileInfo->getContents();
 
-        if (preg_match_all('/->(.*?)\(\)->client\(\)/', $content, $matches, PREG_SET_ORDER)) {
+        if (preg_match_all('/->(.*?)\(\)->facade\(\)/', $content, $matches, PREG_SET_ORDER)) {
             foreach ($matches as $match) {
                 $toBundle = $match[1];
 
@@ -35,8 +33,7 @@ class LocatorClient extends AbstractDependencyFinder
                 }
 
                 $toBundle = ucfirst($toBundle);
-
-                $this->addDependency($fileInfo, $toBundle, [DependencyReport::META_DEPENDS_LAYER => self::NO_LAYER]);
+                $this->addDependency($fileInfo, $toBundle, [DependencyTree::META_FOREIGN_LAYER => self::LAYER_BUSINESS]);
             }
         }
     }

@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
+namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder;
 
-use Spryker\Zed\Development\Business\DependencyTree\DependencyReport\AbstractDependencyReport;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyReport\DependencyReport;
+use Spryker\Zed\Maintenance\Business\DependencyTree\AbstractDependencyTree;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractDependencyFinder
@@ -24,24 +24,24 @@ abstract class AbstractDependencyFinder
     private $bundle;
 
     /**
-     * @var AbstractDependencyReport
+     * @var AbstractDependencyTree
      */
     private $report;
 
     /**
-     * @param AbstractDependencyReport $report
+     * @param AbstractDependencyTree $dependencyTree
      *
      * @return $this
      */
-    public function setReport(AbstractDependencyReport $report)
+    public function setDependencyTree(AbstractDependencyTree $dependencyTree)
     {
-        $this->report = $report;
+        $this->report = $dependencyTree;
 
         return $this;
     }
 
     /**
-     * @return AbstractDependencyReport
+     * @return AbstractDependencyTree
      */
     public function getReport()
     {
@@ -64,7 +64,7 @@ abstract class AbstractDependencyFinder
      */
     protected function addDependency(SplFileInfo $fileInfo, $to, array $meta = [])
     {
-        $meta[DependencyReport::META_FINDER] = get_class($this);
+        $meta[DependencyTree::META_FINDER] = get_class($this);
 
         $this->report->addDependency($fileInfo, $to, $meta);
     }

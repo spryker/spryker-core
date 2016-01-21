@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFilter;
+namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter;
 
 class BundleFilter extends AbstractDependencyFilter
 {

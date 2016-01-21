@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
+namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder;
 
-use Spryker\Zed\Development\Business\DependencyTree\DependencyReport\DependencyReport;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 use Symfony\Component\Finder\SplFileInfo;
 
 class UseStatement extends AbstractDependencyFinder
@@ -30,10 +30,10 @@ class UseStatement extends AbstractDependencyFinder
                 $toBundle = $match[2];
                 $layer = $this->getLayerFromUseStatement($match);
                 $meta = [
-                    DependencyReport::META_DEPENDS_LAYER => self::NO_LAYER
+                    DependencyTree::META_FOREIGN_LAYER => self::NO_LAYER
                 ];
                 if ($layer) {
-                    $meta[DependencyReport::META_DEPENDS_LAYER] = $layer;
+                    $meta[DependencyTree::META_FOREIGN_LAYER] = $layer;
                 }
 
                 $this->addDependency($fileInfo, $toBundle, $meta);

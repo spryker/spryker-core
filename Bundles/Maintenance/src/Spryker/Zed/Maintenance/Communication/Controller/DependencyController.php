@@ -82,4 +82,16 @@ class DependencyController extends AbstractController
         return $this->streamedResponse($callback);
     }
 
+    /**
+     * @return StreamedResponse
+     */
+    public function dependencyTreeGraphAction()
+    {
+        $callback = function() {
+            $this->getFacade()->drawDependencyTreeGraph();
+        };
+
+        return $this->streamedResponse($callback);
+    }
+
 }

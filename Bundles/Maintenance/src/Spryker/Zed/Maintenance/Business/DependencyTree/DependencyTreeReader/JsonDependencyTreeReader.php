@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader;
+namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader;
 
 class JsonDependencyTreeReader extends AbstractDependencyTreeReader
 {
