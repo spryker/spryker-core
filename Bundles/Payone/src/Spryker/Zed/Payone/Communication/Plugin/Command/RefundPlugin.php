@@ -39,7 +39,7 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
         $orderTransfer->fromArray($orderEntity->toArray(), true);
 
         $amount = $this->getFactory()
-            ->createRefundFacade()
+            ->getRefundFacade()
             ->calculateRefundableAmount($orderTransfer);
         $refundTransfer->setAmount($amount * -1);
 

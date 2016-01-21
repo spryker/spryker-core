@@ -40,7 +40,7 @@ class CollectorSearchExportConsole extends AbstractCollectorConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $locale = $this->getFactory()->createLocaleFacade()->getCurrentLocale();
+        $locale = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
         $exportResults = $this->getFacade()->exportSearchForLocale($locale);
 
         $this->info($this->buildSummary($exportResults));

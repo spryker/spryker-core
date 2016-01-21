@@ -22,7 +22,7 @@ class ItemGrouperCheckoutConnectorFacade extends AbstractFacade
      */
     public function groupOrderItems(GroupableContainerTransfer $orderItems)
     {
-        return $this->getFactory()->createItemGrouperFacade()->groupItemsByKey($orderItems);
+        return $this->getFactory()->getItemGrouperFacade()->groupItemsByKey($orderItems);
     }
 
 }

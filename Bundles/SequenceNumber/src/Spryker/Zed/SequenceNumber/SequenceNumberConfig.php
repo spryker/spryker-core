@@ -66,8 +66,6 @@ class SequenceNumberConfig extends AbstractBundleConfig
      */
     public function getNumberMinimum()
     {
-        trigger_error('Deprecated, use getOffset() instead.', E_USER_DEPRECATED);
-
         return $this->getOffset();
     }
 

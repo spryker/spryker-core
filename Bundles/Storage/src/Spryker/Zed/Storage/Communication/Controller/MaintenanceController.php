@@ -65,7 +65,7 @@ class MaintenanceController extends AbstractController
     public function dropTimestampsAction()
     {
         $timestamps = $this->getFacade()->getTimestamps();
-        $this->getFactory()->createCollectorFacade()->deleteStorageTimestamps(array_keys($timestamps));
+        $this->getFactory()->getCollectorFacade()->deleteStorageTimestamps(array_keys($timestamps));
 
         return $this->redirectResponse(self::URL_STORAGE_MAINTENANCE);
     }

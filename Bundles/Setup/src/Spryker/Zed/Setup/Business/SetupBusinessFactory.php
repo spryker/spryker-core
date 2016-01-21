@@ -44,23 +44,11 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     /**
      * @return DirectoryRemoverInterface
      */
-    public function getModelGeneratedDirectoryRemover()
+    public function createModelGeneratedDirectoryRemover()
     {
         return $this->createDirectoryRemover(
             $this->getConfig()->getGeneratedDirectory()
         );
-    }
-
-    /**
-     * @deprecated Use getModelGeneratedDirectoryRemover() instead.
-     *
-     * @return DirectoryRemoverInterface
-     */
-    public function createModelGeneratedDirectoryRemover()
-    {
-        trigger_error('Deprecated, use getModelGeneratedDirectoryRemover() instead.', E_USER_DEPRECATED);
-
-        return $this->getModelGeneratedDirectoryRemover();
     }
 
     /**
