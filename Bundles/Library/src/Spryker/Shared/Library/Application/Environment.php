@@ -70,6 +70,7 @@ class Environment
             }
         }
 
+        $errorCode = error_reporting();
         self::initializeErrorHandler();
 
         require_once APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Library/src/Spryker/Shared/Library/Autoloader.php';
@@ -79,6 +80,12 @@ class Environment
         TestAutoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
 
         $coreNamespaces = Config::get(ApplicationConstants::CORE_NAMESPACES);
+
+        $configErrorCode = Config::get(ApplicationConstants::ERROR_LEVEL);
+        if ($configErrorCode !== $errorCode) {
+            error_reporting($configErrorCode);
+            self::initializeErrorHandler();
+        }
 
         foreach ($coreNamespaces as $namespace) {
             Autoloader::allowNamespace($namespace);
@@ -151,10 +158,12 @@ class Environment
             return ErrorHandler::initialize();
         };
 
+        $errorLevel = error_reporting();
         set_error_handler(
             function ($errno, $errstr, $errfile, $errline) use ($initErrorHandler) {
                 throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
-            }
+            },
+            $errorLevel
         );
 
         set_exception_handler(
