@@ -22,6 +22,7 @@ use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryConfig;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method ProductCategoryQueryContainer getQueryContainer()
@@ -168,7 +169,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idParentNode
      *
-     * @return CategoryFormAdd
+     * @return FormInterface
      */
     public function createCategoryFormAdd($idParentNode)
     {
@@ -186,7 +187,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idCategory
      *
-     * @return CategoryFormEdit
+     * @return FormInterface
      */
     public function createCategoryFormEdit($idCategory)
     {
@@ -204,7 +205,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idCategory
      *
-     * @return CategoryFormEdit
+     * @return FormInterface
      */
     public function createCategoryFormDelete($idCategory)
     {
