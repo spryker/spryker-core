@@ -36,6 +36,8 @@ class Store
     /**
      * List of locales
      *
+     * E.g: "de" => "de_DE"
+     *
      * @var array
      */
     protected $locales;
@@ -269,6 +271,8 @@ class Store
 
     /**
      * @param string $currentLocale
+     *
+     * @throws \InvalidArgumentException
      *
      * @return void
      */
