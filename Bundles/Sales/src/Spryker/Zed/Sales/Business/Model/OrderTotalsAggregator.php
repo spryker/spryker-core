@@ -13,7 +13,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderTotalsAggregator
 {
-
     /**
      * @var OrderTotalsAggregatePluginInterface[]
      */
@@ -45,11 +44,17 @@ class OrderTotalsAggregator
     {
         $orderTransfer = $this->hydrateOrderTransfer($idSalesOrder);
 
-        foreach ($this->orderAmountAggregators as $orderAmountAggregator) {
-            $orderAmountAggregator->aggregate($orderTransfer);
-        }
+        return $this->applyAmountAggregatorsToOrderTransfer($orderTransfer);
+    }
 
-        return $orderTransfer;
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return $orderTransfer
+     */
+    public function aggregateByOrderTransfer(OrderTransfer $orderTransfer)
+    {
+        return $this->applyAmountAggregatorsToOrderTransfer($orderTransfer);
     }
 
     /**
@@ -76,6 +81,20 @@ class OrderTotalsAggregator
             }
             
             $orderTransfer->addItem($itemTransfer);
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return OrderTransfer
+     */
+    protected function applyAmountAggregatorsToOrderTransfer(OrderTransfer $orderTransfer)
+    {
+        foreach ($this->orderAmountAggregators as $orderAmountAggregator) {
+            $orderAmountAggregator->aggregate($orderTransfer);
         }
 
         return $orderTransfer;

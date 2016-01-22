@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Business\Model;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
@@ -39,22 +40,15 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      */
     public function saveShipmentForOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
+        $this->assertShipmentRequirements($quoteTransfer);
+
         Propel::getConnection()->beginTransaction();
-        $idSalesOrder = $checkoutResponse->getSaveOrder()->getIdSalesOrder();
-        $salesOrderEntity = $this->queryContainer->querySalesOrderById($idSalesOrder)->findOne();
-        $salesOrderEntity->setFkShipmentMethod($quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod());
 
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if (ShipmentConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {
-                $salesOrderExpenseEntity = new SpySalesExpense();
-                $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $expenseTransfer);
-                $salesOrderExpenseEntity->save();
+        $salesOrderEntity = $this->getSalesOrderByIdSalesOrder($checkoutResponse->getSaveOrder()->getIdSalesOrder());
 
-                $expenseTransfer->setIdSalesExpense($salesOrderExpenseEntity->getIdSalesExpense());
+        $this->addShippingDetailsToOrder($quoteTransfer, $salesOrderEntity);
+        $this->addExpensesToOrder($quoteTransfer, $salesOrderEntity);
 
-                $salesOrderEntity->addExpense($salesOrderExpenseEntity);
-            }
-        }
         $salesOrderEntity->save();
         Propel::getConnection()->commit();
     }
@@ -71,6 +65,62 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     ) {
         $salesOrderExpenseEntity->fromArray($expenseTransfer->toArray());
         $salesOrderExpenseEntity->setGrossPrice($expenseTransfer->getUnitGrossPrice());
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     *
+     */
+    protected function assertShipmentRequirements(QuoteTransfer $quoteTransfer)
+    {
+        $quoteTransfer->requireShipment();
+        $quoteTransfer->getShipment()->requireMethod();
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    protected function addExpensesToOrder(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
+    {
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            if (ShipmentConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {
+                $salesOrderExpenseEntity = new SpySalesExpense();
+                $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $expenseTransfer);
+                $salesOrderExpenseEntity->save();
+
+                $expenseTransfer->setIdSalesExpense($salesOrderExpenseEntity->getIdSalesExpense());
+
+                $salesOrderEntity->addExpense($salesOrderExpenseEntity);
+            }
+        }
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    protected function addShippingDetailsToOrder(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
+    {
+        $shipmentMethodTransfer = $quoteTransfer->getShipment()->getMethod();
+        $salesOrderEntity->setFkShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod());
+        $salesOrderEntity->setShipmentDeliveryTime($shipmentMethodTransfer->getDeliveryTime());
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return SpySalesOrder
+     */
+    protected function getSalesOrderByIdSalesOrder($idSalesOrder)
+    {
+        return $this->queryContainer->querySalesOrderById($idSalesOrder)->findOne();
     }
 
 }

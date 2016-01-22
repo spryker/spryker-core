@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Customer\Business\Model;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -16,18 +17,18 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
 
     /**
-     * @var \Spryker\Zed\Customer\Business\Customer\Customer
+     * @var Customer
      */
     protected $customer;
 
     /**
-     * @var \Spryker\Zed\Customer\Business\Customer\Address
+     * @var Address
      */
     protected $address;
 
     /**
-     * @param \Spryker\Zed\Customer\Business\Customer\Customer $customer
-     * @param \Spryker\Zed\Customer\Business\Customer\Address $address
+     * @param Customer $customer
+     * @param Address $address
      */
     public function __construct(Customer $customer, Address $address)
     {
@@ -36,60 +37,105 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
+        $this->assertCustomerRequirements($quoteTransfer);
+
         $customerTransfer = $quoteTransfer->getCustomer();
 
-        if ($customerTransfer->getIsGuest()) {
+        if ($customerTransfer->getIsGuest() === true) {
             return;
         }
 
-        if ($customerTransfer->getIdCustomer() !== null) {
-            $this->customer->update($customerTransfer);
+        if ($this->isNewCustomer($customerTransfer)) {
+            $this->createNewCustomer($quoteTransfer, $customerTransfer);
         } else {
-            $customerTransfer->setFirstName($quoteTransfer->getBillingAddress()->getFirstName());
-            $customerTransfer->setLastName($quoteTransfer->getBillingAddress()->getLastName());
-            if (!$customerTransfer->getEmail()) {
-                $customerTransfer->setEmail($quoteTransfer->getBillingAddress()->getEmail());
-            }
-            $customerResponseTransfer = $this->customer->register($customerTransfer);
-            $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
+            $this->customer->update($customerTransfer);
         }
 
         $this->persistAddresses($customerTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
+     * @param CustomerTransfer $customer
      *
      * @return void
      */
     protected function persistAddresses(CustomerTransfer $customer)
     {
-        foreach ($customer->getBillingAddress() as $billingAddress) {
-            $billingAddress->setFkCustomer($customer->getIdCustomer());
-            if ($billingAddress->getIdCustomerAddress() === null) {
-                $newAddress = $this->address->createAddress($billingAddress);
-                $billingAddress->setIdCustomerAddress($newAddress->getIdCustomerAddress());
-            } else {
-                $this->address->updateAddress($billingAddress);
-            }
-        }
+        $this->processCustomerAddressList($customer->getBillingAddress(), $customer);
+        $this->processCustomerAddressList($customer->getShippingAddress(), $customer);
+    }
 
-        foreach ($customer->getShippingAddress() as $shippingAddress) {
-            $shippingAddress->setFkCustomer($customer->getIdCustomer());
-            if ($shippingAddress->getIdCustomerAddress() === null) {
-                $newAddress = $this->address->createAddress($shippingAddress);
-                $shippingAddress->setIdCustomerAddress($newAddress->getIdCustomerAddress());
+    /**
+     * @param \ArrayObject|AddressTransfer[] $addresses
+     *
+     * @return void
+     */
+    protected function processCustomerAddressList(\ArrayObject $addresses, CustomerTransfer $customerTransfer)
+    {
+        foreach ($addresses as $addressTransfer) {
+            $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
+            if ($addressTransfer->getIdCustomerAddress() === null) {
+                $newAddressTransfer = $this->address->createAddress($addressTransfer);
+                $addressTransfer->setIdCustomerAddress($newAddressTransfer->getIdCustomerAddress());
             } else {
-                $this->address->updateAddress($shippingAddress);
+                $this->address->updateAddress($addressTransfer);
             }
         }
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function hydrateCustomerTransfer(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer)
+    {
+        $customerTransfer->setFirstName($quoteTransfer->getBillingAddress()->getFirstName());
+        $customerTransfer->setLastName($quoteTransfer->getBillingAddress()->getLastName());
+        if ($customerTransfer->getEmail() === null) {
+            $customerTransfer->setEmail($quoteTransfer->getBillingAddress()->getEmail());
+        }
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function assertCustomerRequirements(QuoteTransfer $quoteTransfer)
+    {
+        $quoteTransfer->requireCustomer();
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function createNewCustomer(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer)
+    {
+        $this->hydrateCustomerTransfer($quoteTransfer, $customerTransfer);
+        $customerResponseTransfer = $this->customer->register($customerTransfer);
+        $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isNewCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $customerTransfer->getIdCustomer() === null;
     }
 
 }

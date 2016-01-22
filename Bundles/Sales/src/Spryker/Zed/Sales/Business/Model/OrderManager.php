@@ -86,6 +86,8 @@ class OrderManager
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
+        $this->assertOrderRequirements($quoteTransfer);
+
         Propel::getConnection()->beginTransaction();
 
         $orderTransfer = $this->createOrderTransfer();
@@ -140,18 +142,15 @@ class OrderManager
     ) {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
 
+            $this->assertItemRequirements($itemTransfer);
+
             $processName = $this->salesConfiguration->determineProcessForOrderItem($quoteTransfer, $itemTransfer);
             $omsOrderProcessEntity = $this->omsFacade->getProcessEntity($processName);
 
             $salesOrderItemEntity = $this->createSalesOrderItemEntity();
-            $this->hydrateSalesOrderItemEntity(
-                $salesOrderEntity,
-                $omsOrderProcessEntity,
-                $salesOrderItemEntity,
-                $itemTransfer
-            );
+            $this->hydrateSalesOrderItemEntity($salesOrderEntity, $omsOrderProcessEntity, $salesOrderItemEntity, $itemTransfer);
 
-            $salesOrderItemEntity->setGrossPrice($itemTransfer->getUnitGrossPriceWithProductOptions());
+            $salesOrderItemEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
             $salesOrderItemEntity->save();
 
             $orderItemTransfer = clone $itemTransfer;
@@ -261,14 +260,9 @@ class OrderManager
     protected function hydrateSalesOrderEntity(QuoteTransfer $quoteTransfer, SpySalesOrder $orderEntity)
     {
         $orderEntity->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer());
-
         $orderEntity->fromArray($quoteTransfer->getCustomer()->toArray());
-
-        $orderEntity->setFkShipmentMethod($quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod());
-
         $orderEntity->setBillingAddress($this->saveSalesOrderAddress($quoteTransfer->getBillingAddress()));
         $orderEntity->setShippingAddress($this->saveSalesOrderAddress($quoteTransfer->getShippingAddress()));
-
         $orderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
     }
 
@@ -276,7 +270,7 @@ class OrderManager
      * @param SpySalesOrder $salesOrderEntity
      * @param SpyOmsOrderProcess $omsOrderProcessEntity
      * @param $salesOrderItemEntity
-     * @param ItemTransfer $item
+     * @param ItemTransfer $itemTransfer
      *
      * @return void
      */
@@ -284,13 +278,10 @@ class OrderManager
         SpySalesOrder $salesOrderEntity,
         SpyOmsOrderProcess $omsOrderProcessEntity,
         SpySalesOrderItem $salesOrderItemEntity,
-        ItemTransfer $item
+        ItemTransfer $itemTransfer
     ) {
-        $quantity = $this->getQuantity($item);
 
-        $salesOrderItemEntity->fromArray($item->toArray());
-        $salesOrderItemEntity->setQuantity($quantity);
-
+        $salesOrderItemEntity->fromArray($itemTransfer->toArray());
         $salesOrderItemEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesOrderItemEntity->setFkOmsOrderItemState(
             $this->omsFacade->getInitialStateEntity()->getIdOmsOrderItemState()
@@ -412,12 +403,26 @@ class OrderManager
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param $itemTransfer
      *
-     * @return int
+     * @return void
      */
-    protected function getQuantity(ItemTransfer $item)
+    protected function assertItemRequirements(ItemTransfer $itemTransfer)
     {
-        return $item->getQuantity() !== null ? $item->getQuantity() : 1;
+        $itemTransfer->requireUnitGrossPrice()
+            ->requireQuantity()
+            ->requireName()
+            ->requireSku();
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function assertOrderRequirements(QuoteTransfer $quoteTransfer)
+    {
+        $quoteTransfer->requireItems()
+            ->requireTotals();
     }
 }

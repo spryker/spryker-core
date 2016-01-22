@@ -13,11 +13,11 @@ interface CustomerOrderSaverInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
 }

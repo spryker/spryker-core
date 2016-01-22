@@ -86,6 +86,7 @@
         <property name="idSalesOrderItem" type="int" />
         <property name="fkSalesOrder" type="int" />
         <property name="fkOmsOrderItemState" type="int" />
+        <property name="fkRefund" type="int" />
         <property name="name" type="string" />
         <property name="sku" type="string" />
         <property name="groupKey" type="string"/>

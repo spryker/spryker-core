@@ -270,14 +270,14 @@ class CheckoutFacadeTest extends Test
         $item1
             ->setSku('OSB1337')
             ->setQuantity(1)
-            ->setUnitGrossPriceWithProductOptions(3000)
+            ->setUnitGrossPrice(3000)
             ->setName('Product1');
 
         $item2 = new ItemTransfer();
         $item2
             ->setSku('OSB1338')
             ->setQuantity(1)
-            ->setUnitGrossPriceWithProductOptions(4000)
+            ->setUnitGrossPrice(4000)
             ->setName('Product2');
 
 

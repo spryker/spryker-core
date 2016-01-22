@@ -15,10 +15,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Kernel\Container;
@@ -173,6 +170,13 @@ class SalesFacadeTest extends Test
         $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
         $quoteTransfer->setShipment($shipmentTransfer);
 
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setUnitGrossPrice(1)
+            ->setQuantity(1)
+            ->setName('test-name')
+            ->setSku('sku-test');
+        $quoteTransfer->addItem($itemTransfer);
+
         $paymentTransfer = new PaymentTransfer();
         $paymentTransfer->setPaymentSelection('payolution_invoice');
 
@@ -251,14 +255,14 @@ class SalesFacadeTest extends Test
         $item1 = new ItemTransfer();
         $item1->setName('item-test-1')
             ->setSku('sku1')
-            ->setUnitGrossPriceWithProductOptions(120)
+            ->setUnitGrossPrice(120)
             ->setQuantity(2)
             ->setTaxRate(19);
 
         $item2 = new ItemTransfer();
         $item2->setName('item-test-2')
             ->setSku('sku2')
-            ->setUnitGrossPriceWithProductOptions(130)
+            ->setUnitGrossPrice(130)
             ->setQuantity(3)
             ->setTaxRate(19);
 
@@ -282,20 +286,20 @@ class SalesFacadeTest extends Test
         $this->assertNotNull($item1Entity);
         $this->assertNotNull($item2Entity);
 
-        $this->assertSame($savedItems[0]->getIdSalesOrderItem(), $item1Entity->getIdSalesOrderItem());
+        $this->assertSame($savedItems[1]->getIdSalesOrderItem(), $item1Entity->getIdSalesOrderItem());
         $this->assertSame($item1->getName(), $item1Entity->getName());
         $this->assertSame($orderTransfer->getIdSalesOrder(), $item1Entity->getFkSalesOrder());
         $this->assertSame($initialState->getIdOmsOrderItemState(), $item1Entity->getFkOmsOrderItemState());
         $this->assertSame($item1->getSku(), $item1Entity->getSku());
-        $this->assertSame($savedItems[0]->getUnitGrossPriceWithProductOptions(), $item1Entity->getGrossPrice());
+        $this->assertSame($savedItems[1]->getUnitGrossPrice(), $item1Entity->getGrossPrice());
         $this->assertSame($item1->getQuantity(), $item1Entity->getQuantity());
 
-        $this->assertSame($savedItems[1]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
+        $this->assertSame($savedItems[2]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
         $this->assertSame($item2->getName(), $item2Entity->getName());
         $this->assertSame($orderTransfer->getIdSalesOrder(), $item2Entity->getFkSalesOrder());
         $this->assertSame($initialState->getIdOmsOrderItemState(), $item2Entity->getFkOmsOrderItemState());
         $this->assertSame($item2->getSku(), $item2Entity->getSku());
-        $this->assertSame($savedItems[1]->getUnitGrossPriceWithProductOptions(), $item2Entity->getGrossPrice());
+        $this->assertSame($savedItems[2]->getUnitGrossPrice(), $item2Entity->getGrossPrice());
         $this->assertSame($item2->getQuantity(), $item2Entity->getQuantity());
     }
 

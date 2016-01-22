@@ -252,4 +252,14 @@ class SalesFacade extends AbstractFacade
         return $this->getFactory()->createOrderTotalsAggregator()->aggregateByIdSalesOrder($idSalesOrder);
     }
 
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return OrderTransfer
+     */
+    public function getOrderTotalByOrderTransfer(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->aggregateByOrderTransfer($orderTransfer);
+    }
+
 }

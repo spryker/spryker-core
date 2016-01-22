@@ -26,9 +26,7 @@ class ProductOptionOrderSaver
                 $salesOrderItemOptionEntity = $this->createSalesOrderItemOptionEntity();
 
                 $salesOrderItemOptionEntity->fromArray($productOptionTransfer->toArray());
-
                 $salesOrderItemOptionEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
-
                 $salesOrderItemOptionEntity->save();
 
                 $productOptionTransfer->setIdSalesOrderItemOption(
