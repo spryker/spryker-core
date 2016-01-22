@@ -19,6 +19,7 @@ use Spryker\Zed\Refund\Persistence\RefundQueryContainer;
 use Spryker\Zed\Refund\RefundConfig;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method RefundQueryContainer getQueryContainer()
@@ -31,7 +32,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
      * @param OrderTransfer $orderTransfer
      * @param RefundFacade $facadeRefund
      *
-     * @return RefundForm
+     * @return FormInterface
      */
     public function createRefundForm(OrderTransfer $orderTransfer, RefundFacade $facadeRefund)
     {
