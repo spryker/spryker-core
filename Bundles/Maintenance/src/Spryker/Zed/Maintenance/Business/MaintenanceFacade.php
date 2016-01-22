@@ -98,4 +98,9 @@ class MaintenanceFacade extends AbstractFacade
         );
     }
 
+    public function getDependencyTree()
+    {
+        return $this->getFactory()->createDependencyTreeReader()->read();
+    }
+
 }
