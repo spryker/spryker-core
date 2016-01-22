@@ -313,14 +313,15 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param array $categoryKey
+     * @param int $idLocale
      *
      * @return CategoryTransfer
      */
-    public function getCategoryByKey($categoryKey)
+    public function getCategoryByKey($categoryKey, $idLocale)
     {
         return $this->getFactory()
             ->createCategoryTreeReader()
-            ->getCategoryByKey($categoryKey);
+            ->getCategoryByKey($categoryKey, $idLocale);
     }
 
 }

@@ -40,13 +40,14 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
-     * @param $categoryKey
+     * @param string $categoryKey
+     * @param int $idLocale
      *
      * @return CategoryTransfer
      */
-    public function getCategoryByKey($categoryKey)
+    public function getCategoryByKey($categoryKey, $idLocale)
     {
-        return $this->categoryFacade->getCategoryByKey($categoryKey);
+        return $this->categoryFacade->getCategoryByKey($categoryKey, $idLocale);
     }
 
     /**

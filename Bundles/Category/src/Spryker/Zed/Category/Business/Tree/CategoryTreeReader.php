@@ -212,12 +212,13 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param string $categoryKey
+     * @param int $idLocale
      *
      * @return CategoryTransfer
      */
-    public function getCategoryByKey($categoryKey)
+    public function getCategoryByKey($categoryKey, $idLocale)
     {
-        $categoryQuery = $this->queryContainer->queryByCategoryKey($categoryKey);
+        $categoryQuery = $this->queryContainer->queryByCategoryKey($categoryKey, $idLocale);
         $entity = $categoryQuery->findOne();
 
         $transfer = new CategoryTransfer();

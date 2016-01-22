@@ -857,13 +857,20 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @param string $categoryKey
+     * @param $idLocale
      *
      * @return SpyCategoryQuery
      */
-    public function queryByCategoryKey($categoryKey)
+    public function queryByCategoryKey($categoryKey, $idLocale)
     {
         $query = SpyCategoryQuery::create();
-        $query->filterByCategoryKey($categoryKey);
+        $query
+            ->filterByCategoryKey($categoryKey)
+            ->useAttributeQuery()
+                ->joinLocale()
+                ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name');
 
         return $query;
     }

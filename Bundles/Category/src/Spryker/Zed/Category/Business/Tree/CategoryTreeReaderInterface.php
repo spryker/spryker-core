@@ -95,10 +95,11 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param string $categoryKey
+     * @param int $idLocale
      *
      * @return CategoryTransfer
      */
-    public function getCategoryByKey($categoryKey);
+    public function getCategoryByKey($categoryKey, $idLocale);
 
     /**
      * @param string $categoryName

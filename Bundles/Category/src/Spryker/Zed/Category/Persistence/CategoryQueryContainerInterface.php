@@ -267,10 +267,11 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @param string $categoryKey
+     * @param $idLocale
      *
      * @return SpyCategoryQuery
      */
-    public function queryByCategoryKey($categoryKey);
+    public function queryByCategoryKey($categoryKey, $idLocale);
 
     /**
      * @param int $idCategoryNode
