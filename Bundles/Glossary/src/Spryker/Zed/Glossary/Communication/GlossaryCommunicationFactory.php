@@ -12,6 +12,7 @@ use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Spryker\Zed\Glossary\GlossaryConfig;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method GlossaryQueryContainerInterface getQueryContainer()
@@ -81,7 +82,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
      * @param array $locales
      * @param string $type
      *
-     * @return TranslationForm
+     * @return FormInterface
      */
     public function createTranslationForm(array $locales, $type)
     {
