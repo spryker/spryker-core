@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Category\Business\Tree;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryTreeReaderInterface
@@ -91,6 +92,13 @@ interface CategoryTreeReaderInterface
      * @return bool
      */
     public function hasCategoryNode($categoryName, LocaleTransfer $locale);
+
+    /**
+     * @param string $categoryKey
+     *
+     * @return CategoryTransfer
+     */
+    public function getCategoryByKey($categoryKey);
 
     /**
      * @param string $categoryName

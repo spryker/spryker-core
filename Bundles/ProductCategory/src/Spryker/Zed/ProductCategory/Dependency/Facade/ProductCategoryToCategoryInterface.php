@@ -107,4 +107,11 @@ interface ProductCategoryToCategoryInterface
      */
     public function generatePath(array $pathTokens);
 
+    /**
+     * @param array $categoryKey
+     *
+     * @return CategoryTransfer
+     */
+    public function getCategoryByKey($categoryKey);
+
 }

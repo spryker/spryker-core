@@ -311,4 +311,16 @@ class CategoryFacade extends AbstractFacade
             ->generate($pathTokens);
     }
 
+    /**
+     * @param array $categoryKey
+     *
+     * @return CategoryTransfer
+     */
+    public function getCategoryByKey($categoryKey)
+    {
+        return $this->getFactory()
+            ->createCategoryTreeReader()
+            ->getCategoryByKey($categoryKey);
+    }
+
 }

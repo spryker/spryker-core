@@ -856,6 +856,19 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * @param string $categoryKey
+     *
+     * @return SpyCategoryQuery
+     */
+    public function queryByCategoryKey($categoryKey)
+    {
+        $query = SpyCategoryQuery::create();
+        $query->filterByCategoryKey($categoryKey);
+
+        return $query;
+    }
+
+    /**
      * @param int $idCategoryNode
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
