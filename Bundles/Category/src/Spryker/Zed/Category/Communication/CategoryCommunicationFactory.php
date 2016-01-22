@@ -9,12 +9,10 @@ namespace Spryker\Zed\Category\Communication;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Category\CategoryDependencyProvider;
-use Spryker\Zed\Category\Communication\Form\CategoryNodeForm;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
-use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Category\CategoryConfig;
 
 /**
@@ -98,18 +96,6 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
             ->queryUrlByIdCategoryNode($idCategoryNode);
 
         return new UrlTable($urlQuery);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return CategoryNodeForm
-     */
-    public function createCategoryNodeForm(Request $request)
-    {
-        $locale = $this->getCurrentLocale();
-
-        return new CategoryNodeForm($locale);
     }
 
 }
