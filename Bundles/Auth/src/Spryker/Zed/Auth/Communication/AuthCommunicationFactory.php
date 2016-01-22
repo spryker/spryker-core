@@ -14,6 +14,7 @@ use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\Auth\AuthDependencyProvider;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method AuthConfig getConfig()
@@ -33,7 +34,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ResetPasswordRequestForm
+     * @return FormInterface
      */
     public function createResetPasswordRequestForm()
     {
@@ -43,7 +44,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ResetPasswordForm
+     * @return FormInterface
      */
     public function createResetPasswordForm()
     {

@@ -16,6 +16,7 @@ use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Spryker\Zed\User\UserDependencyProvider;
 use Spryker\Zed\User\UserConfig;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method UserQueryContainer getQueryContainer()
@@ -27,7 +28,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param UserFacade $userFacade
      *
-     * @return ResetPasswordForm
+     * @return FormInterface
      */
     public function createResetPasswordForm(UserFacade $userFacade)
     {
@@ -47,7 +48,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UserForm
+     * @return FormInterface
      */
     public function createUserForm()
     {
@@ -60,7 +61,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      * @param int $idUser
      * @param UserFacade $userFacade
      *
-     * @return UserUpdateForm
+     * @return FormInterface
      */
     public function createUpdateUserForm($idUser, UserFacade $userFacade)
     {

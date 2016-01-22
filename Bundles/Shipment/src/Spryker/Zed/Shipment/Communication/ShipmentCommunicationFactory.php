@@ -14,6 +14,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentConfig;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method ShipmentQueryContainer getQueryContainer()
@@ -33,7 +34,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CarrierForm
+     * @return FormInterface
      */
     public function createCarrierForm()
     {
@@ -49,7 +50,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
      *
      * @throws \ErrorException
      *
-     * @return CarrierForm
+     * @return FormInterface
      */
     public function createMethodForm($idMethod = null)
     {

@@ -47,7 +47,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      *
      * @throws PropelException
      *
-     * @return Propel\SpyPriceProductQuery
+     * @return SpyPriceProductQuery
      */
     public function queryPriceEntityForProductAbstract($sku, SpyPriceType $priceType)
     {
@@ -64,7 +64,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      *
      * @throws PropelException
      *
-     * @return Propel\SpyPriceProductQuery
+     * @return SpyPriceProductQuery
      */
     public function queryPriceEntityForProductConcrete($sku, SpyPriceType $priceType)
     {
@@ -76,6 +76,8 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
+     * @deprecated Will be removed in 1.0.0.
+     *
      * @param SpyPriceProductQuery $query
      * @param int $idPriceProduct
      *
@@ -83,6 +85,8 @@ class PriceQueryContainer extends AbstractQueryContainer
      */
     public function addFilter($query, $idPriceProduct)
     {
+        trigger_error('Deprecated, method name confusion about filter meaning to filter out. Use query method directly.', E_USER_DEPRECATED);
+
         return $query->filterByIdPriceProduct($idPriceProduct, Criteria::NOT_EQUAL);
     }
 

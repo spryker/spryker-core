@@ -85,13 +85,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      */
     private function getPropertyNames()
     {
-        $classVars = get_class_vars(get_class($this));
-
-        unset($classVars['modifiedProperties']);
-        unset($classVars['transferMetadata']);
-        unset($classVars['filterUnderscoreToCamelCase']);
-
-        return array_keys($classVars);
+        return array_keys($this->transferMetadata);
     }
 
     /**

@@ -23,9 +23,9 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
-use Symfony\Component\Form\Form;
 use Spryker\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use Spryker\Zed\Discount\Communication\Table\VoucherPoolTable;
+use Symfony\Component\Form\FormInterface;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**
@@ -38,7 +38,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param bool $allowMultiple
      *
-     * @return Form
+     * @return FormInterface
      */
     public function createVoucherForm($allowMultiple = false)
     {
@@ -101,7 +101,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param DiscountFacade $discountFacade
      *
-     * @return Form
+     * @return FormInterface
      */
     public function createCartRuleForm(DiscountFacade $discountFacade)
     {
@@ -114,7 +114,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return Form
+     * @return FormInterface
      */
     public function createCollectorPluginForm()
     {
@@ -126,7 +126,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return Form
+     * @return FormInterface
      */
     public function createVoucherCodesForm()
     {
