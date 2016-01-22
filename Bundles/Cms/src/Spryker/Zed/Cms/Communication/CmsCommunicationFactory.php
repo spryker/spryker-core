@@ -20,7 +20,7 @@ use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method CmsQueryContainer getQueryContainer()
@@ -84,7 +84,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      * @param string $formType
      * @param int $idPage
      *
-     * @return Form
+     * @return FormInterface
      */
     public function createCmsPageForm($formType, $idPage = null)
     {
@@ -105,7 +105,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      * @param string $formType
      * @param int $idCmsBlock
      *
-     * @return Form
+     * @return FormInterface
      */
     public function createCmsBlockForm($formType, $idCmsBlock = null)
     {
@@ -124,7 +124,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      * @param string $formType
      * @param int $idUrl
      *
-     * @return CmsRedirectForm
+     * @return FormInterface
      */
     public function createCmsRedirectForm($formType, $idUrl = null)
     {
@@ -144,7 +144,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      * @param array $placeholder
      * @param CmsFacade $cmsFacade
      *
-     * @return CmsGlossaryForm
+     * @return FormInterface
      */
     public function createCmsGlossaryForm($idPage, $idMapping, $placeholder, $cmsFacade)
     {
