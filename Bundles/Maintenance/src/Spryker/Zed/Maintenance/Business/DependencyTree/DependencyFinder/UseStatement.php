@@ -12,7 +12,7 @@ use Symfony\Component\Finder\SplFileInfo;
 class UseStatement extends AbstractDependencyFinder
 {
 
-    const NO_LAYER = 'noLayer';
+    const NO_LAYER = 'Default';
 
     /**
      * @param SplFileInfo $fileInfo
@@ -27,16 +27,19 @@ class UseStatement extends AbstractDependencyFinder
 
         if (preg_match_all('/use Spryker\\\(.*?)\\\(.*?)\\\(.*?);/', $content, $matches, PREG_SET_ORDER)) {
             foreach ($matches as $match) {
+                $className = str_replace(['use ', ';'], '', $match[0]);
                 $toBundle = $match[2];
                 $layer = $this->getLayerFromUseStatement($match);
-                $meta = [
+                $dependencyInformation = [
                     DependencyTree::META_FOREIGN_LAYER => self::NO_LAYER
                 ];
                 if ($layer) {
-                    $meta[DependencyTree::META_FOREIGN_LAYER] = $layer;
+                    $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = $layer;
                 }
 
-                $this->addDependency($fileInfo, $toBundle, $meta);
+                $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = $className;
+
+                $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
             }
         }
     }

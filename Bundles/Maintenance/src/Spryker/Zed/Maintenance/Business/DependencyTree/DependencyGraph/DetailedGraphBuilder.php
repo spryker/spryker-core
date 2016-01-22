@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\AbstractDependencyFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
@@ -14,18 +13,13 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\UseStatemen
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Library\Service\GraphViz;
 
-class GraphBuilder2
+class DetailedGraphBuilder implements GraphBuilderInterface
 {
 
     /**
      * @var GraphViz
      */
     private $graph;
-
-    /**
-     * @var AbstractDependencyFilter[]
-     */
-    private $filter;
 
     /**
      * @var array
@@ -36,7 +30,7 @@ class GraphBuilder2
         'style' => 'filled',
         'color' => '#ffffff',
         'fontsize' => 12,
-        'fontcolor' => 'black'
+        'fontcolor' => 'black',
     ];
 
     /**
@@ -55,15 +49,11 @@ class GraphBuilder2
     protected $rootFileAttributes = [
         'fillcolor' => '#cfcfcf',
         'shape' => 'diamond',
-        'fontsize' => 8
+        'fontsize' => 8,
     ];
 
-    /**
-     * @param array $filter
-     */
-    public function __construct(array $filter = [])
+    public function __construct()
     {
-        $this->filter = $filter;
         $this->graph = new GraphViz(true, [], 'Bundle Dependencies', false, true);
     }
 
@@ -74,7 +64,6 @@ class GraphBuilder2
      */
     public function build(array $dependencyTree)
     {
-        $dependencyTree = $this->filterDependencyTree($dependencyTree);
         $this->buildGraph($dependencyTree);
 
         return $this->graph->image('svg', 'dot');
@@ -87,20 +76,8 @@ class GraphBuilder2
      */
     private function buildGraph(array $dependencyTree)
     {
-        foreach ($dependencyTree as $bundles) {
-            $this->buildBundlesGraph($bundles);
-        }
-    }
-
-    /**
-     * @param array $bundles
-     *
-     * @return void
-     */
-    private function buildBundlesGraph(array $bundles)
-    {
-        foreach ($bundles as $bundle => $foreignBundles) {
-            $this->buildBundleGraph($bundle, $foreignBundles);
+        foreach ($dependencyTree as $bundle => $dependencies) {
+            $this->buildBundleGraph($bundle, $dependencies);
         }
     }
 
@@ -169,11 +146,11 @@ class GraphBuilder2
         if ($this->graph->hasNode($rootBundleLayerNodeId, $group)) {
             return;
         }
-        $label = $this->getLayer($dependencyInformation[DependencyTree::META_LAYER]);
+        $label = $dependencyInformation[DependencyTree::META_LAYER];
         $this->layerAttributes['label'] = $label;
         $this->graph->addNode($rootBundleLayerNodeId, $this->layerAttributes, $group);
         $this->graph->addEdge([
-            $this->getRootNodeId($dependencyInformation[DependencyTree::META_BUNDLE]) => $rootBundleLayerNodeId]
+            $this->getRootNodeId($dependencyInformation[DependencyTree::META_BUNDLE]) => $rootBundleLayerNodeId, ]
         );
     }
 
@@ -185,16 +162,6 @@ class GraphBuilder2
     private function getRootBundleLayerNodeId(array $dependencyInformation)
     {
         return $dependencyInformation[DependencyTree::META_LAYER];
-    }
-
-    /**
-     * @param $layer
-     *
-     * @return string
-     */
-    private function getLayer($layer)
-    {
-        return ($layer === 'noLayer') ? 'Default' : $layer;
     }
 
     /**
@@ -211,7 +178,7 @@ class GraphBuilder2
         }
         $this->graph->addNode($rootFileNodeId, $this->rootFileAttributes, $group);
         $this->graph->addEdge([
-            $this->getRootBundleLayerNodeId($dependencyInformation) => $rootFileNodeId]
+            $this->getRootBundleLayerNodeId($dependencyInformation) => $rootFileNodeId, ]
         );
     }
 
@@ -238,11 +205,12 @@ class GraphBuilder2
         $attributes = $this->layerAttributes;
         $attributes['label'] = $label;
         $this->graph->addNode($foreignBundleLayerNodeId, $attributes, $group);
+
         $this->graph->addEdge(
             [$this->getRootFileNodeId($dependencyInformation) => $foreignBundleLayerNodeId],
             [
                 'label' => $this->getForeignUsage($dependencyInformation[DependencyTree::META_FINDER]),
-                'fontsize' => 8
+                'fontsize' => 8,
             ],
             $group
         );
@@ -259,56 +227,9 @@ class GraphBuilder2
             ':',
             [
                 $dependencyInformation[DependencyTree::META_FOREIGN_BUNDLE],
-                $dependencyInformation[DependencyTree::META_FOREIGN_LAYER]
+                $dependencyInformation[DependencyTree::META_FOREIGN_LAYER],
             ]
         );
-    }
-
-    /**
-     * @param array $dependencyTree
-     *
-     * @return array
-     */
-    private function filterDependencyTree(array $dependencyTree)
-    {
-        $filteredTree = [];
-
-        foreach ($dependencyTree as $application => $bundles) {
-            $filteredTree[$application] = [];
-            foreach ($bundles as $bundle => $dependentBundles) {
-                $filteredTree[$application][$bundle] = [];
-                $context = ['bundle' => $bundle];
-                foreach ($dependentBundles as $dependentBundle => $meta) {
-                    $addBundle = true;
-                    foreach ($this->filter as $filter) {
-                        if ($filter->filter($dependentBundle, $context)) {
-                            $addBundle = false;
-                        }
-                    }
-                    if ($addBundle) {
-                        $filteredTree[$application][$bundle][$dependentBundle] = $this->filterMeta($meta);
-                    }
-                }
-            }
-        }
-
-        return $filteredTree;
-    }
-
-    /**
-     * @param array $meta
-     *
-     * @return array
-     */
-    private function filterMeta(array $meta)
-    {
-        $filteredMeta = [];
-        foreach ($meta as $item) {
-            $itemHash = implode($item);
-            $filteredMeta[$itemHash] = $item;
-        }
-
-        return array_values($filteredMeta);
     }
 
     /**

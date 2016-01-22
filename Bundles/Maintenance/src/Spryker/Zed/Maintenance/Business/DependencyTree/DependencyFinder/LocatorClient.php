@@ -12,7 +12,7 @@ use Symfony\Component\Finder\SplFileInfo;
 class LocatorClient extends AbstractDependencyFinder
 {
 
-    const NO_LAYER = 'noLayer';
+    const NO_LAYER = 'Default';
 
     /**
      * @param SplFileInfo $fileInfo
@@ -35,10 +35,24 @@ class LocatorClient extends AbstractDependencyFinder
                 }
 
                 $toBundle = ucfirst($toBundle);
-
-                $this->addDependency($fileInfo, $toBundle, [DependencyTree::META_FOREIGN_LAYER => self::NO_LAYER]);
+                $foreignClassName = $this->getClassName($toBundle);
+                $dependencyInformation = [
+                    DependencyTree::META_FOREIGN_LAYER => self::NO_LAYER,
+                    DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName
+                ];
+                $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
             }
         }
+    }
+
+    /**
+     * @param $bundle
+     *
+     * @return string
+     */
+    private function getClassName($bundle)
+    {
+        return sprintf('Spryker\\Zed\\%1$s\\Business\\%1$sFacade', $bundle);
     }
 
 }

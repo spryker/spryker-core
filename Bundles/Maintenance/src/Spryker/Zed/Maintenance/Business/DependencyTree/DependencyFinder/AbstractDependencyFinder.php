@@ -8,6 +8,7 @@ namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder;
 
 use Spryker\Zed\Maintenance\Business\DependencyTree\AbstractDependencyTree;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
+use Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor;
 use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractDependencyFinder
@@ -19,14 +20,14 @@ abstract class AbstractDependencyFinder
     const LAYER_COMMUNICATION = 'Communication';
 
     /**
-     * @var string
-     */
-    private $bundle;
-
-    /**
      * @var AbstractDependencyTree
      */
-    private $report;
+    private $dependencyTree;
+
+    /**
+     * @var FileInfoExtractor
+     */
+    private $fileInfoExtractor;
 
     /**
      * @param AbstractDependencyTree $dependencyTree
@@ -35,7 +36,7 @@ abstract class AbstractDependencyFinder
      */
     public function setDependencyTree(AbstractDependencyTree $dependencyTree)
     {
-        $this->report = $dependencyTree;
+        $this->dependencyTree = $dependencyTree;
 
         return $this;
     }
@@ -43,9 +44,21 @@ abstract class AbstractDependencyFinder
     /**
      * @return AbstractDependencyTree
      */
-    public function getReport()
+    public function getDependencyTree()
     {
-        return $this->report;
+        return $this->dependencyTree;
+    }
+
+    /**
+     * @param FileInfoExtractor $fileInfoExtractor
+     *
+     * @return $this
+     */
+    public function setFileInfoExtractor(FileInfoExtractor $fileInfoExtractor)
+    {
+        $this->fileInfoExtractor = $fileInfoExtractor;
+
+        return $this;
     }
 
     /**
@@ -58,14 +71,15 @@ abstract class AbstractDependencyFinder
     /**
      * @param SplFileInfo $fileInfo
      * @param string $to
-     * @param array $meta
+     * @param array $dependencyInformation
      *
      * @return void
      */
-    protected function addDependency(SplFileInfo $fileInfo, $to, array $meta = [])
+    protected function addDependency(SplFileInfo $fileInfo, $to, array $dependencyInformation = [])
     {
-        $meta[DependencyTree::META_FINDER] = get_class($this);
+        $dependencyInformation[DependencyTree::META_FINDER] = get_class($this);
 
-        $this->report->addDependency($fileInfo, $to, $meta);
+        $this->dependencyTree->addDependency($fileInfo, $to, $dependencyInformation);
     }
+
 }

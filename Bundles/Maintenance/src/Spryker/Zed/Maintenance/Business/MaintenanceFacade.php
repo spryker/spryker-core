@@ -8,6 +8,7 @@ namespace Spryker\Zed\Maintenance\Business;
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter;
 
 /**
  * @method MaintenanceBusinessFactory getFactory()
@@ -91,16 +92,17 @@ class MaintenanceFacade extends AbstractFacade
     /**
      * @return bool
      */
-    public function drawDependencyTreeGraph()
+    public function drawDetailedDependencyTreeGraph()
     {
-        return $this->getFactory()->createDependencyGraphBuilder()->build(
-            $this->getFactory()->createDependencyTreeReader()->read()
-        );
+        return $this->getFactory()->createDetailedDependencyGraphBuilder()->build();
     }
 
-    public function getDependencyTree()
+    /**
+     * @return bool
+     */
+    public function drawSimpleDependencyTreeGraph()
     {
-        return $this->getFactory()->createDependencyTreeReader()->read();
+        return $this->getFactory()->createSimpleDependencyGraphBuilder()->build();
     }
 
 }

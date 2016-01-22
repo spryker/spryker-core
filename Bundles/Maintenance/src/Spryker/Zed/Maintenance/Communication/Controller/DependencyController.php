@@ -89,54 +89,22 @@ class DependencyController extends AbstractController
     public function dependencyTreeGraphAction()
     {
         $callback = function() {
-            $this->getFacade()->drawDependencyTreeGraph();
+            $this->getFacade()->drawDetailedDependencyTreeGraph();
         };
 
         return $this->streamedResponse($callback);
     }
 
-    public function fooAction()
+    /**
+     * @return StreamedResponse
+     */
+    public function simpleAction()
     {
-        $data = '{
-    "Application": "engine",
-    "Auth": "engine",
-    "Config": "engine",
-    "Console": "engine",
-    "Gui": "engine",
-    "Installer": "engine",
-    "Kernel": "engine",
-    "Library": "engine",
-    "Locale": "engine",
-    "Propel": "engine",
-    "Touch": "engine",
-    "Transfer": "engine",
-    "Twig": "engine"
-}';
-        $engineBundles = json_decode($data, true);
-        $dependencyTree = $this->getFacade()->getDependencyTree();
-        $graph = new GraphViz();
-echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($dependencyTree['Zed']['CustomerCheckoutConnector']) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-        foreach ($dependencyTree['Zed'] as $bundle => $foreignBundles) {
+        $callback = function () {
+            $this->getFacade()->drawSimpleDependencyTreeGraph();
+        };
 
-            if (array_key_exists($bundle, $engineBundles)) {
-                continue;
-            }
-            $graph->addNode($bundle);
-
-        }
-        foreach ($dependencyTree['Zed'] as $bundle => $foreignBundles) {
-
-            foreach ($foreignBundles as $foreignBundle => $meta) {
-                if (array_key_exists($foreignBundle, $engineBundles)) {
-                    continue;
-                }
-                $graph->addEdge([$bundle => $foreignBundle]);
-            }
-        }
-
-        echo $graph->image();die();
-        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($dependencyTree) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-
+        return $this->streamedResponse($callback);
     }
 
 }

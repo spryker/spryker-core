@@ -15,6 +15,7 @@ class DependencyTree extends AbstractDependencyTree
     const META_FILE = 'file';
     const META_FOREIGN_BUNDLE = 'foreign bundle';
     const META_FOREIGN_LAYER = 'foreign layer';
+    const META_FOREIGN_CLASS_NAME = 'foreign class name';
     const META_APPLICATION = 'application';
     const META_BUNDLE = 'bundle';
     const META_LAYER = 'layer';
@@ -35,11 +36,11 @@ class DependencyTree extends AbstractDependencyTree
     /**
      * @param SplFileInfo $fileInfo
      * @param string $to
-     * @param array $meta
+     * @param array $dependency
      *
      * @return void
      */
-    public function addDependency(SplFileInfo $fileInfo, $to, array $meta = [])
+    public function addDependency(SplFileInfo $fileInfo, $to, array $dependency = [])
     {
         $application = $this->fileInfoExtractor->getApplicationNameFromFileInfo($fileInfo);
         $bundle = $this->fileInfoExtractor->getBundleNameFromFileInfo($fileInfo);
@@ -49,7 +50,7 @@ class DependencyTree extends AbstractDependencyTree
             return;
         }
 
-        $meta = $meta + [
+        $dependency = $dependency + [
             self::META_FILE => $fileInfo->getFilename(),
             self::META_FOREIGN_BUNDLE => $to,
             self::META_APPLICATION => $application,
@@ -57,17 +58,15 @@ class DependencyTree extends AbstractDependencyTree
             self::META_LAYER => $layer,
         ];
 
-        if (!array_key_exists($application, $this->dependencyTree)) {
-            $this->dependencyTree[$application] = [];
-        }
-        if (!array_key_exists($bundle, $this->dependencyTree[$application])) {
-            $this->dependencyTree[$application][$bundle] = [];
-        }
-        if (!array_key_exists($to, $this->dependencyTree[$application][$bundle])) {
-            $this->dependencyTree[$application][$bundle][$to] = [];
+        if (!array_key_exists($bundle, $this->dependencyTree)) {
+            $this->dependencyTree[$bundle] = [];
         }
 
-        $this->dependencyTree[$application][$bundle][$to][] = $meta;
+        if (!array_key_exists($to, $this->dependencyTree)) {
+            $this->dependencyTree[$bundle][$to] = [];
+        }
+
+        $this->dependencyTree[$bundle][$to][] = $dependency;
     }
 
 

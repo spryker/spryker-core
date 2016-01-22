@@ -19,11 +19,11 @@ abstract class AbstractDependencyTree
     /**
      * @param SplFileInfo $fileInfo
      * @param string $to
-     * @param array $meta
+     * @param array $dependency
      *
      * @return void
      */
-    abstract public function addDependency(SplFileInfo $fileInfo, $to, array $meta = []);
+    abstract public function addDependency(SplFileInfo $fileInfo, $to, array $dependency = []);
 
     /**
      * @return array

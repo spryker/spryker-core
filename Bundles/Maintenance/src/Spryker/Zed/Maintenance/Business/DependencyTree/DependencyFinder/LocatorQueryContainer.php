@@ -33,9 +33,24 @@ class LocatorQueryContainer extends AbstractDependencyFinder
                 }
 
                 $toBundle = ucfirst($toBundle);
-                $this->addDependency($fileInfo, $toBundle, [DependencyTree::META_FOREIGN_LAYER => self::LAYER_PERSISTENCE]);
+                $foreignClassName = $this->getClassName($toBundle);
+                $dependencyInformation = [
+                    DependencyTree::META_FOREIGN_LAYER => self::LAYER_PERSISTENCE,
+                    DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName
+                ];
+                $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
             }
         }
+    }
+
+    /**
+     * @param $bundle
+     *
+     * @return string
+     */
+    private function getClassName($bundle)
+    {
+        return sprintf('Spryker\\Zed\\%1$s\\Persistence\\%1$sQueryContainer', $bundle);
     }
 
 }
