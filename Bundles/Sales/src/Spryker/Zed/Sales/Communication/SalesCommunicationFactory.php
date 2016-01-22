@@ -16,6 +16,7 @@ use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\SalesConfig;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method SalesQueryContainerInterface getQueryContainer()
@@ -25,7 +26,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return Form\OrderItemSplitForm
+     * @return FormInterface
      */
     public function createOrderItemSplitForm()
     {
@@ -37,7 +38,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idSalesOrder
      *
-     * @return CustomerForm
+     * @return FormInterface
      */
     public function createCustomerForm($idSalesOrder)
     {
@@ -51,7 +52,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idOrderAddress
      *
-     * @return AddressForm
+     * @return FormInterface
      */
     public function createAddressForm($idOrderAddress)
     {
