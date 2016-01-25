@@ -28,6 +28,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->Store = Store::getInstance();
+        $this->Store->setCurrentLocale('de_DE');
     }
 
     /**
