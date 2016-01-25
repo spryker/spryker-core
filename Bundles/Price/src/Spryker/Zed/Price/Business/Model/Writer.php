@@ -13,7 +13,7 @@ use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Price\PriceConfig;
-use Bundles\Price\src\Spryker\Zed\Price\Business\Exception\ProductPriceChangeException;
+use Spryker\Zed\Price\Business\Exception\ProductPriceChangeException;
 
 class Writer implements WriterInterface
 {
