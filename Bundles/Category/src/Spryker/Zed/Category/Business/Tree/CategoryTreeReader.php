@@ -12,8 +12,8 @@ use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryException;
-use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
+use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
+use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
