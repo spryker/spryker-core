@@ -26,6 +26,7 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\JsonDep
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeWriter\JsonDependencyTreeWriter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor;
 use Spryker\Zed\Maintenance\Business\DependencyTree\Finder;
+use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationChecker\DependencyViolationChecker;
 use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
@@ -442,6 +443,16 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         }
 
         return $treeFilter;
+    }
+
+    /**
+     * @return DependencyViolationChecker
+     */
+    public function createDependencyViolationChecker()
+    {
+        return new DependencyViolationChecker(
+            $this->createDependencyTreeReader()
+        );
     }
 
     /**

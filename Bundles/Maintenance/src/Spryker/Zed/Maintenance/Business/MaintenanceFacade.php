@@ -109,8 +109,19 @@ class MaintenanceFacade extends AbstractFacade
         return $this->getFactory()->createSimpleDependencyGraphBuilder($bundleToView)->build();
     }
 
+    /**
+     * @param string|bool $bundleToView
+     *
+     * @return bool
+     */
     public function getAdjacencyMatrixData($bundleToView)
     {
         return $this->getFactory()->createAdjacencyMatrixBuilder($bundleToView)->build();
+    }
+
+    public function getDependencyViolations()
+    {
+        return $this->getFactory()->createDependencyViolationChecker()->getDependencyViolations();
+
     }
 }
