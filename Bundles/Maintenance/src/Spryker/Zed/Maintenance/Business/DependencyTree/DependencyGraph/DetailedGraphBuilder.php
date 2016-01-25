@@ -150,7 +150,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
         $this->layerAttributes['label'] = $label;
         $this->graph->addNode($rootBundleLayerNodeId, $this->layerAttributes, $group);
         $this->graph->addEdge([
-            $this->getRootNodeId($dependencyInformation[DependencyTree::META_BUNDLE]) => $rootBundleLayerNodeId, ]
+            $this->getRootNodeId($dependencyInformation[DependencyTree::META_BUNDLE]) => $rootBundleLayerNodeId]
         );
     }
 
@@ -178,7 +178,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
         }
         $this->graph->addNode($rootFileNodeId, $this->rootFileAttributes, $group);
         $this->graph->addEdge([
-            $this->getRootBundleLayerNodeId($dependencyInformation) => $rootFileNodeId, ]
+            $this->getRootBundleLayerNodeId($dependencyInformation) => $rootFileNodeId]
         );
     }
 
@@ -209,7 +209,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
         $this->graph->addEdge(
             [$this->getRootFileNodeId($dependencyInformation) => $foreignBundleLayerNodeId],
             [
-                'label' => $this->getForeignUsage($dependencyInformation[DependencyTree::META_FINDER]),
+                'label' => $this->getForeignUsage($dependencyInformation[DependencyTree::META_FINDER]) . ' : ' . $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME],
                 'fontsize' => 8,
             ],
             $group
