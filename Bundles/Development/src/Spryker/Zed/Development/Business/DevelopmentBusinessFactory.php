@@ -7,20 +7,6 @@
 namespace Spryker\Zed\Development\Business;
 
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\BundleFilter;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\EngineBundleFilter;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorFacade;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\UseStatement;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\GraphBuilder;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\GraphBuilder2;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyReport\DependencyReport;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeBuilder;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\JsonDependencyTreeReader;
-use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeWriter\JsonDependencyTreeWriter;
-use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
-use Spryker\Zed\Development\Business\DependencyTree\Finder;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer;
