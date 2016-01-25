@@ -1,24 +1,30 @@
 {% extends '@Application/Layout/layout.twig' %}
+
 {% block content %}
-    <div class="spy-layout sparse">
-        <h3>{{ "Adjacency Matrix" | trans }}</h3>
-        <table border="1">
-            <tr>
-                <td>From - To</td>
-                {% for fromBundle, toBundles in matrixData %}
-                    {% for bundle, info in toBundles %}
-                        <td>{{ bundle }}</td>
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Adjacency Matrix' } %}
+        {% block widget_content %}
+            <div style="overflow: scroll;">
+                <table class="table table-bordered table-condensed">
+                    <tr>
+                        <th>From - To</th>
+                        {% for fromBundle, toBundles in matrixData %}
+                            {% for bundle, info in toBundles %}
+                                <th>{{ bundle }}</th>
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
+                    {% for fromBundle, toBundles in matrixData %}
+                        <tr>
+                            <th>{{ fromBundle }}</th>
+                            {% for bundle, dependencies in toBundles %}
+                                <td>{{ dependencies.fromLayerToLayer | join('<br/>') | raw }}</td>
+                            {% endfor %}
+                        </tr>
                     {% endfor %}
-                {% endfor %}
-            </tr>
-            {% for fromBundle, toBundles in matrixData %}
-                <tr>
-                    <td>{{ fromBundle }}</td>
-                    {% for bundle, dependencies in toBundles %}
-                        <td>{{ dependencies.fromLayerToLayer | join('<br/>') | raw }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
+                </table>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
 {% endblock %}
