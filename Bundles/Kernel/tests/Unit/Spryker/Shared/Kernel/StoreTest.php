@@ -23,11 +23,21 @@ class StoreTest extends \PHPUnit_Framework_TestCase
      */
     private $Store;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
 
         $this->Store = Store::getInstance();
+
+        $locales = $this->Store->getLocales();
+        if (!in_array('de_DE', $locales)) {
+            $this->markTestSkipped('These tests require `de_DE` as part of the current whitelisted locales.');
+            return;
+        }
+
         $this->Store->setCurrentLocale('de_DE');
     }
 
