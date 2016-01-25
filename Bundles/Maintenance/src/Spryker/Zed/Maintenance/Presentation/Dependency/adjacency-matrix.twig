@@ -1,0 +1,24 @@
+{% extends '@Application/Layout/layout.twig' %}
+{% block content %}
+    <div class="spy-layout sparse">
+        <h3>{{ "Adjacency Matrix" | trans }}</h3>
+        <table border="1">
+            <tr>
+                <td>From - To</td>
+                {% for fromBundle, toBundles in matrixData %}
+                    {% for bundle, info in toBundles %}
+                        <td>{{ bundle }}</td>
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+            {% for fromBundle, toBundles in matrixData %}
+                <tr>
+                    <td>{{ fromBundle }}</td>
+                    {% for bundle, dependencies in toBundles %}
+                        <td>{{ dependencies.fromLayerToLayer | join('<br/>') | raw }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

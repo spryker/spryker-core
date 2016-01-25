@@ -6,8 +6,21 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter;
 
-class BundleFilter extends AbstractDependencyFilter
+class BundleToViewFilter extends AbstractDependencyFilter
 {
+
+    /**
+     * @var string
+     */
+    private $bundle;
+
+    /**
+     * @param string $bundle
+     */
+    public function __construct($bundle)
+    {
+        $this->bundle = $bundle;
+    }
 
     /**
      * @param string $bundle
@@ -17,7 +30,7 @@ class BundleFilter extends AbstractDependencyFilter
      */
     public function filter($bundle, array $context)
     {
-        return ($bundle === $context['bundle']);
+        return ($bundle !== $this->bundle);
     }
 
 }

@@ -6,11 +6,6 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\UseStatement;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Library\Service\GraphViz;
 
 class SimpleGraphBuilder implements GraphBuilderInterface

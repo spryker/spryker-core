@@ -90,19 +90,27 @@ class MaintenanceFacade extends AbstractFacade
     }
 
     /**
+     * @param string|bool $bundleToView
+     *
      * @return bool
      */
-    public function drawDetailedDependencyTreeGraph()
+    public function drawDetailedDependencyTreeGraph($bundleToView)
     {
-        return $this->getFactory()->createDetailedDependencyGraphBuilder()->build();
+        return $this->getFactory()->createDetailedDependencyGraphBuilder($bundleToView)->build();
     }
 
     /**
+     * @param string|bool $bundleToView
+     *
      * @return bool
      */
-    public function drawSimpleDependencyTreeGraph()
+    public function drawSimpleDependencyTreeGraph($bundleToView)
     {
-        return $this->getFactory()->createSimpleDependencyGraphBuilder()->build();
+        return $this->getFactory()->createSimpleDependencyGraphBuilder($bundleToView)->build();
     }
 
+    public function getAdjacencyMatrixData($bundleToView)
+    {
+        return $this->getFactory()->createAdjacencyMatrixBuilder($bundleToView)->build();
+    }
 }

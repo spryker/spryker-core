@@ -84,27 +84,46 @@ class DependencyController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
      * @return StreamedResponse
      */
-    public function dependencyTreeGraphAction()
+    public function dependencyTreeGraphAction(Request $request)
     {
-        $callback = function() {
-            $this->getFacade()->drawDetailedDependencyTreeGraph();
+        $callback = function () use ($request) {
+            $bundleToView = $request->query->get('bundle', false);
+            $this->getFacade()->drawDetailedDependencyTreeGraph($bundleToView);
         };
 
         return $this->streamedResponse($callback);
     }
 
     /**
+     * @param Request $request
+     *
      * @return StreamedResponse
      */
-    public function simpleAction()
+    public function simpleAction(Request $request)
     {
-        $callback = function () {
-            $this->getFacade()->drawSimpleDependencyTreeGraph();
+        $callback = function () use ($request) {
+            $bundleToView = $request->query->get('bundle', false);
+            $this->getFacade()->drawSimpleDependencyTreeGraph($bundleToView);
         };
 
         return $this->streamedResponse($callback);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function adjacencyMatrixAction(Request $request)
+    {
+        $bundleToView = $request->query->get('bundle', false);
+        $matrixData = $this->getFacade()->getAdjacencyMatrixData($bundleToView);
+
+        return $this->viewResponse(['matrixData' => $matrixData]);
     }
 
 }

@@ -6,9 +6,12 @@
 
 namespace Spryker\Zed\Maintenance\Business;
 
+use Spryker\Zed\Maintenance\Business\DependencyTree\AdjacencyMatrixBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\BundleFilter;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ClassNameFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\EngineBundleFilter;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\SelfDependencyFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade;
@@ -318,14 +321,16 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param string|bool $bundleToView
+     *
      * @return DependencyGraphBuilder
      */
-    public function createDetailedDependencyGraphBuilder()
+    public function createDetailedDependencyGraphBuilder($bundleToView)
     {
         $dependencyGraphBuilder = new DependencyGraphBuilder(
             $this->createDetailedGraphBuilder(),
             $this->createDependencyTreeReader(),
-            $this->createDetailedDependencyTreeFilter()
+            $this->createDetailedDependencyTreeFilter($bundleToView)
         );
 
         return $dependencyGraphBuilder;
@@ -340,28 +345,36 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param string|bool $bundleToView
+     *
      * @return TreeFilter
      */
-    protected function createDetailedDependencyTreeFilter()
+    protected function createDetailedDependencyTreeFilter($bundleToView)
     {
         $treeFilter = new TreeFilter();
         $treeFilter
             ->addFilter($this->createDependencyTreeEngineBundleFilter())
-            ->addFilter($this->createDependencyTreeBundleFilter())
+            ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'))
         ;
+
+        if (is_string($bundleToView)) {
+            $treeFilter->addFilter($this->createDependencyTreeBundleToViewFilter($bundleToView));
+        }
 
         return $treeFilter;
     }
 
     /**
+     * @param string|bool $bundleToView
+     *
      * @return DependencyGraphBuilder
      */
-    public function createSimpleDependencyGraphBuilder()
+    public function createSimpleDependencyGraphBuilder($bundleToView)
     {
         $dependencyGraphBuilder = new DependencyGraphBuilder(
             $this->createSimpleGraphBuilder(),
             $this->createDependencyTreeReader(),
-            $this->createSimpleGraphDependencyTreeFilter()
+            $this->createSimpleGraphDependencyTreeFilter($bundleToView)
         );
 
         return $dependencyGraphBuilder;
@@ -376,16 +389,20 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param string|bool $bundleToView
+     *
      * @return TreeFilter
      */
-    protected function createSimpleGraphDependencyTreeFilter()
+    protected function createSimpleGraphDependencyTreeFilter($bundleToView)
     {
         $treeFilter = new TreeFilter();
         $treeFilter
             ->addFilter($this->createDependencyTreeEngineBundleFilter())
-            ->addFilter($this->createDependencyTreeBundleFilter())
             ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'))
         ;
+        if (is_string($bundleToView)) {
+            $treeFilter->addFilter($this->createDependencyTreeBundleToViewFilter($bundleToView));
+        }
 
         return $treeFilter;
     }
@@ -398,12 +415,41 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         return new EngineBundleFilter();
     }
 
+    public function createAdjacencyMatrixBuilder($bundleToView)
+    {
+        $adjacencyMatrixBuilder = new AdjacencyMatrixBuilder(
+            $this->createDependencyTreeReader(),
+            $this->createAdjacencyMatrixFilter($bundleToView)
+        );
+
+        return $adjacencyMatrixBuilder;
+    }
+
     /**
-     * @return BundleFilter
+     * @param string|bool $bundleToView
+     *
+     * @return TreeFilter
+     */
+    protected function createAdjacencyMatrixFilter($bundleToView)
+    {
+        $treeFilter = new TreeFilter();
+        $treeFilter
+            ->addFilter($this->createDependencyTreeEngineBundleFilter())
+            ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'))
+        ;
+        if (is_string($bundleToView)) {
+            $treeFilter->addFilter($this->createDependencyTreeBundleToViewFilter($bundleToView));
+        }
+
+        return $treeFilter;
+    }
+
+    /**
+     * @return SelfDependencyFilter
      */
     protected function createDependencyTreeBundleFilter()
     {
-        return new BundleFilter();
+        return new SelfDependencyFilter();
     }
 
     /**
@@ -414,6 +460,16 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     protected function createDependencyTreeClassNameFilter($pattern)
     {
         return new ClassNameFilter($pattern);
+    }
+
+    /**
+     * @param string $bundleToView
+     *
+     * @return BundleToViewFilter
+     */
+    protected function createDependencyTreeBundleToViewFilter($bundleToView)
+    {
+        return new BundleToViewFilter($bundleToView);
     }
 
 }

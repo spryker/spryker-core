@@ -28,7 +28,7 @@ class EngineBundleFilter extends AbstractDependencyFilter
      */
     public function filter($bundle, array $context)
     {
-        return in_array($bundle, $this->filterBundles);
+        return in_array($context['foreign bundle'], $this->filterBundles);
     }
 
 }

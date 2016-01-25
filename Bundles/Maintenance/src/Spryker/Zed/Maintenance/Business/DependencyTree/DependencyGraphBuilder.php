@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree;
 
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\AbstractDependencyFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\GraphBuilderInterface;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\AbstractDependencyTreeReader;

@@ -35,10 +35,10 @@ class ClassNameFilter extends AbstractDependencyFilter
         $foreignClassName = $context[DependencyTree::META_FOREIGN_CLASS_NAME];
 
         if (preg_match($this->pattern, $foreignClassName)) {
-            true;
+            return true;
         }
 
-        false;
+        return false;
     }
 
 }
