@@ -74,7 +74,7 @@ class CartFacade extends AbstractFacade
      */
     public function recalculate(CartTransfer $cart)
     {
-        $calculator = $this->getFactory()->createCartCalculator();
+        $calculator = $this->getFactory()->getCartCalculator();
         $calculableContainer = $calculator->recalculate(new CalculableContainer($cart));
 
         return $calculableContainer->getCalculableObject();
