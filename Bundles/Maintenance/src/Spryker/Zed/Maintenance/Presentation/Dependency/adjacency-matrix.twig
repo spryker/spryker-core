@@ -5,8 +5,8 @@
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Adjacency Matrix' } %}
         {% block widget_content %}
-            <div style="overflow: scroll;">
-                <table class="table table-bordered table-condensed">
+            <div class="show-scroll">
+                <table class="table table-bordered table-condensed nowrap">
                     <tr>
                         <th>From - To</th>
                         {% for fromBundle, toBundles in matrixData %}
