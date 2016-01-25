@@ -13,6 +13,7 @@ class UseStatement extends AbstractDependencyFinder
 {
 
     const NO_LAYER = 'Default';
+    const BUNDLE = 'bundle';
 
     /**
      * @param SplFileInfo $fileInfo
@@ -21,33 +22,28 @@ class UseStatement extends AbstractDependencyFinder
      *
      * @return void
      */
-    public function findDependencies(SplFileInfo $fileInfo)
+    public function addDependencies(SplFileInfo $fileInfo)
     {
         $content = $fileInfo->getContents();
 
-        if (preg_match_all('/use Spryker\\\(.*?)\\\(.*?)\\\(.*?);/', $content, $matches, PREG_SET_ORDER)) {
-            foreach ($matches as $match) {
-                $className = str_replace(['use ', ';'], '', $match[0]);
-                $toBundle = $match[2];
-                $layer = $this->getLayerFromUseStatement($match);
-                $dependencyInformation = [
-                    DependencyTree::META_FOREIGN_LAYER => self::NO_LAYER
-                ];
-                if ($layer) {
-                    $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = $layer;
-                }
+        if (!preg_match_all('/use Spryker\\\(?<application>.*?)\\\(?<bundle>.*?)\\\(?<layerOrFileName>.*?);/', $content, $matches, PREG_SET_ORDER)) {
+            return;
+        }
+        foreach ($matches as $match) {
+            $className = str_replace(['use ', ';'], '', $match[0]);
+            $toBundle = $match[self::BUNDLE];
+            $layer = $this->getLayerFromUseStatement($match);
+            $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = $layer;
+            $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = $className;
 
-                $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = $className;
-
-                $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
-            }
+            $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
         }
     }
 
     /**
      * @param string $match
      *
-     * @return bool|string
+     * @return string
      */
     protected function getLayerFromUseStatement($match)
     {
@@ -60,7 +56,7 @@ class UseStatement extends AbstractDependencyFinder
             }
         }
 
-        return false;
+        return self::NO_LAYER;
     }
 
 }

@@ -66,7 +66,7 @@ abstract class AbstractDependencyFinder
      *
      * @return void
      */
-    abstract public function findDependencies(SplFileInfo $fileInfo);
+    abstract public function addDependencies(SplFileInfo $fileInfo);
 
     /**
      * @param SplFileInfo $fileInfo

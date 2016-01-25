@@ -11,6 +11,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocatorFacade extends AbstractDependencyFinder
 {
+    const BUNDLE = 'bundle';
 
     /**
      * @param SplFileInfo $fileInfo
@@ -19,32 +20,34 @@ class LocatorFacade extends AbstractDependencyFinder
      *
      * @return void
      */
-    public function findDependencies(SplFileInfo $fileInfo)
+    public function addDependencies(SplFileInfo $fileInfo)
     {
         $content = $fileInfo->getContents();
 
-        if (preg_match_all('/->(.*?)\(\)->facade\(\)/', $content, $matches, PREG_SET_ORDER)) {
-            foreach ($matches as $match) {
-                $toBundle = $match[1];
+        if (!preg_match_all('/->(?<bundle>.*?)\(\)->facade\(\)/', $content, $matches, PREG_SET_ORDER)) {
+            return;
+        }
 
-                if (preg_match('/->/', $toBundle)) {
-                    $foundParts = explode('->', $toBundle);
-                    $toBundle = array_pop($foundParts);
-                }
+        foreach ($matches as $match) {
+            $toBundle = $match[self::BUNDLE];
 
-                $toBundle = ucfirst($toBundle);
-                $foreignClassName = $this->getClassName($toBundle);
-                $dependencyInformation = [
-                    DependencyTree::META_FOREIGN_LAYER => self::LAYER_BUSINESS,
-                    DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName
-                ];
-                $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
+            if (preg_match('/->/', $toBundle)) {
+                $foundParts = explode('->', $toBundle);
+                $toBundle = array_pop($foundParts);
             }
+
+            $toBundle = ucfirst($toBundle);
+            $foreignClassName = $this->getClassName($toBundle);
+            $dependencyInformation = [
+                DependencyTree::META_FOREIGN_LAYER => self::LAYER_BUSINESS,
+                DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName
+            ];
+            $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
         }
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      *
      * @return string
      */

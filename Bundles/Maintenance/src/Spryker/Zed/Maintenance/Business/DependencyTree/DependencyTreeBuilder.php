@@ -74,7 +74,7 @@ class DependencyTreeBuilder
         foreach ($this->finder->getFiles() as $fileInfo) {
             foreach ($this->dependencyChecker as $dependencyChecker) {
                 $dependencyChecker->setDependencyTree($this->dependencyTree);
-                $dependencyChecker->findDependencies($fileInfo);
+                $dependencyChecker->addDependencies($fileInfo);
             }
         }
 
