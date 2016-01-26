@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Discount;
 
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Business\Exception\MissingDecisionRuleException;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemExpense;
@@ -79,11 +80,23 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     /**
      * @param string $pluginName
      *
+     * @throws MissingDecisionRuleException
+     *
      * @return DiscountDecisionRulePluginInterface
      */
     public function getDecisionRulePluginByName($pluginName)
     {
-        return $this->getAvailableDecisionRulePlugins()[$pluginName];
+        $availableDecisionRules = $this->getAvailableDecisionRulePlugins();
+        if (!isset($availableDecisionRules[$pluginName])) {
+            throw new MissingDecisionRuleException(
+                sprintf(
+                    'Decision Rule Plugin %s could not be found, put it in DiscountConfig::getAvailableDecisionRulePlugins',
+                    $pluginName
+                )
+            );
+        }
+
+        return $availableDecisionRules[$pluginName];
     }
 
     /**
