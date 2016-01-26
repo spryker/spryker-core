@@ -59,7 +59,7 @@ class CountryManager implements CountryManagerInterface
     }
 
     /**
-     * @param $countryName
+     * @param string $countryName
      * @deprecated Use getPreferredCountryByName()
      *
      * @return CountryTransfer

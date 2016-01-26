@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Country\Business;
 
+use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Spryker\Zed\Country\Business\Exception\MissingCountryException;
 
@@ -42,5 +43,17 @@ interface CountryManagerInterface
      * @return int
      */
     public function getIdCountryByIso2Code($iso2code);
+
+    /**
+     * @param string $countryName
+     *
+     * @return CountryTransfer
+     */
+    public function getPreferredCountryByName($countryName);
+
+    /**
+     * @return CountryCollectionTransfer
+     */
+    public function getCountryCollection();
 
 }
