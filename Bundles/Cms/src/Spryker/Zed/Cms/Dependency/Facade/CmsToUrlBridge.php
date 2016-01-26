@@ -104,4 +104,14 @@ class CmsToUrlBridge implements CmsToUrlInterface
         return $this->urlFacade->saveRedirectUrlAndTouch($url, $locale, $idUrlRedirect);
     }
 
+    /**
+     * @param UrlTransfer $urlTransfer
+     *
+     * @return UrlTransfer
+     */
+    public function saveUrlAndTouch(UrlTransfer $urlTransfer)
+    {
+        return $this->urlFacade->saveUrlAndTouch($urlTransfer);
+    }
+    
 }

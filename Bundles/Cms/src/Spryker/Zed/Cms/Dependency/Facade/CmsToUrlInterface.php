@@ -71,4 +71,11 @@ interface CmsToUrlInterface
      */
     public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect);
 
+    /**
+     * @param UrlTransfer $urlTransfer
+     *
+     * @return UrlTransfer
+     */
+    public function saveUrlAndTouch(UrlTransfer $urlTransfer);
+
 }
