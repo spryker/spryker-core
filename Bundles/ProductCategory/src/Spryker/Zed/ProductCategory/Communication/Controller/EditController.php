@@ -57,7 +57,7 @@ class EditController extends AddController
 
         if ($form->isValid()) {
             $connection = $this->getFactory()
-                ->createPropelConnection();
+                ->getPropelConnection();
 
             $connection->beginTransaction();
 

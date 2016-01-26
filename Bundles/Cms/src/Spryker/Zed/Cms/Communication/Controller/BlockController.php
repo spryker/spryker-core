@@ -57,6 +57,8 @@ class BlockController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
      * @return array|RedirectResponse
      */
     public function addAction(Request $request)

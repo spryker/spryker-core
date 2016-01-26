@@ -375,7 +375,7 @@ class DiscountFacade extends AbstractFacade
      */
     public function getDiscountCollectors()
     {
-        return array_keys($this->getFactory()->createAvailableCollectorPlugins());
+        return array_keys($this->getFactory()->getAvailableCollectorPlugins());
     }
 
     /**
@@ -383,7 +383,7 @@ class DiscountFacade extends AbstractFacade
      */
     public function getDiscountCalculators()
     {
-        return array_keys($this->getFactory()->createAvailableCalculatorPlugins());
+        return array_keys($this->getFactory()->getAvailableCalculatorPlugins());
     }
 
     /**

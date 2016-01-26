@@ -24,14 +24,16 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
     public function createProductSearchQueryExpander()
     {
         return new ProductSearchQueryExpander(
-            $this->createProductQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
     /**
+     * @deprecated Use getQueryContainer() directly
+     *
      * @return ProductQueryContainerInterface
      */
-    protected function createProductQueryContainer()
+    protected function getProductQueryContainer()
     {
         return $this->getQueryContainer();
     }
