@@ -11,8 +11,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToPayoneBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesBridge;
-use Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
-use Symfony\Component\Intl\Exception\NotImplementedException;
 
 class RefundDependencyProvider extends AbstractBundleDependencyProvider
 {

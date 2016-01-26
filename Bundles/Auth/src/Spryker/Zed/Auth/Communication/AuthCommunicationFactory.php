@@ -53,7 +53,6 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
         return $this->createForm($form);
     }
 
-
     /**
      * @deprecated Use getUserFacade() instead.
      *
@@ -65,6 +64,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getUserFacade();
     }
+
     /**
      * @return UserFacade
      */

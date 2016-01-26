@@ -4,12 +4,10 @@ namespace Functional\Spryker\Zed\Cart\Business;
 
 use Codeception\TestCase\Test;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
-use Spryker\Zed\Kernel\Container;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Spryker\Zed\Cart\Business\CartFacade;
-use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Price\Business\PriceFacade;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;

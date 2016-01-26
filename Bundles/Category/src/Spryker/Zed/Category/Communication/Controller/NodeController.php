@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\CategoryFacade;
-use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Communication\CategoryCommunicationFactory;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;

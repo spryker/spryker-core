@@ -15,7 +15,6 @@ use Spryker\Zed\Glossary\Business\GlossaryBusinessFactory;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Cms\Business\CmsFacade;
-use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;

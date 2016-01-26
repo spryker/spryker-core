@@ -35,6 +35,8 @@ class OrderItemSplitForm extends AbstractForm
 
     /**
      * @param OptionsResolverInterface $resolver
+     *
+     * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -60,6 +62,8 @@ class OrderItemSplitForm extends AbstractForm
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

@@ -31,6 +31,11 @@ interface SalesToOmsInterface
     public function selectProcess(OrderTransfer $transferOrder);
 
     /**
+     * @return array
+     */
+    public function getOrderItemMatrix();
+
+    /**
      * @param int $idOrderItem
      *
      * @return string[]

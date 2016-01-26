@@ -21,7 +21,6 @@ use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;

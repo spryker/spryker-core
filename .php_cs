@@ -79,6 +79,7 @@ return Symfony\CS\Config\Config::create()
     ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\PhpSapiConstantFixer())
     ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\PhpdocParamsFixer())
     ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\PhpdocReturnSelfFixer())
+    ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\PhpdocReturnVoidFixer())
     ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\NoWhitespaceBeforeSemicolonFixer())
     ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\SprykerUseStatementFixer())
     ->addCustomFixer(new \Spryker\Zed\Development\Business\CodeStyleFixer\WhitespaceAfterReturnFixer());

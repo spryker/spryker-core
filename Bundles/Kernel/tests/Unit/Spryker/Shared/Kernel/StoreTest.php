@@ -6,7 +6,6 @@
 
 namespace Unit\Spryker\Shared\Kernel;
 
-use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -35,6 +34,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
         $locales = $this->Store->getLocales();
         if (!in_array('de_DE', $locales)) {
             $this->markTestSkipped('These tests require `de_DE` as part of the current whitelisted locales.');
+
             return;
         }
 

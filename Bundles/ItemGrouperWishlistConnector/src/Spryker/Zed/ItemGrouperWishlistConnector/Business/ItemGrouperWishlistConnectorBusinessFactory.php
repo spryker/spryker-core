@@ -15,6 +15,7 @@ use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorConfig;
  */
 class ItemGrouperWishlistConnectorBusinessFactory extends AbstractBusinessFactory
 {
+
     /**
      * @deprecated Use getItemGrouperFacade() instead.
      *

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Customer\Communication\Table;
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;

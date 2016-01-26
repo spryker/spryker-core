@@ -23,6 +23,9 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
      */
     private $locator;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();

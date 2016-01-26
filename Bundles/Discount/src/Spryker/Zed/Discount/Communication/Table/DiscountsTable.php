@@ -4,7 +4,6 @@ namespace Spryker\Zed\Discount\Communication\Table;
 
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
@@ -129,7 +128,7 @@ class DiscountsTable extends AbstractTable
         $options = [];
         $options[] = $this->generateEditButton(
             Url::generate(self::URL_DISCOUNT_CART_RULE_EDIT, [
-                self::PARAM_ID_DISCOUNT => $item->getIdDiscount()
+                self::PARAM_ID_DISCOUNT => $item->getIdDiscount(),
             ]),
             'Edit'
         );

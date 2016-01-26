@@ -11,7 +11,6 @@ use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
@@ -43,7 +42,7 @@ class PoolController extends AbstractController
             $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
 
             $url = Url::generate(DiscountConstants::URL_DISCOUNT_POOL_EDIT, [
-                DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool()
+                DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
             ]);
 
             return $this->redirectResponse($url->__toString());
@@ -71,7 +70,7 @@ class PoolController extends AbstractController
             $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
 
             $url = Url::generate(DiscountConstants::URL_DISCOUNT_POOL_EDIT, [
-                DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool()
+                DiscountConstants::PARAM_ID_POOL => $voucherPoolTransfer->getIdDiscountVoucherPool(),
             ]);
 
             return $this->redirectResponse($url->__toString());

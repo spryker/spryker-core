@@ -75,6 +75,9 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
      */
     abstract protected function getResolverMock(array $methods);
 
+    /**
+     * @return void
+     */
     public function testResolveMustThrowExceptionIfClassCanNotBeResolved()
     {
         $this->setExpectedException($this->expectedExceptionClass);
@@ -86,6 +89,9 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
         $resolverMock->resolve($this->unResolvableClassName);
     }
 
+    /**
+     * @return void
+     */
     public function testResolveMustReturnCoreClass()
     {
         $this->createClass($this->coreClass);
@@ -98,6 +104,9 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf($this->coreClass, $resolved);
     }
 
+    /**
+     * @return void
+     */
     public function testResolveMustReturnProjectClass()
     {
         $this->createClass($this->coreClass);
@@ -111,6 +120,9 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf($this->projectClass, $resolved);
     }
 
+    /**
+     * @return void
+     */
     public function testResolveMustReturnStoreClass()
     {
         $this->createClass($this->projectClass);
@@ -146,7 +158,7 @@ abstract class AbstractResolverTest extends \PHPUnit_Framework_TestCase
 
         $directoryParts = [
             $this->getBasePath(),
-            implode(DIRECTORY_SEPARATOR, $classNameParts)
+            implode(DIRECTORY_SEPARATOR, $classNameParts),
         ];
         $directory = implode(DIRECTORY_SEPARATOR,  $directoryParts);
 

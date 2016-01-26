@@ -27,6 +27,8 @@ class TaxProductConnectorToProductBridge implements TaxProductConnectorToProduct
 
     /**
      * @param int $idProductAbstract
+     *
+     * @return void
      */
     public function touchProductActive($idProductAbstract)
     {

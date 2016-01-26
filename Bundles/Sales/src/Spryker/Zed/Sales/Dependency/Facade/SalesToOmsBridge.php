@@ -69,7 +69,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
     /**
      * @param int $idOrderItem
      *
-     * @return \string[]
+     * @return string[]
      */
     public function getManualEvents($idOrderItem)
     {

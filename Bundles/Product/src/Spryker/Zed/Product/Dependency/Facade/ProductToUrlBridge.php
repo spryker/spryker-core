@@ -47,6 +47,8 @@ class ProductToUrlBridge implements ProductToUrlInterface
 
     /**
      * @param int $idUrl
+     *
+     * @return void
      */
     public function touchUrlActive($idUrl)
     {

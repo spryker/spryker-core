@@ -172,6 +172,8 @@ class RoleController extends AbstractController
      * @param Request $request
      * @param Form $rulesetForm
      * @param int $idRole
+     *
+     * @return void
      */
     protected function handleRulesetForm(Request $request, Form $rulesetForm, $idRole)
     {
@@ -191,6 +193,8 @@ class RoleController extends AbstractController
     /**
      * @param Request $request
      * @param Form $roleForm
+     *
+     * @return void
      */
     protected function handleRoleForm(Request $request, Form $roleForm)
     {

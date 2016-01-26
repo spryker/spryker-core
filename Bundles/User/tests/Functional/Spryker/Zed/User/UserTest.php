@@ -8,7 +8,6 @@ namespace Functional\Spryker\Zed\User;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\UserTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\User\Business\UserFacade;
 
 /**

@@ -26,7 +26,6 @@ use Generated\Shared\Transfer\OrderItemsTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 use Spryker\Zed\Sales\Business\Model\CalculableContainer;

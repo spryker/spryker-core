@@ -12,7 +12,6 @@ use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
-use Spryker\Zed\Customer\CustomerConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

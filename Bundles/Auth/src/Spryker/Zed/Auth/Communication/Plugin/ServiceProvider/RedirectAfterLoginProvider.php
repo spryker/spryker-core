@@ -10,7 +10,6 @@ use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\AuthFacade;
 use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;

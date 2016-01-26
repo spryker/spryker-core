@@ -27,6 +27,7 @@ class AuthMailConnectorCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getMailFacade();
     }
+
     /**
      * @return AuthMailConnectorToMailInterface
      */

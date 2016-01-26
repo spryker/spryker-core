@@ -43,6 +43,8 @@ class RecursiveFieldFilter extends AbstractFilter
     /**
      * @param array $fields
      * @param array $pattern
+     *
+     * @return void
      */
     protected function applyPattern(array &$fields, array $pattern)
     {

@@ -22,6 +22,8 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     /**
      * @param AbstractBundleDependencyProvider $dependencyProvider
      * @param Container $container
+     *
+     * @return void
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,

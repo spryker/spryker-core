@@ -149,7 +149,6 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(CartDependencyProvider::FACADE_ITEM_GROUPER);
     }
 
-
     /**
      * @deprecated Use getCartCalculator() instead.
      *

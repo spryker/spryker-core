@@ -12,7 +12,6 @@ use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Acl\AclConfig;
 
 class RoleTable extends AbstractTable
 {

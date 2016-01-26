@@ -15,6 +15,9 @@ class LoginForm extends AbstractForm
     const FIELD_USERNAME = 'username';
     const FIELD_PASSWORD = 'password';
 
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_USERNAME, 'text', [

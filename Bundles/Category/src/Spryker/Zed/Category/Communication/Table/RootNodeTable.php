@@ -123,7 +123,7 @@ class RootNodeTable extends AbstractTable
             '<i class="fa fa-sitemap"></i>',
             [
                 self::BUTTON_ICON => null,
-                'id' => sprintf('node-%d', $rootNode[self::ID_CATEGORY_NODE])
+                'id' => sprintf('node-%d', $rootNode[self::ID_CATEGORY_NODE]),
             ]
         );
 

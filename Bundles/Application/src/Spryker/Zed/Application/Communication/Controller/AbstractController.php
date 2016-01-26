@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -60,7 +59,6 @@ abstract class AbstractController
      */
     public function initialize()
     {
-
     }
 
     /**

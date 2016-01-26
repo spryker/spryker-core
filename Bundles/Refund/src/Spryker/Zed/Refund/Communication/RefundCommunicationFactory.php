@@ -81,6 +81,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @throws ContainerKeyNotFoundException
+     *
      * @return PayoneFacade
      */
     public function getPayoneFacade()
