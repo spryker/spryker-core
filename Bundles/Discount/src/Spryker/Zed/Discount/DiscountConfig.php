@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Discount;
 
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Business\Exception\MissingCalculatorException;
 use Spryker\Zed\Discount\Business\Exception\MissingCollectorException;
 use Spryker\Zed\Discount\Business\Exception\MissingDecisionRuleException;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
@@ -113,11 +114,24 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     /**
      * @param string $pluginName
      *
+     * @throws MissingCalculatorException
+     *
      * @return DiscountCalculatorPluginInterface
      */
     public function getCalculatorPluginByName($pluginName)
     {
-        return $this->getAvailableCalculatorPlugins()[$pluginName];
+        $availableCalculators = $this->getAvailableCalculatorPlugins();
+
+        if (!isset($availableCalculators[$pluginName])) {
+            throw new MissingCalculatorException(
+                sprintf(
+                    'Calculator Plugin %s could not be found, put it in DiscountConfig::getAvailableCalculatorPlugins',
+                    $pluginName
+                )
+            );
+        }
+
+        return $availableCalculators[$pluginName];
     }
 
     /**
