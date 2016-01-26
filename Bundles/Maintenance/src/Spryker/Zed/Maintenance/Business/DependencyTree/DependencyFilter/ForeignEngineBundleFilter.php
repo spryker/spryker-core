@@ -8,7 +8,7 @@ namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter;
 
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 
-class EngineBundleFilter implements DependencyFilterInterface
+class ForeignEngineBundleFilter implements DependencyFilterInterface
 {
 
     /**
@@ -29,7 +29,7 @@ class EngineBundleFilter implements DependencyFilterInterface
      */
     public function filter(array $dependency)
     {
-        return in_array($dependency[DependencyTree::META_BUNDLE], $this->filterBundles);
+        return in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->filterBundles);
     }
 
 }

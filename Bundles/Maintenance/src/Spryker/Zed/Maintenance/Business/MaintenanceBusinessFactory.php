@@ -12,6 +12,7 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ClassNameFi
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ConstantsToForeignConstantsFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\DependencyFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\EngineBundleFilter;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ForeignEngineBundleFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade;
@@ -358,7 +359,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         $treeFilter = new TreeFilter();
         $treeFilter
-            ->addFilter($this->createDependencyTreeEngineBundleFilter())
+            ->addFilter($this->createDependencyTreeForeignEngineBundleFilter())
             ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'))
         ;
 
@@ -402,14 +403,24 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         $treeFilter = new TreeFilter();
         $treeFilter
+            ->addFilter($this->createDependencyTreeForeignEngineBundleFilter())
             ->addFilter($this->createDependencyTreeEngineBundleFilter())
             ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'))
         ;
+
         if (is_string($bundleToView)) {
             $treeFilter->addFilter($this->createDependencyTreeBundleToViewFilter($bundleToView));
         }
 
         return $treeFilter;
+    }
+
+    /**
+     * @return ForeignEngineBundleFilter
+     */
+    protected function createDependencyTreeForeignEngineBundleFilter()
+    {
+        return new ForeignEngineBundleFilter();
     }
 
     /**
@@ -444,7 +455,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         $treeFilter = new TreeFilter();
         $treeFilter
-            ->addFilter($this->createDependencyTreeEngineBundleFilter())
+            ->addFilter($this->createDependencyTreeForeignEngineBundleFilter())
             ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'))
         ;
         if (is_string($bundleToView)) {
@@ -477,8 +488,8 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         $violationFinder = new ViolationFinder();
         $violationFinder
-            ->addViolationFinder(new UseForeignConstants())
-//            ->addViolationFinder(new UseForeignException())
+            ->addViolationFinder($this->createViolationFinderUseForeignConstants())
+            ->addViolationFinder($this->createViolationFinderUseForeignException())
         ;
 
         return $violationFinder;
@@ -491,8 +502,8 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         $dependencyFilter = new DependencyFilter();
         $dependencyFilter
-//            ->addFilter(new ConstantsToForeignConstantsFilter())
-//            ->addFilter(new EngineBundleFilter())
+            ->addFilter($this->createDependencyTreeConstantsToForeignConstantsFilter())
+            ->addFilter($this->createDependencyTreeForeignEngineBundleFilter())
         ;
 
         return $dependencyFilter;
@@ -516,6 +527,30 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     protected function createDependencyTreeBundleToViewFilter($bundleToView)
     {
         return new BundleToViewFilter($bundleToView);
+    }
+
+    /**
+     * @return UseForeignConstants
+     */
+    protected function createViolationFinderUseForeignConstants()
+    {
+        return new UseForeignConstants();
+    }
+
+    /**
+     * @return UseForeignException
+     */
+    protected function createViolationFinderUseForeignException()
+    {
+        return new UseForeignException();
+    }
+
+    /**
+     * @return ConstantsToForeignConstantsFilter
+     */
+    protected function createDependencyTreeConstantsToForeignConstantsFilter()
+    {
+        return new ConstantsToForeignConstantsFilter();
     }
 
 }
