@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Bundles\Wishlist\tests\Unit\Spryker\Zed\Wishlist\Business\Storage;
+namespace Unit\Spryker\Zed\Wishlist\Business\Storage;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
