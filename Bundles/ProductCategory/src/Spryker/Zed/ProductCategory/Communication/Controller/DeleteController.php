@@ -66,7 +66,7 @@ class DeleteController extends EditController
     protected function categoryExists($idCategory)
     {
         $categoryCount = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryCategoryById($idCategory)
             ->count();
 
@@ -89,7 +89,7 @@ class DeleteController extends EditController
             ->getCurrentLocale();
 
         $categoryEntity = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryCategoryById($idCategory)
             ->findOne();
 
