@@ -58,6 +58,9 @@ class AddressForm extends AbstractForm
         return 'address';
     }
 
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

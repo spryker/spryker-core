@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Shared\Library\Communication\Response;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;

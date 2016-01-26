@@ -123,6 +123,7 @@ class File extends AbstractWriter
         if (!isset($this->options[EventJournalConstants::OPTION_LOG_PATH])) {
             return DataDirectory::getLocalCommonPath('event_journal');
         }
+
         return $this->options[EventJournalConstants::OPTION_LOG_PATH];
     }
 

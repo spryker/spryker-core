@@ -26,4 +26,5 @@ interface RefundToPayoneInterface
      * @return void
      */
     public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder);
+
 }

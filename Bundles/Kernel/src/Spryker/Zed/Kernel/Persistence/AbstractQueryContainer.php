@@ -29,6 +29,8 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     /**
      * @param AbstractBundleDependencyProvider $dependencyProvider
      * @param Container $container
+     *
+     * @return void
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,

@@ -83,7 +83,8 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return UserToAclInterface
      */
-    public function createAclFacade() {
+    public function createAclFacade()
+    {
         trigger_error('Deprecated, use getAclFacade() instead.', E_USER_DEPRECATED);
 
         return $this->getAclFacade();

@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
-use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 use Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;

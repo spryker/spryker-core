@@ -13,7 +13,6 @@ use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Acl\AclConfig;
 use Orm\Zed\Acl\Persistence\Base\SpyAclUserHasGroupQuery;
 use Orm\Zed\Acl\Persistence\Map\SpyAclGroupsHasRolesTableMap;
 use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;

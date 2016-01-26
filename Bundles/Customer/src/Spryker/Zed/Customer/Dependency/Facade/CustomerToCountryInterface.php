@@ -30,4 +30,5 @@ interface CustomerToCountryInterface
      * @return CountryCollectionTransfer
      */
     public function getAvailableCountries();
+
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterfac
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
-use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {

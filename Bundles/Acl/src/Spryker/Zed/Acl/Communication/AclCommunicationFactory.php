@@ -45,7 +45,6 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     *
      * @return UserFacade
      */
     public function getUserFacade()

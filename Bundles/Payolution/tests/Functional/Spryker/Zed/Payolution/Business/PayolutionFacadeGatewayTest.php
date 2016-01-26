@@ -54,6 +54,9 @@ class PayolutionFacadeGatewayTest extends Test
      */
     private $payolutionFacade;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $this->payolutionFacade = new PayolutionFacade();

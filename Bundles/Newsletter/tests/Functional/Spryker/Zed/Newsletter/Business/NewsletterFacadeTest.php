@@ -10,12 +10,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Kernel\Persistence\QueryContainerLocator;
-use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\Newsletter\Business\NewsletterFacade;
-use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
-use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterType;
 
 /**

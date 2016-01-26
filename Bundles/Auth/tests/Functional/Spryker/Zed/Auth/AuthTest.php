@@ -7,7 +7,6 @@
 namespace Functional\Spryker\Zed\Auth;
 
 use Codeception\TestCase\Test;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Shared\Config;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Shared\Auth\AuthConstants;

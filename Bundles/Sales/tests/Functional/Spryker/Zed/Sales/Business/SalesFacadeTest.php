@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Kernel\Container;
 use Orm\Zed\Country\Persistence\SpyCountry;
-use Spryker\Zed\Oms\OmsConfig;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
@@ -30,7 +29,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 

@@ -6,7 +6,6 @@
 
 namespace Spryker\Shared\Library\Currency;
 
-use Spryker\Shared\Library\Currency\CurrencyConstants;
 use Spryker\Shared\Kernel\Store;
 
 /**

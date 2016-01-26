@@ -40,6 +40,8 @@ class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInte
      * @param string $sku
      * @param int $decrementBy
      * @param string $stockType
+     *
+     * @return void
      */
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1)
     {
@@ -50,6 +52,8 @@ class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInte
      * @param string $sku
      * @param string $stockType
      * @param int $incrementBy
+     *
+     * @return void
      */
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1)
     {

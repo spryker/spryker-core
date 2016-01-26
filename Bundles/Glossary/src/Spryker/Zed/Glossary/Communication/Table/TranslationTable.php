@@ -161,7 +161,6 @@ class TranslationTable extends AbstractTable
                     ]),
                     'Edit'
                 );
-
             }
         }
 

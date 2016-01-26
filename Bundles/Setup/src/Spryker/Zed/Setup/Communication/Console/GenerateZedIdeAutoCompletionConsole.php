@@ -69,15 +69,14 @@ class GenerateZedIdeAutoCompletionConsole extends Console
     protected function getZedDefaultOptions()
     {
         $bundleNameFinder = new BundleNameFinder([
-            BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN =>
-                Config::get(ApplicationConstants::PROJECT_NAMESPACE) . DIRECTORY_SEPARATOR,
+            BundleNameFinder::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN => Config::get(ApplicationConstants::PROJECT_NAMESPACE) . DIRECTORY_SEPARATOR,
             BundleNameFinder::OPTION_KEY_APPLICATION => self::APPLICATION_ZED,
         ]);
 
         $options = [
             IdeAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Zed\Ide',
             IdeAutoCompletionGenerator::OPTION_KEY_LOCATION_DIR => APPLICATION_SOURCE_DIR . '/Generated/Zed/Ide/',
-            IdeAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => $bundleNameFinder
+            IdeAutoCompletionGenerator::OPTION_KEY_BUNDLE_NAME_FINDER => $bundleNameFinder,
         ];
 
         return $options;

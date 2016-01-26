@@ -55,7 +55,6 @@ abstract class AbstractController
      */
     public function initialize()
     {
-
     }
 
     /**

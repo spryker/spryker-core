@@ -35,6 +35,7 @@ class CustomerFacadeTest extends Test
     protected $customerFacade;
 
     /**
+     * @return void
      */
     public function setUp()
     {
@@ -111,6 +112,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testGetCustomer()
     {
@@ -122,6 +124,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testHasEmailReturnsFalseWithoutCustomer()
     {
@@ -129,6 +132,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testHasEmailReturnsTrueWithCustomer()
     {
@@ -137,6 +141,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testRegisterCustomer()
     {
@@ -146,6 +151,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testRegisterCustomerWithAlreadyExistingEmail()
     {
@@ -159,6 +165,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testConfirmRegistration()
     {
@@ -169,6 +176,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testForgotPassword()
     {
@@ -180,6 +188,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testRestorePassword()
     {
@@ -193,6 +202,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testUpdateCustomer()
     {
@@ -206,6 +216,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testDeleteCustomer()
     {
@@ -215,6 +226,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testNewAddress()
     {
@@ -228,6 +240,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testUpdateAddress()
     {
@@ -252,6 +265,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testSetDefaultShippingAddress()
     {
@@ -273,6 +287,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testSetDefaultBillingAddress()
     {
@@ -294,6 +309,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testGetDefaultShippingAddress()
     {
@@ -304,6 +320,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testGetDefaultBillingAddress()
     {
@@ -314,6 +331,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testRenderAddress()
     {
@@ -325,6 +343,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
+     * @return void
      */
     public function testDeleteAddress()
     {

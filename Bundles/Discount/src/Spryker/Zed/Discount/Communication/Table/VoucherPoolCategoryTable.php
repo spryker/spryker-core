@@ -10,6 +10,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class VoucherPoolCategoryTable extends AbstractTable
 {
+
     const URL_DISCOUNT_POOL_EDIT_CATEGORY = '/discount/pool/edit-category';
 
     /**

@@ -48,6 +48,8 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
 
     /**
      * @param int $idUrl
+     *
+     * @return void
      */
     public function touchUrlActive($idUrl)
     {
@@ -56,6 +58,8 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
 
     /**
      * @param int $idUrl
+     *
+     * @return void
      */
     public function touchUrlDeleted($idUrl)
     {

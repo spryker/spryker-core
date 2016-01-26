@@ -7,7 +7,6 @@
 namespace Unit\Spryker\Shared\Kernel;
 
 use Spryker\Shared\Kernel\BundleProxy;
-use Unit\Spryker\Shared\Kernel\Fixtures\LocatorLocator;
 use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithMatcher;
 use Unit\Spryker\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
 

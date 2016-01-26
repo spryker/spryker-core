@@ -109,7 +109,7 @@ class CmsBlockTable extends AbstractTable
 
         $buttons[] = $this->generateEditButton(
             Url::generate(self::PARAM_CMS_BLOCK_EDIT, [
-                self::REQUEST_ID_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK]
+                self::REQUEST_ID_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
             ]),
             'Edit Block'
         );
