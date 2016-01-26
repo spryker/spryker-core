@@ -30,6 +30,16 @@ class CountryFacade extends AbstractFacade
     /**
      * @param string $iso2Code
      *
+     * @return bool
+     */
+    public function hasCountry($iso2Code)
+    {
+        return $this->getFactory()->createCountryManager()->hasCountry($iso2Code);
+    }
+
+    /**
+     * @param string $iso2Code
+     *
      * @return int
      */
     public function getIdCountryByIso2Code($iso2Code)
