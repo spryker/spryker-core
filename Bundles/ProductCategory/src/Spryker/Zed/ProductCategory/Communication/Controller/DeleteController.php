@@ -44,7 +44,7 @@ class DeleteController extends EditController
         if ($form->isValid()) {
             $data = $form->getData();
             $localeTransfer = $this->getFactory()
-                ->createCurrentLocale();
+                ->getCurrentLocale();
             $this->getFacade()->deleteCategory(
                 $data['id_category_node'],
                 $data['fk_parent_category_node'],
@@ -66,7 +66,7 @@ class DeleteController extends EditController
     protected function categoryExists($idCategory)
     {
         $categoryCount = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryCategoryById($idCategory)
             ->count();
 
@@ -86,10 +86,10 @@ class DeleteController extends EditController
     protected function getViewData($idCategory, Form $form)
     {
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $categoryEntity = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryCategoryById($idCategory)
             ->findOne();
 

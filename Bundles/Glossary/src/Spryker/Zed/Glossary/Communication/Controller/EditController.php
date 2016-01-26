@@ -26,7 +26,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $availableLocales = $this->getFactory()
-            ->createEnabledLocales();
+            ->getEnabledLocales();
 
         $glossaryForm = $this->getFactory()
             ->createTranslationForm($availableLocales, self::FORM_UPDATE_TYPE);

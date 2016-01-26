@@ -32,7 +32,7 @@ class AjaxController extends AbstractController
     {
         $term = $request->query->get(self::SEARCH_TERM);
         $keys = $this->getFactory()
-            ->createQueryContainer()
+            ->getQueryContainer()
             ->queryActiveKeysByName('%' . $term . '%')
             ->select([
                 SpyGlossaryKeyTableMap::COL_KEY,

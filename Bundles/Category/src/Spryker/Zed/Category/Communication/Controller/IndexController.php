@@ -81,7 +81,7 @@ class IndexController extends AbstractController
 
         $idCategory = $this->getFacade()->getCategoryNodeIdentifier(
             trim($categoryName),
-            $this->getFactory()->createCurrentLocale()
+            $this->getFactory()->getCurrentLocale()
         );
 
         $children = $this->getCategoryChildrenByIdCategory($idCategory);
@@ -166,7 +166,7 @@ class IndexController extends AbstractController
         return $this->getFacade()
             ->getTreeNodeChildrenByIdCategoryAndLocale(
                 $idCategory,
-                $this->getFactory()->createCurrentLocale()
+                $this->getFactory()->getCurrentLocale()
             );
     }
 

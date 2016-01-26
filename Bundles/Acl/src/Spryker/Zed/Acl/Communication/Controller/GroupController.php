@@ -190,7 +190,7 @@ class GroupController extends AbstractController
     {
         $idGroup = $request->get(self::PARAMETER_ID_GROUP);
 
-        $roles = $this->getFactory()->createGroupRoleListByGroupId($idGroup);
+        $roles = $this->getFactory()->getGroupRoleListByGroupId($idGroup);
 
         return $this->jsonResponse($roles);
     }

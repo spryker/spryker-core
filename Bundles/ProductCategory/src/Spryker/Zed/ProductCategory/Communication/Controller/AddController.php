@@ -40,7 +40,7 @@ class AddController extends AbstractController
 
         if ($form->isValid()) {
             $localeTransfer = $this->getFactory()
-                ->createCurrentLocale();
+                ->getCurrentLocale();
 
             $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
             $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
@@ -68,7 +68,7 @@ class AddController extends AbstractController
     {
         $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $productCategoryTable = $this->getFactory()
             ->createProductCategoryTable($locale, $idCategory);
@@ -87,7 +87,7 @@ class AddController extends AbstractController
     {
         $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $productTable = $this->getFactory()
             ->createProductTable($locale, $idCategory);

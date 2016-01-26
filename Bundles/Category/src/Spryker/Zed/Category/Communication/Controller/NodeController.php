@@ -34,7 +34,7 @@ class NodeController extends AbstractController
         $idCategoryNode = $request->get(CategoryConstants::PARAM_ID_NODE);
 
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $nodeList = $this->getQueryContainer()
             ->getCategoryNodesWithOrder($idCategoryNode, $locale->getIdLocale())
@@ -64,7 +64,7 @@ class NodeController extends AbstractController
     public function reorderAction(Request $request)
     {
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $categoryNodesToReorder = (array) json_decode($request->request->get('nodes'), true);
 

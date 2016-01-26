@@ -37,7 +37,7 @@ class EditController extends AddController
         $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
 
         $currentCategory = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryCategoryById($idCategory)
             ->findOne();
 
@@ -48,7 +48,7 @@ class EditController extends AddController
         }
 
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $form = $this->getFactory()
             ->createCategoryFormEdit($idCategory);
@@ -57,7 +57,7 @@ class EditController extends AddController
 
         if ($form->isValid()) {
             $connection = $this->getFactory()
-                ->createPropelConnection();
+                ->getPropelConnection();
 
             $connection->beginTransaction();
 
@@ -247,7 +247,7 @@ class EditController extends AddController
 
         /* @var SpyCategoryNode $currentCategoryNode */
         $existingCategoryNode = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryNodeById($currentCategoryNodeTransfer->getIdCategoryNode())
             ->findOne();
 
@@ -270,7 +270,7 @@ class EditController extends AddController
         $nodeTransfer->setIsMain(false);
 
         $existingCategoryNode = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $nodeTransfer->getFkParentCategoryNode())
             ->findOne();
 
@@ -310,7 +310,7 @@ class EditController extends AddController
     {
         $path = [];
         $pathTokens = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryPath($node->getIdCategoryNode(), $locale->getIdLocale(), true, false)
             ->find();
 
@@ -436,7 +436,7 @@ class EditController extends AddController
     protected function getCategoryChildren($idCategoryNode, LocaleTransfer $locale)
     {
         return $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryChildren($idCategoryNode, $locale->getIdLocale(), false, false)
             ->find();
     }

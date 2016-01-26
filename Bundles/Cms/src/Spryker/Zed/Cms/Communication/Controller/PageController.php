@@ -53,6 +53,8 @@ class PageController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
      * @return array
      */
     public function addAction(Request $request)
