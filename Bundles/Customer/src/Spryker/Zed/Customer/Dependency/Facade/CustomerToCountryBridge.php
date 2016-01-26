@@ -32,9 +32,9 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
      *
      * @return CountryTransfer
      */
-    public function getPreferedCountryByName($countryName)
+    public function getPreferredCountryByName($countryName)
     {
-        return $this->countryFacade->getPreferedCountryByName($countryName);
+        return $this->countryFacade->getPreferredCountryByName($countryName);
     }
 
     /**

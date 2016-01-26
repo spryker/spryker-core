@@ -61,14 +61,27 @@ class CountryFacade extends AbstractFacade
 
     /**
      * @param string $countryName
+     * @deprecated Use getPreferredCountryByName()
      *
      * @return CountryTransfer
      */
     public function getPreferedCountryByName($countryName)
     {
+        trigger_error('Deprecated, use getPreferredCountryByName() instead.', E_USER_DEPRECATED);
+
+        return $this->getPreferredCountryByName($countryName);
+    }
+
+    /**
+     * @param string $countryName
+     *
+     * @return CountryTransfer
+     */
+    public function getPreferredCountryByName($countryName)
+    {
         $countryTransfer = $this->getFactory()
             ->createCountryManager()
-            ->getPreferedCountryByName($countryName);
+            ->getPreferredCountryByName($countryName);
 
         return $countryTransfer;
     }
