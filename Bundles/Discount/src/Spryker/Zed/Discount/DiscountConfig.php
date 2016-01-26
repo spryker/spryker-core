@@ -71,11 +71,13 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
      */
     public function getDefaultVoucherDecisionRulePlugin()
     {
-        if (!array_key_exists(DiscountConstants::PLUGIN_DECISION_RULE_VOUCHER, $this->getAvailableDecisionRulePlugins())) {
+        $availablePlugins = $this->getAvailableDecisionRulePlugins();
+
+        if (!array_key_exists(DiscountConstants::PLUGIN_DECISION_RULE_VOUCHER, $availablePlugins)) {
             throw new \ErrorException('No default voucher decision rule plugin registered');
         }
 
-        return $this->getAvailableDecisionRulePlugins()[DiscountConstants::PLUGIN_DECISION_RULE_VOUCHER];
+        return $availablePlugins[DiscountConstants::PLUGIN_DECISION_RULE_VOUCHER];
     }
 
     /**
