@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Discount;
 
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Business\Exception\MissingCollectorException;
 use Spryker\Zed\Discount\Business\Exception\MissingDecisionRuleException;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
@@ -120,11 +121,23 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     /**
      * @param string $pluginName
      *
+     * @throws MissingCollectorException
+     *
      * @return DiscountCollectorPluginInterface
      */
     public function getCollectorPluginByName($pluginName)
     {
-        return $this->getAvailableCollectorPlugins()[$pluginName];
+        $availableCollectors = $this->getAvailableCollectorPlugins();
+        if (!isset($availableCollectors[$pluginName])) {
+            throw new MissingCollectorException(
+                sprintf(
+                    'Collector Plugin %s could not be found, put it in DiscountConfig::getAvailableCollectorPlugins',
+                    $pluginName
+                )
+            );
+        }
+
+        return $availableCollectors[$pluginName];
     }
 
     /**
