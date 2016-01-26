@@ -6,16 +6,28 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\ViolationChecker;
 
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\DependencyFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\AbstractDependencyTreeReader;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
+use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinderInterface;
 
 class DependencyViolationChecker implements DependencyViolationCheckerInterface
 {
 
     /**
-     * @var AbstractDependencyTreeReader
+     * @var DependencyTreeReaderInterface
      */
     private $treeReader;
+
+    /**
+     * @var ViolationFinderInterface
+     */
+    private $violationFinder;
+
+    /**
+     * @var DependencyFilter
+     */
+    private $dependencyFilter;
 
     /**
      * @var array
@@ -23,11 +35,15 @@ class DependencyViolationChecker implements DependencyViolationCheckerInterface
     private $dependencyViolations = [];
 
     /**
-     * @param AbstractDependencyTreeReader $treeReader
+     * @param DependencyTreeReaderInterface $treeReader
+     * @param ViolationFinderInterface $violationFinder
+     * @param DependencyFilter $dependencyFilter
      */
-    public function __construct(AbstractDependencyTreeReader $treeReader)
+    public function __construct(DependencyTreeReaderInterface $treeReader, ViolationFinderInterface $violationFinder, DependencyFilter $dependencyFilter)
     {
         $this->treeReader = $treeReader;
+        $this->violationFinder = $violationFinder;
+        $this->dependencyFilter = $dependencyFilter;
     }
 
     /**
@@ -36,12 +52,9 @@ class DependencyViolationChecker implements DependencyViolationCheckerInterface
     public function getDependencyViolations()
     {
         $dependencyTree = $this->treeReader->read();
-
-        foreach ($dependencyTree as $foreignBundle) {
-            foreach ($foreignBundle as $dependencies) {
-                foreach ($dependencies as $dependency) {
-                    $this->validateDependency($dependency);
-                }
+        foreach ($dependencyTree as $dependency) {
+            if ($this->violationFinder->isViolation($dependency) && !$this->dependencyFilter->filter($dependency)) {
+                $this->addViolation($dependency);
             }
         }
 
@@ -53,17 +66,8 @@ class DependencyViolationChecker implements DependencyViolationCheckerInterface
      *
      * @return void
      */
-    private function validateDependency(array $dependency)
+    private function addViolation(array $dependency)
     {
-        $violationPatterns = [
-            '/Exception/',
-            '/Spryker\\\\Shared\\\\(.*?)Constants/',
-        ];
-
-        foreach ($violationPatterns as $violationPattern) {
-            if (preg_match($violationPattern, $dependency[DependencyTree::META_FOREIGN_CLASS_NAME])) {
-                $this->dependencyViolations[] = $dependency[DependencyTree::META_BUNDLE] . ' \ ' . $dependency[DependencyTree::META_FILE] . ' => ' . $dependency[DependencyTree::META_FOREIGN_CLASS_NAME];
-            }
-        }
+        $this->dependencyViolations[] = $dependency[DependencyTree::META_CLASS_NAME] . ' => ' . $dependency[DependencyTree::META_FOREIGN_CLASS_NAME];
     }
 }

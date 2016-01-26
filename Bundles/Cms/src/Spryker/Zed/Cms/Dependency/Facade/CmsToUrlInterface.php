@@ -9,8 +9,6 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 interface CmsToUrlInterface
 {
@@ -20,8 +18,8 @@ interface CmsToUrlInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */
@@ -33,8 +31,8 @@ interface CmsToUrlInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */

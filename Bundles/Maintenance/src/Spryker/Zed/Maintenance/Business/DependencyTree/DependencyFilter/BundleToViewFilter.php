@@ -6,7 +6,9 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter;
 
-class BundleToViewFilter extends AbstractDependencyFilter
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
+
+class BundleToViewFilter implements DependencyFilterInterface
 {
 
     /**
@@ -23,14 +25,13 @@ class BundleToViewFilter extends AbstractDependencyFilter
     }
 
     /**
-     * @param string $bundle
-     * @param array $context
+     * @param array $dependency
      *
      * @return bool
      */
-    public function filter($bundle, array $context)
+    public function filter(array $dependency)
     {
-        return ($bundle !== $this->bundle);
+        return ($dependency[DependencyTree::META_BUNDLE] !== $this->bundle);
     }
 
 }

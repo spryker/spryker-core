@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Propel\Communication\Console;
 
 use Spryker\Shared\Config;
-use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -39,7 +39,7 @@ class CreateDatabaseConsole extends Console
     {
         $this->info('Creating Database');
 
-        if (Config::get(ApplicationConstants::ZED_DB_ENGINE) === 'pgsql') {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === 'pgsql') {
             $this->createPostgresDatabaseIfNotExists();
         } else {
             $this->createMysqlDatabaseIfNotExists();
@@ -57,7 +57,7 @@ class CreateDatabaseConsole extends Console
     {
         $databaseExists = $this->existsPostgresDatabase();
         if (!$databaseExists) {
-            $createDatabaseCommand = 'sudo createdb '  . Config::get(ApplicationConstants::ZED_DB_DATABASE) . ' -E UTF8 -T template0';
+            $createDatabaseCommand = 'sudo createdb '  . Config::get(PropelConstants::ZED_DB_DATABASE) . ' -E UTF8 -T template0';
             $process = new Process($createDatabaseCommand);
             $process->run();
 
@@ -76,7 +76,7 @@ class CreateDatabaseConsole extends Console
      */
     private function existsPostgresDatabase()
     {
-        $databaseExistsCommand = 'echo -n "$(sudo psql -lqt | cut -d \| -f 1 | grep -w ' . Config::get(ApplicationConstants::ZED_DB_DATABASE) . ' | wc -l)"';
+        $databaseExistsCommand = 'echo -n "$(sudo psql -lqt | cut -d \| -f 1 | grep -w ' . Config::get(PropelConstants::ZED_DB_DATABASE) . ' | wc -l)"';
         $process = new Process($databaseExistsCommand);
         $process->run();
 
@@ -95,15 +95,15 @@ class CreateDatabaseConsole extends Console
     private function createMysqlDatabaseIfNotExists()
     {
         $connection = new \PDO(
-            Config::get(ApplicationConstants::ZED_DB_ENGINE)
+            Config::get(PropelConstants::ZED_DB_ENGINE)
             . ':host='
-            . Config::get(ApplicationConstants::ZED_DB_HOST)
-            . ';port=' . Config::get(ApplicationConstants::ZED_DB_PORT),
-            Config::get(ApplicationConstants::ZED_DB_USERNAME),
-            Config::get(ApplicationConstants::ZED_DB_PASSWORD)
+            . Config::get(PropelConstants::ZED_DB_HOST)
+            . ';port=' . Config::get(PropelConstants::ZED_DB_PORT),
+            Config::get(PropelConstants::ZED_DB_USERNAME),
+            Config::get(PropelConstants::ZED_DB_PASSWORD)
         );
 
-        $query = 'CREATE DATABASE IF NOT EXISTS ' . Config::get(ApplicationConstants::ZED_DB_DATABASE) . ' CHARACTER SET "utf8"';
+        $query = 'CREATE DATABASE IF NOT EXISTS ' . Config::get(PropelConstants::ZED_DB_DATABASE) . ' CHARACTER SET "utf8"';
         $connection->exec($query);
     }
 

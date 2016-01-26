@@ -6,7 +6,6 @@
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 use Spryker\Zed\Product\Business\ProductFacade;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class ProductOptionToProductBridge implements ProductOptionToProductInterface
 {
@@ -29,7 +28,7 @@ class ProductOptionToProductBridge implements ProductOptionToProductInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -41,7 +40,7 @@ class ProductOptionToProductBridge implements ProductOptionToProductInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */

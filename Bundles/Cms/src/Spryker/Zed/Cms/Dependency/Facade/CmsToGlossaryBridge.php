@@ -8,12 +8,7 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use Pyz\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
-use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
-use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
-use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
+use Spryker\Zed\Glossary\Business\GlossaryFacade;
 
 class CmsToGlossaryBridge implements CmsToGlossaryInterface
 {
@@ -24,8 +19,6 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
     protected $glossaryFacade;
 
     /**
-     * CmsToGlossaryBridge constructor.
-     *
      * @param GlossaryFacade $glossaryFacade
      */
     public function __construct($glossaryFacade)
@@ -37,7 +30,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      * @param int $idKey
      * @param array $data
      *
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */
@@ -51,9 +44,9 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws MissingKeyException
-     * @throws MissingLocaleException
-     * @throws TranslationExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return TranslationTransfer
      */
@@ -68,9 +61,9 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws MissingKeyException
-     * @throws MissingLocaleException
-     * @throws TranslationExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return TranslationTransfer
      */
@@ -85,9 +78,9 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws MissingKeyException
-     * @throws MissingLocaleException
-     * @throws TranslationExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return TranslationTransfer
      */
@@ -99,7 +92,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
     /**
      * @param string $keyName
      *
-     * @throws KeyExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
      *
      * @return int
      */

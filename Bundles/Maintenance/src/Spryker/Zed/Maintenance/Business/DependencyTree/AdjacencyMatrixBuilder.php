@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Maintenance\Business\DependencyTree;
 
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\AbstractDependencyTreeReader;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
 
 class AdjacencyMatrixBuilder
 {
@@ -15,7 +15,7 @@ class AdjacencyMatrixBuilder
     const FROM_LAYER_TO_LAYER = 'fromLayerToLayer';
 
     /**
-     * @var AbstractDependencyTreeReader
+     * @var DependencyTreeReaderInterface
      */
     protected $dependencyTreeReader;
 
@@ -30,11 +30,11 @@ class AdjacencyMatrixBuilder
     private $matrix = [];
 
     /**
-     * @param AbstractDependencyTreeReader $dependencyTreeReader
+     * @param DependencyTreeReaderInterface $dependencyTreeReader
      * @param TreeFilter $filter
      */
     public function __construct(
-        AbstractDependencyTreeReader $dependencyTreeReader,
+        DependencyTreeReaderInterface $dependencyTreeReader,
         TreeFilter $filter
     ) {
         $this->dependencyTreeReader = $dependencyTreeReader;

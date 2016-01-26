@@ -14,7 +14,7 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\ProductCategory\Business\Exception\MissingProductException;
 use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface;

@@ -7,7 +7,6 @@ namespace Spryker\Zed\Product\Dependency\Facade;
 
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 class ProductToLocaleBridge implements ProductToLocaleInterface
 {
@@ -46,7 +45,7 @@ class ProductToLocaleBridge implements ProductToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @throws MissingLocaleException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
      * @return LocaleTransfer
      */

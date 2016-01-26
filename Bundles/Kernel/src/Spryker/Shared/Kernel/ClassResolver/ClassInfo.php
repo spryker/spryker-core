@@ -7,7 +7,7 @@
 namespace Spryker\Shared\Kernel\ClassResolver;
 
 use Spryker\Shared\Config;
-use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\KernelConstants;
 
 class ClassInfo
 {
@@ -107,8 +107,8 @@ class ClassInfo
     private function removeTestNamespace(array $callerClassParts)
     {
         $config = Config::getInstance();
-        $projectNamespaces = $config->get(ApplicationConstants::PROJECT_NAMESPACES);
-        $coreNamespaces = $config->get(ApplicationConstants::CORE_NAMESPACES);
+        $projectNamespaces = $config->get(KernelConstants::PROJECT_NAMESPACES);
+        $coreNamespaces = $config->get(KernelConstants::CORE_NAMESPACES);
 
         $namespaces = array_merge($projectNamespaces, $coreNamespaces);
 

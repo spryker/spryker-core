@@ -6,12 +6,12 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader;
 
-abstract class AbstractDependencyTreeReader
+interface DependencyTreeReaderInterface
 {
 
     /**
      * @return array
      */
-    abstract public function read();
+    public function read();
 
 }

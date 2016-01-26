@@ -8,7 +8,7 @@ namespace Spryker\Zed\Maintenance\Business\DependencyTree;
 
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\GraphBuilderInterface;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\AbstractDependencyTreeReader;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
 
 class DependencyGraphBuilder
 {
@@ -19,7 +19,7 @@ class DependencyGraphBuilder
     protected $graphBuilder;
 
     /**
-     * @var AbstractDependencyTreeReader
+     * @var DependencyTreeReaderInterface
      */
     protected $dependencyTreeReader;
 
@@ -30,12 +30,12 @@ class DependencyGraphBuilder
 
     /**
      * @param GraphBuilderInterface $graphBuilder
-     * @param AbstractDependencyTreeReader $dependencyTreeReader
+     * @param DependencyTreeReaderInterface $dependencyTreeReader
      * @param TreeFilter $filter
      */
     public function __construct(
         GraphBuilderInterface $graphBuilder,
-        AbstractDependencyTreeReader $dependencyTreeReader,
+        DependencyTreeReaderInterface $dependencyTreeReader,
         TreeFilter $filter
     ) {
         $this->graphBuilder = $graphBuilder;

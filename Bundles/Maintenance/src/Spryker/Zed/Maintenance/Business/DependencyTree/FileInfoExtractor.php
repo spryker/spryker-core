@@ -10,6 +10,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class FileInfoExtractor
 {
+
     const LAYER = 'Default';
 
     /**
@@ -64,6 +65,18 @@ class FileInfoExtractor
      *
      * @throws \Exception
      *
+     * @return string
+     */
+    public function getClassNameFromFile(SplFileInfo $fileInfo)
+    {
+        return substr(implode('\\', $this->getClassNameParts($fileInfo)), 0, -4);
+    }
+
+    /**
+     * @param SplFileInfo $fileInfo
+     *
+     * @throws \Exception
+     *
      * @return array
      */
     private function getClassNameParts(SplFileInfo $fileInfo)
@@ -81,4 +94,5 @@ class FileInfoExtractor
 
         throw new \Exception(sprintf('Could not extract class name parts from file "%s".', $fileInfo->getPathname()));
     }
+
 }

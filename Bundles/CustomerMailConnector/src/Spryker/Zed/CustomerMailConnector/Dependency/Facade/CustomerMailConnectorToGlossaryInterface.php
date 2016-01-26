@@ -7,7 +7,6 @@
 namespace Spryker\Zed\CustomerMailConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 interface CustomerMailConnectorToGlossaryInterface
 {
@@ -24,7 +23,7 @@ interface CustomerMailConnectorToGlossaryInterface
      * @param string $keyName
      * @param array $data
      *
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */

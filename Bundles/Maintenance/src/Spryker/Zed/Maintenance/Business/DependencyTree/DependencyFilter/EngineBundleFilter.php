@@ -6,7 +6,9 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter;
 
-class EngineBundleFilter extends AbstractDependencyFilter
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
+
+class EngineBundleFilter implements DependencyFilterInterface
 {
 
     /**
@@ -21,14 +23,13 @@ class EngineBundleFilter extends AbstractDependencyFilter
     }
 
     /**
-     * @param string $bundle
-     * @param array $context
+     * @param array $dependency
      *
      * @return bool
      */
-    public function filter($bundle, array $context)
+    public function filter(array $dependency)
     {
-        return in_array($context['foreign bundle'], $this->filterBundles);
+        return in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->filterBundles);
     }
 
 }

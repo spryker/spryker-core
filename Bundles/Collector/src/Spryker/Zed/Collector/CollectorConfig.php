@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Collector;
 
+use Spryker\Shared\Collector\CollectorConstants;
 use Spryker\Shared\Config;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CollectorConfig extends AbstractBundleConfig
@@ -18,7 +18,7 @@ class CollectorConfig extends AbstractBundleConfig
      */
     public function getSearchIndexName()
     {
-        return Config::get(ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME);
+        return Config::get(CollectorConstants::ELASTICA_PARAMETER__INDEX_NAME);
     }
 
     /**
@@ -26,7 +26,7 @@ class CollectorConfig extends AbstractBundleConfig
      */
     public function getSearchDocumentType()
     {
-        return Config::get(ApplicationConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+        return Config::get(CollectorConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
     }
 
     /**

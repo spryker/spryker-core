@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\ProductCategory\Business\Exception\MissingProductException;
 use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 

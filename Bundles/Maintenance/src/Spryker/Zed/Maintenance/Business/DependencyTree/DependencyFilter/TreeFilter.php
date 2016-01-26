@@ -6,17 +6,20 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter;
 
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
-
 class TreeFilter
 {
 
     /**
-     * @var AbstractDependencyFilter[]
+     * @var DependencyFilterInterface[]
      */
     private $filter;
 
-    public function addFilter(AbstractDependencyFilter $filter)
+    /**
+     * @param DependencyFilterInterface $filter
+     *
+     * @return self
+     */
+    public function addFilter(DependencyFilterInterface $filter)
     {
         $this->filter[] = $filter;
 
@@ -59,11 +62,12 @@ class TreeFilter
     {
         $filterDependency = false;
         foreach ($this->filter as $filter) {
-            if ($filter->filter($dependency[DependencyTree::META_BUNDLE], $dependency)) {
+            if ($filter->filter($dependency)) {
                 $filterDependency = true;
             }
         }
 
         return $filterDependency;
     }
+
 }

@@ -9,11 +9,6 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
-use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
-use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
-use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
 
 interface CmsToGlossaryInterface
 {
@@ -22,7 +17,7 @@ interface CmsToGlossaryInterface
      * @param int $idKey
      * @param array $data
      *
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */
@@ -33,9 +28,9 @@ interface CmsToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws MissingKeyException
-     * @throws MissingLocaleException
-     * @throws TranslationExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return TranslationTransfer
      */
@@ -47,9 +42,9 @@ interface CmsToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws MissingKeyException
-     * @throws MissingLocaleException
-     * @throws TranslationExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return TranslationTransfer
      */
@@ -61,9 +56,9 @@ interface CmsToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws MissingKeyException
-     * @throws MissingLocaleException
-     * @throws TranslationExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return TranslationTransfer
      */
@@ -72,7 +67,7 @@ interface CmsToGlossaryInterface
     /**
      * @param string $keyName
      *
-     * @throws KeyExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
      *
      * @return int
      */

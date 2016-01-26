@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Propel\Communication\Console;
 
 use Spryker\Shared\Config;
-use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -39,7 +39,7 @@ class MigrateConsole extends Console
     {
         $this->info('Run migrations');
 
-        $config = Config::get(ApplicationConstants::PROPEL);
+        $config = Config::get(KernelConstants::PROPEL);
         $command = 'vendor/bin/propel migrate --config-dir '
             . $config['paths']['phpConfDir'];
 

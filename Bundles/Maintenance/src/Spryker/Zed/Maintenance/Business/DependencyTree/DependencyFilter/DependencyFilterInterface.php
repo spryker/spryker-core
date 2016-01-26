@@ -6,15 +6,14 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter;
 
-abstract class AbstractDependencyFilter
+interface DependencyFilterInterface
 {
 
     /**
-     * @param string $bundle
-     * @param array $context
+     * @param array $dependency
      *
      * @return bool
      */
-    abstract public function filter($bundle, array $context);
+    public function filter(array $dependency);
 
 }

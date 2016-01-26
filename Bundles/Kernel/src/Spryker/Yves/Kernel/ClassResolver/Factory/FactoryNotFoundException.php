@@ -6,10 +6,10 @@
 
 namespace Spryker\Yves\Kernel\ClassResolver\Factory;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
+use Spryker\Shared\Kernel\KernelConstants;
 
 class FactoryNotFoundException extends \Exception
 {
@@ -39,7 +39,7 @@ class FactoryNotFoundException extends \Exception
 
         $message .= sprintf(
             'E.g. %s\\Yves\\%2$s\\%2$sFactory' . PHP_EOL . PHP_EOL,
-            Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
+            Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );
 

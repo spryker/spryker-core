@@ -63,4 +63,12 @@ class NewsletterConfig extends AbstractBundleConfig
         return $this->get(NewsletterConstants::SHOP_MAIL_DOUBLE_OPT_IN_CONFIRMATION_SUBJECT);
     }
 
+    /**
+     * @return string
+     */
+    public function getMergeLanguage()
+    {
+        return $this->get(NewsletterConstants::MERGE_LANGUAGE_HANDLEBARS);
+    }
+
 }

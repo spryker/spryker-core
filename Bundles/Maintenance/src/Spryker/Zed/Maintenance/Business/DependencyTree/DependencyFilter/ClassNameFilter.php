@@ -8,7 +8,7 @@ namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter;
 
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 
-class ClassNameFilter extends AbstractDependencyFilter
+class ClassNameFilter implements DependencyFilterInterface
 {
 
     /**
@@ -25,14 +25,13 @@ class ClassNameFilter extends AbstractDependencyFilter
     }
 
     /**
-     * @param string $bundle
-     * @param array $context
+     * @param array $dependency
      *
      * @return bool
      */
-    public function filter($bundle, array $context)
+    public function filter(array $dependency)
     {
-        $foreignClassName = $context[DependencyTree::META_FOREIGN_CLASS_NAME];
+        $foreignClassName = $dependency[DependencyTree::META_FOREIGN_CLASS_NAME];
 
         if (preg_match($this->pattern, $foreignClassName)) {
             return true;

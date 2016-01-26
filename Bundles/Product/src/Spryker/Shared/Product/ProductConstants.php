@@ -6,6 +6,9 @@
 
 namespace Spryker\Shared\Product;
 
+/**
+ * @TODO https://github.com/spryker/spryker/issues/1219
+ */
 interface ProductConstants
 {
 

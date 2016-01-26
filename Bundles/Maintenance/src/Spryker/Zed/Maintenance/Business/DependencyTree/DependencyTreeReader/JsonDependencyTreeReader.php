@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader;
 
-class JsonDependencyTreeReader extends AbstractDependencyTreeReader
+class JsonDependencyTreeReader implements DependencyTreeReaderInterface
 {
 
     /**

@@ -13,6 +13,7 @@ class DependencyTree extends AbstractDependencyTree
 
     const META_FINDER = 'finder';
     const META_FILE = 'file';
+    const META_CLASS_NAME = 'class name';
     const META_FOREIGN_BUNDLE = 'foreign bundle';
     const META_FOREIGN_LAYER = 'foreign layer';
     const META_FOREIGN_CLASS_NAME = 'foreign class name';
@@ -45,6 +46,7 @@ class DependencyTree extends AbstractDependencyTree
         $application = $this->fileInfoExtractor->getApplicationNameFromFileInfo($fileInfo);
         $bundle = $this->fileInfoExtractor->getBundleNameFromFileInfo($fileInfo);
         $layer = $this->fileInfoExtractor->getLayerNameFromFileInfo($fileInfo);
+        $className = $this->fileInfoExtractor->getClassNameFromFile($fileInfo);
 
         if ($bundle === $to) {
             return;
@@ -52,6 +54,7 @@ class DependencyTree extends AbstractDependencyTree
 
         $dependency = $dependency + [
             self::META_FILE => $fileInfo->getFilename(),
+            self::META_CLASS_NAME => $className,
             self::META_FOREIGN_BUNDLE => $to,
             self::META_APPLICATION => $application,
             self::META_BUNDLE => $bundle,

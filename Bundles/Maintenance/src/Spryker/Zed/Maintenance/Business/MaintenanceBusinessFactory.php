@@ -7,11 +7,11 @@
 namespace Spryker\Zed\Maintenance\Business;
 
 use Spryker\Zed\Maintenance\Business\DependencyTree\AdjacencyMatrixBuilder;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\BundleFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ClassNameFilter;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ConstantsToForeignConstantsFilter;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\DependencyFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\EngineBundleFilter;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\SelfDependencyFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade;
@@ -23,10 +23,14 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraphBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\JsonDependencyTreeReader;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReaderFilter\DependencyTreeReaderFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeWriter\JsonDependencyTreeWriter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor;
 use Spryker\Zed\Maintenance\Business\DependencyTree\Finder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationChecker\DependencyViolationChecker;
+use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignConstants;
+use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignException;
+use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinder;
 use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
@@ -416,6 +420,11 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         return new EngineBundleFilter();
     }
 
+    /**
+     * @param string|bool $bundleToView
+     *
+     * @return AdjacencyMatrixBuilder
+     */
     public function createAdjacencyMatrixBuilder($bundleToView)
     {
         $adjacencyMatrixBuilder = new AdjacencyMatrixBuilder(
@@ -450,17 +459,43 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     public function createDependencyViolationChecker()
     {
-        return new DependencyViolationChecker(
+        $dependencyTreeReaderFilter = new DependencyTreeReaderFilter(
             $this->createDependencyTreeReader()
+        );
+
+        return new DependencyViolationChecker(
+            $dependencyTreeReaderFilter,
+            $this->createViolationFinder(),
+            $this->createDependencyViolationFilter()
         );
     }
 
     /**
-     * @return SelfDependencyFilter
+     * @return ViolationFinder
      */
-    protected function createDependencyTreeBundleFilter()
+    protected function createViolationFinder()
     {
-        return new SelfDependencyFilter();
+        $violationFinder = new ViolationFinder();
+        $violationFinder
+            ->addViolationFinder(new UseForeignConstants())
+//            ->addViolationFinder(new UseForeignException())
+        ;
+
+        return $violationFinder;
+    }
+
+    /**
+     * @return DependencyFilter
+     */
+    protected function createDependencyViolationFilter()
+    {
+        $dependencyFilter = new DependencyFilter();
+        $dependencyFilter
+//            ->addFilter(new ConstantsToForeignConstantsFilter())
+//            ->addFilter(new EngineBundleFilter())
+        ;
+
+        return $dependencyFilter;
     }
 
     /**

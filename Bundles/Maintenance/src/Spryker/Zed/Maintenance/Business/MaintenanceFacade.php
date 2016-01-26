@@ -119,6 +119,9 @@ class MaintenanceFacade extends AbstractFacade
         return $this->getFactory()->createAdjacencyMatrixBuilder($bundleToView)->build();
     }
 
+    /**
+     * @return array
+     */
     public function getDependencyViolations()
     {
         return $this->getFactory()->createDependencyViolationChecker()->getDependencyViolations();
