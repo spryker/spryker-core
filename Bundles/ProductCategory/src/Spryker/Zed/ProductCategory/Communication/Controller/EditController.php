@@ -48,7 +48,7 @@ class EditController extends AddController
         }
 
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $form = $this->getFactory()
             ->createCategoryFormEdit($idCategory);
