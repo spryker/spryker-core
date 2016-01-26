@@ -41,4 +41,11 @@ interface PriceToProductInterface
      */
     public function hasProductConcrete($sku);
 
+    /**
+     * @param string $sku
+     *
+     * @return string
+     */
+    public function getAbstractSkuFromProductConcrete($sku);
+
 }
