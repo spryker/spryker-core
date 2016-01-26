@@ -25,7 +25,7 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         $availableLocales = $this->getFactory()
-            ->createEnabledLocales();
+            ->getEnabledLocales();
 
         $table = $this->getFactory()
             ->createTranslationTable($availableLocales);
@@ -42,7 +42,7 @@ class IndexController extends AbstractController
     public function tableAction()
     {
         $availableLocales = $this->getFactory()
-            ->createEnabledLocales();
+            ->getEnabledLocales();
 
         $table = $this->getFactory()
             ->createTranslationTable($availableLocales);
