@@ -11,7 +11,7 @@ use Elastica\Index;
 use Elastica\Type\Mapping;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
-class ElasticSearchMarkerWriter implements WriterInterface
+class ElasticsearchMarkerWriter implements WriterInterface
 {
 
     const WRITER_NAME = 'elasticsearch-marker-writer';

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Collector\Business;
 use Spryker\Zed\Collector\Business\Exporter\KeyValueExporter;
 use Spryker\Zed\Collector\Business\Exporter\SearchExporter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdater as KeyValueTouchUpdater;
-use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticSearchUpdateWriter;
+use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\TouchUpdater;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
@@ -187,7 +187,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new Collector(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createElasticSearchExporter(
+            $this->createElasticsearchExporter(
                 $searchWriter,
                 $config
             )
@@ -202,7 +202,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new Collector(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createElasticSearchExporter(
+            $this->createElasticsearchExporter(
                 $this->createSearchUpdateWriter(),
                 $this->getConfig()
             )
@@ -215,7 +215,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      *
      * @return SearchExporter
      */
-    protected function createElasticSearchExporter(WriterInterface $searchWriter, CollectorConfig $config)
+    protected function createElasticsearchExporter(WriterInterface $searchWriter, CollectorConfig $config)
     {
         $searchExporter = new SearchExporter(
             $this->getTouchQueryContainer(),
@@ -234,11 +234,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ElasticSearchWriter
+     * @return ElasticsearchWriter
      */
     protected function createSearchWriter()
     {
-        $elasticSearchWriter = new ElasticSearchWriter(
+        $elasticSearchWriter = new ElasticsearchWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType()
@@ -254,7 +254,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         $settings = $this->getConfig();
 
-        $elasticsearchUpdateWriter = new ElasticSearchUpdateWriter(
+        $elasticsearchUpdateWriter = new ElasticsearchUpdateWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $settings->getSearchIndexName(),
             $settings->getSearchDocumentType()
@@ -276,11 +276,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ElasticSearchMarkerWriter
+     * @return ElasticsearchMarkerWriter
      */
     protected function createSearchMarkerWriter()
     {
-        $elasticSearchWriter = new ElasticSearchMarkerWriter(
+        $elasticSearchWriter = new ElasticsearchMarkerWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType()
@@ -290,11 +290,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ElasticSearchMarkerReader
+     * @return ElasticsearchMarkerReader
      */
     protected function createSearchMarkerReader()
     {
-        return new ElasticSearchMarkerReader(
+        return new ElasticsearchMarkerReader(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType()
@@ -312,11 +312,11 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @param MessengerInterface $messenger
      *
-     * @return InstallElasticSearch
+     * @return InstallElasticsearch
      */
     public function createInstaller(MessengerInterface $messenger)
     {
-        $installer = new InstallElasticSearch(
+        $installer = new InstallElasticsearch(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName()
         );

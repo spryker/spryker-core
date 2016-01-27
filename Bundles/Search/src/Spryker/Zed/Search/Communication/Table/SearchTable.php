@@ -84,7 +84,7 @@ class SearchTable extends AbstractTable
                 ];
             }
         } catch (ResponseException $e) {
-            // allowed catch, because ElasticSearch index is not always there
+            // allowed catch, because Elasticsearch index is not always there
         }
 
         return $tableData;

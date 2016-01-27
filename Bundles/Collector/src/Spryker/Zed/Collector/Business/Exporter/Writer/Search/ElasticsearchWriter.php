@@ -11,7 +11,7 @@ use Elastica\Document;
 use Elastica\Index;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
-class ElasticSearchWriter implements WriterInterface
+class ElasticsearchWriter implements WriterInterface
 {
 
     /**

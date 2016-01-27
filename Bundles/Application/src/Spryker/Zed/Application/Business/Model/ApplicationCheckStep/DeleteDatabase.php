@@ -26,11 +26,24 @@ class DeleteDatabase extends AbstractApplicationCheckStep
         }
     }
 
+    private function closePostgresConnections()
+    {
+        $dropDatabaseCommand = "PGPASSWORD='easy' psql -U postgres -w  -c 'SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pid <> pg_backend_pid()'";
+        $process = new Process($dropDatabaseCommand);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException($process->getErrorOutput());
+        }
+    }
+
     /**
      * @return void
      */
     private function deletePostgresDatabaseIfNotExists()
     {
+        $this->closePostgresConnections();
+
         // @todo make it work without sudo
         $dropDatabaseCommand = 'sudo dropdb --if-exists ' . Config::get(ApplicationConstants::ZED_DB_DATABASE);
         $process = new Process($dropDatabaseCommand);
