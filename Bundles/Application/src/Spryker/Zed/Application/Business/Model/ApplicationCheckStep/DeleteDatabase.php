@@ -27,9 +27,11 @@ class DeleteDatabase extends AbstractApplicationCheckStep
     }
 
     /**
+     * @throws \RuntimeException
+     *
      * @return void
      */
-    private function closePostgresConnections()
+    protected function closePostgresConnections()
     {
         $dropDatabaseCommand = sprintf(
             'psql -U %s -w  -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pid <> pg_backend_pid() AND pg_stat_activity.datname = \'%s\';"',
@@ -46,9 +48,11 @@ class DeleteDatabase extends AbstractApplicationCheckStep
     }
 
     /**
+     * @throws \RuntimeException
+     *
      * @return void
      */
-    private function deletePostgresDatabaseIfNotExists()
+    protected function deletePostgresDatabaseIfNotExists()
     {
         $this->closePostgresConnections();
 
@@ -69,7 +73,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
     /**
      * @return void
      */
-    private function deleteMysqlDatabaseIfNotExists()
+    protected function deleteMysqlDatabaseIfNotExists()
     {
         $con = new \PDO(
             Config::get(ApplicationConstants::ZED_DB_ENGINE)
