@@ -405,7 +405,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         $treeFilter = $this->createDependencyTreeFilter();
         $treeFilter
             ->addFilter($this->createDependencyTreeForeignEngineBundleFilter())
-//            ->addFilter($this->createDependencyTreeEngineBundleFilter())
+            ->addFilter($this->createDependencyTreeEngineBundleFilter())
             ->addFilter($this->createDependencyTreeInvalidForeignBundleFilter())
             ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'))
         ;
