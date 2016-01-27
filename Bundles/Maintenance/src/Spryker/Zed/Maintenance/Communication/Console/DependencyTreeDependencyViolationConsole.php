@@ -46,7 +46,7 @@ class DependencyTreeDependencyViolationConsole extends Console
 
         $dependencyViolations = $this->getFacade()->getDependencyViolations();
 
-        $this->info(sprintf('Found "%d" wrong dependencies', count($dependencyViolations)));
+        $this->info(sprintf('Found "%d" dependencies', count($dependencyViolations)));
 
         foreach ($dependencyViolations as $dependencyViolation) {
             $this->info($dependencyViolation);

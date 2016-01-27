@@ -24,7 +24,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProduct;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 
@@ -32,11 +31,8 @@ class ProductManager implements ProductManagerInterface
 {
 
     const COL_ID_PRODUCT_CONCRETE = 'SpyProduct.IdProduct';
-
     const COL_ABSTRACT_SKU = 'SpyProductAbstract.Sku';
-
     const COL_ID_PRODUCT_ABSTRACT = 'SpyProductAbstract.IdProductAbstract';
-
     const COL_NAME = 'SpyProductLocalizedAttributes.Name';
 
     /**
@@ -416,7 +412,7 @@ class ProductManager implements ProductManagerInterface
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws MissingProductException
      *
      * @return UrlTransfer
@@ -434,7 +430,7 @@ class ProductManager implements ProductManagerInterface
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws MissingProductException
      *
      * @return UrlTransfer
@@ -450,7 +446,7 @@ class ProductManager implements ProductManagerInterface
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws MissingProductException
      *
      * @return UrlTransfer
@@ -469,7 +465,7 @@ class ProductManager implements ProductManagerInterface
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws MissingProductException
      *
      * @return UrlTransfer

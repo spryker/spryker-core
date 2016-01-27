@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PageTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 interface GlossaryKeyMappingManagerInterface
 {
@@ -23,7 +22,7 @@ interface GlossaryKeyMappingManagerInterface
      * @param array $data
      *
      * @throws MissingGlossaryKeyMappingException
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Product\Dependency\Facade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 interface ProductToUrlInterface
 {
@@ -21,7 +20,7 @@ interface ProductToUrlInterface
      * @param int $resourceId
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */

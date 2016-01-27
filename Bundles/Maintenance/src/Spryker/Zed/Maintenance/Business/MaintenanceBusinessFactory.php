@@ -29,6 +29,7 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeWriter\JsonDep
 use Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor;
 use Spryker\Zed\Maintenance\Business\DependencyTree\Finder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationChecker\DependencyViolationChecker;
+use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\BundleUsesConnector;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignConstants;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignException;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinder;
@@ -464,7 +465,9 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         $violationFinder = new ViolationFinder();
         $violationFinder
             ->addViolationFinder($this->createViolationFinderUseForeignConstants())
-            ->addViolationFinder($this->createViolationFinderUseForeignException());
+            ->addViolationFinder($this->createViolationFinderUseForeignException())
+            ->addViolationFinder($this->createViolationFinderBundleUsesConnector())
+        ;
 
         return $violationFinder;
     }
@@ -516,6 +519,14 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     protected function createViolationFinderUseForeignException()
     {
         return new UseForeignException();
+    }
+
+    /**
+     * @return BundleUsesConnector
+     */
+    protected function createViolationFinderBundleUsesConnector()
+    {
+        return new BundleUsesConnector();
     }
 
     /**

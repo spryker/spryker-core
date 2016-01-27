@@ -14,8 +14,6 @@ use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Exception\PageExistsException;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
-use Spryker\Zed\Url\Business\Exception\MissingUrlException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 interface PageManagerInterface
 {
@@ -25,7 +23,7 @@ interface PageManagerInterface
      *
      * @throws MissingTemplateException
      * @throws MissingPageException
-     * @throws MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      * @throws PageExistsException
      *
      * @return PageTransfer
@@ -59,7 +57,7 @@ interface PageManagerInterface
      * @param PageTransfer $page
      * @param string $url
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */
@@ -70,7 +68,7 @@ interface PageManagerInterface
      * @param string $url
      * @param LocaleTransfer $localeTransfer
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */

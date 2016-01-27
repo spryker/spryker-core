@@ -19,7 +19,6 @@ use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 {
@@ -78,7 +77,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @param array $data
      *
      * @throws MissingGlossaryKeyMappingException
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */

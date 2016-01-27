@@ -23,7 +23,6 @@ use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 class PageManager implements PageManagerInterface
 {
@@ -223,7 +222,7 @@ class PageManager implements PageManagerInterface
      * @param PageTransfer $page
      * @param string $url
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */
@@ -239,7 +238,7 @@ class PageManager implements PageManagerInterface
      * @param string $url
      * @param LocaleTransfer $localeTransfer
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */

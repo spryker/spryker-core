@@ -18,7 +18,6 @@ use Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException;
 use Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Model\ProductBatchResult;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
  * @method ProductBusinessFactory getFactory()
@@ -210,7 +209,7 @@ class ProductFacade extends AbstractFacade
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws MissingProductException
      *
      * @return UrlTransfer
@@ -226,7 +225,7 @@ class ProductFacade extends AbstractFacade
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws MissingProductException
      *
      * @return UrlTransfer

@@ -9,7 +9,6 @@ use Spryker\Zed\Url\Business\UrlFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 class ProductToUrlBridge implements ProductToUrlInterface
 {
@@ -36,7 +35,7 @@ class ProductToUrlBridge implements ProductToUrlInterface
      * @param int $resourceId
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */

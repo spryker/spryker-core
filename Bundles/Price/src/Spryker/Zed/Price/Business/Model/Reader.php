@@ -11,7 +11,6 @@ use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Spryker\Zed\Price\PriceConfig;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class Reader implements ReaderInterface
 {
@@ -269,7 +268,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -281,7 +280,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */

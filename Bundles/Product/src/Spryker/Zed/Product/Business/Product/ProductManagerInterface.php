@@ -14,7 +14,6 @@ use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 interface ProductManagerInterface
 {
@@ -81,7 +80,7 @@ interface ProductManagerInterface
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws MissingProductException
      *
      * @return UrlTransfer
@@ -94,7 +93,7 @@ interface ProductManagerInterface
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws MissingProductException
      *
      * @return UrlTransfer
@@ -107,7 +106,7 @@ interface ProductManagerInterface
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws MissingProductException
      *
      * @return UrlTransfer
@@ -120,7 +119,7 @@ interface ProductManagerInterface
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws MissingProductException
      *
      * @return UrlTransfer

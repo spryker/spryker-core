@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Price\Business\Model;
 
 use Orm\Zed\Price\Persistence\SpyPriceType;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 interface ReaderInterface
 {
@@ -57,7 +56,7 @@ interface ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -66,7 +65,7 @@ interface ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
