@@ -69,9 +69,8 @@ class MaintenanceConfig extends AbstractBundleConfig
     public function getPathToJsonDependencyTree()
     {
         $pathParts = [
-            APPLICATION_VENDOR_DIR,
-            'spryker',
-            'spryker',
+            APPLICATION_ROOT_DIR,
+            'data',
             'dependencyTree.json',
         ];
 
