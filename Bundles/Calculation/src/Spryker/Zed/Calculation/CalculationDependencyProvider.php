@@ -48,23 +48,23 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCalculatorStack(Container $container)
     {
         return [
-            #Remove calculated values, start with clean state.
+            //Remove calculated values, start with clean state.
             new RemoveTotalsCalculatorPlugin(),
             new RemoveAllExpensesCalculatorPlugin(),
             new RemoveAllCalculatedDiscountsCalculatorPlugin(),
 
-            #Item calculators
+            //Item calculators
             new ProductOptionGrossSumCalculatorPlugin(),
             new ItemGrossAmountsCalculatorPlugin(),
 
-            #SubTotal
+            //SubTotal
             new SubtotalTotalsCalculatorPlugin(),
 
-            #Expenses (e.g. shipping)
+            //Expenses (e.g. shipping)
             new ExpenseGrossSumAmountCalculator(),
             new ExpenseTotalsCalculatorPlugin(),
 
-            #GrandTotal
+            //GrandTotal
             new GrandTotalTotalsCalculatorPlugin(),
             new GrandTotalWithDiscountsCalculatorPlugin(),
         ];

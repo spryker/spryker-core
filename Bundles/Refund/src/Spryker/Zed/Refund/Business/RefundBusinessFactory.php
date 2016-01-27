@@ -36,7 +36,8 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     {
         return new RefundManager(
             $this->getQueryContainer(),
-            $this->getSalesQueryContainer()
+            $this->getSalesQueryContainer(),
+            $this->getSalesFacade()
         );
     }
 

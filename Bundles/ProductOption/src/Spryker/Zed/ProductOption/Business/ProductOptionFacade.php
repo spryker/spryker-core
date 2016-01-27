@@ -7,6 +7,7 @@
 namespace Spryker\Zed\ProductOption\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -240,6 +241,40 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     public function saveSaleOrderProductOptions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $this->getFactory()->createProductOptionOrderSaver()->save($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     */
+    public function aggregateOrderItemProductOptionGrossPrice(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createItemProductOptionGrossPriceAggregator()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     */
+    public function aggregateOrderSubtotalWithProductOptions(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createSubtotalWithProductOption()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateItemProductOptionTaxAmount(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createItemProductOptionTaxAggregator()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     */
+    public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createOrderTaxAmountAggregator()->aggregate($orderTransfer);
     }
 
 }

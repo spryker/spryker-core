@@ -24,8 +24,8 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="unitTaxAmountWithProductOptionAndDiscountAmounts" type="int" />
-        <property name="sumTaxAmountWithProductOptionAndDiscountAmounts" type="int" />
+        <property name="unitTaxAmount" type="int" />
+        <property name="sumTaxAmount" type="int" />
     </transfer>
 
     <transfer name="Expense">

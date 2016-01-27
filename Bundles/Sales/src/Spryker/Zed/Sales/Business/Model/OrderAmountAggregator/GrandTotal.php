@@ -31,26 +31,10 @@ class GrandTotal
         $orderTransfer->getTotals()->requireSubtotal();
 
         $subTotal = $orderTransfer->getTotals()->getSubtotal();
-        $expensesTotal = $this->getExpensesTotal($orderTransfer);
+        $expensesTotal = $orderTransfer->getTotals()->getExpenseTotal();
 
         $grandTotal = $subTotal + $expensesTotal;
 
         return $grandTotal;
-    }
-
-    /**
-     * @param OrderTransfer $orderTransfer
-     *
-     * @return int
-     */
-    protected function getExpensesTotal(OrderTransfer $orderTransfer)
-    {
-        $expensesTotalTransfer = $orderTransfer->getTotals()->getExpenses();
-        $expensesTotal = 0;
-        if ($expensesTotalTransfer !== null) {
-            $expensesTotal = $expensesTotalTransfer->getTotalAmount();
-        }
-
-        return $expensesTotal;
     }
 }

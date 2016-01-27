@@ -5,7 +5,6 @@
 
 namespace Bundles\Calculation\tests\Unit\Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
@@ -57,7 +56,7 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
      * @param int $subTotal
      * @param int $expensesTotal
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return QuoteTransfer
      */
     protected function createQuoteTransferWithFixtureData($subTotal, $expensesTotal)
     {
@@ -65,10 +64,7 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $totalTransfer = $this->createTotalsTransfer();
         $totalTransfer->setSubtotal($subTotal);
-
-        $expensesTotalsTransfer = $this->createExpenseTotalsTransfer();
-        $expensesTotalsTransfer->setTotalAmount($expensesTotal);
-        $totalTransfer->setExpenses($expensesTotalsTransfer);
+        $totalTransfer->setExpenseTotal($expensesTotal);
 
         $quoteTransfer->setTotals($totalTransfer);
 
@@ -76,7 +72,7 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator
+     * @return GrandTotalTotalsCalculator
      */
     protected function createGrandTotalTotalsCalculator()
     {
@@ -84,7 +80,7 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return QuoteTransfer
      */
     private function createQuoteTransfer()
     {
@@ -92,19 +88,10 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Generated\Shared\Transfer\TotalsTransfer
+     * @return TotalsTransfer
      */
     protected function createTotalsTransfer()
     {
         return new TotalsTransfer();
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\ExpenseTotalsTransfer
-     */
-    protected function createExpenseTotalsTransfer()
-    {
-        return new ExpenseTotalsTransfer();
-    }
-
 }

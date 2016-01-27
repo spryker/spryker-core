@@ -39,6 +39,7 @@ include:
  - Bundles/ProductCategory
  - Bundles/ProductOption
  - Bundles/ProductOptionCartConnector
+ - Bundles/ProductOptionDiscountConnector
  - Bundles/ProductOptionExporter
  - Bundles/ProductSearch
  - Bundles/Propel

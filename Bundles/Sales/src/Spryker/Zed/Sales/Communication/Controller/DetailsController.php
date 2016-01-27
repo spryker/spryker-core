@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Sales\Communication\Controller;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
@@ -29,8 +28,6 @@ class DetailsController extends AbstractController
     public function indexAction(Request $request)
     {
         $idSalesOrder = $request->get('id-sales-order');
-
-        $orderTransfer = $this->getFacade()->getOrderTotalsByIdSalesOrder($idSalesOrder);
 
         $salesOrderEntity = $this->getQueryContainer()
             ->querySalesOrderById($idSalesOrder)

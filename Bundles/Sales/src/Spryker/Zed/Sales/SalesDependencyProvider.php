@@ -6,13 +6,20 @@
 
 namespace Spryker\Zed\Sales;
 
+use Spryker\Zed\Discount\Communication\Plugin\OrderAmountAggregator\OrderDiscountsAggregatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\ExpenseTotalAggregatorPlugin;
+use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\GrandTotalAggregatorPlugin;
+use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\ItemGrossPriceAggregatorPlugin;
+use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\SubtotalOrderAggregatorPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
+use Spryker\Zed\Tax\Communication\Plugin\OrderAmountAggregator\ItemTaxAmountAggregatorPlugin;
+use Spryker\Zed\Tax\Communication\Plugin\OrderAmountAggregator\OrderTaxAmountAggregatorPlugin;
 
 class SalesDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -91,7 +98,26 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getOrderAmountAggregationPlugins(Container $container)
     {
-        return [];
+        return [
+            //order level expense total amount
+            new ExpenseTotalAggregatorPlugin(),
+
+            //aggregate sum* fields, so that amount with quantity is available.
+            new ItemGrossPriceAggregatorPlugin(),
+
+            //SubTotal sum of all items before discounts and expenses
+            new SubtotalOrderAggregatorPlugin(),
+
+            //Aggregate order level discounts, same discounts grouped, store in CalculatedDiscountTransfer[]
+            new OrderDiscountsAggregatorPlugin(), //Item and expense discounts
+
+            //Aggregate Grand total amount, subtotal + expenses - discounts
+            new GrandTotalAggregatorPlugin(),
+
+            ##Add tax for grand total, expenses and items.
+            new ItemTaxAmountAggregatorPlugin(),
+            new OrderTaxAmountAggregatorPlugin(),
+        ];
     }
 
 }

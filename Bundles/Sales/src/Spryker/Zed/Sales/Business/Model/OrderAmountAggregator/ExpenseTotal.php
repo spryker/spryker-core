@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Sales\Business\Model\OrderAmountAggregator;
 
-use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -37,6 +36,10 @@ class ExpenseTotal
     {
         $salesOrderExpenses = $this->getOrderExpenses($orderTransfer);
 
+        if (empty($salesOrderExpenses)) {
+            return;
+        }
+
         $orderTotalsTransfer = $orderTransfer->getTotals();
         if ($orderTotalsTransfer === null) {
             $orderTotalsTransfer = new TotalsTransfer();
@@ -44,7 +47,7 @@ class ExpenseTotal
 
         $orderTransfer = $this->hydrateOrderExpenseTransfer($salesOrderExpenses, $orderTransfer);
         $totalExpenseAmount = $this->sumTotalExpenseAmount($salesOrderExpenses);
-        $orderTotalsTransfer = $this->hydrateExpenseTotals($totalExpenseAmount, $orderTotalsTransfer);
+        $orderTotalsTransfer->setExpenseTotal($totalExpenseAmount);
 
         $orderTransfer->setTotals($orderTotalsTransfer);
     }
@@ -81,21 +84,6 @@ class ExpenseTotal
             $totalExpenseAmount += $salesOrderExpenseEntity->getGrossPrice();
         }
         return $totalExpenseAmount;
-    }
-
-    /**
-     * @param int $totalExpenseAmount
-     * @param TotalsTransfer $orderTotalsTransfer
-     *
-     * @return TotalsTransfer
-     */
-    protected function hydrateExpenseTotals($totalExpenseAmount, TotalsTransfer $orderTotalsTransfer)
-    {
-        $expenseTotalsTransfer = new ExpenseTotalsTransfer();
-        $expenseTotalsTransfer->setTotalAmount($totalExpenseAmount);
-        $orderTotalsTransfer->setExpenses($expenseTotalsTransfer);
-
-        return $orderTotalsTransfer;
     }
 
     /**

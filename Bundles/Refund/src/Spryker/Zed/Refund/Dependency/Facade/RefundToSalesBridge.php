@@ -57,4 +57,13 @@ class RefundToSalesBridge implements RefundToSalesInterface
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
     }
 
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return OrderTransfer
+     */
+    public function getOrderTotalsByIdSalesOrder($idSalesOrder)
+    {
+        return $this->salesFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
+    }
 }

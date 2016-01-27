@@ -10,13 +10,12 @@ use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\DiscountTotalsTransfer;
 
 class DiscountTotalsCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -24,15 +23,12 @@ class DiscountTotalsCalculator implements CalculatorInterface
     {
         $quoteTransfer->requireTotals();
 
-        $discountTotalTransfer = $this->createDiscountTotalTransfer();
         $totalDiscountAmount = $this->sumCalculatedDiscounts($quoteTransfer);
-        $discountTotalTransfer->setTotalAmount($totalDiscountAmount);
-
-        $quoteTransfer->getTotals()->setDiscount($discountTotalTransfer);
+        $quoteTransfer->getTotals()->setDiscountTotal($totalDiscountAmount);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return int
      */
@@ -47,7 +43,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return int
      */
@@ -62,7 +58,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param ItemTransfer $itemTransfer
      *
      * @return int
      */
@@ -91,7 +87,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculatedDiscounts
+     * @param \ArrayObject|CalculatedDiscountTransfer[] $calculatedDiscounts
      *
      * @return int
      */
@@ -114,7 +110,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $options
+     * @param \ArrayObject|ProductOptionTransfer[] $options
      *
      * @return int
      */
@@ -134,7 +130,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param ItemTransfer $itemTransfer
      * @param int $totalDiscountUnitGrossAmount
      * @param int $totalDiscountSumGrossAmount
      *
@@ -155,7 +151,7 @@ class DiscountTotalsCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return int
      */
@@ -168,14 +164,6 @@ class DiscountTotalsCalculator implements CalculatorInterface
         }
 
         return $totalDiscountSumGrossAmount;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\DiscountTotalsTransfer
-     */
-    protected function createDiscountTotalTransfer()
-    {
-        return new DiscountTotalsTransfer();
     }
 
 }

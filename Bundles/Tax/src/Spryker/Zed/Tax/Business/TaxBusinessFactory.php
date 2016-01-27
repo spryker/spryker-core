@@ -8,6 +8,7 @@ namespace Spryker\Zed\Tax\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Tax\Business\Model\OrderAmountAggregator\ItemTax;
+use Spryker\Zed\Tax\Business\Model\OrderAmountAggregator\OrderTaxAmount;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 use Spryker\Zed\Tax\Business\Model\TaxCalculation;
 use Spryker\Zed\Tax\TaxConfig;
@@ -77,5 +78,13 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemTaxAmountAggregator()
     {
         return new ItemTax($this->createPriceCalculationHelper());
+    }
+
+    /**
+     * @return OrderTaxAmount
+     */
+    public function createOrderTaxAmountAggregator()
+    {
+        return new OrderTaxAmount($this->createPriceCalculationHelper());
     }
 }

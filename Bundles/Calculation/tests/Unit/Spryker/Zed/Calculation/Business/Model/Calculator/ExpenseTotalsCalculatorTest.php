@@ -43,7 +43,7 @@ class ExpenseTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
             return $carry;
         });
 
-        $this->assertEquals($expectedTotalExpenseAmount, $quoteTransfer->getTotals()->getExpenses()->getTotalAmount());
+        $this->assertEquals($expectedTotalExpenseAmount, $quoteTransfer->getTotals()->getExpenseTotal());
     }
 
     /**

@@ -18,7 +18,7 @@ class RemoveTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     public function testRemoveTotalsShouldSetEmptyExpensesArrayObject()
     {
         $totalsTransfer = $this->getCleanedTotals();
-        $this->assertEmpty($totalsTransfer->getExpenses());
+        $this->assertEmpty($totalsTransfer->getExpenseTotal());
     }
 
     /**
@@ -27,7 +27,7 @@ class RemoveTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     public function testRemoveTotalsShouldSetEmptyDiscountArrayObject()
     {
         $totalsTransfer = $this->getCleanedTotals();
-        $this->assertEmpty($totalsTransfer->getDiscount());
+        $this->assertEmpty($totalsTransfer->getDiscountTotal());
     }
 
     /**

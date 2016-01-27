@@ -6,24 +6,10 @@
 namespace Spryker\Zed\Discount\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
-use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountTotalAmount
 {
-    /**
-     * @var DiscountQueryContainerInterface
-     */
-    protected $discountQueryContainer;
-
-    /**
-     * ItemDiscountAmounts constructor.
-     */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
-    {
-        $this->discountQueryContainer = $discountQueryContainer;
-    }
 
     /**
      * @param OrderTransfer $orderTransfer
@@ -32,13 +18,10 @@ class DiscountTotalAmount
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $orderTransfer->requireTotals();
+        $this->assertDiscountTotalRequirements($orderTransfer);
 
         $totalDiscountAmount = $this->getSumTotalGrossDiscountAmount($orderTransfer);
-        
-        $discountTotalsTransfer = new DiscountTotalsTransfer();
-        $discountTotalsTransfer->setTotalAmount($totalDiscountAmount);
-        $orderTransfer->getTotals()->setDiscount($discountTotalsTransfer);
+        $orderTransfer->getTotals()->setDiscountTotal($totalDiscountAmount);
     }
 
     /**
@@ -70,21 +53,6 @@ class DiscountTotalAmount
     }
 
     /**
-     * @param \ArrayObject|CalculatedDiscountTransfer[] $calculatedDiscounts
-     *
-     * @return int
-     */
-    protected function getCalculatedDiscountUnitGrossAmount(\ArrayObject $calculatedDiscounts)
-    {
-        $totalUnitGrossDiscountAmount = 0;
-        foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
-            $totalUnitGrossDiscountAmount += $calculatedDiscountTransfer->getUnitGrossAmount();
-        }
-
-        return $totalUnitGrossDiscountAmount;
-    }
-
-    /**
      * @param OrderTransfer $orderTransfer
      *
      * @return int
@@ -93,24 +61,7 @@ class DiscountTotalAmount
     {
         $totalSumGrossDiscountAmount = 0;
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $itemTotalSumGrossDiscountAmount = 0;
-            $itemTotalUnitGrossDiscountAmount = 0;
-
-            $itemTotalSumGrossDiscountAmount += $this->getCalculatedDiscountSumGrossAmount($itemTransfer->getCalculatedDiscounts());
-            $itemTotalUnitGrossDiscountAmount += $this->getCalculatedDiscountUnitGrossAmount($itemTransfer->getCalculatedDiscounts());
-            foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                $itemTotalSumGrossDiscountAmount += $this->getCalculatedDiscountSumGrossAmount($productOptionTransfer->getCalculatedDiscounts());
-                $itemTotalUnitGrossDiscountAmount += $this->getCalculatedDiscountUnitGrossAmount($productOptionTransfer->getCalculatedDiscounts());
-            }
-
-            $itemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(
-                $itemTransfer->getUnitGrossPriceWithProductOptions() - $itemTotalUnitGrossDiscountAmount
-            );
-            $itemTransfer->setSumGrossPriceWithProductOptionAndDiscountAmounts(
-                $itemTransfer->getSumGrossPriceWithProductOptions() - $itemTotalSumGrossDiscountAmount
-            );
-
-            $totalSumGrossDiscountAmount += $itemTotalSumGrossDiscountAmount;
+            $totalSumGrossDiscountAmount += $this->getCalculatedDiscountSumGrossAmount($itemTransfer->getCalculatedDiscounts());
         }
         return $totalSumGrossDiscountAmount;
     }
@@ -127,5 +78,15 @@ class DiscountTotalAmount
             $totalSumGrossDiscountAmount += $this->getCalculatedDiscountSumGrossAmount($expenseTransfer->getCalculatedDiscounts());
         }
         return $totalSumGrossDiscountAmount;
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function assertDiscountTotalRequirements(OrderTransfer $orderTransfer)
+    {
+        $orderTransfer->requireTotals();
     }
 }

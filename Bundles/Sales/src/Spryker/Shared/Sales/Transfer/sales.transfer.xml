@@ -95,9 +95,15 @@
         <property name="taxRate" type="float" />
         <property name="quantity" type="int" />
         <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
-        <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="variety" type="string" />
         <property name="status" type="OrderItemState[]" />
+        <property name="refundableAmount" type="int"/>
+        <property name="canceledAmount" type="int"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="refundableAmount" type="int"/>
+        <property name="canceledAmount" type="int"/>
     </transfer>
 
     <transfer name="TaxSet">
@@ -112,16 +118,6 @@
     <transfer name="OrderItemsAndExpenses">
         <property name="orderItems" type="Item[]" singular="orderItem" />
         <property name="expenses" type="Expense[]" singular="expense" />
-    </transfer>
-
-    <transfer name="ProductOption">
-        <property name="idOptionValueUsage" type="int" />
-        <property name="labelOptionType" type="string" />
-        <property name="labelOptionValue" type="string" />
-        <property name="taxRate" type="float" />
-        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
     </transfer>
 
     <transfer name="OrderItemState">

@@ -23,6 +23,6 @@ class OrderDiscountsAggregatorPlugin extends AbstractPlugin implements OrderTota
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $this->getFacade()->aggregateOrderTotalDiscounts($orderTransfer);
+        $this->getFacade()->aggregateOrderCalculatedDiscounts($orderTransfer);
     }
 }

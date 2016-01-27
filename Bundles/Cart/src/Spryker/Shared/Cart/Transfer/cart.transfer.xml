@@ -18,15 +18,9 @@
         <property name="id" type="int" />
         <property name="sku" type="string" />
         <property name="groupKey" type="string"/>
-        <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="quantity" type="int" />
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
-        <property name="unitGrossPriceWithProductOptions" type="int" />
-        <property name="sumGrossPriceWithProductOptions" type="int" />
-        <property name="unitGrossPriceWithProductOptionAndDiscountAmounts" type="int" />
-        <property name="sumGrossPriceWithProductOptionAndDiscountAmounts" type="int" />
-        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
     </transfer>
 
 </transfers>

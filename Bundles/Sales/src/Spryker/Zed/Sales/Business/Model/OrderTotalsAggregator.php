@@ -73,13 +73,6 @@ class OrderTotalsAggregator
             $itemTransfer = new ItemTransfer();
             $itemTransfer->fromArray($salesOrderItemEntity->toArray(), true);
             $itemTransfer->setUnitGrossPrice($salesOrderItemEntity->getGrossPrice());
-
-            foreach ($salesOrderItemEntity->getOptions() as $productOptionEntity) {
-                $productOptionTransfer = new ProductOptionTransfer();
-                $productOptionTransfer->fromArray($productOptionEntity->toArray(), true);
-                $productOptionTransfer->setUnitGrossPrice($productOptionEntity->getGrossPrice());
-            }
-            
             $orderTransfer->addItem($itemTransfer);
         }
 

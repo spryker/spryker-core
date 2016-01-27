@@ -2,24 +2,26 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator;
 
+namespace Spryker\Zed\Tax\Communication\Plugin\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
+use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
- * @method SalesFacade getFacade()
+ * @method TaxFacade getFacade()
  */
-class ProductOptionAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
+class ItemTaxAmountAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
 {
     /**
      * @param OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $this->getFacade()->aggregateOrderItemProductOptionAmounts($orderTransfer);
+        $this->getFacade()->aggregateOrderItemTaxAmount($orderTransfer);
     }
 }

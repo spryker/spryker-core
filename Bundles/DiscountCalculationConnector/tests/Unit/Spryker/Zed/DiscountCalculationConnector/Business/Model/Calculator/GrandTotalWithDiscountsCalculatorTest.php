@@ -88,10 +88,7 @@ class GrandTotalWithDiscountsCalculatorTest extends \PHPUnit_Framework_TestCase
         $totalsTransfer = $this->createTotalsTransfer();
         $totalsTransfer->setGrandTotal($grandTotalBeforeDiscounts);
 
-        $discountTotalTransfer = new DiscountTotalsTransfer();
-        $discountTotalTransfer->setTotalAmount($discountAmount);
-
-        $totalsTransfer->setDiscount($discountTotalTransfer);
+        $totalsTransfer->setDiscountTotal($discountAmount);
 
         $quoteTransfer->setTotals($totalsTransfer);
 

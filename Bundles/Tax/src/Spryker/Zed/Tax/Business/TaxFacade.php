@@ -213,10 +213,22 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
 
     /**
      * @param OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function aggregateOrderItemTaxAmount(OrderTransfer $orderTransfer)
     {
         $this->getFactory()->createOrderItemTaxAmountAggregator()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createOrderTaxAmountAggregator()->aggregate($orderTransfer);
     }
 
 }

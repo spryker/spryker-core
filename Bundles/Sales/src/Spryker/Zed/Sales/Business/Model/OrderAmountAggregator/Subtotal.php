@@ -37,8 +37,8 @@ class Subtotal
     {
         $subTotal = 0;
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->requireSumGrossPriceWithProductOptions();
-            $subTotal += $itemTransfer->getSumGrossPriceWithProductOptions();
+            $itemTransfer->requireSumGrossPrice();
+            $subTotal += $itemTransfer->getSumGrossPrice();
         }
         return $subTotal;
     }

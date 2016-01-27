@@ -6,6 +6,7 @@
 namespace Spryker\Zed\Discount\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
@@ -34,14 +35,16 @@ class ItemDiscounts
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
+        $this->assertItemDiscountsRequirements($orderTransfer);
+
         $salesOrderDiscounts = $this->getSalesOrderDiscounts($orderTransfer);
 
         foreach ($salesOrderDiscounts as $salesOrderDiscountEntity) {
             foreach ($orderTransfer->getItems() as $itemTransfer) {
+                $this->assertItemRequirements($itemTransfer);
                 $this->addItemCalculatedDiscounts($itemTransfer, $salesOrderDiscountEntity);
-                $this->addProductOptionCalculatedDiscounts($itemTransfer, $salesOrderDiscountEntity);
-                $this->addOrderExpenseCalculatedDiscounts($orderTransfer, $salesOrderDiscountEntity);
             }
+            $this->addOrderExpenseCalculatedDiscounts($orderTransfer, $salesOrderDiscountEntity);
         }
     }
 
@@ -49,58 +52,32 @@ class ItemDiscounts
      * @param ItemTransfer $itemTransfer
      * @param SpySalesDiscount $salesOrderDiscountEntity
      *
-     * @return null
+     * @return void
      */
     protected function addItemCalculatedDiscounts(
         ItemTransfer $itemTransfer,
         SpySalesDiscount $salesOrderDiscountEntity
     ) {
-        if ($itemTransfer->getIdSalesOrderItem() !== $salesOrderDiscountEntity->getFkSalesOrderItem() &&
+        if ($itemTransfer->getIdSalesOrderItem() !== $salesOrderDiscountEntity->getFkSalesOrderItem() ||
             $salesOrderDiscountEntity->getFkSalesOrderItemOption() !== null
         ) {
             return;
         }
 
-        $calculatedDiscountTransfer = $this->getCalculatedDiscountTransferFromEntity(
+        $calculatedDiscountTransfer = $this->hydrateCalculatedDiscountTransferFromEntity(
             $salesOrderDiscountEntity,
             $itemTransfer->getQuantity()
         );
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
     }
 
-    /**
-     * @param ItemTransfer $itemTransfer
-     * @param SpySalesDiscount $salesOrderDiscountEntity
-     *
-     * @return null
-     */
-    protected function addProductOptionCalculatedDiscounts(
-        ItemTransfer $itemTransfer,
-        SpySalesDiscount $salesOrderDiscountEntity
-    ) {
-        if ($itemTransfer->getIdSalesOrderItem() !== $salesOrderDiscountEntity->getFkSalesOrderItem() &&
-            $salesOrderDiscountEntity->getFkSalesOrderItemOption() === null) {
-            return;
-        }
 
-        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            if ($salesOrderDiscountEntity->getFkSalesOrderItemOption() !== $productOptionTransfer->getIdSalesOrderItemOption()) {
-                continue;
-            }
-
-            $calculatedDiscountTransfer = $this->getCalculatedDiscountTransferFromEntity(
-                $salesOrderDiscountEntity,
-                $productOptionTransfer->getQuantity()
-            );
-
-            $productOptionTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-        }
-    }
 
     /**
      * @param OrderTransfer $orderTransfer
      * @param SpySalesDiscount $salesOrderDiscountEntity
      *
+     * @return void
      */
     protected function addOrderExpenseCalculatedDiscounts(
         OrderTransfer $orderTransfer,
@@ -116,11 +93,13 @@ class ItemDiscounts
                 continue;
             }
 
-            $calculatedDiscountTransfer = $this->getCalculatedDiscountTransferFromEntity(
+            $calculatedDiscountTransfer = $this->hydrateCalculatedDiscountTransferFromEntity(
                 $salesOrderDiscountEntity,
                 $expenseTransfer->getQuantity()
             );
             $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
+
+            $this->addExpenseDiscountAmount($expenseTransfer, $calculatedDiscountTransfer);
         }
     }
 
@@ -130,10 +109,10 @@ class ItemDiscounts
      *
      * @return CalculatedDiscountTransfer
      */
-    protected function getCalculatedDiscountTransferFromEntity(
-        SpySalesDiscount $salesOrderDiscountEntity,
-        $quantity
-    ) {
+    protected function hydrateCalculatedDiscountTransferFromEntity(SpySalesDiscount $salesOrderDiscountEntity, $quantity)
+    {
+        $quantity = !empty($quantity) ? $quantity : 1;
+
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->fromArray($salesOrderDiscountEntity->toArray(), true);
         $calculatedDiscountTransfer->setQuantity($quantity);
@@ -145,6 +124,26 @@ class ItemDiscounts
         }
 
         return $calculatedDiscountTransfer;
+    }
+
+
+    /**
+     * @param ExpenseTransfer $expenseTransfer
+     * @param CalculatedDiscountTransfer $calculatedDiscountTransfer
+     *
+     * @return void
+     */
+    protected function addExpenseDiscountAmount(
+        ExpenseTransfer $expenseTransfer,
+        CalculatedDiscountTransfer $calculatedDiscountTransfer
+    ) {
+        $expenseTransfer->setUnitGrossPriceWithDiscounts(
+            $expenseTransfer->getUnitGrossPrice() - $calculatedDiscountTransfer->getUnitGrossAmount()
+        );
+
+        $expenseTransfer->setSumGrossPriceWithDiscounts(
+            $expenseTransfer->getSumGrossPriceWithDiscounts() - $calculatedDiscountTransfer->getSumGrossAmount()
+        );
     }
 
     /**
@@ -159,4 +158,23 @@ class ItemDiscounts
             ->findByFkSalesOrder($orderTransfer->getIdSalesOrder());
     }
 
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function assertItemDiscountsRequirements(OrderTransfer $orderTransfer)
+    {
+        $orderTransfer->requireIdSalesOrder();
+    }
+
+    /**
+     * @param ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function assertItemRequirements(ItemTransfer $itemTransfer)
+    {
+        $itemTransfer->requireQuantity()->requireIdSalesOrderItem();
+    }
 }

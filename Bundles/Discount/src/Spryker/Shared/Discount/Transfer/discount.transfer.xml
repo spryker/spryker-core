@@ -143,5 +143,14 @@
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="unitGrossPriceWithDiscounts" type="int"/>
+        <property name="sumGrossPriceWithDiscounts" type="int" />
+    </transfer>
+
 </transfers>
 

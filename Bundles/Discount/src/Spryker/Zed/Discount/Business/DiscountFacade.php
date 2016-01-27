@@ -423,7 +423,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return void
      */
-    public function aggregateOrderTotalDiscounts(OrderTransfer $orderTransfer)
+    public function aggregateOrderCalculatedDiscounts(OrderTransfer $orderTransfer)
     {
         $this->getFactory()->createSalesOrderTotalsAggregator()->aggregate($orderTransfer);
     }

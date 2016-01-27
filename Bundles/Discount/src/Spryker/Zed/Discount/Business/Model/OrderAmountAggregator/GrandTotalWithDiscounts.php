@@ -16,12 +16,22 @@ class GrandTotalWithDiscounts
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
+        $this->assertGrandTotalWithDiscountsRequirements($orderTransfer);
+
+        $grandTotal = $orderTransfer->getTotals()->getGrandTotal();
+        $totalDiscountAmount = $orderTransfer->getTotals()->getDiscountTotal();
+
+        $orderTransfer->getTotals()->setGrandTotal($grandTotal - $totalDiscountAmount);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function assertGrandTotalWithDiscountsRequirements(OrderTransfer $orderTransfer)
+    {
         $orderTransfer->requireTotals();
-
-        $totalDiscountAmount = $orderTransfer->getTotals()->getDiscount()->getTotalAmount();
-
-        $orderTransfer->getTotals()->setGrandTotal(
-            $orderTransfer->getTotals()->getGrandTotal() - $totalDiscountAmount
-        );
+        $orderTransfer->getTotals()->requireGrandTotal();
     }
 }

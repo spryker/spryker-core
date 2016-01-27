@@ -226,14 +226,6 @@ class SalesFacade extends AbstractFacade
 
     /**
      * @param OrderTransfer $orderTransfer
-     */
-    public function aggregateOrderItemProductOptionAmounts(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createItemProductOptionOrderAggregator()->aggregate($orderTransfer);
-    }
-
-    /**
-     * @param OrderTransfer $orderTransfer
      *
      * @return void
      */

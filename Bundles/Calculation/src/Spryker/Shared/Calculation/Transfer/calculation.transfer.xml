@@ -3,10 +3,6 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="ExpenseTotals">
-        <property name="totalAmount" type="int" />
-    </transfer>
-
     <transfer name="Discount">
         <property name="displayName" type="string" />
         <property name="amount" type="int" />
@@ -16,10 +12,6 @@
 
     <transfer name="DiscountItems">
         <property name="discounts" type="Discount[]" singular="discount" />
-    </transfer>
-
-    <transfer name="DiscountTotals">
-        <property name="totalAmount" type="int" />
     </transfer>
 
     <transfer name="Expense">
@@ -40,8 +32,8 @@
 
     <transfer name="Totals">
         <property name="subtotal" type="int" />
-        <property name="expenses" type="ExpenseTotals" />
-        <property name="discount" type="DiscountTotals" />
+        <property name="expenseTotal" type="int" />
+        <property name="discountTotal" type="int" />
         <property name="taxTotal" type="TaxTotal" />
         <property name="grandTotal" type="int" />
         <property name="hash" type="string"/>

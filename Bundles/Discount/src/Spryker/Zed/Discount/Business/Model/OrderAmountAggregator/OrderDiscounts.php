@@ -7,22 +7,9 @@ namespace Spryker\Zed\Discount\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class OrderDiscounts
 {
-    /**
-     * @var DiscountQueryContainerInterface
-     */
-    protected $discountQueryContainer;
-
-    /**
-     * @param DiscountQueryContainerInterface $discountQueryContainer
-     */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
-    {
-        $this->discountQueryContainer = $discountQueryContainer;
-    }
 
     /**
      * @param OrderTransfer $orderTransfer
@@ -31,11 +18,7 @@ class OrderDiscounts
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $orderCalculatedDiscounts = new \ArrayObject();
-        $orderCalculatedDiscounts = $this->getOrderItemCalculatedDIscounts($orderTransfer, $orderCalculatedDiscounts);
-        $orderCalculatedDiscounts = $this->getProductOptionCalculatedDiscounts($orderTransfer, $orderCalculatedDiscounts);
-        $orderCalculatedDiscounts = $this->getOrderExpenseCalculatedDiscounts($orderTransfer, $orderCalculatedDiscounts);
-
+        $orderCalculatedDiscounts = $this->getOrderCalculatedDiscounts($orderTransfer);
         $orderTransfer->setCalculatedDiscounts($orderCalculatedDiscounts);
     }
 
@@ -43,7 +26,7 @@ class OrderDiscounts
      * @param OrderTransfer $orderTransfer
      * @param \ArrayObject $orderCalculatedDiscounts
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|CalculatedDiscountTransfer[]
      */
     protected function getOrderExpenseCalculatedDiscounts(
         OrderTransfer $orderTransfer,
@@ -63,7 +46,7 @@ class OrderDiscounts
      * @param OrderTransfer $orderTransfer
      * @param \ArrayObject $orderCalculatedDiscounts
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|CalculatedDiscountTransfer[]
      */
     protected function getOrderItemCalculatedDIscounts(
         OrderTransfer $orderTransfer,
@@ -79,46 +62,23 @@ class OrderDiscounts
         return $orderCalculatedDiscounts;
     }
 
-    /**
-     * @param OrderTransfer $orderTransfer
-     * @param \ArrayObject $orderCalculatedDiscounts
-     *
-     * @return \ArrayObject
-     */
-    protected function getProductOptionCalculatedDiscounts(
-        OrderTransfer $orderTransfer,
-        \ArrayObject $orderCalculatedDiscounts
-    ) {
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                $orderCalculatedDiscounts = $this->sumCalculatedDiscounts(
-                    $orderCalculatedDiscounts,
-                    $productOptionTransfer->getCalculatedDiscounts()
-                );
-            }
-        }
-
-        return $orderCalculatedDiscounts;
-    }
 
     /**
-     * @param \ArrayObject $orderCalculatedDiscounts
+     * @param \ArrayObject|CalculatedDiscountTransfer[] $orderCalculatedDiscounts
      * @param \ArrayObject|CalculatedDiscountTransfer[] $calculatedDiscounts
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|CalculatedDiscountTransfer[]
      */
-    public function sumCalculatedDiscounts(
-        \ArrayObject $orderCalculatedDiscounts,
-        \ArrayObject $calculatedDiscounts
-    ) {
+    public function sumCalculatedDiscounts(\ArrayObject $orderCalculatedDiscounts, \ArrayObject $calculatedDiscounts)
+    {
         foreach ($calculatedDiscounts as $calculatedDiscountDiscountTransfer) {
             $displayName = $calculatedDiscountDiscountTransfer->getDisplayName();
             if ($orderCalculatedDiscounts->offsetExists($displayName) === false) {
-                $orderCalculatedDiscounts[$displayName] = $calculatedDiscountDiscountTransfer;
+                $orderCalculatedDiscounts[$displayName] = clone $calculatedDiscountDiscountTransfer;
                 continue;
             }
 
-            $orderCalculatedDiscountTransfer = $calculatedDiscounts[$displayName];
+            $orderCalculatedDiscountTransfer = $orderCalculatedDiscounts[$displayName];
             $orderCalculatedDiscountTransfer->setUnitGrossAmount(
                 $orderCalculatedDiscountTransfer->getUnitGrossAmount() + $calculatedDiscountDiscountTransfer->getUnitGrossAmount()
             );
@@ -131,5 +91,22 @@ class OrderDiscounts
 
         return $orderCalculatedDiscounts;
 
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[]
+     */
+    protected function getOrderCalculatedDiscounts(OrderTransfer $orderTransfer)
+    {
+        $orderCalculatedDiscounts = new \ArrayObject();
+        $orderCalculatedDiscounts = $this->getOrderItemCalculatedDIscounts($orderTransfer, $orderCalculatedDiscounts);
+        $orderCalculatedDiscounts = $this->getOrderExpenseCalculatedDiscounts(
+            $orderTransfer,
+            $orderCalculatedDiscounts
+        );
+
+        return $orderCalculatedDiscounts;
     }
 }

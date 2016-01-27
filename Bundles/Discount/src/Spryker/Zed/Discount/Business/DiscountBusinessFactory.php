@@ -362,7 +362,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderDiscountTotalAmount()
     {
-        return new DiscountTotalAmount($this->getQueryContainer());
+        return new DiscountTotalAmount();
     }
 
     /**
@@ -378,7 +378,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createSalesOrderTotalsAggregator()
     {
-        return new OrderDiscounts($this->getQueryContainer());
+        return new OrderDiscounts();
     }
 
     /**

@@ -16,7 +16,7 @@ class RemoveTotalsCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -24,14 +24,14 @@ class RemoveTotalsCalculator implements CalculatorInterface
     {
         $totalsTransfer = $this->createTotalsTransfer();
         $totalsTransfer->setTaxTotal($this->createTaxTotalsTransfer());
-        $totalsTransfer->setDiscount($this->createDiscountTotalsTransfer());
-        $totalsTransfer->setExpenses($this->createExpenseTotalsTransfer());
+        $totalsTransfer->setDiscountTotal(0);
+        $totalsTransfer->setExpenseTotal(0);
 
         $quoteTransfer->setTotals($totalsTransfer);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\TotalsTransfer
+     * @return TotalsTransfer
      */
     protected function createTotalsTransfer()
     {
@@ -39,27 +39,10 @@ class RemoveTotalsCalculator implements CalculatorInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\TaxTotalTransfer
+     * @return TaxTotalTransfer
      */
     protected function createTaxTotalsTransfer()
     {
         return new TaxTotalTransfer();
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\DiscountTotalsTransfer
-     */
-    protected function createDiscountTotalsTransfer()
-    {
-        return new DiscountTotalsTransfer();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ExpenseTotalsTransfer
-     */
-    protected function createExpenseTotalsTransfer()
-    {
-        return new ExpenseTotalsTransfer();
-    }
-
 }

@@ -13,7 +13,7 @@ class GrandTotalTotalsCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -31,7 +31,7 @@ class GrandTotalTotalsCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return int
      */
@@ -40,27 +40,11 @@ class GrandTotalTotalsCalculator implements CalculatorInterface
         $quoteTransfer->getTotals()->requireSubtotal();
 
         $subTotal = $quoteTransfer->getTotals()->getSubtotal();
-        $expensesTotal = $this->getExpensesTotal($quoteTransfer);
+        $expensesTotal = $quoteTransfer->getTotals()->getExpenseTotal();
 
         $grandTotal = $subTotal + $expensesTotal;
 
         return $grandTotal;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return int
-     */
-    protected function getExpensesTotal(QuoteTransfer $quoteTransfer)
-    {
-        $expensesTotalTransfer = $quoteTransfer->getTotals()->getExpenses();
-        $expensesTotal = 0;
-        if ($expensesTotalTransfer !== null) {
-            $expensesTotal = $expensesTotalTransfer->getTotalAmount();
-        }
-
-        return $expensesTotal;
     }
 
     /**

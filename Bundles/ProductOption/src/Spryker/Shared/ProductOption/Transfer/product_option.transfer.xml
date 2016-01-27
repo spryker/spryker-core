@@ -13,6 +13,9 @@
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
         <property name="quantity" type="int" />
+        <property name="refundableAmount" type="int"/>
+        <property name="unitTaxAmount" type="int" />
+        <property name="sumTaxAmount" type="int" />
     </transfer>
 
     <transfer name="ProductOptionsNameValue">
@@ -20,4 +23,9 @@
         <property name="value" type="string" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
+        <property name="unitGrossPriceWithProductOptions" type="int" />
+        <property name="sumGrossPriceWithProductOptions" type="int" />
+    </transfer>
 </transfers>

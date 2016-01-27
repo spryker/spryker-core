@@ -47,7 +47,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $discountTotalsCalculator->recalculate($quoteTransfer);
 
-        $this->assertEquals(120, $quoteTransfer->getTotals()->getDiscount()->getTotalAmount());
+        $this->assertEquals(120, $quoteTransfer->getTotals()->getDiscountTotal());
 
     }
 
@@ -129,6 +129,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @param int $itemQuantity
      * @param int $itemGrossSumPriceWithOptions
+     * @param int $itemGrossUnitPriceWithOptions
      * @param array $calculatedDiscounts
      *
      * @return QuoteTransfer

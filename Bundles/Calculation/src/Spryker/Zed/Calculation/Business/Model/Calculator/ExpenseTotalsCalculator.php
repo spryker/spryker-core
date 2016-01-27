@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class ExpenseTotalsCalculator implements CalculatorInterface
@@ -21,10 +20,8 @@ class ExpenseTotalsCalculator implements CalculatorInterface
     {
         $quoteTransfer->requireTotals();
 
-        $expenseTotalTransfer = $this->createExpenseTotalTransfer();
-        $expenseTotalTransfer->setTotalAmount($this->getCalculatedExpenseTotalAmount($quoteTransfer));
-
-        $quoteTransfer->getTotals()->setExpenses($expenseTotalTransfer);
+        $quoteTransfer->getTotals()
+            ->setExpenseTotal($this->getCalculatedExpenseTotalAmount($quoteTransfer));
     }
 
     /**
@@ -42,13 +39,4 @@ class ExpenseTotalsCalculator implements CalculatorInterface
 
         return $totalExpenseAmount;
     }
-
-    /**
-     * @return ExpenseTotalsTransfer
-     */
-    protected function createExpenseTotalTransfer()
-    {
-        return new ExpenseTotalsTransfer();
-    }
-
 }

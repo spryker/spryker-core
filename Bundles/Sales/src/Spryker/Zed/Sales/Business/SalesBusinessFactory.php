@@ -162,7 +162,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GrandTotalAggregatorPlugin
+     * @return GrandTotal
      */
     public function createGrandTotalOrderTotalAggregator()
     {
@@ -175,14 +175,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createItemOrderOrderAggregator()
     {
         return new Item();
-    }
-
-    /**
-     * @return ProductOption
-     */
-    public function createItemProductOptionOrderAggregator()
-    {
-        return new ProductOption();
     }
 
     /**

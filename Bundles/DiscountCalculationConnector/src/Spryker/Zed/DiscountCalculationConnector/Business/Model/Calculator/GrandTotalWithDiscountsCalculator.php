@@ -11,33 +11,17 @@ class GrandTotalWithDiscountsCalculator implements CalculatorInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         $quoteTransfer->requireTotals();
 
         $grandTotal = $quoteTransfer->getTotals()->getGrandTotal();
-        $discountTotal = $this->getDiscountTotal($quoteTransfer);
+        $discountTotal = $quoteTransfer->getTotals()->getDiscountTotal();
         $grandTotal = $this->subtractDiscount($discountTotal, $grandTotal);
 
         $quoteTransfer->getTotals()->setGrandTotal($grandTotal);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return int
-     */
-    protected function getDiscountTotal(QuoteTransfer $quoteTransfer)
-    {
-        $discountTotalTransfer = $quoteTransfer->getTotals()->getDiscount();
-        $discountTotal = 0;
-        if ($discountTotalTransfer !== null) {
-            $discountTotal = $discountTotalTransfer->getTotalAmount();
-        }
-
-        return $discountTotal;
     }
 
     /**

@@ -28,4 +28,11 @@ interface RefundToSalesInterface
      */
     public function getOrderByIdSalesOrder($idSalesOrder);
 
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return OrderTransfer
+     */
+    public function getOrderTotalsByIdSalesOrder($idSalesOrder);
+
 }
