@@ -54,7 +54,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
 
     public function __construct()
     {
-        $this->graph = new GraphViz(true, [], 'Bundle Dependencies', false, true);
+        $this->graph = new GraphViz(true, [], 'Bundle Dependencies', true, true);
     }
 
     /**
@@ -76,40 +76,17 @@ class DetailedGraphBuilder implements GraphBuilderInterface
      */
     private function buildGraph(array $dependencyTree)
     {
-        foreach ($dependencyTree as $bundle => $dependencies) {
-            $this->buildBundleGraph($bundle, $dependencies);
-        }
-    }
+        foreach ($dependencyTree as $dependency) {
+            $bundle = $dependency[DependencyTree::META_BUNDLE];
+            $foreignBundle = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
 
-    /**
-     * @param string $bundle
-     * @param array $foreignBundles
-     *
-     * @return void
-     */
-    private function buildBundleGraph($bundle, array $foreignBundles)
-    {
-        foreach ($foreignBundles as $foreignBundle => $dependencyInformationCollection) {
-            $this->buildBundleDependencyGraph($bundle, $foreignBundle, $dependencyInformationCollection);
-        }
-    }
+            $group = $this->getGroup($bundle, $foreignBundle);
+            $rootNodeId = $this->getRootNodeId($bundle);
+            $this->graph->addNode($rootNodeId, [], $group);
 
-    /**
-     * @param $bundle
-     * @param $foreignBundle
-     * @param $dependencyInformationCollection
-     *
-     * @return void
-     */
-    private function buildBundleDependencyGraph($bundle, $foreignBundle, $dependencyInformationCollection)
-    {
-        $group = $this->getGroup($bundle, $foreignBundle);
-        $rootNodeId = $this->getRootNodeId($bundle);
-        $this->graph->addNode($rootNodeId, [], $group);
-        foreach ($dependencyInformationCollection as $dependencyInformation) {
-            $this->addRootBundleLayer($dependencyInformation, $group);
-            $this->addRootFile($dependencyInformation, $group);
-            $this->addForeignBundleLayer($dependencyInformation, $group);
+            $this->addRootBundleLayer($dependency, $group);
+            $this->addRootFile($dependency, $group);
+            $this->addForeignBundleLayer($dependency, $group);
         }
     }
 
@@ -135,22 +112,22 @@ class DetailedGraphBuilder implements GraphBuilderInterface
     }
 
     /**
-     * @param array $dependencyInformation
+     * @param array $dependency
      * @param string $group
      *
      * @return void
      */
-    private function addRootBundleLayer(array $dependencyInformation, $group)
+    private function addRootBundleLayer(array $dependency, $group)
     {
-        $rootBundleLayerNodeId = $this->getRootBundleLayerNodeId($dependencyInformation);
+        $rootBundleLayerNodeId = $this->getRootBundleLayerNodeId($dependency);
         if ($this->graph->hasNode($rootBundleLayerNodeId, $group)) {
             return;
         }
-        $label = $dependencyInformation[DependencyTree::META_LAYER];
+        $label = $dependency[DependencyTree::META_LAYER];
         $this->layerAttributes['label'] = $label;
         $this->graph->addNode($rootBundleLayerNodeId, $this->layerAttributes, $group);
         $this->graph->addEdge([
-            $this->getRootNodeId($dependencyInformation[DependencyTree::META_BUNDLE]) => $rootBundleLayerNodeId]
+            $this->getRootNodeId($dependency[DependencyTree::META_BUNDLE]) => $rootBundleLayerNodeId]
         );
     }
 

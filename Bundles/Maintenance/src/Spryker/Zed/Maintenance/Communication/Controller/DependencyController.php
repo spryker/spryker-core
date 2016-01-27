@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Maintenance\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Library\Service\GraphViz;
 use Spryker\Zed\Maintenance\Business\MaintenanceFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -114,16 +113,14 @@ class DependencyController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
-    public function adjacencyMatrixAction(Request $request)
+    public function adjacencyMatrixAction()
     {
-        $bundleToView = $request->query->get('bundle', false);
-        $matrixData = $this->getFacade()->getAdjacencyMatrixData($bundleToView);
+        $matrixData = $this->getFacade()->getAdjacencyMatrixData();
+        $engineBundleList = $this->getFacade()->getEngineBundleList();
 
-        return $this->viewResponse(['matrixData' => $matrixData]);
+        return $this->viewResponse(['matrixData' => $matrixData, 'engineBundles' => $engineBundleList]);
     }
 
 }

@@ -78,4 +78,12 @@ class MaintenanceConfig extends AbstractBundleConfig
         return implode(DIRECTORY_SEPARATOR, $pathParts);
     }
 
+    /**
+     * @return string
+     */
+    public function getPathToBundleConfig()
+    {
+        return APPLICATION_VENDOR_DIR . '/spryker/spryker/bundle_config.json';
+    }
+
 }

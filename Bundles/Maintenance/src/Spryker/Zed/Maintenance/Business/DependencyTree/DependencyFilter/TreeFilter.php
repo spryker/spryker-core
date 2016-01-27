@@ -34,19 +34,9 @@ class TreeFilter
     public function filter(array $dependencyTree)
     {
         $filteredTree = [];
-        foreach ($dependencyTree as $bundle => $foreignBundles) {
-            foreach ($foreignBundles as $foreignBundle => $dependencies) {
-                foreach ($dependencies as $dependency) {
-                    if (!$this->shouldBeFiltered($dependency)) {
-                        if (!array_key_exists($bundle, $filteredTree)) {
-                            $filteredTree[$bundle] = [];
-                        }
-                        if (!array_key_exists($foreignBundle, $filteredTree[$bundle])) {
-                            $filteredTree[$bundle][$foreignBundle] = [];
-                        }
-                        $filteredTree[$bundle][$foreignBundle][] = $dependency;
-                    }
-                }
+        foreach ($dependencyTree as $dependency) {
+            if (!$this->shouldBeFiltered($dependency)) {
+                $filteredTree[] = $dependency;
             }
         }
 
@@ -58,7 +48,7 @@ class TreeFilter
      *
      * @return bool
      */
-    protected function shouldBeFiltered(array $dependency)
+    private function shouldBeFiltered(array $dependency)
     {
         $filterDependency = false;
         foreach ($this->filter as $filter) {

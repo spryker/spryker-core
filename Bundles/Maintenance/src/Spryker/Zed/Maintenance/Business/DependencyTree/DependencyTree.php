@@ -15,10 +15,12 @@ class DependencyTree extends AbstractDependencyTree
     const META_FILE = 'file';
     const META_CLASS_NAME = 'class name';
     const META_FOREIGN_BUNDLE = 'foreign bundle';
+    const META_FOREIGN_BUNDLE_IS_ENGINE = 'foreign bundle is engine';
     const META_FOREIGN_LAYER = 'foreign layer';
     const META_FOREIGN_CLASS_NAME = 'foreign class name';
     const META_APPLICATION = 'application';
     const META_BUNDLE = 'bundle';
+    const META_BUNDLE_IS_ENGINE = 'is engine';
     const META_LAYER = 'layer';
 
     /**
@@ -27,11 +29,18 @@ class DependencyTree extends AbstractDependencyTree
     private $fileInfoExtractor;
 
     /**
-     * @param FileInfoExtractor $fileInfoExtractor
+     * @var array
      */
-    public function __construct(FileInfoExtractor $fileInfoExtractor)
+    private $engineBundles;
+
+    /**
+     * @param FileInfoExtractor $fileInfoExtractor
+     * @param array $engineBundles
+     */
+    public function __construct(FileInfoExtractor $fileInfoExtractor, array $engineBundles)
     {
         $this->fileInfoExtractor = $fileInfoExtractor;
+        $this->engineBundles = $engineBundles;
     }
 
     /**
@@ -48,7 +57,7 @@ class DependencyTree extends AbstractDependencyTree
         $layer = $this->fileInfoExtractor->getLayerNameFromFileInfo($fileInfo);
         $className = $this->fileInfoExtractor->getClassNameFromFile($fileInfo);
 
-        if ($bundle === $to) {
+        if ($this->isSelfReference($bundle, $to)) {
             return;
         }
 
@@ -56,20 +65,35 @@ class DependencyTree extends AbstractDependencyTree
             self::META_FILE => $fileInfo->getFilename(),
             self::META_CLASS_NAME => $className,
             self::META_FOREIGN_BUNDLE => $to,
+            self::META_FOREIGN_BUNDLE_IS_ENGINE => $this->isEngineBundle($to),
             self::META_APPLICATION => $application,
             self::META_BUNDLE => $bundle,
+            self::META_BUNDLE_IS_ENGINE => $this->isEngineBundle($bundle),
             self::META_LAYER => $layer,
         ];
 
-        if (!array_key_exists($bundle, $this->dependencyTree)) {
-            $this->dependencyTree[$bundle] = [];
-        }
+        $this->dependencyTree[] = $dependency;
+    }
 
-        if (!array_key_exists($to, $this->dependencyTree)) {
-            $this->dependencyTree[$bundle][$to] = [];
-        }
+    /**
+     * @param string $bundle
+     *
+     * @return bool
+     */
+    private function isEngineBundle($bundle)
+    {
+        return (in_array($bundle, $this->engineBundles));
+    }
 
-        $this->dependencyTree[$bundle][$to][] = $dependency;
+    /**
+     * @param string $bundle
+     * @param string $to
+     *
+     * @return bool
+     */
+    protected function isSelfReference($bundle, $to)
+    {
+        return ($bundle === $to);
     }
 
 

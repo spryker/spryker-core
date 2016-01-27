@@ -17,12 +17,17 @@ class AdjacencyMatrixBuilder
     /**
      * @var DependencyTreeReaderInterface
      */
-    protected $dependencyTreeReader;
+    private $dependencyTreeReader;
 
     /**
      * @var TreeFilter
      */
-    protected $filter;
+    private $filter;
+
+    /**
+     * @var array
+     */
+    private $bundleList;
 
     /**
      * @var array
@@ -30,13 +35,16 @@ class AdjacencyMatrixBuilder
     private $matrix = [];
 
     /**
+     * @param array $bundleList
      * @param DependencyTreeReaderInterface $dependencyTreeReader
      * @param TreeFilter $filter
      */
     public function __construct(
+        array $bundleList,
         DependencyTreeReaderInterface $dependencyTreeReader,
         TreeFilter $filter
     ) {
+        $this->bundleList = $bundleList;
         $this->dependencyTreeReader = $dependencyTreeReader;
         $this->filter = $filter;
     }
@@ -47,73 +55,32 @@ class AdjacencyMatrixBuilder
     public function build()
     {
         $dependencyTree = $this->filter->filter($this->dependencyTreeReader->read());
-        $this->buildMatrixStructure($dependencyTree);
+        $this->buildMatrixStructure();
 
-        foreach ($dependencyTree as $bundle => $foreignBundles) {
-            $this->addBundles($bundle, $foreignBundles);
+        foreach ($dependencyTree as $dependency) {
+
+            $bundle = $dependency[DependencyTree::META_BUNDLE];
+            $foreignBundle = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
+            $info = $this->matrix[$bundle][$foreignBundle];
+
+            $info[] = $dependency[DependencyTree::META_CLASS_NAME] . ' => ' . $dependency[DependencyTree::META_FOREIGN_CLASS_NAME];
+
+            $this->matrix[$bundle][$foreignBundle] = $info;
         }
 
         return $this->matrix;
     }
 
     /**
-     * @param array $dependencyTree
-     *
      * @return void
      */
-    protected function buildMatrixStructure(array $dependencyTree)
+    private function buildMatrixStructure()
     {
-        foreach ($dependencyTree as $rowBundle => $rowForeignBundles) {
+        foreach ($this->bundleList as $rowBundle) {
             $this->matrix[$rowBundle] = [];
-            $this->addColumnsToMatrix($dependencyTree, $rowBundle);
-        }
-    }
-
-    /**
-     * @param array $dependencyTree
-     * @param string $rowBundle
-     *
-     * @return void
-     */
-    protected function addColumnsToMatrix(array $dependencyTree, $rowBundle)
-    {
-        foreach ($dependencyTree as $columnBundle => $columnForeignBundles) {
-            $this->matrix[$rowBundle][$columnBundle] = [self::FROM_LAYER_TO_LAYER => []];
-        }
-    }
-
-    /**
-     * @param string $bundle
-     * @param array $foreignBundles
-     *
-     * @return void
-     */
-    protected function addBundles($bundle, array $foreignBundles)
-    {
-        foreach ($foreignBundles as $foreignBundle => $dependencies) {
-            $this->addForeignBundles($bundle, $foreignBundle, $dependencies);
-        }
-    }
-
-    /**
-     * @param string $bundle
-     * @param string $foreignBundle
-     * @param array $dependencies
-     *
-     * @return void
-     */
-    protected function addForeignBundles($bundle, $foreignBundle, array $dependencies)
-    {
-        foreach ($dependencies as $dependency) {
-            if (!array_key_exists($foreignBundle, $this->matrix[$bundle])) {
-                $this->matrix[$bundle][$foreignBundle] = [self::FROM_LAYER_TO_LAYER => []];
+            foreach ($this->bundleList as $columnBundle) {
+                $this->matrix[$rowBundle][$columnBundle] = [];
             }
-            $name = $dependency[DependencyTree::META_LAYER] . ' => ' . $dependency[DependencyTree::META_FOREIGN_LAYER];
-
-            $info = $this->matrix[$bundle][$foreignBundle];
-            $info[self::FROM_LAYER_TO_LAYER][$name] = $name;
-
-            $this->matrix[$bundle][$foreignBundle] = $info;
         }
     }
 

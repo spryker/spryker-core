@@ -10,16 +10,19 @@
                     <tr>
                         <th>From - To</th>
                         {% for fromBundle, toBundles in matrixData %}
-                            {% for bundle, info in toBundles %}
-                                <th>{{ bundle }}</th>
-                            {% endfor %}
+                            <th{% if fromBundle in engineBundles  %} style="color: red"{% endif %}>{{ fromBundle }}</th>
                         {% endfor %}
                     </tr>
                     {% for fromBundle, toBundles in matrixData %}
                         <tr>
-                            <th>{{ fromBundle }}</th>
+                            <th{% if fromBundle in engineBundles  %} style="color: red"{% endif %}>{{ fromBundle }}</th>
                             {% for bundle, dependencies in toBundles %}
-                                <td>{{ dependencies.fromLayerToLayer | join('<br/>') | raw }}</td>
+                                {% if dependencies | length > 0 %}
+                                    <td>1</td>
+                                    {#<td>{{ dependencies | join('<br/>') | raw }}</td>#}
+                                {% else %}
+                                    <td>0</td>
+                                {% endif %}
                             {% endfor %}
                         </tr>
                     {% endfor %}

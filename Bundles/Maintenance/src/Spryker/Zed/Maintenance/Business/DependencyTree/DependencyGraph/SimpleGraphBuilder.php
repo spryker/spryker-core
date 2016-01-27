@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
 use Spryker\Zed\Library\Service\GraphViz;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 
 class SimpleGraphBuilder implements GraphBuilderInterface
 {
@@ -16,40 +17,9 @@ class SimpleGraphBuilder implements GraphBuilderInterface
      */
     private $graph;
 
-    /**
-     * @var array
-     */
-    protected $clusterAttributes = [
-        'fontname' => 'Verdana',
-        'fillcolor' => '#cfcfcf',
-        'style' => 'filled',
-        'color' => '#ffffff',
-        'fontsize' => 12,
-        'fontcolor' => 'black',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $layerAttributes = [
-        'fillcolor' => '#cfcfcf',
-        'style' => 'filled',
-        'color' => '#999999',
-        'fontsize' => 12,
-    ];
-
-    /**
-     * @var array
-     */
-    protected $rootFileAttributes = [
-        'fillcolor' => '#cfcfcf',
-        'shape' => 'diamond',
-        'fontsize' => 8,
-    ];
-
     public function __construct()
     {
-        $this->graph = new GraphViz(true, [], 'Bundle Dependencies', false, true);
+        $this->graph = new GraphViz(true, [], 'Bundle Dependencies', true, true);
     }
 
     /**
@@ -59,17 +29,45 @@ class SimpleGraphBuilder implements GraphBuilderInterface
      */
     public function build(array $dependencyTree)
     {
-        foreach ($dependencyTree as $bundle => $foreignBundles) {
-            $this->graph->addNode($bundle);
+        foreach ($dependencyTree as $dependency) {
+            $this->graph->addNode($dependency[DependencyTree::META_BUNDLE], $this->getNodeAttributes($dependency));
         }
 
-        foreach ($dependencyTree as $bundle => $foreignBundles) {
-            foreach ($foreignBundles as $foreignBundle => $meta) {
-                $this->graph->addEdge([$bundle => $foreignBundle]);
-            }
+        foreach ($dependencyTree as $dependency) {
+            $this->graph->addEdge([$dependency[DependencyTree::META_BUNDLE] => $dependency[DependencyTree::META_FOREIGN_BUNDLE]], $this->getEdgeAttributes($dependency));
         }
 
         return $this->graph->image('svg', 'dot');
+    }
+
+    /**
+     * @param array $dependency
+     *
+     * @return array
+     */
+    protected function getNodeAttributes(array $dependency)
+    {
+        $attributes = [];
+        if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
+            $attributes['fontcolor'] = 'red';
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param array $dependency
+     *
+     * @return array
+     */
+    protected function getEdgeAttributes(array $dependency)
+    {
+        $attributes = [];
+        if ($dependency[DependencyTree::META_FOREIGN_BUNDLE_IS_ENGINE]) {
+            $attributes['fontcolor'] = 'red';
+        }
+
+        return $attributes;
     }
 
 }

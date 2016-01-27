@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter;
 
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
-
 class DependencyFilter implements DependencyFilterInterface
 {
 
@@ -19,7 +17,7 @@ class DependencyFilter implements DependencyFilterInterface
     /**
      * @param DependencyFilterInterface $dependencyFilter
      *
-     * @return $this
+     * @return self
      */
     public function addFilter(DependencyFilterInterface $dependencyFilter)
     {
@@ -44,4 +42,5 @@ class DependencyFilter implements DependencyFilterInterface
 
         return $filterDependency;
     }
+
 }

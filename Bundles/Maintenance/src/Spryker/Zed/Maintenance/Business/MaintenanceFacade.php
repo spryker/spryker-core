@@ -110,13 +110,11 @@ class MaintenanceFacade extends AbstractFacade
     }
 
     /**
-     * @param string|bool $bundleToView
-     *
      * @return bool
      */
-    public function getAdjacencyMatrixData($bundleToView)
+    public function getAdjacencyMatrixData()
     {
-        return $this->getFactory()->createAdjacencyMatrixBuilder($bundleToView)->build();
+        return $this->getFactory()->createAdjacencyMatrixBuilder()->build();
     }
 
     /**
@@ -125,6 +123,13 @@ class MaintenanceFacade extends AbstractFacade
     public function getDependencyViolations()
     {
         return $this->getFactory()->createDependencyViolationChecker()->getDependencyViolations();
+    }
 
+    /**
+     * @return array
+     */
+    public function getEngineBundleList()
+    {
+        return $this->getFactory()->createEngineBundleList();
     }
 }

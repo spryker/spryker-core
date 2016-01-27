@@ -21,4 +21,6 @@ interface KernelConstants
 
     const STORE_PREFIX = ApplicationConstants::STORE_PREFIX;
 
+    const PROPEL = ApplicationConstants::PROPEL;
+
 }

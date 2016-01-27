@@ -27,14 +27,16 @@ interface LibraryConstants
     const ELASTICA_PARAMETER__PORT = ApplicationConstants::ELASTICA_PARAMETER__PORT;
     const ELASTICA_PARAMETER__TRANSPORT = ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT;
     const ERROR_LEVEL = ApplicationConstants::ERROR_LEVEL;
-
     const HOST_SSL_STATIC_MEDIA = ApplicationConstants::HOST_SSL_STATIC_MEDIA;
+
     const HOST_STATIC_MEDIA = ApplicationConstants::HOST_STATIC_MEDIA;
     const HOST_YVES = ApplicationConstants::HOST_YVES;
     const HOST_ZED_API = ApplicationConstants::HOST_ZED_API;
     const HOST_ZED_GUI = ApplicationConstants::HOST_ZED_GUI;
 
     const PRODUCT_IMAGE_IMAGE_URL_PREFIX = 'PRODUCT_IMAGE_IMAGE_URL_PREFIX';
+
+    const STORAGE_KV_SOURCE = ApplicationConstants::STORAGE_KV_SOURCE;
 
     const TRANSFER_DEBUG_SESSION_FORWARD_ENABLED = ApplicationConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED;
     const TRANSFER_DEBUG_SESSION_NAME = ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME;
