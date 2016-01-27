@@ -19,16 +19,24 @@ class DeleteDatabase extends AbstractApplicationCheckStep
     {
         $this->info('Delete database');
 
-        if (Config::get(ApplicationConstants::ZED_DB_ENGINE) === 'pgsql') {
+        if (Config::get(ApplicationConstants::ZED_DB_ENGINE) === ApplicationConstants::ZED_DB_ENGINE_PGSQL) {
             $this->deletePostgresDatabaseIfNotExists();
         } else {
             $this->deleteMysqlDatabaseIfNotExists();
         }
     }
 
+    /**
+     * @return void
+     */
     private function closePostgresConnections()
     {
-        $dropDatabaseCommand = "PGPASSWORD='easy' psql -U postgres -w  -c 'SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pid <> pg_backend_pid()'";
+        $dropDatabaseCommand = sprintf(
+            'psql -U %s -w  -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pid <> pg_backend_pid() AND pg_stat_activity.datname = \'%s\';"',
+            'postgres',
+            Config::get(ApplicationConstants::ZED_DB_DATABASE)
+        );
+
         $process = new Process($dropDatabaseCommand);
         $process->run();
 
@@ -44,8 +52,12 @@ class DeleteDatabase extends AbstractApplicationCheckStep
     {
         $this->closePostgresConnections();
 
-        // @todo make it work without sudo
-        $dropDatabaseCommand = 'sudo dropdb --if-exists ' . Config::get(ApplicationConstants::ZED_DB_DATABASE);
+        $dropDatabaseCommand = sprintf(
+            'psql -U %s -w  -c "DROP DATABASE IF EXISTS \"%s\";"',
+            'postgres',
+            Config::get(ApplicationConstants::ZED_DB_DATABASE)
+        );
+
         $process = new Process($dropDatabaseCommand);
         $process->run();
 
