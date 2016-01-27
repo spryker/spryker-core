@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Library\System;
 use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
@@ -49,10 +50,14 @@ class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderI
 
             $host = isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : System::getHostname();
 
+            $store = Store::getInstance();
+
             $this->getFactory()->createNewRelicApi()
                 ->setNameOfTransaction($transactionName)
                 ->addCustomParameter('request_uri', $requestUri)
-                ->addCustomParameter('host', $host);
+                ->addCustomParameter('host', $host)
+                ->addCustomParameter('store', $store->getStoreName())
+                ->addCustomParameter('locale', $store->getCurrentLocale());
         });
     }
 

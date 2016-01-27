@@ -118,16 +118,6 @@ class Store
      */
     protected function publish()
     {
-        header('X-Store: ' . $this->getStoreName());
-        header('X-Env: ' . APPLICATION_ENV);
-
-        $newRelicApi = new Api();
-        $newRelicApi->addCustomParameter('store', $this->getStoreName());
-
-        if ($this->currentLocale !== null) {
-            header('X-Locale: ' . $this->getCurrentLocale());
-            $newRelicApi->addCustomParameter('locale', $this->getCurrentLocale());
-        }
     }
 
     /**
