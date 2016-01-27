@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Maintenance\Business;
 
+use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Maintenance\Business\DependencyTree\AdjacencyMatrixBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ClassNameFilter;
@@ -33,6 +34,7 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\BundleUsesCo
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignConstants;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignException;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinder;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\JsonUpdater;
 use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
@@ -579,6 +581,18 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         $bundleList = json_decode(file_get_contents($this->getConfig()->getPathToBundleConfig()), true);
 
         return array_keys($bundleList);
+    }
+
+    /**
+     * @return ComposerJsonUpdater
+     */
+    public function createComposerJsonUpdater()
+    {
+        return new ComposerJsonUpdater(
+            $this->createDependencyTreeReader(),
+            new \Symfony\Component\Finder\Finder(),
+            $this->getConfig()->getBundleDirectory()
+        );
     }
 
 }
