@@ -11,7 +11,7 @@ use Elastica\Document;
 use Elastica\Index;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
-class ElasticSearchWriter implements WriterInterface
+class _ElasticsearchUpdateWriter implements WriterInterface
 {
 
     /**
@@ -49,44 +49,24 @@ class ElasticSearchWriter implements WriterInterface
      */
     public function write(array $dataSet, $type = '')
     {
-        //@todo this is wrong, the touched type does not directly map to the processed type
         $type = $this->index->getType($this->type);
-        $type->addDocuments($this->createDocuments($dataSet));
+        $type->updateDocuments($this->createDocuments($dataSet));
         $response = $type->getIndex()->refresh();
 
         return $response->isOk();
     }
 
     /**
-     * @param array $dataSet
-     *
-     * @return bool
+     * @return void
      */
     public function delete(array $dataSet)
     {
-        $documents = [];
-        foreach ($dataSet as $key) {
-            $documents[] = $this->index->getType($this->type)->getDocument($key);
-        }
-
-        $response = $this->index->deleteDocuments($documents);
-        $this->index->flush(true);
-
-        return $response->isOk();
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'elasticsearch-writer';
     }
 
     /**
      * @param array $dataSet
      *
-     * @return array
+     * @return Document[]
      */
     protected function createDocuments(array $dataSet)
     {
@@ -101,6 +81,14 @@ class ElasticSearchWriter implements WriterInterface
         }
 
         return $documents;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'elasticsearch-update-writer';
     }
 
 }
