@@ -3,6 +3,7 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder;
 
 interface ViolationFinderInterface

@@ -45,7 +45,7 @@ class SimpleGraphBuilder implements GraphBuilderInterface
      *
      * @return array
      */
-    protected function getNodeAttributes(array $dependency)
+    private function getNodeAttributes(array $dependency)
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
@@ -60,7 +60,7 @@ class SimpleGraphBuilder implements GraphBuilderInterface
      *
      * @return array
      */
-    protected function getEdgeAttributes(array $dependency)
+    private function getEdgeAttributes(array $dependency)
     {
         $attributes = [];
         if ($dependency[DependencyTree::META_FOREIGN_BUNDLE_IS_ENGINE]) {

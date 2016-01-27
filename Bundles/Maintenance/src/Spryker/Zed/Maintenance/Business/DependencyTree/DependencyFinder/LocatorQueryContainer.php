@@ -11,6 +11,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocatorQueryContainer extends AbstractDependencyFinder
 {
+
     const BUNDLE = 'bundle';
 
     /**

@@ -6,7 +6,7 @@
 
 namespace Spryker\Shared\Customer;
 
-use Pyz\Shared\Mail\MailConstants;
+use Spryker\Shared\Mail\MailConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 
 interface CustomerConstants

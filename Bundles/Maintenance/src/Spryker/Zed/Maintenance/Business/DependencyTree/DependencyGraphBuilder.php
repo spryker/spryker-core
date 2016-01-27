@@ -16,17 +16,17 @@ class DependencyGraphBuilder
     /**
      * @var GraphBuilderInterface
      */
-    protected $graphBuilder;
+    private $graphBuilder;
 
     /**
      * @var DependencyTreeReaderInterface
      */
-    protected $dependencyTreeReader;
+    private $dependencyTreeReader;
 
     /**
      * @var TreeFilter
      */
-    protected $filter;
+    private $filter;
 
     /**
      * @param GraphBuilderInterface $graphBuilder

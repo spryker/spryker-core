@@ -19,7 +19,6 @@
                             {% for bundle, dependencies in toBundles %}
                                 {% if dependencies | length > 0 %}
                                     <td>1</td>
-                                    {#<td>{{ dependencies | join('<br/>') | raw }}</td>#}
                                 {% else %}
                                     <td>0</td>
                                 {% endif %}

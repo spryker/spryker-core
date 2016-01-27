@@ -12,8 +12,6 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\Depende
 class AdjacencyMatrixBuilder
 {
 
-    const FROM_LAYER_TO_LAYER = 'fromLayerToLayer';
-
     /**
      * @var DependencyTreeReaderInterface
      */

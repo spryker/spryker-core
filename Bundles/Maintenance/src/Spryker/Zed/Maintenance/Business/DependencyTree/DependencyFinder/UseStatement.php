@@ -12,7 +12,7 @@ use Symfony\Component\Finder\SplFileInfo;
 class UseStatement extends AbstractDependencyFinder
 {
 
-    const NO_LAYER = 'Default';
+    const LAYER_DEFAULT = 'Default';
     const BUNDLE = 'bundle';
 
     /**
@@ -56,7 +56,7 @@ class UseStatement extends AbstractDependencyFinder
             }
         }
 
-        return self::NO_LAYER;
+        return self::LAYER_DEFAULT;
     }
 
 }

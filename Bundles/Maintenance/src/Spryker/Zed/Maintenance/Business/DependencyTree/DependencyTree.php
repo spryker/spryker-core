@@ -91,7 +91,7 @@ class DependencyTree extends AbstractDependencyTree
      *
      * @return bool
      */
-    protected function isSelfReference($bundle, $to)
+    private function isSelfReference($bundle, $to)
     {
         return ($bundle === $to);
     }

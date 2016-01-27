@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter;
 
-class TreeFilter
+class TreeFilter implements TreeFilterCompositeInterface
 {
 
     /**
