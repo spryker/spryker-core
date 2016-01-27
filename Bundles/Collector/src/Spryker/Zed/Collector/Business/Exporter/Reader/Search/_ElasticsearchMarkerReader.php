@@ -11,7 +11,7 @@ use Elastica\Exception\ResponseException;
 use Elastica\Index;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 
-class ElasticSearchMarkerReader implements ReaderInterface
+class _ElasticsearchMarkerReader implements ReaderInterface
 {
 
     const READER_NAME = 'elastic-search-marker-reader';
