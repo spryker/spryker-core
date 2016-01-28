@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductCategory\Communication;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormAddDataProvider;
+use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormDeleteDataProvider;
+use Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormEditDataProvider;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
@@ -158,57 +161,75 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int $idParentNode
+     * @param array $formData
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCategoryFormAdd($idParentNode)
+    public function createCategoryFormAdd(array $formData, array $formOptions = [])
     {
-        $form = new CategoryFormAdd(
-            $this->getCategoryQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getCurrentLocale(),
-            null,
-            $idParentNode
-        );
+        $formType = new CategoryFormAdd();
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($formType, $formData, $formOptions);
     }
 
     /**
-     * @param int $idCategory
-     *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return CategoryFormAddDataProvider
      */
-    public function createCategoryFormEdit($idCategory)
+    public function createCategoryFormAddDataProvider()
     {
-        $form = new CategoryFormEdit(
+        return new CategoryFormAddDataProvider(
             $this->getCategoryQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getCurrentLocale(),
-            $idCategory,
-            null
+            $this->getCurrentLocale()
         );
-
-        return $this->createForm($form);
     }
 
     /**
-     * @param int $idCategory
+     * @param array $formData
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCategoryFormDelete($idCategory)
+    public function createCategoryFormEdit(array $formData, array $formOptions = [])
     {
-        $form = new CategoryFormDelete(
-            $this->getCategoryQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getCurrentLocale(),
-            $idCategory,
-            null
-        );
+        $formType = new CategoryFormEdit();
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+    }
+
+    /**
+     * @return CategoryFormEditDataProvider
+     */
+    public function createCategoryFormEditDataProvider()
+    {
+        return new CategoryFormEditDataProvider(
+            $this->getCategoryQueryContainer(),
+            $this->getCurrentLocale()
+        );
+    }
+
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCategoryFormDelete(array $formData, array $formOptions = [])
+    {
+        $formType = new CategoryFormDelete();
+
+        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+    }
+
+    /**
+     * @return CategoryFormDeleteDataProvider
+     */
+    public function createCategoryFormDeleteDataProvider()
+    {
+        return new CategoryFormDeleteDataProvider(
+            $this->getCategoryQueryContainer(),
+            $this->getCurrentLocale()
+        );
     }
 
     /**

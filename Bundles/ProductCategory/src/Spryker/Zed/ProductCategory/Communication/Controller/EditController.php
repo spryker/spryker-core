@@ -47,10 +47,14 @@ class EditController extends AddController
         $locale = $this->getFactory()
             ->getCurrentLocale();
 
-        $form = $this->getFactory()
-            ->createCategoryFormEdit($idCategory);
-
-        $form->handleRequest($request);
+        $dataProvider = $this->getFactory()->createCategoryFormEditDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createCategoryFormEdit(
+                $dataProvider->getData($idCategory),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $connection = $this->getFactory()

@@ -6,7 +6,9 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Form;
 
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductCategory\Communication\Form\Constraints\CategoryFieldNotBlank;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class CategoryFormDelete extends CategoryFormEdit
 {
@@ -14,37 +16,57 @@ class CategoryFormDelete extends CategoryFormEdit
     const DELETE_CHILDREN = 'delete_children';
 
     /**
-     * @return self
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
      */
-    protected function buildFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return $this->addCheckbox(self::DELETE_CHILDREN, [
-                'label' => 'Delete subcategories',
-            ])
-            ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
-                'label' => 'Or move them to category',
-                'choices' => $this->getCategoriesWithPaths($this->locale->getIdLocale()),
-                'multiple' => false,
-                'constraints' => [
-                    new CategoryFieldNotBlank([
-                        'categoryFieldName' => self::FK_PARENT_CATEGORY_NODE,
-                        'checkboxFieldName' => self::DELETE_CHILDREN,
-                    ]),
-                ],
-            ])
-            ->addHidden(self::PK_CATEGORY_NODE)
-            ->addHidden(self::FK_NODE_CATEGORY);
+        $this
+            ->addDeleteChildrenField($builder)
+            ->addCategoryNodeField($builder, $options[self::OPTION_PARENT_CATEGORY_NODE_CHOICES])
+            ->addPkCategoryNodeField($builder)
+            ->addFkNodeCategoryField($builder);
     }
 
     /**
-     * @return array
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
      */
-    public function populateFormFields()
+    protected function addDeleteChildrenField(FormBuilderInterface $builder)
     {
-        $fields = parent::populateFormFields();
-        $fields[self::FK_PARENT_CATEGORY_NODE] = null;
+        $builder
+            ->add(self::DELETE_CHILDREN, 'checkbox', [
+                'label' => 'Delete subcategories',
+            ]);
 
-        return $fields;
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return self
+     */
+    protected function addCategoryNodeField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder
+            ->add(self::FIELD_FK_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
+                'label' => 'Or move them to category',
+                'choices' => $choices,
+                'multiple' => false,
+                'constraints' => [
+                    new CategoryFieldNotBlank([
+                        'categoryFieldName' => self::FIELD_FK_PARENT_CATEGORY_NODE,
+                        'checkboxFieldName' => self::DELETE_CHILDREN,
+                    ]),
+                ],
+            ]);
+
+        return $this;
     }
 
 }

@@ -52,7 +52,7 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
      */
     protected function isCategorySelected($fieldName)
     {
-        return (bool) $this->context->getRoot()
+        return $this->context->getRoot()
             ->get($fieldName)
             ->getData() !== null;
     }
