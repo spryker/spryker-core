@@ -150,6 +150,8 @@
     <transfer name="Expense">
         <property name="unitGrossPriceWithDiscounts" type="int"/>
         <property name="sumGrossPriceWithDiscounts" type="int" />
+        <property name="unitTaxAmountWithDiscounts" type="int" />
+        <property name="sumTaxAmountWithDiscounts" type="int" />
     </transfer>
 
 </transfers>

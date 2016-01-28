@@ -7,10 +7,13 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Sales\Business\SalesFacade;
+use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
+ * @method SalesCommunicationFactory getFactory()
+ * @method SalesFacade getFacade()
  */
 class IndexController extends AbstractController
 {
@@ -20,7 +23,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getFactory()->createOrdersTable();
+        $table = $this->getFactory()->createOrdersTable($this->getFacade());
 
         return [
             'orders' => $table->render(),
@@ -32,7 +35,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getFactory()->createOrdersTable();
+        $table = $this->getFactory()->createOrdersTable($this->getFacade());
 
         return $this->jsonResponse(
             $table->fetchData()

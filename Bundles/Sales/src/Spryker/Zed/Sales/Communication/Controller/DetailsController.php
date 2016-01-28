@@ -73,6 +73,9 @@ class DetailsController extends AbstractController
         $itemsPaid = $this->getFactory()->getOmsFacade()->getItemsWithFlag($salesOrderEntity, 'paid');
         $itemsCancelled = $this->getFactory()->getOmsFacade()->getItemsWithFlag($salesOrderEntity, 'cancelled');
 
+        //@todo details page should use quote for data display, change this!
+        $orderTransfer = $this->getFacade()->getOrderTotalsByIdSalesOrder($idSalesOrder);
+
         return [
             'idOrder' => $idSalesOrder,
             'orderDetails' => $salesOrderEntity,
@@ -88,6 +91,7 @@ class DetailsController extends AbstractController
             'itemsInProgress' => $itemsInProgress,
             'itemsPaid' => $itemsPaid,
             'itemsCancelled' => $itemsCancelled,
+            'order' => $orderTransfer,
         ];
     }
 

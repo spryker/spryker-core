@@ -15,6 +15,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Zed\Sales\Business\SalesFacade;
 
 class OrdersTable extends AbstractTable
 {
@@ -25,30 +26,42 @@ class OrdersTable extends AbstractTable
     const FILTER = 'filter';
     const URL_SALES_DETAILS = '/sales/details';
     const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    const GRAND_TOTAL = 'GrandTotal';
 
     /**
-     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     * @var SpySalesOrderQuery
      */
     protected $orderQuery;
 
     /**
-     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @var SpySalesOrderItemQuery
      */
     protected $orderItemQuery;
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderQuery
+     * @var SalesFacade
      */
-    public function __construct(SpySalesOrderQuery $orderQuery, SpySalesOrderItemQuery $orderItemQuery)
-    {
+    protected $salesFacade;
+
+    /**
+     * @param SpySalesOrderQuery $orderQuery
+     * @param SpySalesOrderItemQuery $orderItemQuery
+     * @param SalesFacade $salesFacade
+     */
+    public function __construct(
+        SpySalesOrderQuery $orderQuery,
+        SpySalesOrderItemQuery $orderItemQuery,
+        SalesFacade $salesFacade
+    ) {
         $this->orderQuery = $orderQuery;
         $this->orderItemQuery = $orderItemQuery;
+        $this->salesFacade = $salesFacade;
     }
 
     /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @param TableConfiguration $config
      *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     * @return TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -58,7 +71,7 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_FK_CUSTOMER => 'Customer Id',
             SpySalesOrderTableMap::COL_EMAIL => 'Email',
             SpySalesOrderTableMap::COL_FIRST_NAME => 'Billing Name',
-            SpySalesOrderTableMap::COL_GRAND_TOTAL => 'Value',
+            self::GRAND_TOTAL => 'GrandTotal',
             self::URL => 'Url',
         ]);
         $config->setSortable([
@@ -85,7 +98,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @param TableConfiguration $config
      *
      * @return array
      */
@@ -101,7 +114,7 @@ class OrdersTable extends AbstractTable
                 SpySalesOrderTableMap::COL_FK_CUSTOMER => $item[SpySalesOrderTableMap::COL_FK_CUSTOMER],
                 SpySalesOrderTableMap::COL_EMAIL => $item[SpySalesOrderTableMap::COL_EMAIL],
                 SpySalesOrderTableMap::COL_FIRST_NAME => $item[SpySalesOrderTableMap::COL_FIRST_NAME],
-                SpySalesOrderTableMap::COL_GRAND_TOTAL => $this->formatPrice($item[SpySalesOrderTableMap::COL_GRAND_TOTAL]),
+                self::GRAND_TOTAL => $this->formatPrice($this->getGrandTotalByIdSalesOrder($item[SpySalesOrderTableMap::COL_ID_SALES_ORDER])),
                 self::URL => implode(' ', $this->createActionUrls($item)),
             ];
         }
@@ -130,7 +143,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     * @return SpySalesOrderQuery
      */
     protected function buildQuery()
     {
@@ -170,7 +183,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @param TableConfiguration $config
      *
      * @return void
      */
@@ -182,6 +195,18 @@ class OrdersTable extends AbstractTable
             $filter = $this->request->get(self::FILTER);
             $config->setUrl(sprintf('table?id-order-item-process=%s&id-order-item-state=%s&filter=%s', $idOrderItemProcess, $idOrderItemState, $filter));
         }
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return int
+     */
+    protected function getGrandTotalByIdSalesOrder($idSalesOrder)
+    {
+         $orderTransfer = $this->salesFacade->getOrderTotalsByIdSalesOrder($idSalesOrder);
+
+         return $orderTransfer->getTotals()->getGrandTotal();
     }
 
 }

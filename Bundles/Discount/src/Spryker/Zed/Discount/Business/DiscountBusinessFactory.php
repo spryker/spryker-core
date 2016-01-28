@@ -24,6 +24,7 @@ use Spryker\Zed\Discount\Business\Model\DiscountSaverInterface;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemTaxWithDiscounts;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderDiscounts;
 use Spryker\Zed\Discount\Business\Model\VoucherCode;
 use Spryker\Zed\Discount\Business\Model\VoucherCodeInterface;
@@ -387,6 +388,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderGrandTotalAggregator()
     {
         return new GrandTotalWithDiscounts();
+    }
+
+    /**
+     * @return ItemTaxWithDiscounts
+     */
+    public function createItemTaxWithDiscountsAggregator()
+    {
+        return new ItemTaxWithDiscounts($this->getProvidedDependency(DiscountDependencyProvider::FACADE_TAX));
     }
 
 }

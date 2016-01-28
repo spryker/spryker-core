@@ -15,6 +15,7 @@ use Spryker\Zed\Discount\Communication\Plugin\Collector\OrderExpense;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
@@ -28,6 +29,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
     const STORE_CONFIG = 'store_config';
     const FACADE_MESSENGER = 'messenger facade';
+    const FACADE_TAX = 'tax facade';
 
     const PLUGIN_PROPEL_CONNECTION = 'propel_connection_plugin';
 
@@ -76,6 +78,10 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::COLLECTOR_PLUGINS] = function (Container $container) {
             return $this->getAvailableCollectorPlugins($container);
+        };
+
+        $container[self::FACADE_TAX] = function (Container $container) {
+            return new DiscountToTaxBridge($container->getLocator()->tax()->facade());
         };
 
         return $container;

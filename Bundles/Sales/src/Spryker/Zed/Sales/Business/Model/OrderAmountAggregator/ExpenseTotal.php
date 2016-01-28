@@ -65,6 +65,9 @@ class ExpenseTotal
             $orderExpenseTransfer->fromArray($salesOrderExpenseEntity->toArray(), true);
             $orderExpenseTransfer->setUnitGrossPrice($salesOrderExpenseEntity->getGrossPrice());
             $orderExpenseTransfer->setSumGrossPrice($salesOrderExpenseEntity->getGrossPrice());
+            $orderExpenseTransfer->setRefundableAmount(
+                $salesOrderExpenseEntity->getGrossPrice() - $salesOrderExpenseEntity->getCanceledAmount()
+            );
             $orderExpenseTransfer->setQuantity(1);
             $orderTransfer->addExpense($orderExpenseTransfer);
         }

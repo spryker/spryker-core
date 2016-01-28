@@ -39,6 +39,11 @@ class ItemDiscounts
 
         $salesOrderDiscounts = $this->getSalesOrderDiscounts($orderTransfer);
 
+        if (count($salesOrderDiscounts) === 0) {
+            $this->setDiscountFieldToValueWithoutDiscounts($orderTransfer);
+            return;
+        }
+
         foreach ($salesOrderDiscounts as $salesOrderDiscountEntity) {
             foreach ($orderTransfer->getItems() as $itemTransfer) {
                 $this->assertItemRequirements($itemTransfer);
@@ -100,6 +105,10 @@ class ItemDiscounts
             $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
             $this->addExpenseDiscountAmount($expenseTransfer, $calculatedDiscountTransfer);
+
+            $expenseTransfer->setRefundableAmount(
+                $expenseTransfer->getRefundableAmount() - $calculatedDiscountTransfer->getSumGrossAmount()
+            );
         }
     }
 
@@ -142,7 +151,7 @@ class ItemDiscounts
         );
 
         $expenseTransfer->setSumGrossPriceWithDiscounts(
-            $expenseTransfer->getSumGrossPriceWithDiscounts() - $calculatedDiscountTransfer->getSumGrossAmount()
+            $expenseTransfer->getSumGrossPrice() - $calculatedDiscountTransfer->getSumGrossAmount()
         );
     }
 
@@ -176,5 +185,29 @@ class ItemDiscounts
     protected function assertItemRequirements(ItemTransfer $itemTransfer)
     {
         $itemTransfer->requireQuantity()->requireIdSalesOrderItem();
+    }
+
+    /**
+     * @param ExpenseTransfer $expenseTransfer
+     *
+     * @return void
+     */
+    protected function addExpenseDiscountAmountDefaults(ExpenseTransfer $expenseTransfer)
+    {
+        $expenseTransfer->setUnitGrossPriceWithDiscounts($expenseTransfer->getUnitGrossPrice());
+        $expenseTransfer->setSumGrossPriceWithDiscounts($expenseTransfer->getSumGrossPrice());
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function setDiscountFieldToValueWithoutDiscounts($orderTransfer)
+    {
+        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
+            $expenseTransfer->setSumGrossPriceWithDiscounts($expenseTransfer->getSumGrossPrice());
+            $expenseTransfer->setUnitGrossPriceWithDiscounts($expenseTransfer->getUnitGrossPrice());
+        }
     }
 }
