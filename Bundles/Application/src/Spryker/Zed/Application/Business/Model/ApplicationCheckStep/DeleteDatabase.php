@@ -7,6 +7,7 @@ namespace Spryker\Zed\Application\Business\Model\ApplicationCheckStep;
 
 use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Propel\PropelConstants;
 use Symfony\Component\Process\Process;
 
 class DeleteDatabase extends AbstractApplicationCheckStep
@@ -19,7 +20,7 @@ class DeleteDatabase extends AbstractApplicationCheckStep
     {
         $this->info('Delete database');
 
-        if (Config::get(ApplicationConstants::ZED_DB_ENGINE) === ApplicationConstants::ZED_DB_ENGINE_PGSQL) {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === PropelConstants::ZED_DB_ENGINE_PGSQL) {
             $this->deletePostgresDatabaseIfNotExists();
         } else {
             $this->deleteMysqlDatabaseIfNotExists();
