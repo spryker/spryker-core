@@ -67,7 +67,7 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormFactory
+     * @return \Symfony\Component\Form\FormFactoryInterface
      */
     protected function getFormFactory()
     {
@@ -75,6 +75,8 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use $this->getFormFactory()->create() instead.
+     *
      * @param \Symfony\Component\Form\FormTypeInterface $formTypeInterface
      * @param array $options
      *

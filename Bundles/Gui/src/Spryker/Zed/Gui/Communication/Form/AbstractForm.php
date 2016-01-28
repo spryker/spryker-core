@@ -11,6 +11,9 @@ use Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Shared\Gui\Form\AbstractForm as SharedAbstractForm;
 
+/**
+ * @deprecated Use \Symfony\Component\Form\AbstractType instead.
+ */
 abstract class AbstractForm extends SharedAbstractForm
 {
 

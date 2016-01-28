@@ -28,6 +28,9 @@ class Application extends \Silex\Application
     /**
      * Returns a form.
      *
+     * @deprecated Create forms inside your bundle's factory with getting the form factory,
+     * e.g. FooBundleFactory.php: $this->getFormFactory()->create(new FooFormType());
+     *
      * @see createBuilder()
      *
      * @param string|\Symfony\Component\Form\FormTypeInterface $type The type of the form
@@ -37,8 +40,6 @@ class Application extends \Silex\Application
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      *
      * @return \Symfony\Component\Form\FormInterface The form named after the type
-     *
-     * @deprecated Use buildForm() instead.
      */
     public function createForm($type = 'form', $data = null, array $options = [])
     {
@@ -51,6 +52,9 @@ class Application extends \Silex\Application
     }
 
     /**
+     * @deprecated Create forms inside your bundle's factory with getting the form factory,
+     * e.g. FooBundleFactory.php: $this->getFormFactory()->create(new FooFormType());
+     *
      * @param \Spryker\Shared\Gui\Form\AbstractForm $form
      * @param array $options The options
      *
