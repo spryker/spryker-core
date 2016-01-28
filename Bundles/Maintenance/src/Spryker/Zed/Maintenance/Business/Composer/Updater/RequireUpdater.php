@@ -16,6 +16,7 @@ class RequireUpdater implements UpdaterInterface
 {
 
     const KEY_REQUIRE = 'require';
+    const RELEASE_OPERATOR = '^';
 
     /**
      * @var DependencyTreeReaderInterface
@@ -51,7 +52,7 @@ class RequireUpdater implements UpdaterInterface
             $filter = new CamelCaseToDash();
             $dependentBundle = strtolower($filter->filter($dependentBundle));
 
-            $composerJson[self::KEY_REQUIRE]['spryker/' . $dependentBundle] = '^1.0.0';
+            $composerJson[self::KEY_REQUIRE]['spryker/' . $dependentBundle] = self::RELEASE_OPERATOR . '1.0.0';
         }
 
         return $composerJson;
