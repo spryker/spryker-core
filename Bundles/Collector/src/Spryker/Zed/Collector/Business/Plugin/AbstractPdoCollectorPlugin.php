@@ -30,6 +30,8 @@ abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
 
     /**
      * @param CriteriaBuilderInterface $criteriaBuilder
+     *
+     * @return void
      */
     public function setCriteriaBuilder(CriteriaBuilderInterface $criteriaBuilder)
     {

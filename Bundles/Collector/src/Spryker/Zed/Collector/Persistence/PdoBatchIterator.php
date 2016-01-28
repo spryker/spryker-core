@@ -73,6 +73,8 @@ class PdoBatchIterator implements CountableIteratorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function next()
     {
@@ -83,6 +85,9 @@ class PdoBatchIterator implements CountableIteratorInterface
         $this->offset += $this->chunkSize;
     }
 
+    /**
+     * @return void
+     */
     protected function loadChunk()
     {
         $this->criteriaBuilder->setLimit($this->chunkSize);
@@ -113,6 +118,8 @@ class PdoBatchIterator implements CountableIteratorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function rewind()
     {

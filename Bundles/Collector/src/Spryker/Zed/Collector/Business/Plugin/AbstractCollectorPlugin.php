@@ -76,6 +76,8 @@ abstract class AbstractCollectorPlugin
 
     /**
      * @param TouchQueryContainerInterface $touchQueryContainer
+     *
+     * @return void
      */
     public function setTouchQueryContainer(TouchQueryContainerInterface $touchQueryContainer)
     {
@@ -84,6 +86,8 @@ abstract class AbstractCollectorPlugin
 
     /**
      * @param AbstractCollectorQuery $queryBuilder
+     *
+     * @return void
      */
     public function setQueryBuilder(AbstractCollectorQuery $queryBuilder)
     {
@@ -100,6 +104,8 @@ abstract class AbstractCollectorPlugin
 
     /**
      * @param int $chunkSize
+     *
+     * @return void
      */
     public function setChunkSize($chunkSize)
     {
@@ -188,6 +194,8 @@ abstract class AbstractCollectorPlugin
      * @param BatchResultInterface $result
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
+     *
+     * @return void
      */
     public function run(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result,
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, OutputInterface $output)
@@ -206,6 +214,8 @@ abstract class AbstractCollectorPlugin
      * @param BatchResultInterface $batchResult
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
+     *
+     * @return void
      */
     protected function runInsertion(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $batchResult,
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, OutputInterface $output)
@@ -246,6 +256,8 @@ abstract class AbstractCollectorPlugin
      * @param BatchResultInterface $result
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
+     *
+     * @return void
      */
     public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result,
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater)
@@ -259,6 +271,8 @@ abstract class AbstractCollectorPlugin
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
      * @param string $itemType
+     *
+     * @return void
      */
     protected function runDeletion(LocaleTransfer $locale, BatchResultInterface $batchResult,
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, $itemType, OutputInterface $output)

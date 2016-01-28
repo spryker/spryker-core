@@ -59,6 +59,8 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
 
     /**
      * @param WriterInterface $dataWriter
+     *
+     * @return void
      */
     public function setDataWriter(WriterInterface $dataWriter)
     {
@@ -75,6 +77,8 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
 
     /**
      * @param TouchUpdaterInterface $touchUpdater
+     *
+     * @return void
      */
     public function setTouchUpdater(TouchUpdaterInterface $touchUpdater)
     {

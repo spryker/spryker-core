@@ -26,6 +26,8 @@ abstract class AbstractPropelCollectorQuery extends AbstractCollectorQuery
 
     /**
      * @param SpyTouchQuery $touchQuery
+     *
+     * @return void
      */
     public function setTouchQuery(SpyTouchQuery $touchQuery)
     {
