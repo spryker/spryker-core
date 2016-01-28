@@ -7,6 +7,9 @@ namespace Spryker\Zed\Maintenance\Business\Model;
 
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @deprecated Bundles do not contain base or map directories of propel anymore
+ */
 class PropelBaseFolderFinder implements PropelBaseFolderFinderInterface
 {
 

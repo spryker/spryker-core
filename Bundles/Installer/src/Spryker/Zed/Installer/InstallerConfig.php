@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Installer;
 
+use Spryker\Shared\Installer\InstallerConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 abstract class InstallerConfig extends AbstractBundleConfig
@@ -16,10 +17,8 @@ abstract class InstallerConfig extends AbstractBundleConfig
      */
     public function getGlossaryFilePaths()
     {
-        // Find files in Core bundles
         return glob(
-            APPLICATION_VENDOR_DIR
-            . '/spryker/spryker/Bundles/*/src/Spryker/*/*/Ressources/glossary.yml'
+            $this->get(InstallerConstants::SPRYKER_BUNDLES_ROOT) . '/*/src/Spryker/*/*/Resources/glossary.yml'
         );
     }
 

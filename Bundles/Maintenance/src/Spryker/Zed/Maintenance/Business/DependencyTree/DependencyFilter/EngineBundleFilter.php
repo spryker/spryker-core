@@ -16,9 +16,12 @@ class EngineBundleFilter implements DependencyFilterInterface
      */
     private $filterBundles = [];
 
-    public function __construct()
+    /**
+     * @param string $pathToBundleConfig
+     */
+    public function __construct($pathToBundleConfig)
     {
-        $bundleList = json_decode(file_get_contents(APPLICATION_VENDOR_DIR . '/spryker/spryker/bundle_config.json'), true);
+        $bundleList = json_decode(file_get_contents($pathToBundleConfig), true);
         $this->filterBundles = array_keys($bundleList);
     }
 

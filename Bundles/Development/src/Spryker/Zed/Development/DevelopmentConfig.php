@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Development;
 
+use Spryker\Shared\Development\DevelopmentConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
@@ -16,10 +17,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getBundleDirectory()
     {
-        return APPLICATION_VENDOR_DIR
-            . DIRECTORY_SEPARATOR . 'spryker'
-            . DIRECTORY_SEPARATOR . 'spryker'
-            . DIRECTORY_SEPARATOR . 'Bundles'
+        return $this->get(DevelopmentConstants::SPRYKER_BUNDLES_ROOT)
             . DIRECTORY_SEPARATOR;
     }
 
@@ -32,11 +30,13 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated use getBundleDirectory() to get the path to bundles
+     *
      * @return string
      */
     public function getPathToSpryker()
     {
-        return APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR . 'spryker' . DIRECTORY_SEPARATOR;
+        return $this->getBundleDirectory();
     }
 
 }

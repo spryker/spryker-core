@@ -14,6 +14,8 @@ interface PropelConstants
     const PROPEL = ApplicationConstants::PROPEL;
     const PROPEL_DEBUG = ApplicationConstants::PROPEL_DEBUG;
 
+    const SPRYKER_BUNDLES_ROOT = ApplicationConstants::SPRYKER_BUNDLES_ROOT;
+
     const ZED_DB_DATABASE = ApplicationConstants::ZED_DB_DATABASE;
     const ZED_DB_ENGINE = ApplicationConstants::ZED_DB_ENGINE;
     const ZED_DB_HOST = ApplicationConstants::ZED_DB_HOST;

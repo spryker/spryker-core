@@ -8,6 +8,7 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Application\ApplicationConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
@@ -25,6 +26,7 @@ use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 /**
  * @method ApplicationFacade getFacade()
  * @method ApplicationCommunicationFactory getFactory()
+ * @method ApplicationConfig getConfig()
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -56,8 +58,8 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/',
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/',
 
-                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/src/Spryker/Zed/%1$s/Presentation/',
-                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/src/Spryker/Zed/%1$s/Presentation/',
+                    $this->getConfig()->getBundlesDirectory() . '/%1$s/src/Spryker/Zed/%1$s/Presentation/',
+                    $this->getConfig()->getBundlesDirectory() . '/%1$s/src/Spryker/Zed/%1$s/Presentation/',
                 ]
             );
         });
@@ -166,7 +168,8 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      */
     protected function provideFormTypeTemplates()
     {
-        $path = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Presentation/Form/Type';
+        // @TODO path contains bundle name
+        $path = $this->getConfig()->getBundlesDirectory() . '/Gui/src/Spryker/Zed/Gui/Presentation/Form/Type';
 
         $this->app['twig.loader.filesystem']->addPath(
             $path

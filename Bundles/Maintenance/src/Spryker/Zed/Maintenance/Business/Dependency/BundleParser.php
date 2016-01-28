@@ -179,12 +179,8 @@ class BundleParser
         if (isset($this->bundleConfig)) {
             return $this->bundleConfig;
         }
-        $file = APPLICATION_VENDOR_DIR
-            . DIRECTORY_SEPARATOR . 'spryker'
-            . DIRECTORY_SEPARATOR . 'spryker'
-            . DIRECTORY_SEPARATOR . self::CONFIG_FILE;
 
-        $this->bundleConfig = json_decode(file_get_contents($file), true);
+        $this->bundleConfig = json_decode(file_get_contents($this->config->getPathToBundleConfig()), true);
 
         return $this->bundleConfig;
     }

@@ -76,8 +76,9 @@ class Environment
         require_once APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Library/src/Spryker/Shared/Library/Autoloader.php';
 
         Autoloader::unregister();
-        Autoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
-        TestAutoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
+        Autoloader::register(Config::get(LibraryConstants::SPRYKER_BUNDLES_ROOT) . '/', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
+
+        TestAutoloader::register(Config::get(LibraryConstants::SPRYKER_BUNDLES_ROOT) . '/', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
 
         $coreNamespaces = Config::get(LibraryConstants::CORE_NAMESPACES);
 

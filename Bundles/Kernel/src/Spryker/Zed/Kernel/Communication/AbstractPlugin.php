@@ -6,7 +6,10 @@
 
 namespace Spryker\Zed\Kernel\Communication;
 
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigNotFoundException;
+use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
@@ -30,9 +33,9 @@ abstract class AbstractPlugin
     private $factory;
 
     /**
-     * @var Container
+     * @var AbstractBundleConfig
      */
-    private $container;
+    private $config;
 
     /**
      * @var AbstractQueryContainer
@@ -151,6 +154,36 @@ abstract class AbstractPlugin
     private function getQueryContainerResolver()
     {
         return new QueryContainerResolver();
+    }
+
+    /**
+     * @return AbstractBundleConfig
+     */
+    protected function getConfig()
+    {
+        if ($this->config === null) {
+            $this->config = $this->resolveBundleConfig();
+        }
+
+        return $this->config;
+    }
+
+    /**
+     * @throws BundleConfigNotFoundException
+     *
+     * @return AbstractBundleConfig
+     */
+    private function resolveBundleConfig()
+    {
+        return $this->getBundleConfigResolver()->resolve($this);
+    }
+
+    /**
+     * @return BundleConfigResolver
+     */
+    private function getBundleConfigResolver()
+    {
+        return new BundleConfigResolver();
     }
 
 }
