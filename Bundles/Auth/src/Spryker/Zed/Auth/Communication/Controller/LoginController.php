@@ -24,13 +24,18 @@ class LoginController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getFactory()->createLoginForm();
-        $form->handleRequest($request);
+        $form = $this
+            ->getFactory()
+            ->createLoginForm()
+            ->handleRequest($request);
 
         if ($form->isValid()) {
-            $formData = $form->getData();
+            $data = $form->getData();
 
-            $isLogged = $this->getFacade()->login($formData[LoginForm::FIELD_USERNAME], $formData[LoginForm::FIELD_PASSWORD]);
+            $isLogged = $this->getFacade()->login(
+                $data[LoginForm::FIELD_USERNAME],
+                $data[LoginForm::FIELD_PASSWORD]
+            );
 
             if ($isLogged) {
                 return $this->redirectResponse('/');

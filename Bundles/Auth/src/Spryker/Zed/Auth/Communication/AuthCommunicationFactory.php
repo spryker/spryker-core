@@ -20,13 +20,13 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\Auth\Communication\Form\LoginForm
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createLoginForm()
     {
-        $form = new LoginForm();
+        $formType = new LoginForm();
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($formType);
     }
 
     /**

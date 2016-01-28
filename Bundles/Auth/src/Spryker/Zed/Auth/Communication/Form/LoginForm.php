@@ -6,54 +6,70 @@
 
 namespace Spryker\Zed\Auth\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 
-class LoginForm extends AbstractForm
+class LoginForm extends AbstractType
 {
 
     const FIELD_USERNAME = 'username';
     const FIELD_PASSWORD = 'password';
 
     /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_USERNAME, 'text', [
-            'constraints' => [
-                $this->getConstraints()->createConstraintRequired(),
-                $this->getConstraints()->createConstraintNotBlank(),
-            ],
-            'attr' => [
-                'placeholder' => 'Email Address',
-            ],
-        ])
-        ->add(self::FIELD_PASSWORD, 'password', [
-            'constraints' => [
-                $this->getConstraints()->createConstraintRequired(),
-                $this->getConstraints()->createConstraintNotBlank(),
-            ],
-            'attr' => [
-                'placeholder' => 'Password',
-            ],
-        ]);
+        $this
+            ->addUserNameField($builder)
+            ->addPasswordField($builder);
     }
 
     /**
-     * @return array
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
      */
-    public function populateFormFields()
+    protected function addUserNameField(FormBuilderInterface $builder)
     {
-        return [];
+        $builder
+            ->add(self::FIELD_USERNAME, 'text', [
+                'constraints' => [
+                    new Required(),
+                    new NotBlank(),
+                ],
+                'attr' => [
+                    'placeholder' => 'Email Address',
+                ],
+            ]);
+
+        return $this;
     }
 
     /**
-     * @return null
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
      */
-    protected function getDataClass()
+    protected function addPasswordField(FormBuilderInterface $builder)
     {
-        return null;
+        $builder
+            ->add(self::FIELD_PASSWORD, 'password', [
+                'constraints' => [
+                    new Required(),
+                    new NotBlank(),
+                ],
+                'attr' => [
+                    'placeholder' => 'Password',
+                ],
+            ]);
+
+        return $this;
     }
 
     /**
