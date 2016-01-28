@@ -55,7 +55,7 @@ class LocatorClient extends AbstractDependencyFinder
      */
     private function getClassName($bundle)
     {
-        return sprintf('Spryker\\Zed\\%1$s\\Business\\%1$sFacade', $bundle);
+        return sprintf('Spryker\\Client\\%1$s\\\\%1$sClient', $bundle);
     }
 
 }
