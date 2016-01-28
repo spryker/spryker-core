@@ -17,11 +17,6 @@ class TaxCalculation implements CalculatorInterface
     protected $priceCalculationHelper;
 
     /**
-     * @var array|float[]
-     */
-    protected $taxRates = [];
-
-    /**
      * @param PriceCalculationHelperInterface $priceCalculationHelper
      */
     public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
@@ -36,71 +31,74 @@ class TaxCalculation implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->requireTotals();
+        $this->assertTaxCalculationRequirements($quoteTransfer);
 
-        $this->aggregateItemTaxes($quoteTransfer);
-        $this->aggregateExpenseTaxes($quoteTransfer);
-
-        $effectiveTaxRate = $this->getCalculatedEffectiveTaxRate();
+        $taxRates = $this->getTaxesFromCurrentQuoteTransfer($quoteTransfer);
+        $effectiveTaxRate = $this->getCalculatedEffectiveTaxRate($taxRates);
 
         if ($effectiveTaxRate <= 0) {
-            $taxTotalTransfer = $this->createTaxTotalTransfer(0, 0);
-            $quoteTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
+            $this->setEmptyTaxRateTransfer($quoteTransfer);
             return;
         }
 
         $grossPrice = $this->getAmountForTaxCalculation($quoteTransfer);
         $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($grossPrice, $effectiveTaxRate);
 
-        $taxTotalTransfer = $this->createTaxTotalTransfer($effectiveTaxRate, $taxAmount);
-
-        $quoteTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
+        $this->setTaxTotals($quoteTransfer, $effectiveTaxRate, $taxAmount);
     }
 
     /**
      * @param QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return array|int[]
      */
     protected function aggregateItemTaxes(QuoteTransfer $quoteTransfer)
     {
+        $taxRates = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $this->setTaxRate($itemTransfer->getTaxRate());
-            $this->aggregateProductOptionTaxes($itemTransfer);
+            $taxRates[] = $itemTransfer->getTaxRate();
+            $taxRates = array_merge($taxRates, $this->aggregateProductOptionTaxes($itemTransfer));
         }
+
+        return $taxRates;
     }
 
     /**
      * @param QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return array|int[]
      */
     protected function aggregateExpenseTaxes(QuoteTransfer $quoteTransfer)
     {
+        $taxRates = [];
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            $this->setTaxRate($expenseTransfer->getTaxRate());
+            $taxRates[] = $expenseTransfer->getTaxRate();
         }
+        return $taxRates;
     }
 
     /**
      * @param ItemTransfer $itemTransfer
      *
-     * @return void
+     * @return array|int[]
      */
     protected function aggregateProductOptionTaxes(ItemTransfer $itemTransfer)
     {
+        $taxRates = [];
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $this->setTaxRate($productOptionTransfer->getTaxRate());
+            $taxRates[] = $productOptionTransfer->getTaxRate();
         }
+        return $taxRates;
     }
 
     /**
+     * @param array|int[] $taxRates
      * @return float
      */
-    protected function getCalculatedEffectiveTaxRate()
+    protected function getCalculatedEffectiveTaxRate(array $taxRates)
     {
         $totalTaxRate = 0;
-        foreach ($this->taxRates as $taxRate) {
+        foreach ($taxRates as $taxRate) {
             $totalTaxRate += $taxRate;
         }
 
@@ -108,19 +106,9 @@ class TaxCalculation implements CalculatorInterface
             return 0;
         }
 
-        $effectiveTaxRate = $totalTaxRate / count($this->taxRates);
+        $effectiveTaxRate = $totalTaxRate / count($taxRates);
 
         return $effectiveTaxRate;
-    }
-
-    /**
-     * @param float $taxRate
-     *
-     * @return void
-     */
-    protected function setTaxRate($taxRate)
-    {
-        $this->taxRates[] = $taxRate;
     }
 
     /**
@@ -130,25 +118,59 @@ class TaxCalculation implements CalculatorInterface
      */
     protected function getAmountForTaxCalculation(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->getTotals()->requireGrandTotal();
-
         return $quoteTransfer->getTotals()->getGrandTotal();
     }
 
     /**
+     * @param QuoteTransfer $quoteTransfer
      * @param int $effectiveTaxRate
      * @param int $taxAmount
      *
-     * @return TaxTotalTransfer
+     * @return void
      */
-    protected function createTaxTotalTransfer($effectiveTaxRate, $taxAmount)
+    protected function setTaxTotals(QuoteTransfer $quoteTransfer, $effectiveTaxRate, $taxAmount)
     {
         $taxTotalTransfer = new TaxTotalTransfer();
-
         $taxTotalTransfer->setTaxRate($effectiveTaxRate);
         $taxTotalTransfer->setAmount($taxAmount);
 
-        return $taxTotalTransfer;
+        $quoteTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function setEmptyTaxRateTransfer(QuoteTransfer $quoteTransfer)
+    {
+        $taxTotalsTransfer = new TaxTotalTransfer();
+        $taxTotalsTransfer->setTaxRate(0);
+        $taxTotalsTransfer->setAmount(0);
+
+        $quoteTransfer->getTotals()->setTaxTotal($taxTotalsTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return array|int[]
+     */
+    protected function getTaxesFromCurrentQuoteTransfer(QuoteTransfer $quoteTransfer)
+    {
+        $taxRates = $this->aggregateItemTaxes($quoteTransfer);
+        $taxRates = array_merge($taxRates, $this->aggregateExpenseTaxes($quoteTransfer));
+
+        return $taxRates;
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     */
+    protected function assertTaxCalculationRequirements(QuoteTransfer $quoteTransfer)
+    {
+        $quoteTransfer->requireTotals();
+        $quoteTransfer->getTotals()->requireGrandTotal();
     }
 
 }

@@ -8,7 +8,7 @@ namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountA
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
-class OrderDiscounts
+class OrderDiscounts implements OrderAmountAggregatorInterface
 {
     /**
      * @param OrderTransfer $orderTransfer

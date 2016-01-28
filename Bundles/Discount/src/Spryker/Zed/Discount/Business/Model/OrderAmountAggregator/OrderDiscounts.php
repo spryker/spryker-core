@@ -8,7 +8,7 @@ namespace Spryker\Zed\Discount\Business\Model\OrderAmountAggregator;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
-class OrderDiscounts
+class OrderDiscounts implements OrderAmountAggregatorInterface
 {
 
     /**
@@ -48,7 +48,7 @@ class OrderDiscounts
      *
      * @return \ArrayObject|CalculatedDiscountTransfer[]
      */
-    protected function getOrderItemCalculatedDIscounts(
+    protected function getOrderItemCalculatedDiscounts(
         OrderTransfer $orderTransfer,
         \ArrayObject $orderCalculatedDiscounts
     ) {
@@ -101,7 +101,7 @@ class OrderDiscounts
     protected function getOrderCalculatedDiscounts(OrderTransfer $orderTransfer)
     {
         $orderCalculatedDiscounts = new \ArrayObject();
-        $orderCalculatedDiscounts = $this->getOrderItemCalculatedDIscounts($orderTransfer, $orderCalculatedDiscounts);
+        $orderCalculatedDiscounts = $this->getOrderItemCalculatedDiscounts($orderTransfer, $orderCalculatedDiscounts);
         $orderCalculatedDiscounts = $this->getOrderExpenseCalculatedDiscounts(
             $orderTransfer,
             $orderCalculatedDiscounts

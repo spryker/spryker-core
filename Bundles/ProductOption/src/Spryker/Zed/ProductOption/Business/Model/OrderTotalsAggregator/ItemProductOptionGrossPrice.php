@@ -12,7 +12,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-class ItemProductOptionGrossPrice
+class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
 {
     /**
      * @var SalesQueryContainerInterface

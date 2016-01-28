@@ -8,7 +8,7 @@ namespace Spryker\Zed\Sales\Business\Model\OrderAmountAggregator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
-class Item
+class Item implements OrderAmountAggregatorInterface
 {
     /**
      * @param OrderTransfer $orderTransfer

@@ -9,7 +9,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface;
 
-class ItemProductOptionTaxWithDiscounts
+class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterface
 {
     /**
      * @var ProductOptionToTaxBridgeInterface

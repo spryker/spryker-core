@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 
-class ItemTax
+class ItemTax implements OrderAmountAggregatorInterface
 {
     /**
      * @var PriceCalculationHelperInterface

@@ -8,7 +8,7 @@ namespace Spryker\Zed\Sales\Business\Model\OrderAmountAggregator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
-class Subtotal
+class Subtotal implements OrderAmountAggregatorInterface
 {
     /**
      * @param OrderTransfer $orderTransfer

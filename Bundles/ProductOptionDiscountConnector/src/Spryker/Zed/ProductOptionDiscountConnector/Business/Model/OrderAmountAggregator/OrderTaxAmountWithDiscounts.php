@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface;
 
-class OrderTaxAmountWithDiscounts
+class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
 {
     /**
      * @var ProductOptionToTaxBridgeInterface
@@ -35,15 +35,9 @@ class OrderTaxAmountWithDiscounts
     public function aggregate(OrderTransfer $orderTransfer)
     {
         $orderEffectiveTaxRate = $this->getOrderEffectiveTaxRate($orderTransfer);
-
         $totalTaxAmount = $this->getTotalTaxAmount($orderTransfer, $orderEffectiveTaxRate);
 
-        $taxTotalTransfer = new TaxTotalTransfer();
-        $taxTotalTransfer->setAmount($totalTaxAmount);
-        $taxTotalTransfer->setTaxRate($orderEffectiveTaxRate);
-
-        $totalsTransfer = $orderTransfer->getTotals();
-        $totalsTransfer->setTaxTotal($taxTotalTransfer);
+        $this->setTaxTotals($orderTransfer, $orderEffectiveTaxRate, $totalTaxAmount);
     }
 
     /**
@@ -113,5 +107,21 @@ class OrderTaxAmountWithDiscounts
             $orderTransfer->getTotals()->getGrandTotal(),
             $orderEffectiveTaxRate
         );
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     * @param int $orderEffectiveTaxRate
+     * @param int $totalTaxAmount
+     *
+     * @return void
+     */
+    protected function setTaxTotals(OrderTransfer $orderTransfer, $orderEffectiveTaxRate, $totalTaxAmount)
+    {
+        $taxTotalTransfer = new TaxTotalTransfer();
+        $taxTotalTransfer->setAmount($totalTaxAmount);
+        $taxTotalTransfer->setTaxRate($orderEffectiveTaxRate);
+
+        $orderTransfer->getTotals()->setTaxTotal($taxTotalTransfer);
     }
 }

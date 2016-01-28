@@ -13,7 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-class ItemDiscounts
+class ItemDiscounts implements OrderAmountAggregatorInterface
 {
     /**
      * @var DiscountQueryContainerInterface
@@ -40,10 +40,23 @@ class ItemDiscounts
         $salesOrderDiscounts = $this->getSalesOrderDiscounts($orderTransfer);
 
         if (count($salesOrderDiscounts) === 0) {
-            $this->setDiscountFieldToValueWithoutDiscounts($orderTransfer);
+            $this->setGrossPriceWithDiscountsToDefaults($orderTransfer);
             return;
         }
 
+        $this->addDiscountsFromSalesOrderDiscountEntity($orderTransfer, $salesOrderDiscounts);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     * @param ObjectCollection|SpySalesDiscount[] $salesOrderDiscounts
+     *
+     * @return void
+     */
+    protected function addDiscountsFromSalesOrderDiscountEntity(
+        OrderTransfer $orderTransfer,
+        ObjectCollection $salesOrderDiscounts
+    ) {
         foreach ($salesOrderDiscounts as $salesOrderDiscountEntity) {
             foreach ($orderTransfer->getItems() as $itemTransfer) {
                 $this->assertItemRequirements($itemTransfer);
@@ -104,11 +117,8 @@ class ItemDiscounts
             );
             $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
-            $this->addExpenseDiscountAmount($expenseTransfer, $calculatedDiscountTransfer);
-
-            $expenseTransfer->setRefundableAmount(
-                $expenseTransfer->getRefundableAmount() - $calculatedDiscountTransfer->getSumGrossAmount()
-            );
+            $this->updateExpenseGrossPriceWithDiscounts($expenseTransfer, $calculatedDiscountTransfer);
+            $this->setExpenseRefundableAmount($expenseTransfer, $calculatedDiscountTransfer);
         }
     }
 
@@ -142,7 +152,7 @@ class ItemDiscounts
      *
      * @return void
      */
-    protected function addExpenseDiscountAmount(
+    protected function updateExpenseGrossPriceWithDiscounts(
         ExpenseTransfer $expenseTransfer,
         CalculatedDiscountTransfer $calculatedDiscountTransfer
     ) {
@@ -203,11 +213,26 @@ class ItemDiscounts
      *
      * @return void
      */
-    protected function setDiscountFieldToValueWithoutDiscounts($orderTransfer)
+    protected function setGrossPriceWithDiscountsToDefaults($orderTransfer)
     {
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             $expenseTransfer->setSumGrossPriceWithDiscounts($expenseTransfer->getSumGrossPrice());
             $expenseTransfer->setUnitGrossPriceWithDiscounts($expenseTransfer->getUnitGrossPrice());
         }
+    }
+
+    /**
+     * @param ExpenseTransfer $expenseTransfer
+     * @param CalculatedDiscountTransfer $calculatedDiscountTransfer
+     *
+     * @return void
+     */
+    protected function setExpenseRefundableAmount(
+        ExpenseTransfer $expenseTransfer,
+        CalculatedDiscountTransfer $calculatedDiscountTransfer
+    ) {
+        $expenseTransfer->setRefundableAmount(
+            $expenseTransfer->getRefundableAmount() - $calculatedDiscountTransfer->getSumGrossAmount()
+        );
     }
 }

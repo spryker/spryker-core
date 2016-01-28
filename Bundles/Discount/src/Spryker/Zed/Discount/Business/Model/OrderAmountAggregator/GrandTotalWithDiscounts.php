@@ -7,7 +7,7 @@ namespace Spryker\Zed\Discount\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-class GrandTotalWithDiscounts
+class GrandTotalWithDiscounts implements OrderAmountAggregatorInterface
 {
     /**
      * @param OrderTransfer $orderTransfer

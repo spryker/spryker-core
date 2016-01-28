@@ -84,7 +84,7 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
 
         $taxCalculation = $this->createTaxCalculation($priceCalculationMock);
         $quoteTransfer = $this->createQuoteTransfer();
-        $quoteTransfer->setTotals($this->createTotalsTransfer());
+        $quoteTransfer->setTotals($this->createTotalsTransfer()->setGrandTotal(100));
         $taxCalculation->recalculate($quoteTransfer);
 
         $this->assertEquals(0, $quoteTransfer->getTotals()->getTaxTotal()->getTaxRate());
@@ -99,7 +99,7 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
 
         $taxCalculation = $this->createTaxCalculation($priceCalculationMock);
         $quoteTransfer = $this->createQuoteTransfer();
-        $quoteTransfer->setTotals($this->createTotalsTransfer());
+        $quoteTransfer->setTotals($this->createTotalsTransfer()->setGrandTotal(100));
         $taxCalculation->recalculate($quoteTransfer);
 
         $this->assertEquals(0, $quoteTransfer->getTotals()->getTaxTotal()->getAmount());

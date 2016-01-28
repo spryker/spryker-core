@@ -12,7 +12,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 
-class ExpenseTotal
+class ExpenseTotal implements OrderAmountAggregatorInterface
 {
     /**
      * @var SalesQueryContainerInterface

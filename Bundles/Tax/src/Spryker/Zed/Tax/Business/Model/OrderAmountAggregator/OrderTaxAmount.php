@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 
-class OrderTaxAmount
+class OrderTaxAmount implements OrderAmountAggregatorInterface
 {
     /**
      * @var PriceCalculationHelperInterface
