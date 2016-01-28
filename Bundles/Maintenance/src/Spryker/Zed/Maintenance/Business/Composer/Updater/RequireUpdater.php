@@ -37,13 +37,7 @@ class RequireUpdater implements UpdaterInterface
     public function update(array $composerJson)
     {
         $bundleName = $this->getBundleName($composerJson);
-
-        $dependencyTree = $this->dependencyTreeReader->read();
-        $dependentBundles = $this->getDependentBundles($bundleName, $dependencyTree);
-
-        if (!isset($composerJson[self::KEY_REQUIRE])) {
-            $composerJson[self::KEY_REQUIRE] = [];
-        }
+        $dependentBundles = $this->getDependentBundles($bundleName);
 
         foreach ($dependentBundles as $dependentBundle) {
             $filter = new CamelCaseToDash();
@@ -71,18 +65,19 @@ class RequireUpdater implements UpdaterInterface
 
     /**
      * @param string $bundleName
-     * @param array $dependencyTree
      *
      * @return array
      */
-    private function getDependentBundles($bundleName, array $dependencyTree)
+    private function getDependentBundles($bundleName)
     {
+        $dependencyTree = $this->dependencyTreeReader->read();
         $dependentBundles = [];
         foreach ($dependencyTree as $dependency) {
             if ($dependency[DependencyTree::META_BUNDLE] === $bundleName && !in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $dependentBundles)) {
                 $dependentBundles[] = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
             }
         }
+        sort($dependentBundles);
 
         return $dependentBundles;
     }
