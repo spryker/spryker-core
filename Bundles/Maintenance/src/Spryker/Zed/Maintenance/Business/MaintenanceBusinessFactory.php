@@ -8,6 +8,7 @@ namespace Spryker\Zed\Maintenance\Business;
 
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater;
+use Spryker\Zed\Maintenance\Business\Composer\Updater\BranchAliasUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\ComposerUpdaterComposite;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\DescriptionUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\LicenseUpdater;
@@ -620,7 +621,8 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
             ->addUpdater($this->createComposerJsonDescriptionUpdater())
             ->addUpdater($this->createComposerJsonLicenseUpdater())
             ->addUpdater($this->createComposerJsonRequireUpdater())
-            ->addUpdater($this->createComposerJsonMinimumStabilityUpdater());
+            ->addUpdater($this->createComposerJsonMinimumStabilityUpdater())
+            ->addUpdater($this->createComposerJsonBranchAliasUpdater());
 
         return $updaterComposite;
     }
@@ -666,6 +668,14 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     protected function createComposerJsonMinimumStabilityUpdater()
     {
         return new MinimumStabilityUpdater('dev');
+    }
+
+    /**
+     * @return BranchAliasUpdater
+     */
+    protected function createComposerJsonBranchAliasUpdater()
+    {
+        return new BranchAliasUpdater('1.0.x-dev');
     }
 
     /**
