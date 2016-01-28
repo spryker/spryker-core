@@ -1,5 +1,10 @@
 "use strict";
 
+const GLOSSARY_SELECT_MARGIN_TOP = 159;
+const GLOSSARY_SELECT_MARGIN_LEFT = 230;
+const GLOSSARY_SELECT_MARGIN_WIDTH = 25;
+
+
 var xhr = null;
 var keyList = null;
 var keyContainer = null;
@@ -44,8 +49,8 @@ var ajaxifySubmmit = function(formId) {
                 $('.waiting_' + formId).text('');
                 if(response.success != 'false'){
                     var form = $('.form_class_' + formId);
-                    var keyInput = form.find('#form_glossary_key');
-                    var keyType = form.find('#form_search_option');
+                    var keyInput = form.find('#cms_glossary_glossary_key');
+                    var keyType = form.find('#cms_glossary_search_option');
 
                     if (keyType.val() == 0) {
                         keyInput.removeAttr('disabled');
@@ -73,7 +78,7 @@ function showAutoComplete(formId, type) {
 
     var form = $('.form_class_' + formId);
 
-    var keyInput = form.find('#form_glossary_key');
+    var keyInput = form.find('#cms_glossary_glossary_key');
     var keyTranslation = form.find('#form_translation');
 
     var ajaxUrl = '';
@@ -99,9 +104,9 @@ function showAutoComplete(formId, type) {
                     text : item.key
                 }));
 
-                keyContainer.css({ top: keyInput.offset().top - 217 });
-                keyContainer.css({ left: keyInput.offset().left - 230 });
-                keyContainer.css({ width: keyInput.width() + 25 });
+                keyContainer.css({ top: keyInput.offset().top - GLOSSARY_SELECT_MARGIN_TOP });
+                keyContainer.css({ left: keyInput.offset().left - GLOSSARY_SELECT_MARGIN_LEFT });
+                keyContainer.css({ width: keyInput.width() + GLOSSARY_SELECT_MARGIN_WIDTH });
                 keyContainer.show();
             });
 
@@ -131,8 +136,8 @@ function showAutoComplete(formId, type) {
 
 var addKeySearchEvent = function(formId) {
     var form = $('.form_class_' + formId);
-    var keyInput = form.find('#form_glossary_key');
-    var keyType = form.find('#form_search_option');
+    var keyInput = form.find('#cms_glossary_glossary_key');
+    var keyType = form.find('#cms_glossary_search_option');
 
     keyInput.on('input', function() {
         if($(this).val().length > 3){
@@ -181,7 +186,7 @@ function showBlockAutoComplete(elementId, type) {
 
     var elementInput = $(elementId);
 
-    var blockValue = $('#form_value');
+    var blockValue = $('#cms_block_value');
     var ajaxUrl = type == 'category' ? '/cms/block/search-category?term=' : '/cms/block/search-product?term=';
 
     itemList.find('option').remove();
@@ -231,7 +236,7 @@ function showBlockAutoComplete(elementId, type) {
 
 var addAutoCompleteSearchEvent = function(elementId) {
     var elementInput = $(elementId);
-    var elementType = $('#form_type');
+    var elementType = $('#cms_block_type');
 
     elementInput.attr( 'autocomplete', 'off' );
 
@@ -258,16 +263,16 @@ var addAutoCompleteSearchEvent = function(elementId) {
     });
 
     if (elementType.val() == 'static') {
-        $('#form_selectValue').attr('disabled','disabled');
-        $('#form_value').val(0);
+        $('#cms_block_selectValue').attr('disabled','disabled');
+        $('#cms_block_value').val(0);
     }
 
     elementType.on('change', function() {
         if (this.value == 'static') {
-            $('#form_selectValue').attr('disabled','disabled');
-            $('#form_value').attr('value',0);
+            $('#cms_block_selectValue').attr('disabled','disabled');
+            $('#cms_block_value').attr('value',0);
         } else {
-            $('#form_selectValue').removeAttr('disabled');
+            $('#cms_block_selectValue').removeAttr('disabled');
         }
     });
 }
@@ -281,7 +286,7 @@ var delay = (function(){
 })();
 
 $(document).ready(function(){
-    addAutoCompleteSearchEvent('#form_selectValue');
+    addAutoCompleteSearchEvent('#cms_block_selectValue');
 
     $('.cms_form').each(function(index, item){
         var formId = $(item).attr('data-index');
