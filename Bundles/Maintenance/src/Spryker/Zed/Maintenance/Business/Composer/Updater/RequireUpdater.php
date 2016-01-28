@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Maintenance\Business\Composer\Updater;
 
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilterInterface;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
 use Zend\Filter\Word\CamelCaseToDash;
@@ -22,11 +23,18 @@ class RequireUpdater implements UpdaterInterface
     private $dependencyTreeReader;
 
     /**
-     * @param DependencyTreeReaderInterface $dependencyTreeReader
+     * @var TreeFilterInterface
      */
-    public function __construct(DependencyTreeReaderInterface $dependencyTreeReader)
+    private $treeFilter;
+
+    /**
+     * @param DependencyTreeReaderInterface $dependencyTreeReader
+     * @param TreeFilterInterface $treeFilter
+     */
+    public function __construct(DependencyTreeReaderInterface $dependencyTreeReader, TreeFilterInterface $treeFilter)
     {
         $this->dependencyTreeReader = $dependencyTreeReader;
+        $this->treeFilter = $treeFilter;
     }
 
     /**
@@ -70,7 +78,7 @@ class RequireUpdater implements UpdaterInterface
      */
     private function getDependentBundles($bundleName)
     {
-        $dependencyTree = $this->dependencyTreeReader->read();
+        $dependencyTree = $this->treeFilter->filter($this->dependencyTreeReader->read());
         $dependentBundles = [];
         foreach ($dependencyTree as $dependency) {
             if ($dependency[DependencyTree::META_BUNDLE] === $bundleName) {

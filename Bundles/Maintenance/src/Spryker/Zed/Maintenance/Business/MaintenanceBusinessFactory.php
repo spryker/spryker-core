@@ -601,7 +601,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     protected function createComposerJsonFinder()
     {
         $composerJsonFinder = new ComposerJsonFinder(
-            new SfFinder(),
+            $this->createFinder(),
             $this->getConfig()->getBundleDirectory()
         );
 
@@ -614,10 +614,50 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     protected function createComposerJsonUpdaterComposite()
     {
         $updaterComposite = new ComposerUpdaterComposite();
-        $updaterComposite->addUpdater(new RequireUpdater($this->createDependencyTreeReader()));
-        $updaterComposite->addUpdater(new MinimumStabilityUpdater('dev'));
+        $updaterComposite
+            ->addUpdater($this->createComposerJsonRequireUpdater())
+            ->addUpdater($this->createComposerJsonMinimumStabilityUpdater());
 
         return $updaterComposite;
+    }
+
+    /**
+     * @return SfFinder
+     */
+    protected function createFinder()
+    {
+        return new SfFinder();
+    }
+
+    /**
+     * @return RequireUpdater
+     */
+    protected function createComposerJsonRequireUpdater()
+    {
+        return new RequireUpdater(
+            $this->createDependencyTreeReader(),
+            $this->createComposerJsonRequireUpdaterTreeFilter()
+        );
+    }
+
+    /**
+     * @return MinimumStabilityUpdater
+     */
+    protected function createComposerJsonMinimumStabilityUpdater()
+    {
+        return new MinimumStabilityUpdater('dev');
+    }
+
+    /**
+     * @return TreeFilter
+     */
+    protected function createComposerJsonRequireUpdaterTreeFilter()
+    {
+        $treeFilter = new TreeFilter();
+        $treeFilter
+            ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'));
+
+        return $treeFilter;
     }
 
 }
