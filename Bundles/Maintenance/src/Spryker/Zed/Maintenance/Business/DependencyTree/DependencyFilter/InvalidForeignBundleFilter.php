@@ -14,16 +14,15 @@ class InvalidForeignBundleFilter implements DependencyFilterInterface
     /**
      * @var array
      */
-    private $invalidBundlesNames = [
-        'AbstractSniffs',
-        'X',
-        'TwoFive',
-        'TwoFour',
-        'TwoThree',
-        'TwoTwo',
-        'Two',
-        ''
-    ];
+    private $allowedBundles;
+
+    /**
+     * @param array $allowedBundles
+     */
+    public function __construct(array $allowedBundles)
+    {
+        $this->allowedBundles = $allowedBundles;
+    }
 
     /**
      * @param array $dependency
@@ -32,7 +31,7 @@ class InvalidForeignBundleFilter implements DependencyFilterInterface
      */
     public function filter(array $dependency)
     {
-        return in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->invalidBundlesNames);
+        return !in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->allowedBundles);
     }
 
 }

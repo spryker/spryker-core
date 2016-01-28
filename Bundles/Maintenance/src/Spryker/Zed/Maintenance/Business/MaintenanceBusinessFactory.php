@@ -558,7 +558,9 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createDependencyTreeInvalidForeignBundleFilter()
     {
-        return new InvalidForeignBundleFilter();
+        return new InvalidForeignBundleFilter(
+            $this->createDependencyManager()->collectAllBundles()
+        );
     }
 
     /**
