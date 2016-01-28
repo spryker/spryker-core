@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
+
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Silex\Application;
+use Silex\ServiceProviderInterface;
+use Spryker\Zed\Application\Business\ApplicationFacade;
+use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * @method ApplicationFacade getFacade()
+ * @method ApplicationCommunicationFactory getFactory()
+ */
+class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+{
+
+    /**
+     * @param Application $app
+     *
+     * @return void
+     */
+    public function register(Application $app)
+    {
+    }
+
+    /**
+     * @param Application $app
+     *
+     * @return void
+     */
+    public function boot(Application $app)
+    {
+        $app->after(function (Request $request, Response $response) {
+            $store = Store::getInstance();
+
+            $response->headers->set('X-Store', $store->getStoreName());
+            $response->headers->set('X-Env', APPLICATION_ENV);
+            $response->headers->set('X-Locale', $store->getCurrentLocale());
+        });
+    }
+
+}
