@@ -103,14 +103,20 @@ class AddressController extends AbstractController
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
-        $addressForm = $this->getFactory()->createAddressForm();
-        $addressForm->handleRequest($request);
+        $dataProvider = $this->getFactory()->createAddressFormDataProvider();
+        $addressForm = $this
+            ->getFactory()
+            ->createAddressForm(
+                $dataProvider->getData($idCustomerAddress),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($addressForm->isValid()) {
-            $customerAddress = $addressForm->getData();
+            $customerAddress = new AddressTransfer();
+            $customerAddress->fromArray($addressForm->getData(), true);
 
-            $this->getFacade()
-                ->updateAddress($customerAddress);
+            $this->getFacade()->updateAddress($customerAddress);
 
             return $this->redirectResponse(sprintf(
                 '/customer/address/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
@@ -133,16 +139,21 @@ class AddressController extends AbstractController
     {
         $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
 
-        $addressForm = $this->getFactory()->createAddressForm();
-        $addressForm->handleRequest($request);
+        $dataProvider = $this->getFactory()->createAddressFormDataProvider();
+        $addressForm = $this
+            ->getFactory()
+            ->createAddressForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($addressForm->isValid()) {
-            /* @var AddressTransfer $data */
-            $customerAddress = $addressForm->getData();
-            $customerAddress->setFkCustomer($idCustomer);
+            $addressTransfer = new AddressTransfer();
+            $addressTransfer->fromArray($addressForm->getData(), true);
+            $addressTransfer->setFkCustomer($idCustomer);
 
-            $this->getFacade()
-                ->createAddress($customerAddress);
+            $this->getFacade()->createAddress($addressTransfer);
 
             return $this->redirectResponse(
                 sprintf('/customer/address/?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
