@@ -73,10 +73,11 @@ class RequireUpdater implements UpdaterInterface
         $dependencyTree = $this->dependencyTreeReader->read();
         $dependentBundles = [];
         foreach ($dependencyTree as $dependency) {
-            if ($dependency[DependencyTree::META_BUNDLE] === $bundleName && !in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $dependentBundles)) {
+            if ($dependency[DependencyTree::META_BUNDLE] === $bundleName) {
                 $dependentBundles[] = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
             }
         }
+        $dependentBundles = array_unique($dependentBundles);
         sort($dependentBundles);
 
         return $dependentBundles;
