@@ -8,6 +8,8 @@ namespace Spryker\Zed\Maintenance\Business;
 
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater;
+use Spryker\Zed\Maintenance\Business\Composer\Updater\ComposerUpdaterComposite;
+use Spryker\Zed\Maintenance\Business\Composer\Updater\MinimumStabilityUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Maintenance\Business\DependencyTree\AdjacencyMatrixBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
@@ -589,7 +591,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         return new ComposerJsonUpdater(
             $this->createComposerJsonFinder(),
-            $this->createComposerJsonUpdaterCollection()
+            $this->createComposerJsonUpdaterComposite()
         );
     }
 
@@ -607,15 +609,15 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return ComposerUpdaterComposite
      */
-    protected function createComposerJsonUpdaterCollection()
+    protected function createComposerJsonUpdaterComposite()
     {
-        $updater = [
-            new RequireUpdater($this->createDependencyTreeReader()),
-        ];
+        $updaterComposite = new ComposerUpdaterComposite();
+        $updaterComposite->addUpdater(new RequireUpdater($this->createDependencyTreeReader()));
+        $updaterComposite->addUpdater(new MinimumStabilityUpdater('dev'));
 
-        return $updater;
+        return $updaterComposite;
     }
 
 }

@@ -8,12 +8,13 @@ namespace Spryker\Zed\Maintenance\Business\Composer\Updater;
 
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
-use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\DashToCamelCase;
 
 class RequireUpdater implements UpdaterInterface
 {
+
+    const KEY_REQUIRE = 'require';
 
     /**
      * @var DependencyTreeReaderInterface
@@ -40,15 +41,15 @@ class RequireUpdater implements UpdaterInterface
         $dependencyTree = $this->dependencyTreeReader->read();
         $dependentBundles = $this->getDependentBundles($bundleName, $dependencyTree);
 
-        if (!isset($composerJson['require'])) {
-            $composerJson['require'] = [];
+        if (!isset($composerJson[self::KEY_REQUIRE])) {
+            $composerJson[self::KEY_REQUIRE] = [];
         }
 
         foreach ($dependentBundles as $dependentBundle) {
             $filter = new CamelCaseToDash();
             $dependentBundle = strtolower($filter->filter($dependentBundle));
 
-            $composerJson['require']['spryker/' . $dependentBundle] = '^1.0.0';
+            $composerJson[self::KEY_REQUIRE]['spryker/' . $dependentBundle] = '^1.0.0';
         }
 
         return $composerJson;
