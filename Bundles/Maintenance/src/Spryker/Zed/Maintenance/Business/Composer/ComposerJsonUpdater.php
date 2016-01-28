@@ -58,7 +58,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         $composerJson = json_decode($composerJsonFile->getContents(), true);
 
         foreach ($this->updater as $updater) {
-            $updater->update($composerJson);
+            $composerJson = $updater->update($composerJson);
         }
 
         file_put_contents($composerJsonFile->getPathname(), json_encode($composerJson, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));

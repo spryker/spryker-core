@@ -40,15 +40,15 @@ class RequireUpdater implements UpdaterInterface
         $dependencyTree = $this->dependencyTreeReader->read();
         $dependentBundles = $this->getDependentBundles($bundleName, $dependencyTree);
 
-        if (!isset($composerJsonData['require'])) {
-            $composerJsonData['require'] = [];
+        if (!isset($composerJson['require'])) {
+            $composerJson['require'] = [];
         }
 
         foreach ($dependentBundles as $dependentBundle) {
             $filter = new CamelCaseToDash();
             $dependentBundle = strtolower($filter->filter($dependentBundle));
 
-            $composerJsonData['require']['spryker/' . $dependentBundle] = '^1.0.0';
+            $composerJson['require']['spryker/' . $dependentBundle] = '^1.0.0';
         }
 
         return $composerJson;
