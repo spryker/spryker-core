@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 class CmsToUrlBridge implements CmsToUrlInterface
 {
@@ -21,8 +20,6 @@ class CmsToUrlBridge implements CmsToUrlInterface
     protected $urlFacade;
 
     /**
-     * CmsToUrlBridge constructor.
-     *
      * @param UrlFacade $urlFacade
      */
     public function __construct($urlFacade)
@@ -36,7 +33,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      * @param int $idResource
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */
@@ -52,7 +49,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      * @param int $idResource
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */

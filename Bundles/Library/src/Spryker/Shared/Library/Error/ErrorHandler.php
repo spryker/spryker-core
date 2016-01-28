@@ -6,8 +6,9 @@
 
 namespace Spryker\Shared\Library\Error;
 
+use Propel\Runtime\Propel;
 use Spryker\Shared\Config;
-use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Library\LibraryConstants;
 
 class ErrorHandler
 {
@@ -107,10 +108,10 @@ class ErrorHandler
     protected function showExceptionStackTrace()
     {
         if (APPLICATION === self::YVES) {
-            return Config::get(ApplicationConstants::YVES_SHOW_EXCEPTION_STACK_TRACE);
+            return Config::get(LibraryConstants::YVES_SHOW_EXCEPTION_STACK_TRACE);
         }
 
-        return Config::get(ApplicationConstants::ZED_SHOW_EXCEPTION_STACK_TRACE);
+        return Config::get(LibraryConstants::ZED_SHOW_EXCEPTION_STACK_TRACE);
     }
 
     /**
@@ -138,10 +139,10 @@ class ErrorHandler
             return;
         }
 
-        $errorPage = Config::get(ApplicationConstants::ZED_ERROR_PAGE);
+        $errorPage = Config::get(LibraryConstants::ZED_ERROR_PAGE);
 
         if (APPLICATION === self::YVES) {
-            $errorPage = Config::get(ApplicationConstants::YVES_ERROR_PAGE);
+            $errorPage = Config::get(LibraryConstants::YVES_ERROR_PAGE);
         }
 
         require_once $errorPage;
@@ -153,7 +154,7 @@ class ErrorHandler
     protected function doDatabaseRollback()
     {
         if (APPLICATION === self::ZED && class_exists('Propel', false)) {
-            \Propel\Runtime\Propel::getConnection()->forceRollBack();
+            Propel::getConnection()->forceRollBack();
         }
     }
 

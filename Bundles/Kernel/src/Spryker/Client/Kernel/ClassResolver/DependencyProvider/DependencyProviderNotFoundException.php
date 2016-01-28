@@ -8,8 +8,8 @@ namespace Spryker\Client\Kernel\ClassResolver\DependencyProvider;
 
 use Spryker\Shared\Config;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\Exception\Backtrace;
+use Spryker\Shared\Kernel\KernelConstants;
 
 class DependencyProviderNotFoundException extends \Exception
 {
@@ -39,7 +39,7 @@ class DependencyProviderNotFoundException extends \Exception
 
         $message .= sprintf(
             'E.g. %1$s\\Client\\%2$s\\%2$sDependencyProvider',
-            Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
+            Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );
 

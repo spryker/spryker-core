@@ -18,7 +18,6 @@ use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
 use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
  * @method CmsBusinessFactory getFactory()
@@ -221,7 +220,7 @@ class CmsFacade extends AbstractFacade
      * @param PageTransfer $pageTransfer
      * @param string $url
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */

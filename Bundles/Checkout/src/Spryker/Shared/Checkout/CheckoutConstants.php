@@ -2,6 +2,9 @@
 
 namespace Spryker\Shared\Checkout;
 
+/**
+ * @TODO https://github.com/spryker/spryker/issues/1219
+ */
 class CheckoutConstants
 {
 

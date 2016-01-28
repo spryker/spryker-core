@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 use Spryker\Zed\Url\Business\Exception\MissingUrlException;
 use Spryker\Zed\Url\Business\Exception\RedirectExistsException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
@@ -74,7 +73,7 @@ interface RedirectManagerInterface
      * @param int $idUrlRedirect
      *
      * @throws UrlExistsException
-     * @throws MissingLocaleException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
      * @return UrlTransfer
      */

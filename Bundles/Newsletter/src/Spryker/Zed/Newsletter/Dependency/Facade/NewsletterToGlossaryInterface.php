@@ -8,7 +8,6 @@ namespace Spryker\Zed\Newsletter\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 interface NewsletterToGlossaryInterface
 {
@@ -25,7 +24,7 @@ interface NewsletterToGlossaryInterface
      * @param string $keyName
      * @param LocaleTransfer $locale
      *
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return TranslationTransfer
      */

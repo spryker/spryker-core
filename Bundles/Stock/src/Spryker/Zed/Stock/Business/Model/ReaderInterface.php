@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
@@ -29,7 +28,7 @@ interface ReaderInterface
     /**
      * @param string $sku
      *
-     * @return array|\PropelObjectCollection
+     * @return array
      */
     public function getStocksProduct($sku);
 
@@ -59,7 +58,7 @@ interface ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -68,7 +67,7 @@ interface ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */

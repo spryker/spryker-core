@@ -6,20 +6,18 @@
 
 namespace Spryker\Zed\PriceCartConnector;
 
-use Spryker\Shared\Price\PriceConstants;
+use Spryker\Shared\PriceCartConnector\PriceCartConnectorConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceCartConnectorConfig extends AbstractBundleConfig
 {
 
     /**
-     * Return the string which represents the gross price type
-     *
      * @return string
      */
     public function getGrossPriceType()
     {
-        return PriceConstants::DEFAULT_PRICE_TYPE;
+        return $this->getConfig()->get(PriceCartConnectorConstants::DEFAULT_PRICE_TYPE, 'DEFAULT');
     }
 
 }

@@ -5,7 +5,7 @@ namespace Unit\Spryker\Zed\Development\Business\CodeStyleFixer\Fixtures\SprykerU
 use Spryker\Zed\Foo;
 use Pyz\Zed\Foo\Bar\Baz;
 use X\Y;
-use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinder as InstalledPackagesInstalledPackageFinder;
+use Spryker\Zed\Development\Business\InstalledPackages\InstalledPackageFinder as InstalledPackagesInstalledPackageFinder;
 use Foo\InstalledPackageFinder;
 
 class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz

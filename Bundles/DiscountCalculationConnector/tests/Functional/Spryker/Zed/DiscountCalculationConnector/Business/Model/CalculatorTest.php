@@ -7,6 +7,7 @@
 namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model;
 
 use Codeception\TestCase\Test;
+use Spryker\Shared\DiscountCalculationConnector\DiscountCalculationConnectorConstants;
 use Generated\Shared\Transfer\DiscountItemsTransfer;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -19,7 +20,6 @@ use Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlug
 use Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin;
-use Spryker\Shared\Sales\Code\ExpenseConstants;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -43,6 +43,7 @@ class CalculatorTest extends Test
     const ITEM_DISCOUNT_AMOUNT = 1000;
     const ORDER_SHIPPING_COSTS = 2000;
     const EXPENSE_NAME_SHIPPING_COSTS = 'Shipping Costs';
+    const EXPENSE_TYPE_SHIPPING = 'shipping';
 
     /**
      * @var LocatorLocatorInterface|AutoCompletion
@@ -107,7 +108,7 @@ class CalculatorTest extends Test
 
         $expense = $this->getExpenseWithFixtureData();
         $expense->setName(self::EXPENSE_NAME_SHIPPING_COSTS)
-            ->setType(ExpenseConstants::EXPENSE_SHIPPING)
+            ->setType(self::EXPENSE_TYPE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS)
             ->setGrossPrice(self::ORDER_SHIPPING_COSTS);
 

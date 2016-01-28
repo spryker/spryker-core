@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 use Spryker\Zed\Url\Business\Exception\MissingUrlException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Spryker\Zed\Url\Dependency\UrlToLocaleInterface;
@@ -71,7 +70,7 @@ class UrlManager implements UrlManagerInterface
      *
      * @throws PropelException
      * @throws UrlExistsException
-     * @throws MissingLocaleException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
      * @return SpyUrl
      */

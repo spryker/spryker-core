@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected.
  */
@@ -6,7 +7,7 @@
 namespace Spryker\Zed\Application\Business\Url;
 
 use Spryker\Zed\Library\Sanitize\Html;
-use Spryker\Zed\Url\Business\Exception\UrlInvalidException;
+use Spryker\Zed\Application\Business\Exception\UrlInvalidException;
 
 /**
  * Parses and generates URLs based on URL parts. In favor of performance, URL parts are not validated.

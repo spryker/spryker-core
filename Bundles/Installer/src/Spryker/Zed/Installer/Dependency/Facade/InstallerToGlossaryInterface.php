@@ -8,11 +8,6 @@ namespace Spryker\Zed\Installer\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
-use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
-use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface InstallerToGlossaryInterface
 {
@@ -20,7 +15,7 @@ interface InstallerToGlossaryInterface
     /**
      * @param string $keyName
      *
-     * @throws KeyExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
      *
      * @return int
      */
@@ -45,7 +40,7 @@ interface InstallerToGlossaryInterface
      * @param string $keyName
      * @param LocaleTransfer $locale
      *
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return TranslationTransfer
      */
@@ -57,9 +52,9 @@ interface InstallerToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws MissingKeyException
-     * @throws MissingLocaleException
-     * @throws TranslationExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return TranslationTransfer
      */
@@ -71,7 +66,7 @@ interface InstallerToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return TranslationTransfer
      */

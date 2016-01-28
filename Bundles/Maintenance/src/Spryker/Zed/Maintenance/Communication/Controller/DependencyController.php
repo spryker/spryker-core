@@ -20,11 +20,9 @@ class DependencyController extends AbstractController
     const QUERY_BUNDLE = 'bundle';
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $bundles = $this->getFacade()->getAllBundles();
 
@@ -82,6 +80,47 @@ class DependencyController extends AbstractController
         };
 
         return $this->streamedResponse($callback);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return StreamedResponse
+     */
+    public function dependencyTreeGraphAction(Request $request)
+    {
+        $callback = function () use ($request) {
+            $bundleToView = $request->query->get('bundle', false);
+            $this->getFacade()->drawDetailedDependencyTreeGraph($bundleToView);
+        };
+
+        return $this->streamedResponse($callback);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return StreamedResponse
+     */
+    public function simpleAction(Request $request)
+    {
+        $callback = function () use ($request) {
+            $bundleToView = $request->query->get('bundle', false);
+            $this->getFacade()->drawSimpleDependencyTreeGraph($bundleToView);
+        };
+
+        return $this->streamedResponse($callback);
+    }
+
+    /**
+     * @return array
+     */
+    public function adjacencyMatrixAction()
+    {
+        $matrixData = $this->getFacade()->getAdjacencyMatrixData();
+        $engineBundleList = $this->getFacade()->getEngineBundleList();
+
+        return $this->viewResponse(['matrixData' => $matrixData, 'engineBundles' => $engineBundleList]);
     }
 
 }

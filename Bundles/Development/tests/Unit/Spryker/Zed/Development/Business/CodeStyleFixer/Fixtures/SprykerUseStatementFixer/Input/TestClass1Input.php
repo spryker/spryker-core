@@ -4,7 +4,7 @@ namespace Unit\Spryker\Zed\Development\Business\CodeStyleFixer\Fixtures\SprykerU
 
 use Pyz\Zed\Foo\Bar\Baz;
 use X\Y;
-use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinder as InstalledPackagesInstalledPackageFinder;
+use Spryker\Zed\Development\Business\InstalledPackages\InstalledPackageFinder as InstalledPackagesInstalledPackageFinder;
 use Foo\InstalledPackageFinder;
 
 class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
@@ -26,7 +26,7 @@ class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
         $x = new InstalledPackageFinder();
         $y = new InstalledPackagesInstalledPackageFinder();
 
-        return new \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinder(
+        return new \Spryker\Zed\Development\Business\InstalledPackages\InstalledPackageFinder(
             $collection,
             $path
         );

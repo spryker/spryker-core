@@ -63,4 +63,26 @@ class MaintenanceConfig extends AbstractBundleConfig
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'FOSS.md';
     }
 
+    /**
+     * @return string
+     */
+    public function getPathToJsonDependencyTree()
+    {
+        $pathParts = [
+            APPLICATION_ROOT_DIR,
+            'data',
+            'dependencyTree.json',
+        ];
+
+        return implode(DIRECTORY_SEPARATOR, $pathParts);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToBundleConfig()
+    {
+        return APPLICATION_VENDOR_DIR . '/spryker/spryker/bundle_config.json';
+    }
+
 }

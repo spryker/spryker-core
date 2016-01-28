@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Url\Dependency;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface UrlToLocaleInterface
 {
@@ -15,7 +14,7 @@ interface UrlToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @throws MissingLocaleException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
      * @return LocaleTransfer
      */

@@ -9,8 +9,6 @@ use Spryker\Zed\Url\Business\UrlFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Url\Business\Exception\MissingUrlException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 class CategoryToUrlBridge implements CategoryToUrlInterface
 {
@@ -37,7 +35,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
      * @param int $resourceId
      *
      * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return UrlTransfer
      */
@@ -89,7 +87,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     /**
      * @param string $urlString
      *
-     * @throws MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      *
      * @return UrlTransfer
      */
@@ -112,7 +110,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     /**
      * @param UrlTransfer $urlTransfer
      *
-     * @throws MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      * @throws PropelException
      *
      * @return void

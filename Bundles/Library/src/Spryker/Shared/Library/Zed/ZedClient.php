@@ -6,6 +6,7 @@
 
 namespace Spryker\Shared\Library\Zed;
 
+use Spryker\Client\EventJournal\EventJournalClient;
 use Spryker\Shared\Library\Communication\Response as CommunicationResponse;
 use Guzzle\Http\Client;
 use Guzzle\Http\Message\EntityEnclosingRequest;
@@ -17,11 +18,11 @@ use Spryker\Client\EventJournal\EventJournal;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\Library\Communication\ObjectInterface;
 use Spryker\Shared\Config;
+use Spryker\Shared\Library\LibraryConstants;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Communication\Request;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use Spryker\Shared\Application\ApplicationConstants;
 
 class ZedClient
 {
@@ -267,7 +268,7 @@ class ZedClient
      *
      * @return void
      */
-    protected function logResponse($pathInfo, \Spryker\Shared\Library\Communication\Response $responseTransfer, $rawBody)
+    protected function logResponse($pathInfo, Response $responseTransfer, $rawBody)
     {
         $this->doLog($pathInfo, Types::TRANSFER_RESPONSE, $responseTransfer, $rawBody);
     }
@@ -317,11 +318,11 @@ class ZedClient
      */
     protected function forwardDebugSession(EntityEnclosingRequest $request)
     {
-        if (Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
+        if (Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
             $cookie = new Cookie();
-            $cookie->setName(trim(Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME)));
-            $cookie->setValue($_COOKIE[Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME)]);
-            $cookie->setDomain(Config::get(ApplicationConstants::HOST_ZED_API));
+            $cookie->setName(trim(Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_NAME)));
+            $cookie->setValue($_COOKIE[Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_NAME)]);
+            $cookie->setDomain(Config::get(LibraryConstants::HOST_ZED_API));
             $cookieArray = new ArrayCookieJar(true);
             $cookieArray->add($cookie);
 

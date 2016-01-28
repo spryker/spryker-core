@@ -9,8 +9,8 @@ namespace Spryker\Zed\Category\Dependency\Facade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Url\Business\Exception\MissingUrlException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
+use Spryker\Zed\Category\Business\Exception\MissingUrlException;
+use Spryker\Zed\Category\Business\Exception\UrlExistsException;
 
 interface CategoryToUrlInterface
 {
