@@ -10,8 +10,9 @@
       "YvesUnit": "tests/"
     }
   },
-  "require": {
-  },
-  "require-dev": {
-  }
+  "require": {},
+  "require-dev": {},
+  "description": "twig bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev"
 }

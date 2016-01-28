@@ -10,8 +10,9 @@
       "YvesUnit": "tests/"
     }
   },
-  "require": {
-  },
-  "require-dev": {
-  }
+  "require": {},
+  "require-dev": {},
+  "description": "eventjournal bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev"
 }

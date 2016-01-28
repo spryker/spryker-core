@@ -6,8 +6,17 @@
     }
   },
   "require": {
+    "spryker/customer": "^1.0.0",
+    "spryker/kernel": "^1.0.0",
+    "spryker/product": "^1.0.0",
+    "spryker/session": "^1.0.0",
+    "spryker/storage": "^1.0.0",
+    "spryker/zed-request": "^1.0.0"
   },
   "require-dev": {
     "phpspec/phpspec": "~2.0"
-  }
+  },
+  "description": "wishlist bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev"
 }

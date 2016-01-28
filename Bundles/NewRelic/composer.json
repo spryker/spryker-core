@@ -10,8 +10,9 @@
       "YvesUnit": "tests/"
     }
   },
-  "require": {
-  },
-  "require-dev": {
-  }
+  "require": {},
+  "require-dev": {},
+  "description": "newrelic bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev"
 }

@@ -6,8 +6,9 @@
       "Unit": "tests/"
     }
   },
-  "require": {
-  },
-  "require-dev": {
-  }
+  "require": {},
+  "require-dev": {},
+  "description": "log bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev"
 }

@@ -11,7 +11,12 @@
     }
   },
   "require": {
+    "spryker/kernel": "^1.0.0",
+    "spryker/product": "^1.0.0",
+    "spryker/product-option": "^1.0.0"
   },
-  "require-dev": {
-  }
+  "require-dev": {},
+  "description": "product option exporter bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev"
 }

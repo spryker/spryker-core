@@ -8,8 +8,9 @@
       "Unit": "tests/"
     }
   },
-  "require": {
-  },
-  "require-dev": {
-  }
+  "require": {},
+  "require-dev": {},
+  "description": "taxproductconnector bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev"
 }
