@@ -132,4 +132,12 @@ class MaintenanceFacade extends AbstractFacade
     {
         return $this->getFactory()->createEngineBundleList();
     }
+
+    /**
+     * @return void
+     */
+    public function updateComposerJsonInBundles()
+    {
+        $this->getFactory()->createComposerJsonUpdater()->update();
+    }
 }
