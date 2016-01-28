@@ -109,4 +109,14 @@ class GenerateClientIdeAutoCompletionConsole extends Console
         return Config::get(ApplicationConstants::PROJECT_NAMESPACES)[0];
     }
 
+    /**
+     * @throws \Exception
+     *
+     * @return string
+     */
+    private function getBundlesDirectory()
+    {
+        return Config::get(ApplicationConstants::SPRYKER_BUNDLES_ROOT);
+    }
+
 }

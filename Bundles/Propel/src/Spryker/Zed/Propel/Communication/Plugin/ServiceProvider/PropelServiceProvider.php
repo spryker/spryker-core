@@ -43,7 +43,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     public function boot(Application $app)
     {
         $manager = new ConnectionManagerSingle();
-        $manager->setConfiguration($this->getConfig());
+        $manager->setConfiguration($this->getPropelConfig());
         $manager->setName('zed');
 
         $serviceContainer = $this->getServiceContainer();
@@ -91,7 +91,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
      *
      * @return mixed
      */
-    private function getConfig()
+    private function getPropelConfig()
     {
         $propelConfig = Config::get(PropelConstants::PROPEL)['database']['connections']['default'];
         $propelConfig['user'] = Config::get(PropelConstants::ZED_DB_USERNAME);

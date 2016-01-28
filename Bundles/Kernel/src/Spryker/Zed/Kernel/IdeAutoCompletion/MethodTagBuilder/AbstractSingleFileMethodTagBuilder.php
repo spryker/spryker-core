@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -52,7 +54,8 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
         $resolver->setDefaults([
             self::OPTION_KEY_APPLICATION => self::APPLICATION,
             self::OPTION_KEY_NAMESPACE_PATTERN => self::NAMESPACE_PATTERN,
-            self::OPTION_KEY_PROJECT_PATH_PATTERN => APPLICATION_SOURCE_DIR
+            self::OPTION_KEY_PROJECT_PATH_PATTERN => APPLICATION_SOURCE_DIR,
+            self::OPTION_KEY_VENDOR_PATH_PATTERN => Config::get(ApplicationConstants::SPRYKER_BUNDLES_ROOT) . '/*/src',
         ]);
 
         $resolver->setRequired([
