@@ -7,6 +7,7 @@ namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,17 +18,26 @@ class EditController extends AbstractController
 {
 
     const FORM_UPDATE_TYPE = 'update';
+    const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
 
     /**
-     * @return array
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
     public function indexAction(Request $request)
     {
-        $availableLocales = $this->getFactory()
-            ->getEnabledLocales();
+        $formData = $this
+            ->getFactory()
+            ->createTranslationDataProvider()
+            ->getData(
+                $request->query->getInt(self::URL_PARAMETER_GLOSSARY_KEY),
+                $this->getFactory()->getEnabledLocales()
+            );
 
-        $glossaryForm = $this->getFactory()
-            ->createTranslationForm($availableLocales, self::FORM_UPDATE_TYPE);
+        $glossaryForm = $this
+            ->getFactory()
+            ->createTranslationUpdateForm($formData);
 
         $glossaryForm->handleRequest($request);
 

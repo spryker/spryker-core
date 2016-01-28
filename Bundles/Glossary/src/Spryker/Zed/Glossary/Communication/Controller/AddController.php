@@ -19,15 +19,15 @@ class AddController extends AbstractController
     const FORM_ADD_TYPE = 'add';
 
     /**
+     * @param Request $request
+     *
      * @return array
      */
     public function indexAction(Request $request)
     {
-        $availableLocales = $this->getFactory()
-            ->getEnabledLocales();
-
-        $glossaryForm = $this->getFactory()
-            ->createTranslationForm($availableLocales, self::FORM_ADD_TYPE);
+        $glossaryForm = $this
+            ->getFactory()
+            ->createTranslationAddForm();
 
         $glossaryForm->handleRequest($request);
 

@@ -26,6 +26,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     const GLOSSARY_KEY = 'glossary_key';
     const GLOSSARY_KEY_IS_ACTIVE = 'glossary_key_is_active';
     const LOCALE = 'locale';
+    const VALUE = 'value';
 
     /**
      * @param string $keyName
@@ -385,6 +386,27 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     {
         $query = $this->queryTranslations();
         $query->where('lower(' . SpyGlossaryTranslationTableMap::COL_VALUE . ') like ?', '%' . mb_strtolower($value) . '%');
+
+        return $query;
+    }
+
+    /**
+     * @param $fkGlossaryKey
+     * @param array $locales
+     *
+     * @throws PropelException
+     * @return ModelCriteria
+     */
+    public function queryGlossaryKeyTranslationsByLocale($fkGlossaryKey, array $locales)
+    {
+        $query = $this->queryTranslations()
+            ->useLocaleQuery(null, Criteria::LEFT_JOIN)
+            ->leftJoinSpyGlossaryTranslation(SpyGlossaryTranslationTableMap::TABLE_NAME)
+            ->addJoinCondition(SpyGlossaryTranslationTableMap::TABLE_NAME, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY . ' = ?', (int) $fkGlossaryKey)
+            ->where(SpyLocaleTableMap::COL_LOCALE_NAME . ' IN ?', $locales)
+            ->groupBy(SpyLocaleTableMap::COL_ID_LOCALE)
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, self::LOCALE)
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
 
         return $query;
     }

@@ -124,4 +124,12 @@ interface GlossaryQueryContainerInterface
      */
     public function queryByKey($key);
 
+    /**
+     * @param int $fkGlossaryKey
+     * @param array $locales
+     *
+     * @return ModelCriteria
+     */
+    public function queryGlossaryKeyTranslationsByLocale($fkGlossaryKey, array $locales);
+
 }

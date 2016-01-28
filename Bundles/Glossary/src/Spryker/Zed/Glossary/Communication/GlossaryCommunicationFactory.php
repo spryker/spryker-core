@@ -5,6 +5,9 @@
 
 namespace Spryker\Zed\Glossary\Communication;
 
+use Spryker\Shared\Gui\Form\DataProvider\FormDataProviderInterface;
+use Spryker\Zed\Glossary\Communication\Form\DataProvider\TranslationFormDataProvider;
+use Spryker\Zed\Glossary\Communication\Form\UpdateTranslationForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Spryker\Zed\Glossary\Communication\Table\TranslationTable;
@@ -75,22 +78,33 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $locales
-     * @param string $type
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createTranslationAddForm()
+    {
+        return $this->getFormFactory()->create(new TranslationForm(), null, [
+            TranslationForm::OPTION_LOCALES => $this->getEnabledLocales(),
+        ]);
+    }
+
+    /**
+     * @param array $formData
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createTranslationForm(array $locales, $type)
+    public function createTranslationUpdateForm(array $formData)
     {
-        $translationQuery = $this->getQueryContainer()
-            ->queryTranslations();
+        return $this->getFormFactory()->create(new UpdateTranslationForm(), $formData, [
+            UpdateTranslationForm::OPTION_LOCALES => $this->getEnabledLocales(),
+        ]);
+    }
 
-        $glossaryKeyQuery = $this->getQueryContainer()
-            ->queryKeys();
-
-        $form = new TranslationForm($translationQuery, $glossaryKeyQuery, $locales, $type);
-
-        return $this->createForm($form);
+    /**
+     * @return TranslationFormDataProvider
+     */
+    public function createTranslationDataProvider()
+    {
+        return new TranslationFormDataProvider($this->getQueryContainer());
     }
 
 }
