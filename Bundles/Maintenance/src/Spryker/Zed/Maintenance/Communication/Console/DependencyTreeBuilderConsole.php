@@ -36,7 +36,7 @@ class DependencyTreeBuilderConsole extends Console
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
             ->setDescription('Build dependency tree');
 
-        $this->addOption(self::OPTION_APPLICATION, 'a', InputOption::VALUE_OPTIONAL, 'Name of application to build the dependency tree');
+        $this->addOption(self::OPTION_APPLICATION, 'a', InputOption::VALUE_OPTIONAL, 'Name of application to build the dependency tree (Client, Shared, Yves, Zed)');
         $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of bundle to build the dependency tree');
         $this->addOption(self::OPTION_LAYER, 'l', InputOption::VALUE_OPTIONAL, 'Name of layer to build the dependency tree (only for Zed)');
     }
