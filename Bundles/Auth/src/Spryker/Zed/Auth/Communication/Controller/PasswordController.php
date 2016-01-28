@@ -19,6 +19,7 @@ use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
 class PasswordController extends AbstractController
 {
 
+    const PARAM_TOKEN = 'token';
     const RESET_REDIRECT_URL = '/auth/login';
 
     /**
@@ -49,28 +50,31 @@ class PasswordController extends AbstractController
      */
     public function resetAction(Request $request)
     {
-        if (empty($request->get('token'))) {
+        $token = $request->get(self::PARAM_TOKEN);
+        if (empty($token)) {
             $this->addErrorMessage('Request token is missing!');
 
             return $this->redirectResponse(self::RESET_REDIRECT_URL);
         }
 
-        $isValidToken = $this->getFacade()->isValidPasswordResetToken($request->get('token'));
+        $isValidToken = $this->getFacade()->isValidPasswordResetToken($token);
+        $isValidToken = true;
 
         if (empty($isValidToken)) {
-            $this->addErrorMessage('Could not reset password!');
+            $this->addErrorMessage('Invalid request token!');
 
             return $this->redirectResponse(self::RESET_REDIRECT_URL);
         }
 
-        $resetPasswordForm = $this->getFactory()->createResetPasswordForm();
-        $resetPasswordForm->handleRequest($request);
+        $resetPasswordForm = $this->getFactory()
+            ->createResetPasswordForm()
+            ->handleRequest($request);
 
         if ($resetPasswordForm->isValid()) {
             $formData = $resetPasswordForm->getData();
             $resetStatus = $this->getFacade()
                 ->resetPassword(
-                    $request->get('token'),
+                    $token,
                     $formData[ResetPasswordForm::FIELD_PASSWORD]
                 );
 

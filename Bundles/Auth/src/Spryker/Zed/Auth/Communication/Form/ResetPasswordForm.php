@@ -5,10 +5,12 @@
 
 namespace Spryker\Zed\Auth\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 
-class ResetPasswordForm extends AbstractForm
+class ResetPasswordForm extends AbstractType
 {
 
     const FIELD_PASSWORD = 'password';
@@ -21,9 +23,21 @@ class ResetPasswordForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this
+            ->addUserNameField($builder);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addUserNameField(FormBuilderInterface $builder)
+    {
         $builder->add(self::FIELD_PASSWORD, 'repeated', [
             'constraints' => [
-                $this->getConstraints()->createConstraintNotBlank(),
+                new Required(),
+                new NotBlank(),
             ],
             'invalid_message' => 'The password fields must match.',
             'first_options' => [
@@ -44,14 +58,8 @@ class ResetPasswordForm extends AbstractForm
                 'class' => 'btn btn-default btn-block btn-outline',
             ],
         ]);
-    }
 
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
+        return $this;
     }
 
     /**
@@ -60,14 +68,6 @@ class ResetPasswordForm extends AbstractForm
     public function getName()
     {
         return 'reset_password';
-    }
-
-    /**
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        return [];
     }
 
 }

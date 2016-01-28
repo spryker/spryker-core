@@ -30,11 +30,11 @@ class LoginController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isValid()) {
-            $data = $form->getData();
+            $formData = $form->getData();
 
             $isLogged = $this->getFacade()->login(
-                $data[LoginForm::FIELD_USERNAME],
-                $data[LoginForm::FIELD_PASSWORD]
+                $formData[LoginForm::FIELD_USERNAME],
+                $formData[LoginForm::FIELD_PASSWORD]
             );
 
             if ($isLogged) {

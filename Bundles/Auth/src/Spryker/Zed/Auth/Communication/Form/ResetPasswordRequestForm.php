@@ -6,10 +6,13 @@
 
 namespace Spryker\Zed\Auth\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 
-class ResetPasswordRequestForm extends AbstractForm
+class ResetPasswordRequestForm extends AbstractType
 {
 
     const FIELD_EMAIL = 'email';
@@ -24,38 +27,69 @@ class ResetPasswordRequestForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this
+            ->addEmailField($builder)
+            ->addSubmitField($builder)
+            ->addLoginField($builder);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addEmailField(FormBuilderInterface $builder)
+    {
         $builder
             ->add(self::FIELD_EMAIL, 'text', [
                 'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                    $this->getConstraints()->createConstraintRequired(),
-                    $this->getConstraints()->createConstraintEmail(),
+                    new Required(),
+                    new NotBlank(),
+                    new Email(),
                 ],
                 'attr' => [
                     'placeholder' => 'Email Address',
                 ],
-            ])
-            ->add(self::FIELD_SUBMIT, 'submit', [
-                'label' => 'Recover password',
-                'attr' => [
-                    'class' => 'btn btn-primary btn-block btn-outline',
-                ],
-            ])
-            ->add(self::FIELD_LOGIN, 'url', [
-                'attr' => [
-                    'href' => '/auth/login',
-                    'class' => 'btn btn-success btn-block btn-outline',
-                    'title' => 'Login',
-                ],
             ]);
+
+        return $this;
     }
 
     /**
-     * @return null
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
      */
-    protected function getDataClass()
+    protected function addSubmitField(FormBuilderInterface $builder)
     {
-        return null;
+        $builder
+            ->add(self::FIELD_SUBMIT, 'submit', [
+                'label' => 'Recover password',
+                'attr' => [
+                    'class' => 'btn btn-success btn-block btn-outline',
+                ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addLoginField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_LOGIN, 'url', [
+                'attr' => [
+                    'href' => '/auth/login',
+                    'class' => 'btn btn-primary btn-block btn-outline',
+                    'title' => 'Login',
+                ],
+            ]);
+
+        return $this;
     }
 
     /**
@@ -64,14 +98,6 @@ class ResetPasswordRequestForm extends AbstractForm
     public function getName()
     {
         return 'reset_password';
-    }
-
-    /**
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        return [];
     }
 
 }
