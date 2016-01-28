@@ -159,7 +159,16 @@ class DiscountTotalsCalculator implements CalculatorInterface
     {
         $totalDiscountSumGrossAmount = 0;
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            list (,$sumAmount) = $this->getSumOfCalculatedDiscounts($expenseTransfer->getCalculatedDiscounts());
+            list ($unitAmount, $sumAmount) = $this->getSumOfCalculatedDiscounts($expenseTransfer->getCalculatedDiscounts());
+
+            $expenseTransfer->setUnitGrossPriceWithDiscounts(
+                $expenseTransfer->getUnitGrossPrice() - $unitAmount
+            );
+
+            $expenseTransfer->setSumGrossPriceWithDiscounts(
+                $expenseTransfer->getSumGrossPrice() - $sumAmount
+            );
+
             $totalDiscountSumGrossAmount += $sumAmount;
         }
 

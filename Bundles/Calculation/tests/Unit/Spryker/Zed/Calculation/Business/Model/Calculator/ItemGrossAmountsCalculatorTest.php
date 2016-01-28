@@ -34,58 +34,6 @@ class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testWithItemAndProductOptionsShouldCalculateItemAndOptionGrossSum()
-    {
-        $itemGrossAmountsCalculator = $this->createItemGrossAmountsCalculator();
-
-        $productOptionFixtures = $this->getProductOptionFixtures();
-
-        $quoteTransfer = $this->createQuoteTransferWithFixtureData(
-            self::UNIT_GROSS_PRICE,
-            self::QUANTITY,
-            $productOptionFixtures
-        );
-        $itemGrossAmountsCalculator->recalculate($quoteTransfer);
-        $calculatedItemSumAndProductOptionGrossPrice = $quoteTransfer->getItems()[0]->getSumGrossPriceWithProductOptions();
-
-        $optionSum = array_reduce($productOptionFixtures, function ($carry, $item) {
-            $carry += $item['sumGrossPrice'];
-
-            return $carry;
-        });
-
-        $this->assertEquals(self::UNIT_GROSS_PRICE * self::QUANTITY + $optionSum, $calculatedItemSumAndProductOptionGrossPrice);
-    }
-
-    /**
-     * @return void
-     */
-    public function testWithItemAndProductOptionsShouldCalculateItemAndOptionUnitSum()
-    {
-        $itemGrossAmountsCalculator = $this->createItemGrossAmountsCalculator();
-
-        $productOptionFixtures = $this->getProductOptionFixtures();
-
-        $quoteTransfer = $this->createQuoteTransferWithFixtureData(
-            self::UNIT_GROSS_PRICE,
-            self::QUANTITY,
-            $productOptionFixtures
-        );
-        $itemGrossAmountsCalculator->recalculate($quoteTransfer);
-        $calculatedItemUnitAndProductOptionGrossPrice = $quoteTransfer->getItems()[0]->getUnitGrossPriceWithProductOptions();
-
-        $optionUnit = array_reduce($productOptionFixtures, function ($carry, $item) {
-            $carry += $item['unitGrossPrice'];
-
-            return $carry;
-        });
-
-        $this->assertEquals(self::UNIT_GROSS_PRICE + $optionUnit, $calculatedItemUnitAndProductOptionGrossPrice);
-    }
-
-    /**
-     * @return void
-     */
     public function testWhenItemQuantityIsNotPresentShouldThrowAssertException()
     {
         $this->setExpectedException(RequiredTransferPropertyException::class);
@@ -123,15 +71,6 @@ class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
         $itemTransfer = $this->createItemTransfer();
         $itemTransfer->setUnitGrossPrice($unitGrossPrice);
         $itemTransfer->setQuantity($itemQuantity);
-
-        foreach ($productOptions as $productOption) {
-            $productOptionTransfer = $this->createProductOptionTransfer();
-            $productOptionTransfer->setUnitGrossPrice($productOption['unitGrossPrice']);
-            $productOptionTransfer->setSumGrossPrice($productOption['sumGrossPrice']);
-            $productOptionTransfer->setQuantity($productOption['quantity']);
-            $itemTransfer->addProductOption($productOptionTransfer);
-        }
-
         $quoteTransfer->addItem($itemTransfer);
 
         return $quoteTransfer;
@@ -168,24 +107,4 @@ class ItemGrossAmountsCalculatorTest extends \PHPUnit_Framework_TestCase
     {
         return new ProductOptionTransfer();
     }
-
-    /**
-     * @return array
-     */
-    protected function getProductOptionFixtures()
-    {
-        return [
-            [
-                'unitGrossPrice' => 100,
-                'sumGrossPrice' => 200,
-                'quantity' => 2,
-            ],
-            [
-                'unitGrossPrice' => 100,
-                'sumGrossPrice' => 200,
-                'quantity' => 2,
-            ],
-        ];
-    }
-
 }

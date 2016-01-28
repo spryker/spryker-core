@@ -31,33 +31,17 @@ class ItemGrossAmountsCalculator implements CalculatorInterface
      */
     protected function addCalculatedItemGrossAmounts(ItemTransfer $itemTransfer)
     {
-        $itemTransfer->requireUnitGrossPrice()->requireQuantity();
+        $this->assertItemRequirements($itemTransfer);
         $itemTransfer->setSumGrossPrice($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
-
-        $this->withProductOptionGrossAmounts($itemTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return int
+     * @Return void
      */
-    protected function withProductOptionGrossAmounts(ItemTransfer $itemTransfer)
+    protected function assertItemRequirements(ItemTransfer $itemTransfer)
     {
-        $totalProductOptionGrossSum = 0;
-        $totalProductOptionGrossUnit = 0;
-        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $totalProductOptionGrossSum += $productOptionTransfer->getSumGrossPrice();
-            $totalProductOptionGrossUnit += $productOptionTransfer->getUnitGrossPrice();
-        }
-
-        $itemTransfer->setSumGrossPriceWithProductOptions(
-            $itemTransfer->getSumGrossPrice() + $totalProductOptionGrossSum
-        );
-
-        $itemTransfer->setUnitGrossPriceWithProductOptions(
-            $itemTransfer->getUnitGrossPrice() + $totalProductOptionGrossUnit
-        );
+        $itemTransfer->requireUnitGrossPrice()->requireQuantity();
     }
-
 }

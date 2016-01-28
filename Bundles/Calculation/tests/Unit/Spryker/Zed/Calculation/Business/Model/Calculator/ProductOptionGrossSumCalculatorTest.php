@@ -53,8 +53,11 @@ class ProductOptionGrossSumCalculatorTest extends \PHPUnit_Framework_TestCase
         $quoteTransfer = $this->createQuoteTransfer();
 
         $itemTransfer = $this->createItemTransfer();
+        $itemTransfer->setQuantity(1);
+        $itemTransfer->setSumGrossPrice(100);
         foreach ($productOptions as $productOption) {
             $productOptionTransfer = $this->createProductOptionTransfer();
+            $productOptionTransfer->setSumGrossPrice($productOption['unitGrossPrice'] * $productOption['quantity']);
             $productOptionTransfer->setUnitGrossPrice($productOption['unitGrossPrice']);
             $productOptionTransfer->setQuantity($productOption['quantity']);
             $itemTransfer->addProductOption($productOptionTransfer);
