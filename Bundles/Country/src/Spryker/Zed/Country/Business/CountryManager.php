@@ -59,11 +59,22 @@ class CountryManager implements CountryManagerInterface
     }
 
     /**
-     * @param $countryName
+     * @param string $countryName
+     * @deprecated Use getPreferredCountryByName()
      *
      * @return CountryTransfer
      */
     public function getPreferedCountryByName($countryName)
+    {
+        return $this->getPreferredCountryByName($countryName);
+    }
+
+    /**
+     * @param string $countryName
+     *
+     * @return CountryTransfer
+     */
+    public function getPreferredCountryByName($countryName)
     {
         $country = $this->countryQueryContainer->queryCountries()->findOneByName($countryName);
 

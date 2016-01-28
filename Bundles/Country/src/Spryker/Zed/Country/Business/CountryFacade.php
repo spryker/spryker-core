@@ -30,6 +30,16 @@ class CountryFacade extends AbstractFacade
     /**
      * @param string $iso2Code
      *
+     * @return bool
+     */
+    public function hasCountry($iso2Code)
+    {
+        return $this->getFactory()->createCountryManager()->hasCountry($iso2Code);
+    }
+
+    /**
+     * @param string $iso2Code
+     *
      * @return int
      */
     public function getIdCountryByIso2Code($iso2Code)
@@ -51,14 +61,27 @@ class CountryFacade extends AbstractFacade
 
     /**
      * @param string $countryName
+     * @deprecated Use getPreferredCountryByName()
      *
      * @return CountryTransfer
      */
     public function getPreferedCountryByName($countryName)
     {
+        trigger_error('Deprecated, use getPreferredCountryByName() instead.', E_USER_DEPRECATED);
+
+        return $this->getPreferredCountryByName($countryName);
+    }
+
+    /**
+     * @param string $countryName
+     *
+     * @return CountryTransfer
+     */
+    public function getPreferredCountryByName($countryName)
+    {
         $countryTransfer = $this->getFactory()
             ->createCountryManager()
-            ->getPreferedCountryByName($countryName);
+            ->getPreferredCountryByName($countryName);
 
         return $countryTransfer;
     }

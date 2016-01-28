@@ -24,7 +24,7 @@ interface CustomerToCountryInterface
      *
      * @return CountryTransfer
      */
-    public function getPreferedCountryByName($countryName);
+    public function getPreferredCountryByName($countryName);
 
     /**
      * @return CountryCollectionTransfer
