@@ -6,7 +6,9 @@
 
 namespace Spryker\Zed\Maintenance\Business;
 
+use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater;
+use Spryker\Zed\Maintenance\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Maintenance\Business\DependencyTree\AdjacencyMatrixBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ClassNameFilter;
@@ -34,7 +36,6 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\BundleUsesCo
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignConstants;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignException;
 use Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinder;
-use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\JsonUpdater;
 use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
@@ -51,6 +52,7 @@ use Spryker\Zed\Maintenance\Business\Model\PropelBaseFolderFinder;
 use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleanerInterface;
 use Spryker\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Finder\Finder as SfFinder;
 
 /**
  * @method MaintenanceConfig getConfig()
@@ -409,8 +411,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
             ->addFilter($this->createDependencyTreeForeignEngineBundleFilter())
             ->addFilter($this->createDependencyTreeEngineBundleFilter())
             ->addFilter($this->createDependencyTreeInvalidForeignBundleFilter())
-            ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'))
-        ;
+            ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'));
 
         if (is_string($bundleToView)) {
             $treeFilter->addFilter($this->createDependencyTreeBundleToViewFilter($bundleToView));
@@ -441,8 +442,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         $treeFilter = $this->createDependencyTreeFilter();
         $treeFilter
-            ->addFilter($this->createDependencyTreeInvalidForeignBundleFilter())
-        ;
+            ->addFilter($this->createDependencyTreeInvalidForeignBundleFilter());
 
         return $treeFilter;
     }
@@ -468,8 +468,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         $violationFinder
             ->addViolationFinder($this->createViolationFinderUseForeignConstants())
             ->addViolationFinder($this->createViolationFinderUseForeignException())
-            ->addViolationFinder($this->createViolationFinderBundleUsesConnector())
-        ;
+            ->addViolationFinder($this->createViolationFinderBundleUsesConnector());
 
         return $violationFinder;
     }
@@ -589,10 +588,34 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     public function createComposerJsonUpdater()
     {
         return new ComposerJsonUpdater(
-            $this->createDependencyTreeReader(),
-            new \Symfony\Component\Finder\Finder(),
+            $this->createComposerJsonFinder(),
+            $this->createComposerJsonUpdaterCollection()
+        );
+    }
+
+    /**
+     * @return ComposerJsonFinder
+     */
+    protected function createComposerJsonFinder()
+    {
+        $composerJsonFinder = new ComposerJsonFinder(
+            new SfFinder(),
             $this->getConfig()->getBundleDirectory()
         );
+
+        return $composerJsonFinder;
+    }
+
+    /**
+     * @return array
+     */
+    protected function createComposerJsonUpdaterCollection()
+    {
+        $updater = [
+            new RequireUpdater($this->createDependencyTreeReader()),
+        ];
+
+        return $updater;
     }
 
 }

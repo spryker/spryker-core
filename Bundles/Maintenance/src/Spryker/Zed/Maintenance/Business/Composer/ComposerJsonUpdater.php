@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Maintenance\Business\Composer;
 
+use Spryker\Zed\Maintenance\Business\Composer\Updater\UpdaterInterface;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
 use Symfony\Component\Finder\Finder;
@@ -13,34 +14,27 @@ use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\DashToCamelCase;
 
-class ComposerJsonUpdater
+class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
 
     /**
-     * @var DependencyTreeReaderInterface
-     */
-    private $dependencyTreeReader;
-
-    /**
-     * @var Finder
+     * @var ComposerJsonFinderInterface
      */
     private $finder;
 
     /**
-     * @var string
+     * @var UpdaterInterface[]
      */
-    private $pathToBundles;
+    private $updater;
 
     /**
-     * @param DependencyTreeReaderInterface $dependencyTreeReader
-     * @param Finder $finder
-     * @param $pathToBundles
+     * @param ComposerJsonFinderInterface $finder
+     * @param UpdaterInterface[] $updater
      */
-    public function __construct(DependencyTreeReaderInterface $dependencyTreeReader, Finder $finder, $pathToBundles)
+    public function __construct(ComposerJsonFinderInterface $finder, array $updater)
     {
-        $this->dependencyTreeReader = $dependencyTreeReader;
         $this->finder = $finder;
-        $this->pathToBundles = $pathToBundles;
+        $this->updater = $updater;
     }
 
     /**
@@ -48,80 +42,27 @@ class ComposerJsonUpdater
      */
     public function update()
     {
-        $dependencyTree = $this->dependencyTreeReader->read();
-        $composerJsonFiles = $this->getComposerJsonFiles();
+        $composerJsonFiles = $this->finder->find();
         foreach ($composerJsonFiles as $composerJsonFile) {
-            $this->updateComposerJsonFile($composerJsonFile, $dependencyTree);
+            $this->updateComposerJsonFile($composerJsonFile);
         }
-    }
-
-    /**
-     * @return Finder|SplFileInfo[]
-     */
-    private function getComposerJsonFiles()
-    {
-        return $this->finder->in($this->pathToBundles)->name('composer.json');
     }
 
     /**
      * @param SplFileInfo $composerJsonFile
-     * @param array $dependencyTree
      *
      * @return void
      */
-    private function updateComposerJsonFile(SplFileInfo $composerJsonFile, array $dependencyTree)
+    private function updateComposerJsonFile(SplFileInfo $composerJsonFile)
     {
-        $composerJsonData = json_decode($composerJsonFile->getContents(), true);
-        $bundleName = $this->getBundleName($composerJsonData);
+        $composerJson = json_decode($composerJsonFile->getContents(), true);
 
-        $dependentBundles = $this->getDependentBundles($bundleName, $dependencyTree);
-        if (!isset($composerJsonData['require'])) {
-            $composerJsonData['require'] = [];
+        foreach ($this->updater as $updater) {
+            $updater->update($composerJson);
         }
 
-        foreach ($dependentBundles as $dependentBundle) {
-            $filter = new CamelCaseToDash();
-            $dependentBundle = strtolower($filter->filter($dependentBundle));
-
-            $dependency = ['spryker/' . $dependentBundle => '^1.0.0'];
-
-            $composerJsonData['require'][] = $dependency;
-        }
-
-        file_put_contents($composerJsonFile->getPathname(), json_encode($composerJsonData));
+        file_put_contents($composerJsonFile->getPathname(), json_encode($composerJson, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
         echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($composerJsonFile) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-    }
-
-    /**
-     * @param array $composerJsonData
-     *
-     * @return string
-     */
-    private function getBundleName($composerJsonData)
-    {
-        $nameParts = explode('/', $composerJsonData['name']);
-        $bundleName = array_pop($nameParts);
-        $filter = new DashToCamelCase();
-
-        return $filter->filter($bundleName);
-    }
-
-    /**
-     * @param string $bundleName
-     * @param array $dependencyTree
-     *
-     * @return array
-     */
-    private function getDependentBundles($bundleName, array $dependencyTree)
-    {
-        $dependentBundles = [];
-        foreach ($dependencyTree as $dependency) {
-            if ($dependency[DependencyTree::META_BUNDLE] === $bundleName && !in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $dependentBundles)) {
-                $dependentBundles[] = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
-            }
-        }
-
-        return $dependentBundles;
     }
 
 }
