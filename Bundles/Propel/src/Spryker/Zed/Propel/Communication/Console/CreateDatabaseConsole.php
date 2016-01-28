@@ -49,6 +49,8 @@ class CreateDatabaseConsole extends Console
     /**
      * @throws \Exception
      *
+     * @todo no sudo, vagrant user is missing for pgsql
+     *
      * @return void
      */
     protected function createPostgresDatabaseIfNotExists()
@@ -56,7 +58,7 @@ class CreateDatabaseConsole extends Console
         $databaseExists = $this->existsPostgresDatabase();
         if (!$databaseExists) {
             $createDatabaseCommand = sprintf(
-                'psql -U %s -w  -c "CREATE DATABASE "%s" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE="template0"; "',
+                'psql -U %s -w  -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; "',
                 'postgres',
                 Config::get(PropelConstants::ZED_DB_DATABASE)
             );
@@ -74,6 +76,8 @@ class CreateDatabaseConsole extends Console
      * @throws \Exception
      *
      * @return bool
+     *
+     * @todo no sudo, vagrant user is missing for pgsql
      */
     protected function existsPostgresDatabase()
     {
@@ -90,7 +94,7 @@ class CreateDatabaseConsole extends Console
             throw new \RuntimeException($process->getErrorOutput());
         }
 
-        return $process->getOutput();
+        return (int) trim($process->getOutput());
     }
 
     /**
