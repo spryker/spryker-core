@@ -46,6 +46,7 @@ class UserFormDataProvider
         $userTransfer = $this->userFacade->getUserById($idUser);
         $formData = $userTransfer->toArray();
         $formData = $this->populateSelectedAclGroups($idUser, $formData);
+
         if (array_key_exists(UserForm::FIELD_PASSWORD, $formData)) {
             unset($formData[UserForm::FIELD_PASSWORD]);
         }
@@ -110,6 +111,7 @@ class UserFormDataProvider
     {
         $userAclGroupsTransfer = $this->aclFacade->getUserGroups($idUser);
         $groupChoices = $this->getGroupChoices();
+
         foreach ($userAclGroupsTransfer->getGroups() as $aclGroupTransfer) {
             if (array_key_exists($aclGroupTransfer->getIdAclGroup(), $groupChoices)) {
                 $formData[UserForm::FIELD_GROUP][] = $aclGroupTransfer->getIdAclGroup();

@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserForm extends AbstractType
@@ -33,7 +34,7 @@ class UserForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addUsernameField($builder)
+            ->addEmailField($builder)
             ->addPasswordField($builder)
             ->addFirstNameField($builder)
             ->addLastNameField($builder)
@@ -45,13 +46,14 @@ class UserForm extends AbstractType
      *
      * @return self
      */
-    protected function addUsernameField(FormBuilderInterface $builder)
+    protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder
             ->add(self::FIELD_USERNAME, 'text', [
-                'label' => 'Username',
+                'label' => 'E-mail',
                 'constraints' => [
                     new NotBlank(),
+                    new Email(),
                 ],
             ]);
 

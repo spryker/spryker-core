@@ -73,7 +73,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return UserFormDataProvider
      */
-    public function createAddressFormDataProvider()
+    public function createUserFormDataProvider()
     {
         return new UserFormDataProvider(
             $this->getAclFacade(),

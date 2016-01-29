@@ -31,8 +31,14 @@ class EditController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $userForm = $this->getFactory()->createUserForm();
-        $userForm->handleRequest($request);
+        $dataProvider = $this->getFactory()->createUserFormDataProvider();
+
+        $userForm = $this->getFactory()
+            ->createUserForm(
+                [],
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
@@ -76,7 +82,7 @@ class EditController extends AbstractController
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
-        $dataProvider = $this->getFactory()->createAddressFormDataProvider();
+        $dataProvider = $this->getFactory()->createUserFormDataProvider();
 
         $userForm = $this->getFactory()
             ->createUpdateUserForm(
