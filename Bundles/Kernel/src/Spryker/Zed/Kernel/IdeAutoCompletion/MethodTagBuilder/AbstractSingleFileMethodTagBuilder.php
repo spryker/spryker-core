@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder;
 
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\OptionsResolver\OptionsResolver;
