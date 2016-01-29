@@ -84,7 +84,7 @@ class MaintenanceConfig extends AbstractBundleConfig
      */
     public function getPathToBundleConfig()
     {
-        return $this->get(MaintenanceConstants::SPRYKER_ROOT) . '/../bundle_config.json';
+        return SPRYKER_ROOT . '/bundle_config.json';
     }
 
 }

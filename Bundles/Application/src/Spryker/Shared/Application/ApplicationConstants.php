@@ -9,8 +9,6 @@ namespace Spryker\Shared\Application;
 interface ApplicationConstants
 {
 
-    const SPRYKER_ROOT = 'SPRYKER_ROOT';
-
     const ALLOW_INTEGRATION_CHECKS = 'ALLOW_INTEGRATION_CHECKS';
     const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';
     const DISPLAY_ERRORS = 'DISPLAY_ERRORS';

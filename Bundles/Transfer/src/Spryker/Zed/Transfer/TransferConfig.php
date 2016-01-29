@@ -34,7 +34,7 @@ class TransferConfig extends AbstractBundleConfig
     public function getSourceDirectories()
     {
         $directories = [
-            $this->get(TransferConstants::SPRYKER_ROOT) . '/*/src/*/Shared/*/Transfer/',
+            SPRYKER_ROOT . '/*/src/*/Shared/*/Transfer/',
         ];
 
         $applicationTransferGlobPattern = APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
