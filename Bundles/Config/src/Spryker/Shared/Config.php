@@ -116,6 +116,11 @@ class Config
          */
         self::buildConfig('local_' . $storeName, $config);
 
+        /*
+         * e.g. config_database.php
+         */
+        self::buildConfig('database', $config);
+
         self::$config = $config;
     }
 
