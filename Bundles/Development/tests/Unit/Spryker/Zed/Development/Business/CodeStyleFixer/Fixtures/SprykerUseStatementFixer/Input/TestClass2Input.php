@@ -17,7 +17,7 @@ class TestClass2Input extends \Pyz\Zed\Foo\Bar\Baz
         new \Pyz\Zed\Foo\Bar\Baz($x);
     }
 
-    public function replaceFunctionC()
+    public function replaceFunctionC(\Spryker\Zed\Form\SomeForm $form)
     {
         new\Spryker\Zed\Foo();
     }

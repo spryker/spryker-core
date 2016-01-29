@@ -34,7 +34,6 @@ class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
 
     public function replaceNotYetFunction()
     {
-        //TODO: Baz::x();
         \Pyz\Zed\Foo\Bar\Baz::x();
     }
 
