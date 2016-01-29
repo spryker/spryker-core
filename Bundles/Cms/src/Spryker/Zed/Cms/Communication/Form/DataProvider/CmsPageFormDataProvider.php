@@ -7,9 +7,7 @@
 namespace Spryker\Zed\Cms\Communication\Form\DataProvider;
 
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsPageFormDataProvider
 {
@@ -26,7 +24,7 @@ class CmsPageFormDataProvider
     const FIELD_IS_ACTIVE = 'is_active';
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var CmsQueryContainer
      */
     protected $cmsQueryContainer;
 

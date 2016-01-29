@@ -6,18 +6,21 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
-use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
-use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class CmsBlockForm extends AbstractForm
+class CmsBlockForm extends AbstractType
 {
 
-    const TYPE_STATIC = 'static';
-    const CATEGORY = 'category';
-    const PRODUCT = 'product';
     const FIELD_SELECT_VALUE = 'selectValue';
     const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
     const FIELD_FK_PAGE = 'fkPage';
@@ -26,73 +29,27 @@ class CmsBlockForm extends AbstractForm
     const FIELD_TYPE = 'type';
     const FIELD_VALUE = 'value';
     const FIELD_CURRENT_TEMPLATE = 'cur_temp';
-    const PAGE = 'Page';
     const FIELD_IS_ACTIVE = 'is_active';
 
-    /**
-     * @var \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
-     */
-    protected $templateQuery;
+    const OPTION_TEMPLATE_CHOICES = 'template_choices';
+
+    const GROUP_UNIQUE_BLOCK_CHECK = 'unique_block_check';
+
+    const TYPE_STATIC = 'static';
+    const TYPE_CATEGORY = 'category';
+    const TYPE_PRODUCT = 'product';
 
     /**
-     * @var \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
+     * @var CmsQueryContainerInterface
      */
-    protected $blockPageByIdQuery;
+    protected $cmsQueryContainer;
 
     /**
-     * @var string
+     * @param CmsQueryContainerInterface $cmsQueryContainer
      */
-    protected $formType;
-
-    /**
-     * @var int
-     */
-    protected $idCmsBlock;
-
-    /**
-     * @var string
-     */
-    protected $blockName;
-
-    /**
-     * @var string
-     */
-    protected $blockType;
-
-    /**
-     * @var string
-     */
-    protected $blockValue;
-
-    /**
-     * @var string
-     */
-    protected $selectValue;
-
-    /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery $templateQuery
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery $blockPageByIdQuery
-     * @param string $formType
-     * @param int $idCmsBlock
-     */
-    public function __construct(
-        SpyCmsTemplateQuery $templateQuery,
-        SpyCmsBlockQuery $blockPageByIdQuery,
-        $formType,
-        $idCmsBlock
-    ) {
-        $this->templateQuery = $templateQuery;
-        $this->blockPageByIdQuery = $blockPageByIdQuery;
-        $this->formType = $formType;
-        $this->idCmsBlock = $idCmsBlock;
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer)
     {
-        return null;
+        $this->cmsQueryContainer = $cmsQueryContainer;
     }
 
     /**
@@ -104,6 +61,43 @@ class CmsBlockForm extends AbstractForm
     }
 
     /**
+     * @param OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setRequired(self::OPTION_TEMPLATE_CHOICES);
+
+        $resolver->setDefaults([
+            'validation_groups' => function(FormInterface $form) {
+                $defaultData = $form->getConfig()->getData();
+                $formData = $form->getData();
+
+                if (
+                    !array_key_exists(self::FIELD_NAME, $defaultData) ||
+                    !array_key_exists(self::FIELD_TYPE, $defaultData) ||
+                    !array_key_exists(self::FIELD_VALUE, $defaultData)
+                ) {
+                    return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_BLOCK_CHECK];
+                }
+
+                if (
+                    $defaultData[self::FIELD_NAME] !== $formData[self::FIELD_NAME] ||
+                    $defaultData[self::FIELD_TYPE] !== $formData[self::FIELD_TYPE] ||
+                    (int) $defaultData[self::FIELD_VALUE] !== (int) $formData[self::FIELD_VALUE]
+                ) {
+                    return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_BLOCK_CHECK];
+                }
+
+                return [Constraint::DEFAULT_GROUP];
+            }
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -111,39 +105,23 @@ class CmsBlockForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $blockConstraints = $this->getConstraints()->getMandatoryConstraints();
-
-        $blockConstraints[] = $this->getConstraints()->createConstraintCallback([
-            'methods' => [
-                function ($name, ExecutionContext $context) {
-                    $formData = $context->getRoot()->getViewData();
-                    if (!empty($this->checkExistingBlock($name, $formData)) && ($this->blockName !== $name
-                        || $this->blockType !== $formData['type']
-                        || $this->blockValue !== (int) $formData['value'])
-                    ) {
-                        $context->addViolation('Block name with same Type and Value already exists.');
-                    }
-                },
-            ],
-        ]);
-
         $builder->add(self::FIELD_ID_CMS_BLOCK, 'hidden')
             ->add(self::FIELD_CURRENT_TEMPLATE, 'hidden')
             ->add(self::FIELD_FK_PAGE, 'hidden')
             ->add(self::FIELD_FK_TEMPLATE, 'choice', [
                 'label' => 'Template',
-                'choices' => $this->getTemplateList(),
+                'choices' => $options[self::OPTION_TEMPLATE_CHOICES],
             ])
             ->add(self::FIELD_NAME, 'text', [
                 'label' => 'Name',
-                'constraints' => $blockConstraints,
+                'constraints' => $this->getBlockConstraints(),
             ])
             ->add(self::FIELD_TYPE, 'choice', [
                 'label' => 'Type',
                 'choices' => [
                     self::TYPE_STATIC => 'Static',
-                    self::CATEGORY => 'Category',
-                    self::PRODUCT => 'Product',
+                    self::TYPE_CATEGORY => 'Category',
+                    self::TYPE_PRODUCT => 'Product',
                 ],
             ])
             ->add(self::FIELD_SELECT_VALUE, 'text', [
@@ -160,59 +138,46 @@ class CmsBlockForm extends AbstractForm
     /**
      * @return array
      */
-    protected function getTemplateList()
+    protected function getBlockConstraints()
     {
-        $templates = $this->templateQuery->find();
+        $blockConstraints = [
+            new Required(),
+            new NotBlank(),
+            new Length(['max' => 255]),
+        ];
 
-        $result = [];
-        foreach ($templates->getData() as $template) {
-            $result[$template->getIdCmsTemplate()] = $template->getTemplateName();
-        }
+        $blockConstraints[] = new Callback([
+            'methods' => [
+                function ($name, ExecutionContextInterface $context) {
+                    $formData = $context->getRoot()->getViewData();
 
-        return $result;
-    }
+                    if ($this->hasExistingBlock($name, $formData[self::FIELD_TYPE], $formData[self::FIELD_VALUE])) {
+                        $context->addViolation('Block name with same Type and Value already exists.');
+                    }
+                },
+            ],
+            'groups' => [self::GROUP_UNIQUE_BLOCK_CHECK]
+        ]);
 
-    /**
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        if ($this->idCmsBlock) {
-            $pageUrlTemplate = $this->blockPageByIdQuery->findOne();
-            $this->blockName = $pageUrlTemplate->getName();
-            $this->blockType = $pageUrlTemplate->getType();
-            $this->blockValue = $pageUrlTemplate->getValue();
-            $this->selectValue = $pageUrlTemplate->getCategoryName();
-
-            return [
-                self::FIELD_ID_CMS_BLOCK => $pageUrlTemplate->getIdCmsBlock(),
-                self::FIELD_FK_PAGE => $pageUrlTemplate->getFkPage(),
-                self::FIELD_FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::FIELD_NAME => $pageUrlTemplate->getName(),
-                self::FIELD_TYPE => $pageUrlTemplate->getType(),
-                self::FIELD_SELECT_VALUE => $pageUrlTemplate->getCategoryName(),
-                self::FIELD_VALUE => $pageUrlTemplate->getValue(),
-                self::FIELD_CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::FIELD_IS_ACTIVE => (bool) $pageUrlTemplate->getIsActive(),
-            ];
-        }
+        return $blockConstraints;
     }
 
     /**
      * @param string $name
-     * @param array $formData
+     * @param string $type
+     * @param int $value
      *
-     * @return array
+     * @return bool
      */
-    protected function checkExistingBlock($name, array $formData)
+    protected function hasExistingBlock($name, $type, $value)
     {
-        return $this->templateQuery->useSpyCmsPageQuery()
-            ->useSpyCmsBlockQuery()
-            ->filterByName($name)
-            ->filterByType($formData['type'])
-            ->filterByValue($formData['value'])
-            ->find()
-            ->getData();
+        $blockEntity = $this->cmsQueryContainer
+            ->queryBlockByNameAndTypeValue($name, $type, $value)
+            ->findOne();
+
+        $hasBlock = ($blockEntity !== null);
+
+        return $hasBlock;
     }
 
 }

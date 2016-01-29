@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Cms\Communication;
 
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
+use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsBlockFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Cms\CmsDependencyProvider;
@@ -99,22 +100,24 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param string $formType
-     * @param int $idCmsBlock
+     * @param array $formData
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsBlockForm($formType, $idCmsBlock = null)
+    public function createCmsBlockForm(array $formData = [], array $formOptions = [])
     {
-        $blockPageByIdQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndBlocksById($idCmsBlock);
+        $formType = new CmsBlockForm($this->getQueryContainer());
 
-        $templateQuery = $this->getQueryContainer()
-            ->queryTemplates();
+        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+    }
 
-        $form = new CmsBlockForm($templateQuery, $blockPageByIdQuery, $formType, $idCmsBlock);
-
-        return $this->createForm($form);
+    /**
+     * @return CmsBlockFormDataProvider
+     */
+    public function createCmsBlockFormDataProvider()
+    {
+        return new CmsBlockFormDataProvider($this->getQueryContainer());
     }
 
     /**
