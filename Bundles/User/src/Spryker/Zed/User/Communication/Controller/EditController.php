@@ -22,6 +22,7 @@ use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 class EditController extends AbstractController
 {
 
+    const PARAM_ID_USER = 'id-user';
     const USER_LISTING_URL = '/user';
 
     /**
@@ -74,7 +75,7 @@ class EditController extends AbstractController
      */
     public function updateAction(Request $request)
     {
-        $idUser = $request->get('id-user');
+        $idUser = $request->get(self::PARAM_ID_USER);
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -119,7 +120,7 @@ class EditController extends AbstractController
      */
     public function activateUserAction(Request $request)
     {
-        $idUser = $request->get('id-user');
+        $idUser = $request->get(self::PARAM_ID_USER);
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -145,7 +146,7 @@ class EditController extends AbstractController
      */
     public function deactivateUserAction(Request $request)
     {
-        $idUser = $request->get('id-user');
+        $idUser = $request->get(self::PARAM_ID_USER);
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -171,7 +172,7 @@ class EditController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idUser = $request->get('id-user');
+        $idUser = $request->get(self::PARAM_ID_USER);
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -203,13 +204,15 @@ class EditController extends AbstractController
 
         if ($resetPasswordForm->isValid()) {
             $formData = $resetPasswordForm->getData();
-            $currentUserTransfer->setPassword($formData[ResetPasswordForm::FIELD_PASSWORD]);
+            $currentUserTransfer->setPassword(
+                $formData[ResetPasswordForm::FIELD_PASSWORD]
+            );
 
             try {
                 $this->getFacade()->updateUser($currentUserTransfer);
                 $this->addSuccessMessage('Password successfully updated.');
-            } catch (UserNotFoundException $e) {
-                $this->addErrorMessage($e->getMessage());
+            } catch (UserNotFoundException $exception) {
+                $this->addErrorMessage($exception->getMessage());
             }
         }
 
@@ -248,6 +251,7 @@ class EditController extends AbstractController
     {
         $aclFacade = $this->getFactory()->getAclFacade();
         $userAclGroups = $aclFacade->getUserGroups($idUser);
+
         foreach ($userAclGroups->getGroups() as $aclGroupTransfer) {
             $aclFacade->removeUserFromGroup($idUser, $aclGroupTransfer->getIdAclGroup());
         }
