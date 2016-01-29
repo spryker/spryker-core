@@ -101,7 +101,6 @@ class SprykerUseStatementFixer extends AbstractFixer
 
             $nextIndex = $openingBraceIndex = $tokens->getNextTokenOfKind($index, ['(']);
 
-
             while (true) {
                 $nextIndex = $tokens->getNextMeaningfulToken($nextIndex);
                 if ($tokens[$nextIndex - 1]->equals(')')) {

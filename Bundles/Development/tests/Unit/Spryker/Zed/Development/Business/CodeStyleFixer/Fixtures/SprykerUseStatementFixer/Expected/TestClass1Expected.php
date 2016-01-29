@@ -33,7 +33,7 @@ class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
         );
     }
 
-    public function replaceNotYetFunction()
+    public function replaceStaticFunction()
     {
         Baz::x();
     }
