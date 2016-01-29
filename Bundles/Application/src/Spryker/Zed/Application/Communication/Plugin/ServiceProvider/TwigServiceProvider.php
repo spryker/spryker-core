@@ -168,7 +168,6 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      */
     protected function provideFormTypeTemplates()
     {
-        // @TODO path contains bundle name
         $path = $this->getConfig()->getBundlesDirectory() . '/Gui/src/Spryker/Zed/Gui/Presentation/Form/Type';
 
         $this->app['twig.loader.filesystem']->addPath(

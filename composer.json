@@ -73,7 +73,6 @@
   "autoload": {
     "files": ["Autoload/autoload.php"],
     "psr-0": {
-      "Spryker\\Shared\\Config": "Bundles/Config/src/",
       "Spryker\\Shared\\Library": "Bundles/Library/src/"
     }
   },
