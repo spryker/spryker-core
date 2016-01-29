@@ -17,7 +17,7 @@ class MaintenanceConfig extends AbstractBundleConfig
      */
     public function getBundleDirectory()
     {
-        return $this->get(MaintenanceConstants::SPRYKER_BUNDLES_ROOT)
+        return $this->get(MaintenanceConstants::SPRYKER_ROOT)
             . DIRECTORY_SEPARATOR;
     }
 
@@ -84,7 +84,7 @@ class MaintenanceConfig extends AbstractBundleConfig
      */
     public function getPathToBundleConfig()
     {
-        return $this->get(MaintenanceConstants::SPRYKER_BUNDLES_ROOT) . '/../bundle_config.json';
+        return $this->get(MaintenanceConstants::SPRYKER_ROOT) . '/../bundle_config.json';
     }
 
 }

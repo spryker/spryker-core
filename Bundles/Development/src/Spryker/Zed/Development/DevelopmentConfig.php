@@ -17,7 +17,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getBundleDirectory()
     {
-        return $this->get(DevelopmentConstants::SPRYKER_BUNDLES_ROOT)
+        return $this->get(DevelopmentConstants::SPRYKER_ROOT)
             . DIRECTORY_SEPARATOR;
     }
 

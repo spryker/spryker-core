@@ -45,7 +45,7 @@ class AbstractBundle
             self::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN => self::BUNDLE_PATH_PATTERN,
             self::OPTION_KEY_BUNDLE_PATH_PATTERN => self::BUNDLE_PATH_PATTERN,
             self::OPTION_KEY_PROJECT_PATH_PATTERN => APPLICATION_SOURCE_DIR,
-            self::OPTION_KEY_VENDOR_PATH_PATTERN => Config::get(ApplicationConstants::SPRYKER_BUNDLES_ROOT) . '/*/src',
+            self::OPTION_KEY_VENDOR_PATH_PATTERN => Config::get(ApplicationConstants::SPRYKER_ROOT) . '/*/src',
         ]);
 
         $resolver->setRequired([

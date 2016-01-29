@@ -15,4 +15,4 @@ require_once $vendor . '/Library/src/Spryker/Shared/Library/Autoloader.php';
 $bundleParent = realpath($vendor . '/..');
 $vendor = realpath($bundleParent . '/../..');
 
-Autoloader::register($bundleParent, $vendor);
+Autoloader::register($bundleParent . '/Bundles', $vendor);

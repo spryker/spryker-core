@@ -116,7 +116,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
      */
     private function getBundlesDirectory()
     {
-        return Config::get(ApplicationConstants::SPRYKER_BUNDLES_ROOT);
+        return Config::get(ApplicationConstants::SPRYKER_ROOT);
     }
 
 }

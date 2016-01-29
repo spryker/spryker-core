@@ -40,7 +40,7 @@ class PropelConfig extends AbstractBundleConfig
     public function getPropelSchemaPathPatterns()
     {
         return [
-            $this->get(PropelConstants::SPRYKER_BUNDLES_ROOT) . '/*/src/*/Zed/*/Persistence/Propel/Schema/',
+            $this->get(PropelConstants::SPRYKER_ROOT) . '/*/src/*/Zed/*/Persistence/Propel/Schema/',
         ];
     }
 

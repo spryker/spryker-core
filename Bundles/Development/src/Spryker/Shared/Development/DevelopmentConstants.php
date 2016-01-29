@@ -12,5 +12,5 @@ use Spryker\Shared\Application\ApplicationConstants;
 interface DevelopmentConstants
 {
 
-    const SPRYKER_BUNDLES_ROOT = ApplicationConstants::SPRYKER_BUNDLES_ROOT;
+    const SPRYKER_ROOT = ApplicationConstants::SPRYKER_ROOT;
 }

@@ -91,7 +91,7 @@ class TestAutoloader
     private function getResourceRelativePath($resourceParts)
     {
         $bundle = $resourceParts[3];
-        $relativeResourcePath = 'Bundles/' . $bundle . '/tests/' . implode(DIRECTORY_SEPARATOR, $resourceParts);
+        $relativeResourcePath = '/' . $bundle . '/tests/' . implode(DIRECTORY_SEPARATOR, $resourceParts);
 
         return $relativeResourcePath . '.php';
     }

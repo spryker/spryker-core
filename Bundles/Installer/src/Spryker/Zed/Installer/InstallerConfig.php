@@ -18,7 +18,7 @@ abstract class InstallerConfig extends AbstractBundleConfig
     public function getGlossaryFilePaths()
     {
         return glob(
-            $this->get(InstallerConstants::SPRYKER_BUNDLES_ROOT) . '/*/src/Spryker/*/*/Resources/glossary.yml'
+            $this->get(InstallerConstants::SPRYKER_ROOT) . '/*/src/Spryker/*/*/Resources/glossary.yml'
         );
     }
 
