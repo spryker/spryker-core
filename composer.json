@@ -56,10 +56,6 @@
     "spryker/yves": "self.version",
     "spryker/zed-request": "self.version"
   },
-
-  "require": {
-    "digital-canvas/zend-framework": ">=1.12.2"
-  },
   "require-dev": {
     "knplabs/github-api": "1.4.7",
     "silex/web-profiler": "~1.0.2",
@@ -73,6 +69,12 @@
   "prefer-stable": true,
   "config": {
     "use-include-path": true
+  },
+  "autoload": {
+    "files": ["Autoload/autoload.php"],
+    "psr-0": {
+      "Spryker\\Shared\\Library": "Bundles/Library/src/"
+    }
   },
   "bin": [
     "Bundles/Console/bin/console"
