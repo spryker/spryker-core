@@ -6,7 +6,8 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
-use Spryker\Zed\Library\Service\GraphViz;
+use Spryker\Zed\Library\GraphViz\Adapter\PhpDocumentorGraph;
+use Spryker\Zed\Library\GraphViz\GraphViz;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 
 class SimpleGraphBuilder implements GraphBuilderInterface
@@ -19,7 +20,8 @@ class SimpleGraphBuilder implements GraphBuilderInterface
 
     public function __construct()
     {
-        $this->graph = new GraphViz(true, [], 'Bundle Dependencies', true, true);
+        $adapter = new PhpDocumentorGraph();
+        $this->graph = new GraphViz($adapter, 'Bundle Dependencies');
     }
 
     /**
@@ -31,13 +33,17 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     {
         foreach ($dependencyTree as $dependency) {
             $this->graph->addNode($dependency[DependencyTree::META_BUNDLE], $this->getNodeAttributes($dependency));
+            $this->graph->addNode($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->getNodeAttributes($dependency));
         }
 
         foreach ($dependencyTree as $dependency) {
             $this->graph->addEdge([$dependency[DependencyTree::META_BUNDLE] => $dependency[DependencyTree::META_FOREIGN_BUNDLE]], $this->getEdgeAttributes($dependency));
         }
 
-        return $this->graph->image('svg', 'dot');
+        $fileName = sys_get_temp_dir() . '/graph';
+        $this->graph->render('svg', $fileName);
+
+        echo file_get_contents($fileName);
     }
 
     /**
