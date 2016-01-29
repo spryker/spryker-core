@@ -56,10 +56,6 @@
     "spryker/yves": "self.version",
     "spryker/zed-request": "self.version"
   },
-
-  "require": {
-    "digital-canvas/zend-framework": ">=1.12.2"
-  },
   "require-dev": {
     "knplabs/github-api": "1.4.7",
     "silex/web-profiler": "~1.0.2",

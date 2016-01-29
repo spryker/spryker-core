@@ -27,12 +27,4 @@ class DevelopmentConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($this->getConfig()->getPathToRoot()));
     }
 
-    /**
-     * @return void
-     */
-    public function testGetPathToSpryker()
-    {
-        $this->assertTrue(is_string($this->getConfig()->getPathToSpryker()));
-    }
-
 }

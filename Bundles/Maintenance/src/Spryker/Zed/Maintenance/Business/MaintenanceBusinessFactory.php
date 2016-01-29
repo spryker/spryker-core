@@ -77,10 +77,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
             $collection,
             $this->getConfig()->getPathToRoot()
         );
-        $finder[] = $this->createNodePackageManagerInstalledPackageFinder(
-            $collection,
-            $this->getConfig()->getPathToSpryker()
-        );
+        $finder[] = $this->createComposerInstalledPackageFinder($collection);
 
         $collector = $this->createInstalledPackageCollector($collection, $finder);
         $collector = $this->createFilteredInstalledPackageCollector($collector);
@@ -179,10 +176,14 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated will be removed. Core does not contain any base or map directories of Propel anymore
+     *
      * @return PropelBaseFolderFinder
      */
     public function createPropelBaseFolderFinder()
     {
+        trigger_error('Deprecated, will be removed.', E_USER_DEPRECATED);
+
         return new PropelBaseFolderFinder($this->getConfig()->getPathToSpryker());
     }
 
@@ -252,7 +253,12 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createDependencyTreeFinder($application, $bundle, $layer)
     {
-        $finder = new Finder($application, $bundle, $layer);
+        $finder = new Finder(
+            $this->getConfig()->getBundleDirectory(),
+            $application,
+            $bundle,
+            $layer
+        );
 
         return $finder;
     }
@@ -548,7 +554,9 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createDependencyTreeForeignEngineBundleFilter()
     {
-        return new ForeignEngineBundleFilter();
+        return new ForeignEngineBundleFilter(
+            $this->getConfig()->getPathToBundleConfig()
+        );
     }
 
     /**
@@ -556,7 +564,9 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createDependencyTreeEngineBundleFilter()
     {
-        return new EngineBundleFilter();
+        return new EngineBundleFilter(
+            $this->getConfig()->getPathToBundleConfig()
+        );
     }
 
     /**

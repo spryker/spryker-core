@@ -53,7 +53,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
             self::OPTION_KEY_APPLICATION => self::APPLICATION,
             self::OPTION_KEY_NAMESPACE_PATTERN => self::NAMESPACE_PATTERN,
             self::OPTION_KEY_PROJECT_PATH_PATTERN => APPLICATION_SOURCE_DIR,
-            self::OPTION_KEY_VENDOR_PATH_PATTERN => APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src',
+            self::OPTION_KEY_VENDOR_PATH_PATTERN => APPLICATION_SPRYKER_ROOT . '/*/src',
         ]);
 
         $resolver->setRequired([

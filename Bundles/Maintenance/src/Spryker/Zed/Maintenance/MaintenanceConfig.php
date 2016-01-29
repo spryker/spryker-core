@@ -16,11 +16,7 @@ class MaintenanceConfig extends AbstractBundleConfig
      */
     public function getBundleDirectory()
     {
-        return APPLICATION_VENDOR_DIR
-            . DIRECTORY_SEPARATOR . 'spryker'
-            . DIRECTORY_SEPARATOR . 'spryker'
-            . DIRECTORY_SEPARATOR . 'Bundles'
-            . DIRECTORY_SEPARATOR;
+        return APPLICATION_SPRYKER_ROOT . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -48,11 +44,15 @@ class MaintenanceConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated use getBundleDirectory() instead
+     *
      * @return string
      */
     public function getPathToSpryker()
     {
-        return APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR . 'spryker' . DIRECTORY_SEPARATOR;
+        trigger_error('Deprecated, use getBundleDirectory() instead.', E_USER_DEPRECATED);
+
+        return $this->getBundleDirectory();
     }
 
     /**
@@ -82,7 +82,7 @@ class MaintenanceConfig extends AbstractBundleConfig
      */
     public function getPathToBundleConfig()
     {
-        return APPLICATION_VENDOR_DIR . '/spryker/spryker/bundle_config.json';
+        return APPLICATION_SPRYKER_ROOT . '/bundle_config.json';
     }
 
 }

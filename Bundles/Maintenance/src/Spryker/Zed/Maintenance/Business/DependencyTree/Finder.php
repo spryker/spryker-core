@@ -14,6 +14,11 @@ class Finder
     /**
      * @var string
      */
+    private $bundleDirectory;
+
+    /**
+     * @var string
+     */
     private $application;
 
     /**
@@ -32,13 +37,15 @@ class Finder
     private $name;
 
     /**
+     * @param $bundleDirectory
      * @param string $application
      * @param string $bundle
      * @param string $layer
      * @param string $name
      */
-    public function __construct($application = '*', $bundle = '*', $layer = '*', $name = '*.php')
+    public function __construct($bundleDirectory, $application = '*', $bundle = '*', $layer = '*', $name = '*.php')
     {
+        $this->bundleDirectory = $bundleDirectory;
         $this->application = $application;
         $this->bundle = $bundle;
         $this->layer = $layer;
@@ -103,8 +110,8 @@ class Finder
             $this->layer = null;
         }
         return [
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
+            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
+            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
         ];
     }
 
@@ -114,8 +121,8 @@ class Finder
     private function getYvesDirectories()
     {
         return [
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Yves/' . $this->bundle,
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Yves/' . $this->bundle,
+            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Yves/' . $this->bundle,
+            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Yves/' . $this->bundle,
         ];
     }
 
@@ -125,8 +132,8 @@ class Finder
     private function getClientDirectories()
     {
         return [
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Client/' . $this->bundle,
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Client/' . $this->bundle,
+            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Client/' . $this->bundle,
+            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Client/' . $this->bundle,
         ];
     }
 
@@ -136,8 +143,8 @@ class Finder
     private function getSharedDirectories()
     {
         return [
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/src/Spryker/Shared/' . $this->bundle . '/',
-            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . $this->bundle . '/tests/*/Spryker/Shared/' . $this->bundle . '/',
+            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Shared/' . $this->bundle . '/',
+            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Shared/' . $this->bundle . '/',
         ];
     }
 

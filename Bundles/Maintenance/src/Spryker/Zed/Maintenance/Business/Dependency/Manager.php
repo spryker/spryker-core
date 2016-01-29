@@ -23,11 +23,18 @@ class Manager
     protected $finder;
 
     /**
-     * @param BundleParser $bundleParser
+     * @var string
      */
-    public function __construct(BundleParser $bundleParser)
+    protected $bundleDirectory;
+
+    /**
+     * @param BundleParser $bundleParser
+     * @param string $bundleDirectory
+     */
+    public function __construct(BundleParser $bundleParser, $bundleDirectory)
     {
         $this->bundleParser = $bundleParser;
+        $this->bundleDirectory = $bundleDirectory;
     }
 
     /**
@@ -65,10 +72,8 @@ class Manager
     protected function collectAllForeignBundles($bundleName)
     {
         $bundles = $this->collectCoreBundles();
-
         $allForeignBundles = [];
 
-        /** @var $bundle SplFileInfo */
         foreach ($bundles as $bundle) {
             $foreignBundleName = $bundle->getFilename();
             if ($foreignBundleName !== $bundleName) {
@@ -86,10 +91,8 @@ class Manager
     public function collectAllBundles()
     {
         $bundles = $this->collectCoreBundles();
-
         $allBundles = [];
 
-        /** @var $bundle SplFileInfo */
         foreach ($bundles as $bundle) {
             $allBundles[] = $bundle->getFilename();
         }
@@ -99,12 +102,11 @@ class Manager
     }
 
     /**
-     * @return Finder
+     * @return Finder|SplFileInfo[]
      */
     protected function collectCoreBundles()
     {
-        $pathToBundles = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/';
-        $bundles = (new Finder())->directories()->depth('== 0')->in($pathToBundles);
+        $bundles = (new Finder())->directories()->depth('== 0')->in($this->bundleDirectory);
 
         return $bundles;
     }
