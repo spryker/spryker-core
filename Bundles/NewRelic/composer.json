@@ -1,5 +1,5 @@
 {
-  "name": "spryker/newrelic",
+  "name": "spryker/new-relic",
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
