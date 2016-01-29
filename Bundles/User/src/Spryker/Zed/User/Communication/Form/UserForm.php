@@ -6,12 +6,16 @@
 namespace Spryker\Zed\User\Communication\Form;
 
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
-use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class UserForm extends AbstractForm
+class UserForm extends AbstractType
 {
+
+    const OPTION_GROUP_CHOICES = 'group_choices';
 
     const FIELD_USERNAME = 'username';
     const FIELD_GROUP = 'group';
@@ -21,26 +25,6 @@ class UserForm extends AbstractForm
     const FIELD_STATUS = 'status';
 
     /**
-     * @var array
-     */
-    protected $allAclGroups;
-
-    /**
-     * @var \Spryker\Zed\User\Dependency\Facade\UserToAclInterface
-     */
-    protected $aclFacade;
-
-    /**
-     * UserForm constructor.
-     *
-     * @param \Spryker\Zed\User\Dependency\Facade\UserToAclInterface $aclFacade
-     */
-    public function __construct(UserToAclInterface $aclFacade)
-    {
-        $this->aclFacade = $aclFacade;
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -48,53 +32,112 @@ class UserForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_USERNAME, 'text', [
-            'label' => 'Username',
-            'constraints' => [
-                $this->getConstraints()->createConstraintNotBlank(),
-            ],
-        ])
-        ->add(self::FIELD_PASSWORD, 'repeated', [
-            'constraints' => [
-                $this->getConstraints()->createConstraintNotBlank(),
-            ],
-            'invalid_message' => 'The password fields must match.',
-            'first_options' => ['label' => 'Password'],
-            'second_options' => ['label' => 'Repeat Password'],
-            'required' => true,
-            'type' => 'password',
-        ])
-        ->add(self::FIELD_FIRST_NAME, 'text', [
-            'constraints' => [
-                $this->getConstraints()->createConstraintNotBlank(),
-            ],
-        ])
-        ->add(self::FIELD_LAST_NAME, 'text', [
-            'constraints' => [
-                $this->getConstraints()->createConstraintNotBlank(),
-            ],
-        ])
-        ->add(self::FIELD_GROUP, 'choice', [
-            'constraints' => [
-                $this->getConstraints()->createConstraintChoice([
-                    'choices' => array_keys($this->getGroupChoices()),
-                    'multiple' => true,
-                    'min' => 1,
-                ]),
-            ],
-            'label' => 'Assigned groups',
-            'multiple' => true,
-            'expanded' => true,
-            'choices' => $this->getGroupChoices(),
-        ]);
+        $this
+            ->addUsernameField($builder)
+            ->addPasswordField($builder)
+            ->addFirstNameField($builder)
+            ->addLastNameField($builder)
+            ->addGroupField($builder, $options[self::OPTION_GROUP_CHOICES]);
     }
 
     /**
-     * @return null
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
      */
-    protected function getDataClass()
+    protected function addUsernameField(FormBuilderInterface $builder)
     {
-        return null;
+        $builder
+            ->add(self::FIELD_USERNAME, 'text', [
+                'label' => 'Username',
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addPasswordField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_PASSWORD, 'repeated', [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'invalid_message' => 'The password fields must match.',
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+                'required' => true,
+                'type' => 'password',
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addFirstNameField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_FIRST_NAME, 'text', [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addLastNameField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_LAST_NAME, 'text', [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return self
+     */
+    protected function addGroupField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder
+            ->add(self::FIELD_GROUP, 'choice', [
+                'constraints' => [
+                    new Choice([
+                        'choices' => array_keys($choices),
+                        'multiple' => true,
+                        'min' => 1,
+                    ]),
+                ],
+                'label' => 'Assigned groups',
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => $choices,
+            ]);
+
+        return $this;
     }
 
     /**
@@ -106,20 +149,15 @@ class UserForm extends AbstractForm
     }
 
     /**
-     * @return array
+     * @param OptionsResolverInterface $resolver
+     *
+     * @return void
      */
-    protected function getGroupChoices()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        if ($this->allAclGroups === null) {
-            $groupsTransfer = $this->aclFacade->getAllGroups();
+        parent::setDefaultOptions($resolver);
 
-            foreach ($groupsTransfer->getGroups() as $groupTransfer) {
-                $this->allAclGroups[$groupTransfer->getIdAclGroup()] =
-                    $this->formatGroupName($groupTransfer->getName());
-            }
-        }
-
-        return $this->allAclGroups;
+        $resolver->setRequired(self::OPTION_GROUP_CHOICES);
     }
 
     /**
@@ -141,16 +179,6 @@ class UserForm extends AbstractForm
             SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS),
             SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS)
         );
-    }
-
-    /**
-     * Set the values for fields
-     *
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        return [];
     }
 
 }

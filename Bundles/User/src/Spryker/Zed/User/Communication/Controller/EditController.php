@@ -69,14 +69,21 @@ class EditController extends AbstractController
     public function updateAction(Request $request)
     {
         $idUser = $request->get('id-user');
+
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
 
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
-        $userForm = $this->getFactory()->createUpdateUserForm($idUser, $this->getFacade());
-        $userForm->handleRequest($request);
+        $dataProvider = $this->getFactory()->createAddressFormDataProvider();
+
+        $userForm = $this->getFactory()
+            ->createUpdateUserForm(
+                $dataProvider->getData($idUser),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($userForm->isValid()) {
             $formData = $userForm->getData();

@@ -8,6 +8,7 @@ namespace Spryker\Zed\User\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\User\Business\UserFacade;
+use Spryker\Zed\User\Communication\Form\DataProvider\UserFormDataProvider;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 use Spryker\Zed\User\Communication\Table\UsersTable;
@@ -44,26 +45,40 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface
+     * @param array $data
+     * @param array $options
+     *
+     * @return FormInterface
      */
-    public function createUserForm()
+    public function createUserForm(array $data = [], array $options = [])
     {
-        $form = new UserForm($this->getAclFacade());
+        $formType = new UserForm();
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($formType, $data, $options);
     }
 
     /**
-     * @param int $idUser
-     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
+     * @param array $data
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createUpdateUserForm($idUser, UserFacade $userFacade)
+    public function createUpdateUserForm(array $data = [], array $options = [])
     {
-        $form = new UserUpdateForm($idUser, $userFacade, $this->getAclFacade());
+        $formType = new UserUpdateForm();
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($formType, $data, $options);
+    }
+
+    /**
+     * @return UserFormDataProvider
+     */
+    public function createAddressFormDataProvider()
+    {
+        return new UserFormDataProvider(
+            $this->getAclFacade(),
+            $this->getProvidedDependency(UserDependencyProvider::FACADE_USER)
+        );
     }
 
     /**
