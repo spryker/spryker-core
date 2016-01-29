@@ -49,14 +49,18 @@ class RedirectController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
      * @return array
      */
     public function addAction(Request $request)
     {
+        $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
-            ->createCmsRedirectForm('add');
-
-        $form->handleRequest($request);
+            ->createCmsRedirectForm(
+                $dataProvider->getData()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -85,10 +89,12 @@ class RedirectController extends AbstractController
     {
         $idUrl = $request->get(CmsRedirectTable::REQUEST_ID_URL);
 
+        $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
-            ->createCmsRedirectForm('update', $idUrl);
-
-        $form->handleRequest($request);
+            ->createCmsRedirectForm(
+                $dataProvider->getData($idUrl)
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -153,7 +159,7 @@ class RedirectController extends AbstractController
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      * @param array $data
      *
-     * @return self
+     * @return RedirectTransfer
      */
     private function createRedirectTransfer($redirect, $data)
     {

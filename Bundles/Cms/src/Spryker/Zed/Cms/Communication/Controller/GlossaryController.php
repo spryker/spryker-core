@@ -21,6 +21,7 @@ use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -298,21 +299,27 @@ class GlossaryController extends AbstractController
     }
 
     /**
+     * @param Request $request
      * @param array $glossaryMappingArray
-     * @param string $place
+     * @param string $placeholder
      * @param int $idPage
      *
-     * @return mixed
+     * @return FormInterface
      */
-    private function createPlaceholderForm(Request $request, array $glossaryMappingArray, $place, $idPage)
+    private function createPlaceholderForm(Request $request, array $glossaryMappingArray, $placeholder, $idPage)
     {
         $idMapping = null;
-        if (isset($glossaryMappingArray[$place])) {
-            $idMapping = $glossaryMappingArray[$place];
+        if (isset($glossaryMappingArray[$placeholder])) {
+            $idMapping = $glossaryMappingArray[$placeholder];
         }
+
+        $dataProvider = $this->getFactory()->createCmsGlossaryFormDataProvider();
         $form = $this->getFactory()
-            ->createCmsGlossaryForm($idPage, $idMapping, $place, $this->getFacade());
-        $form->handleRequest($request);
+            ->createCmsGlossaryForm(
+                $this->getFacade(),
+                $dataProvider->getData($idPage, $idMapping, $placeholder)
+            )
+            ->handleRequest($request);
 
         return $form;
     }

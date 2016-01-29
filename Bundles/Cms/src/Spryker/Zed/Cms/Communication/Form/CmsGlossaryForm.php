@@ -6,74 +6,47 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Cms\Business\CmsFacade;
-use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class CmsGlossaryForm extends AbstractForm
+class CmsGlossaryForm extends AbstractType
 {
 
     const FIELD_FK_PAGE = 'fkPage';
     const FIELD_PLACEHOLDER = 'placeholder';
     const FIELD_GLOSSARY_KEY = 'glossary_key';
     const FIELD_ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
-    const AUTO_GLOSSARY = 'Auto';
-    const FIELD_SEARCH_OPTION = 'search_option';
-    const GLOSSARY_NEW = 'New glossary';
-    const GLOSSARY_FIND = 'Find glossary';
-    const FULLTEXT_SEARCH = 'Full text';
-    const FIELD_TRANSLATION = 'translation';
     const FIELD_TEMPLATE_NAME = 'templateName';
+    const FIELD_SEARCH_OPTION = 'search_option';
+    const FIELD_TRANSLATION = 'translation';
+
+    const TYPE_GLOSSARY_NEW = 'New glossary';
+    const TYPE_GLOSSARY_FIND = 'Find glossary';
+    const TYPE_AUTO_GLOSSARY = 'Auto';
+    const TYPE_FULLTEXT_SEARCH = 'Full text';
+
+    const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
 
     /**
-     * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
-     */
-    protected $glossaryByIdQuery;
-
-    /**
-     * @var int
-     */
-    protected $idPage;
-
-    /**
-     * @var int
-     */
-    protected $idMapping;
-
-    /**
-     * @var array
-     */
-    protected $placeholder;
-
-    /**
-     * @var \Spryker\Zed\Cms\Business\CmsFacade
+     * @var CmsFacade
      */
     protected $cmsFacade;
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery
      * @param \Spryker\Zed\Cms\Business\CmsFacade $cmsFacade
-     * @param int $idPage
-     * @param int $idMapping
-     * @param array $placeholder
      */
-    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery, CmsFacade $cmsFacade, $idPage, $idMapping, $placeholder)
+    public function __construct(CmsFacade $cmsFacade)
     {
-        $this->glossaryByIdQuery = $glossaryByIdQuery;
         $this->cmsFacade = $cmsFacade;
-        $this->idPage = $idPage;
-        $this->idMapping = $idMapping;
-        $this->placeholder = $placeholder;
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
     }
 
     /**
@@ -85,6 +58,28 @@ class CmsGlossaryForm extends AbstractForm
     }
 
     /**
+     * @param OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults([
+            'validation_groups' => function(FormInterface $form) {
+                $defaultData = $form->getConfig()->getData();
+
+                if (!isset($defaultData[self::FIELD_ID_KEY_MAPPING])) {
+                    return [Constraint::DEFAULT_GROUP, self::GROUP_PLACEHOLDER_CHECK];
+                }
+
+                return [Constraint::DEFAULT_GROUP];
+            }
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -92,75 +87,145 @@ class CmsGlossaryForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $placeholderConstraints = $this->getConstraints()->getMandatoryConstraints();
+        $this
+            ->addFkPageField($builder)
+            ->addIdCmsGlossaryKeyMappingField($builder)
+            ->addTemplateNameField($builder)
+            ->addPlaceholderField($builder)
+            ->addSearchOptionField($builder)
+            ->addGlossaryKeyField($builder)
+            ->addTranslationField($builder);
+    }
 
-        if (!isset($this->idMapping)) {
-            $placeholderConstraints[] = $this->getConstraints()->createConstraintCallback([
-                'methods' => [
-                    function ($placeholder, ExecutionContext $context) {
-                        if ($this->cmsFacade->hasPagePlaceholderMapping($this->idPage, $placeholder)) {
-                            $context->addViolation('Placeholder has already mapped');
-                        }
-                    },
-                ],
-            ]);
-        }
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addFkPageField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_FK_PAGE, 'hidden');
 
-        $placeholderParams = [
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addPlaceholderField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_PLACEHOLDER, 'text', [
             'label' => 'Placeholder',
-            'constraints' => $placeholderConstraints,
-        ];
+            'constraints' => $this->getPlaceholderConstants(),
+            'disabled' => 'disabled',
+        ]);
 
-        $placeholderParams['disabled'] = 'disabled';
+        return $this;
+    }
 
-        $builder->add(self::FIELD_FK_PAGE, 'hidden')
-            ->add(self::FIELD_ID_KEY_MAPPING, 'hidden')
-            ->add(self::FIELD_TEMPLATE_NAME, 'hidden')
-            ->add(self::FIELD_PLACEHOLDER, 'text', $placeholderParams)
-            ->add(self::FIELD_SEARCH_OPTION, 'choice', [
-                'label' => 'Search Type',
-                'choices' => [
-                    self::AUTO_GLOSSARY,
-                    self::GLOSSARY_NEW,
-                    self::GLOSSARY_FIND,
-                    self::FULLTEXT_SEARCH,
-                ],
-            ])
-            ->add(self::FIELD_GLOSSARY_KEY, 'text')
-            ->add(self::FIELD_TRANSLATION, 'textarea', [
-                'label' => 'Content',
-                'constraints' => $this->getConstraints()->getRequiredConstraints(),
-                'attr' => [
-                    'class' => 'html-editor',
-                ],
-            ]);
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addGlossaryKeyField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_GLOSSARY_KEY, 'text');
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addIdCmsGlossaryKeyMappingField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_KEY_MAPPING, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addTemplateNameField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_TEMPLATE_NAME, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addSearchOptionField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_SEARCH_OPTION, 'choice', [
+            'label' => 'Search Type',
+            'choices' => [
+                self::TYPE_AUTO_GLOSSARY,
+                self::TYPE_GLOSSARY_NEW,
+                self::TYPE_GLOSSARY_FIND,
+                self::TYPE_FULLTEXT_SEARCH,
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addTranslationField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_TRANSLATION, 'textarea', [
+            'label' => 'Content',
+            'constraints' => [
+                new Required(),
+                new NotBlank(),
+            ],
+            'attr' => [
+                'class' => 'html-editor',
+            ],
+        ]);
+
+        return $this;
     }
 
     /**
      * @return array
      */
-    public function populateFormFields()
+    protected function getPlaceholderConstants()
     {
-        $formItems = [
-            self::FIELD_FK_PAGE => $this->idPage,
-            self::FIELD_ID_KEY_MAPPING => $this->idMapping,
+        $placeholderConstraints = [
+            new Required(),
+            new NotBlank(),
+            new Length(['max' => 255]),
         ];
 
-        if ($this->placeholder) {
-            $formItems[self::FIELD_PLACEHOLDER] = $this->placeholder;
-        }
+        $placeholderConstraints[] = new Callback([
+            'methods' => [
+                function ($placeholder, ExecutionContextInterface $context) {
+                    $formData = $context->getRoot()->getViewData();
+                    if ($this->cmsFacade->hasPagePlaceholderMapping($formData[self::FIELD_FK_PAGE], $placeholder)) {
+                        $context->addViolation('Placeholder has already mapped');
+                    }
+                },
+            ],
+            'groups' => [self::GROUP_PLACEHOLDER_CHECK],
+        ]);
 
-        if ($this->idMapping !== null) {
-            $glossaryMapping = $this->glossaryByIdQuery->findOne();
-
-            if ($glossaryMapping) {
-                $formItems[self::FIELD_PLACEHOLDER] = $glossaryMapping->getPlaceholder();
-                $formItems[self::FIELD_GLOSSARY_KEY] = $glossaryMapping->getKeyname();
-                $formItems[self::FIELD_TRANSLATION] = $glossaryMapping->getTrans();
-            }
-        }
-
-        return $formItems;
+        return $placeholderConstraints;
     }
 
 }

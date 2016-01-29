@@ -6,9 +6,12 @@
 
 namespace Spryker\Zed\Cms\Communication;
 
+use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsBlockFormDataProvider;
+use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider;
+use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
@@ -121,39 +124,47 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param string $formType
-     * @param int $idUrl
+     * @param array $formData
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsRedirectForm($formType, $idUrl = null)
+    public function createCmsRedirectForm(array $formData = [], array $formOptions = [])
     {
-        $queryUrlById = $this->getQueryContainer()
-            ->queryUrlByIdWithRedirect($idUrl);
-
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+        $cmsRedirectFormType = new CmsRedirectForm($urlFacade);
 
-        $form = new CmsRedirectForm($queryUrlById, $urlFacade, $formType);
-
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($cmsRedirectFormType, $formData, $formOptions);
     }
 
     /**
-     * @param int $idPage
-     * @param int $idMapping
-     * @param array $placeholder
+     * @return CmsRedirectFormDataProvider
+     */
+    public function createCmsRedirectFormDataProvider()
+    {
+        return new CmsRedirectFormDataProvider($this->getQueryContainer());
+    }
+
+    /**
      * @param \Spryker\Zed\Cms\Business\CmsFacade $cmsFacade
+     * @param array $formData
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsGlossaryForm($idPage, $idMapping, $placeholder, $cmsFacade)
+    public function createCmsGlossaryForm(CmsFacade $cmsFacade, array $formData = [], array $formOptions = [])
     {
-        $glossaryMappingByIdQuery = $this->getQueryContainer()
-            ->queryGlossaryKeyMappingWithKeyById($idMapping);
+        $cmsGlossaryFormType = new CmsGlossaryForm($cmsFacade);
 
-        $form = new CmsGlossaryForm($glossaryMappingByIdQuery, $cmsFacade, $idPage, $idMapping, $placeholder);
+        return $this->getFormFactory()->create($cmsGlossaryFormType, $formData, $formOptions);
+    }
 
-        return $this->createForm($form);
+    /**
+     * @return CmsGlossaryFormDataProvider
+     */
+    public function createCmsGlossaryFormDataProvider()
+    {
+        return new CmsGlossaryFormDataProvider($this->getQueryContainer());
     }
 
     /**

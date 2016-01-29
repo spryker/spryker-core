@@ -6,64 +6,39 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class CmsRedirectForm extends AbstractForm
+class CmsRedirectForm extends AbstractType
 {
 
-    const ADD = 'add';
-    const UPDATE = 'update';
     const FIELD_ID_REDIRECT = 'id_redirect';
     const FIELD_FROM_URL = 'from_url';
     const FIELD_TO_URL = 'to_url';
     const FIELD_STATUS = 'status';
 
-    /**
-     * @var \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    protected $urlByIdQuery;
+    const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
+     * @var CmsToUrlInterface
      */
     protected $urlFacade;
 
     /**
-     * @var string
-     */
-    protected $formType;
-
-    /**
-     * @var string
-     */
-    protected $redirectUrl;
-
-    /**
-     * @param string $type
-     */
-
-    /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlByIdQuery
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
-     * @param string $formType
      */
-    public function __construct(SpyUrlQuery $urlByIdQuery, CmsToUrlInterface $urlFacade, $formType)
+    public function __construct(CmsToUrlInterface $urlFacade)
     {
-        $this->urlByIdQuery = $urlByIdQuery;
         $this->urlFacade = $urlFacade;
-        $this->formType = $formType;
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
     }
 
     /**
@@ -75,6 +50,29 @@ class CmsRedirectForm extends AbstractForm
     }
 
     /**
+     * @param OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults([
+            'validation_groups' => function(FormInterface $form) {
+                $defaultData = $form->getConfig()->getData();
+                if (
+                    array_key_exists(self::FIELD_FROM_URL, $defaultData) === false ||
+                    $defaultData[self::FIELD_FROM_URL] !== $form->getData()[self::FIELD_FROM_URL]
+                ) {
+                    return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_URL_CHECK];
+                }
+                return [Constraint::DEFAULT_GROUP];
+            }
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -82,47 +80,97 @@ class CmsRedirectForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $urlConstraints = $this->getConstraints()->getMandatoryConstraints();
+        $this
+            ->addIdRedirectField($builder)
+            ->addFromUrlField($builder)
+            ->addToUrlField($builder)
+            ->addStatusField($builder);
+    }
 
-        $urlConstraints[] = $this->getConstraints()->createConstraintCallback([
-            'methods' => [
-                function ($url, ExecutionContext $context) {
-                    if ($this->urlFacade->hasUrl($url) && $this->redirectUrl !== $url) {
-                        $context->addViolation('Url is already used');
-                    }
-                },
-            ],
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addIdRedirectField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_REDIRECT, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addFromUrlField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_FROM_URL, 'text', [
+            'label' => 'URL',
+            'constraints' => $this->getUrlConstraints(),
         ]);
 
-        $builder->add(self::FIELD_ID_REDIRECT, 'hidden')
-            ->add(self::FIELD_FROM_URL, 'text', [
-                'label' => 'URL',
-                'constraints' => $urlConstraints,
-            ])
-            ->add(self::FIELD_TO_URL, 'text', [
-                'label' => 'To URL',
-                'constraints' => $this->getConstraints()->getMandatoryConstraints(),
-            ])
-            ->add(self::FIELD_STATUS, 'text');
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addToUrlField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_TO_URL, 'text', [
+            'label' => 'To URL',
+            'constraints' => $this->getMandatoryConstraints(),
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addStatusField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_STATUS, 'text');
+
+        return $this;
     }
 
     /**
      * @return array
      */
-    public function populateFormFields()
+    protected function getUrlConstraints()
     {
-        $url = $this->urlByIdQuery->findOne();
+        $urlConstraints = $this->getMandatoryConstraints();
 
-        if (!isset($url)) {
-            return [];
-        }
+        $urlConstraints[] = new Callback([
+            'methods' => [
+                function ($url, ExecutionContextInterface $context) {
+                    if ($this->urlFacade->hasUrl($url)) {
+                        $context->addViolation('Url is already used');
+                    }
+                },
+            ],
+            'groups' => [self::GROUP_UNIQUE_URL_CHECK]
+        ]);
 
-        $this->redirectUrl = $url->getUrl();
+        return $urlConstraints;
+    }
 
+    /**
+     * @return array
+     */
+    protected function getMandatoryConstraints()
+    {
         return [
-            self::FIELD_FROM_URL => $url->getUrl(),
-            self::FIELD_TO_URL => $url->getToUrl(),
-            self::FIELD_STATUS => $url->getStatus(),
+            new Required(),
+            new NotBlank(),
+            new Length(['max' => 255]),
         ];
     }
 
