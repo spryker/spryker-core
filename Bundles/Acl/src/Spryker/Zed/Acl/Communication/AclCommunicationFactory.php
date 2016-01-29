@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Acl\Communication;
 
-use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
+use Spryker\Zed\Acl\Communication\Form\DataProvider\AclRoleFormDataProvider;
 use Spryker\Zed\Acl\Communication\Table\GroupTable;
 use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
@@ -128,16 +128,26 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
+     * @param array $data
+     * @param array $options
      *
-     * @return \Symfony\Component\Form\Form
+     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createRoleForm(RoleTransfer $roleTransfer)
+    public function createRoleForm(array $data = [], array $options = [])
     {
-        $form = $this->getFormFactory()
-            ->create(new RoleForm(), $roleTransfer);
+        $formType = new RoleForm();
 
-        return $form;
+        return $this->getFormFactory()->create($formType, $data, $options);
+    }
+
+    /**
+     * @return AclRoleFormDataProvider
+     */
+    public function createAclRoleFormDataProvider()
+    {
+        return new AclRoleFormDataProvider(
+            $this->getProvidedDependency(AclDependencyProvider::FACADE_ACL)
+        );
     }
 
     /**
@@ -147,9 +157,8 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createRulesetForm(RuleTransfer $ruleTransfer)
     {
-        $form = $this->getFormFactory()->create(new RulesetForm(), $ruleTransfer);
-
-        return $form;
+        return $this->getFormFactory()
+            ->create(new RulesetForm(), $ruleTransfer);
     }
 
     /**

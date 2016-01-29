@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Update "' ~ roleTransfer.getName() ~ '" rule' %}
+{% set widget_title = 'Update "' ~ roleTransfer.getName() ~ '" Role' %}
 
 {% block head_title widget_title | trans %}
 
@@ -28,18 +28,18 @@
             <div class="panel panel-default">
                 <div class="panel-heading">{{ 'Ruleset' | trans }}</div>
                 <div class="panel-body">
-                    {{ form_start(rulesetForm) }}
-                    {{ form_widget(rulesetForm) }}
-                    <input type="submit" class="btn btn-primary" value="{{ 'Add ruleset' | trans }}"/>
-                    {{ form_end(rulesetForm) }}
+                    {{ form_start(ruleSetForm) }}
+                    {{ form_widget(ruleSetForm) }}
+                    <input type="submit" class="btn btn-primary" value="{{ 'Add ruleSet' | trans }}"/>
+                    {{ form_end(ruleSetForm) }}
                 </div>
             </div>
 
-            <h3>{{ 'Assigned rulesets' | trans }}</h3>
+            <h3>{{ 'Assigned ruleSets' | trans }}</h3>
 
-            {% if rulesetTable %}
+            {% if ruleSetTable %}
                 <p>
-                    {{ rulesetTable | raw }}
+                    {{ ruleSetTable | raw }}
                 </p>
             {% endif %}
 

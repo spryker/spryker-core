@@ -5,10 +5,11 @@
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RoleForm extends AbstractForm
+class RoleForm extends AbstractType
 {
 
     const FIELD_NAME = 'name';
@@ -22,23 +23,42 @@ class RoleForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_NAME, 'text', [
-            'label' => 'Role name',
-            'constraints' => [
-                $this->getConstraints()->createConstraintNotBlank(),
-            ],
-        ])
-        ->add(self::FIELD_ID_ROLE, 'hidden', [
-            'label' => 'Role name',
-        ]);
+        $this
+            ->addNameField($builder)
+            ->addRoleField($builder);
     }
 
     /**
-     * @return null
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
      */
-    protected function getDataClass()
+    protected function addNameField(FormBuilderInterface $builder)
     {
-        return null;
+        $builder
+            ->add(self::FIELD_NAME, 'text', [
+                'label' => 'Role name',
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addRoleField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_ID_ROLE, 'hidden', [
+                'label' => 'Role name',
+            ]);
+
+        return $this;
     }
 
     /**
@@ -47,22 +67,6 @@ class RoleForm extends AbstractForm
     public function getName()
     {
         return 'role';
-    }
-
-    /**
-     * @return self
-     */
-    protected function addRoleId()
-    {
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        return [];
     }
 
 }
