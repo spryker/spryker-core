@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Cms\Communication;
 
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
+use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
@@ -76,24 +77,25 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param string $formType
-     * @param int $idPage
+     * @param array $formData
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsPageForm($formType, $idPage = null)
+    public function createCmsPageForm(array $formData = [], array $formOptions = [])
     {
-        $pageUrlByIdQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndUrlByIdPage($idPage);
-
-        $templateQuery = $this->getQueryContainer()
-            ->queryTemplates();
-
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+        $cmsPageForm = new CmsPageForm($urlFacade);
 
-        $form = new CmsPageForm($templateQuery, $pageUrlByIdQuery, $urlFacade, $formType, $idPage);
+        return $this->getFormFactory()->create($cmsPageForm, $formData, $formOptions);
+    }
 
-        return $this->createForm($form);
+    /**
+     * @return CmsPageFormDataProvider
+     */
+    public function createCmsPageFormDataProvider()
+    {
+        return new CmsPageFormDataProvider($this->getQueryContainer());
     }
 
     /**

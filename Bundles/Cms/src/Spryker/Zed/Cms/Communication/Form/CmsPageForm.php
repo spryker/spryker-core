@@ -6,45 +6,30 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
-use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
-use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class CmsPageForm extends AbstractForm
+class CmsPageForm extends AbstractType
 {
 
-    const ADD = 'add';
-    const UPDATE = 'update';
     const FIELD_ID_CMS_PAGE = 'idCmsPage';
     const FIELD_FK_TEMPLATE = 'fkTemplate';
     const FIELD_URL = 'url';
     const FIELD_CURRENT_TEMPLATE = 'cur_temp';
-    const PAGE = 'Page';
     const FIELD_IS_ACTIVE = 'is_active';
+    const FIELD_ID_URL = 'id_url';
 
-    /**
-     * @var \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
-     */
-    protected $templateQuery;
-
-    /**
-     * @var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
-     */
-    protected $pageUrlByIdQuery;
-
-    /**
-     * @var string
-     */
-    protected $formType;
-
-    /**
-     * @var int
-     */
-    protected $idPage;
+    const OPTION_TEMPLATE_CHOICES = 'template_choices';
+    const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
@@ -52,32 +37,11 @@ class CmsPageForm extends AbstractForm
     protected $urlFacade;
 
     /**
-     * @var string
-     */
-    protected $pageUrl;
-
-    /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery $templateQuery
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageQuery $pageUrlByIdQuery
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
-     * @param string $formType
-     * @param int $idPage
      */
-    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsPageQuery $pageUrlByIdQuery, CmsToUrlInterface $urlFacade, $formType, $idPage)
+    public function __construct(CmsToUrlInterface $urlFacade)
     {
-        $this->templateQuery = $templateQuery;
-        $this->pageUrlByIdQuery = $pageUrlByIdQuery;
-        $this->formType = $formType;
-        $this->idPage = $idPage;
         $this->urlFacade = $urlFacade;
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
     }
 
     /**
@@ -89,6 +53,31 @@ class CmsPageForm extends AbstractForm
     }
 
     /**
+     * @param OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setRequired(self::OPTION_TEMPLATE_CHOICES);
+
+        $resolver->setDefaults([
+            'validation_groups' => function(FormInterface $form) {
+                $defaultData = $form->getConfig()->getData();
+                if (
+                    array_key_exists(self::FIELD_URL, $defaultData) === false ||
+                    $defaultData[self::FIELD_URL] !== $form->getData()[self::FIELD_URL]
+                ) {
+                    return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_URL_CHECK];
+                }
+                return [Constraint::DEFAULT_GROUP];
+            }
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -96,70 +85,118 @@ class CmsPageForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $urlConstraints = $this->getConstraints()->getMandatoryConstraints();
+        $this
+            ->addIdCmsPageField($builder)
+            ->addIdUrlField($builder)
+            ->addCurrentTemplateField($builder, $options[self::OPTION_TEMPLATE_CHOICES])
+            ->addFkTemplateField($builder)
+            ->addUrlField($builder)
+            ->addIsActiveField($builder);
+    }
 
-        $urlConstraints[] = $this->getConstraints()->createConstraintCallback([
-            'methods' => [
-                function ($url, ExecutionContext $context) {
-                    if ($this->urlFacade->hasUrl($url) && $this->pageUrl !== $url) {
-                        $context->addViolation('Url is already used');
-                    }
-                },
-            ],
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addIdCmsPageField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_CMS_PAGE, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addFkTemplateField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_URL, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addUrlField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_CURRENT_TEMPLATE, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return self
+     */
+    protected function addCurrentTemplateField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder->add(self::FIELD_FK_TEMPLATE, 'choice', [
+            'label' => 'Template',
+            'choices' => $choices,
         ]);
 
-        $builder->add(self::FIELD_ID_CMS_PAGE, 'hidden')
-            ->add(CmsQueryContainer::ID_URL, 'hidden')
-            ->add(self::FIELD_CURRENT_TEMPLATE, 'hidden')
-            ->add(self::FIELD_FK_TEMPLATE, 'choice', [
-                'label' => 'Template',
-                'choices' => $this->getTemplateList(),
-            ])
-            ->add(self::FIELD_URL, 'text', [
-                'label' => 'URL',
-                'constraints' => $urlConstraints,
-            ])
-            ->add(self::FIELD_IS_ACTIVE, 'checkbox', [
-                'label' => 'Active',
-            ]);
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addIdUrlField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_URL, 'text', [
+            'label' => 'URL',
+            'constraints' => $this->getUrlConstraints(),
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addIsActiveField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox', [
+            'label' => 'Active',
+        ]);
+
+        return $this;
     }
 
     /**
      * @return array
      */
-    protected function getTemplateList()
+    protected function getUrlConstraints()
     {
-        $templates = $this->templateQuery->find();
-
-        $result = [];
-        foreach ($templates->getData() as $template) {
-            $result[$template->getIdCmsTemplate()] = $template->getTemplateName();
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        if ($this->idPage === null) {
-            return [];
-        }
-
-        $pageUrlTemplate = $this->pageUrlByIdQuery->findOne();
-
-        $this->pageUrl = $pageUrlTemplate->getUrl();
-
-        return [
-            self::FIELD_ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
-            self::FIELD_FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-            self::FIELD_URL => $pageUrlTemplate->getUrl(),
-            self::FIELD_CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-            self::FIELD_IS_ACTIVE => $pageUrlTemplate->getIsActive(),
-            CmsQueryContainer::ID_URL => $pageUrlTemplate->getIdUrl(),
+        $urlConstraints = [
+            new Required(),
+            new NotBlank(),
+            new Length(['max' => 255]),
+            new Callback([
+                'methods' => [
+                    function ($url, ExecutionContextInterface $context) {
+                        if ($this->urlFacade->hasUrl($url)) {
+                            $context->addViolation('Url is already used');
+                        }
+                    },
+                ],
+                'groups' => [self::GROUP_UNIQUE_URL_CHECK],
+            ]),
         ];
+
+        return $urlConstraints;
     }
 
 }

@@ -56,12 +56,16 @@ class PageController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $form = $this->getFactory()
-            ->createCmsPageForm('add');
+        $dataProvider = $this->getFactory()->createCmsPageFormDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createCmsPageForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
-
-        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -89,11 +93,16 @@ class PageController extends AbstractController
     {
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
-        $form = $this->getFactory()
-            ->createCmsPageForm('update', $idPage);
-
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
-        $form->handleRequest($request);
+
+        $dataProvider = $this->getFactory()->createCmsPageFormDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createCmsPageForm(
+                $dataProvider->getData($idPage),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
