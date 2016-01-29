@@ -1,5 +1,5 @@
 {
-  "name": "spryker/eventjournal",
+  "name": "spryker/event-journal",
   "autoload": {
     "psr-0": {
       "Spryker": "src/",

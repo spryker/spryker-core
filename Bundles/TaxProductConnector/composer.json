@@ -1,5 +1,5 @@
 {
-  "name": "spryker/taxproductconnector",
+  "name": "spryker/tax-product-connector",
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
