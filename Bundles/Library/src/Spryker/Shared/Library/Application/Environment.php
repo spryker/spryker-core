@@ -70,15 +70,15 @@ class Environment
             }
         }
 
-        if (!defined('SPRYKER_ROOT')) {
-            if (!getenv('SPRYKER_ROOT')) {
+        if (!defined('APPLICATION_SPRYKER_ROOT')) {
+            if (!getenv('APPLICATION_SPRYKER_ROOT')) {
                 $sprykerRoot = APPLICATION_VENDOR_DIR . '/spryker';
                 if (is_dir($sprykerRoot . '/spryker/Bundles')) {
                     $sprykerRoot = $sprykerRoot . '/spryker/Bundles';
                 }
-                define('SPRYKER_ROOT', $sprykerRoot);
+                define('APPLICATION_SPRYKER_ROOT', $sprykerRoot);
             } else {
-                define('SPRYKER_ROOT', getenv('SPRYKER_ROOT'));
+                define('APPLICATION_SPRYKER_ROOT', getenv('APPLICATION_SPRYKER_ROOT'));
             }
         }
 
@@ -86,11 +86,11 @@ class Environment
         self::initializeErrorHandler();
 
 
-        require_once SPRYKER_ROOT . '/Library/src/Spryker/Shared/Library/Autoloader.php';
+        require_once APPLICATION_SPRYKER_ROOT . '/Library/src/Spryker/Shared/Library/Autoloader.php';
 
         Autoloader::unregister();
-        Autoloader::register(SPRYKER_ROOT, APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
-        TestAutoloader::register(SPRYKER_ROOT, APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
+        Autoloader::register(APPLICATION_SPRYKER_ROOT, APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
+        TestAutoloader::register(APPLICATION_SPRYKER_ROOT, APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
 
         $coreNamespaces = Config::get(LibraryConstants::CORE_NAMESPACES);
         $configErrorCode = Config::get(LibraryConstants::ERROR_LEVEL);

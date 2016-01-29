@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Maintenance;
 
-use Spryker\Shared\Maintenance\MaintenanceConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MaintenanceConfig extends AbstractBundleConfig
@@ -17,8 +16,7 @@ class MaintenanceConfig extends AbstractBundleConfig
      */
     public function getBundleDirectory()
     {
-        return $this->get(MaintenanceConstants::SPRYKER_ROOT)
-            . DIRECTORY_SEPARATOR;
+        return APPLICATION_SPRYKER_ROOT . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -84,7 +82,7 @@ class MaintenanceConfig extends AbstractBundleConfig
      */
     public function getPathToBundleConfig()
     {
-        return SPRYKER_ROOT . '/bundle_config.json';
+        return APPLICATION_SPRYKER_ROOT . '/bundle_config.json';
     }
 
 }
