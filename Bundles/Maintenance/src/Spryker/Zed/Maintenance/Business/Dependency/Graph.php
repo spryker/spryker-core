@@ -6,7 +6,8 @@
 
 namespace Spryker\Zed\Maintenance\Business\Dependency;
 
-use Spryker\Zed\Library\Service\GraphViz;
+use Spryker\Zed\Library\GraphViz\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Zed\Library\GraphViz\GraphVizInterface;
 
 class Graph
 {
@@ -21,14 +22,31 @@ class Graph
      */
     protected $manager;
 
+    /**
+     * @var array
+     */
     protected $graphDefault = ['fontname' => 'Verdana', 'labelfontname' => 'Verdana', 'nodesep' => 0.6, 'ranksep' => 0.8];
 
+    /**
+     * @var string
+     */
     protected $format = 'svg';
 
-    public function __construct(BundleParser $bundleParser, Manager $manager)
+    /**
+     * @var GraphVizInterface
+     */
+    protected $graph;
+
+    /**
+     * @param BundleParser $bundleParser
+     * @param Manager $manager
+     * @param GraphVizInterface $graph
+     */
+    public function __construct(BundleParser $bundleParser, Manager $manager, GraphVizInterface $graph)
     {
         $this->bundleParser = $bundleParser;
         $this->manager = $manager;
+        $this->graph = $graph;
     }
 
     /**
@@ -41,8 +59,7 @@ class Graph
         $outgoingDependencies = $this->bundleParser->parseOutgoingDependencies($bundleName);
         $incomingDependencies = $this->manager->parseIncomingDependencies($bundleName);
 
-        $graph = new GraphViz(true, $this->graphDefault, 'G', false, true);
-        $graph->addNode($bundleName);
+        $this->graph->addNode($bundleName);
 
         foreach (array_keys($outgoingDependencies) as $foreignBundleName) {
             $isEngine = $this->bundleParser->isEngine($foreignBundleName);
@@ -54,25 +71,25 @@ class Graph
                 $attributes['fillcolor'] = '#e9e9e9';
             }
 
-            $graph->addNode($foreignBundleName, $attributes);
+            $this->graph->addNode($foreignBundleName, $attributes);
         }
 
         foreach (array_keys($incomingDependencies) as $foreignBundleName) {
-            $graph->addNode($foreignBundleName);
+            $this->graph->addNode($foreignBundleName);
         }
 
         $attributes = ['fontsize' => 10];
         foreach ($outgoingDependencies as $foreignBundleName => $count) {
             $attributes['label'] = $count;
-            $graph->addEdge([$bundleName => $foreignBundleName], $attributes);
+            $this->graph->addEdge($bundleName, $foreignBundleName, $attributes);
         }
 
         foreach ($incomingDependencies as $foreignBundleName => $count) {
             $attributes['label'] = $count;
-            $graph->addEdge([$foreignBundleName => $bundleName], $attributes);
+            $this->graph->addEdge($foreignBundleName, $bundleName, $attributes);
         }
 
-        return $graph->image($this->format, 'dot');
+        return $this->graph->render($this->format);
     }
 
 }

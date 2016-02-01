@@ -8,7 +8,7 @@ namespace Spryker\Zed\Library\GraphViz;
 
 use Spryker\Zed\Library\GraphViz\Adapter\AdapterInterface;
 
-class GraphViz
+class GraphViz implements GraphVizInterface
 {
 
     /**
@@ -18,7 +18,7 @@ class GraphViz
 
     /**
      * @param AdapterInterface $adapter
-     * @param $name
+     * @param string $name
      * @param array $attributes
      * @param bool $directed
      * @param bool $strict
@@ -44,27 +44,41 @@ class GraphViz
     }
 
     /**
-     * @param string $edge
+     * @param string $fromNode
+     * @param string $toNode
+     * @param array $attributes
+     *
+     * @return $this
+     */
+    public function addEdge($fromNode, $toNode, $attributes = [])
+    {
+        $this->adapter->addEdge($fromNode, $toNode, $attributes);
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
      * @param array $attributes
      *
      * @return self
      */
-    public function addEdge($edge, $attributes = [])
+    public function addCluster($name, $attributes = [])
     {
-        $this->adapter->addEdge($edge, $attributes);
+        $this->adapter->addCluster($name, $attributes);
 
         return $this;
     }
 
     /**
      * @param string $type
-     * @param string $fileName
+     * @param null $fileName
      *
-     * @return void
+     * @return string
      */
-    public function render($type, $fileName)
+    public function render($type, $fileName = null)
     {
-        $this->adapter->render($type, $fileName);
+        return $this->adapter->render($type, $fileName);
     }
 
 }

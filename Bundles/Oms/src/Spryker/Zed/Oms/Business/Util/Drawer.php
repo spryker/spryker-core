@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Spryker\Zed\Library\GraphViz\Adapter\PhpDocumentorGraph;
-use Spryker\Zed\Library\Service\GraphViz;
+use Spryker\Zed\Library\GraphViz\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Zed\Library\GraphViz\GraphViz;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
@@ -71,10 +71,9 @@ class Drawer implements DrawerInterface
     {
         $this->commandModels = $commands;
         $this->conditionModels = $conditions;
-        $this->graph = new GraphViz(true, $this->graphDefault, 'G', false, true);
 
-        $adapter = new PhpDocumentorGraph();
-        $this->graph = new \Spryker\Zed\Library\GraphViz\GraphViz($adapter, 'G', $this->graphDefault, true, false);
+        $adapter = new PhpDocumentorGraphAdapter();
+        $this->graph = new GraphViz($adapter, 'G', $this->graphDefault, true, false);
     }
 
     /**
@@ -89,15 +88,11 @@ class Drawer implements DrawerInterface
     {
         $this->init($format, $fontSize);
 
+        $this->drawClusters($process);
         $this->drawStates($process, $highlightState);
-
         $this->drawTransitions($process);
 
-        $this->drawClusters($process);
-
-        $fileName = sys_get_temp_dir() . '/graph';
-        $this->graph->render($this->format, 'dot');
-        echo file_get_contents($fileName);
+        return $this->graph->render($this->format);
     }
 
     /**
@@ -182,7 +177,11 @@ class Drawer implements DrawerInterface
         $processes = $process->getAllProcesses();
         foreach ($processes as $subProcess) {
             $group = $subProcess->getName();
-            $this->graph->addCluster($group, $group, $this->attributesProcess);
+            $attributes = $this->attributesProcess;
+            $attributes['label'] = $group;
+
+            $this->graph->addCluster($group, $attributes);
+//            $this->graph->addCluster($group, $group, $attributes);
         }
     }
 
@@ -269,7 +268,7 @@ class Drawer implements DrawerInterface
         $toName = $this->addEdgeToState($transition, $toName);
         $attributes = $this->addEdgeAttributes($transition, $attributes, $label, $type);
 
-        $this->graph->addEdge([$fromName => $toName], $attributes);
+        $this->graph->addEdge($fromName, $toName, $attributes);
     }
 
     /**

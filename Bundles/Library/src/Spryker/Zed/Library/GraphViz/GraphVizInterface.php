@@ -9,6 +9,8 @@ namespace Spryker\Zed\Library\GraphViz;
 interface GraphVizInterface
 {
 
+    const DEFAULT_GROUP = 'default';
+
     /**
      * @param string $name
      * @param array $attributes
@@ -16,15 +18,16 @@ interface GraphVizInterface
      *
      * @return self
      */
-    public function addNode($name, $attributes = [], $group = 'default');
+    public function addNode($name, $attributes = [], $group = self::DEFAULT_GROUP);
 
     /**
-     * @param string $edge
+     * @param string $fromNode
+     * @param string $toNode
      * @param array $attributes
      *
      * @return self
      */
-    public function addEdge($edge, $attributes = []);
+    public function addEdge($fromNode, $toNode, $attributes = []);
 
     /**
      * @param string $name
@@ -38,8 +41,8 @@ interface GraphVizInterface
      * @param string $type
      * @param string $fileName
      *
-     * @return void
+     * @return string
      */
-    public function render($type, $fileName);
+    public function render($type, $fileName = null);
 
 }

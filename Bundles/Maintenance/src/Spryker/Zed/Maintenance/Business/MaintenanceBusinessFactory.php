@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Maintenance\Business;
 
+use Spryker\Zed\Library\GraphViz\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Zed\Library\GraphViz\GraphViz;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\BranchAliasUpdater;
@@ -142,7 +144,23 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         $bundleParser = $this->createDependencyBundleParser();
         $manager = $this->createDependencyManager();
 
-        return new Graph($bundleParser, $manager);
+        return new Graph($bundleParser, $manager, $this->createGraphViz('Bundle Graph'));
+    }
+
+    /**
+     * @param string $name
+     * @param array $attributes
+     * @param bool $directed
+     * @param bool $strict
+     *
+     * @return GraphViz
+     */
+    protected function createGraphViz($name, array $attributes = [], $directed = true, $strict = true)
+    {
+        $adapter = $this->createGraphVizAdapter();
+        $graph = new GraphViz($adapter, $name, $attributes, $directed, $strict);
+
+        return $graph;
     }
 
     /**
@@ -162,7 +180,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         $bundleParser = $this->createDependencyBundleParser();
 
-        return new Manager($bundleParser);
+        return new Manager($bundleParser, $this->getConfig()->getBundleDirectory());
     }
 
     /**
@@ -364,7 +382,15 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createDetailedGraphBuilder()
     {
-        return new DetailedGraphBuilder();
+        return new DetailedGraphBuilder($this->createGraphViz('Detailed Dependencies'));
+    }
+
+    /**
+     * @return PhpDocumentorGraphAdapter
+     */
+    protected function createGraphVizAdapter()
+    {
+        return new PhpDocumentorGraphAdapter();
     }
 
     /**
@@ -407,7 +433,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSimpleGraphBuilder()
     {
-        return new SimpleGraphBuilder();
+        return new SimpleGraphBuilder($this->createGraphViz('Bundle Dependencies'));
     }
 
     /**

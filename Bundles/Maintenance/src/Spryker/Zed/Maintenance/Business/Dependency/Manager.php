@@ -18,11 +18,6 @@ class Manager
     protected $bundleParser;
 
     /**
-     * @var Finder
-     */
-    protected $finder;
-
-    /**
      * @var string
      */
     protected $bundleDirectory;
