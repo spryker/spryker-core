@@ -15,7 +15,7 @@ class Helper
     protected $app;
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      */
     public function __construct(Application $app)
     {

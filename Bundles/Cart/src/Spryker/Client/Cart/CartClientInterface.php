@@ -28,21 +28,21 @@ interface CartClientInterface
     public function getItemCount();
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addItem(ItemTransfer $itemTransfer);
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeItem(ItemTransfer $itemTransfer);
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -50,7 +50,7 @@ interface CartClientInterface
     public function changeItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\CartTransfer
@@ -58,7 +58,7 @@ interface CartClientInterface
     public function decreaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\CartTransfer

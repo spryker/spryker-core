@@ -10,7 +10,7 @@ interface FilterInterface
 {
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return void
      */

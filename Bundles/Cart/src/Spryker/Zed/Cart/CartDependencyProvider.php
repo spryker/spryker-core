@@ -18,7 +18,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_ITEM_GROUPER = 'item grouper facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

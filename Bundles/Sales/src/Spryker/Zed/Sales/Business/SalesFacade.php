@@ -23,7 +23,7 @@ class SalesFacade extends AbstractFacade
 {
 
     /**
-     * @param CommentTransfer $commentTransfer
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
      * @return \Generated\Shared\Transfer\CommentTransfer
      */
@@ -83,7 +83,7 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -107,7 +107,7 @@ class SalesFacade extends AbstractFacade
 
     /**
      * @param int $idRefund
-     * @param OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
+     * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
      *
      * @return void
      */
@@ -119,7 +119,7 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
@@ -132,7 +132,7 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param AddressTransfer $addressesTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
      * @return mixed
@@ -157,7 +157,7 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
@@ -169,7 +169,7 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */

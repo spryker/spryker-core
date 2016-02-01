@@ -24,7 +24,7 @@ class BundleControllerAction implements BundleControllerActionInterface
     private $filter;
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(Request $request)
     {

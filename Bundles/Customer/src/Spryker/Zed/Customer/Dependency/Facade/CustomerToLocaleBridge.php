@@ -19,7 +19,7 @@ class CustomerToLocaleBridge implements CustomerToLocaleInterface
     /**
      * CustomerToLocaleBridge constructor.
      *
-     * @param LocaleFacade $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {

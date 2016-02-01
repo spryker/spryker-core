@@ -24,7 +24,7 @@ interface SalesToOmsInterface
     public function getProcessEntity($processName);
 
     /**
-     * @param OrderTransfer $transferOrder
+     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
      *
      * @return string
      */
@@ -43,7 +43,7 @@ interface SalesToOmsInterface
     public function getManualEvents($idOrderItem);
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
      * @return SpySalesOrderItem[]

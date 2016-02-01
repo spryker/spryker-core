@@ -20,7 +20,7 @@ class Search
     private $searchClient;
 
     /**
-     * @param SearchClient $searchClient
+     * @param \Spryker\Client\Search\SearchClient $searchClient
      */
     public function __construct(SearchClient $searchClient)
     {

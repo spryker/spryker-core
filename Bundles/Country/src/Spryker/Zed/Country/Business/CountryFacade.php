@@ -18,7 +18,7 @@ class CountryFacade extends AbstractFacade
 {
 
     /**
-     * @param LoggerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */

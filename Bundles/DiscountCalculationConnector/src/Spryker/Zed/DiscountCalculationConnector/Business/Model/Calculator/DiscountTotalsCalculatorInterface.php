@@ -13,7 +13,7 @@ interface DiscountTotalsCalculatorInterface extends TotalsCalculatorPluginInterf
 {
 
     /**
-     * @param CalculableInterface $discountableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
      * @param \ArrayObject $calculableItems
      */
     public function calculateDiscount(CalculableInterface $discountableContainer, \ArrayObject $calculableItems);

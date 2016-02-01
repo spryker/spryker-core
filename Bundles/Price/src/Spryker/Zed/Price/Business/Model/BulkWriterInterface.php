@@ -24,12 +24,12 @@ interface BulkWriterInterface
     public function createPriceType($name);
 
     /**
-     * @param PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      */
     public function setPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      */
     public function createPriceForProduct(PriceProductTransfer $transferPriceProduct);
 

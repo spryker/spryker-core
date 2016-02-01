@@ -18,7 +18,7 @@ class CalculationCheckoutConnectorToCalculationBridge implements CalculationChec
     protected $calculationFacade;
 
     /**
-     * @param CalculationFacade $calculationFacade
+     * @param \Spryker\Zed\Calculation\Business\CalculationFacade $calculationFacade
      */
     public function __construct($calculationFacade)
     {
@@ -26,7 +26,7 @@ class CalculationCheckoutConnectorToCalculationBridge implements CalculationChec
     }
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
      */

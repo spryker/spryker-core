@@ -21,7 +21,7 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
 {
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -30,7 +30,7 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return string
      */

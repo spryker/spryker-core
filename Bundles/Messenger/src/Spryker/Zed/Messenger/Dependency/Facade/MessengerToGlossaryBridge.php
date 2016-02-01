@@ -18,7 +18,7 @@ class MessengerToGlossaryBridge implements MessengerToGlossaryInterface
     protected $glossaryFacade;
 
     /**
-     * @param GlossaryFacade $glossaryFacade
+     * @param \Spryker\Zed\Glossary\Business\GlossaryFacade $glossaryFacade
      */
     public function __construct($glossaryFacade)
     {

@@ -14,7 +14,7 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
 {
 
     /**
-     * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -30,7 +30,7 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

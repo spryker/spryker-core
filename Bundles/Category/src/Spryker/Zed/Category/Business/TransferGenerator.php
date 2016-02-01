@@ -16,7 +16,7 @@ class TransferGenerator implements TransferGeneratorInterface
 {
 
     /**
-     * @param SpyCategory $categoryEntity
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
@@ -42,7 +42,7 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyCategoryNode $nodeEntity
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $nodeEntity
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
      */

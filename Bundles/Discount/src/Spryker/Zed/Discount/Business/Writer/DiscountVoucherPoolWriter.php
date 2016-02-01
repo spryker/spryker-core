@@ -14,7 +14,7 @@ class DiscountVoucherPoolWriter extends AbstractWriter
 {
 
     /**
-     * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $discountVoucherPoolTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
@@ -28,7 +28,7 @@ class DiscountVoucherPoolWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $discountVoucherPoolTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -46,7 +46,7 @@ class DiscountVoucherPoolWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherPoolTransfer $voucherPoolTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $voucherPoolTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */

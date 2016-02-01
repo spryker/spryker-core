@@ -23,7 +23,7 @@ interface LocalInterface
     public function createQuery($type, $options = null);
 
     /**
-     * @param QueryInterface $query
+     * @param \Solarium\Core\Query\QueryInterface $query
      *
      * @return \Solarium\Core\Query\Result\ResultInterface
      */

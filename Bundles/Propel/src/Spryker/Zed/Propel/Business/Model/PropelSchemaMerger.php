@@ -50,7 +50,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param SplFileInfo $schemaFile
+     * @param \Symfony\Component\Finder\SplFileInfo $schemaFile
      *
      * @return \SimpleXMLElement
      */
@@ -76,7 +76,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param SplFileInfo $schemaFile
+     * @param \Symfony\Component\Finder\SplFileInfo $schemaFile
      *
      * @return \SimpleXMLElement
      */

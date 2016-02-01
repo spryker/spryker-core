@@ -23,8 +23,8 @@ class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
     protected $sequenceNumberSettings;
 
     /**
-     * @param CustomerToSequenceNumberInterface $sequenceNumberFacade
-     * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface $sequenceNumberFacade
+     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
      */
     public function __construct(
         CustomerToSequenceNumberInterface $sequenceNumberFacade,
@@ -35,7 +35,7 @@ class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
     }
 
     /**
-     * @param CustomerTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $orderTransfer
      *
      * @return string
      */

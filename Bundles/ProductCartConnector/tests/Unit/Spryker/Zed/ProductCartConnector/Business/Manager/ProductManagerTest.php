@@ -132,7 +132,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param ProductConcreteTransfer $returnValue
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $returnValue
      *
      * @return \Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager
      */

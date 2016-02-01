@@ -17,7 +17,7 @@ interface CartSessionInterface
     public function getCart();
 
     /**
-     * @param CartTransfer $cartTransfer
+     * @param \Generated\Shared\Transfer\CartTransfer $cartTransfer
      *
      * @return self
      */

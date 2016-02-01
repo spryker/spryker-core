@@ -36,8 +36,8 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param $calculableItems
      *
      * @return void
@@ -56,8 +56,8 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param $calculableItems
      *
      * @return int
@@ -74,7 +74,7 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param $calculableItems
      *
      * @return int
@@ -89,8 +89,8 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return int
      */

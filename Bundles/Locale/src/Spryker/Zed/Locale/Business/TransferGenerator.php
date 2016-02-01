@@ -13,7 +13,7 @@ class TransferGenerator implements TransferGeneratorInterface
 {
 
     /**
-     * @param SpyLocale $localeEntity
+     * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -24,7 +24,7 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyLocale $localeEntityList
+     * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntityList
      *
      * @return LocaleTransfer[]
      */

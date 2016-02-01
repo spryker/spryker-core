@@ -32,8 +32,8 @@ class GlossaryStorage implements GlossaryStorageInterface
     private $translations = [];
 
     /**
-     * @param StorageClientInterface $storage
-     * @param KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Client\Storage\StorageClientInterface $storage
+     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
      */
     public function __construct($storage, $keyBuilder, $localeName)

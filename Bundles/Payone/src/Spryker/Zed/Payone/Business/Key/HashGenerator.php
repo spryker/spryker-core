@@ -67,7 +67,7 @@ class HashGenerator implements HashGeneratorInterface
     ];
 
     /**
-     * @param HashInterface $hashProvider
+     * @param \Spryker\Shared\Payone\Dependency\HashInterface $hashProvider
      */
     public function __construct(HashInterface $hashProvider)
     {
@@ -75,7 +75,7 @@ class HashGenerator implements HashGeneratorInterface
     }
 
     /**
-     * @param AbstractRequestContainer $request
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer $request
      * @param string $securityKey
      *
      * @return string

@@ -38,8 +38,8 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
     protected $camelCaseToUnderscoreFilter;
 
     /**
-     * @param DiscountConfig $config
-     * @param CamelCaseToUnderscore $camelCaseToUnderscoreFilter
+     * @param \Spryker\Zed\Discount\DiscountConfig $config
+     * @param \Zend\Filter\Word\CamelCaseToUnderscore $camelCaseToUnderscoreFilter
      */
     public function __construct(DiscountConfig $config, CamelCaseToUnderscore $camelCaseToUnderscoreFilter)
     {
@@ -48,7 +48,7 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param TransferInterface $formArray
+     * @param \Spryker\Shared\Transfer\TransferInterface $formArray
      *
      * @return array
      */

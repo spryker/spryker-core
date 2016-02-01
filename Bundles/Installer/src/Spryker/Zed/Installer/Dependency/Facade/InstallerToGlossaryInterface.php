@@ -38,7 +38,7 @@ interface InstallerToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
@@ -48,7 +48,7 @@ interface InstallerToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -62,7 +62,7 @@ interface InstallerToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *

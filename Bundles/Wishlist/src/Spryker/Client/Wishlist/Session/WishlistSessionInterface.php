@@ -15,7 +15,7 @@ interface WishlistSessionInterface
     public function getWishlist();
 
     /**
-     * @param WishlistTransfer $wishlist
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlist
      *
      * @return self
      */

@@ -65,7 +65,7 @@ abstract class AbstractZedClient
 
     /**
      * @param string $url
-     * @param TransferInterface $object
+     * @param \Spryker\Shared\Transfer\TransferInterface $object
      * @param int|null $timeoutInSeconds (optional) default: null
      * @param bool $isBackgroundRequest (optional) default: false
      *

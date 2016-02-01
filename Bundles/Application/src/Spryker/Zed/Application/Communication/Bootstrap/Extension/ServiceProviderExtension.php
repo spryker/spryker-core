@@ -37,7 +37,7 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
 {
 
     /**
-     * @param Application $app
+     * @param \Spryker\Shared\Application\Communication\Application $app
      *
      * @return array
      */

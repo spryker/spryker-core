@@ -37,7 +37,7 @@ abstract class AbstractForm extends SharedAbstractForm
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      */

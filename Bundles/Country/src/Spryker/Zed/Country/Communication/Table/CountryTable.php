@@ -21,7 +21,7 @@ class CountryTable extends AbstractTable
     protected $countryQuery;
 
     /**
-     * @param SpyCountryQuery $countryQuery
+     * @param \Orm\Zed\Country\Persistence\SpyCountryQuery $countryQuery
      */
     public function __construct(SpyCountryQuery $countryQuery)
     {
@@ -29,7 +29,7 @@ class CountryTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -48,7 +48,7 @@ class CountryTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Propel\Runtime\Collection\ObjectCollection
      */

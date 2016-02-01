@@ -15,7 +15,7 @@ class FulltextSearch extends AbstractSearch
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Elastica\Query
      */
@@ -38,8 +38,8 @@ class FulltextSearch extends AbstractSearch
     }
 
     /**
-     * @param Request $request
-     * @param Query $searchQuery
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Elastica\Query $searchQuery
      *
      * @return void
      */

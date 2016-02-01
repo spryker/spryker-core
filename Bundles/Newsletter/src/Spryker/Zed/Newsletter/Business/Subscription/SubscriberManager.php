@@ -24,7 +24,7 @@ class SubscriberManager implements SubscriberManagerInterface
     protected $subscriberKeyGenerator;
 
     /**
-     * @param NewsletterQueryContainer $queryContainer
+     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
      * @param SubscriberKeyGeneratorInterface $subscriberKeyGenerator
      */
     public function __construct(NewsletterQueryContainer $queryContainer, SubscriberKeyGeneratorInterface $subscriberKeyGenerator)
@@ -52,7 +52,7 @@ class SubscriberManager implements SubscriberManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriberTransfer
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
@@ -72,7 +72,7 @@ class SubscriberManager implements SubscriberManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $subscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriber
      *
      * @return void
      */
@@ -92,7 +92,7 @@ class SubscriberManager implements SubscriberManagerInterface
     }
 
     /**
-     * @param SpyNewsletterSubscriber $subscriberEntity
+     * @param \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber $subscriberEntity
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */

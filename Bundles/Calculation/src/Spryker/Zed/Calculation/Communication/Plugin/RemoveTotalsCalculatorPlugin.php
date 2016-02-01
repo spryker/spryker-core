@@ -20,7 +20,7 @@ class RemoveTotalsCalculatorPlugin extends AbstractPlugin implements CalculatorP
 {
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
      */

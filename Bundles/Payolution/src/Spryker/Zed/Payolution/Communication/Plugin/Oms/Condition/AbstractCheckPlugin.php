@@ -15,7 +15,7 @@ abstract class AbstractCheckPlugin extends BaseAbstractPlugin implements Conditi
 {
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool
      */
@@ -32,7 +32,7 @@ abstract class AbstractCheckPlugin extends BaseAbstractPlugin implements Conditi
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

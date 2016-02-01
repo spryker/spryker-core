@@ -19,7 +19,7 @@ interface PageManagerInterface
 {
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
@@ -40,21 +40,21 @@ interface PageManagerInterface
     public function getPageById($idPage);
 
     /**
-     * @param SpyCmsPage $page
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $page
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */
     public function convertPageEntityToTransfer(SpyCmsPage $page);
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      *
      * @return void
      */
     public function touchPageActive(PageTransfer $page);
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $url
      *
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
@@ -64,9 +64,9 @@ interface PageManagerInterface
     public function createPageUrl(PageTransfer $page, $url);
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $url
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
@@ -75,7 +75,7 @@ interface PageManagerInterface
     public function createPageUrlWithLocale(PageTransfer $page, $url, LocaleTransfer $localeTransfer);
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $url
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -83,8 +83,8 @@ interface PageManagerInterface
     public function savePageUrlAndTouch(PageTransfer $page, $url);
 
     /**
-     * @param PageTransfer $page
-     * @param CmsBlockTransfer $blockTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */

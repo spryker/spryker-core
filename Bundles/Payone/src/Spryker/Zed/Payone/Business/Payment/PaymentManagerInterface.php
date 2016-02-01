@@ -28,7 +28,7 @@ interface PaymentManagerInterface
     public function registerPaymentMethodMapper(PaymentMethodMapperInterface $paymentMethodMapper);
 
     /**
-     * @param PayoneRefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\PayoneRefundTransfer $refundTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer
      */
@@ -63,43 +63,43 @@ interface PaymentManagerInterface
     public function capturePayment($idPayment);
 
     /**
-     * @param PayoneCreditCardTransfer $creditCardData
+     * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $creditCardData
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData);
 
     /**
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return array
      */
     public function getPaymentLogs(ObjectCollection $orders);
 
     /**
-     * @param PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer
+     * @param \Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer
      *
      * @return array
      */
     public function getCreditCardCheckRequestData(PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer);
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
     public function isRefundPossible(OrderTransfer $orderTransfer);
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
     public function isPaymentDataRequired(OrderTransfer $orderTransfer);
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
@@ -113,7 +113,7 @@ interface PaymentManagerInterface
     public function getPaymentData($idPayment);
 
     /**
-     * @param PaymentDataTransfer $paymentDataTransfer
+     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentDataTransfer
      * @param int $idOrder
      *
      * @return void

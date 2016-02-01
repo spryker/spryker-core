@@ -18,7 +18,7 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -28,7 +28,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -38,7 +38,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -48,7 +48,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -58,7 +58,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CartTransfer $cartTransfer
+     * @param \Generated\Shared\Transfer\CartTransfer $cartTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -68,7 +68,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -78,7 +78,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -88,7 +88,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */

@@ -15,7 +15,7 @@ class CmsDependencyProvider extends AbstractDependencyProvider
     const KV_STORAGE = 'kv storage';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */

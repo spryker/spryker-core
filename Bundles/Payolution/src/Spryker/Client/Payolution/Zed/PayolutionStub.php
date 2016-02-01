@@ -19,7 +19,7 @@ class PayolutionStub implements PayolutionStubInterface
     protected $zedRequestClient;
 
     /**
-     * @param ZedRequestClient $zedRequestClient
+     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedRequestClient
      */
     public function __construct(ZedRequestClient $zedRequestClient)
     {
@@ -27,7 +27,7 @@ class PayolutionStub implements PayolutionStubInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */

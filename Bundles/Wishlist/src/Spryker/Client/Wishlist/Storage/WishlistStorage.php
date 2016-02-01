@@ -25,8 +25,8 @@ class WishlistStorage implements WishlistStorageInterface
     private $productClient;
 
     /**
-     * @param StorageClientInterface $storageClient
-     * @param ProductClientInterface $productClient
+     * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
+     * @param \Spryker\Client\Product\ProductClientInterface $productClient
      */
     public function __construct(StorageClientInterface $storageClient, ProductClientInterface $productClient)
     {
@@ -35,7 +35,7 @@ class WishlistStorage implements WishlistStorageInterface
     }
 
     /**
-     * @param WishlistTransfer $wishlist
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlist
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */

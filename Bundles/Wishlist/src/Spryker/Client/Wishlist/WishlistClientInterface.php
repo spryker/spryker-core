@@ -14,28 +14,28 @@ interface WishlistClientInterface
 {
 
     /**
-     * @param ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function addItem(ItemTransfer $wishlistItem);
 
     /**
-     * @param ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseItemQuantity(ItemTransfer $wishlistItem);
 
     /**
-     * @param ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function decreaseItemQuantity(ItemTransfer $wishlistItem);
 
     /**
-     * @param ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */

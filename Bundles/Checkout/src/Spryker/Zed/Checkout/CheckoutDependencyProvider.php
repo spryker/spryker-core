@@ -27,7 +27,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_CALCULATION = 'calculation facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
@@ -61,7 +61,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return CheckoutPreConditionInterface[]
      */
@@ -71,7 +71,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return CheckoutPreHydrationInterface[]
      */
@@ -81,7 +81,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return CheckoutOrderHydrationInterface[]
      */
@@ -91,7 +91,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return CheckoutSaveOrderInterface[]
      */
@@ -101,7 +101,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return CheckoutPostSaveHookInterface[]
      */

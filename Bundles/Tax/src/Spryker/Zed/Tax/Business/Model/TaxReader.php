@@ -23,7 +23,7 @@ class TaxReader implements TaxReaderInterface
     protected $queryContainer;
 
     /**
-     * @param TaxQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface $queryContainer
      */
     public function __construct(
         TaxQueryContainerInterface $queryContainer

@@ -20,7 +20,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     protected static $container = null;
 
     /**
-     * @param SessionInterface $container
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $container
      *
      * @return void
      */
@@ -251,7 +251,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Registers a SessionBagInterface with the session.
      *
-     * @param SessionBagInterface $bag
+     * @param \Symfony\Component\HttpFoundation\Session\SessionBagInterface $bag
      */
     public function registerBag(SessionBagInterface $bag)
     {

@@ -14,7 +14,7 @@ class DiscountWriter extends AbstractWriter
 {
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
@@ -28,7 +28,7 @@ class DiscountWriter extends AbstractWriter
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -45,7 +45,7 @@ class DiscountWriter extends AbstractWriter
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */

@@ -142,7 +142,7 @@ trait Helper
      * If he answers nothing, it will use the default value. If he answers abort,
      * it will throw a RuntimeException.
      *
-     * @param OutputInterface $output An Output instance
+     * @param \Symfony\Component\Console\Output\OutputInterface $output An Output instance
      * @param string|array $question The question to ask
      * @param bool $default The default answer if the user enters nothing
      *

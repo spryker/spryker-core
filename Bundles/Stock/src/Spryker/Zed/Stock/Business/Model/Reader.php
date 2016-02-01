@@ -30,8 +30,8 @@ class Reader implements ReaderInterface
     protected $productFacade;
 
     /**
-     * @param StockQueryContainer $queryContainer
-     * @param StockToProductInterface $productFacade
+     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainer $queryContainer
+     * @param \Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface $productFacade
      */
     public function __construct(
         StockQueryContainer $queryContainer,

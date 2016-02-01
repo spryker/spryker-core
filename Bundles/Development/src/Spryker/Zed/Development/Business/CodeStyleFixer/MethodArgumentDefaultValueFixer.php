@@ -89,7 +89,7 @@ class MethodArgumentDefaultValueFixer extends AbstractFixer
     /**
      * Method to remove incorrect default values.
      *
-     * @param Tokens $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens $tokens
      * @param int $index
      * @param int $endIndex
      *

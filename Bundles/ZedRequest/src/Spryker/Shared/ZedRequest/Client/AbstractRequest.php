@@ -74,7 +74,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
 
     /**
      * @param string $name
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return self
      */
@@ -169,7 +169,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     }
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return self
      */

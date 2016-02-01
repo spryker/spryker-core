@@ -21,7 +21,7 @@ class SearchHealthIndicator extends AbstractHealthIndicator implements HealthInd
     protected $client;
 
     /**
-     * @param Client $client
+     * @param \Elastica\Client $client
      */
     public function __construct(Client $client)
     {

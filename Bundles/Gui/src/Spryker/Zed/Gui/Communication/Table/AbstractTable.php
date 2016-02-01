@@ -113,7 +113,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param DataTablesTransfer $dataTablesTransfer
+     * @param \Generated\Shared\Transfer\DataTablesTransfer $dataTablesTransfer
      *
      * @return void
      */
@@ -393,7 +393,7 @@ abstract class AbstractTable
     /**
      * @todo CD-412 to be rafactored, does to many things and is hard to understand
      *
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param TableConfiguration $config
      * @param bool $returnRawResults
      *
@@ -711,7 +711,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $searchColumns
      * @param \ArrayObject $column
      *

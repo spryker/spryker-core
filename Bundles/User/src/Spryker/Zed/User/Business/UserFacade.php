@@ -78,7 +78,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @throws Exception\UserNotFoundException
      *
@@ -92,7 +92,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return mixed
      */
@@ -137,7 +137,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return bool
      */

@@ -57,7 +57,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
@@ -98,7 +98,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     }
 
     /**
-     * @param MethodTagBuilderInterface $methodTagBuilder
+     * @param \Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\MethodTagBuilderInterface $methodTagBuilder
      *
      * @return self
      */

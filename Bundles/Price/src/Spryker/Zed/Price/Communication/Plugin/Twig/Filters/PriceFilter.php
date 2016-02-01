@@ -14,7 +14,7 @@ class PriceFilter
     protected $currencyManager;
 
     /**
-     * @param CurrencyManager $currencyManager
+     * @param \Spryker\Shared\Library\Currency\CurrencyManager $currencyManager
      */
     public function __construct(CurrencyManager $currencyManager)
     {

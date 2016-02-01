@@ -28,8 +28,8 @@ class LocaleManager
     protected $transferGenerator;
 
     /**
-     * @param LocaleQueryContainerInterface $localeQueryContainer
-     * @param TransferGeneratorInterface $transferGenerator
+     * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
+     * @param \Spryker\Zed\Locale\Business\TransferGeneratorInterface $transferGenerator
      */
     public function __construct(
         LocaleQueryContainerInterface $localeQueryContainer,

@@ -18,7 +18,7 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     protected $productFacade;
 
     /**
-     * @param ProductFacade $productFacade
+     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
      */
     public function __construct($productFacade)
     {

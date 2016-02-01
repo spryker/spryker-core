@@ -19,7 +19,7 @@ class ShipmentStub implements ShipmentStubInterface
     protected $zedStub;
 
     /**
-     * @param ZedRequestClient $zedStub
+     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
      */
     public function __construct(ZedRequestClient $zedStub)
     {
@@ -27,7 +27,7 @@ class ShipmentStub implements ShipmentStubInterface
     }
 
     /**
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */

@@ -60,7 +60,7 @@ abstract class AbstractEventJournal implements EventJournalInterface
     }
 
     /**
-     * @param DataCollectorInterface $dataCollector
+     * @param \Spryker\Shared\Lumberjack\Model\Collector\DataCollectorInterface $dataCollector
      *
      * @return void
      */
@@ -93,7 +93,7 @@ abstract class AbstractEventJournal implements EventJournalInterface
     }
 
     /**
-     * @param WriterInterface $writer
+     * @param \Spryker\Shared\Lumberjack\Model\Writer\WriterInterface $writer
      *
      * @return void
      */

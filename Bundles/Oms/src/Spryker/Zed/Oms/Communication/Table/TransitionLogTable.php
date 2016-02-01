@@ -21,7 +21,7 @@ class TransitionLogTable extends AbstractTable
     /**
      * TransitionLogTable constructor.
      *
-     * @param OmsQueryContainerInterface $omsQueryContainer
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $omsQueryContainer
      */
     public function __construct(OmsQueryContainerInterface $omsQueryContainer)
     {

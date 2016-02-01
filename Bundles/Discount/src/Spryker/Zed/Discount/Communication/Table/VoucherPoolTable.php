@@ -41,8 +41,8 @@ class VoucherPoolTable extends AbstractTable
     protected $discountConfig;
 
     /**
-     * @param SpyDiscountVoucherPoolQuery $discountVoucherPool
-     * @param DiscountConfig $discountConfig
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery $discountVoucherPool
+     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
      */
     public function __construct(SpyDiscountVoucherPoolQuery $discountVoucherPool, DiscountConfig $discountConfig)
     {
@@ -51,7 +51,7 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -72,7 +72,7 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
@@ -111,7 +111,7 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPool
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPool
      *
      * @return string
      */
@@ -126,7 +126,7 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPool
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPool
      *
      * @return string
      */
@@ -141,7 +141,7 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPool
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPool
      *
      * @return string
      */
@@ -157,7 +157,7 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPoolEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPoolEntity
      *
      * @return string|null
      */

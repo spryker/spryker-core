@@ -22,7 +22,7 @@ class UrlFacade extends AbstractFacade
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
      *
@@ -58,7 +58,7 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -125,7 +125,7 @@ class UrlFacade extends AbstractFacade
 
     /**
      * @param int $idCategoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return UrlTransfer|null
      */
@@ -195,7 +195,7 @@ class UrlFacade extends AbstractFacade
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
      *
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
@@ -212,7 +212,7 @@ class UrlFacade extends AbstractFacade
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -225,7 +225,7 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
@@ -237,7 +237,7 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return void
      */
@@ -249,7 +249,7 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -261,7 +261,7 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
@@ -273,7 +273,7 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */

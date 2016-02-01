@@ -35,9 +35,9 @@ class Refund
     protected $salesQueryContainer;
 
     /**
-     * @param RefundToSalesInterface $salesFacade
-     * @param RefundToOmsInterface $omsFacade
-     * @param SalesQueryContainer $salesQueryContainer
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $salesFacade
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainer $salesQueryContainer
      */
     public function __construct(
         RefundToSalesInterface $salesFacade,
@@ -50,7 +50,7 @@ class Refund
     }
 
     /**
-     * @param RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return \Generated\Shared\Transfer\RefundTransfer
      */

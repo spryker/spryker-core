@@ -57,7 +57,7 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */
@@ -86,7 +86,7 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -134,7 +134,7 @@ class BlockController extends AbstractController
 
     /**
      * @param array $data
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
      */
@@ -173,7 +173,7 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */

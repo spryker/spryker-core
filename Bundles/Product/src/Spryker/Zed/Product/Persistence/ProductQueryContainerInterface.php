@@ -21,7 +21,7 @@ interface ProductQueryContainerInterface
 
     /**
      * @param string $skus
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
@@ -87,15 +87,15 @@ interface ProductQueryContainerInterface
     public function queryProductConcreteAttributeCollection($idProductConcrete, $fkCurrentLocale);
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      *
      * @return self
      */
     public function joinProductConcreteCollection(ModelCriteria $expandableQuery);
 
     /**
-     * @param ModelCriteria $expandableQuery
-     * @param LocaleTransfer $locale
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return self
      */

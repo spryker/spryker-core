@@ -23,7 +23,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     private $keyBuilder;
 
     /**
-     * @param StorageClientInterface $storage
+     * @param \Spryker\Client\Storage\StorageClientInterface $storage
      * @param KeyBuilderInterface $keyBuilder
      */
     public function __construct($storage, $keyBuilder)
@@ -33,7 +33,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return array
      */

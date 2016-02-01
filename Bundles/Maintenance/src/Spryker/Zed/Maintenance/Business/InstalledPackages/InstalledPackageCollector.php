@@ -22,7 +22,7 @@ class InstalledPackageCollector implements InstalledPackageCollectorInterface
     private $installedPackageCollection;
 
     /**
-     * @param InstalledPackagesTransfer $installedPackageCollection
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $installedPackageCollection
      * @param array $installedPackageFinder
      */
     public function __construct(InstalledPackagesTransfer $installedPackageCollection, array $installedPackageFinder)

@@ -17,7 +17,7 @@ class ProductToProductOptionBridge implements ProductToProductOptionInterface
     protected $productOptionFacade;
 
     /**
-     * @param ProductOptionFacade $productOptionFacade
+     * @param \Spryker\Zed\ProductOption\Business\ProductOptionFacade $productOptionFacade
      */
     public function __construct($productOptionFacade)
     {

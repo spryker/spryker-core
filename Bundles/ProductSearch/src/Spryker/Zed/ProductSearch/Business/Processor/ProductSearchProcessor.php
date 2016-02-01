@@ -23,7 +23,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
     private $keyBuilder;
 
     /**
-     * @param KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $storeName
      */
     public function __construct(
@@ -37,7 +37,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
     /**
      * @param array $productsRaw
      * @param array $processedProducts
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -53,7 +53,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
 
     /**
      * @param array $productData
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */

@@ -18,7 +18,7 @@ class KernelToMessengerBridge implements KernelToMessengerInterface
     protected $messengerFacade;
 
     /**
-     * @param MessengerFacade $messengerFacade
+     * @param \Spryker\Zed\Messenger\Business\MessengerFacade $messengerFacade
      */
     public function __construct($messengerFacade)
     {

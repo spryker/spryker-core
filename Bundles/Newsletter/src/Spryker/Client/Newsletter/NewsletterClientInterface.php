@@ -15,35 +15,35 @@ interface NewsletterClientInterface
 {
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber);
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */

@@ -20,7 +20,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
     protected $urlFacade;
 
     /**
-     * @param UrlFacade $urlFacade
+     * @param \Spryker\Zed\Url\Business\UrlFacade $urlFacade
      */
     public function __construct($urlFacade)
     {
@@ -44,7 +44,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
      *
@@ -91,7 +91,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -102,7 +102,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */

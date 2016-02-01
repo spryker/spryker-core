@@ -26,7 +26,7 @@ class ProductOptionManager implements ProductOptionManagerInterface
     }
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\ChangeTransfer
      */
@@ -40,7 +40,7 @@ class ProductOptionManager implements ProductOptionManagerInterface
     }
 
     /**
-     * @param ItemTransfer $cartItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
      *
      * @return void
      */

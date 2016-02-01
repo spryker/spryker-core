@@ -69,7 +69,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param CalculableInterface $container
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
      * @return \Spryker\Zed\Discount\Business\Model\Discount
      */

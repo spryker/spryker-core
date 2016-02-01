@@ -158,7 +158,7 @@ class RefundContainer extends AbstractRequestContainer
     }
 
     /**
-     * @param TransactionContainer $invoicing
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer $invoicing
      *
      * @return self
      */
@@ -178,7 +178,7 @@ class RefundContainer extends AbstractRequestContainer
     }
 
     /**
-     * @param BankAccountContainer $paymentMethod
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer $paymentMethod
      *
      * @return self;
      */

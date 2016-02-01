@@ -15,7 +15,7 @@ interface ProductToUrlInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $resourceId
      *

@@ -15,7 +15,7 @@ class CountryDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_USER = 'QUERY_CONTAINER_USER';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

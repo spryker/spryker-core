@@ -19,8 +19,8 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     protected $session;
 
     /**
-     * @param SessionInterface $session
-     * @param MessengerToGlossaryInterface $glossaryFacade
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface $glossaryFacade
      */
     public function __construct(SessionInterface $session, MessengerToGlossaryInterface $glossaryFacade)
     {
@@ -29,7 +29,7 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -45,7 +45,7 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -61,7 +61,7 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */

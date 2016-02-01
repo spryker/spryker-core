@@ -27,8 +27,8 @@ class TouchRecord implements TouchRecordInterface
     protected $connection;
 
     /**
-     * @param TouchQueryContainerInterface $queryContainer
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(TouchQueryContainerInterface $queryContainer, ConnectionInterface $connection)
     {
@@ -72,7 +72,7 @@ class TouchRecord implements TouchRecordInterface
      * @param string $itemType
      * @param int $idItem
      * @param string $itemEvent
-     * @param SpyTouch $touchEntity
+     * @param \Orm\Zed\Touch\Persistence\SpyTouch $touchEntity
      *
      * @return void
      */

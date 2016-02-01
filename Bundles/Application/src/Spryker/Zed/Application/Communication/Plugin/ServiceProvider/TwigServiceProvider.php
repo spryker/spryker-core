@@ -37,7 +37,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     private $app;
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -100,7 +100,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     /**
      * Handles string responses.
      *
-     * @param GetResponseForControllerResultEvent $event The event to handle
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event The event to handle
      *
      * @return void
      */
@@ -117,7 +117,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

@@ -311,8 +311,8 @@ class DataImportWriterTest extends Test
     }
 
     /**
-     * @param SpyProduct $product
-     * @param SpyProductOptionType $optionType
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $product
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionType $optionType
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

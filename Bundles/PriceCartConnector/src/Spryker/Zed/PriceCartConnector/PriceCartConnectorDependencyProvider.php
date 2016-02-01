@@ -16,7 +16,7 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
     const FACADE_PRICE = 'price facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

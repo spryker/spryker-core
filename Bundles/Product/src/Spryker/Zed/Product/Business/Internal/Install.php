@@ -19,7 +19,7 @@ class Install extends AbstractInstaller
     protected $attributeManager;
 
     /**
-     * @param AttributeManagerInterface $attributeManager
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface $attributeManager
      */
     public function __construct(AttributeManagerInterface $attributeManager)
     {

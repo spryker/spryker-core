@@ -17,7 +17,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     const  KVSTORAGE = 'kvstorage';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */

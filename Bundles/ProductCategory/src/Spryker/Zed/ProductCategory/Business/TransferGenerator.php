@@ -14,7 +14,7 @@ class TransferGenerator implements TransferGeneratorInterface
 {
 
     /**
-     * @param SpyProductCategory $productCategoryEntity
+     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory $productCategoryEntity
      *
      * @return \Generated\Shared\Transfer\ProductCategoryTransfer
      */

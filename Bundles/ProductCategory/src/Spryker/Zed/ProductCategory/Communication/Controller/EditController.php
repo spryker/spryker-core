@@ -28,7 +28,7 @@ class EditController extends AddController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */
@@ -109,8 +109,8 @@ class EditController extends AddController
 
     /**
      * @param $existingCategoryNode
-     * @param NodeTransfer $categoryNodeTransfer
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -136,8 +136,8 @@ class EditController extends AddController
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param array $parentIdList
      *
      * @return void
@@ -161,7 +161,7 @@ class EditController extends AddController
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param array $data
      *
      * @return void
@@ -194,7 +194,7 @@ class EditController extends AddController
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param $productOrder
      *
      * @return void
@@ -206,7 +206,7 @@ class EditController extends AddController
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param $productPreConfig
      *
      * @return void
@@ -217,7 +217,7 @@ class EditController extends AddController
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
@@ -234,7 +234,7 @@ class EditController extends AddController
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
@@ -257,8 +257,8 @@ class EditController extends AddController
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
@@ -280,8 +280,8 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -300,9 +300,9 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param SpyCategoryNode $node
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -327,8 +327,8 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -352,9 +352,9 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param SpyCategoryNode $node
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -381,8 +381,8 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -402,8 +402,8 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param SpyCategoryNode $node
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
      *
      * @return array
      */
@@ -429,7 +429,7 @@ class EditController extends AddController
 
     /**
      * @param int $idCategoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return SpyCategoryNode[]
      */

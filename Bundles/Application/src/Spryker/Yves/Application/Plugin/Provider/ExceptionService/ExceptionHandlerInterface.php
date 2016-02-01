@@ -13,7 +13,7 @@ interface ExceptionHandlerInterface
 {
 
     /**
-     * @param FlattenException $exception
+     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

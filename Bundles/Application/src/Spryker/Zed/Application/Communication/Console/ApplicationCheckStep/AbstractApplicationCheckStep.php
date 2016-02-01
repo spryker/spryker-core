@@ -49,7 +49,7 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     /**
-     * @param AbstractCommunicationFactory $communicationFactory
+     * @param \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $communicationFactory
      *
      * @return void
      */
@@ -59,7 +59,7 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */
@@ -80,7 +80,7 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     /**
-     * @param AbstractFacade $facade
+     * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
      *
      * @return self
      */

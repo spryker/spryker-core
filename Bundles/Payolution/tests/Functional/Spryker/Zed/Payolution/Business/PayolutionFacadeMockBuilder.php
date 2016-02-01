@@ -16,7 +16,7 @@ class PayolutionFacadeMockBuilder
 {
 
     /**
-     * @param AdapterInterface $adapter
+     * @param \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface $adapter
      *
      * @return \Spryker\Zed\Payolution\Business\PayolutionFacade
      */

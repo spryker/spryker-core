@@ -18,7 +18,7 @@ class ModeDetector implements ModeDetectorInterface
     protected $config;
 
     /**
-     * @param PayoneConfig $config
+     * @param \Spryker\Zed\Payone\PayoneConfig $config
      */
     public function __construct(PayoneConfig $config)
     {

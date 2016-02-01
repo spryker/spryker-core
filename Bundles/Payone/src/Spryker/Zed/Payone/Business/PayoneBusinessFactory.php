@@ -154,7 +154,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
+     * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest
      */

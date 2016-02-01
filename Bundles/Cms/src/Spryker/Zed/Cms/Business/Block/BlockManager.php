@@ -33,9 +33,9 @@ class BlockManager implements BlockManagerInterface
     protected $connection;
 
     /**
-     * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param CmsToTouchInterface $touchFacade
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade, ConnectionInterface $connection)
     {
@@ -45,7 +45,7 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
@@ -63,7 +63,7 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
@@ -112,7 +112,7 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param SpyCmsBlock $blockEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlock $blockEntity
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
@@ -125,7 +125,7 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -135,7 +135,7 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -145,7 +145,7 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -155,7 +155,7 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsBlock
      */
@@ -170,7 +170,7 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsBlock
      */
@@ -236,8 +236,8 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
-     * @param SpyCmsBlock $blockEntity
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlock $blockEntity
      *
      * @return void
      */

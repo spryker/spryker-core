@@ -20,7 +20,7 @@ class KeyManager implements KeyManagerInterface
     protected $queryContainer;
 
     /**
-     * @param GlossaryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface $queryContainer
      */
     public function __construct(GlossaryQueryContainerInterface $queryContainer)
     {

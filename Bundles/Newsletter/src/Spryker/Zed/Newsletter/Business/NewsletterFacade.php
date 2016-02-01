@@ -19,7 +19,7 @@ class NewsletterFacade extends AbstractFacade
 {
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
@@ -35,7 +35,7 @@ class NewsletterFacade extends AbstractFacade
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
@@ -51,7 +51,7 @@ class NewsletterFacade extends AbstractFacade
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
@@ -63,7 +63,7 @@ class NewsletterFacade extends AbstractFacade
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
@@ -77,7 +77,7 @@ class NewsletterFacade extends AbstractFacade
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
@@ -91,7 +91,7 @@ class NewsletterFacade extends AbstractFacade
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return void
      */

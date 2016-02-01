@@ -30,7 +30,7 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return string
      */

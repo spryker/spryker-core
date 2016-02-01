@@ -12,7 +12,7 @@ interface SaverInterface
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     public function saveOrderPayment(OrderTransfer $orderTransfer);
 

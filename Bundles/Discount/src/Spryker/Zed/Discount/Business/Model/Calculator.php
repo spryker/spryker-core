@@ -40,7 +40,7 @@ class Calculator implements CalculatorInterface
 
     /**
      * @param CollectorResolver $collectorResolver
-     * @param DiscountToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      */
     public function __construct(
         CollectorResolver $collectorResolver,
@@ -52,9 +52,9 @@ class Calculator implements CalculatorInterface
 
     /**
      * @param DiscountTransfer[] $discountCollection
-     * @param CalculableInterface $container
-     * @param DiscountConfigInterface $config
-     * @param DistributorInterface $discountDistributor
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Spryker\Zed\Discount\DiscountConfigInterface $config
+     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $discountDistributor
      *
      * @return array
      */
@@ -73,8 +73,8 @@ class Calculator implements CalculatorInterface
 
     /**
      * @param DiscountTransfer[] $discountCollection
-     * @param CalculableInterface $container
-     * @param DiscountConfigInterface $config
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Spryker\Zed\Discount\DiscountConfigInterface $config
      *
      * @return array
      */
@@ -118,7 +118,7 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param DistributorInterface $discountDistributor
+     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $discountDistributor
      * @param array $calculatedDiscounts
      *
      * @return void

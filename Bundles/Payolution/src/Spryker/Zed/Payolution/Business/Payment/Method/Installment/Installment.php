@@ -47,7 +47,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return array
      */
@@ -131,7 +131,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return array
      */
@@ -179,7 +179,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      *
      * @return array
      */
@@ -222,7 +222,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -236,7 +236,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -250,7 +250,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -264,7 +264,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array

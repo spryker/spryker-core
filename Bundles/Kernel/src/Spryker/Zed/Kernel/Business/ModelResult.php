@@ -40,7 +40,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @param ActiveRecordInterface $entity
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      */
     public function __construct(ActiveRecordInterface $entity = null)
     {
@@ -88,7 +88,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @param TransferInterface $transfer
+     * @param \Spryker\Shared\Transfer\TransferInterface $transfer
      *
      * @return self
      */
@@ -132,7 +132,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @param ActiveRecordInterface $entity
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      *
      * @return self
      */

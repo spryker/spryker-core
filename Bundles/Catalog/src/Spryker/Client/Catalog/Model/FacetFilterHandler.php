@@ -26,7 +26,7 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
     protected $facetConfig;
 
     /**
-     * @param NestedFilterBuilderInterface $nestedFilterBuilder
+     * @param \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface $nestedFilterBuilder
      * @param FacetConfig $facetConfig
      */
     public function __construct(
@@ -38,8 +38,8 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
     }
 
     /**
-     * @param Query $query
-     * @param Request $request
+     * @param \Elastica\Query $query
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      */

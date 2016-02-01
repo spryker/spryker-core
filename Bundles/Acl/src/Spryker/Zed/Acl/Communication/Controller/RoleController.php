@@ -56,7 +56,7 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */
@@ -86,7 +86,7 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -116,7 +116,7 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -131,7 +131,7 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */
@@ -169,8 +169,8 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Form $rulesetForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\Form $rulesetForm
      * @param int $idRole
      *
      * @return void
@@ -191,8 +191,8 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Form $roleForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\Form $roleForm
      *
      * @return void
      */

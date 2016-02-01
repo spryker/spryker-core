@@ -26,7 +26,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @param UserFacade $userFacade
+     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -59,7 +59,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param int $idUser
-     * @param UserFacade $userFacade
+     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      *
      * @return \Symfony\Component\Form\FormInterface
      */

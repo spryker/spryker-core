@@ -42,7 +42,7 @@ interface UserInterface
     public function validatePassword($password, $hash);
 
     /**
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
@@ -83,7 +83,7 @@ interface UserInterface
     public function getUserById($id);
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
@@ -95,7 +95,7 @@ interface UserInterface
     public function hasCurrentUser();
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return bool
      */

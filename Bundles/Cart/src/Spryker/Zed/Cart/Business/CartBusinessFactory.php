@@ -170,7 +170,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param OperatorInterface $operator
+     * @param \Spryker\Zed\Cart\Business\Operator\OperatorInterface $operator
      *
      * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */

@@ -199,7 +199,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return Event[]
      */
@@ -211,7 +211,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
      * @return SpySalesOrderItem[]
@@ -224,7 +224,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
      * @return SpySalesOrderItem[]
@@ -237,7 +237,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
      * @return SpyOmsTransitionLog[]
@@ -309,7 +309,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $transferOrder
+     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
      *
      * @return string
      */
@@ -320,7 +320,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return string
      */
@@ -333,7 +333,7 @@ class OmsFacade extends AbstractFacade
 
     /**
      * @param string $eventId
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
      *
@@ -350,7 +350,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
      *
@@ -367,7 +367,7 @@ class OmsFacade extends AbstractFacade
 
     /**
      * @param string $eventId
-     * @param OrderTransfer $orderItem
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderItem
      * @param array $logContext
      * @param array $data
      *

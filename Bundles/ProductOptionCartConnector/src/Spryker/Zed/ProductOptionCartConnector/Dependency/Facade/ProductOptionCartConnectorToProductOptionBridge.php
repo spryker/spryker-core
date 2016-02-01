@@ -19,7 +19,7 @@ class ProductOptionCartConnectorToProductOptionBridge implements ProductOptionCa
     /**
      * ProductOptionExporterToProductOptionBridge constructor.
      *
-     * @param ProductOptionFacade $productOptionFacade
+     * @param \Spryker\Zed\ProductOption\Business\ProductOptionFacade $productOptionFacade
      */
     public function __construct($productOptionFacade)
     {

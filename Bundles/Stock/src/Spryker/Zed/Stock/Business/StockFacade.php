@@ -37,7 +37,7 @@ class StockFacade extends AbstractFacade
     }
 
     /**
-     * @param TypeTransfer $stockTypeTransfer
+     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int
      */
@@ -47,7 +47,7 @@ class StockFacade extends AbstractFacade
     }
 
     /**
-     * @param TypeTransfer $stockTypeTransfer
+     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int
      */
@@ -57,7 +57,7 @@ class StockFacade extends AbstractFacade
     }
 
     /**
-     * @param StockProductTransfer $transferStockProduct
+     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
      */
@@ -67,7 +67,7 @@ class StockFacade extends AbstractFacade
     }
 
     /**
-     * @param StockProductTransfer $stockProductTransfer
+     * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
      *
      * @return int
      */

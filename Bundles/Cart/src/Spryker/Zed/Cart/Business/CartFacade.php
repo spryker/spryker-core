@@ -18,7 +18,7 @@ class CartFacade extends AbstractFacade
 {
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -30,7 +30,7 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -42,7 +42,7 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -54,7 +54,7 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -68,7 +68,7 @@ class CartFacade extends AbstractFacade
     /**
      * @todo call calculator client from cart client.
      *
-     * @param CartTransfer $cart
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -81,7 +81,7 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -93,7 +93,7 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -105,7 +105,7 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */

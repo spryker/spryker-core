@@ -13,7 +13,7 @@ interface CheckoutStubInterface
 {
 
     /**
-     * @param CheckoutRequestTransfer $transferCheckout
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $transferCheckout
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

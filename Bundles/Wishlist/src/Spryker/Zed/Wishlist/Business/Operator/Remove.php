@@ -14,7 +14,7 @@ class Remove extends AbstractOperator
     const OPERATION_NAME = 'REMOVE';
 
     /**
-     * @param WishlistChangeTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */

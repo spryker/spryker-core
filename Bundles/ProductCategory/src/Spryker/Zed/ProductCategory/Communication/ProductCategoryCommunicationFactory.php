@@ -221,7 +221,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idCategory
      *
      * @return \Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable
@@ -232,7 +232,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idCategory
      *
      * @return \Spryker\Zed\ProductCategory\Communication\Table\ProductTable

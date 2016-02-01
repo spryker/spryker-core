@@ -18,7 +18,7 @@ class SalesToSequenceNumberBridge implements SalesToSequenceNumberInterface
     protected $sequenceNumberFacade;
 
     /**
-     * @param SequenceNumberFacade $sequenceNumberFacade
+     * @param \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade $sequenceNumberFacade
      */
     public function __construct($sequenceNumberFacade)
     {
@@ -26,7 +26,7 @@ class SalesToSequenceNumberBridge implements SalesToSequenceNumberInterface
     }
 
     /**
-     * @param SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer
+     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer
      *
      * @return string
      */

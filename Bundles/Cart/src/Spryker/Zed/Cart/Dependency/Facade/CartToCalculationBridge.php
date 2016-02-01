@@ -18,7 +18,7 @@ class CartToCalculationBridge implements CartToCalculationInterface
     protected $calculationFacade;
 
     /**
-     * @param CalculationFacade $calculationFacade
+     * @param \Spryker\Zed\Calculation\Business\CalculationFacade $calculationFacade
      */
     public function __construct($calculationFacade)
     {
@@ -26,7 +26,7 @@ class CartToCalculationBridge implements CartToCalculationInterface
     }
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
      */

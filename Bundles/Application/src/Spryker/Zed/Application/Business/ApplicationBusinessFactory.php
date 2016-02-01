@@ -107,7 +107,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface $logger
      *
      * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\InstallDemoData
      */

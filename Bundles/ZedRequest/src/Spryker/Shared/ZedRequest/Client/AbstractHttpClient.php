@@ -72,7 +72,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected $authClient;
 
     /**
-     * @param AuthClientInterface $authClient
+     * @param \Spryker\Client\Auth\AuthClientInterface $authClient
      * @param string $baseUrl
      */
     public function __construct(
@@ -214,7 +214,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      * @param array $metaTransfers
      *
      * @throws \LogicException
@@ -243,7 +243,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param EntityEnclosingRequest $request
+     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
      *
      * @throws \Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException
      *
@@ -260,7 +260,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param Response $response
+     * @param \Guzzle\Http\Message\Response $response
      *
      * @throws \Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException
      *
@@ -292,7 +292,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param ZedResponse $responseTransfer
+     * @param \Spryker\Shared\ZedRequest\Client\ResponseInterface $responseTransfer
      * @param string $rawBody
      *
      * @return void
@@ -341,7 +341,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param EntityEnclosingRequest $request
+     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
      *
      * @return void
      */

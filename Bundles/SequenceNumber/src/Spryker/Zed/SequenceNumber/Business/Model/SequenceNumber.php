@@ -27,9 +27,9 @@ class SequenceNumber implements SequenceNumberInterface
     protected $connection;
 
     /**
-     * @param RandomNumberGeneratorInterface $randomNumberGenerator
-     * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface $randomNumberGenerator
+     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, SequenceNumberSettingsTransfer $sequenceNumberSettings, ConnectionInterface $connection)
     {

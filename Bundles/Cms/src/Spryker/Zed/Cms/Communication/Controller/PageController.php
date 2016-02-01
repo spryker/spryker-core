@@ -53,7 +53,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -84,7 +84,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -147,7 +147,7 @@ class PageController extends AbstractController
 
     /**
      * @param int $idUrl
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\UrlTransfer

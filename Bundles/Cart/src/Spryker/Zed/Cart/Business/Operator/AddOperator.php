@@ -14,8 +14,8 @@ class AddOperator extends AbstractOperator
 {
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */

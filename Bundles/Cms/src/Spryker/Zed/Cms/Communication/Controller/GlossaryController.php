@@ -48,7 +48,7 @@ class GlossaryController extends AbstractController
     protected $glossaryKeyName = '';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -94,7 +94,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -136,7 +136,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -226,7 +226,7 @@ class GlossaryController extends AbstractController
 
     /**
      * @param array $data
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -241,7 +241,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param SpyCmsPage $pageUrl
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsPage $pageUrl
      *
      * @return array
      */
@@ -257,7 +257,7 @@ class GlossaryController extends AbstractController
 
     /**
      * @param int $idPage
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
@@ -277,7 +277,7 @@ class GlossaryController extends AbstractController
     /**
      * @param array $forms
      * @param int $idForm
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -323,7 +323,7 @@ class GlossaryController extends AbstractController
 
     /**
      * @param array $data
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
@@ -387,7 +387,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param SpyCmsBlock $blockEntity
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsBlock $blockEntity
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */

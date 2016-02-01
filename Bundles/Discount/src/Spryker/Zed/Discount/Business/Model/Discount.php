@@ -74,13 +74,13 @@ class Discount
     protected $messengerFacade;
 
     /**
-     * @param CalculableInterface $discountContainer
-     * @param DiscountQueryContainer $queryContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
      * @param DecisionRuleInterface $decisionRule
-     * @param DiscountConfig $discountSettings
+     * @param \Spryker\Zed\Discount\DiscountConfig $discountSettings
      * @param CalculatorInterface $calculator
-     * @param DistributorInterface $distributor
-     * @param DiscountToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      */
     public function __construct(
         CalculableInterface $discountContainer,
@@ -211,7 +211,7 @@ class Discount
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer
      */

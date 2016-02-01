@@ -63,7 +63,7 @@ class MonologServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      * @codeCoverageIgnore
      *
      * @return void

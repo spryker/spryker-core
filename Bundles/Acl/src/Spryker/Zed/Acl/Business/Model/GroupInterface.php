@@ -25,14 +25,14 @@ interface GroupInterface
     public function addGroup($name);
 
     /**
-     * @param GroupTransfer $group
+     * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function updateGroup(GroupTransfer $group);
 
     /**
-     * @param GroupTransfer $group
+     * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNameExistsException
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
@@ -62,14 +62,14 @@ interface GroupInterface
     public function getAllGroups();
 
     /**
-     * @param GroupTransfer $group
+     * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNameExistsException
      */
     public function assertGroupHasName(GroupTransfer $group);
 
     /**
-     * @param GroupTransfer $group
+     * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      */

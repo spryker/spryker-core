@@ -18,7 +18,7 @@ class DiscountToMessengerBridge implements DiscountToMessengerInterface
     protected $messengerFacade;
 
     /**
-     * @param MessengerFacade $messengerFacade
+     * @param \Spryker\Zed\Messenger\Business\MessengerFacade $messengerFacade
      */
     public function __construct($messengerFacade)
     {
@@ -26,7 +26,7 @@ class DiscountToMessengerBridge implements DiscountToMessengerInterface
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -36,7 +36,7 @@ class DiscountToMessengerBridge implements DiscountToMessengerInterface
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -46,7 +46,7 @@ class DiscountToMessengerBridge implements DiscountToMessengerInterface
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */

@@ -16,8 +16,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
 {
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $discountableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
      * @param \ArrayObject $discountableContainers
      *
      * @return void
@@ -32,8 +32,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $container
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      * @param \ArrayObject $items
      *
      * @return void
@@ -48,7 +48,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
     }
 
     /**
-     * @param CalculableInterface $container
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
      * @return void
      */

@@ -11,28 +11,28 @@ interface StorageInterface
 {
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function addItems(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItems(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseItems(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */

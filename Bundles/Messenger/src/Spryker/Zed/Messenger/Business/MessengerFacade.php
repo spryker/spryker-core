@@ -16,7 +16,7 @@ class MessengerFacade extends AbstractFacade
 {
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -26,7 +26,7 @@ class MessengerFacade extends AbstractFacade
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -36,7 +36,7 @@ class MessengerFacade extends AbstractFacade
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */

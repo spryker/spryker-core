@@ -40,9 +40,9 @@ class DataImportWriter implements DataImportWriterInterface
     protected $localeFacade;
 
     /**
-     * @param ProductOptionQueryContainerInterface $queryContainer
-     * @param ProductOptionToProductInterface $productFacade
-     * @param ProductOptionToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface $localeFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $queryContainer,
@@ -85,7 +85,7 @@ class DataImportWriter implements DataImportWriterInterface
     }
 
     /**
-     * @param SpyProductOptionType $productOptionTypeEntity
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionType $productOptionTypeEntity
      * @param array $localizedNames
      *
      * @return void
@@ -162,7 +162,7 @@ class DataImportWriter implements DataImportWriterInterface
     }
 
     /**
-     * @param SpyProductOptionValue $productOptionValueEntity
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
      * @param array $localizedNames
      *
      * @return void

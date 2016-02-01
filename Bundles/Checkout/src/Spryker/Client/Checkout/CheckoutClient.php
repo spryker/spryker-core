@@ -18,7 +18,7 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
 {
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

@@ -36,7 +36,7 @@ class CustomerTable extends AbstractTable
     protected $customerQueryContainer;
 
     /**
-     * @param CustomerQueryContainer $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $customerQueryContainer
      */
     public function __construct(CustomerQueryContainer $customerQueryContainer)
     {
@@ -44,7 +44,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -88,7 +88,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Propel\Runtime\Collection\ObjectCollection
      */
@@ -106,7 +106,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param SpyCustomer $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
      * @return string
      */
@@ -125,7 +125,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param ObjectCollection $customersCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection $customersCollection
      *
      * @return array
      */
@@ -141,7 +141,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param SpyCustomer $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
      * @return array
      */
@@ -157,7 +157,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param SpyCustomer $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
      * @return string
      */

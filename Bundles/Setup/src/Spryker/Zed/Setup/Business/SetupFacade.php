@@ -51,7 +51,7 @@ class SetupFacade extends AbstractFacade
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */

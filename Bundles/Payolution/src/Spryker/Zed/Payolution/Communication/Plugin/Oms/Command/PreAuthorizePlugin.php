@@ -24,8 +24,8 @@ class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfa
 
     /**
      * @param SpySalesOrderItem[] $orderItems
-     * @param SpySalesOrder $orderEntity
-     * @param ReadOnlyArrayObject $data
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return array
      */
@@ -38,7 +38,7 @@ class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfa
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */

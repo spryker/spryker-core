@@ -9,7 +9,7 @@ interface RefundToOmsInterface
 
     /**
      * @param string $eventId
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
      *

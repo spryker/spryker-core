@@ -13,7 +13,7 @@ interface ShipmentStubInterface
 {
 
     /**
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */

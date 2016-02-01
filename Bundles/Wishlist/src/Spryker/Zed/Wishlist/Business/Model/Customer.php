@@ -24,8 +24,8 @@ class Customer
     protected $customerTransfer;
 
     /**
-     * @param WishlistQueryContainerInterface $wishlistQueryContainer
-     * @param CustomerTransfer $customerTransfer
+     * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $wishlistQueryContainer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      */
     public function __construct(
         WishlistQueryContainerInterface $wishlistQueryContainer,

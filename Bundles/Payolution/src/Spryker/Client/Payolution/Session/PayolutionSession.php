@@ -20,7 +20,7 @@ class PayolutionSession implements PayolutionSessionInterface
     private $session;
 
     /**
-     * @param SessionInterface $session
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      */
     public function __construct(SessionInterface $session)
     {
@@ -28,7 +28,7 @@ class PayolutionSession implements PayolutionSessionInterface
     }
 
     /**
-     * @param PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
+     * @param \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
      *
      * @return self
      */

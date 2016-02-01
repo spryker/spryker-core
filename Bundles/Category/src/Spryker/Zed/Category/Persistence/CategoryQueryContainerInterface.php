@@ -194,7 +194,7 @@ interface CategoryQueryContainerInterface
     public function queryCategoryNode($idLocale);
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $rightTableAlias
      * @param string $fieldIdentifier
      * @param string $leftTableAlias
@@ -204,7 +204,7 @@ interface CategoryQueryContainerInterface
     public function joinCategoryQueryWithChildrenCategories(ModelCriteria $expandableQuery, $rightTableAlias = 'categoryChildren', $fieldIdentifier = 'child', $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME);
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      * @param string $leftTableAlias
@@ -218,7 +218,7 @@ interface CategoryQueryContainerInterface
     public function joinCategoryQueryWithParentCategories(ModelCriteria $expandableQuery, $excludeDirectParent = true, $excludeRoot = true, $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME, $relationTableAlias = 'categoryParents', $fieldIdentifier = 'parent');
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $leftAlias
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -226,7 +226,7 @@ interface CategoryQueryContainerInterface
     public function joinCategoryQueryWithUrls(ModelCriteria $expandableQuery, $leftAlias = SpyCategoryNodeTableMap::TABLE_NAME);
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
      *
@@ -235,7 +235,7 @@ interface CategoryQueryContainerInterface
     public function joinLocalizedRelatedCategoryQueryWithAttributes(ModelCriteria $expandableQuery, $relationTableAlias, $fieldIdentifier);
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
      *
@@ -246,7 +246,7 @@ interface CategoryQueryContainerInterface
     public function joinRelatedCategoryQueryWithUrls(ModelCriteria $expandableQuery, $relationTableAlias, $fieldIdentifier);
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $tableAlias
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria

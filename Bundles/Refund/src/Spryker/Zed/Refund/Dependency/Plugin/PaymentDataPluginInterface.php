@@ -20,21 +20,21 @@ interface PaymentDataPluginInterface
     public function getPaymentData($idOrder);
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
     public function isRefundPossible(OrderTransfer $orderTransfer);
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
     public function isPaymentDataRequired(OrderTransfer $orderTransfer);
 
     /**
-     * @param PaymentDataTransfer $paymentData
+     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentData
      * @param int $idOrder
      *
      * @return void

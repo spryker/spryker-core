@@ -35,8 +35,8 @@ class ErrorLogger
     /**
      * @param \Exception $exception
      * @param bool $ignoreInternalExceptions
-     * @param EventJournalInterface $eventJournal
-     * @param ApiInterface $newRelicApi
+     * @param \Spryker\Shared\EventJournal\Model\EventJournalInterface $eventJournal
+     * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      *
      * @return void
      */
@@ -65,8 +65,8 @@ class ErrorLogger
 
     /**
      * @param \Exception $exception
-     * @param EventJournalInterface $eventJournal
-     * @param ApiInterface $newRelicApi
+     * @param \Spryker\Shared\EventJournal\Model\EventJournalInterface $eventJournal
+     * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      * @param bool $ignoreInternalExceptions
      *
      * @return void
@@ -89,8 +89,8 @@ class ErrorLogger
 
     /**
      * @param \Exception $exception
-     * @param EventJournalInterface $eventJournal
-     * @param ApiInterface $newRelicApi
+     * @param \Spryker\Shared\EventJournal\Model\EventJournalInterface $eventJournal
+     * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      *
      * @return void
      */
@@ -109,7 +109,7 @@ class ErrorLogger
     }
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return void
      */

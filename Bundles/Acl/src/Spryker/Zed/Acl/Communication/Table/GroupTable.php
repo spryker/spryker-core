@@ -25,7 +25,7 @@ class GroupTable extends AbstractTable
     protected $aclGroupQuery;
 
     /**
-     * @param SpyAclGroupQuery $aclGroupQuery
+     * @param \Orm\Zed\Acl\Persistence\SpyAclGroupQuery $aclGroupQuery
      */
     public function __construct(SpyAclGroupQuery $aclGroupQuery)
     {
@@ -33,7 +33,7 @@ class GroupTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -51,7 +51,7 @@ class GroupTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

@@ -17,7 +17,7 @@ class BulkWriter extends Writer implements BulkWriterInterface
     protected $recordsToTouch = [];
 
     /**
-     * @param PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @throws \Exception
      *
@@ -41,7 +41,7 @@ class BulkWriter extends Writer implements BulkWriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @throws \Exception
      *

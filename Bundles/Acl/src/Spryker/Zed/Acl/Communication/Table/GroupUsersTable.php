@@ -37,7 +37,7 @@ class GroupUsersTable extends AbstractTable
     protected $idGroup;
 
     /**
-     * @param SpyAclGroupQuery $hasGroupQuery
+     * @param \Orm\Zed\Acl\Persistence\SpyAclGroupQuery $hasGroupQuery
      * @param int $idAclGroup
      */
     public function __construct(SpyAclGroupQuery $hasGroupQuery, $idAclGroup)
@@ -47,7 +47,7 @@ class GroupUsersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -70,7 +70,7 @@ class GroupUsersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

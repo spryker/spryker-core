@@ -12,7 +12,7 @@ interface SalesCheckoutConnectorToSalesInterface
 {
 
     /**
-     * @param OrderTransfer $transferOrder
+     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */

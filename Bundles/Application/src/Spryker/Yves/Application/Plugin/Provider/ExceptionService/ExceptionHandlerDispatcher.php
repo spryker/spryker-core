@@ -27,7 +27,7 @@ class ExceptionHandlerDispatcher
     }
 
     /**
-     * @param FlattenException $exception
+     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
      *
      * @throws \Spryker\Yves\Application\Plugin\Exception\UndefinedExceptionHandlerException
      *

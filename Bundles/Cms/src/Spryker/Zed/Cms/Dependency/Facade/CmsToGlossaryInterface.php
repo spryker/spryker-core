@@ -38,7 +38,7 @@ interface CmsToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -52,7 +52,7 @@ interface CmsToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -102,7 +102,7 @@ interface CmsToGlossaryInterface
     public function getOrCreateKey($keyName);
 
     /**
-     * @param KeyTranslationTransfer $keyTranslationTransfer
+     * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
      *
      * @return bool
      */

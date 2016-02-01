@@ -23,7 +23,7 @@ interface ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -32,7 +32,7 @@ interface ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException
      * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingProductException
@@ -45,14 +45,14 @@ interface ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return SpyProductCategoryQuery[]
      */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale);
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return SpyProductCategory[]
      */
@@ -105,18 +105,18 @@ interface ProductCategoryManagerInterface
     public function updateProductMappingsPreConfig($idCategory, array $productPreConfigList);
 
     /**
-     * @param NodeTransfer $sourceNodeTransfer
-     * @param NodeTransfer $destinationNodeTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $sourceNodeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $destinationNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
     public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNodeTransfer, NodeTransfer $destinationNodeTransfer, LocaleTransfer $localeTransfer);
 
     /**
-     * @param CategoryTransfer $categoryTransfer
-     * @param NodeTransfer $categoryNodeTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return int
      */
@@ -124,7 +124,7 @@ interface ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -134,7 +134,7 @@ interface ProductCategoryManagerInterface
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */

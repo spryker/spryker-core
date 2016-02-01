@@ -98,7 +98,7 @@ class FunctionSpacingFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens $tokens
      * @param int $openingBraceIndex
      *
      * @return bool
@@ -109,7 +109,7 @@ class FunctionSpacingFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens $tokens
      * @param int $closingBraceIndex
      *
      * @return bool

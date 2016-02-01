@@ -24,7 +24,7 @@ class MaintenanceFacade extends AbstractFacade
     }
 
     /**
-     * @param InstalledPackagesTransfer $installedPackages
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $installedPackages
      *
      * @return void
      */

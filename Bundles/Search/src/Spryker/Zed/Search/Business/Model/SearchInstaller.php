@@ -24,7 +24,7 @@ class SearchInstaller implements SearchInstallerInterface
 
     /**
      * @param array $installer
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      */
     public function __construct(array $installer, MessengerInterface $messenger)
     {

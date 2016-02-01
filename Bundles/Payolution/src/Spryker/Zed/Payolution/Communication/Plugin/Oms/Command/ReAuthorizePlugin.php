@@ -23,8 +23,8 @@ class ReAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfac
 
     /**
      * @param array $orderItems
-     * @param SpySalesOrder $orderEntity
-     * @param ReadOnlyArrayObject $data
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return array
      */
@@ -37,7 +37,7 @@ class ReAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfac
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */

@@ -20,7 +20,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @param TransferInterface $transfer
+     * @param \Spryker\Shared\Transfer\TransferInterface $transfer
      *
      * @return \Spryker\Client\ZedRequest\Client\Response
      */

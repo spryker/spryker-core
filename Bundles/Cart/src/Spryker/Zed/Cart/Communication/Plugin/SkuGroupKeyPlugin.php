@@ -17,7 +17,7 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
 {
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\ChangeTransfer
      */
@@ -31,7 +31,7 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
     }
 
     /**
-     * @param ItemTransfer $cartItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
      *
      * @return string
      */

@@ -21,7 +21,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     /**
      * CategoryToUrlBridge constructor.
      *
-     * @param UrlFacade $urlFacade
+     * @param \Spryker\Zed\Url\Business\UrlFacade $urlFacade
      */
     public function __construct($urlFacade)
     {
@@ -30,7 +30,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $resourceId
      *
@@ -65,7 +65,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -98,7 +98,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
 
     /**
      * @param int $idCategoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -108,7 +108,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      * @throws \Propel\Runtime\Exception\PropelException

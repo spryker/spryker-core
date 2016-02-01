@@ -17,7 +17,7 @@ interface CategoryToUrlInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $resourceId
      *
@@ -39,7 +39,7 @@ interface CategoryToUrlInterface
     public function touchUrlDeleted($idUrl);
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -63,14 +63,14 @@ interface CategoryToUrlInterface
 
     /**
      * @param int $idCategoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @throws \Spryker\Zed\Category\Business\Exception\MissingUrlException
      * @throws \Propel\Runtime\Exception\PropelException

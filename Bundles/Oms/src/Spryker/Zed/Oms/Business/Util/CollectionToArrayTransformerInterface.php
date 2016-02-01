@@ -13,7 +13,7 @@ interface CollectionToArrayTransformerInterface
 {
 
     /**
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      *
      * @return SpySalesOrderItem[] $orderItems
      */

@@ -27,8 +27,8 @@ class Touch implements TouchInterface
     protected $connection;
 
     /**
-     * @param TouchQueryContainerInterface $queryContainer
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(TouchQueryContainerInterface $queryContainer, ConnectionInterface $connection)
     {

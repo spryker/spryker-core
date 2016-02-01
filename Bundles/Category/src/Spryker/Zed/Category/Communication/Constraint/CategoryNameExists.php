@@ -31,9 +31,9 @@ class CategoryNameExists extends Constraint
     protected $locale;
 
     /**
-     * @param CategoryQueryContainer $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param mixed $options
      */
     public function __construct(

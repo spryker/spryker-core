@@ -108,7 +108,7 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @param VoucherCreateInfoTransfer $voucherCreateInfoInterface
+     * @param \Generated\Shared\Transfer\VoucherCreateInfoTransfer $voucherCreateInfoInterface
      *
      * @return self
      */
@@ -122,7 +122,7 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -162,7 +162,7 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable
      */
@@ -177,7 +177,7 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

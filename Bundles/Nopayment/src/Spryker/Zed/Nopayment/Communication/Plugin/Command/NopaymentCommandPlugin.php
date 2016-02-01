@@ -23,8 +23,8 @@ class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInt
 
     /**
      * @param SpySalesOrderItem[] $orderItems
-     * @param SpySalesOrder $order
-     * @param ReadOnlyArrayObject $data
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return array
      */

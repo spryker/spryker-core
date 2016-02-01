@@ -28,7 +28,7 @@ class CustomerForm extends AbstractForm
     protected $customerQueryContainer;
 
     /**
-     * @param CustomerQueryContainerInterface $customerQueryContainerInterface
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainerInterface
      * @param string $formActionType
      */
     public function __construct(CustomerQueryContainerInterface $customerQueryContainerInterface, $formActionType)
@@ -66,7 +66,7 @@ class CustomerForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

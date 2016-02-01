@@ -20,7 +20,7 @@ class ObjectBuilder extends PropelObjectBuilder
      * @see parent::addColumnMutators()
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param \Propel\Generator\Model\Column $col The current column.
      *
      * @return void
      */

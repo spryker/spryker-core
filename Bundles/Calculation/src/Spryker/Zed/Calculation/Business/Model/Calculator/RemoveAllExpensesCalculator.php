@@ -14,7 +14,7 @@ class RemoveAllExpensesCalculator implements
 {
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
      */

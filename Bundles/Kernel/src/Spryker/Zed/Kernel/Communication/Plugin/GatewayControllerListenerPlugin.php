@@ -26,7 +26,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 {
 
     /**
-     * @param FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
      * @return callable
      */
@@ -57,7 +57,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
-     * @param AbstractGatewayController $controller
+     * @param \Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController $controller
      * @param string $action
      *
      * @throw \LogicException
@@ -90,7 +90,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
-     * @param AbstractGatewayController $controller
+     * @param \Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController $controller
      * @param $result
      *
      * @return \Spryker\Zed\ZedRequest\Business\Client\Response
@@ -112,8 +112,8 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
-     * @param AbstractGatewayController $controller
-     * @param Response $response
+     * @param \Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController $controller
+     * @param \Spryker\Zed\ZedRequest\Business\Client\Response $response
      *
      * @return void
      */
@@ -125,7 +125,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
-     * @param Response $response
+     * @param \Spryker\Zed\ZedRequest\Business\Client\Response $response
      *
      * @return void
      */

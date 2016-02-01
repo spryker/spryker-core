@@ -19,7 +19,7 @@ class VoucherPoolCategoryTable extends AbstractTable
     protected $categoriesQuery;
 
     /**
-     * @param SpyDiscountVoucherPoolCategoryQuery $discountVoucherPoolCategory
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery $discountVoucherPoolCategory
      */
     public function __construct(SpyDiscountVoucherPoolCategoryQuery $discountVoucherPoolCategory)
     {
@@ -27,7 +27,7 @@ class VoucherPoolCategoryTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return mixed
      */
@@ -44,7 +44,7 @@ class VoucherPoolCategoryTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

@@ -40,9 +40,9 @@ class Reader implements ReaderInterface
     protected $priceTypeEntityByNameCache = [];
 
     /**
-     * @param PriceQueryContainer $queryContainer
-     * @param PriceToProductInterface $productFacade
-     * @param PriceConfig $priceSettings
+     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainer $queryContainer
+     * @param \Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface $productFacade
+     * @param \Spryker\Zed\Price\PriceConfig $priceSettings
      */
     public function __construct(
         $queryContainer,
@@ -171,7 +171,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @throws \Exception
      *
@@ -197,7 +197,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @return bool
      */
@@ -212,7 +212,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @return bool
      */
@@ -227,7 +227,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
@@ -240,7 +240,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */

@@ -177,7 +177,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */
@@ -201,7 +201,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
      */

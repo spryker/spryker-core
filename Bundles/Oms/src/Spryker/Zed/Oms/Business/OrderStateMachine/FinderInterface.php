@@ -51,14 +51,14 @@ interface FinderInterface
     public function countReservedOrderItemsForSku($sku);
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return array
      */
     public function getGroupedManuallyExecutableEvents(SpySalesOrder $order);
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
      * @return SpySalesOrderItem[]
@@ -66,7 +66,7 @@ interface FinderInterface
     public function getItemsWithFlag(SpySalesOrder $order, $flag);
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
      * @return SpySalesOrderItem[]
@@ -79,7 +79,7 @@ interface FinderInterface
     public function getProcesses();
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return string
      */

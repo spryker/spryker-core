@@ -38,7 +38,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @param PayoneStandardParameterTransfer $standardParameterTransfer
+     * @param \Generated\Shared\Transfer\PayoneStandardParameterTransfer $standardParameterTransfer
      *
      * @return void
      */
@@ -56,7 +56,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @param SequenceNumberProviderInterface $sequenceNumberProvider
+     * @param \Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface $sequenceNumberProvider
      *
      * @return void
      */
@@ -104,8 +104,8 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @param PersonalContainer $personalContainer
-     * @param SpySalesOrderAddress $billingAddressEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer $personalContainer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $billingAddressEntity
      *
      * @return void
      */

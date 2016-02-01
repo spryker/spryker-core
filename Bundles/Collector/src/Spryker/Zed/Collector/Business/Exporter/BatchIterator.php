@@ -43,7 +43,7 @@ class BatchIterator implements CountableIteratorInterface
     protected $currentDataSet = [];
 
     /**
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize
      */
     public function __construct(ModelCriteria $query, $chunkSize = 100)

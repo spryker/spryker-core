@@ -27,10 +27,10 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     private $queryContainer;
 
     /**
-     * @param AdapterInterface $executionAdapter
-     * @param ConverterInterface $converter
-     * @param PayolutionQueryContainerInterface $queryContainer
-     * @param PayolutionConfig $config
+     * @param \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface $executionAdapter
+     * @param \Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface $converter
+     * @param \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Payolution\PayolutionConfig $config
      */
     public function __construct(
         AdapterInterface $executionAdapter,
@@ -48,7 +48,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
@@ -176,7 +176,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
 
     /**
      * @param array $requestData
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
@@ -224,7 +224,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param PayolutionTransactionResponseTransfer $responseTransfer
+     * @param \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer $responseTransfer
      * @param int $idPayment
      *
      * @return void

@@ -12,7 +12,7 @@ interface PersistenceFactoryInterface
 {
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      */
     public function setContainer(Container $container);
 

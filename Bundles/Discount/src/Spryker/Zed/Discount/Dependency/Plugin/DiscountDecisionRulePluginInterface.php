@@ -14,8 +14,8 @@ interface DiscountDecisionRulePluginInterface
 {
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param CalculableInterface $discountableContainer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
      *
      * @return \Spryker\Zed\Kernel\Business\ModelResult
      */

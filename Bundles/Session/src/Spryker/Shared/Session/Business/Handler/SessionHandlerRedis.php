@@ -44,7 +44,7 @@ class SessionHandlerRedis implements \SessionHandlerInterface
     /**
      * @param string $savePath
      * @param int $lifetime
-     * @param ApiInterface $newRelicApi
+     * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      */
     public function __construct($savePath, $lifetime, ApiInterface $newRelicApi)
     {

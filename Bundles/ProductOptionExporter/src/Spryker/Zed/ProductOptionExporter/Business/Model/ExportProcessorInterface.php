@@ -14,7 +14,7 @@ interface ExportProcessorInterface
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */

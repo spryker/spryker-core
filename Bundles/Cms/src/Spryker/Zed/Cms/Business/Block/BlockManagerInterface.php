@@ -13,14 +13,14 @@ interface BlockManagerInterface
 {
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function saveBlock(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
@@ -34,28 +34,28 @@ interface BlockManagerInterface
     public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode);
 
     /**
-     * @param SpyCmsBlock $blockEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlock $blockEntity
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function convertBlockEntityToTransfer(SpyCmsBlock $blockEntity);
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
     public function touchBlockActive(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
     public function touchBlockActiveWithKeyChange(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */

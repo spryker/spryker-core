@@ -17,7 +17,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
 {
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
      */
@@ -32,7 +32,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
@@ -50,7 +50,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
@@ -122,7 +122,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return ItemTransfer[]
      */
@@ -134,7 +134,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     /**
      * //@todo why set to gross, why not keep 0?
      *
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $priceToPay
      *
      * @return int

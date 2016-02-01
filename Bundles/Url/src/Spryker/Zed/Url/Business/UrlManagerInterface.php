@@ -19,7 +19,7 @@ interface UrlManagerInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
      *
@@ -32,14 +32,14 @@ interface UrlManagerInterface
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource);
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveUrl(UrlTransfer $urlTransfer);
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      * @throws \Propel\Runtime\Exception\PropelException
@@ -49,7 +49,7 @@ interface UrlManagerInterface
     public function deleteUrl(UrlTransfer $urlTransfer);
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -106,7 +106,7 @@ interface UrlManagerInterface
     public function touchUrlDeleted($idUrl);
 
     /**
-     * @param SpyUrl $urlEntity
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
      *
      * @throws \Spryker\Zed\Url\Persistence\Exception\MissingResourceException
      *

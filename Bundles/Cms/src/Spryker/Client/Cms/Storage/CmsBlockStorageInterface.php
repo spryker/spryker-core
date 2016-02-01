@@ -12,7 +12,7 @@ interface CmsBlockStorageInterface
 {
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return array
      */

@@ -27,7 +27,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     const BUNDLE = 'Propel';
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -36,7 +36,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -102,7 +102,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     }
 
     /**
-     * @param StandardServiceContainer $serviceContainer
+     * @param \Propel\Runtime\ServiceContainer\StandardServiceContainer $serviceContainer
      *
      * @throws \ErrorException
      *

@@ -42,8 +42,8 @@ class OrderDetailsManager
     protected $logReceiverPluginStack;
 
     /**
-     * @param SalesQueryContainerInterface $queryContainer
-     * @param SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param array $logReceiverPluginStack
      */
     public function __construct(SalesQueryContainerInterface $queryContainer, SalesToOmsInterface $omsFacade, array $logReceiverPluginStack)
@@ -54,7 +54,7 @@ class OrderDetailsManager
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
@@ -73,7 +73,7 @@ class OrderDetailsManager
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param int $idAddress
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
@@ -144,7 +144,7 @@ class OrderDetailsManager
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
@@ -189,8 +189,8 @@ class OrderDetailsManager
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
-     * @param OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -203,7 +203,7 @@ class OrderDetailsManager
     }
 
     /**
-     * @param SpySalesOrderItem $orderItemEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
@@ -222,8 +222,8 @@ class OrderDetailsManager
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
-     * @param OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -236,8 +236,8 @@ class OrderDetailsManager
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
-     * @param OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -250,8 +250,8 @@ class OrderDetailsManager
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
-     * @param OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -263,8 +263,8 @@ class OrderDetailsManager
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
-     * @param OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -281,7 +281,7 @@ class OrderDetailsManager
 
     /**
      * @param int $idRefund
-     * @param OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
+     * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
      *
      * @return void
      */

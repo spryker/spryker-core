@@ -88,7 +88,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param InstalledPackagesTransfer $collection
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $collection
      *
      * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder
      */
@@ -101,7 +101,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param InstalledPackagesTransfer $collection
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $collection
      * @param string $path
      *
      * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder
@@ -124,7 +124,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param InstalledPackagesTransfer $installedPackages
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $installedPackages
      *
      * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter
      */

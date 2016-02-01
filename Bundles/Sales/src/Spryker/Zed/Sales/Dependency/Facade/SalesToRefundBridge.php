@@ -17,7 +17,7 @@ class SalesToRefundBridge implements SalesToRefundInterface
     protected $refundFacade;
 
     /**
-     * @param RefundFacade $refundFacade
+     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
      */
     public function __construct($refundFacade)
     {

@@ -75,7 +75,7 @@ class Console extends SymfonyCommand
     private $exitCode = 0;
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return self
      */
@@ -95,7 +95,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param AbstractCommunicationFactory $factory
+     * @param \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $factory
      *
      * @return self
      */
@@ -145,7 +145,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param AbstractFacade $facade
+     * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
      *
      * @return void
      */
@@ -181,7 +181,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param AbstractQueryContainer $queryContainer
+     * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer
      *
      * @return self
      */
@@ -201,8 +201,8 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */

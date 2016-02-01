@@ -17,7 +17,7 @@ interface RuleInterface
 {
 
     /**
-     * @param RuleTransfer $ruleTransfer
+     * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
@@ -26,7 +26,7 @@ interface RuleInterface
     public function addRule(RuleTransfer $ruleTransfer);
 
     /**
-     * @param RuleTransfer $RuleTransfer
+     * @param \Generated\Shared\Transfer\RuleTransfer $RuleTransfer
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
@@ -49,7 +49,7 @@ interface RuleInterface
     public function getRoleRules($idRole);
 
     /**
-     * @param RolesTransfer $roles
+     * @param \Generated\Shared\Transfer\RolesTransfer $roles
      * @param string $bundle
      * @param string $controller
      * @param string $action
@@ -98,14 +98,14 @@ interface RuleInterface
     public function isIgnorable($bundle, $controller, $action);
 
     /**
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      */
     public function registerSystemUserRules(UserTransfer $userTransfer);
 
     /**
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param string $bundle
      * @param string $controller
      * @param string $action

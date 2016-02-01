@@ -75,7 +75,7 @@ interface GlossaryQueryContainerInterface
     public function queryTranslationById($idGlossaryTranslation);
 
     /**
-     * @param SpyGlossaryTranslationQuery $query
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -106,14 +106,14 @@ interface GlossaryQueryContainerInterface
     public function queryMissingTranslationsForKey($idKey, array $relevantLocales);
 
     /**
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryDistinctKeysFromQuery(ModelCriteria $query);
 
     /**
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */

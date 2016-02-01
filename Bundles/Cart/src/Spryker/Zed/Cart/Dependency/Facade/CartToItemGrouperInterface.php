@@ -12,7 +12,7 @@ interface CartToItemGrouperInterface
 {
 
     /**
-     * @param GroupableContainerTransfer $groupAbleItems
+     * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupAbleItems
      *
      * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */

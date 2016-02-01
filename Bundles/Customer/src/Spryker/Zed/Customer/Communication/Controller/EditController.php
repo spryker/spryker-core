@@ -24,7 +24,7 @@ class EditController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */
@@ -99,7 +99,7 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return bool
      */

@@ -37,7 +37,7 @@ class StatusLog extends AbstractTable
     ];
 
     /**
-     * @param SpyPaymentPayolutionTransactionStatusLogQuery $statusLogQuery
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery $statusLogQuery
      * @param int $idPayment
      */
     public function __construct(SpyPaymentPayolutionTransactionStatusLogQuery $statusLogQuery, $idPayment)
@@ -47,7 +47,7 @@ class StatusLog extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -85,7 +85,7 @@ class StatusLog extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

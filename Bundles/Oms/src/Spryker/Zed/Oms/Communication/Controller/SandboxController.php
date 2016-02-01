@@ -68,7 +68,7 @@ class SandboxController extends AbstractController
     /**
      * @deprecated
      *
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -138,9 +138,9 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @param SpySalesOrder $order
-     * @param SpyOmsOrderItemState $state
-     * @param SpyOmsOrderProcess $process
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState $state
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $process
      * @param float $price
      * @param string $sku
      *
@@ -195,7 +195,7 @@ class SandboxController extends AbstractController
 
     /**
      * @param array $cities
-     * @param SpyCountry $country
+     * @param \Orm\Zed\Country\Persistence\SpyCountry $country
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
      */
@@ -214,7 +214,7 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @param SpySalesOrderAddress $address
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $address
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
@@ -267,7 +267,7 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param float $total
      *
      * @return void

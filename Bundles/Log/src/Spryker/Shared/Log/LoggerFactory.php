@@ -20,7 +20,7 @@ class LoggerFactory
     protected static $loggers = [];
 
     /**
-     * @param LoggerConfigInterface $loggerConfig
+     * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
      *
      * @return LoggerInterface|null
      */
@@ -34,7 +34,7 @@ class LoggerFactory
     }
 
     /**
-     * @param LoggerConfigInterface $loggerConfig
+     * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
      *
      * @return \Psr\Log\LoggerInterface
      */

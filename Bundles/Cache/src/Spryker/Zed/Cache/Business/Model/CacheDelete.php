@@ -19,7 +19,7 @@ class CacheDelete
     protected $config;
 
     /**
-     * @param CacheConfig $config
+     * @param \Spryker\Zed\Cache\CacheConfig $config
      */
     public function __construct(CacheConfig $config)
     {

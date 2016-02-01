@@ -40,7 +40,7 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return \Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller
      */

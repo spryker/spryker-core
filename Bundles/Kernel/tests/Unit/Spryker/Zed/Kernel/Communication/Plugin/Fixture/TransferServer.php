@@ -19,7 +19,7 @@ class TransferServer extends CoreTransferServer
     private $fixtureRequest;
 
     /**
-     * @param Request $request
+     * @param \Spryker\Shared\Library\Communication\Request $request
      *
      * @return self
      */

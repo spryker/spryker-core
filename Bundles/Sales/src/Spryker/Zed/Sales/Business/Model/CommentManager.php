@@ -20,7 +20,7 @@ class CommentManager
     protected $queryContainer;
 
     /**
-     * @param SalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      */
     public function __construct(SalesQueryContainerInterface $salesQueryContainer)
     {
@@ -28,7 +28,7 @@ class CommentManager
     }
 
     /**
-     * @param CommentTransfer $commentTransfer
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderComment
      */

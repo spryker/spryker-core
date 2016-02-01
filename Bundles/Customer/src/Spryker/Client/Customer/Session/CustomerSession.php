@@ -20,7 +20,7 @@ class CustomerSession implements CustomerSessionInterface
     private $sessionClient;
 
     /**
-     * @param SessionClientInterface $sessionClient
+     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
      */
     public function __construct(SessionClientInterface $sessionClient)
     {
@@ -52,7 +52,7 @@ class CustomerSession implements CustomerSessionInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */

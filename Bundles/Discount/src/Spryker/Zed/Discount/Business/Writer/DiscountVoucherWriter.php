@@ -14,7 +14,7 @@ class DiscountVoucherWriter extends AbstractWriter
 {
 
     /**
-     * @param VoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $discountVoucherTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
@@ -28,7 +28,7 @@ class DiscountVoucherWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $discountVoucherTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

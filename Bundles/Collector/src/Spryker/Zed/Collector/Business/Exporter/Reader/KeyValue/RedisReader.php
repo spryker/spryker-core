@@ -20,7 +20,7 @@ class RedisReader implements ReaderInterface
     protected $redis;
 
     /**
-     * @param ReadInterface $redis
+     * @param \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface $redis
      */
     public function __construct(ReadInterface $redis)
     {

@@ -25,7 +25,7 @@ class LocaleInstaller extends AbstractInstaller
     protected $localeQueryContainer;
 
     /**
-     * @param LocaleQueryContainerInterface $localeQueryContainer
+     * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param string $localeFile
      */
     public function __construct(LocaleQueryContainerInterface $localeQueryContainer, $localeFile)

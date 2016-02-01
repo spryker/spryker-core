@@ -34,7 +34,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
      * @param string $skus
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
@@ -221,7 +221,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      *
      * @return self
      */
@@ -253,8 +253,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
-     * @param ModelCriteria $expandableQuery
-     * @param LocaleTransfer $locale
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return self
      */

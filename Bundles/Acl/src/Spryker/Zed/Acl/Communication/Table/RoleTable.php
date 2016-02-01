@@ -27,7 +27,7 @@ class RoleTable extends AbstractTable
     protected $aclQueryContainer;
 
     /**
-     * @param AclQueryContainer $aclQueryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $aclQueryContainer
      */
     public function __construct(AclQueryContainer $aclQueryContainer)
     {
@@ -35,7 +35,7 @@ class RoleTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -60,7 +60,7 @@ class RoleTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return mixed
      */

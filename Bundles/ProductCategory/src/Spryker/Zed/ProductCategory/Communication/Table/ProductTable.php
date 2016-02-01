@@ -35,8 +35,8 @@ class ProductTable extends AbstractTable
     protected $idCategory;
 
     /**
-     * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
-     * @param LocaleTransfer $locale
+     * @param \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idCategory
      */
     public function __construct(ProductCategoryQueryContainerInterface $productCategoryQueryContainer, LocaleTransfer $locale, $idCategory)
@@ -49,7 +49,7 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -73,7 +73,7 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

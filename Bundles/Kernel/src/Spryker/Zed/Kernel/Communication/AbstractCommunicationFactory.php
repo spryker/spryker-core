@@ -20,8 +20,8 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     const FORM_FACTORY = 'form.factory';
 
     /**
-     * @param AbstractBundleDependencyProvider $dependencyProvider
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */
@@ -41,7 +41,7 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     }
 
     /**
-     * @param FormTypeInterface $formTypeInterface
+     * @param \Symfony\Component\Form\FormTypeInterface $formTypeInterface
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface

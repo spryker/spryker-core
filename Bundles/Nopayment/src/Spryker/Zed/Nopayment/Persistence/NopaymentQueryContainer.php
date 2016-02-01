@@ -14,7 +14,7 @@ class NopaymentQueryContainer extends AbstractQueryContainer
 {
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $orderItem
      *
      * @return \Orm\Zed\Nopayment\Persistence\SpyNopaymentPaidQuery
      */

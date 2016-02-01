@@ -12,7 +12,7 @@ class ItemTotalPriceCalculator implements CalculatorPluginInterface
 {
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
      */

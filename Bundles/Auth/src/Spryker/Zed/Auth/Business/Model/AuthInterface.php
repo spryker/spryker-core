@@ -22,7 +22,7 @@ interface AuthInterface
     public function authenticate($username, $password);
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return string
      */

@@ -49,7 +49,7 @@ class Guzzle extends AbstractHttpAdapter
     }
 
     /**
-     * @param GuzzleRequestInterface $request
+     * @param \Guzzle\Http\Message\RequestInterface $request
      * @param string $user
      * @param string $password
      *
@@ -61,7 +61,7 @@ class Guzzle extends AbstractHttpAdapter
     }
 
     /**
-     * @param GuzzleRequestInterface $request
+     * @param \Guzzle\Http\Message\RequestInterface $request
      *
      * @throws \Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException
      *

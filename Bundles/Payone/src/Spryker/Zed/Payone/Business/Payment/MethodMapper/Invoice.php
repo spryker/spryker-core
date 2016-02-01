@@ -31,7 +31,7 @@ class Invoice extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer
      */
@@ -44,7 +44,7 @@ class Invoice extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
      */
@@ -61,7 +61,7 @@ class Invoice extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer
      */
@@ -74,8 +74,8 @@ class Invoice extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
-     * @param AbstractAuthorizationContainer $authorizationContainer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer $authorizationContainer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer
      */
@@ -101,7 +101,7 @@ class Invoice extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer
      */
@@ -118,7 +118,7 @@ class Invoice extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer
      */
@@ -142,7 +142,7 @@ class Invoice extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer
      */
@@ -154,7 +154,7 @@ class Invoice extends AbstractMapper
     }
 
     /**
-     * @param PayoneAuthorizationTransfer $payoneAuthorizationTransfer
+     * @param \Generated\Shared\Transfer\PayoneAuthorizationTransfer $payoneAuthorizationTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
      */

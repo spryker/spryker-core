@@ -30,8 +30,8 @@ class ProductCategoryPathQueryExpander
     protected $categoryQueryContainer;
 
     /**
-     * @param CategoryQueryContainer $categoryQueryContainer
-     * @param LocaleTransfer $locale
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $categoryQueryContainer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      */
     public function __construct(
         CategoryQueryContainer $categoryQueryContainer,
@@ -42,7 +42,7 @@ class ProductCategoryPathQueryExpander
     }
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      *

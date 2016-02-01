@@ -20,7 +20,7 @@ class AuthorizationIsApprovedPlugin extends AbstractPlugin
     const NAME = 'AuthorizationIsApprovedPlugin';
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

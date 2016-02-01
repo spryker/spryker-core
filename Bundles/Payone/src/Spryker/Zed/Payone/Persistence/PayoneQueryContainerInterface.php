@@ -77,7 +77,7 @@ interface PayoneQueryContainerInterface
     public function getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids);
 
     /**
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */
@@ -91,7 +91,7 @@ interface PayoneQueryContainerInterface
     public function getLastApiLogsByOrderId($idSalesOrder);
 
     /**
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
      */

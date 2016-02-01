@@ -15,7 +15,7 @@ class CalculableContainer implements CalculableInterface
     private $order;
 
     /**
-     * @param OrderTransfer $order
+     * @param \Generated\Shared\Transfer\OrderTransfer $order
      */
     public function __construct(OrderTransfer $order)
     {

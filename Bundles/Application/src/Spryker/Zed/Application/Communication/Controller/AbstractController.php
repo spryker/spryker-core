@@ -62,7 +62,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param Application $application
+     * @param \Silex\Application $application
      *
      * @return self
      */

@@ -17,7 +17,7 @@ class BaseStub
     protected $zedStub;
 
     /**
-     * @param ZedRequestClient $zedStub
+     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
      */
     public function __construct(ZedRequestClient $zedStub)
     {

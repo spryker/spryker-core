@@ -21,7 +21,7 @@ interface DiscountCalculatorPluginInterface
     public function calculate(array $discountableObjects, $number);
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return string
      */

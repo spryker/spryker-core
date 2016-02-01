@@ -19,7 +19,7 @@ class ProductCategoryToCmsBridge implements ProductCategoryToCmsInterface
     /**
      * ProductCategoryToCmsBridge constructor.
      *
-     * @param CmsFacade $cmsFacade
+     * @param \Spryker\Zed\Cms\Business\CmsFacade $cmsFacade
      */
     public function __construct($cmsFacade)
     {

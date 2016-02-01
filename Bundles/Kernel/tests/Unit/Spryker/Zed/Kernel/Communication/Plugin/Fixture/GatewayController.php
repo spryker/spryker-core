@@ -18,7 +18,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param TransferInterface $foo
+     * @param \Spryker\Shared\Transfer\TransferInterface $foo
      *
      * @return \Spryker\Shared\Transfer\TransferInterface
      */
@@ -28,7 +28,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CartTransfer $foo
+     * @param \Generated\Shared\Transfer\CartTransfer $foo
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -38,8 +38,8 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param TransferInterface $foo
-     * @param TransferInterface $bar
+     * @param \Spryker\Shared\Transfer\TransferInterface $foo
+     * @param \Spryker\Shared\Transfer\TransferInterface $bar
      *
      * @return \Spryker\Shared\Transfer\TransferInterface
      */
@@ -52,7 +52,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param TransferInterface $foo
+     * @param \Spryker\Shared\Transfer\TransferInterface $foo
      * @param mixed $bar
      * @param mixed $baz
      *

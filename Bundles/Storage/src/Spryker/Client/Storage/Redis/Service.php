@@ -30,7 +30,7 @@ class Service implements ServiceInterface
     private $accessStats;
 
     /**
-     * @param ClientInterface $client
+     * @param \Predis\ClientInterface $client
      * @param bool $debug
      */
     public function __construct(ClientInterface $client, $debug = false)

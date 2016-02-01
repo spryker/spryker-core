@@ -12,7 +12,7 @@ interface ProductConcreteWriterInterface
 {
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool success
      */

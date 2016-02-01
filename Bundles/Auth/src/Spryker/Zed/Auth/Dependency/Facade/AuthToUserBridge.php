@@ -18,7 +18,7 @@ class AuthToUserBridge implements AuthToUserInterface
     protected $userFacade;
 
     /**
-     * @param UserFacade $userFacade
+     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      */
     public function __construct($userFacade)
     {
@@ -26,7 +26,7 @@ class AuthToUserBridge implements AuthToUserInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return bool
      */
@@ -83,7 +83,7 @@ class AuthToUserBridge implements AuthToUserInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
@@ -93,7 +93,7 @@ class AuthToUserBridge implements AuthToUserInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return mixed
      */

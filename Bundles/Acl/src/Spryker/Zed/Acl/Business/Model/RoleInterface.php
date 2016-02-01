@@ -24,7 +24,7 @@ interface RoleInterface
     public function addRole($name);
 
     /**
-     * @param RoleTransfer $data
+     * @param \Generated\Shared\Transfer\RoleTransfer $data
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
      * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException

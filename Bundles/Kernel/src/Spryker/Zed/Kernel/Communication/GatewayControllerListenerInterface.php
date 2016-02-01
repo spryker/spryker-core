@@ -12,7 +12,7 @@ interface GatewayControllerListenerInterface
 {
 
     /**
-     * @param FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
      * @return callable
      */

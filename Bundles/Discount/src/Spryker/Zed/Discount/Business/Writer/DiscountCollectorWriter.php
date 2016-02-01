@@ -12,7 +12,7 @@ class DiscountCollectorWriter extends AbstractWriter
 {
 
     /**
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollector
      */
@@ -26,7 +26,7 @@ class DiscountCollectorWriter extends AbstractWriter
     }
 
     /**
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollector
      */
@@ -40,7 +40,7 @@ class DiscountCollectorWriter extends AbstractWriter
     }
 
     /**
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollector
      */

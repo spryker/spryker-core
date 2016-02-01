@@ -17,7 +17,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     protected static $messages;
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -32,7 +32,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -47,7 +47,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */

@@ -28,7 +28,7 @@ class SubRequestExceptionHandler implements ExceptionHandlerInterface
     protected $errorPageNamePrefix;
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      * @param string $errorPageNamePrefix
      */
     public function __construct(Application $application, $errorPageNamePrefix = self::DEFAULT_URL_NAME_PREFIX)
@@ -38,7 +38,7 @@ class SubRequestExceptionHandler implements ExceptionHandlerInterface
     }
 
     /**
-     * @param FlattenException $exception
+     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

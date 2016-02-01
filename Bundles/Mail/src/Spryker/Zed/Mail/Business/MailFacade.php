@@ -17,7 +17,7 @@ class MailFacade extends AbstractFacade
 {
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
@@ -27,7 +27,7 @@ class MailFacade extends AbstractFacade
     }
 
     /**
-     * @param SendMailResponsesTransfer $mailResponses
+     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $mailResponses
      *
      * @return bool
      */

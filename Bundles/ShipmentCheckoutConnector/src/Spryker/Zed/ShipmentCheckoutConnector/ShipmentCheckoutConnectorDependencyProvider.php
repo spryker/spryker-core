@@ -20,7 +20,7 @@ class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependen
     const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
@@ -34,7 +34,7 @@ class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependen
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

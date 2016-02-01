@@ -51,9 +51,9 @@ class CategoryTreeWriter
      * @param NodeWriterInterface $nodeWriter
      * @param ClosureTableWriterInterface $closureTableWriter
      * @param CategoryTreeReaderInterface $categoryTreeReader
-     * @param NodeUrlManagerInterface $nodeUrlManager
-     * @param CategoryToTouchInterface $touchFacade
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Category\Business\Manager\NodeUrlManagerInterface $nodeUrlManager
+     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface $touchFacade
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
         NodeWriterInterface $nodeWriter,
@@ -72,8 +72,8 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $createUrlPath
      *
      * @return int
@@ -102,8 +102,8 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param NodeTransfer $categoryNodeTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -123,7 +123,7 @@ class CategoryTreeWriter
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $deleteChildren
      *
      * @return int
@@ -168,7 +168,7 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
      * @return void
      */
@@ -185,7 +185,7 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
      * @return void
      */
@@ -243,7 +243,7 @@ class CategoryTreeWriter
 
     /**
      * @param int $idCategoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */

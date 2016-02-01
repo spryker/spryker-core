@@ -22,7 +22,7 @@ class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Spryker\Zed\ProductCategory\Persistence\QueryExpander\ProductCategoryPathQueryExpander
      */

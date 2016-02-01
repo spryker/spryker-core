@@ -37,7 +37,7 @@ class RootNodeTable extends AbstractTable
 
     /**
      * @param int $idLocale
-     * @param CategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $productCategoryQueryContainer
      */
     public function __construct(CategoryQueryContainerInterface $productCategoryQueryContainer, $idLocale)
     {
@@ -48,7 +48,7 @@ class RootNodeTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -70,7 +70,7 @@ class RootNodeTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

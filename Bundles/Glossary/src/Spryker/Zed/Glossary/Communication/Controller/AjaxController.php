@@ -24,7 +24,7 @@ class AjaxController extends AbstractController
     const SEARCH_TERM = 'term';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */

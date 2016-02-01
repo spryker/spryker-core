@@ -16,7 +16,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     const COMMANDS = 'commands';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
@@ -30,7 +30,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return Command[]
      */

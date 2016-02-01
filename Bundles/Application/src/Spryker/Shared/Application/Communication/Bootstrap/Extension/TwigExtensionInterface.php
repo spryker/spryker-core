@@ -12,7 +12,7 @@ interface TwigExtensionInterface
 {
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      */
     public function getTwigExtensions(Application $application);
 

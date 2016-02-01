@@ -26,7 +26,7 @@ interface ProductManagerInterface
     public function hasProductAbstract($sku);
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
      *
@@ -44,7 +44,7 @@ interface ProductManagerInterface
     public function getProductAbstractIdBySku($sku);
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param int $idProductAbstract
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
@@ -77,7 +77,7 @@ interface ProductManagerInterface
     /**
      * @param string $sku
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
@@ -90,7 +90,7 @@ interface ProductManagerInterface
     /**
      * @param int $idProductAbstract
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
@@ -103,7 +103,7 @@ interface ProductManagerInterface
     /**
      * @param string $sku
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
@@ -116,7 +116,7 @@ interface ProductManagerInterface
     /**
      * @param int $idProductAbstract
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException

@@ -25,7 +25,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_PRODUCT_CATEGORY = 'query container product category';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
@@ -47,7 +47,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

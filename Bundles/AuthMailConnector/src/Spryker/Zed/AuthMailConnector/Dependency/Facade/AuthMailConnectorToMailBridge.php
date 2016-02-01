@@ -19,7 +19,7 @@ class AuthMailConnectorToMailBridge implements AuthMailConnectorToMailInterface
     protected $mailFacade;
 
     /**
-     * @param MailFacade $mailFacade
+     * @param \Spryker\Zed\Mail\Business\MailFacade $mailFacade
      */
     public function __construct($mailFacade)
     {
@@ -27,7 +27,7 @@ class AuthMailConnectorToMailBridge implements AuthMailConnectorToMailInterface
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */

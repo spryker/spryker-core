@@ -32,7 +32,7 @@ class Role implements RoleInterface
 
     /**
      * @param GroupInterface $group
-     * @param AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
      */
     public function __construct(GroupInterface $group, AclQueryContainer $queryContainer)
     {
@@ -58,7 +58,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * @param RoleTransfer $roleTransfer
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
      * @throws \Spryker\Zed\Acl\Business\Exception\RootNodeModificationException
@@ -132,7 +132,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * @param RolesTransfer $rolesTransfer
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      * @param int $idAclGroup
      *
      * @return void

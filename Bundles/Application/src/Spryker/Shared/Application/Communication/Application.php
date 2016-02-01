@@ -54,7 +54,7 @@ class Application extends \Silex\Application
     }
 
     /**
-     * @param AbstractForm $form
+     * @param \Spryker\Shared\Gui\Form\AbstractForm $form
      * @param array $options The options
      *
      * @throws InvalidOptionsException if any given option is not applicable to the given type
@@ -77,7 +77,7 @@ class Application extends \Silex\Application
     /**
      * Add a router to the list of routers.
      *
-     * @param RouterInterface $router The router
+     * @param \Symfony\Component\Routing\RouterInterface $router The router
      * @param int $priority The priority of the router
      *
      * @return void

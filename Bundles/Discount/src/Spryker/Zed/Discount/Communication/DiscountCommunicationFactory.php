@@ -72,7 +72,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param DataTablesTransfer $dataTablesTransfer
+     * @param \Generated\Shared\Transfer\DataTablesTransfer $dataTablesTransfer
      * @param int $idPool
      * @param int $batchValue
      *
@@ -99,7 +99,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param DiscountFacade $discountFacade
+     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      *
      * @return \Symfony\Component\Form\FormInterface
      */

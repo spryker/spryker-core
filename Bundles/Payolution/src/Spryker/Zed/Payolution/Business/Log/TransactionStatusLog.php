@@ -19,7 +19,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     private $queryContainer;
 
     /**
-     * @param PayolutionQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface $queryContainer
      */
     public function __construct(PayolutionQueryContainerInterface $queryContainer)
     {
@@ -27,7 +27,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -41,7 +41,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -55,7 +55,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -69,7 +69,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -83,7 +83,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -97,7 +97,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param string $paymentCode
      * @param string $expectedStatusReasonCode
      *

@@ -51,11 +51,11 @@ class Rule implements RuleInterface
 
     /**
      * @param GroupInterface $group
-     * @param AclQueryContainer $queryContainer
-     * @param AclToUserInterface $facadeUser
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
      * @param RuleValidator $rulesValidator
      * @param RuleValidator $rulesValidator
-     * @param AclConfig $settings
+     * @param \Spryker\Zed\Acl\AclConfig $settings
      */
     public function __construct(
         GroupInterface $group,
@@ -72,7 +72,7 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param RuleTransfer $ruleTransfer
+     * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
@@ -84,7 +84,7 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param RuleTransfer $ruleTransfer
+     * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
@@ -155,7 +155,7 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param RolesTransfer $roles
+     * @param \Generated\Shared\Transfer\RolesTransfer $roles
      * @param string $bundle
      * @param string $controller
      * @param string $action
@@ -266,7 +266,7 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
@@ -290,7 +290,7 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param string $bundle
      * @param string $controller
      * @param string $action

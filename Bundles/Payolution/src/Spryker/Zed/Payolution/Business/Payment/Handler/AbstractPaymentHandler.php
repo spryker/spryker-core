@@ -39,9 +39,9 @@ abstract class AbstractPaymentHandler
     protected $methodMappers = [];
 
     /**
-     * @param AdapterInterface $executionAdapter
-     * @param ConverterInterface $converter
-     * @param PayolutionConfig $config
+     * @param \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface $executionAdapter
+     * @param \Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface $converter
+     * @param \Spryker\Zed\Payolution\PayolutionConfig $config
      */
     public function __construct(
         AdapterInterface $executionAdapter,
@@ -62,7 +62,7 @@ abstract class AbstractPaymentHandler
     }
 
     /**
-     * @param InvoiceInterface | InstallmentInterface $mapper
+     * @param \Spryker\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface | InstallmentInterface $mapper
      *
      * @return void
      */

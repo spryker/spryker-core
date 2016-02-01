@@ -19,7 +19,7 @@ class ShipmentFacade extends AbstractFacade
 {
 
     /**
-     * @param ShipmentCarrierTransfer $carrierTransfer
+     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
@@ -32,7 +32,7 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
@@ -45,7 +45,7 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
@@ -97,7 +97,7 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */

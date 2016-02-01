@@ -20,7 +20,7 @@ class WishlistStub implements WishlistStubInterface
     protected $zedStub;
 
     /**
-     * @param ZedRequestClient $zedStub
+     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
      */
     public function __construct(ZedRequestClient $zedStub)
     {
@@ -28,7 +28,7 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -38,7 +38,7 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -48,7 +48,7 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -58,7 +58,7 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -68,7 +68,7 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */

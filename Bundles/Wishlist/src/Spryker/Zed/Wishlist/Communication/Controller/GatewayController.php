@@ -19,7 +19,7 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param WishlistChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -29,7 +29,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param WishlistChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -39,7 +39,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param WishlistChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -49,7 +49,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param WishlistChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -59,7 +59,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */

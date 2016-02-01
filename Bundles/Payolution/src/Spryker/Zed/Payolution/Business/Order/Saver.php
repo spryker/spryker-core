@@ -15,7 +15,7 @@ class Saver implements SaverInterface
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class Saver implements SaverInterface
     }
 
     /**
-     * @param PayolutionPaymentTransfer $paymentTransfer
+     * @param \Generated\Shared\Transfer\PayolutionPaymentTransfer $paymentTransfer
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution

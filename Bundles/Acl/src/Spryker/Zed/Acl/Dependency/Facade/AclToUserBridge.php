@@ -19,7 +19,7 @@ class AclToUserBridge implements AclToUserInterface
     /**
      * AclToUserBridge constructor.
      *
-     * @param UserFacade $userFacade
+     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      */
     public function __construct($userFacade)
     {
@@ -27,7 +27,7 @@ class AclToUserBridge implements AclToUserInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return bool
      */

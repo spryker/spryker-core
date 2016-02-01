@@ -16,7 +16,7 @@ class UrlTable extends AbstractTable
     const TABLE_IDENTIFIER = 'url_table';
 
     /**
-     * @param SpyUrlQuery $urlQuery
+     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
      */
     public function __construct(SpyUrlQuery $urlQuery)
     {
@@ -26,7 +26,7 @@ class UrlTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -46,7 +46,7 @@ class UrlTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

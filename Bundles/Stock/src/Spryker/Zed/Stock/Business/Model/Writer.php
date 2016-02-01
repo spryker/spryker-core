@@ -41,9 +41,9 @@ class Writer implements WriterInterface
     protected $touchFacade;
 
     /**
-     * @param StockQueryContainer $queryContainer
+     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainer $queryContainer
      * @param ReaderInterface $readerInterface
-     * @param StockToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
      */
     public function __construct(
         StockQueryContainer $queryContainer,
@@ -56,7 +56,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param TypeTransfer $stockTypeTransfer
+     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -76,7 +76,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param TypeTransfer $stockTypeTransfer
+     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException
@@ -101,7 +101,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param StockProductTransfer $transferStockProduct
+     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
      *
@@ -122,7 +122,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param StockProductTransfer $transferStockProduct
+     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
@@ -195,7 +195,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param SpyStock $stockTypeEntity
+     * @param \Orm\Zed\Stock\Persistence\SpyStock $stockTypeEntity
      *
      * @return void
      */
@@ -208,7 +208,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param SpyStockProduct $stockProductEntity
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct $stockProductEntity
      *
      * @return void
      */
@@ -221,7 +221,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param StockProductTransfer $transferStockProduct
+     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      * @param int $idStockType
      * @param int $idProduct
      *

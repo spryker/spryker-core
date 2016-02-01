@@ -12,7 +12,7 @@ interface SessionClientInterface extends SessionInterface
 {
 
     /**
-     * @param SessionInterface $container
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $container
      *
      * @return SessionClientInterface
      */

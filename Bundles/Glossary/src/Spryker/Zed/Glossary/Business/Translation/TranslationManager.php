@@ -56,11 +56,11 @@ class TranslationManager implements TranslationManagerInterface
     protected $messengerFacade;
 
     /**
-     * @param GlossaryQueryContainerInterface $glossaryQueryContainer
-     * @param GlossaryToTouchInterface $touchFacade
-     * @param GlossaryToLocaleInterface $localeFacade
-     * @param KeyManagerInterface $keyManager
-     * @param GlossaryToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface $glossaryQueryContainer
+     * @param \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Glossary\Business\Key\KeyManagerInterface $keyManager
+     * @param \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerInterface $messengerFacade
      */
     public function __construct(
         GlossaryQueryContainerInterface $glossaryQueryContainer,
@@ -77,7 +77,7 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param KeyTranslationTransfer $keyTranslationTransfer
+     * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      *
@@ -120,7 +120,7 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $idGlossaryKey
      * @param string $value
      * @param bool $isActive
@@ -154,7 +154,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -249,7 +249,7 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param SpyGlossaryTranslation $translation
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation $translation
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
@@ -263,7 +263,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -281,7 +281,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -301,7 +301,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
@@ -326,7 +326,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -367,7 +367,7 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param TranslationTransfer $translationTransfer
+     * @param \Generated\Shared\Transfer\TranslationTransfer $translationTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
@@ -393,7 +393,7 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param TranslationTransfer $transferTranslation
+     * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
@@ -424,7 +424,7 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param TranslationTransfer $transferTranslation
+     * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
@@ -436,7 +436,7 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param TranslationTransfer $transferTranslation
+     * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation
      */
@@ -478,7 +478,7 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param TranslationTransfer $transferTranslation
+     * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
@@ -532,7 +532,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -559,7 +559,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -577,7 +577,7 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param SpyGlossaryTranslation $translation
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation $translation
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
@@ -591,7 +591,7 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param SpyGlossaryTranslation $translation
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation $translation
      *
      * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException

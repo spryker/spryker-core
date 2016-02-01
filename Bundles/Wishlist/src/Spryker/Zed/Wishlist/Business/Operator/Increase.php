@@ -14,7 +14,7 @@ class Increase extends AbstractOperator
     const OPERATION_NAME = 'INCREASE';
 
     /**
-     * @param WishlistChangeTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */

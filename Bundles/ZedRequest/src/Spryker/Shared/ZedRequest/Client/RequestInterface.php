@@ -32,7 +32,7 @@ interface RequestInterface
 
     /**
      * @param string $name
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return self
      */
@@ -80,7 +80,7 @@ interface RequestInterface
     public function getTransfer();
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return self
      */

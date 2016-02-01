@@ -20,7 +20,7 @@ class PreauthorizationIsRedirectPlugin extends AbstractPlugin
     const NAME = 'PreauthorizationIsErrorPlugin';
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

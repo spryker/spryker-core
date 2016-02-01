@@ -22,7 +22,7 @@ class CustomerStub implements CustomerStubInterface
     protected $zedStub;
 
     /**
-     * @param ZedRequestClient $zedStub
+     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
      */
     public function __construct(ZedRequestClient $zedStub)
     {
@@ -30,7 +30,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -40,7 +40,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -50,7 +50,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -60,7 +60,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -70,7 +70,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -80,7 +80,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -90,7 +90,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -100,7 +100,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -110,7 +110,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Spryker\Client\ZedRequest\Client\Response
      */
@@ -120,7 +120,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -130,7 +130,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -140,7 +140,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -150,7 +150,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -160,7 +160,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -170,7 +170,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
@@ -180,7 +180,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -190,7 +190,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -200,7 +200,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */

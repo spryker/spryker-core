@@ -18,7 +18,7 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -45,7 +45,7 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -59,7 +59,7 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -73,7 +73,7 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -86,7 +86,7 @@ interface TranslationManagerInterface
     public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 
     /**
-     * @param TranslationTransfer $translationTransfer
+     * @param \Generated\Shared\Transfer\TranslationTransfer $translationTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
@@ -98,7 +98,7 @@ interface TranslationManagerInterface
     public function saveTranslation(TranslationTransfer $translationTransfer);
 
     /**
-     * @param TranslationTransfer $transferTranslation
+     * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
@@ -119,7 +119,7 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -144,7 +144,7 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *

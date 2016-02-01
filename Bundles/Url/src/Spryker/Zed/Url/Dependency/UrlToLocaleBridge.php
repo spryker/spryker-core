@@ -17,7 +17,7 @@ class UrlToLocaleBridge implements UrlToLocaleInterface
     protected $localeFacade;
 
     /**
-     * @param LocaleFacade $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {

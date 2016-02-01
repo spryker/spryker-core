@@ -47,7 +47,7 @@ class PriceFacade extends AbstractFacade
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @return mixed
      */
@@ -57,7 +57,7 @@ class PriceFacade extends AbstractFacade
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
      */
@@ -78,7 +78,7 @@ class PriceFacade extends AbstractFacade
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @return void
      */

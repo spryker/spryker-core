@@ -22,7 +22,7 @@ class OrderManager implements OrderManagerInterface
     private $config;
 
     /**
-     * @param PayoneConfig $config
+     * @param \Spryker\Zed\Payone\PayoneConfig $config
      */
     public function __construct(PayoneConfig $config)
     {
@@ -49,7 +49,7 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param PayonePaymentTransfer $paymentTransfer
+     * @param \Generated\Shared\Transfer\PayonePaymentTransfer $paymentTransfer
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
@@ -69,8 +69,8 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param SpyPaymentPayone $payment
-     * @param PaymentDetailTransfer $paymentDetailTransfer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $payment
+     * @param \Generated\Shared\Transfer\PaymentDetailTransfer $paymentDetailTransfer
      *
      * @return void
      */

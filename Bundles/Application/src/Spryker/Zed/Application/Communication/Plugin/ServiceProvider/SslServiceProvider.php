@@ -24,7 +24,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
 {
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @throws \Exception
      *
@@ -51,7 +51,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Exception
      *
@@ -66,7 +66,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return bool
      */
@@ -76,7 +76,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return bool
      */
@@ -89,7 +89,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $excluded
      *
      * @return bool

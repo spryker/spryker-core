@@ -25,7 +25,7 @@ class CarrierForm extends AbstractForm
     protected $carrierQuery;
 
     /**
-     * @param SpyShipmentCarrierQuery $carrierQuery
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery $carrierQuery
      */
     public function __construct(SpyShipmentCarrierQuery $carrierQuery)
     {
@@ -49,7 +49,7 @@ class CarrierForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

@@ -19,7 +19,7 @@ class RegionManager implements RegionManagerInterface
     protected $countryQueryContainer;
 
     /**
-     * @param CountryQueryContainerInterface $countryQueryContainer
+     * @param \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface $countryQueryContainer
      */
     public function __construct(
         CountryQueryContainerInterface $countryQueryContainer

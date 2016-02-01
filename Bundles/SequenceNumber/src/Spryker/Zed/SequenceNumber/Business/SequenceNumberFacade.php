@@ -16,7 +16,7 @@ class SequenceNumberFacade extends AbstractFacade
 {
 
     /**
-     * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
+     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
      *
      * @return string
      */

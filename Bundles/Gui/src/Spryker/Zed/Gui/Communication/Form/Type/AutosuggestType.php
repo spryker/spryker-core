@@ -18,8 +18,8 @@ class AutosuggestType extends AbstractType
     const PLACEHOLDER = 'placeholder';
 
     /**
-     * @param FormView $view
-     * @param FormInterface $form
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      *
      * @return void

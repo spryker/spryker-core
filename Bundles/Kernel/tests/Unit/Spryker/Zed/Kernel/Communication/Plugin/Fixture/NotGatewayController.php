@@ -20,7 +20,7 @@ class NotGatewayController
     }
 
     /**
-     * @param TransferInterface $foo
+     * @param \Spryker\Shared\Transfer\TransferInterface $foo
      * @param int $bar
      *
      * @return int

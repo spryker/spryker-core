@@ -19,7 +19,7 @@ class ProductToLocaleBridge implements ProductToLocaleInterface
     /**
      * CategoryToLocaleBridge constructor.
      *
-     * @param LocaleFacade $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {

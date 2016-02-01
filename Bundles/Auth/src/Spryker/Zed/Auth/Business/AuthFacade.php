@@ -61,7 +61,7 @@ class AuthFacade extends AbstractFacade
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return string
      */

@@ -33,11 +33,11 @@ abstract class AbstractPropelCollectorPlugin
     protected $touchQueryContainer;
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $result
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      *
      * @return void
      */
@@ -58,7 +58,7 @@ abstract class AbstractPropelCollectorPlugin
     }
 
     /**
-     * @param TouchQueryContainerInterface $touchQueryContainer
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
      *
      * @return void
      */
@@ -87,9 +87,9 @@ abstract class AbstractPropelCollectorPlugin
 
     /**
      * @param string $itemType
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
-     * @param LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -109,11 +109,11 @@ abstract class AbstractPropelCollectorPlugin
     }
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $result
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      *
      * @return void
      */
@@ -122,15 +122,15 @@ abstract class AbstractPropelCollectorPlugin
     }
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     abstract protected function createQuery(SpyTouchQuery $baseQuery, LocaleTransfer $locale);
 
     /**
-     * @param ModelCriteria $baseQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $baseQuery
      *
      * @return BatchIterator
      */
@@ -141,8 +141,8 @@ abstract class AbstractPropelCollectorPlugin
 
     /**
      * @param array $resultSet
-     * @param LocaleTransfer $locale
-     * @param TouchUpdaterSet $touchUpdaterSet
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
      */
     abstract protected function processData($resultSet, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet);
 
@@ -170,10 +170,10 @@ abstract class AbstractPropelCollectorPlugin
     }
 
     /**
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $batchResult
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      * @param string $itemType
      *
      * @return void
@@ -187,11 +187,11 @@ abstract class AbstractPropelCollectorPlugin
     }
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $batchResult
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      *
      * @return void
      */

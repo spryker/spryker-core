@@ -23,8 +23,8 @@ interface TimeoutInterface
     public function checkTimeouts(OrderStateMachineInterface $orderStateMachine);
 
     /**
-     * @param ProcessInterface $process
-     * @param SpySalesOrderItem $orderItem
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param DateTime $currentTime
      *
      * @throws Exception
@@ -35,9 +35,9 @@ interface TimeoutInterface
     public function setNewTimeout(ProcessInterface $process, SpySalesOrderItem $orderItem, DateTime $currentTime);
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string $stateId
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @throws Exception
      * @throws \Propel\Runtime\Exception\PropelException

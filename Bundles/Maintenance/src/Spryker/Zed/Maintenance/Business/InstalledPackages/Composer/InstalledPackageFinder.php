@@ -24,7 +24,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     private $pathToComposerLock;
 
     /**
-     * @param InstalledPackagesTransfer $collection
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $collection
      * @param string $pathToComposerLock
      */
     public function __construct(InstalledPackagesTransfer $collection, $pathToComposerLock)

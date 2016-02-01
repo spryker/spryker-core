@@ -16,7 +16,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return SpyCategoryNode[]
      */
@@ -24,7 +24,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
      *
      * @return array
@@ -40,7 +40,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
@@ -67,7 +67,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
@@ -77,7 +77,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
@@ -89,7 +89,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -97,7 +97,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
      *
@@ -107,7 +107,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      *
@@ -158,7 +158,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
@@ -166,7 +166,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -174,7 +174,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */

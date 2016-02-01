@@ -119,7 +119,7 @@ interface ResponseInterface
     public function getTransfer();
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return self
      */

@@ -198,8 +198,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param WriterInterface $searchWriter
-     * @param CollectorConfig $config
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $searchWriter
+     * @param \Spryker\Zed\Collector\CollectorConfig $config
      *
      * @return \Spryker\Zed\Collector\Business\Exporter\SearchCollector
      */
@@ -298,7 +298,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return \Spryker\Zed\Collector\Business\Internal\InstallElasticsearch
      */

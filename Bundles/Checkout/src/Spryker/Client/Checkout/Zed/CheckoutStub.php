@@ -20,7 +20,7 @@ class CheckoutStub implements CheckoutStubInterface
     protected $zedStub;
 
     /**
-     * @param ZedRequestClient $zedStub
+     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
      */
     public function __construct(ZedRequestClient $zedStub)
     {
@@ -28,7 +28,7 @@ class CheckoutStub implements CheckoutStubInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $transferCheckout
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $transferCheckout
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

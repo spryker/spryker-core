@@ -24,7 +24,7 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_PAYONE = 'payone facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
@@ -54,7 +54,7 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

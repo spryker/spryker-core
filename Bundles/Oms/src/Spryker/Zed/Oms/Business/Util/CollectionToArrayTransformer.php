@@ -15,7 +15,7 @@ class CollectionToArrayTransformer implements CollectionToArrayTransformerInterf
     /**
      * @deprecated
      *
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      *
      * @return SpySalesOrderItem[] $orderItems
      */

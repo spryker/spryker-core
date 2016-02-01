@@ -29,7 +29,7 @@ interface CountryManagerInterface
     public function createCountry($iso2code, array $countryData);
 
     /**
-     * @param CountryTransfer $countryTransfer
+     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
      *
      * @return int
      */

@@ -28,7 +28,7 @@ class UsersTable extends AbstractTable
     protected $userQueryContainer;
 
     /**
-     * @param UserQueryContainer $userQueryContainer
+     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $userQueryContainer
      */
     public function __construct(UserQueryContainer $userQueryContainer)
     {
@@ -36,7 +36,7 @@ class UsersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -69,7 +69,7 @@ class UsersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return mixed
      */

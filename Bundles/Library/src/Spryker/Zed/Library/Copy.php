@@ -16,8 +16,8 @@ class Copy
     /**
      * TODO arguments must be switched entityToTransfer i expect entity to be the first argument
      *
-     * @param AbstractTransfer $transfer
-     * @param ActiveRecordInterface $entity
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param bool $enrich
      *
      * @return \Spryker\Shared\Transfer\AbstractTransfer
@@ -60,8 +60,8 @@ class Copy
     }
 
     /**
-     * @param AbstractTransfer $transfer
-     * @param ActiveRecordInterface $entity
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param bool $enrich
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
@@ -125,8 +125,8 @@ class Copy
      *  WARNING: Be carefull using this method and think if this is
      *  what you need!
      *
-     * @param AbstractTransfer $transfer
-     * @param ActiveRecordInterface $entity
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
@@ -147,7 +147,7 @@ class Copy
 
     /**
      * @param $transferCollection
-     * @param Collection $entityCollection
+     * @param \Propel\Runtime\Collection\Collection $entityCollection
      * @param $enrich
      *
      * @return mixed
@@ -165,7 +165,7 @@ class Copy
 
     /**
      * @param $transferCollection
-     * @param Collection $entityCollection
+     * @param \Propel\Runtime\Collection\Collection $entityCollection
      * @param $enrich
      *
      * @return \Propel\Runtime\Collection\Collection
@@ -183,7 +183,7 @@ class Copy
     }
 
     /**
-     * @param AbstractTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
      * @param $enrich
      *
      * @return array
@@ -212,7 +212,7 @@ class Copy
     }
 
     /**
-     * @param AbstractTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
      * @param $enrich
      *
      * @return array

@@ -40,9 +40,9 @@ class Address
     private $localeFacade;
 
     /**
-     * @param QueryContainerInterface $queryContainer
-     * @param CustomerToCountryInterface $countryFacade
-     * @param CustomerToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
      */
     public function __construct(QueryContainerInterface $queryContainer, CustomerToCountryInterface $countryFacade, CustomerToLocaleInterface $localeFacade)
     {
@@ -52,7 +52,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      * @throws \Propel\Runtime\Exception\PropelException
@@ -71,7 +71,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
@@ -115,7 +115,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return void
      */
@@ -145,7 +145,7 @@ class Address
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
@@ -159,7 +159,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
@@ -177,7 +177,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
@@ -203,7 +203,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
@@ -229,7 +229,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return string
      */
@@ -239,7 +239,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return array
      */
@@ -269,7 +269,7 @@ class Address
     }
 
     /**
-     * @param SpyCustomerAddress $entity
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $entity
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -281,7 +281,7 @@ class Address
     }
 
     /**
-     * @param ObjectCollection $entities
+     * @param \Propel\Runtime\Collection\ObjectCollection $entities
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
@@ -296,7 +296,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      *
@@ -320,7 +320,7 @@ class Address
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      *
@@ -360,7 +360,7 @@ class Address
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
@@ -375,7 +375,7 @@ class Address
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
@@ -401,7 +401,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
@@ -446,7 +446,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\CountryNotFoundException
      *
@@ -468,7 +468,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Exception
      *
@@ -499,7 +499,7 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @throws \Exception
      *
@@ -530,7 +530,7 @@ class Address
     }
 
     /**
-     * @param SpyCustomer $entity
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $entity
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -542,8 +542,8 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
-     * @param SpyCustomer $customer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddress
      */
@@ -562,8 +562,8 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
-     * @param SpyCustomer $customer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
@@ -589,9 +589,9 @@ class Address
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
-     * @param SpyCustomer $customerEntity
-     * @param SpyCustomerAddress $entity
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $entity
      *
      * @return void
      */

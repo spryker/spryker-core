@@ -57,12 +57,12 @@ abstract class AbstractCollector implements ExporterInterface
     protected $queryContainer;
 
     /**
-     * @param TouchQueryContainer $queryContainer
-     * @param WriterInterface $writer
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $queryContainer
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
      * @param MarkerInterface $marker
-     * @param FailedResultInterface $failedResultPrototype
-     * @param BatchResultInterface $batchResultPrototype
-     * @param TouchUpdaterInterface $touchUpdater
+     * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failedResultPrototype
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResultPrototype
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      */
     public function __construct(
         TouchQueryContainer $queryContainer,
@@ -82,7 +82,7 @@ abstract class AbstractCollector implements ExporterInterface
 
     /**
      * @param string $touchItemType
-     * @param CollectorPluginInterface $plugin
+     * @param \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface $plugin
      *
      * @return void
      */
@@ -93,7 +93,7 @@ abstract class AbstractCollector implements ExporterInterface
 
     /**
      * @param string $type
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
@@ -125,7 +125,7 @@ abstract class AbstractCollector implements ExporterInterface
     }
 
     /**
-     * @param BatchResultInterface $batchResult
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
      * @param $type
      * @param string $timestamp
      *

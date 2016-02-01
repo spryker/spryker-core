@@ -142,7 +142,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      * @param int $idPage
      * @param int $idMapping
      * @param array $placeholder
-     * @param CmsFacade $cmsFacade
+     * @param \Spryker\Zed\Cms\Business\CmsFacade $cmsFacade
      *
      * @return \Symfony\Component\Form\FormInterface
      */

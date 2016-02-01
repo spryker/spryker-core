@@ -32,7 +32,7 @@ class Finder implements FinderInterface
     protected $activeProcesses;
 
     /**
-     * @param OmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param BuilderInterface $builder
      * @param array $activeProcesses
      */
@@ -160,7 +160,7 @@ class Finder implements FinderInterface
     /**
      * FIXME core-121 refactor method
      *
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return array
      */
@@ -217,7 +217,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
      * @return SpySalesOrderItem[]
@@ -228,7 +228,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
      * @return SpySalesOrderItem[]
@@ -253,7 +253,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      * @param bool $hasFlag
      *
@@ -315,7 +315,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return string
      */

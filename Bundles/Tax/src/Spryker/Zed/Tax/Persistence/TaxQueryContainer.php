@@ -55,7 +55,7 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      *
      * @return self
      */

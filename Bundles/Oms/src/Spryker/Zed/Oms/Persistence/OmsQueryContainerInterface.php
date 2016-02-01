@@ -37,7 +37,7 @@ interface OmsQueryContainerInterface
     public function querySalesOrderItemsByIdOrder($idOrder);
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
      */

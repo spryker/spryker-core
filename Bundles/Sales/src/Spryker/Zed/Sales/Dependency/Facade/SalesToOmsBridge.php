@@ -23,7 +23,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
     /**
      * SalesToOmsBridge constructor.
      *
-     * @param OmsFacade $omsFacade
+     * @param \Spryker\Zed\Oms\Business\OmsFacade $omsFacade
      */
     public function __construct($omsFacade)
     {
@@ -49,7 +49,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
     }
 
     /**
-     * @param OrderTransfer $transferOrder
+     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
      *
      * @return string
      */
@@ -77,7 +77,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
      * @return SpySalesOrderItem[]

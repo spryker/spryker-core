@@ -31,9 +31,9 @@ abstract class AbstractSender
     protected $glossaryFacade;
 
     /**
-     * @param CustomerMailConnectorConfig $config
-     * @param CustomerMailConnectorToMailInterface $mailFacade
-     * @param CustomerMailConnectorToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig $config
+     * @param \Spryker\Zed\CustomerMailConnector\Dependency\Facade\CustomerMailConnectorToMailInterface $mailFacade
+     * @param \Spryker\Zed\CustomerMailConnector\Dependency\Facade\CustomerMailConnectorToGlossaryInterface $glossaryFacade
      */
     public function __construct(
         CustomerMailConnectorConfig $config,
@@ -54,7 +54,7 @@ abstract class AbstractSender
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      * @param string $email
      *
      * @return void
@@ -75,7 +75,7 @@ abstract class AbstractSender
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      * @param array $globalMergeVars
      *
      * @return void
@@ -88,7 +88,7 @@ abstract class AbstractSender
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return void
      */

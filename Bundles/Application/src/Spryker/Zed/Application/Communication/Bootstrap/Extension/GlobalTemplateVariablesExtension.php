@@ -18,7 +18,7 @@ class GlobalTemplateVariablesExtension extends LocatorAwareExtension implements 
 {
 
     /**
-     * @param Application $app
+     * @param \Spryker\Shared\Application\Communication\Application $app
      *
      * @return array
      */

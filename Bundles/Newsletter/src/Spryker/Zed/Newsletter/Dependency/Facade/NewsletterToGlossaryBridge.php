@@ -19,7 +19,7 @@ class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
     protected $glossaryFacade;
 
     /**
-     * @param GlossaryFacade $glossaryFacade
+     * @param \Spryker\Zed\Glossary\Business\GlossaryFacade $glossaryFacade
      */
     public function __construct($glossaryFacade)
     {
@@ -39,7 +39,7 @@ class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */

@@ -39,9 +39,9 @@ class User implements UserInterface
     protected $settings;
 
     /**
-     * @param UserQueryContainer $queryContainer
-     * @param SessionInterface $session
-     * @param UserConfig $settings
+     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $queryContainer
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Spryker\Zed\User\UserConfig $settings
      */
     public function __construct(
         UserQueryContainer $queryContainer,
@@ -102,7 +102,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
@@ -266,7 +266,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return mixed
      */
@@ -289,7 +289,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return bool
      */
@@ -343,7 +343,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param SpyUser $entity
+     * @param \Orm\Zed\User\Persistence\SpyUser $entity
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */

@@ -14,7 +14,7 @@ class Add extends AbstractOperator
     const OPERATION_NAME = 'ADD';
 
     /**
-     * @param WishlistChangeTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */

@@ -29,7 +29,7 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
     const DEFAULT_ACTION = 'index';
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -38,7 +38,7 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -54,7 +54,7 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      */
@@ -84,7 +84,7 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      */

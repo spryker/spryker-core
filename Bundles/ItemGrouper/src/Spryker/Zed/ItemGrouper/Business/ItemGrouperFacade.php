@@ -15,7 +15,7 @@ class ItemGrouperFacade extends AbstractFacade
 {
 
     /**
-     * @param GroupableContainerTransfer $groupAbleItems
+     * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupAbleItems
      *
      * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
@@ -25,7 +25,7 @@ class ItemGrouperFacade extends AbstractFacade
     }
 
     /**
-     * @param GroupableContainerTransfer $groupableItems
+     * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupableItems
      *
      * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */

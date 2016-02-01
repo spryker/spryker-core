@@ -24,12 +24,12 @@ interface WriterInterface
     public function createPriceType($name);
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      */
     public function setPriceForProduct(PriceProductTransfer $transferPriceProduct);
 
     /**
-     * @param PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      */
     public function createPriceForProduct(PriceProductTransfer $priceProductTransfer);
 

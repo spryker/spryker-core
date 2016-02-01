@@ -19,7 +19,7 @@ class MockOrderHydrator implements CheckoutOrderHydrationInterface
     private $orderTransfer;
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     public function __construct(OrderTransfer $orderTransfer)
     {
@@ -27,8 +27,8 @@ class MockOrderHydrator implements CheckoutOrderHydrationInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return void
      */

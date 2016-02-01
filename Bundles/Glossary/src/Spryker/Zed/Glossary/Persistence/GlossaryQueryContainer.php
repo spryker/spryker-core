@@ -181,7 +181,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
-     * @param SpyGlossaryTranslationQuery $query
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -262,7 +262,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
-     * @param SpyGlossaryKeyQuery $keyQuery
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery $keyQuery
      * @param array $relevantLocales
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -309,7 +309,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -324,7 +324,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */

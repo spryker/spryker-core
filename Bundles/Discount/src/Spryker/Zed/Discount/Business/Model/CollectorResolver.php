@@ -21,7 +21,7 @@ class CollectorResolver
     protected $discountConfig;
 
     /**
-     * @param DiscountConfigInterface $discountConfig
+     * @param \Spryker\Zed\Discount\DiscountConfigInterface $discountConfig
      */
     public function __construct(DiscountConfigInterface $discountConfig)
     {
@@ -29,8 +29,8 @@ class CollectorResolver
     }
 
     /**
-     * @param CalculableInterface $container
-     * @param DiscountTransfer $discountTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return DiscountTransfer[]
      */
@@ -103,7 +103,7 @@ class CollectorResolver
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param DiscountTransfer[] $collectedItems
      * @param DiscountTransfer[] $itemsToCombine
      *
@@ -124,7 +124,7 @@ class CollectorResolver
 
     /**
      * @param DiscountTransfer[] $itemsToCombine
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return bool
      */

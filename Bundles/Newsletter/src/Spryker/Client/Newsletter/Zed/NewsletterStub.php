@@ -21,7 +21,7 @@ class NewsletterStub implements NewsletterStubInterface
     protected $zedStub;
 
     /**
-     * @param ZedRequestClient $zedStub
+     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
      */
     public function __construct(ZedRequestClient $zedStub)
     {
@@ -29,7 +29,7 @@ class NewsletterStub implements NewsletterStubInterface
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
@@ -39,7 +39,7 @@ class NewsletterStub implements NewsletterStubInterface
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
@@ -49,7 +49,7 @@ class NewsletterStub implements NewsletterStubInterface
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
@@ -59,7 +59,7 @@ class NewsletterStub implements NewsletterStubInterface
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
@@ -69,7 +69,7 @@ class NewsletterStub implements NewsletterStubInterface
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */

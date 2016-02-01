@@ -29,8 +29,8 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param RefundFacade $facadeRefund
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Spryker\Zed\Refund\Business\RefundFacade $facadeRefund
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -44,7 +44,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param RefundFacade $refundFacade
+     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
      *
      * @return \Spryker\Zed\Refund\Communication\Table\RefundTable
      */

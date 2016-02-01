@@ -12,7 +12,7 @@ interface EmbeddedTransferInterface
 {
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return self
      */

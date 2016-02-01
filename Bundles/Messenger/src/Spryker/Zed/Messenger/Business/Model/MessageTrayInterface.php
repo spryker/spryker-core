@@ -15,21 +15,21 @@ interface MessageTrayInterface
     const FLASH_MESSAGES_INFO = 'flash.messages.info';
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
     public function addSuccessMessage(MessageTransfer $message);
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
     public function addInfoMessage(MessageTransfer $message);
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */

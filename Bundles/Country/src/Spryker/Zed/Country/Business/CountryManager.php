@@ -22,7 +22,7 @@ class CountryManager implements CountryManagerInterface
     protected $countryQueryContainer;
 
     /**
-     * @param CountryQueryContainerInterface $countryQueryContainer
+     * @param \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface $countryQueryContainer
      */
     public function __construct(
         CountryQueryContainerInterface $countryQueryContainer
@@ -116,7 +116,7 @@ class CountryManager implements CountryManagerInterface
     }
 
     /**
-     * @param CountryTransfer $countryTransfer
+     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
      *
      * @return int
      */

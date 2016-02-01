@@ -52,10 +52,10 @@ class Builder implements BuilderInterface
     protected $xmlFolder;
 
     /**
-     * @param EventInterface $event
-     * @param StateInterface $state
-     * @param TransitionInterface $transition
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|null $xmlFolder
      */
     public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, $process, $xmlFolder = null)

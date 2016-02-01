@@ -32,7 +32,7 @@ abstract class AbstractPaymentMethod
     protected $config;
 
     /**
-     * @param PayolutionConfig $config
+     * @param \Spryker\Zed\Payolution\PayolutionConfig $config
      */
     public function __construct(PayolutionConfig $config)
     {
@@ -96,7 +96,7 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $paymentCode
      * @param string $uniqueId
      *
@@ -157,7 +157,7 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return string
      */

@@ -37,7 +37,7 @@ class OrdersTable extends AbstractTable
     protected $orderItemQuery;
 
     /**
-     * @param SpySalesOrderQuery $orderQuery
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderQuery
      */
     public function __construct(SpySalesOrderQuery $orderQuery, SpySalesOrderItemQuery $orderItemQuery)
     {
@@ -46,7 +46,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -85,7 +85,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
@@ -170,7 +170,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return void
      */

@@ -46,10 +46,10 @@ abstract class AbstractOperator implements OperatorInterface
     protected $itemGrouperFacade;
 
     /**
-     * @param StorageProviderInterface $storageProvider
-     * @param CartToCalculationInterface $cartCalculator
-     * @param CartToItemGrouperInterface $itemGrouperFacade
-     * @param LoggerInterface $messenger
+     * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $storageProvider
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $cartCalculator
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface $itemGrouperFacade
+     * @param \Psr\Log\LoggerInterface $messenger
      */
     public function __construct(
         StorageProviderInterface $storageProvider,
@@ -65,7 +65,7 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -84,7 +84,7 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param CartTransfer $cart
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -97,8 +97,8 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -110,7 +110,7 @@ abstract class AbstractOperator implements OperatorInterface
     abstract protected function createSuccessMessage();
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\ChangeTransfer
      */
@@ -124,7 +124,7 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param ItemExpanderPluginInterface $itemExpander
+     * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface $itemExpander
      *
      * @return void
      */
@@ -134,7 +134,7 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param CartTransfer $cart
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */

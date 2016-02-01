@@ -18,7 +18,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_STOCK = 'stock facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

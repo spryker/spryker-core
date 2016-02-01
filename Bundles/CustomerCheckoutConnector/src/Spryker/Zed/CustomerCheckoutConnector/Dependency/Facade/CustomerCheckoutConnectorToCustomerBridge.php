@@ -21,7 +21,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     /**
      * CustomerCheckoutConnectorToCustomerBridge constructor.
      *
-     * @param CustomerFacade $customerFacade
+     * @param \Spryker\Zed\Customer\Business\CustomerFacade $customerFacade
      */
     public function __construct($customerFacade)
     {
@@ -29,7 +29,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -39,7 +39,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
@@ -49,7 +49,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -59,7 +59,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -69,7 +69,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */

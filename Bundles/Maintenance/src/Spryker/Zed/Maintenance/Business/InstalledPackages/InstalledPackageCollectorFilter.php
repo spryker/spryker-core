@@ -45,7 +45,7 @@ class InstalledPackageCollectorFilter implements InstalledPackageCollectorInterf
     }
 
     /**
-     * @param InstalledPackageTransfer $package
+     * @param \Generated\Shared\Transfer\InstalledPackageTransfer $package
      *
      * @return string
      */

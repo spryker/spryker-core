@@ -20,7 +20,7 @@ class PreauthorizationIsApprovedPlugin extends AbstractPlugin
     const NAME = 'PreauthorizationIsApprovedPlugin';
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

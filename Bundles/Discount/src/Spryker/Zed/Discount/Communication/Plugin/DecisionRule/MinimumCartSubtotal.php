@@ -19,8 +19,8 @@ class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisi
 {
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
      * @return \Spryker\Zed\Kernel\Business\ModelResult
      */

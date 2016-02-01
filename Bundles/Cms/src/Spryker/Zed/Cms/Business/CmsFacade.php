@@ -67,7 +67,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
@@ -81,7 +81,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
@@ -93,7 +93,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageKeyMappingTransfer $pageKeyMappingTransfer
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
@@ -105,7 +105,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageKeyMappingTransfer $pageKeyMappingTransfer
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
@@ -157,7 +157,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param CmsTemplateTransfer $cmsTemplateTransfer
+     * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
@@ -186,7 +186,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      * @param string $value
      *
@@ -200,7 +200,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
@@ -217,7 +217,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      *
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
@@ -232,7 +232,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
      */
@@ -243,7 +243,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -254,7 +254,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -265,7 +265,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -278,8 +278,8 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
-     * @param CmsBlockTransfer $blockTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */

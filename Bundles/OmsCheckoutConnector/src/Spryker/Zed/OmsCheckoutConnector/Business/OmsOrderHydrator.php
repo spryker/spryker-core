@@ -18,8 +18,8 @@ class OmsOrderHydrator implements OmsOrderHydratorInterface
     const PAYMENT_METHOD_VORKASSE = 'prepay';
 
     /**
-     * @param OrderTransfer $order
-     * @param CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\OrderTransfer $order
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      *
      * @throws \Spryker\Zed\OmsCheckoutConnector\Business\Exception\NoStatemachineProcessException
      *

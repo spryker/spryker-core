@@ -29,7 +29,7 @@ abstract class AbstractOptInHandler
     protected $subscriberOptInSenders;
 
     /**
-     * @param NewsletterQueryContainer $queryContainer
+     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
      * @param SubscriberKeyGeneratorInterface $subscriberKeyGenerator
      */
     public function __construct(NewsletterQueryContainer $queryContainer, SubscriberKeyGeneratorInterface $subscriberKeyGenerator)
@@ -39,7 +39,7 @@ abstract class AbstractOptInHandler
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $subscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriberTransfer
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber
      */

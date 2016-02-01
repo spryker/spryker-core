@@ -15,7 +15,7 @@ class AuthMailConnectorDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_MAIL = 'mail facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

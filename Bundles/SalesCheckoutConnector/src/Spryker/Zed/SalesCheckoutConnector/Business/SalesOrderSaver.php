@@ -19,7 +19,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $salesFacade;
 
     /**
-     * @param SalesCheckoutConnectorToSalesInterface $salesFacade
+     * @param \Spryker\Zed\SalesCheckoutConnector\Dependency\Facade\SalesCheckoutConnectorToSalesInterface $salesFacade
      */
     public function __construct(SalesCheckoutConnectorToSalesInterface $salesFacade)
     {
@@ -27,8 +27,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     }
 
     /**
-     * @param OrderTransfer $order
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\OrderTransfer $order
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */

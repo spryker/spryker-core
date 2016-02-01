@@ -34,7 +34,7 @@ class DiscountVoucherCodesTable extends AbstractTable
     protected $batchValue;
 
     /**
-     * @param DiscountQueryContainer $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
      * @param int $idPool
      * @param int $batchValue
      */
@@ -47,7 +47,7 @@ class DiscountVoucherCodesTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -73,7 +73,7 @@ class DiscountVoucherCodesTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

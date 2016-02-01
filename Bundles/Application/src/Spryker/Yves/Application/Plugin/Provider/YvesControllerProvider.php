@@ -48,7 +48,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return mixed|ControllerCollection
      */
@@ -182,14 +182,14 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
     abstract protected function defineControllers(Application $app);
 
     /**
-     * @param Controller $controller
+     * @param \Silex\Controller $controller
      *
      * @return void
      */

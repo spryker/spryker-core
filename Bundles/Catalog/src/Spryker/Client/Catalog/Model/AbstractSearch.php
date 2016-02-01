@@ -82,20 +82,20 @@ abstract class AbstractSearch
     protected $sortOrder;
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Elastica\Query
      */
     abstract protected function createSearchQuery(Request $request);
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param FacetConfig $facetConfig
-     * @param Index $searchIndex
-     * @param FacetAggregationBuilderInterface $facetAggregation
+     * @param \Elastica\Index $searchIndex
+     * @param \Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface $facetAggregation
      * @param FacetFilterHandlerInterface $facetFilterHandler
-     * @param AggregationExtractorInterface $facetExtractor
-     * @param AggregationExtractorInterface $rangeExtractor
+     * @param \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface $facetExtractor
+     * @param \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface $rangeExtractor
      * @param CatalogInterface $catalogModel
      */
     public function __construct(
@@ -149,7 +149,7 @@ abstract class AbstractSearch
     }
 
     /**
-     * @param ResultSet $resultSet
+     * @param \Elastica\ResultSet $resultSet
      *
      * @return array
      */
@@ -165,7 +165,7 @@ abstract class AbstractSearch
     }
 
     /**
-     * @param ResultSet $resultSet
+     * @param \Elastica\ResultSet $resultSet
      * @param array $activeParameters
      *
      * @return array
@@ -201,7 +201,7 @@ abstract class AbstractSearch
     }
 
     /**
-     * @param Query $query
+     * @param \Elastica\Query $query
      *
      * @return self
      */
@@ -231,7 +231,7 @@ abstract class AbstractSearch
     }
 
     /**
-     * @param Query $query
+     * @param \Elastica\Query $query
      *
      * @return void
      */
@@ -247,8 +247,8 @@ abstract class AbstractSearch
     }
 
     /**
-     * @param Query $query
-     * @param Request $request
+     * @param \Elastica\Query $query
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      */
@@ -258,7 +258,7 @@ abstract class AbstractSearch
     }
 
     /**
-     * @param Query $query
+     * @param \Elastica\Query $query
      *
      * @return void
      */

@@ -88,7 +88,7 @@ class PhpdocReturnVoidFixer extends AbstractFixer
     }
 
     /**
-     * @param DocBlock $doc
+     * @param \Symfony\CS\DocBlock\DocBlock $doc
      *
      * @return void
      */

@@ -38,7 +38,7 @@ interface TaxQueryContainerInterface
     public function queryAllTaxSets();
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      *
      * @return self
      */

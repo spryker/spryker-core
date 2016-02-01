@@ -14,7 +14,7 @@ class ExpensePriceToPayCalculator implements CalculatorPluginInterface
 {
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
      */
@@ -32,7 +32,7 @@ class ExpensePriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param ExpenseTransfer $expense
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expense
      *
      * @return int
      */

@@ -33,7 +33,7 @@ class Cronjobs
     protected $config;
 
     /**
-     * @param SetupConfig $config
+     * @param \Spryker\Zed\Setup\SetupConfig $config
      */
     public function __construct(SetupConfig $config)
     {

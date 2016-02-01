@@ -24,7 +24,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     protected $queryContainer;
 
     /**
-     * @param CategoryQueryContainer $categoryTreeRepository
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $categoryTreeRepository
      */
     public function __construct(
         CategoryQueryContainer $categoryTreeRepository
@@ -33,7 +33,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
      * @return void
      */
@@ -62,7 +62,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -101,7 +101,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

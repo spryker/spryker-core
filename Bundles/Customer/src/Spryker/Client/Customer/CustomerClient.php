@@ -20,7 +20,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 {
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
@@ -39,7 +39,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return CustomerTransfer|null
      */
@@ -53,7 +53,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -65,7 +65,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -77,7 +77,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      *
@@ -91,7 +91,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -103,7 +103,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -115,7 +115,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -141,7 +141,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -155,7 +155,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -167,7 +167,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -179,7 +179,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Spryker\Client\ZedRequest\Client\Response
      */
@@ -191,7 +191,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return CustomerTransfer|null
      */
@@ -229,7 +229,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
@@ -241,7 +241,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -253,7 +253,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -265,7 +265,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -277,7 +277,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -289,7 +289,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -301,7 +301,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -313,7 +313,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -325,7 +325,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */

@@ -35,7 +35,7 @@ class PasswordRestoreTokenSender extends AbstractSender
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return void
      */

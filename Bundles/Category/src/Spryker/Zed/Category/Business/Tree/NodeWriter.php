@@ -23,7 +23,7 @@ class NodeWriter implements NodeWriterInterface
     protected $queryContainer;
 
     /**
-     * @param CategoryQueryContainer $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
      */
     public function __construct(CategoryQueryContainer $queryContainer)
     {
@@ -31,7 +31,7 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -72,7 +72,7 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

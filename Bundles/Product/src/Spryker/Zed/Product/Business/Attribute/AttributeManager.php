@@ -22,7 +22,7 @@ class AttributeManager implements AttributeManagerInterface
     protected $productQueryContainer;
 
     /**
-     * @param ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     public function __construct(ProductQueryContainerInterface $productQueryContainer)
     {

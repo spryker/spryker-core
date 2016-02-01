@@ -67,12 +67,12 @@ class Install extends AbstractInstaller
     protected $postalCodes;
 
     /**
-     * @param CountryManagerInterface $countryManager
-     * @param RegionManagerInterface $regionManager
-     * @param CldrDataProviderInterface $cldrDataProvider
-     * @param CldrDataProviderInterface $codeMappingsProvider
-     * @param CldrDataProviderInterface $postalCodeDataProvider
-     * @param CountryConfig $countrySettings
+     * @param \Spryker\Zed\Country\Business\CountryManagerInterface $countryManager
+     * @param \Spryker\Zed\Country\Business\RegionManagerInterface $regionManager
+     * @param \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface $cldrDataProvider
+     * @param \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface $codeMappingsProvider
+     * @param \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface $postalCodeDataProvider
+     * @param \Spryker\Zed\Country\CountryConfig $countrySettings
      */
     public function __construct(
         CountryManagerInterface $countryManager,

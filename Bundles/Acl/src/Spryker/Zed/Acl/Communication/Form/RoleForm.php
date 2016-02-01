@@ -15,7 +15,7 @@ class RoleForm extends AbstractForm
     const FIELD_ID_ROLE = 'id_acl_role';
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

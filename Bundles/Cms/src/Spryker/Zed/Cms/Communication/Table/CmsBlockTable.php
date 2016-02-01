@@ -29,7 +29,7 @@ class CmsBlockTable extends AbstractTable
     protected $cmsBlockQuery;
 
     /**
-     * @param SpyCmsBlockQuery $cmsBlockQuery
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery $cmsBlockQuery
      */
     public function __construct(SpyCmsBlockQuery $cmsBlockQuery)
     {
@@ -37,7 +37,7 @@ class CmsBlockTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -68,7 +68,7 @@ class CmsBlockTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

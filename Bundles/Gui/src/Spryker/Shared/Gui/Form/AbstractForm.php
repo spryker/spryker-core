@@ -24,7 +24,7 @@ abstract class AbstractForm implements FormTypeInterface
      *
      * @see FormTypeExtensionInterface::buildForm()
      *
-     * @param FormBuilderInterface $builder The form builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
      * @param array $options The options
      *
      * @return void
@@ -42,7 +42,7 @@ abstract class AbstractForm implements FormTypeInterface
     abstract protected function getDataClass();
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
@@ -89,8 +89,8 @@ abstract class AbstractForm implements FormTypeInterface
      *
      * @see FormTypeExtensionInterface::buildView()
      *
-     * @param FormView $view The view
-     * @param FormInterface $form The form
+     * @param \Symfony\Component\Form\FormView $view The view
+     * @param \Symfony\Component\Form\FormInterface $form The form
      * @param array $options The options
      *
      * @return void
@@ -112,8 +112,8 @@ abstract class AbstractForm implements FormTypeInterface
      *
      * @see FormTypeExtensionInterface::finishView()
      *
-     * @param FormView $view The view
-     * @param FormInterface $form The form
+     * @param \Symfony\Component\Form\FormView $view The view
+     * @param \Symfony\Component\Form\FormInterface $form The form
      * @param array $options The options
      *
      * @return void

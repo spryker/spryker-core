@@ -40,7 +40,7 @@ class EWalletContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @param RedirectContainer $redirect
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
      *
      * @return void
      */

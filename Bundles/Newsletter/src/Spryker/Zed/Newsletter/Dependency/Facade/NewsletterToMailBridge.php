@@ -19,7 +19,7 @@ class NewsletterToMailBridge implements NewsletterToMailInterface
     protected $mailFacade;
 
     /**
-     * @param MailFacade $mailFacade
+     * @param \Spryker\Zed\Mail\Business\MailFacade $mailFacade
      */
     public function __construct($mailFacade)
     {
@@ -27,7 +27,7 @@ class NewsletterToMailBridge implements NewsletterToMailInterface
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
@@ -37,7 +37,7 @@ class NewsletterToMailBridge implements NewsletterToMailInterface
     }
 
     /**
-     * @param SendMailResponsesTransfer $mailResponses
+     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $mailResponses
      *
      * @return bool
      */

@@ -21,7 +21,7 @@ class CustomerForm extends AbstractForm
     protected $idOrder;
 
     /**
-     * @param SpySalesOrderQuery $orderQuery
+     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery $orderQuery
      */
     public function __construct(SpySalesOrderQuery $orderQuery)
     {
@@ -45,7 +45,7 @@ class CustomerForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

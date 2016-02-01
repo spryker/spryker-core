@@ -13,7 +13,7 @@ interface AuthMailConnectorToMailInterface
 {
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */

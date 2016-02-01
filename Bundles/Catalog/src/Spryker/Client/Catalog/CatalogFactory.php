@@ -55,7 +55,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $category
      *
      * @return Model\FacetSearch
@@ -78,7 +78,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return Model\FulltextSearch
      */
@@ -107,7 +107,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @param FacetConfig $facetConfig
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
      *
      * @return Model\FacetFilterHandler
      */

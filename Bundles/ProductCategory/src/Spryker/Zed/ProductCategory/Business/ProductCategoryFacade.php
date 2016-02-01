@@ -29,7 +29,7 @@ class ProductCategoryFacade extends AbstractFacade
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException
      * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingProductException
@@ -48,7 +48,7 @@ class ProductCategoryFacade extends AbstractFacade
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -60,7 +60,7 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return ProductCategoryTransfer[]
      */
@@ -133,7 +133,7 @@ class ProductCategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -145,9 +145,9 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param NodeTransfer $sourceNode
-     * @param NodeTransfer $destinationNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $sourceNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $destinationNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -159,9 +159,9 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
-     * @param NodeTransfer $categoryNodeTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return int
      */
@@ -176,7 +176,7 @@ class ProductCategoryFacade extends AbstractFacade
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */

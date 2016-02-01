@@ -42,7 +42,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
@@ -89,7 +89,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param SendMailResponsesTransfer $responses
+     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $responses
      *
      * @return bool
      */
@@ -123,7 +123,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return array
      */

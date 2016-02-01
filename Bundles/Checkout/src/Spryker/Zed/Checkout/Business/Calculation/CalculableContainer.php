@@ -19,7 +19,7 @@ class CalculableContainer implements CalculableInterface
     private $cart;
 
     /**
-     * @param CartTransfer $cart
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
      */
     public function __construct(CartTransfer $cart)
     {

@@ -23,7 +23,7 @@ class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderI
 {
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -32,7 +32,7 @@ class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderI
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @throws \Exception
      *

@@ -21,7 +21,7 @@ class ProductToUrlBridge implements ProductToUrlInterface
     /**
      * CmsToUrlBridge constructor.
      *
-     * @param UrlFacade $urlFacade
+     * @param \Spryker\Zed\Url\Business\UrlFacade $urlFacade
      */
     public function __construct($urlFacade)
     {
@@ -30,7 +30,7 @@ class ProductToUrlBridge implements ProductToUrlInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $resourceId
      *

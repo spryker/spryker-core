@@ -20,7 +20,7 @@ class AuthorizationIsErrorPlugin extends AbstractPlugin
     const NAME = 'AuthorizationIsErrorPlugin';
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

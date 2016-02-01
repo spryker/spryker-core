@@ -29,7 +29,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     const LOGIN_URI = '/auth/login';
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -38,7 +38,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param GetResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
      *
      * @return void
      */
@@ -64,7 +64,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return bool
      */
@@ -92,7 +92,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return bool
      */
@@ -117,7 +117,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
      *
      * @return null
      */

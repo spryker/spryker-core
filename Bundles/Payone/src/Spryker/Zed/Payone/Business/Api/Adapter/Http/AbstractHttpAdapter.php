@@ -75,7 +75,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     }
 
     /**
-     * @param AbstractRequestContainer $container
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer $container
      *
      * @return array
      */

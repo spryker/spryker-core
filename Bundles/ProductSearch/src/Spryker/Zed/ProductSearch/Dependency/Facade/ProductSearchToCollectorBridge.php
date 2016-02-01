@@ -17,7 +17,7 @@ class ProductSearchToCollectorBridge implements ProductSearchToCollectorInterfac
     protected $collectorFacade;
 
     /**
-     * @param CollectorFacade $collectorFacade
+     * @param \Spryker\Zed\Collector\Business\CollectorFacade $collectorFacade
      */
     public function __construct($collectorFacade)
     {

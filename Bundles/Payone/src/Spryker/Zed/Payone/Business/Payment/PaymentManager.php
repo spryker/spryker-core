@@ -78,12 +78,12 @@ class PaymentManager implements PaymentManagerInterface
     protected $registeredMethodMappers;
 
     /**
-     * @param AdapterInterface $executionAdapter
-     * @param PayoneQueryContainerInterface $queryContainer
-     * @param PayoneStandardParameterTransfer $standardParameter
-     * @param HashGenerator $hashGenerator
-     * @param SequenceNumberProviderInterface $sequenceNumberProvider
-     * @param ModeDetectorInterface $modeDetector
+     * @param \Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface $executionAdapter
+     * @param \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface $queryContainer
+     * @param \Generated\Shared\Transfer\PayoneStandardParameterTransfer $standardParameter
+     * @param \Spryker\Zed\Payone\Business\Key\HashGenerator $hashGenerator
+     * @param \Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface $sequenceNumberProvider
+     * @param \Spryker\Shared\Payone\Dependency\ModeDetectorInterface $modeDetector
      */
     public function __construct(
         AdapterInterface $executionAdapter,
@@ -177,8 +177,8 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
-     * @param AuthorizationContainerInterface $requestContainer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainerInterface $requestContainer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
@@ -196,7 +196,7 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return PaymentMethodMapperInterface
      */
@@ -262,7 +262,7 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param PayoneCreditCardTransfer $creditCardData
+     * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $creditCardData
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
      */
@@ -280,7 +280,7 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param PayoneRefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\PayoneRefundTransfer $refundTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer
      */
@@ -305,7 +305,7 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\PayonePaymentTransfer
      */
@@ -325,8 +325,8 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
-     * @param AuthorizationResponseContainer $responseContainer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer $responseContainer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -349,8 +349,8 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
-     * @param AbstractRequestContainer $container
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer $container
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -373,8 +373,8 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param SpyPaymentPayoneApiLog $apiLogEntity
-     * @param AuthorizationResponseContainer $responseContainer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer $responseContainer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -393,8 +393,8 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param SpyPaymentPayoneApiLog $apiLogEntity
-     * @param CaptureResponseContainer $responseContainer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer $responseContainer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -411,8 +411,8 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param SpyPaymentPayoneApiLog $apiLogEntity
-     * @param DebitResponseContainer $responseContainer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer $responseContainer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -429,8 +429,8 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param SpyPaymentPayoneApiLog $apiLogEntity
-     * @param RefundResponseContainer $responseContainer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLogEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer $responseContainer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -447,7 +447,7 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param AbstractRequestContainer $container
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer $container
      *
      * @return void
      */
@@ -479,7 +479,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * Gets payment logs (both api and transaction status) for specific orders in chronological order.
      *
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return PayonePaymentLogTransfer[]
      */
@@ -513,7 +513,7 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer
+     * @param \Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer
      *
      * @return array
      */
@@ -529,7 +529,7 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -547,7 +547,7 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -570,8 +570,8 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
@@ -593,7 +593,7 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param PaymentDataTransfer $paymentDataTransfer
+     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentDataTransfer
      * @param int $idOrder
      *
      * @return void

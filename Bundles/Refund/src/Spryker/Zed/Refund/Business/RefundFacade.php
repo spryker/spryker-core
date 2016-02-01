@@ -22,7 +22,7 @@ class RefundFacade extends AbstractFacade
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
      */
@@ -66,7 +66,7 @@ class RefundFacade extends AbstractFacade
     }
 
     /**
-     * @param RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return \Generated\Shared\Transfer\RefundTransfer
      */

@@ -42,10 +42,10 @@ class Writer implements WriterInterface
     protected $priceSettings;
 
     /**
-     * @param PriceQueryContainer $queryContainer
+     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainer $queryContainer
      * @param ReaderInterface $reader
-     * @param PriceToTouchInterface $touchFacade
-     * @param PriceConfig $priceSettings
+     * @param \Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Price\PriceConfig $priceSettings
      */
     public function __construct(
         PriceQueryContainer $queryContainer,
@@ -76,7 +76,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @throws \Spryker\Zed\Price\Business\Exception\ProductPriceChangeException
      *
@@ -105,7 +105,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @throws \Spryker\Zed\Price\Business\Exception\ProductPriceChangeException
      *
@@ -134,7 +134,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @return void
      */
@@ -148,7 +148,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @return void
      */
@@ -165,8 +165,8 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
-     * @param SpyPriceProduct $priceProductEntity
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProduct $priceProductEntity
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
@@ -200,7 +200,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
@@ -234,7 +234,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @return bool
      */
@@ -262,7 +262,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @return bool
      */

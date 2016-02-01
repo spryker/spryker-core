@@ -17,7 +17,7 @@ class OmsDiscountConnectorToDiscountBridge implements OmsDiscountConnectorToDisc
     protected $discountFacade;
 
     /**
-     * @param DiscountFacade $discountFacade
+     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      */
     public function __construct($discountFacade)
     {

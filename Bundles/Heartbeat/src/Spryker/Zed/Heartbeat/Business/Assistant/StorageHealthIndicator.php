@@ -23,7 +23,7 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     protected $client;
 
     /**
-     * @param Client $client
+     * @param \Predis\Client $client
      */
     public function __construct(Client $client)
     {

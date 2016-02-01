@@ -36,8 +36,8 @@ class DiscountSaver implements DiscountSaverInterface
     protected $discountFacade;
 
     /**
-     * @param DiscountQueryContainerInterface $discountQueryContainer
-     * @param DiscountCheckoutConnectorToDiscountInterface $discountFacade
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface $discountFacade
      */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,
@@ -48,8 +48,8 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
@@ -61,7 +61,7 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param ItemTransfer $orderItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
@@ -107,7 +107,7 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
      */
@@ -121,8 +121,8 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param SpySalesDiscount $salesDiscountEntity
-     * @param DiscountTransfer $discountTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesDiscountEntity
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return void
      */
@@ -144,7 +144,7 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param SpySalesDiscount $salesDiscountEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesDiscountEntity
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -156,7 +156,7 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return bool
      */
@@ -168,8 +168,8 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param SpySalesDiscount $salesDiscountEntity
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesDiscountEntity
      *
      * @return void
      */
@@ -195,7 +195,7 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param SpySalesDiscountCode $salesDiscountCodeEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscountCode $salesDiscountCodeEntity
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -225,7 +225,7 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */

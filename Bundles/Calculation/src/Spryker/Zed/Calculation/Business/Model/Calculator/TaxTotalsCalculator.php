@@ -30,7 +30,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     private $calculatedTaxSets = [];
 
     /**
-     * @param PriceCalculationHelperInterface $priceCalculationHelper
+     * @param \Spryker\Zed\Calculation\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
      */
     public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
     {
@@ -38,8 +38,8 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param ItemTransfer[]|ItemTransfer[] $calculableItems
      *
      * @return void
@@ -54,7 +54,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param ItemTransfer[]|ItemTransfer[] $calculableItems
      *
      * @return void
@@ -112,7 +112,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      *
      * @return void
      */

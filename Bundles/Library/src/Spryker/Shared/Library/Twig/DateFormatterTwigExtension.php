@@ -23,7 +23,7 @@ class DateFormatterTwigExtension extends \Twig_Extension
     private $dateFormatter;
 
     /**
-     * @param DateFormatter $dateFormatter
+     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
      */
     public function __construct(DateFormatter $dateFormatter)
     {

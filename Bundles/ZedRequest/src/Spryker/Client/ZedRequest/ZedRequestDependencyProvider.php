@@ -15,7 +15,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     const CLIENT_AUTH = 'auth client';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */

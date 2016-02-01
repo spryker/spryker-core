@@ -20,7 +20,7 @@ class PaymentLogReceiverPlugin extends AbstractPlugin implements PaymentLogRecei
 {
 
     /**
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return PayonePaymentLogTransfer[]
      */

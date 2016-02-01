@@ -27,7 +27,7 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
     protected $productQueryContainer;
 
     /**
-     * @param ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     public function __construct(ProductQueryContainerInterface $productQueryContainer)
     {
@@ -35,8 +35,8 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
     }
 
     /**
-     * @param ModelCriteria $expandableQuery
-     * @param LocaleTransfer $locale
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -62,7 +62,7 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
     }
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

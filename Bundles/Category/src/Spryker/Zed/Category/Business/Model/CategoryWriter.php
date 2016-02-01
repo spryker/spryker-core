@@ -22,7 +22,7 @@ class CategoryWriter implements CategoryWriterInterface
     protected $queryContainer;
 
     /**
-     * @param CategoryQueryContainer $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
      */
     public function __construct(CategoryQueryContainer $queryContainer)
     {
@@ -30,8 +30,8 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \ErrorException
      *
@@ -52,8 +52,8 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -83,7 +83,7 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -99,8 +99,8 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -116,8 +116,8 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -146,7 +146,7 @@ class CategoryWriter implements CategoryWriterInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute
      */
@@ -168,9 +168,9 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
-     * @param SpyCategoryAttribute $categoryAttributeEntity
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
      *
      * @return void
      */

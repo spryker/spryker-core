@@ -50,7 +50,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -106,7 +106,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param SpyProduct $product
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $product
      *
      * @return array
      */
@@ -160,7 +160,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param SpyProductAbstract $productAbstract
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstract
      * @param int $idLocale
      *
      * @return array

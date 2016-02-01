@@ -43,7 +43,7 @@ class PriceQueryContainer extends AbstractQueryContainer
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -60,7 +60,7 @@ class PriceQueryContainer extends AbstractQueryContainer
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -78,7 +78,7 @@ class PriceQueryContainer extends AbstractQueryContainer
     /**
      * @deprecated Will be removed in 1.0.0.
      *
-     * @param SpyPriceProductQuery $query
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProductQuery $query
      * @param int $idPriceProduct
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
@@ -91,8 +91,8 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
-     * @param SpyPriceType $priceType
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -109,8 +109,8 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
-     * @param SpyPriceType $priceType
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

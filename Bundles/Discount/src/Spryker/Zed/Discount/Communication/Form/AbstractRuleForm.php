@@ -27,7 +27,7 @@ abstract class AbstractRuleForm extends AbstractForm
     protected $availableDecisionRulePlugins;
 
     /**
-     * @param DiscountConfig $discountConfig
+     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
      */
     public function __construct(DiscountConfig $discountConfig)
     {

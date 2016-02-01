@@ -88,7 +88,7 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -125,7 +125,7 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -157,7 +157,7 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
@@ -172,7 +172,7 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -189,7 +189,7 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -205,7 +205,7 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param KeyTranslationTransfer $keyTranslationTransfer
+     * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
      *
      * @return bool
      */
@@ -217,7 +217,7 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param TranslationTransfer $transferTranslation
+     * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
@@ -233,7 +233,7 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param TranslationTransfer $transferTranslation
+     * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
@@ -250,7 +250,7 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */

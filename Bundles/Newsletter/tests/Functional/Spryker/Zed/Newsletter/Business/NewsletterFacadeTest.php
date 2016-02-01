@@ -245,7 +245,7 @@ class NewsletterFacadeTest extends Test
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $request
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $request
      *
      * @return void
      */
@@ -258,7 +258,7 @@ class NewsletterFacadeTest extends Test
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $request
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $request
      *
      * @return void
      */

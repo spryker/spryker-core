@@ -20,7 +20,7 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
 {
 
     /**
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */

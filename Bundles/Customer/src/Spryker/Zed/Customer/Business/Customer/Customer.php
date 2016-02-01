@@ -64,9 +64,9 @@ class Customer
     protected $customerConfig;
 
     /**
-     * @param QueryContainerInterface $queryContainer
-     * @param CustomerReferenceGeneratorInterface $customerReferenceGenerator
-     * @param CustomerConfig $customerConfig
+     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
+     * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
      */
     public function __construct(QueryContainerInterface $queryContainer, CustomerReferenceGeneratorInterface $customerReferenceGenerator, CustomerConfig $customerConfig)
     {
@@ -90,7 +90,7 @@ class Customer
     }
 
     /**
-     * @param PasswordRestoredConfirmationSenderPluginInterface $sender
+     * @param \Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface $sender
      *
      * @return void
      */
@@ -100,7 +100,7 @@ class Customer
     }
 
     /**
-     * @param PasswordRestoreTokenSenderPluginInterface $sender
+     * @param \Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface $sender
      *
      * @return void
      */
@@ -110,7 +110,7 @@ class Customer
     }
 
     /**
-     * @param RegistrationTokenSenderPluginInterface $sender
+     * @param \Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface $sender
      *
      * @return void
      */
@@ -120,7 +120,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -137,7 +137,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -185,7 +185,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
@@ -200,7 +200,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
@@ -219,7 +219,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
@@ -231,7 +231,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      * @throws \Propel\Runtime\Exception\PropelException
@@ -256,7 +256,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      * @throws \Propel\Runtime\Exception\PropelException
@@ -294,7 +294,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
@@ -335,7 +335,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
@@ -351,7 +351,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
@@ -413,7 +413,7 @@ class Customer
     }
 
     /**
-     * @param SpyCustomer $customerEntity
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
      *
      * @return bool
      */
@@ -427,7 +427,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
@@ -460,8 +460,8 @@ class Customer
     }
 
     /**
-     * @param SpyCustomer $customerEntity
-     * @param CustomerTransfer $customerTransfer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
@@ -483,7 +483,7 @@ class Customer
     }
 
     /**
-     * @param SpyCustomerAddress $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $customer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
@@ -495,8 +495,8 @@ class Customer
     }
 
     /**
-     * @param ObjectCollection $entities
-     * @param SpyCustomer $customer
+     * @param \Propel\Runtime\Collection\ObjectCollection $entities
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
@@ -520,7 +520,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      *
@@ -549,7 +549,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
@@ -576,7 +576,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
@@ -595,7 +595,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -608,7 +608,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */

@@ -158,7 +158,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return \Spryker\Zed\Product\Business\Internal\Install
      */

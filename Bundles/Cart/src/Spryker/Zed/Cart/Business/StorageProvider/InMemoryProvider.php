@@ -15,8 +15,8 @@ class InMemoryProvider implements StorageProviderInterface
 {
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $increasedItems
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $increasedItems
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -26,8 +26,8 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -43,8 +43,8 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $decreasedItems
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $decreasedItems
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -54,8 +54,8 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -98,7 +98,7 @@ class InMemoryProvider implements StorageProviderInterface
     /**
      * @param ItemTransfer[] $existingItems
      * @param int $index
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return void
      */
@@ -116,7 +116,7 @@ class InMemoryProvider implements StorageProviderInterface
 
     /**
      * @param \ArrayObject $existingItems
-     * @param ItemTransfer $changedItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $changedItem
      *
      * @return void
      */
@@ -132,7 +132,7 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return bool
      */
@@ -152,8 +152,8 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -165,8 +165,8 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -185,7 +185,7 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */

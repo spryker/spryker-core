@@ -31,7 +31,7 @@ class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInter
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -41,7 +41,7 @@ class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInter
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -51,7 +51,7 @@ class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInter
     }
 
     /**
-     * @param PaymentDataTransfer $paymentData
+     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentData
      * @param int $idOrder
      *
      * @return void

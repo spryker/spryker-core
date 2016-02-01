@@ -16,9 +16,9 @@ interface CalculatorInterface
 
     /**
      * @param DiscountTransfer[] $discountCollection
-     * @param CalculableInterface $container
-     * @param DiscountConfigInterface $config
-     * @param DistributorInterface $discountDistributor
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Spryker\Zed\Discount\DiscountConfigInterface $config
+     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $discountDistributor
      */
     public function calculate(
         array $discountCollection,

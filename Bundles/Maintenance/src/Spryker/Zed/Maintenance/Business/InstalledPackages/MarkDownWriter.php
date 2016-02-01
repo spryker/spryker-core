@@ -24,7 +24,7 @@ class MarkDownWriter implements MarkDownWriterInterface
     private $path;
 
     /**
-     * @param InstalledPackagesTransfer $installedPackages
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $installedPackages
      * @param string $path
      */
     public function __construct(InstalledPackagesTransfer $installedPackages, $path)

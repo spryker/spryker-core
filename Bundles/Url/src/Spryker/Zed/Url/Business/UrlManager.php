@@ -45,10 +45,10 @@ class UrlManager implements UrlManagerInterface
     protected $connection;
 
     /**
-     * @param UrlQueryContainerInterface $urlQueryContainer
-     * @param UrlToLocaleInterface $localeFacade
-     * @param UrlToTouchInterface $touchFacade
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
+     * @param \Spryker\Zed\Url\Dependency\UrlToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Url\Dependency\UrlToTouchInterface $touchFacade
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
         UrlQueryContainerInterface $urlQueryContainer,
@@ -64,7 +64,7 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
      *
@@ -126,7 +126,7 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param SpyUrl $urlEntity
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
      *
      * @throws \Spryker\Zed\Url\Persistence\Exception\MissingResourceException
      *
@@ -245,7 +245,7 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -259,7 +259,7 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      * @throws \Propel\Runtime\Exception\PropelException
@@ -278,7 +278,7 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -295,7 +295,7 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws \Exception
@@ -318,7 +318,7 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
@@ -347,8 +347,8 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
-     * @param SpyUrl $urlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
      *
      * @return void
      */

@@ -20,7 +20,7 @@ class RefundToSalesBridge implements RefundToSalesInterface
     protected $salesFacade;
 
     /**
-     * @param SalesFacade $salesFacade
+     * @param \Spryker\Zed\Sales\Business\SalesFacade $salesFacade
      */
     public function __construct($salesFacade)
     {
@@ -40,7 +40,7 @@ class RefundToSalesBridge implements RefundToSalesInterface
 
     /**
      * @param int $idRefund
-     * @param OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
+     * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
      *
      * @return void
      */

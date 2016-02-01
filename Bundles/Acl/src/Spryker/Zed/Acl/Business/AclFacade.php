@@ -33,7 +33,7 @@ class AclFacade extends AbstractFacade
 
     /**
      * @param string $groupName
-     * @param RolesTransfer $rolesTransfer
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
@@ -51,8 +51,8 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param GroupTransfer $transfer
-     * @param RolesTransfer $rolesTransfer
+     * @param \Generated\Shared\Transfer\GroupTransfer $transfer
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
@@ -166,7 +166,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param RoleTransfer $roleTransfer
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
      */
@@ -263,7 +263,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param RuleTransfer $ruleTransfer
+     * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
      * @return \Generated\Shared\Transfer\RuleTransfer
      */
@@ -387,8 +387,8 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param GroupTransfer $groupTransfer
-     * @param RolesTransfer $rolesTransfer
+     * @param \Generated\Shared\Transfer\GroupTransfer $groupTransfer
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
      * @return void
      */
@@ -405,7 +405,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      * @param string $bundle
      * @param string $controller
      * @param string $action

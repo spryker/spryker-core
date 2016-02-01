@@ -20,7 +20,7 @@ class PayoneDependencyProvider extends AbstractBundleDependencyProvider
     const STORE_CONFIG = 'store config';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
@@ -38,7 +38,7 @@ class PayoneDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

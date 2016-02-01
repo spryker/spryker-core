@@ -24,7 +24,7 @@ class Payments extends AbstractTable
     private $paymentPayolutionQuery;
 
     /**
-     * @param SpyPaymentPayolutionQuery $paymentPayolutionQuery
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery $paymentPayolutionQuery
      */
     public function __construct(SpyPaymentPayolutionQuery $paymentPayolutionQuery)
     {
@@ -32,7 +32,7 @@ class Payments extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -54,7 +54,7 @@ class Payments extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

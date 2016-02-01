@@ -109,7 +109,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $options
      *
      * @return \Spryker\Zed\Acl\Communication\Form\GroupForm
@@ -133,7 +133,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param RoleTransfer $roleTransfer
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
      *
      * @return \Symfony\Component\Form\Form
      */
@@ -146,7 +146,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param RuleTransfer $ruleTransfer
+     * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
      * @return Form|FormInterface
      */

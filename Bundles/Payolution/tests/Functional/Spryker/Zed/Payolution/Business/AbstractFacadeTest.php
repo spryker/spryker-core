@@ -190,7 +190,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @param AdapterInterface $adapter
+     * @param \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface $adapter
      *
      * @return \Spryker\Zed\Payolution\Business\PayolutionFacade
      */
@@ -200,8 +200,8 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @param SpyPaymentPayolutionTransactionStatusLog $statusLog
-     * @param PayolutionTransactionResponseTransfer $response
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $statusLog
+     * @param \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer $response
      *
      * @return void
      */

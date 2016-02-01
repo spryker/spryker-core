@@ -19,7 +19,7 @@ class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
     protected $checkoutResponse;
 
     /**
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      */
     public function __construct(CheckoutResponseTransfer $checkoutResponse)
     {
@@ -27,8 +27,8 @@ class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequest
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */

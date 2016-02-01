@@ -82,7 +82,7 @@ interface BatchResultInterface
     public function getProcessedLocale();
 
     /**
-     * @param LocaleTransfer $processedLocale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $processedLocale
      */
     public function setProcessedLocale(LocaleTransfer $processedLocale);
 

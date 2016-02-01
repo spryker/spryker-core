@@ -27,8 +27,8 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     private $factory;
 
     /**
-     * @param AbstractBundleDependencyProvider $dependencyProvider
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */

@@ -15,7 +15,7 @@ interface OperationLocatorInterface
 {
 
     /**
-     * @param OperationInterface $operation
+     * @param \Spryker\Zed\ProductSearch\Business\Operation\OperationInterface $operation
      */
     public function addOperation(OperationInterface $operation);
 

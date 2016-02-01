@@ -24,7 +24,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
@@ -49,7 +49,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
@@ -65,7 +65,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Overwrite in project
      *
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return mixed[]
      */

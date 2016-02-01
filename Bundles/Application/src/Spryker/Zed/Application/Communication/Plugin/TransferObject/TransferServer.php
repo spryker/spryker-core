@@ -115,7 +115,7 @@ class TransferServer
     }
 
     /**
-     * @param HttpRequest $httpRequest
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return self
      */
@@ -127,7 +127,7 @@ class TransferServer
     }
 
     /**
-     * @param ResponseInterface $response
+     * @param \Spryker\Shared\ZedRequest\Client\ResponseInterface $response
      *
      * @return self
      */

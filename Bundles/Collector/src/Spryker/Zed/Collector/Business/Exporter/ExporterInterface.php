@@ -14,7 +14,7 @@ interface ExporterInterface
 
     /**
      * @param string $type
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */

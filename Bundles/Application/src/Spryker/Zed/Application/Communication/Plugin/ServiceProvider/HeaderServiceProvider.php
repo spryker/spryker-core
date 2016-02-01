@@ -23,7 +23,7 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
 {
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -32,7 +32,7 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

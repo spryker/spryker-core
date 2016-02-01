@@ -19,7 +19,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
 
     /**
-     * @param ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -33,7 +33,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -48,7 +48,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -63,7 +63,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItem
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
@@ -109,7 +109,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistChangeTransfer
      */

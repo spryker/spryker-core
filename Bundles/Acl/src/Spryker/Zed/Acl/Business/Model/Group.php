@@ -32,7 +32,7 @@ class Group implements GroupInterface
     protected $queryContainer;
 
     /**
-     * @param AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
      */
     public function __construct(AclQueryContainer $queryContainer)
     {
@@ -54,7 +54,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param GroupTransfer $group
+     * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
@@ -70,7 +70,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param GroupTransfer $group
+     * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
@@ -397,7 +397,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param GroupTransfer $group
+     * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNameExistsException
      *
@@ -411,7 +411,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param GroupTransfer $group
+     * @param \Generated\Shared\Transfer\GroupTransfer $group
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *

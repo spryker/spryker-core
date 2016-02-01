@@ -30,9 +30,9 @@ abstract class AbstractCall
     protected $modeDetector;
 
     /**
-     * @param PayoneStandardParameterTransfer $standardParameterTransfer
-     * @param HashGeneratorInterface $hashGenerator
-     * @param ModeDetectorInterface $modeDetector
+     * @param \Generated\Shared\Transfer\PayoneStandardParameterTransfer $standardParameterTransfer
+     * @param \Spryker\Client\Payone\ClientApi\HashGeneratorInterface $hashGenerator
+     * @param \Spryker\Shared\Payone\Dependency\ModeDetectorInterface $modeDetector
      */
     public function __construct(
         PayoneStandardParameterTransfer $standardParameterTransfer,
@@ -45,7 +45,7 @@ abstract class AbstractCall
     }
 
     /**
-     * @param AbstractRequest $container
+     * @param \Spryker\Client\Payone\ClientApi\Request\AbstractRequest $container
      *
      * @return void
      */

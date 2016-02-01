@@ -26,7 +26,7 @@ class BundleControllerActionRouteNameResolver implements RouteNameResolverInterf
     private $filter;
 
     /**
-     * @param BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      */
     public function __construct(BundleControllerActionInterface $bundleControllerAction)
     {

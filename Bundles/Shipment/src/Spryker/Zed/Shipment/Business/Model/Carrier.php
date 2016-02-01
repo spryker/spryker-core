@@ -14,7 +14,7 @@ class Carrier
 {
 
     /**
-     * @param ShipmentCarrierTransfer $carrierTransfer
+     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

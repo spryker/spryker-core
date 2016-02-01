@@ -16,7 +16,7 @@ interface TaxWriterInterface
 {
 
     /**
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -25,7 +25,7 @@ interface TaxWriterInterface
     public function createTaxRate(TaxRateTransfer $taxRateTransfer);
 
     /**
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -35,7 +35,7 @@ interface TaxWriterInterface
     public function updateTaxRate(TaxRateTransfer $taxRateTransfer);
 
     /**
-     * @param TaxSetTransfer $taxSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -46,7 +46,7 @@ interface TaxWriterInterface
     public function createTaxSet(TaxSetTransfer $taxSetTransfer);
 
     /**
-     * @param TaxSetTransfer $taxSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -58,7 +58,7 @@ interface TaxWriterInterface
 
     /**
      * @param int $taxSetId
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException

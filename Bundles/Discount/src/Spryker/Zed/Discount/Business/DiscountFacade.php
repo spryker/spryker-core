@@ -33,7 +33,7 @@ class DiscountFacade extends AbstractFacade
 {
 
     /**
-     * @param CalculableInterface $container
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
      * @return SpyDiscount[]
      */
@@ -53,8 +53,8 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param CalculableInterface $container
-     * @param DecisionRule $decisionRule
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule $decisionRule
      *
      * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
@@ -89,7 +89,7 @@ class DiscountFacade extends AbstractFacade
 
     /**
      * @param DiscountableInterface[] $discountableObjects
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return void
      */
@@ -99,7 +99,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
@@ -109,7 +109,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
@@ -119,7 +119,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param VoucherCodesTransfer $voucherCodesTransfer
+     * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      *
      * @return \Generated\Shared\Transfer\VoucherPoolTransfer
      */
@@ -137,7 +137,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
@@ -147,7 +147,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
@@ -167,7 +167,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param DecisionRuleTransfer $decisionRuleTransfer
+     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $decisionRuleTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
@@ -177,7 +177,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param CartRuleTransfer $cartRuleFormTransfer
+     * @param \Generated\Shared\Transfer\CartRuleTransfer $cartRuleFormTransfer
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer
      */
@@ -187,7 +187,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $discountDecisionRuleTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
@@ -209,7 +209,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $discountDecisionRuleTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
@@ -219,7 +219,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param VoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $discountVoucherTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
@@ -229,7 +229,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param VoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $discountVoucherTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
@@ -239,7 +239,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $discountVoucherPoolTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
@@ -249,7 +249,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $discountVoucherPoolTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
@@ -259,7 +259,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
      */
@@ -270,7 +270,7 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
      */
@@ -302,8 +302,8 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param CalculableInterface $container
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return array
      */
@@ -315,8 +315,8 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param CalculableInterface $container
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return OrderTransfer[]
      */
@@ -329,8 +329,8 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param CalculableInterface $container
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return OrderTransfer[]
      */
@@ -343,8 +343,8 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param CalculableInterface $container
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return OrderTransfer[]
      */
@@ -357,8 +357,8 @@ class DiscountFacade extends AbstractFacade
     }
 
     /**
-     * @param CalculableInterface $container
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return OrderTransfer[]
      */

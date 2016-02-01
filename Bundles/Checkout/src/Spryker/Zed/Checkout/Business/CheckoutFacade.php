@@ -17,7 +17,7 @@ class CheckoutFacade extends AbstractFacade
 {
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

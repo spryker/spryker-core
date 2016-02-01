@@ -31,7 +31,7 @@ class MvcRouter implements RouterInterface
     private $app;
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      */
     public function __construct(Application $app)
     {
@@ -39,7 +39,7 @@ class MvcRouter implements RouterInterface
     }
 
     /**
-     * @param RequestContext $context
+     * @param \Symfony\Component\Routing\RequestContext $context
      *
      * @return void
      */

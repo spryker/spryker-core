@@ -18,7 +18,7 @@ class ZedRequestConfig
     protected $config;
 
     /**
-     * @param Config $config
+     * @param \Spryker\Shared\Config $config
      */
     public function __construct(Config $config)
     {

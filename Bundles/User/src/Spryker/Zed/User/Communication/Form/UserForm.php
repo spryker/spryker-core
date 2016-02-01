@@ -33,7 +33,7 @@ class UserForm extends AbstractForm
     /**
      * UserForm constructor.
      *
-     * @param UserToAclInterface $aclFacade
+     * @param \Spryker\Zed\User\Dependency\Facade\UserToAclInterface $aclFacade
      */
     public function __construct(UserToAclInterface $aclFacade)
     {
@@ -41,7 +41,7 @@ class UserForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

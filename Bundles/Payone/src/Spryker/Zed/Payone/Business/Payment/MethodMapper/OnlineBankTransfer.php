@@ -30,7 +30,7 @@ class OnlineBankTransfer extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer
      */
@@ -43,7 +43,7 @@ class OnlineBankTransfer extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
      */
@@ -60,7 +60,7 @@ class OnlineBankTransfer extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer
      */
@@ -73,8 +73,8 @@ class OnlineBankTransfer extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
-     * @param AbstractAuthorizationContainer $authorizationContainer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer $authorizationContainer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer
      */
@@ -101,7 +101,7 @@ class OnlineBankTransfer extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer
      */
@@ -118,7 +118,7 @@ class OnlineBankTransfer extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer
      */
@@ -142,7 +142,7 @@ class OnlineBankTransfer extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\OnlineBankTransferContainer
      */
@@ -164,7 +164,7 @@ class OnlineBankTransfer extends AbstractMapper
     }
 
     /**
-     * @param PayoneAuthorizationTransfer $authorizationData
+     * @param \Generated\Shared\Transfer\PayoneAuthorizationTransfer $authorizationData
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
      */

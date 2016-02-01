@@ -16,7 +16,7 @@ interface CartRuleInterface
     public function getCurrentCartRulesDetailsByIdDiscount($idDiscount);
 
     /**
-     * @param CartRuleTransfer $cartRuleFormTransfer
+     * @param \Generated\Shared\Transfer\CartRuleTransfer $cartRuleFormTransfer
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer
      */

@@ -60,7 +60,7 @@ class FacetAggregationBuilder implements FacetAggregationBuilderInterface
 
     /**
      * @param string $fieldName
-     * @param AbstractAggregation $aggregation
+     * @param \Elastica\Aggregation\AbstractAggregation $aggregation
      *
      * @return \Elastica\Aggregation\AbstractAggregation
      */

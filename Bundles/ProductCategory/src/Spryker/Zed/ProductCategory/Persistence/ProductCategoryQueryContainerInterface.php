@@ -15,8 +15,8 @@ interface ProductCategoryQueryContainerInterface
 {
 
     /**
-     * @param ModelCriteria $query
-     * @param LocaleTransfer $locale
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      *
@@ -40,7 +40,7 @@ interface ProductCategoryQueryContainerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
@@ -55,7 +55,7 @@ interface ProductCategoryQueryContainerInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
@@ -63,7 +63,7 @@ interface ProductCategoryQueryContainerInterface
 
     /**
      * @param $term
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param null $idExcludedCategory
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery

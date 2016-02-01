@@ -11,7 +11,7 @@ interface WriterInterface
 {
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return bool success or failure.
      */

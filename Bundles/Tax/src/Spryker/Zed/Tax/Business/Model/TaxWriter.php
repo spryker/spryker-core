@@ -37,7 +37,7 @@ class TaxWriter implements TaxWriterInterface
     protected $taxChangePlugins;
 
     /**
-     * @param TaxQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface $queryContainer
      * @param TaxChangePluginInterface[] $taxChangePlugins
      */
     public function __construct(
@@ -49,7 +49,7 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -65,7 +65,7 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -90,7 +90,7 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxSetTransfer $taxSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -120,7 +120,7 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxSetTransfer $taxSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -156,7 +156,7 @@ class TaxWriter implements TaxWriterInterface
 
     /**
      * @param int $taxSetId
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException

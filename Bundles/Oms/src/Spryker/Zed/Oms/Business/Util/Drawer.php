@@ -74,7 +74,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|null $highlightState
      * @param string|null $format
      * @param int|null $fontSize
@@ -93,7 +93,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|null $highlightState
      *
      * @return void
@@ -108,7 +108,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      *
      * @return void
      */
@@ -122,7 +122,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @return void
      */
@@ -149,7 +149,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @return void
      */
@@ -165,7 +165,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      *
      * @return void
      */
@@ -183,7 +183,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      * @param array $attributes
      * @param string|null $name
      * @param bool $highlighted
@@ -221,7 +221,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @return bool
      */
@@ -240,7 +240,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param string $type
      * @param array $attributes
      * @param string|null $fromName
@@ -269,7 +269,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param string $label
      *
      * @return array
@@ -290,7 +290,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param string $label
      *
      * @return array
@@ -353,7 +353,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param array $attributes
      * @param string $label
      * @param string $type
@@ -389,7 +389,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param string $fromName
      *
      * @return string
@@ -402,7 +402,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param string|null $toName
      *
      * @return string

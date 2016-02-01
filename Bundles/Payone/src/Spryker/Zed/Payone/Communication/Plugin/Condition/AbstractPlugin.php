@@ -26,7 +26,7 @@ abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInt
     private static $resultCache = [];
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool
      */
@@ -48,7 +48,7 @@ abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInt
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

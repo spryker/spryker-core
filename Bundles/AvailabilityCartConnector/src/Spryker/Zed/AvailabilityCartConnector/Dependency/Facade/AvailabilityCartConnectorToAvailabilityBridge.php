@@ -17,7 +17,7 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     protected $availabilityFacade;
 
     /**
-     * @param AvailabilityFacade $availabilityFacade
+     * @param \Spryker\Zed\Availability\Business\AvailabilityFacade $availabilityFacade
      */
     public function __construct($availabilityFacade)
     {

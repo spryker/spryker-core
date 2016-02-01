@@ -14,14 +14,14 @@ interface OperatorInterface
 {
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function executeOperation(ChangeTransfer $cartChange);
 
     /**
-     * @param ItemExpanderPluginInterface $itemExpander
+     * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface $itemExpander
      */
     public function addItemExpanderPlugin(ItemExpanderPluginInterface $itemExpander);
 

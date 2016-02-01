@@ -33,9 +33,9 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
     private $queryContainer;
 
     /**
-     * @param ProductSearchQueryContainerInterface $queryContainer
-     * @param OperationLocatorInterface $operationLocator
-     * @param OperationInterface $defaultOperation
+     * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface $operationLocator
+     * @param \Spryker\Zed\ProductSearch\Business\Operation\OperationInterface $defaultOperation
      */
     public function __construct(
         ProductSearchQueryContainerInterface $queryContainer,

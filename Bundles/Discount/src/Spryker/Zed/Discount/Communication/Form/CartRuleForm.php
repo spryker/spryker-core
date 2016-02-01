@@ -39,8 +39,8 @@ class CartRuleForm extends AbstractRuleForm
     protected $discountConfig;
 
     /**
-     * @param DiscountConfig $discountConfig
-     * @param DiscountFacade $discountFacade
+     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
+     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      */
     public function __construct(DiscountConfig $discountConfig, DiscountFacade $discountFacade)
     {
@@ -91,7 +91,7 @@ class CartRuleForm extends AbstractRuleForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

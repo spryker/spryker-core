@@ -33,7 +33,7 @@ class AddressTable extends AbstractTable
     protected $idCustomer;
 
     /**
-     * @param CustomerQueryContainer $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $customerQueryContainer
      * @param int $idCustomer
      */
     public function __construct(CustomerQueryContainer $customerQueryContainer, $idCustomer)
@@ -43,7 +43,7 @@ class AddressTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -87,7 +87,7 @@ class AddressTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Propel\Runtime\Collection\ObjectCollection
      */

@@ -12,7 +12,7 @@ interface GlossaryToMessengerInterface
 {
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */

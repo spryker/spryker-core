@@ -40,8 +40,8 @@ class Catalog implements CatalogInterface
     protected $locale;
 
     /**
-     * @param KeyBuilderInterface $productKeyBuilder
-     * @param StorageClientInterface $storageReader
+     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $productKeyBuilder
+     * @param \Spryker\Client\Storage\StorageClientInterface $storageReader
      * @param string $locale
      */
     public function __construct(

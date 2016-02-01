@@ -14,7 +14,7 @@ class DiscountDecisionRuleWriter extends AbstractWriter
 {
 
     /**
-     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $discountDecisionRuleTransfer
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
@@ -28,7 +28,7 @@ class DiscountDecisionRuleWriter extends AbstractWriter
     }
 
     /**
-     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $discountDecisionRuleTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -47,7 +47,7 @@ class DiscountDecisionRuleWriter extends AbstractWriter
     }
 
     /**
-     * @param DecisionRuleTransfer $decisionRuleTransfer
+     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $decisionRuleTransfer
      *
      * @return SpyDiscountDecisionRule|null
      */

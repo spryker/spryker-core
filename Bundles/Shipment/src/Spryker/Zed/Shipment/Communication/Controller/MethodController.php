@@ -24,7 +24,7 @@ class MethodController extends AbstractController
     const ID_METHOD_PARAMETER = 'id-method';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */
@@ -52,7 +52,7 @@ class MethodController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -86,7 +86,7 @@ class MethodController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

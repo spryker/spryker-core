@@ -26,7 +26,7 @@ class PasswordController extends AbstractController
     const RESET_REDIRECT_URL = '/auth/login';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -47,7 +47,7 @@ class PasswordController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */

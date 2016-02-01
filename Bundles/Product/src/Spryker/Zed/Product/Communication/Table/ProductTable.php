@@ -40,9 +40,9 @@ class ProductTable extends AbstractTable
     protected $yvesUrl;
 
     /**
-     * @param SpyProductAbstractQuery $productQuery
-     * @param ProductToUrlInterface $urlFacade
-     * @param LocaleTransfer $localeTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productQuery
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param $yvesUrl
      */
     public function __construct(
@@ -58,7 +58,7 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -79,7 +79,7 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

@@ -43,7 +43,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
@@ -144,7 +144,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
     }
 
     /**
-     * @param SplFileInfo $file
+     * @param \Symfony\Component\Finder\SplFileInfo $file
      * @param string $methodPattern
      *
      * @return string

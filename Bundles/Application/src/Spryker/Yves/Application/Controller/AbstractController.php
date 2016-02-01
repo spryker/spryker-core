@@ -58,7 +58,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param Application $application
+     * @param \Spryker\Yves\Application\Application $application
      *
      * @return self
      */
@@ -223,7 +223,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param AbstractForm $form
+     * @param \Spryker\Shared\Gui\Form\AbstractForm $form
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -251,7 +251,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */

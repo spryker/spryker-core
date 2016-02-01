@@ -20,7 +20,7 @@ interface DoubleOptInHandlerInterface
     public function addSubscriberOptInSender(SubscriberOptInSenderInterface $subscriberOptInSender);
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */

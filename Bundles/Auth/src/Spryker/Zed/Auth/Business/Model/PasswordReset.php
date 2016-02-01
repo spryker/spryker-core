@@ -36,9 +36,9 @@ class PasswordReset
     protected $authConfig;
 
     /**
-     * @param AuthQueryContainer $authQueryContainer
-     * @param AuthToUserBridge $facadeUser
-     * @param AuthConfig $authConfig
+     * @param \Spryker\Zed\Auth\Persistence\AuthQueryContainer $authQueryContainer
+     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge $facadeUser
+     * @param \Spryker\Zed\Auth\AuthConfig $authConfig
      */
     public function __construct(
         AuthQueryContainer $authQueryContainer,
@@ -152,7 +152,7 @@ class PasswordReset
     }
 
     /**
-     * @param AuthPasswordResetSenderInterface $userPasswordResetNotificationSender
+     * @param \Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface $userPasswordResetNotificationSender
      *
      * @return void
      */

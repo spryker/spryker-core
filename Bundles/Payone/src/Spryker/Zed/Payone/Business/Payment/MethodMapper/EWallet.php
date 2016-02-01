@@ -30,7 +30,7 @@ class EWallet extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer
      */
@@ -43,7 +43,7 @@ class EWallet extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
      */
@@ -60,7 +60,7 @@ class EWallet extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer
      */
@@ -73,8 +73,8 @@ class EWallet extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
-     * @param AbstractAuthorizationContainer $authorizationContainer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer $authorizationContainer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer
      */
@@ -100,7 +100,7 @@ class EWallet extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer
      */
@@ -117,7 +117,7 @@ class EWallet extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer
      */
@@ -133,7 +133,7 @@ class EWallet extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\EWalletContainer
      */
@@ -148,7 +148,7 @@ class EWallet extends AbstractMapper
     }
 
     /**
-     * @param PayoneAuthorizationTransfer $payoneAuthorizationTransfer
+     * @param \Generated\Shared\Transfer\PayoneAuthorizationTransfer $payoneAuthorizationTransfer
      *
      * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
      */

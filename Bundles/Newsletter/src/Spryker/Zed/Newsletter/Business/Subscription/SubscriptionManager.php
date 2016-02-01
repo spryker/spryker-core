@@ -21,7 +21,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
     protected $queryContainer;
 
     /**
-     * @param NewsletterQueryContainer $queryContainer
+     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
      */
     public function __construct(NewsletterQueryContainer $queryContainer)
     {
@@ -29,8 +29,8 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
-     * @param NewsletterTypeTransfer $newsletterType
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
      *
      * @return void
      */
@@ -43,8 +43,8 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
-     * @param NewsletterTypeTransfer $newsletterType
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
      *
      * @return bool
      */
@@ -58,8 +58,8 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
-     * @param NewsletterTypeTransfer $newsletterType
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
      *
      * @return bool
      */
@@ -77,7 +77,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param NewsletterTypeTransfer $newsletterType
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
      *
      * @throws \Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterTypeException
      *
@@ -101,8 +101,8 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
-     * @param NewsletterTypeTransfer $newsletterType
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
      *
      * @return SpyNewsletterSubscription|null
      */

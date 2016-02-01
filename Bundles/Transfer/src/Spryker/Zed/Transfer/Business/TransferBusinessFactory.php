@@ -26,7 +26,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return \Spryker\Zed\Transfer\Business\Model\TransferGenerator
      */

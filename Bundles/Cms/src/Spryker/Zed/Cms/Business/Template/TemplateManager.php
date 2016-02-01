@@ -35,9 +35,9 @@ class TemplateManager implements TemplateManagerInterface
     protected $finder;
 
     /**
-     * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param CmsConfig $config
-     * @param Finder $finder
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\CmsConfig $config
+     * @param \Symfony\Component\Finder\Finder $finder
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
@@ -114,7 +114,7 @@ class TemplateManager implements TemplateManagerInterface
     }
 
     /**
-     * @param SpyCmsTemplate $template
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsTemplate $template
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
@@ -127,7 +127,7 @@ class TemplateManager implements TemplateManagerInterface
     }
 
     /**
-     * @param CmsTemplateTransfer $cmsTemplate
+     * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplate
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
@@ -141,7 +141,7 @@ class TemplateManager implements TemplateManagerInterface
     }
 
     /**
-     * @param CmsTemplateTransfer $cmsTemplate
+     * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplate
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
@@ -159,7 +159,7 @@ class TemplateManager implements TemplateManagerInterface
     }
 
     /**
-     * @param CmsTemplateTransfer $cmsTemplate
+     * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplate
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      * @throws \Spryker\Zed\Cms\Business\Exception\TemplateExistsException

@@ -12,7 +12,7 @@ interface CustomerReferenceGeneratorInterface
 {
 
     /**
-     * @param CustomerTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $orderTransfer
      *
      * @return string
      */

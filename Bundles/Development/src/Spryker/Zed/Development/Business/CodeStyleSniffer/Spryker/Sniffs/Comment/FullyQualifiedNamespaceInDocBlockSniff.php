@@ -45,11 +45,21 @@ class FullyQualifiedNamespaceInDocBlockSniff implements \PHP_CodeSniffer_Sniff
             }
 
             $classNameIndex = $i + 2;
+
             if ($tokens[$classNameIndex]['type'] !== 'T_DOC_COMMENT_STRING') {
                 continue;
             }
 
             $className = $tokens[$classNameIndex]['content'];
+
+            // Fix a Sniffer bug with param having the variable also part of the content
+            $appendix = '';
+            if ($tokens[$i]['content'] === '@param') {
+                $spaceIndex = strpos($className, ' ');
+
+                $appendix = substr($className, $spaceIndex);
+                $className = substr($className, 0, $spaceIndex);
+            }
 
             if (strpos($className, '\\') !== false) {
                 continue;
@@ -62,7 +72,7 @@ class FullyQualifiedNamespaceInDocBlockSniff implements \PHP_CodeSniffer_Sniff
 
             $fix = $phpCsFile->addFixableError($className . ' => ' . $useStatement, $classNameIndex);
             if ($fix) {
-                $phpCsFile->fixer->replaceToken($classNameIndex, $useStatement);
+                $phpCsFile->fixer->replaceToken($classNameIndex, $useStatement . $appendix);
             }
         }
     }

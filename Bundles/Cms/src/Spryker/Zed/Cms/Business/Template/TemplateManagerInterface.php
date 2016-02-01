@@ -38,7 +38,7 @@ interface TemplateManagerInterface
     public function hasTemplateId($id);
 
     /**
-     * @param CmsTemplateTransfer $cmsTemplate
+     * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplate
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */

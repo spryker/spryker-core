@@ -12,7 +12,7 @@ interface SubscriberOptInSenderInterface
 {
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return bool
      */

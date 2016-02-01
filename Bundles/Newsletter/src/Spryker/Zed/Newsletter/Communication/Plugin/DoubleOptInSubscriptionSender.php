@@ -23,7 +23,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
 {
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return bool
      */
@@ -52,8 +52,8 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     }
 
     /**
-     * @param MailTransfer $mailTransfer
-     * @param NewsletterConfig $config
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param \Spryker\Zed\Newsletter\NewsletterConfig $config
      *
      * @return void
      */
@@ -88,7 +88,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      * @param string $email
      *
      * @return void
@@ -109,7 +109,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      * @param array $globalMergeVars
      *
      * @return void
@@ -130,8 +130,8 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     }
 
     /**
-     * @param MailTransfer $mailTransfer
-     * @param NewsletterConfig $config
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param \Spryker\Zed\Newsletter\NewsletterConfig $config
      *
      * @return void
      */

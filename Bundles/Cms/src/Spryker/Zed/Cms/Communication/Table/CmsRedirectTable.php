@@ -26,7 +26,7 @@ class CmsRedirectTable extends AbstractTable
     protected $urlQuery;
 
     /**
-     * @param SpyUrlQuery $urlQuery
+     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
      */
     public function __construct($urlQuery)
     {
@@ -34,7 +34,7 @@ class CmsRedirectTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -63,7 +63,7 @@ class CmsRedirectTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

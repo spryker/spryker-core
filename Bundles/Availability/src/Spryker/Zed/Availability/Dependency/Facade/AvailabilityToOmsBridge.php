@@ -18,7 +18,7 @@ class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
     protected $omsFacade;
 
     /**
-     * @param OmsFacade $omsFacade
+     * @param \Spryker\Zed\Oms\Business\OmsFacade $omsFacade
      */
     public function __construct($omsFacade)
     {

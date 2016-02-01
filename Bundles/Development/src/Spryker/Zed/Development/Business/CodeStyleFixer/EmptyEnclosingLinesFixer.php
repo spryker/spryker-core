@@ -91,7 +91,7 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens $tokens
      * @param int $openingBraceIndex
      *
      * @return bool
@@ -102,7 +102,7 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens $tokens
      * @param int $closingBraceIndex
      *
      * @return bool

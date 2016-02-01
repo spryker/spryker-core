@@ -30,8 +30,8 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     private $path;
 
     /**
-     * @param InstalledPackagesTransfer $collection
-     * @param Process $process
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $collection
+     * @param \Symfony\Component\Process\Process $process
      * @param string $path
      */
     public function __construct(InstalledPackagesTransfer $collection, Process $process, $path)

@@ -24,8 +24,8 @@ class UserUpdateForm extends UserForm
 
     /**
      * @param int $idUser
-     * @param UserFacade $userFacade
-     * @param UserToAclInterface $aclFacade
+     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
+     * @param \Spryker\Zed\User\Dependency\Facade\UserToAclInterface $aclFacade
      */
     public function __construct($idUser, UserFacade $userFacade, UserToAclInterface $aclFacade)
     {
@@ -36,7 +36,7 @@ class UserUpdateForm extends UserForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

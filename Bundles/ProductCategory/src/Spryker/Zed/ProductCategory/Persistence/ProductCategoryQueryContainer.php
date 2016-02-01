@@ -28,8 +28,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     const COL_CATEGORY_NAME = 'category_name';
 
     /**
-     * @param ModelCriteria $query
-     * @param LocaleTransfer $locale
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      *
@@ -83,7 +83,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
@@ -119,7 +119,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
@@ -181,7 +181,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param $term
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idExcludedCategory null
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery

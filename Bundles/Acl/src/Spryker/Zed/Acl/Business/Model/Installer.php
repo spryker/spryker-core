@@ -45,8 +45,8 @@ class Installer implements InstallerInterface
      * @param GroupInterface $group
      * @param RoleInterface $role
      * @param RuleInterface $rule
-     * @param AclToUserInterface $facadeUser
-     * @param AclConfig $settings
+     * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
+     * @param \Spryker\Zed\Acl\AclConfig $settings
      */
     public function __construct(
         GroupInterface $group,

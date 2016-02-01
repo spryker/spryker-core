@@ -231,7 +231,7 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param ObjectCollection $relationshipCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection $relationshipCollection
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */
@@ -257,7 +257,7 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param RolesTransfer $roles
+     * @param \Generated\Shared\Transfer\RolesTransfer $roles
      * @param string $bundle
      * @param string $controller
      * @param string $action

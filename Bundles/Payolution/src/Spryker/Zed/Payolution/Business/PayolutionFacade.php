@@ -19,7 +19,7 @@ class PayolutionFacade extends AbstractFacade
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     public function saveOrderPayment(OrderTransfer $orderTransfer)
     {
@@ -30,7 +30,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
@@ -110,7 +110,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
@@ -125,7 +125,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -138,7 +138,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -151,7 +151,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -164,7 +164,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -177,7 +177,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

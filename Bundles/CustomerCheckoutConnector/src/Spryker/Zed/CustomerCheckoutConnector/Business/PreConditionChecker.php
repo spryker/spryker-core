@@ -21,7 +21,7 @@ class PreConditionChecker implements PreConditionCheckerInterface
     private $customerFacade;
 
     /**
-     * @param CustomerCheckoutConnectorToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface $customerFacade
      */
     public function __construct(CustomerCheckoutConnectorToCustomerInterface $customerFacade)
     {
@@ -29,8 +29,8 @@ class PreConditionChecker implements PreConditionCheckerInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $request
-     * @param CheckoutResponseTransfer $response
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $response
      *
      * @return void
      */

@@ -19,7 +19,7 @@ class InstallerToGlossaryBridge implements InstallerToGlossaryInterface
     protected $glossaryFacade;
 
     /**
-     * @param GlossaryFacade $glossaryFacade
+     * @param \Spryker\Zed\Glossary\Business\GlossaryFacade $glossaryFacade
      */
     public function __construct($glossaryFacade)
     {
@@ -59,7 +59,7 @@ class InstallerToGlossaryBridge implements InstallerToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
@@ -70,7 +70,7 @@ class InstallerToGlossaryBridge implements InstallerToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -83,7 +83,7 @@ class InstallerToGlossaryBridge implements InstallerToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *

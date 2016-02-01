@@ -25,7 +25,7 @@ class CmsPageTable extends AbstractTable
     protected $pageQuery;
 
     /**
-     * @param SpyCmsPageQuery $pageQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageQuery $pageQuery
      */
     public function __construct(SpyCmsPageQuery $pageQuery)
     {
@@ -33,7 +33,7 @@ class CmsPageTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
@@ -59,7 +59,7 @@ class CmsPageTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

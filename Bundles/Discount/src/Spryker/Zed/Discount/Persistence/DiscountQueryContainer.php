@@ -221,7 +221,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @param SpyDiscountVoucherPool $pool
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $pool
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

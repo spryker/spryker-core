@@ -25,8 +25,8 @@ class ShipmentOrderHydrator implements ShipmentOrderHydratorInterface
     }
 
     /**
-     * @param OrderTransfer $order
-     * @param CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\OrderTransfer $order
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      *
      * @return void
      */

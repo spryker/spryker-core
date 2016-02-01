@@ -24,8 +24,8 @@ class RefundPlugin  extends AbstractPlugin implements CommandByOrderInterface
 
     /**
      * @param SpySalesOrderItem[] $orderItems
-     * @param SpySalesOrder $orderEntity
-     * @param ReadOnlyArrayObject $data
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return array
      */
@@ -38,7 +38,7 @@ class RefundPlugin  extends AbstractPlugin implements CommandByOrderInterface
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */

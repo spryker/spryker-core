@@ -23,7 +23,7 @@ abstract class AbstractRestController
     protected $request;
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */

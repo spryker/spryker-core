@@ -18,7 +18,7 @@ abstract class AbstractWriter
     private $queryContainer;
 
     /**
-     * @param DiscountQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      */
     public function __construct(DiscountQueryContainerInterface $queryContainer)
     {

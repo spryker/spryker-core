@@ -47,7 +47,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return array
      */
@@ -88,7 +88,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      *
      * @return array
      */
@@ -124,7 +124,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -138,7 +138,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -152,7 +152,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -166,7 +166,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array

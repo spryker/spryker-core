@@ -24,7 +24,7 @@ class AuthorizationContainer extends AbstractAuthorizationContainer
     protected $business;
 
     /**
-     * @param BusinessContainer $business
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer $business
      *
      * @return self
      */

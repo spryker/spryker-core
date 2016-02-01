@@ -24,7 +24,7 @@ class CatalogClient extends AbstractClient
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $category
      *
      * @return \Spryker\Client\Catalog\Model\FacetSearch
@@ -35,7 +35,7 @@ class CatalogClient extends AbstractClient
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Client\Catalog\Model\FulltextSearch
      */

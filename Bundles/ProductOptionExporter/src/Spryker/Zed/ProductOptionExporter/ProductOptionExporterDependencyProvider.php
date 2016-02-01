@@ -18,7 +18,7 @@ class ProductOptionExporterDependencyProvider extends AbstractBundleDependencyPr
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

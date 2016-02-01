@@ -60,7 +60,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
      */

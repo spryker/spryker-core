@@ -64,8 +64,8 @@ class PayoneConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param PayonePaymentTransfer $paymentTransfer
-     * @param SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\PayonePaymentTransfer $paymentTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
      * @return string
      */
@@ -76,8 +76,8 @@ class PayoneConfig extends AbstractBundleConfig
 
     /**
      * @param array $orderItems
-     * @param SpySalesOrder $orderEntity
-     * @param ReadOnlyArrayObject $data
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return string
      */

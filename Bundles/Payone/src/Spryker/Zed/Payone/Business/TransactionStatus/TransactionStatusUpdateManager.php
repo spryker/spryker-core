@@ -35,9 +35,9 @@ class TransactionStatusUpdateManager
     protected $hashGenerator;
 
     /**
-     * @param PayoneQueryContainerInterface $queryContainer
-     * @param PayoneStandardParameterTransfer $standardParameter
-     * @param HashGenerator $hashGenerator
+     * @param \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface $queryContainer
+     * @param \Generated\Shared\Transfer\PayoneStandardParameterTransfer $standardParameter
+     * @param \Spryker\Zed\Payone\Business\Key\HashGenerator $hashGenerator
      */
     public function __construct(
         PayoneQueryContainerInterface $queryContainer,
@@ -50,7 +50,7 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param TransactionStatusUpdateInterface $request
+     * @param \Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface $request
      *
      * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
      */
@@ -67,7 +67,7 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param TransactionStatusUpdateInterface $request
+     * @param \Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface $request
      *
      * @return void
      */
@@ -104,7 +104,7 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param TransactionStatusUpdateInterface $request
+     * @param \Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface $request
      *
      * @return void
      */
@@ -124,7 +124,7 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param TransactionStatusUpdateInterface $request
+     * @param \Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface $request
      *
      * @return bool|TransactionStatusResponse
      */
@@ -380,7 +380,7 @@ class TransactionStatusUpdateManager
 
     /**
      * @param int $idSalesOrderItem
-     * @param SpyPaymentPayoneTransactionStatusLog $statusLog
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog $statusLog
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

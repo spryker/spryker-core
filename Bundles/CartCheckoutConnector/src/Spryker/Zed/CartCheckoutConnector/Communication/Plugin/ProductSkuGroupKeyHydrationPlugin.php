@@ -21,8 +21,8 @@ class ProductSkuGroupKeyHydrationPlugin extends AbstractPlugin implements Checko
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class ProductSkuGroupKeyHydrationPlugin extends AbstractPlugin implements Checko
     }
 
     /**
-     * @param ItemTransfer $orderItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $orderItem
      *
      * @return string
      */

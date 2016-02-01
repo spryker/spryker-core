@@ -38,7 +38,7 @@ class SequenceNumberBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
+     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
      *
      * @return \Spryker\Zed\SequenceNumber\Business\Model\SequenceNumberInterface
      */

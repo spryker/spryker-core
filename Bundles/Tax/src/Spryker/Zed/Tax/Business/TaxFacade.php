@@ -92,7 +92,7 @@ class TaxFacade extends AbstractFacade
     }
 
     /**
-     * @param TaxRateTransfer $taxRate
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRate
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -104,7 +104,7 @@ class TaxFacade extends AbstractFacade
     }
 
     /**
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -117,7 +117,7 @@ class TaxFacade extends AbstractFacade
     }
 
     /**
-     * @param TaxSetTransfer $taxSet
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSet
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -131,7 +131,7 @@ class TaxFacade extends AbstractFacade
     }
 
     /**
-     * @param TaxSetTransfer $taxSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
@@ -146,7 +146,7 @@ class TaxFacade extends AbstractFacade
 
     /**
      * @param int $taxSetId
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException

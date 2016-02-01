@@ -60,7 +60,7 @@ class OrderManager
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Exception
@@ -93,7 +93,7 @@ class OrderManager
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -122,7 +122,7 @@ class OrderManager
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param $orderEntity
      * @param $orderProcess
      *
@@ -183,7 +183,7 @@ class OrderManager
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return void
      */
@@ -205,7 +205,7 @@ class OrderManager
     }
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
@@ -244,7 +244,7 @@ class OrderManager
     }
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return SpySalesOrder[]|ObjectCollection
      */
@@ -258,7 +258,7 @@ class OrderManager
     }
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */

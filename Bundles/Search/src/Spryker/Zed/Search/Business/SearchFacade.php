@@ -18,7 +18,7 @@ class SearchFacade extends AbstractFacade
 {
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
      */

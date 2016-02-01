@@ -30,7 +30,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Spryker\Zed\Wishlist\Business\Operator\Add
      */
@@ -44,7 +44,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Spryker\Zed\Wishlist\Business\Operator\Increase
      */
@@ -58,7 +58,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Spryker\Zed\Wishlist\Business\Operator\Decrease
      */
@@ -72,7 +72,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Spryker\Zed\Wishlist\Business\Operator\Remove
      */
@@ -86,7 +86,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param AbstractOperator $operator
+     * @param \Spryker\Zed\Wishlist\Business\Operator\AbstractOperator $operator
      *
      * @return void
      */
@@ -97,7 +97,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Spryker\Zed\Wishlist\Business\Storage\StorageInterface
      */
@@ -111,7 +111,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Spryker\Zed\Wishlist\Business\Storage\Propel
      */
@@ -127,7 +127,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
      * @return \Spryker\Zed\Wishlist\Business\Storage\InMemory
      */
@@ -140,7 +140,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Spryker\Zed\Wishlist\Business\Model\Customer
      */

@@ -20,8 +20,8 @@ class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderI
 
     /**
      * @param SpySalesOrder[] $orderItems
-     * @param SpySalesOrder $orderEntity
-     * @param ReadOnlyArrayObject $data
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return array $returnArray
      */
@@ -37,7 +37,7 @@ class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderI
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
      * @return array
      */

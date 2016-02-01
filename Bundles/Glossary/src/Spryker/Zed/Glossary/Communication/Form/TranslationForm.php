@@ -51,8 +51,8 @@ class TranslationForm extends AbstractForm
     protected $type;
 
     /**
-     * @param SpyGlossaryTranslationQuery $glossaryTranslationQuery
-     * @param SpyGlossaryKeyQuery $glossaryKeyQuery
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $glossaryTranslationQuery
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery $glossaryKeyQuery
      * @param array $locales
      * @param string $type
      */
@@ -81,7 +81,7 @@ class TranslationForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

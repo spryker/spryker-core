@@ -20,7 +20,7 @@ class CaptureIsErrorPlugin extends AbstractPlugin
     const NAME = 'CaptureIsErrorPlugin';
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

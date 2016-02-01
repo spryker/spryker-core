@@ -50,10 +50,10 @@ class VoucherEngine
     protected $connection;
 
     /**
-     * @param DiscountConfigInterface $settings
-     * @param DiscountQueryContainer $queryContainer
-     * @param DiscountToMessengerInterface $messengerFacade
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Discount\DiscountConfigInterface $settings
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
         DiscountConfigInterface $settings,
@@ -68,7 +68,7 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
@@ -89,8 +89,8 @@ class VoucherEngine
     }
 
     /**
-     * @param SpyDiscountVoucherPool $voucherPoolEntity
-     * @param TransferInterface $voucherTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $voucherPoolEntity
+     * @param \Spryker\Shared\Transfer\TransferInterface $voucherTransfer
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
@@ -103,7 +103,7 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherCreateInfoTransfer $voucherCreateInfoInterface
+     * @param \Generated\Shared\Transfer\VoucherCreateInfoTransfer $voucherCreateInfoInterface
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
@@ -121,8 +121,8 @@ class VoucherEngine
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPool
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPool
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      * @param int $quantiy
      *
      * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
@@ -191,7 +191,7 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -249,7 +249,7 @@ class VoucherEngine
     }
 
     /**
-     * @param SpyDiscountVoucherPool $voucherPoolEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $voucherPoolEntity
      * @param string $code
      *
      * @return string
@@ -271,7 +271,7 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      *
      * @return int
      */

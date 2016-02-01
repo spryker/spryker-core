@@ -36,7 +36,7 @@ class ProductWriter implements ProductWriterInterface
     }
 
     /**
-     * @param ProductAbstractInterface $product
+     * @param \Spryker\Shared\Product\Model\ProductAbstractInterface $product
      *
      * @return bool
      */

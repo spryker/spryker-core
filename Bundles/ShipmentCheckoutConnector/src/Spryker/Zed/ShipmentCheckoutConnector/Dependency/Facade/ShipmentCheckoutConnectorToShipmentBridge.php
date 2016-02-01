@@ -19,7 +19,7 @@ class ShipmentCheckoutConnectorToShipmentBridge implements ShipmentCheckoutConne
     protected $shipmentFacade;
 
     /**
-     * @param ShipmentFacade $shipmentFacade
+     * @param \Spryker\Zed\Shipment\Business\ShipmentFacade $shipmentFacade
      */
     public function __construct($shipmentFacade)
     {
@@ -27,7 +27,7 @@ class ShipmentCheckoutConnectorToShipmentBridge implements ShipmentCheckoutConne
     }
 
     /**
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransferTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransferTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */

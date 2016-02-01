@@ -12,7 +12,7 @@ interface GlobalTemplateVariableExtensionInterface
 {
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      */
     public function getGlobalTemplateVariables(Application $application);
 

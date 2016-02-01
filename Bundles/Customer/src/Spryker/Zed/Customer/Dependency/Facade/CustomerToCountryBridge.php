@@ -20,7 +20,7 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
     /**
      * CustomerToCountryBridge constructor.
      *
-     * @param CountryFacade $countryFacade
+     * @param \Spryker\Zed\Country\Business\CountryFacade $countryFacade
      */
     public function __construct($countryFacade)
     {
