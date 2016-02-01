@@ -1,5 +1,5 @@
 <?php
-namespace GraphPhpDocumentor;
+namespace Graph;
 
 /**
  * Inherited Methods

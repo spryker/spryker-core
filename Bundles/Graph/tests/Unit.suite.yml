@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-        - \GraphPhpDocumentor\Module\Unit
+        - \Graph\Module\Unit

@@ -34,7 +34,7 @@ class Graph implements GraphInterface
      *
      * @return self
      */
-    public function addNode($name, $attributes = [], $group = 'default')
+    public function addNode($name, $attributes = [], $group = self::DEFAULT_GROUP)
     {
         $this->adapter->addNode($name, $attributes, $group);
 

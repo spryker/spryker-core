@@ -21,16 +21,36 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
     private $graph;
 
     /**
+     * @param PhpDocumentorGraph|null $graph
+     */
+    public function __construct(PhpDocumentorGraph $graph = null)
+    {
+        if ($graph === null) {
+            $graph = $this->createPhpDocumentorGraph();
+        }
+
+        $this->graph = $graph;
+    }
+
+    /**
+     * @return PhpDocumentorGraph
+     */
+    private function createPhpDocumentorGraph()
+    {
+        return new PhpDocumentorGraph();
+    }
+
+    /**
      * @param string $name
      * @param array $attributes
      * @param bool $directed
      * @param bool $strict
      *
-     * @return void
+     * @return self
      */
     public function create($name, array $attributes = [], $directed = true, $strict = true)
     {
-        $this->graph = new PhpDocumentorGraph();
+        $this->graph = $this->createPhpDocumentorGraph();
         $this->graph->setName($name);
 
         if ($strict) {
@@ -40,6 +60,8 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
         }
 
         $this->addAttributesTo($attributes, $this->graph);
+
+        return $this;
     }
 
     /**
@@ -47,7 +69,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      * @param array $attributes
      * @param string $group
      *
-     * @return void
+     * @return self
      */
     public function addNode($name, $attributes = [], $group = self::DEFAULT_GROUP)
     {
@@ -60,6 +82,8 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
         } else {
             $this->graph->setNode($node);
         }
+
+        return $this;
     }
 
     /**
@@ -67,7 +91,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      * @param string $toNode
      * @param array $attributes
      *
-     * @return void
+     * @return self
      */
     public function addEdge($fromNode, $toNode, $attributes = [])
     {
@@ -75,19 +99,23 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
         $this->addAttributesTo($attributes, $edge);
 
         $this->graph->link($edge);
+
+        return $this;
     }
 
     /**
      * @param string $name
      * @param array $attributes
      *
-     * @return void
+     * @return self
      */
     public function addCluster($name, $attributes = [])
     {
         $graph = $this->getGraphByName($name);
 
         $this->addAttributesTo($attributes, $graph);
+
+        return $this;
     }
 
     /**

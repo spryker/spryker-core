@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace GraphPhpDocumentor\Module;
+namespace Graph\Module;
 
 use Codeception\Module;
 
