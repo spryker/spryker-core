@@ -2,21 +2,18 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Discount\DiscountConfig;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class VoucherForm extends AbstractForm
+class VoucherForm extends AbstractType
 {
-
-    const ONE_VOUCHER = 1;
-    const MINIMUM_VOUCHERS_TO_GENERATE = 2;
 
     const FIELD_DISCOUNT_VOUCHER_POOL = 'fk_discount_voucher_pool';
     const FIELD_QUANTITY = 'quantity';
@@ -24,51 +21,126 @@ class VoucherForm extends AbstractForm
     const FIELD_CUSTOM_CODE = 'custom_code';
     const FIELD_CODE_LENGTH = 'code_length';
 
-    /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
-     */
-    protected $discountQueryContainer;
+    const OPTION_DISCOUNT_VOUCHER_POOL_CHOICES = 'discount_voucher_pool_choices';
+    const OPTION_CODE_LENGTH_CHOICES = 'code_length_choices';
+    const OPTION_IS_MULTIPLE = 'is_multiple';
+
+    const ONE_VOUCHER = 1;
+    const MINIMUM_VOUCHERS_TO_GENERATE = 2;
 
     /**
-     * @var bool
-     */
-    protected $isMultiple;
-
-    /**
-     * @var \Spryker\Zed\Discount\DiscountConfig
+     * @var DiscountConfig
      */
     protected $discountConfig;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
      * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
-     * @param bool $isMultiple
      */
-    public function __construct(DiscountQueryContainer $discountQueryContainer, DiscountConfig $discountConfig, $isMultiple = false)
+    public function __construct(DiscountConfig $discountConfig)
     {
-        $this->discountQueryContainer = $discountQueryContainer;
         $this->discountConfig = $discountConfig;
-        $this->isMultiple = $isMultiple;
     }
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'voucher';
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setRequired(self::OPTION_DISCOUNT_VOUCHER_POOL_CHOICES);
+        $resolver->setRequired(self::OPTION_CODE_LENGTH_CHOICES);
+        $resolver->setRequired(self::OPTION_IS_MULTIPLE);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($this->isMultiple) {
-            $builder->add(self::FIELD_QUANTITY, 'text', [
-                'label' => 'Quantity',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                    $this->getConstraints()->createConstraintGreaterThan(1),
-                ],
-            ]);
+        if ($options[self::OPTION_IS_MULTIPLE]) {
+            $this->addQuantityField($builder);
         }
 
-        $maxAllowedCodeCharactersLength = $this->discountConfig->getAllowedCodeCharactersLength();
-        $codeLengthValidator = new MaximumCalculatedRangeValidator($maxAllowedCodeCharactersLength);
+        $this
+            ->addCustomCodeField($builder)
+            ->addCodeLengthField($builder, $options[self::OPTION_CODE_LENGTH_CHOICES])
+            ->addMaxNumberOfUsesField($builder)
+            ->addFkDiscountVoucherPoolField($builder, $options[self::OPTION_DISCOUNT_VOUCHER_POOL_CHOICES]);
+    }
 
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addQuantityField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_QUANTITY, 'text', [
+            'label' => 'Quantity',
+            'constraints' => [
+                new NotBlank(),
+                new GreaterThan(1),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return self
+     */
+    protected function addFkDiscountVoucherPoolField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder->add(self::FIELD_DISCOUNT_VOUCHER_POOL, 'choice', [
+            'label' => 'Voucher',
+            'placeholder' => 'Select one',
+            'choices' => $choices,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addMaxNumberOfUsesField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_MAX_NUMBER_OF_USES, 'number', [
+            'label' => 'Max number of uses (0 = Infinite usage)',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCustomCodeField(FormBuilderInterface $builder)
+    {
         $builder->add(self::FIELD_CUSTOM_CODE, 'text', [
             'label' => 'Custom Code',
             'attr' => [
@@ -77,12 +149,26 @@ class VoucherForm extends AbstractForm
                 'title' => 'Add [code] template to position generated code',
                 'help' => 'Please enter a string that will be used as custom code, the string code can be used to put the code in a certain position, e.g. "summer-code-special"',
             ],
-        ])
-        ->add(self::FIELD_CODE_LENGTH, 'choice', [
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCodeLengthField(FormBuilderInterface $builder, array $choices)
+    {
+        $maxAllowedCodeCharactersLength = $this->discountConfig->getAllowedCodeCharactersLength();
+        $codeLengthValidator = new MaximumCalculatedRangeValidator($maxAllowedCodeCharactersLength);
+
+        $builder->add(self::FIELD_CODE_LENGTH, 'choice', [
             'label' => 'Random Generated Code Length',
-            'choices' => $this->getCodeLengthChoices(),
+            'choices' => $choices,
             'constraints' => [
-                $this->getConstraints()->createConstraintCallback([
+                new Callback([
                     'methods' => [
                         function ($length, ExecutionContextInterface $context) use ($codeLengthValidator) {
                             $formData = $context->getRoot()->getData();
@@ -102,111 +188,9 @@ class VoucherForm extends AbstractForm
                     ],
                 ]),
             ],
-        ])
-        ->add(self::FIELD_MAX_NUMBER_OF_USES, 'number', [
-            'label' => 'Max number of uses (0 = Infinite usage)',
-        ])
-        ->add(self::FIELD_DISCOUNT_VOUCHER_POOL, 'choice', [
-            'label' => 'Voucher',
-            'placeholder' => 'Select one',
-            'choices' => $this->getPools(),
-            'constraints' => [
-                $this->getConstraints()->createConstraintNotBlank(),
-            ],
         ]);
-    }
 
-    /**
-     * @return array
-     */
-    protected function getPools()
-    {
-        $pools = [];
-        $poolResult = $this->discountQueryContainer->queryVoucherPool()->find();
-
-        if (!empty($poolResult)) {
-            foreach ($poolResult as $discountVoucherPoolEntity) {
-                $pools[$discountVoucherPoolEntity->getIdDiscountVoucherPool()] = $this->getDiscountVoucherPoolDisplayName($discountVoucherPoolEntity);
-            }
-        }
-
-        return $pools;
-    }
-
-    /**
-     * Set the values for fields
-     *
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        return [
-            static::FIELD_QUANTITY => ($this->isMultiple) ? static::MINIMUM_VOUCHERS_TO_GENERATE : static::ONE_VOUCHER,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getCodeLengthChoices()
-    {
-        $codeLengthChoices = [
-            0 => 'No additional random characters',
-            3 => 3,
-            4 => 4,
-            5 => 5,
-            6 => 6,
-            7 => 7,
-            8 => 8,
-            9 => 9,
-            10 => 10,
-        ];
-
-        return $codeLengthChoices;
-    }
-
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPoolEntity
-     *
-     * @return string
-     */
-    protected function getDiscountVoucherPoolDisplayName(SpyDiscountVoucherPool $discountVoucherPoolEntity)
-    {
-        $availableCalculatorPlugins = $this->discountConfig->getAvailableCalculatorPlugins();
-        $displayName = $discountVoucherPoolEntity->getName();
-
-        $discounts = [];
-        foreach ($discountVoucherPoolEntity->getDiscounts() as $discountEntity) {
-            $discountTransfer = new DiscountTransfer();
-            $discountTransfer->fromArray($discountEntity->toArray(), true);
-
-            /* @var DiscountCalculatorPluginInterface $calculator */
-            $calculator = $availableCalculatorPlugins[$discountEntity->getCalculatorPlugin()];
-
-            $discounts[] = $calculator->getFormattedAmount($discountTransfer);
-        }
-
-        if (!empty($discounts)) {
-            $displayName .= ' (' . implode(', ', $discounts) . ')';
-        }
-
-        return $displayName;
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'voucher';
+        return $this;
     }
 
 }

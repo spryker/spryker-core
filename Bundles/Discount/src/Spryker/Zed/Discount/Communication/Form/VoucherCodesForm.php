@@ -2,14 +2,12 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Generated\Shared\Transfer\VoucherCodesTransfer;
-use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer;
 use Spryker\Zed\Discount\DiscountConfig;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Zend\Filter\Word\CamelCaseToUnderscore;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class VoucherCodesForm extends AbstractRuleForm
 {
@@ -22,9 +20,6 @@ class VoucherCodesForm extends AbstractRuleForm
     const FIELD_AMOUNT = 'amount';
     const FIELD_VALID_FROM = 'valid_from';
     const FIELD_VALID_TO = 'valid_to';
-    const DATE_NOW = 'now';
-    const DATE_PERIOD_YEARS = 3;
-
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
     const FIELD_COLLECTOR_PLUGINS = 'collector_plugins';
     const FIELD_DECISION_RULES = 'decision_rules';
@@ -36,107 +31,35 @@ class VoucherCodesForm extends AbstractRuleForm
     protected $availablePoolCategories;
 
     /**
-     * @var \Spryker\Zed\Discount\DiscountConfig
+     * @var DiscountConfig
      */
     protected $discountConfig;
 
     /**
-     * @var \Zend\Filter\Word\CamelCaseToUnderscore
+     * @var DataTransformerInterface
      */
-    protected $camelCaseToUnderscore;
-
-    /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
-     */
-    protected $discountQueryContainer;
+    protected $decisionRulesFormTransformer;
 
     /**
      * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
-     * @param \Zend\Filter\Word\CamelCaseToUnderscore $camelCaseToUnderscore
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
+     * @param DataTransformerInterface $decisionRulesFormTransformer
      */
     public function __construct(
         DiscountConfig $discountConfig,
-        CamelCaseToUnderscore $camelCaseToUnderscore,
-        DiscountQueryContainer $discountQueryContainer
+        DataTransformerInterface $decisionRulesFormTransformer
     ) {
         parent::__construct($discountConfig);
 
         $this->discountConfig = $discountConfig;
-        $this->camelCaseToUnderscore = $camelCaseToUnderscore;
-        $this->discountQueryContainer = $discountQueryContainer;
+        $this->decisionRulesFormTransformer = $decisionRulesFormTransformer;
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function populateFormFields()
+    public function getName()
     {
-        $idPool = $this->getRequest()->query->getInt(DiscountConstants::PARAM_ID_POOL);
-
-        if ($idPool > 0) {
-            $voucherCodesTransfer = $this->getVoucherCodesTransfer($idPool);
-
-            return $voucherCodesTransfer->toArray();
-        }
-
-        return [
-            self::FIELD_VALID_FROM => new \DateTime('now'),
-            self::FIELD_VALID_TO => new \DateTime('now'),
-            'decision_rules' => [
-                'rule_1' => [
-                    'value' => '',
-                    'rules' => '',
-                ],
-            ],
-            'collector_plugins' => [
-                'plugin_1' => [
-                    'collector_plugin' => '',
-                    'value' => '',
-                ],
-            ],
-            'group' => [],
-        ];
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
-    }
-
-    /**
-     * @param int $idPool
-     *
-     * @return \Spryker\Shared\Transfer\AbstractTransfer
-     */
-    protected function getVoucherCodesTransfer($idPool)
-    {
-        $discountVoucherPoolEntity = $this->discountQueryContainer->queryVoucherCodeByIdVoucherCode($idPool)->findOne();
-
-        $discountEntity = $this->discountQueryContainer
-            ->queryDiscount()
-            ->filterByFkDiscountVoucherPool($idPool)
-            ->findOne();
-
-        $decisionRuleEntities = $discountEntity->getDecisionRules();
-        $discountCollectorEntities = $discountEntity->getDiscountCollectors();
-        $discountVoucherPool = $discountVoucherPoolEntity->toArray();
-        $discountVoucherPool[CartRuleForm::FIELD_COLLECTOR_PLUGINS] = $discountCollectorEntities->toArray();
-
-        $voucherCodesTransfer = new VoucherCodesTransfer();
-        $voucherCodesTransfer->fromArray($discountVoucherPool, true);
-
-        $voucherCodesTransfer->setDecisionRules($decisionRuleEntities->toArray());
-        $voucherCodesTransfer->setCalculatorPlugin($discountEntity->getCalculatorPlugin());
-
-        $voucherCodesTransfer->setIsPrivileged((bool) $discountEntity->getIsPrivileged());
-        $voucherCodesTransfer->setValidFrom($discountEntity->getValidFrom());
-        $voucherCodesTransfer->setValidTo($discountEntity->getValidTo());
-
-        return $voucherCodesTransfer;
+        return 'voucher_codes';
     }
 
     /**
@@ -147,79 +70,216 @@ class VoucherCodesForm extends AbstractRuleForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(self::FIELD_NAME, 'text', [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->add(self::FIELD_VOUCHER_POOL_CATEGORY, new AutosuggestType(), [
-                'label' => 'Pool Category',
-                'url' => '/discount/pool/category-suggest',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->add(self::FIELD_DESCRIPTION, 'textarea')
-            ->add(self::FIELD_AMOUNT, 'text', [
-                'label' => 'Amount (Please enter a valid amount. Eg. 5 or 5.55)',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                    $this->getConstraints()->createConstraintGreaterThan([
-                        'value' => 0,
-                    ]),
-                ],
-            ])
-            ->add(self::FIELD_VALID_FROM, 'date', [
-                'label' => 'Valid From',
-            ])
-            ->add(self::FIELD_VALID_TO, 'date', [
-                'label' => 'Valid Until',
-            ])
-            ->add(self::FIELD_IS_PRIVILEGED, 'checkbox', [
-                'label' => 'Is Combinable with other discounts',
-            ])
-            ->add(self::FIELD_IS_ACTIVE, 'checkbox', [
-                'label' => 'Active',
-            ])
-            ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-                'type' => new CollectorPluginForm($this->discountConfig),
-                'label' => null,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'allow_extra_fields' => true,
-            ])
-            ->add(self::FIELD_COLLECTOR_LOGICAL_OPERATOR, 'choice', [
-                'label' => 'Logical operator for combining multiple collectors',
-                'choices' => $this->getCollectorLogicalOperators(),
-                'required' => true,
-            ])
-            ->add(self::FIELD_DECISION_RULES, 'collection', [
-                'type' => new DecisionRuleForm($this->discountConfig),
-                'label' => null,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'allow_extra_fields' => true,
-            ])
-            ->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
-                'label' => 'Calculator Plugin',
-                'choices' => $this->getAvailableCalculatorPlugins(),
-                'empty_data' => null,
-                'required' => false,
-                'placeholder' => false,
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->addModelTransformer(new DecisionRulesFormTransformer($this->discountConfig, $this->camelCaseToUnderscore));
+        $this
+            ->addNameField($builder)
+            ->addVoucherPoolCategoryField($builder)
+            ->addDescriptionField($builder)
+            ->addAmountField($builder)
+            ->addValidFromField($builder)
+            ->addValidToField($builder)
+            ->addIsPrivilegedField($builder)
+            ->addIsActiveField($builder)
+            ->addCollectorPluginsField($builder)
+            ->addCollectorLogicalOperatorField($builder)
+            ->addDecisionRulesField($builder)
+            ->addCalculatorPluginField($builder);
+
+        $builder->addModelTransformer($this->decisionRulesFormTransformer);
     }
 
     /**
-     * @return string
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
      */
-    public function getName()
+    protected function addNameField(FormBuilderInterface $builder)
     {
-        return 'voucher_codes';
+        $builder->add(self::FIELD_NAME, 'text', [
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addVoucherPoolCategoryField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_VOUCHER_POOL_CATEGORY, new AutosuggestType(), [
+            'label' => 'Pool Category',
+            'url' => '/discount/pool/category-suggest',
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addIsActiveField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox', [
+            'label' => 'Active',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addIsPrivilegedField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_IS_PRIVILEGED, 'checkbox', [
+            'label' => 'Is Combinable with other discounts',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addDescriptionField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_DESCRIPTION, 'textarea');
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addAmountField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_AMOUNT, 'text', [
+            'label' => 'Amount (Please enter a valid amount. Eg. 5 or 5.55)',
+            'constraints' => [
+                new NotBlank(),
+                new GreaterThan([
+                    'value' => 0,
+                ]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addValidFromField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_VALID_FROM, 'date', [
+            'label' => 'Valid From',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addValidToField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_VALID_TO, 'date', [
+            'label' => 'Valid Until',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCalculatorPluginField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
+            'label' => 'Calculator Plugin',
+            'choices' => $this->getAvailableCalculatorPlugins(),
+            'empty_data' => null,
+            'required' => false,
+            'placeholder' => false,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCollectorPluginsField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
+            'type' => new CollectorPluginForm($this->discountConfig),
+            'label' => null,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'allow_extra_fields' => true,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addDecisionRulesField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_DECISION_RULES, 'collection', [
+            'type' => new DecisionRuleForm($this->discountConfig),
+            'label' => null,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'allow_extra_fields' => true,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCollectorLogicalOperatorField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_COLLECTOR_LOGICAL_OPERATOR, 'choice', [
+            'label' => 'Logical operator for combining multiple collectors',
+            'choices' => $this->getCollectorLogicalOperators(),
+            'required' => true,
+        ]);
+
+        return $this;
     }
 
 }

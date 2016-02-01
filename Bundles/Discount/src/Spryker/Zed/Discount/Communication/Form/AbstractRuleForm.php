@@ -3,9 +3,9 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Zed\Discount\DiscountConfig;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Form\AbstractType;
 
-abstract class AbstractRuleForm extends AbstractForm
+abstract class AbstractRuleForm extends AbstractType
 {
 
     const DECISION_RULES_PREFIX = 'PLUGIN_DECISION_RULE_';

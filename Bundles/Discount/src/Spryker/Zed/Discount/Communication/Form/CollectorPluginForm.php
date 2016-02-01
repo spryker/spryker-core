@@ -3,6 +3,7 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Required;
 
 class CollectorPluginForm extends AbstractRuleForm
 {
@@ -13,19 +14,11 @@ class CollectorPluginForm extends AbstractRuleForm
     const FIELD_REMOVE = 'remove';
 
     /**
-     * @return array
+     * @return string
      */
-    public function populateFormFields()
+    public function getName()
     {
-        return [];
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
+        return 'collector_plugin';
     }
 
     /**
@@ -36,33 +29,72 @@ class CollectorPluginForm extends AbstractRuleForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(self::FIELD_ID_DISCOUNT_COLLECTOR, 'hidden')
-            ->add(self::FIELD_COLLECTOR_PLUGIN, 'choice', [
-                'label' => 'Collector Plugin',
-                'multiple' => false,
-                'choices' => $this->getAvailableCollectorPlugins(),
-                'constraints' => [
-                    $this->getConstraints()->createConstraintRequired(),
-                ],
-            ])
-            ->add(self::FIELD_VALUE, 'text', [
-                'label' => 'Value',
-            ]);
+        $this
+            ->addIdDiscountCollectorField($builder)
+            ->addCollectorPluginField($builder)
+            ->addValueField($builder)
+            ->addRemoveButton($builder);
+    }
 
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addIdDiscountCollectorField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_DISCOUNT_COLLECTOR, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCollectorPluginField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_COLLECTOR_PLUGIN, 'choice', [
+            'label' => 'Collector Plugin',
+            'multiple' => false,
+            'choices' => $this->getAvailableCollectorPlugins(),
+            'constraints' => [
+                new Required(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addValueField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_VALUE, 'text', [
+            'label' => 'Value',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addRemoveButton(FormBuilderInterface $builder)
+    {
         $builder->add(self::FIELD_REMOVE, 'button', [
             'attr' => [
                 'class' => 'btn btn-xs btn-danger remove-form-collection',
             ],
         ]);
-    }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'collector_plugin';
+        return $this;
     }
 
 }

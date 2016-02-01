@@ -3,6 +3,7 @@
 namespace Spryker\Zed\Discount\Communication\Controller;
 
 use Generated\Shared\Transfer\CartRuleTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,8 +52,10 @@ class CartRuleController extends AbstractController
     {
         $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
 
-        $form = $this->getFactory()->createDecisionRuleForm();
-        $form->handleRequest($request);
+        $form = $this
+            ->getFactory()
+            ->createDecisionRuleForm()
+            ->handleRequest($request);
 
         return [
             'form' => $form->createView(),
@@ -69,8 +72,10 @@ class CartRuleController extends AbstractController
     {
         $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
 
-        $form = $this->getFactory()->createCollectorPluginForm();
-        $form->handleRequest($request);
+        $form = $this
+            ->getFactory()
+            ->createCollectorPluginForm()
+            ->handleRequest($request);
 
         return [
             'form' => $form->createView(),
@@ -85,8 +90,14 @@ class CartRuleController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $form = $this->getFactory()->createCartRuleForm($this->getFacade());
-        $form->handleRequest($request);
+        $dataProvider = $this->getFactory()->createCartRuleFormDataProvider($this->getFacade());
+        $form = $this
+            ->getFactory()
+            ->createCartRuleForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
@@ -109,8 +120,16 @@ class CartRuleController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $form = $this->getFactory()->createCartRuleForm($this->getFacade());
-        $form->handleRequest($request);
+        $idDiscount = $request->query->getInt(DiscountConstants::PARAM_ID_DISCOUNT);
+
+        $dataProvider = $this->getFactory()->createCartRuleFormDataProvider($this->getFacade());
+        $form = $this
+            ->getFactory()
+            ->createCartRuleForm(
+                $dataProvider->getData($idDiscount),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
