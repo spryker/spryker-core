@@ -64,9 +64,9 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractFactory
+     * @return \Spryker\Zed\Kernel\AbstractFactory
      */
     private function resolveFactory()
     {
@@ -74,7 +74,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
-     * @return FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {
@@ -82,7 +82,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
-     * @return ConnectionInterface
+     * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     public function getConnection()
     {

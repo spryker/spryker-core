@@ -30,7 +30,7 @@ class CommentManager
     /**
      * @param CommentTransfer $commentTransfer
      *
-     * @return SpySalesOrderComment
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderComment
      */
     public function saveComment(CommentTransfer $commentTransfer)
     {

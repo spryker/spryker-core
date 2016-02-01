@@ -16,7 +16,7 @@ interface ItemInterface
      *
      * @throws \Exception
      *
-     * @return ItemSplitResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
     public function split($idSalesOrderItem, $quantityToSplit);
 

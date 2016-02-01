@@ -23,7 +23,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return TaxReaderInterface
+     * @return \Spryker\Zed\Tax\Business\Model\TaxReaderInterface
      */
     public function createReaderModel()
     {
@@ -33,7 +33,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TaxWriterInterface
+     * @return \Spryker\Zed\Tax\Business\Model\TaxWriterInterface
      */
     public function createWriterModel()
     {

@@ -19,7 +19,7 @@ class AuthMailConnectorCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getMailFacade() instead.
      *
-     * @return AuthMailConnectorToMailInterface
+     * @return \Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInterface
      */
     public function createMailFacade()
     {
@@ -29,7 +29,7 @@ class AuthMailConnectorCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return AuthMailConnectorToMailInterface
+     * @return \Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInterface
      */
     public function getMailFacade()
     {

@@ -77,7 +77,7 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     }
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getMessages()
     {
@@ -104,7 +104,7 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     }
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     protected function createFlashMessageTransfer()
     {

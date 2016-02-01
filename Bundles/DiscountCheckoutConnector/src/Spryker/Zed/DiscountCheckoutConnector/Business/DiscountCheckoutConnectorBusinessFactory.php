@@ -22,7 +22,7 @@ class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return DiscountOrderHydratorInterface
+     * @return \Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydratorInterface
      */
     public function createOrderHydrator()
     {
@@ -30,7 +30,7 @@ class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountSaverInterface
+     * @return \Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaverInterface
      */
     public function createDiscountSaver()
     {
@@ -43,7 +43,7 @@ class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getDiscountFacade() instead.
      *
-     * @return DiscountCheckoutConnectorToDiscountInterface
+     * @return \Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface
      */
     public function createDiscountFacade()
     {
@@ -53,7 +53,7 @@ class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountCheckoutConnectorToDiscountInterface
+     * @return \Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface
      */
     public function getDiscountFacade()
     {

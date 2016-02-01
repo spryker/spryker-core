@@ -56,7 +56,7 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addAction()
     {
@@ -70,7 +70,7 @@ class SandboxController extends AbstractController
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function triggerAction(Request $request)
     {
@@ -90,7 +90,7 @@ class SandboxController extends AbstractController
     /**
      * Create test order with 4 items
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -197,7 +197,7 @@ class SandboxController extends AbstractController
      * @param array $cities
      * @param SpyCountry $country
      *
-     * @return SpySalesOrderAddress
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
      */
     protected function saveTestAddress($cities, SpyCountry $country)
     {
@@ -216,7 +216,7 @@ class SandboxController extends AbstractController
     /**
      * @param SpySalesOrderAddress $address
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function saveTestOrder(SpySalesOrderAddress $address, SpyCustomer $customer)
     {
@@ -237,7 +237,7 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @return SpyOmsOrderProcess
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     protected function saveTestProcess()
     {
@@ -252,7 +252,7 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @return SpyOmsOrderItemState
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     protected function saveTestState()
     {
@@ -280,7 +280,7 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @return SpyCustomer
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
     protected function generateCustomer()
     {

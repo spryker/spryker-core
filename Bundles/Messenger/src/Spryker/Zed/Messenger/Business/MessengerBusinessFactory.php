@@ -22,7 +22,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return MessageTrayInterface
+     * @return \Spryker\Zed\Messenger\Business\Model\MessageTrayInterface
      */
     public function createMessageTray()
     {
@@ -35,7 +35,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return InMemoryMessageTray
+     * @return \Spryker\Zed\Messenger\Business\Model\InMemoryMessageTray
      */
     public function createInMemoryMessageTray()
     {
@@ -43,7 +43,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SessionMessageTray
+     * @return \Spryker\Zed\Messenger\Business\Model\SessionMessageTray
      */
     public function createSessionMessageTray()
     {
@@ -51,7 +51,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SessionInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     public function getSession()
     {
@@ -59,7 +59,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MessengerToGlossaryInterface
+     * @return \Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface
      */
     public function getGlossaryFacade()
     {

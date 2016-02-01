@@ -24,7 +24,7 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     /**
      * @param MessengerInterface $messenger
      *
-     * @return Install
+     * @return \Spryker\Zed\Country\Business\Internal\Install
      */
     public function createInstaller(MessengerInterface $messenger)
     {
@@ -71,7 +71,7 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string $filePath
      *
-     * @return CldrDataProviderInterface
+     * @return \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface
      */
     protected function createCldrDataProvider($filePath)
     {

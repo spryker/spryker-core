@@ -13,7 +13,7 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
 {
 
     /**
-     * @return SpySequenceNumberQuery
+     * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery
      */
     public function querySequenceNumber()
     {
@@ -31,7 +31,7 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
     /**
      * @param int $idMethod
      *
-     * @return SpySequenceNumberQuery
+     * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery
      */
     public function querySequenceNumberByIdSequenceNumber($idMethod)
     {

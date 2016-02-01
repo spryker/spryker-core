@@ -56,7 +56,7 @@ class RefundFacade extends AbstractFacade
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
@@ -68,7 +68,7 @@ class RefundFacade extends AbstractFacade
     /**
      * @param RefundTransfer $refundTransfer
      *
-     * @return RefundTransfer
+     * @return \Generated\Shared\Transfer\RefundTransfer
      */
     public function saveRefund(RefundTransfer $refundTransfer)
     {

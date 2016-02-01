@@ -33,7 +33,7 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return StreamHandler
+     * @return \Monolog\Handler\StreamHandler
      */
     protected function createStreamHandler()
     {

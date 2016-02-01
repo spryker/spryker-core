@@ -33,7 +33,7 @@ class NodeWriter implements NodeWriterInterface
     /**
      * @param NodeTransfer $categoryNode
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -52,8 +52,8 @@ class NodeWriter implements NodeWriterInterface
     /**
      * @param int $nodeId
      *
-     * @throws NodeNotFoundException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -74,7 +74,7 @@ class NodeWriter implements NodeWriterInterface
     /**
      * @param NodeTransfer $categoryNode
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

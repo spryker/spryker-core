@@ -41,7 +41,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
     /**
      * @param DataFetcherInterface $dataFetcher
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return array
      */

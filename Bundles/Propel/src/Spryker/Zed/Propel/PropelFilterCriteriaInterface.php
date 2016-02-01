@@ -12,7 +12,7 @@ interface PropelFilterCriteriaInterface
 {
 
     /**
-     * @return FilterTransfer
+     * @return \Generated\Shared\Transfer\FilterTransfer
      */
     public function getFilterTransfer();
 
@@ -22,7 +22,7 @@ interface PropelFilterCriteriaInterface
     public function setFilterTransfer(FilterTransfer $filterTransfer);
 
     /**
-     * @return Criteria
+     * @return \Propel\Runtime\ActiveQuery\Criteria
      */
     public function toCriteria();
 

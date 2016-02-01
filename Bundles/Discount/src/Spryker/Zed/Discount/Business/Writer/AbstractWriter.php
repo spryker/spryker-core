@@ -26,7 +26,7 @@ abstract class AbstractWriter
     }
 
     /**
-     * @return DiscountQueryContainer
+     * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
     protected function getQueryContainer()
     {

@@ -40,7 +40,7 @@ class CodeExists extends Constraint
     }
 
     /**
-     * @return DiscountQueryContainerInterface
+     * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     public function getQueryContainer()
     {

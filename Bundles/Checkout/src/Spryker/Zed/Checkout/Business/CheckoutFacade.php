@@ -19,7 +19,7 @@ class CheckoutFacade extends AbstractFacade
     /**
      * @param CheckoutRequestTransfer $checkoutRequest
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
     {

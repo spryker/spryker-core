@@ -18,7 +18,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
     /**
      * @param $idSalesOrder
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrderById($idSalesOrder)
     {
@@ -28,7 +28,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
     /**
      * @param $idShipmentMethod
      *
-     * @return SpyShipmentMethodQuery
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryShipmentOrderById($idShipmentMethod)
     {
@@ -36,7 +36,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
-     * @return SalesQueryContainerInterface
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected function getSalesQueryContainer()
     {
@@ -44,7 +44,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
-     * @return ShipmentQueryContainerInterface
+     * @return \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
     protected function getShipmentQueryContainer()
     {

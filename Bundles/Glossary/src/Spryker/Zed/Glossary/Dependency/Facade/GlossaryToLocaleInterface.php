@@ -16,14 +16,14 @@ interface GlossaryToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @throws MissingLocaleException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName);
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
 
@@ -35,9 +35,9 @@ interface GlossaryToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @throws LocaleExistsException
+     * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function createLocale($localeName);
 

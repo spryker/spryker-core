@@ -20,7 +20,7 @@ class OmsDiscountConnectorCommunicationFactory extends AbstractCommunicationFact
     /**
      * @deprecated Use getDiscountFacade() instead.
      *
-     * @return OmsDiscountConnectorToDiscountInterface
+     * @return \Spryker\Zed\OmsDiscountConnector\Dependency\Facade\OmsDiscountConnectorToDiscountInterface
      */
     public function createDiscountFacade()
     {
@@ -30,7 +30,7 @@ class OmsDiscountConnectorCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return OmsDiscountConnectorToDiscountInterface
+     * @return \Spryker\Zed\OmsDiscountConnector\Dependency\Facade\OmsDiscountConnectorToDiscountInterface
      */
     public function getDiscountFacade()
     {

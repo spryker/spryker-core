@@ -38,7 +38,7 @@ class AuthToUserBridge implements AuthToUserInterface
     /**
      * @param string $username
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username)
     {
@@ -54,7 +54,7 @@ class AuthToUserBridge implements AuthToUserInterface
     }
 
     /**
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser()
     {
@@ -85,7 +85,7 @@ class AuthToUserBridge implements AuthToUserInterface
     /**
      * @param UserTransfer $user
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function updateUser(UserTransfer $user)
     {
@@ -105,7 +105,7 @@ class AuthToUserBridge implements AuthToUserInterface
     /**
      * @param int $idUser
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserById($idUser)
     {

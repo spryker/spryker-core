@@ -19,7 +19,7 @@ class LogoutController extends AbstractController
 {
 
     /**
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction()
     {

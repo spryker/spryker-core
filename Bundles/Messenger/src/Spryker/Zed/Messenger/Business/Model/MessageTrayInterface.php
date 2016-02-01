@@ -36,7 +36,7 @@ interface MessageTrayInterface
     public function addErrorMessage(MessageTransfer $message);
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getMessages();
 

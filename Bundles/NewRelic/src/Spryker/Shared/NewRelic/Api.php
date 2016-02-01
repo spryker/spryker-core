@@ -286,7 +286,7 @@ class Api implements ApiInterface
     /**
      * @param array $params
      *
-     * @throws RecordDeploymentException
+     * @throws \Spryker\Shared\NewRelic\Exception\RecordDeploymentException
      *
      * @return self
      */

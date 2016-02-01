@@ -31,7 +31,7 @@ class TransferServer extends CoreTransferServer
     }
 
     /**
-     * @return ZedRequest
+     * @return \Spryker\Zed\ZedRequest\Business\Client\Request
      */
     public function getRequest()
     {

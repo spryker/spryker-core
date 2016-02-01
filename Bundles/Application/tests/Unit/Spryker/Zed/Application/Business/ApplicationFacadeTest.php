@@ -19,7 +19,7 @@ class ApplicationFacadeTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return ApplicationFacade
+     * @return \Spryker\Zed\Application\Business\ApplicationFacade
      */
     private function getFacade()
     {

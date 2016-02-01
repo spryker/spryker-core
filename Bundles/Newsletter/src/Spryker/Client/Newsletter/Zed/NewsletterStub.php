@@ -31,7 +31,7 @@ class NewsletterStub implements NewsletterStubInterface
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -41,7 +41,7 @@ class NewsletterStub implements NewsletterStubInterface
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -51,7 +51,7 @@ class NewsletterStub implements NewsletterStubInterface
     /**
      * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
@@ -61,7 +61,7 @@ class NewsletterStub implements NewsletterStubInterface
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -71,7 +71,7 @@ class NewsletterStub implements NewsletterStubInterface
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {

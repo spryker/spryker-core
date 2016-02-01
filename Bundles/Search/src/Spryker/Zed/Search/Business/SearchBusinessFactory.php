@@ -23,7 +23,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @param MessengerInterface $messenger
      *
-     * @return SearchInstaller
+     * @return \Spryker\Zed\Search\Business\Model\SearchInstaller
      */
     public function createSearchInstaller(MessengerInterface $messenger)
     {
@@ -34,7 +34,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Search
+     * @return \Spryker\Zed\Search\Business\Model\Search
      */
     public function createSearch()
     {

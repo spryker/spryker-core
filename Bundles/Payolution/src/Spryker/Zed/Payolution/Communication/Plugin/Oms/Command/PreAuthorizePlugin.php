@@ -40,7 +40,7 @@ class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfa
     /**
      * @param SpySalesOrder $orderEntity
      *
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     protected function getPaymentEntity(SpySalesOrder $orderEntity)
     {

@@ -18,50 +18,50 @@ interface SalesQueryContainerInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrderById($idSalesOrder);
 
     /**
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrder();
 
     /**
      * @var int
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByIdSalesOrder($idOrder);
 
     /**
      * @var int
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsWithState($idOrder);
 
     /**
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItem();
 
     /**
-     * @return SpySalesExpenseQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
      */
     public function querySalesExpense();
 
     /**
      * @param int $orderId
      *
-     * @return SpySalesExpenseQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
      */
     public function querySalesExpensesByOrderId($orderId);
 
     /**
      * @param int $idSalesOrderAddress
      *
-     * @return SpySalesOrderAddressQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
      */
     public function querySalesOrderAddressById($idSalesOrderAddress);
 
@@ -69,7 +69,7 @@ interface SalesQueryContainerInterface
      * @param $idCustomer
      * @param Criteria|null $criteria
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria=null);
 
@@ -77,7 +77,7 @@ interface SalesQueryContainerInterface
      * @param int $idSalesOrder
      * @param int $idCustomer
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrderDetails($idSalesOrder, $idCustomer);
 

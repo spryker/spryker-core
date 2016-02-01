@@ -22,7 +22,7 @@ interface OperationLocatorInterface
     /**
      * @param string $name
      *
-     * @return OperationInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Operation\OperationInterface
      */
     public function findOperationByName($name = 'CopyToField');
 

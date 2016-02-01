@@ -132,7 +132,7 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function getPriceDiscount()
     {
@@ -142,7 +142,7 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return CalculableContainer
+     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
@@ -152,7 +152,7 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function getItemWithFixtureData()
     {

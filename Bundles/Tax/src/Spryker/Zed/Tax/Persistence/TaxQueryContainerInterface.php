@@ -16,24 +16,24 @@ interface TaxQueryContainerInterface
     /**
      * @param int $id
      *
-     * @return SpyTaxRateQuery
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
      */
     public function queryTaxRate($id);
 
     /**
-     * @return SpyTaxRateQuery
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
      */
     public function queryAllTaxRates();
 
     /**
      * @param int $id
      *
-     * @return SpyTaxSetQuery
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     public function queryTaxSet($id);
 
     /**
-     * @return SpyTaxSetQuery
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     public function queryAllTaxSets();
 

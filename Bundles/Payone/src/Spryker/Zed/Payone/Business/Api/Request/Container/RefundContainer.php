@@ -170,7 +170,7 @@ class RefundContainer extends AbstractRequestContainer
     }
 
     /**
-     * @return TransactionContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     public function getInvoicing()
     {
@@ -190,7 +190,7 @@ class RefundContainer extends AbstractRequestContainer
     }
 
     /**
-     * @return BankAccountContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer
      */
     public function getPaymentMethod()
     {

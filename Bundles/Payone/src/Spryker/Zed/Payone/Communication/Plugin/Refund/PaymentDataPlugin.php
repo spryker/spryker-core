@@ -23,7 +23,7 @@ class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInter
     /**
      * @param int $idOrder
      *
-     * @return PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
     public function getPaymentData($idOrder)
     {

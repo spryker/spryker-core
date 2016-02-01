@@ -58,7 +58,7 @@ class AbstractBundleDependencyProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return AbstractBundleDependencyProvider
+     * @return \Spryker\Zed\Kernel\AbstractBundleDependencyProvider
      */
     private function getAbstractBundleDependencyProviderMock()
     {

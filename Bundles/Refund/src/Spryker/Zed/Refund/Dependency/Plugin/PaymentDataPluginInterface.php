@@ -15,7 +15,7 @@ interface PaymentDataPluginInterface
     /**
      * @param int $idOrder
      *
-     * @return PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
     public function getPaymentData($idOrder);
 

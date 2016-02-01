@@ -45,7 +45,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param string $code
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function isVoucherUsable($code)
     {
@@ -56,7 +56,7 @@ class DiscountFacade extends AbstractFacade
      * @param CalculableInterface $container
      * @param DecisionRule $decisionRule
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function isMinimumCartSubtotalReached(CalculableInterface $container, DecisionRule $decisionRule)
     {
@@ -101,7 +101,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param VoucherTransfer $voucherTransfer
      *
-     * @return VoucherCreateInfoTransfer
+     * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
     public function createVoucherCodes(VoucherTransfer $voucherTransfer)
     {
@@ -111,7 +111,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param VoucherTransfer $voucherTransfer
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function createVoucherCode(VoucherTransfer $voucherTransfer)
     {
@@ -121,7 +121,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param VoucherCodesTransfer $voucherCodesTransfer
      *
-     * @return VoucherPoolTransfer
+     * @return \Generated\Shared\Transfer\VoucherPoolTransfer
      */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
     {
@@ -139,7 +139,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param DiscountTransfer $discountTransfer
      *
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     public function createDiscount(DiscountTransfer $discountTransfer)
     {
@@ -149,7 +149,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param DiscountTransfer $discountTransfer
      *
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     public function updateDiscount(DiscountTransfer $discountTransfer)
     {
@@ -169,7 +169,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param DecisionRuleTransfer $decisionRuleTransfer
      *
-     * @return DecisionRule
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
     public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
     {
@@ -179,7 +179,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param CartRuleTransfer $cartRuleFormTransfer
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     public function saveCartRules(CartRuleTransfer $cartRuleFormTransfer)
     {
@@ -189,7 +189,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      *
-     * @return SpyDiscountDecisionRule
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
     public function createDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
@@ -211,7 +211,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      *
-     * @return SpyDiscountDecisionRule
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
     public function updateDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
@@ -221,7 +221,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param VoucherTransfer $discountVoucherTransfer
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function createDiscountVoucher(VoucherTransfer $discountVoucherTransfer)
     {
@@ -231,7 +231,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param VoucherTransfer $discountVoucherTransfer
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function updateDiscountVoucher(VoucherTransfer $discountVoucherTransfer)
     {
@@ -241,7 +241,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param VoucherPoolTransfer $discountVoucherPoolTransfer
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function createDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer)
     {
@@ -251,7 +251,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param VoucherPoolTransfer $discountVoucherPoolTransfer
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function updateDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer)
     {
@@ -261,7 +261,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      *
-     * @return SpyDiscountVoucherPoolCategory
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
      */
     public function createDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
@@ -272,7 +272,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      *
-     * @return SpyDiscountVoucherPoolCategory
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
      */
     public function updateDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
@@ -283,7 +283,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param string $poolCategoryName
      *
-     * @return SpyDiscountVoucherPoolCategory
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
      */
     public function getOrCreateDiscountVoucherPoolCategoryByName($poolCategoryName)
     {
@@ -294,7 +294,7 @@ class DiscountFacade extends AbstractFacade
     /**
      * @param string $pluginName
      *
-     * @return DiscountCalculatorPluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
     public function getCalculatorPluginByName($pluginName)
     {

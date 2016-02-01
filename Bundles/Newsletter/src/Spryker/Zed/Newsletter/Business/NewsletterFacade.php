@@ -21,7 +21,7 @@ class NewsletterFacade extends AbstractFacade
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -37,7 +37,7 @@ class NewsletterFacade extends AbstractFacade
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -53,7 +53,7 @@ class NewsletterFacade extends AbstractFacade
     /**
      * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
@@ -65,7 +65,7 @@ class NewsletterFacade extends AbstractFacade
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {
@@ -79,7 +79,7 @@ class NewsletterFacade extends AbstractFacade
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {

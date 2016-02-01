@@ -112,7 +112,7 @@ class Installer implements InstallerInterface
     /**
      * @param array $role
      *
-     * @throws GroupNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
      * @return void
      */
@@ -128,7 +128,7 @@ class Installer implements InstallerInterface
     }
 
     /**
-     * @throws RoleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException
      *
      * @return void
      */
@@ -150,8 +150,8 @@ class Installer implements InstallerInterface
     }
 
     /**
-     * @throws GroupNotFoundException
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
      * @return void
      */

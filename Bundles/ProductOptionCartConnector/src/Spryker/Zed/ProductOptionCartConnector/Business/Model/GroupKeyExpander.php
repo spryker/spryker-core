@@ -15,7 +15,7 @@ class GroupKeyExpander
     /**
      * @param ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function expand(ChangeTransfer $change)
     {

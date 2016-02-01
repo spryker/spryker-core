@@ -32,7 +32,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
@@ -47,7 +47,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -60,7 +60,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function reAuthorizePayment($idPayment)
     {
@@ -73,7 +73,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function revertPayment($idPayment)
     {
@@ -86,7 +86,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function capturePayment($idPayment)
     {
@@ -99,7 +99,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function refundPayment($idPayment)
     {
@@ -112,7 +112,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
     {

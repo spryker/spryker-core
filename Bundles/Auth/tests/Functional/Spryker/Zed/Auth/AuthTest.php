@@ -60,7 +60,7 @@ class AuthTest extends Test
     /**
      * @param string[] $data
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     private function mockAddUser($data)
     {

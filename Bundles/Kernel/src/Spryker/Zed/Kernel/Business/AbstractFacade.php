@@ -42,7 +42,7 @@ abstract class AbstractFacade
     }
 
     /**
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
      * @return AbstractBusinessFactory
      */
@@ -52,7 +52,7 @@ abstract class AbstractFacade
     }
 
     /**
-     * @return FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {

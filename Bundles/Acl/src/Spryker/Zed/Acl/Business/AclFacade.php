@@ -35,7 +35,7 @@ class AclFacade extends AbstractFacade
      * @param string $groupName
      * @param RolesTransfer $rolesTransfer
      *
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function addGroup($groupName, RolesTransfer $rolesTransfer)
     {
@@ -54,7 +54,7 @@ class AclFacade extends AbstractFacade
      * @param GroupTransfer $transfer
      * @param RolesTransfer $rolesTransfer
      *
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function updateGroup(GroupTransfer $transfer, RolesTransfer $rolesTransfer)
     {
@@ -72,7 +72,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function getGroup($id)
     {
@@ -84,7 +84,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param string $name
      *
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function getGroupByName($name)
     {
@@ -94,7 +94,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @return GroupsTransfer
+     * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getAllGroups()
     {
@@ -112,7 +112,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser()
     {
@@ -134,7 +134,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getRoleById($id)
     {
@@ -146,7 +146,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param string $name
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getRoleByName($name)
     {
@@ -158,7 +158,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param string $name
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function addRole($name)
     {
@@ -168,7 +168,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param RoleTransfer $roleTransfer
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function updateRole(RoleTransfer $roleTransfer)
     {
@@ -178,7 +178,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $id
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function getRule($id)
     {
@@ -230,7 +230,7 @@ class AclFacade extends AbstractFacade
      *
      * @param int $idUser
      *
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function getUserGroup($idUser)
     {
@@ -242,7 +242,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idUser
      *
-     * @return GroupsTransfer
+     * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getUserGroups($idUser)
     {
@@ -265,7 +265,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param RuleTransfer $ruleTransfer
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function addRule(RuleTransfer $ruleTransfer)
     {
@@ -277,7 +277,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idGroup
      *
-     * @return RolesTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getGroupRoles($idGroup)
     {
@@ -289,7 +289,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idGroup
      *
-     * @return RulesTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function getGroupRules($idGroup)
     {
@@ -301,7 +301,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idRole
      *
-     * @return RulesTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function getRoleRules($idRole)
     {
@@ -328,7 +328,7 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idUser
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getUserRoles($idUser)
     {

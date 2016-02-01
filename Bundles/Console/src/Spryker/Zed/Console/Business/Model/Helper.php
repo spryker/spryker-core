@@ -216,12 +216,12 @@ trait Helper
     }
 
     /**
-     * @return Application
+     * @return \Silex\Application
      */
     abstract protected function getApplication();
 
     /**
-     * @return HelperSet
+     * @return \Symfony\Component\Console\Helper\HelperSet
      */
     abstract protected function getHelperSet();
 

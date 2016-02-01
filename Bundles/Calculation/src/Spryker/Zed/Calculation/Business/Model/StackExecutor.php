@@ -45,7 +45,7 @@ class StackExecutor
      * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     public function recalculateTotals(
         array $calculatorStack,

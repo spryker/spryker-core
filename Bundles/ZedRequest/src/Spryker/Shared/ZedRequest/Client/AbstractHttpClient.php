@@ -105,7 +105,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param null $timeoutInSeconds
      * @param bool $isBackgroundRequest
      *
-     * @throws RequestException
+     * @throws \Spryker\Shared\ZedRequest\Client\Exception\RequestException
      *
      * @return ResponseInterface
      */
@@ -172,7 +172,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param RequestInterface $requestTransfer
      * @param null $timeoutInSeconds
      *
-     * @return EntityEnclosingRequest
+     * @return \Guzzle\Http\Message\EntityEnclosingRequest
      */
     protected function createGuzzleRequest($pathInfo, RequestInterface $requestTransfer, $timeoutInSeconds = null)
     {
@@ -245,9 +245,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param EntityEnclosingRequest $request
      *
-     * @throws InvalidZedResponseException
+     * @throws \Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException
      *
-     * @return Response
+     * @return \Guzzle\Http\Message\Response
      */
     protected function sendRequest(EntityEnclosingRequest $request)
     {
@@ -262,9 +262,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param Response $response
      *
-     * @throws InvalidZedResponseException
+     * @throws \Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException
      *
-     * @return ZedResponse
+     * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     protected function getTransferFromResponse(Response $response)
     {
@@ -362,7 +362,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @return Request
+     * @return \Spryker\Client\ZedRequest\Client\Request
      */
     private function getRequest()
     {

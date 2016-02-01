@@ -89,7 +89,7 @@ class DiscountSaver implements DiscountSaverInterface
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -109,7 +109,7 @@ class DiscountSaver implements DiscountSaverInterface
     /**
      * @param DiscountTransfer $discountTransfer
      *
-     * @return SpySalesDiscount
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
      */
     protected function createSalesDiscountEntity(DiscountTransfer $discountTransfer)
     {
@@ -136,7 +136,7 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @return SpySalesDiscount
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
      */
     protected function getSalesDiscountEntity()
     {
@@ -146,7 +146,7 @@ class DiscountSaver implements DiscountSaverInterface
     /**
      * @param SpySalesDiscount $salesDiscountEntity
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -197,7 +197,7 @@ class DiscountSaver implements DiscountSaverInterface
     /**
      * @param SpySalesDiscountCode $salesDiscountCodeEntity
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -209,7 +209,7 @@ class DiscountSaver implements DiscountSaverInterface
     /**
      * @param string $code
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     protected function getDiscountVoucherEntityByCode($code)
     {
@@ -217,7 +217,7 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @return SpySalesDiscountCode
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountCode
      */
     protected function getSalesDiscountCodeEntity()
     {

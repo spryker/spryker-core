@@ -30,7 +30,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idLocale
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryNodeWithDirectParent($idLocale)
     {
@@ -79,7 +79,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idNode
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryNodeById($idNode)
     {
@@ -89,7 +89,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idNode
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryFirstLevelChildren($idNode)
     {
@@ -102,7 +102,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param int $idCategory
      * @param int $idParentNode
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
     {
@@ -115,7 +115,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
-     * @return SpyCategoryAttributeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
     public function queryRootNodes()
     {
@@ -145,7 +145,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param int $idNode
      * @param int $idLocale
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryFirstLevelChildrenByIdLocale($idNode, $idLocale)
     {
@@ -174,7 +174,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idNode
      *
-     * @return SpyCategoryClosureTableQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
     public function queryClosureTableByNodeId($idNode)
     {
@@ -192,9 +192,9 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idNode
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyCategoryClosureTableQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
     public function queryClosureTableParentEntries($idNode)
     {
@@ -270,7 +270,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param bool $onlyOneLevel
      * @param bool $excludeStartNode
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryChildren($idNode, $idLocale, $onlyOneLevel = true, $excludeStartNode = true)
     {
@@ -310,9 +310,9 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false)
     {
@@ -358,7 +358,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param int $idParentNode
      * @param bool $excludeRoot
      *
-     * @return SpyCategoryClosureTableQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
     public function getChildrenPath($idParentNode, $excludeRoot = true)
     {
@@ -379,7 +379,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param int $idLocale
      * @param bool $excludeRoot
      *
-     * @return SpyCategoryClosureTableQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
     public function getParentPath($idChildNode, $idLocale, $excludeRoot = true)
     {
@@ -405,7 +405,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryRootNode()
     {
@@ -417,7 +417,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idNode
      *
-     * @return SpyCategoryClosureTableQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
     public function queryDescendant($idNode)
     {
@@ -427,7 +427,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryAttributeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
     public function queryAttributeByCategoryId($idCategory)
     {
@@ -437,7 +437,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryAllNodesByCategoryId($idCategory)
     {
@@ -447,7 +447,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryMainNodesByCategoryId($idCategory)
     {
@@ -457,7 +457,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryNotMainNodesByCategoryId($idCategory)
     {
@@ -468,7 +468,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param $idCategory
      * @param mixed $isMain true|false|null
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     protected function queryNodesByCategoryId($idCategory, $isMain)
     {
@@ -485,7 +485,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     public function queryCategoryById($idCategory)
     {
@@ -495,7 +495,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param $idNode
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryNodeByNodeId($idNode)
     {
@@ -505,7 +505,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idLocale
      *
-     * @return SpyCategoryQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     public function queryCategory($idLocale)
     {
@@ -527,7 +527,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param int $idCategory
      * @param int $idLocale
      *
-     * @return SpyCategoryAttributeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
     public function queryAttributeByCategoryIdAndLocale($idCategory, $idLocale)
     {
@@ -542,9 +542,9 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param string $name
      * @param int $idLocale
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyCategoryAttributeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
     public function queryCategoryAttributesByName($name, $idLocale)
     {
@@ -556,9 +556,9 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idLocale
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryNode($idLocale)
     {
@@ -581,7 +581,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param string $fieldIdentifier
      * @param string $leftTableAlias
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinCategoryQueryWithChildrenCategories(
         ModelCriteria $expandableQuery,
@@ -614,9 +614,9 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinCategoryQueryWithParentCategories(
         ModelCriteria $expandableQuery,
@@ -680,7 +680,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param ModelCriteria $expandableQuery
      * @param string $leftAlias
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinCategoryQueryWithUrls(
         ModelCriteria $expandableQuery,
@@ -715,7 +715,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinLocalizedRelatedCategoryQueryWithAttributes(
         ModelCriteria $expandableQuery,
@@ -750,9 +750,9 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param string $relationTableAlias
      * @param string $fieldIdentifier
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinRelatedCategoryQueryWithUrls(
         ModelCriteria $expandableQuery,
@@ -786,7 +786,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param ModelCriteria $expandableQuery
      * @param string $tableAlias
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function selectCategoryAttributeColumns(
         ModelCriteria $expandableQuery,
@@ -820,9 +820,9 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param string $categoryName
      * @param int $idLocale
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryNodeByCategoryName($categoryName, $idLocale)
     {
@@ -841,7 +841,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param string $categoryKey
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryNodeByCategoryKey($categoryKey)
     {
@@ -856,7 +856,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idCategoryNode
      *
-     * @return SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlByIdCategoryNode($idCategoryNode)
     {
@@ -870,7 +870,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param int $idParentNode
      * @param int $idLocale
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function getCategoryNodesWithOrder($idParentNode, $idLocale)
     {

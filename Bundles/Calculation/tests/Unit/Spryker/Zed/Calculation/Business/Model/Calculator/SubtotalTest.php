@@ -74,7 +74,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return CalculableContainer
+     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
@@ -84,7 +84,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
@@ -94,7 +94,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     protected function getTotals()
     {

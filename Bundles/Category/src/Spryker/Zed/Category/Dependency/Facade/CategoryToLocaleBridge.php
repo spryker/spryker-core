@@ -27,7 +27,7 @@ class CategoryToLocaleBridge implements CategoryToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {
@@ -37,7 +37,7 @@ class CategoryToLocaleBridge implements CategoryToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)
     {

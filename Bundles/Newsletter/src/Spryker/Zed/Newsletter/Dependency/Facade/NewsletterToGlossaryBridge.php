@@ -41,7 +41,7 @@ class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
      * @param string $keyName
      * @param LocaleTransfer $locale
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function getTranslation($keyName, LocaleTransfer $locale)
     {

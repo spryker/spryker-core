@@ -15,14 +15,14 @@ interface BlockManagerInterface
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function saveBlock(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function saveBlockAndTouch(CmsBlockTransfer $cmsBlockTransfer);
 
@@ -36,7 +36,7 @@ interface BlockManagerInterface
     /**
      * @param SpyCmsBlock $blockEntity
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function convertBlockEntityToTransfer(SpyCmsBlock $blockEntity);
 

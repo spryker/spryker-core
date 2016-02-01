@@ -57,7 +57,7 @@ class Method
     /**
      * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
-     * @return ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
@@ -95,7 +95,7 @@ class Method
     /**
      * @param $idMethod
      *
-     * @return ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function getShipmentMethodTransferById($idMethod)
     {

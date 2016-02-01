@@ -43,9 +43,9 @@ class Role implements RoleInterface
     /**
      * @param string $name
      *
-     * @throws RoleNameExistsException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function addRole($name)
     {
@@ -60,10 +60,10 @@ class Role implements RoleInterface
     /**
      * @param RoleTransfer $roleTransfer
      *
-     * @throws RoleNameExistsException
-     * @throws RootNodeModificationException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RootNodeModificationException
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function save(RoleTransfer $roleTransfer)
     {
@@ -117,7 +117,7 @@ class Role implements RoleInterface
     /**
      * @param int $idUser
      *
-     * @return RolesTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getUserRoles($idUser)
     {
@@ -148,9 +148,9 @@ class Role implements RoleInterface
     /**
      * @param int $idGroup
      *
-     * @throws GroupNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
-     * @return RolesTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getGroupRoles($idGroup)
     {
@@ -171,9 +171,9 @@ class Role implements RoleInterface
     /**
      * @param int $id
      *
-     * @throws EmptyEntityException
+     * @throws \Spryker\Zed\Acl\Business\Exception\EmptyEntityException
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getRoleById($id)
     {
@@ -192,7 +192,7 @@ class Role implements RoleInterface
     /**
      * @param int $idRole
      *
-     * @throws RoleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException
      *
      * @return bool
      */
@@ -213,7 +213,7 @@ class Role implements RoleInterface
     /**
      * @param string $name
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getByName($name)
     {

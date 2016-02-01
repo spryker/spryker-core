@@ -25,7 +25,7 @@ class SalesFacade extends AbstractFacade
     /**
      * @param CommentTransfer $commentTransfer
      *
-     * @return CommentTransfer
+     * @return \Generated\Shared\Transfer\CommentTransfer
      */
     public function saveComment(CommentTransfer $commentTransfer)
     {
@@ -73,7 +73,7 @@ class SalesFacade extends AbstractFacade
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
@@ -85,7 +85,7 @@ class SalesFacade extends AbstractFacade
     /**
      * @param OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function saveOrder(OrderTransfer $orderTransfer)
     {
@@ -98,7 +98,7 @@ class SalesFacade extends AbstractFacade
      * @param int $idSalesOrderItem
      * @param int $quantity
      *
-     * @return ItemSplitResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
     public function splitSalesOrderItem($idSalesOrderItem, $quantity)
     {
@@ -122,7 +122,7 @@ class SalesFacade extends AbstractFacade
      * @param OrderTransfer $orderTransfer
      * @param int $idOrder
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     public function updateOrderCustomer(OrderTransfer $orderTransfer, $idOrder)
     {
@@ -159,7 +159,7 @@ class SalesFacade extends AbstractFacade
     /**
      * @param OrderListTransfer $orderListTransfer
      *
-     * @return OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
@@ -171,7 +171,7 @@ class SalesFacade extends AbstractFacade
     /**
      * @param OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {

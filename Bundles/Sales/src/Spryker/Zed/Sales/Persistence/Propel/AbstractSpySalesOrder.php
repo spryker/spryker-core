@@ -52,7 +52,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     }
 
     /**
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     public function getSpyPaymentPayolution()
     {

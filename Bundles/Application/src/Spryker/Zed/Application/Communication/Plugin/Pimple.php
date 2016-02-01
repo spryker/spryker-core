@@ -34,7 +34,7 @@ class Pimple extends AbstractPlugin
     }
 
     /**
-     * @return Application
+     * @return \Spryker\Shared\Application\Communication\Application
      */
     public function getApplication()
     {

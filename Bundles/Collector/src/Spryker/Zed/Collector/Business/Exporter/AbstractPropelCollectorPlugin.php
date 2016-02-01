@@ -125,7 +125,7 @@ abstract class AbstractPropelCollectorPlugin
      * @param SpyTouchQuery $baseQuery
      * @param LocaleTransfer $locale
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     abstract protected function createQuery(SpyTouchQuery $baseQuery, LocaleTransfer $locale);
 

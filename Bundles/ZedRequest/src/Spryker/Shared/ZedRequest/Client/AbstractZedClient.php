@@ -69,7 +69,7 @@ abstract class AbstractZedClient
      * @param int|null $timeoutInSeconds (optional) default: null
      * @param bool $isBackgroundRequest (optional) default: false
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function call($url, TransferInterface $object, $timeoutInSeconds = null, $isBackgroundRequest = false)
     {

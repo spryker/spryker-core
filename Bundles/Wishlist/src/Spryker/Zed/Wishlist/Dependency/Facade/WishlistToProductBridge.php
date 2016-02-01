@@ -28,7 +28,7 @@ class WishlistToProductBridge implements WishlistToProductInterface
     /**
      * @param string $concreteSku
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku)
     {

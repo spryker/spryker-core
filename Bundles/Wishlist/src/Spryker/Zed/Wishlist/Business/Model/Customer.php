@@ -36,7 +36,7 @@ class Customer
     }
 
     /**
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getWishlist()
     {

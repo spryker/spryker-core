@@ -16,7 +16,7 @@ class CollectorFactory extends AbstractFactory
 {
 
     /**
-     * @return UrlMatcher
+     * @return \Spryker\Client\Collector\Matcher\UrlMatcher
      */
     public function createUrlMatcher()
     {
@@ -27,7 +27,7 @@ class CollectorFactory extends AbstractFactory
     }
 
     /**
-     * @return UrlKeyBuilder
+     * @return \Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder
      */
     protected function createUrlKeyBuilder()
     {
@@ -37,9 +37,9 @@ class CollectorFactory extends AbstractFactory
     }
 
     /**
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return StorageClient
+     * @return \Spryker\Client\Storage\StorageClient
      */
     protected function getStorageClient()
     {

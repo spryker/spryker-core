@@ -48,7 +48,7 @@ class OrdersTable extends AbstractTable
     /**
      * @param TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -130,7 +130,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected function buildQuery()
     {

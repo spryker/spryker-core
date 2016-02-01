@@ -14,7 +14,7 @@ class ShipmentFactory extends AbstractFactory
 {
 
     /**
-     * @return ShipmentStubInterface
+     * @return \Spryker\Client\Shipment\Zed\ShipmentStubInterface
      */
     public function createZedStub()
     {

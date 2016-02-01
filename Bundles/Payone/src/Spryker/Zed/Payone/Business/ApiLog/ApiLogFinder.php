@@ -192,7 +192,7 @@ class ApiLogFinder
     /**
      * @param PayonePaymentTransfer $payonePaymentTransfer
      *
-     * @return PayoneAuthorizationCheckResponseTransfer
+     * @return \Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer
      */
     public function getAuthorizationResponse(PayonePaymentTransfer $payonePaymentTransfer)
     {
@@ -262,7 +262,7 @@ class ApiLogFinder
     /**
      * @param int $transactionId
      *
-     * @return SpyPaymentPayone
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
     protected function findPaymentByTransactionId($transactionId)
     {
@@ -272,7 +272,7 @@ class ApiLogFinder
     /**
      * @param OrderTransfer $orderTransfer
      *
-     * @return SpyPaymentPayone
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
     protected function findPaymentByOrder(OrderTransfer $orderTransfer)
     {
@@ -283,7 +283,7 @@ class ApiLogFinder
      * @param SpyPaymentPayone $payment
      * @param $authorizationType
      *
-     * @return SpyPaymentPayoneApiLog
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog
      */
     protected function findApiLog(SpyPaymentPayone $payment, $authorizationType)
     {

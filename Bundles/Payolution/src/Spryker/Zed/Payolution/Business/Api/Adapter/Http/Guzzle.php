@@ -37,7 +37,7 @@ class Guzzle extends AbstractHttpAdapter
     /**
      * @param array|string $data
      *
-     * @return GuzzleRequestInterface
+     * @return \Guzzle\Http\Message\RequestInterface
      */
     protected function buildRequest($data)
     {
@@ -63,7 +63,7 @@ class Guzzle extends AbstractHttpAdapter
     /**
      * @param GuzzleRequestInterface $request
      *
-     * @throws ApiHttpRequestException
+     * @throws \Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException
      *
      * @return string
      */

@@ -25,7 +25,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return ProductTable
+     * @return \Spryker\Zed\Product\Communication\Table\ProductTable
      */
     public function createProductTable()
     {
@@ -43,7 +43,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getLocaleFacade() instead.
      *
-     * @return ProductToLocaleInterface
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
     public function createLocaleFacade()
     {
@@ -53,7 +53,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ProductToLocaleInterface
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
     public function getLocaleFacade()
     {
@@ -63,7 +63,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getProductOptionsFacade() instead.
      *
-     * @return ProductToProductOptionInterface
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToProductOptionInterface
      */
     public function createProductOptionsFacade()
     {
@@ -73,7 +73,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ProductToProductOptionInterface
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToProductOptionInterface
      */
     public function getProductOptionsFacade()
     {
@@ -83,7 +83,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getUrlFacade() instead.
      *
-     * @return ProductToUrlInterface
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
     public function createUrlFacade()
     {
@@ -93,7 +93,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ProductToUrlInterface
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
     public function getUrlFacade()
     {
@@ -103,7 +103,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getProductCategoryQueryContainer() instead.
      *
-     * @return ProductCategoryQueryContainerInterface
+     * @return \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
      */
     public function createProductCategoryQueryContainer()
     {
@@ -113,7 +113,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ProductCategoryQueryContainerInterface
+     * @return \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
      */
     public function getProductCategoryQueryContainer()
     {
@@ -121,7 +121,7 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function createLocaleTransfer()
     {

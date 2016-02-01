@@ -28,7 +28,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param UserFacade $userFacade
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createResetPasswordForm(UserFacade $userFacade)
     {
@@ -38,7 +38,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UsersTable
+     * @return \Spryker\Zed\User\Communication\Table\UsersTable
      */
     public function createUserTable()
     {
@@ -48,7 +48,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createUserForm()
     {
@@ -61,7 +61,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      * @param int $idUser
      * @param UserFacade $userFacade
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createUpdateUserForm($idUser, UserFacade $userFacade)
     {
@@ -71,7 +71,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UserToAclInterface
+     * @return \Spryker\Zed\User\Dependency\Facade\UserToAclInterface
      */
     public function getAclFacade()
     {
@@ -81,7 +81,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getAclFacade() instead.
      *
-     * @return UserToAclInterface
+     * @return \Spryker\Zed\User\Dependency\Facade\UserToAclInterface
      */
     public function createAclFacade()
     {

@@ -17,7 +17,7 @@ class AddOperator extends AbstractOperator
      * @param CartTransfer $cart
      * @param ChangeTransfer $change
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     protected function changeCart(CartTransfer $cart, ChangeTransfer $change)
     {

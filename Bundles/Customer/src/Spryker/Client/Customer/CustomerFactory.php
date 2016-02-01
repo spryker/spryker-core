@@ -16,7 +16,7 @@ class CustomerFactory extends AbstractFactory
 {
 
     /**
-     * @return CustomerStubInterface
+     * @return \Spryker\Client\Customer\Zed\CustomerStubInterface
      */
     public function createZedCustomerStub()
     {
@@ -26,7 +26,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return CustomerSessionInterface
+     * @return \Spryker\Client\Customer\Session\CustomerSessionInterface
      */
     public function createSessionCustomerSession()
     {

@@ -49,7 +49,7 @@ class ZedBootstrap extends Bootstrap
     }
 
     /**
-     * @return Application
+     * @return \Spryker\Shared\Application\Communication\Application
      */
     protected function getBaseApplication()
     {
@@ -73,7 +73,7 @@ class ZedBootstrap extends Bootstrap
     }
 
     /**
-     * @return BeforeBootExtension
+     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\BeforeBootExtension
      */
     protected function getBeforeBootExtension()
     {
@@ -81,7 +81,7 @@ class ZedBootstrap extends Bootstrap
     }
 
     /**
-     * @return AfterBootExtension
+     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\AfterBootExtension
      */
     protected function getAfterBootExtension()
     {
@@ -89,7 +89,7 @@ class ZedBootstrap extends Bootstrap
     }
 
     /**
-     * @return ServiceProviderExtension
+     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\ServiceProviderExtension
      */
     protected function getServiceProviderExtension()
     {
@@ -97,7 +97,7 @@ class ZedBootstrap extends Bootstrap
     }
 
     /**
-     * @return RouterExtension
+     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\RouterExtension
      */
     protected function getRouterExtension()
     {
@@ -105,7 +105,7 @@ class ZedBootstrap extends Bootstrap
     }
 
     /**
-     * @return TwigExtension
+     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\TwigExtension
      */
     protected function getTwigExtension()
     {
@@ -113,7 +113,7 @@ class ZedBootstrap extends Bootstrap
     }
 
     /**
-     * @return GlobalTemplateVariablesExtension
+     * @return \Spryker\Zed\Application\Communication\Bootstrap\Extension\GlobalTemplateVariablesExtension
      */
     protected function getGlobalTemplateVariablesExtension()
     {

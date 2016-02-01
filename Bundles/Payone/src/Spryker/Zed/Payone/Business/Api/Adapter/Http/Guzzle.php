@@ -26,7 +26,7 @@ class Guzzle extends AbstractHttpAdapter
     /**
      * @param array $params
      *
-     * @throws TimeoutException
+     * @throws \Spryker\Zed\Payone\Business\Exception\TimeoutException
      *
      * @return array
      */

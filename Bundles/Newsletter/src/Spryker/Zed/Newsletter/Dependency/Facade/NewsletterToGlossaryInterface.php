@@ -26,7 +26,7 @@ interface NewsletterToGlossaryInterface
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function getTranslation($keyName, LocaleTransfer $locale);
 

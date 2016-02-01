@@ -29,7 +29,7 @@ class UrlToLocaleBridge implements UrlToLocaleInterface
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)
     {
@@ -37,7 +37,7 @@ class UrlToLocaleBridge implements UrlToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {

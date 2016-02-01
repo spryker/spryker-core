@@ -25,7 +25,7 @@ class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionI
      * @param CheckoutRequestTransfer $checkoutRequestTransfer
      * @param CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function checkCondition(
         CheckoutRequestTransfer $checkoutRequestTransfer,

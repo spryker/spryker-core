@@ -53,7 +53,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Voucher
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\Voucher
      */
     public function createDecisionRuleVoucher()
     {
@@ -61,7 +61,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MinimumCartSubtotal
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal
      */
     public function createDecisionRuleMinimumCartSubtotal()
     {
@@ -71,7 +71,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @param CalculableInterface $container
      *
-     * @return Discount
+     * @return \Spryker\Zed\Discount\Business\Model\Discount
      */
     public function createDiscount(CalculableInterface $container)
     {
@@ -87,7 +87,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CartRuleInterface
+     * @return \Spryker\Zed\Discount\Business\Model\CartRuleInterface
      */
     public function createCartRule()
     {
@@ -101,7 +101,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountCollectorWriter
+     * @return \Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter
      */
     public function createDiscountCollectorWriter()
     {
@@ -149,7 +149,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Percentage
+     * @return \Spryker\Zed\Discount\Business\Calculator\Percentage
      */
     public function createCalculatorPercentage()
     {
@@ -157,7 +157,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Fixed
+     * @return \Spryker\Zed\Discount\Business\Calculator\Fixed
      */
     public function createCalculatorFixed()
     {
@@ -165,7 +165,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountWriter
+     * @return \Spryker\Zed\Discount\Business\Writer\DiscountWriter
      */
     public function createDiscountWriter()
     {
@@ -175,7 +175,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return VoucherPoolCategory
+     * @return \Spryker\Zed\Discount\Business\Model\VoucherPoolCategory
      */
     public function createVoucherPoolCategory()
     {
@@ -185,7 +185,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return VoucherCodesWriter
+     * @return \Spryker\Zed\Discount\Business\Writer\VoucherCodesWriter
      */
     public function createVoucherCodesWriter()
     {
@@ -200,7 +200,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountDecisionRuleWriter
+     * @return \Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter
      */
     public function createDiscountDecisionRuleWriter()
     {
@@ -210,7 +210,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountVoucherWriter
+     * @return \Spryker\Zed\Discount\Business\Writer\DiscountVoucherWriter
      */
     public function createDiscountVoucherWriter()
     {
@@ -220,7 +220,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountVoucherPoolWriter
+     * @return \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter
      */
     public function createDiscountVoucherPoolWriter()
     {
@@ -230,7 +230,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountVoucherPoolCategoryWriter
+     * @return \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter
      */
     public function createDiscountVoucherPoolCategoryWriter()
     {
@@ -240,7 +240,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DecisionRuleEngine
+     * @return \Spryker\Zed\Discount\Business\Model\DecisionRuleEngine
      */
     protected function createDecisionRuleEngine()
     {
@@ -248,7 +248,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Calculator
+     * @return \Spryker\Zed\Discount\Business\Model\Calculator
      */
     protected function createCalculator()
     {
@@ -256,7 +256,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Distributor
+     * @return \Spryker\Zed\Discount\Business\Distributor\Distributor
      */
     public function createDistributor()
     {
@@ -264,7 +264,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return VoucherEngine
+     * @return \Spryker\Zed\Discount\Business\Model\VoucherEngine
      */
     public function createVoucherEngine()
     {
@@ -277,7 +277,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Item
+     * @return \Spryker\Zed\Discount\Business\Collector\Item
      */
     public function createItemCollector()
     {
@@ -285,7 +285,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemExpense
+     * @return \Spryker\Zed\Discount\Business\Collector\ItemExpense
      */
     public function createItemExpenseCollector()
     {
@@ -293,7 +293,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Expense
+     * @return \Spryker\Zed\Discount\Business\Collector\Expense
      */
     public function createOrderExpenseCollector()
     {
@@ -301,7 +301,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemProductOption
+     * @return \Spryker\Zed\Discount\Business\Collector\ItemProductOption
      */
     public function createItemProductOptionCollector()
     {
@@ -309,7 +309,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Aggregate
+     * @return \Spryker\Zed\Discount\Business\Collector\Aggregate
      */
     public function createAggregateCollector()
     {
@@ -322,7 +322,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return VoucherCodeInterface
+     * @return \Spryker\Zed\Discount\Business\Model\VoucherCodeInterface
      */
     public function createVoucherCode()
     {
@@ -330,7 +330,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CollectorResolver
+     * @return \Spryker\Zed\Discount\Business\Model\CollectorResolver
      */
     public function createCollectorResolver()
     {
@@ -338,7 +338,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountToMessengerInterface
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected function getMessengerFacade()
     {
@@ -346,7 +346,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ConnectionInterface
+     * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     protected function getPropelConnection()
     {
@@ -354,7 +354,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStoreConfig()
     {
@@ -372,7 +372,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @param $pluginName
      *
-     * @return DiscountCalculatorPluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
     public function getCalculatorPluginByName($pluginName)
     {

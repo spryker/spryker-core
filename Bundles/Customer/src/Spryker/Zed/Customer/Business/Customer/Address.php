@@ -54,10 +54,10 @@ class Address
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @throws CustomerNotFoundException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function createAddress(AddressTransfer $addressTransfer)
     {
@@ -73,9 +73,9 @@ class Address
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @throws AddressNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function getAddress(AddressTransfer $addressTransfer)
     {
@@ -92,9 +92,9 @@ class Address
      * @param int $idAddress
      * @param int|null $idCustomer
      *
-     * @throws AddressNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function getAddressTransferById($idAddress, $idCustomer = null)
     {
@@ -147,7 +147,7 @@ class Address
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return AddressesTransfer
+     * @return \Generated\Shared\Transfer\AddressesTransfer
      */
     public function getAddresses(CustomerTransfer $customerTransfer)
     {
@@ -161,11 +161,11 @@ class Address
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @throws AddressNotFoundException
-     * @throws CustomerNotFoundException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function updateAddress(AddressTransfer $addressTransfer)
     {
@@ -179,9 +179,9 @@ class Address
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @throws AddressNotFoundException
-     * @throws CustomerNotFoundException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
@@ -205,9 +205,9 @@ class Address
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @throws AddressNotFoundException
-     * @throws CustomerNotFoundException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
@@ -271,7 +271,7 @@ class Address
     /**
      * @param SpyCustomerAddress $entity
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function entityToAddressTransfer(SpyCustomerAddress $entity)
     {
@@ -283,7 +283,7 @@ class Address
     /**
      * @param ObjectCollection $entities
      *
-     * @return AddressesTransfer
+     * @return \Generated\Shared\Transfer\AddressesTransfer
      */
     protected function entityCollectionToTransferCollection(ObjectCollection $entities)
     {
@@ -298,9 +298,9 @@ class Address
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @throws CustomerNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      *
-     * @return SpyCustomer
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
     protected function getCustomerFromAddressTransfer(AddressTransfer $addressTransfer)
     {
@@ -322,9 +322,9 @@ class Address
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @throws CustomerNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      *
-     * @return SpyCustomer
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
     protected function getCustomerFromCustomerTransfer(CustomerTransfer $customerTransfer)
     {
@@ -344,7 +344,7 @@ class Address
     }
 
     /**
-     * @throws CountryNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CountryNotFoundException
      *
      * @return int
      */
@@ -362,9 +362,9 @@ class Address
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @throws AddressNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
     {
@@ -377,9 +377,9 @@ class Address
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @throws AddressNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
     {
@@ -403,11 +403,11 @@ class Address
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @throws AddressNotFoundException
-     * @throws CustomerNotFoundException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function deleteAddress(AddressTransfer $addressTransfer)
     {
@@ -448,7 +448,7 @@ class Address
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @throws CountryNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CountryNotFoundException
      *
      * @return int
      */
@@ -472,7 +472,7 @@ class Address
      *
      * @throws \Exception
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
@@ -503,7 +503,7 @@ class Address
      *
      * @throws \Exception
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
@@ -532,7 +532,7 @@ class Address
     /**
      * @param SpyCustomer $entity
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function entityToCustomerTransfer(SpyCustomer $entity)
     {
@@ -545,7 +545,7 @@ class Address
      * @param AddressTransfer $addressTransfer
      * @param SpyCustomer $customer
      *
-     * @return SpyCustomerAddress
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddress
      */
     protected function createCustomerAddress(AddressTransfer $addressTransfer, SpyCustomer $customer)
     {
@@ -565,9 +565,9 @@ class Address
      * @param AddressTransfer $addressTransfer
      * @param SpyCustomer $customer
      *
-     * @throws AddressNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
-     * @return SpyCustomerAddress
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddress
      */
     protected function updateCustomerAddress(AddressTransfer $addressTransfer, SpyCustomer $customer)
     {

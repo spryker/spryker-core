@@ -15,7 +15,7 @@ class KernelCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getMessengerFacade() instead.
      *
-     * @return KernelToMessengerInterface
+     * @return \Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerInterface
      */
     public function createMessengerFacade()
     {
@@ -25,7 +25,7 @@ class KernelCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return KernelToMessengerInterface
+     * @return \Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerInterface
      */
     public function getMessengerFacade()
     {

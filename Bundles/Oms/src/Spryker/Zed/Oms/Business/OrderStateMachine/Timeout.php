@@ -73,7 +73,7 @@ class Timeout implements TimeoutInterface
      * @param DateTime $currentTime
      *
      * @throws Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -111,7 +111,7 @@ class Timeout implements TimeoutInterface
      * @param SpySalesOrderItem $orderItem
      *
      * @throws Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -154,7 +154,7 @@ class Timeout implements TimeoutInterface
      * @param string $stateId
      * @param ProcessInterface $process
      *
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     protected function getStateFromProcess($stateId, ProcessInterface $process)
     {
@@ -185,7 +185,7 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @return ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
     protected function findItemsWithExpiredTimeouts()
     {

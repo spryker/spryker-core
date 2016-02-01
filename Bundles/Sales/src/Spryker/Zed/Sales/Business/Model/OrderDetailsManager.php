@@ -57,7 +57,7 @@ class OrderDetailsManager
      * @param OrderTransfer $orderTransfer
      * @param int $idOrder
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     public function updateOrderCustomer(OrderTransfer $orderTransfer, $idOrder)
     {
@@ -76,7 +76,7 @@ class OrderDetailsManager
      * @param AddressTransfer $addressTransfer
      * @param int $idAddress
      *
-     * @return SpySalesOrderAddress
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
      */
     public function updateOrderAddress(AddressTransfer $addressTransfer, $idAddress)
     {
@@ -146,9 +146,9 @@ class OrderDetailsManager
     /**
      * @param OrderTransfer $orderTransfer
      *
-     * @throws InvalidSalesOrderException
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {
@@ -168,7 +168,7 @@ class OrderDetailsManager
     /**
      * @param $orderEntity
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function convertOrderDetailsEntityIntoTransfer(SpySalesOrder $orderEntity)
     {
@@ -205,7 +205,7 @@ class OrderDetailsManager
     /**
      * @param SpySalesOrderItem $orderItemEntity
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createOrderItemTransfer(SpySalesOrderItem $orderItemEntity)
     {

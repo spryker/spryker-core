@@ -18,7 +18,7 @@ class CalculationCheckoutConnectorBusinessFactory extends AbstractBusinessFactor
 {
 
     /**
-     * @return CalculationCheckoutConnectorToCalculationInterface
+     * @return \Spryker\Zed\CalculationCheckoutConnector\Dependency\Facade\CalculationCheckoutConnectorToCalculationInterface
      */
     public function getCalculationFacade()
     {

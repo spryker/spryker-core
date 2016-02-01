@@ -14,14 +14,14 @@ interface TaxProductConnectorQueryContainerInterface
     /**
      * @param int $idTaxRate
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function getAbstractAbstractIdsForTaxRate($idTaxRate);
 
     /**
      * @param int $idTaxSet
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function getProductAbstractIdsForTaxSet($idTaxSet);
 

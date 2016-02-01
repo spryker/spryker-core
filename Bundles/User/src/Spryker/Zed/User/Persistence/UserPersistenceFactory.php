@@ -18,7 +18,7 @@ class UserPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function createUserQuery()
     {

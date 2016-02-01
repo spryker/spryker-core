@@ -62,7 +62,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     }
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getMessages()
     {
@@ -70,7 +70,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     }
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     protected static function getFlashMessagesTransfer()
     {

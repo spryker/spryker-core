@@ -19,7 +19,7 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CheckoutWorkflowInterface
+     * @return \Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflowInterface
      */
     public function createCheckoutWorkflow()
     {

@@ -48,7 +48,7 @@ class CountryFacade extends AbstractFacade
     }
 
     /**
-     * @return CountryCollectionTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getAvailableCountries()
     {
@@ -64,7 +64,7 @@ class CountryFacade extends AbstractFacade
      *
      * @deprecated Use getPreferredCountryByName()
      *
-     * @return CountryTransfer
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferedCountryByName($countryName)
     {
@@ -76,7 +76,7 @@ class CountryFacade extends AbstractFacade
     /**
      * @param string $countryName
      *
-     * @return CountryTransfer
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferredCountryByName($countryName)
     {

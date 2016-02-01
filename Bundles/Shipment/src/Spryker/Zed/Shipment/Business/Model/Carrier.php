@@ -16,7 +16,7 @@ class Carrier
     /**
      * @param ShipmentCarrierTransfer $carrierTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */

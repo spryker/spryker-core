@@ -28,7 +28,7 @@ class Paid
     /**
      * @param SpySalesOrderItem $orderItem
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

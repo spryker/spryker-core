@@ -67,7 +67,7 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param int $idCategory
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -85,9 +85,9 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param CategoryTransfer $category
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyCategory
+     * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
     protected function saveCategory(CategoryTransfer $category)
     {
@@ -102,7 +102,7 @@ class CategoryWriter implements CategoryWriterInterface
      * @param CategoryTransfer $category
      * @param LocaleTransfer $locale
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -148,7 +148,7 @@ class CategoryWriter implements CategoryWriterInterface
      * @param int $idCategory
      * @param LocaleTransfer $locale
      *
-     * @return SpyCategoryAttribute
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute
      */
     protected function getAttributeEntity($idCategory, LocaleTransfer $locale)
     {
@@ -160,7 +160,7 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategory
+     * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
     protected function getCategoryEntity($idCategory)
     {

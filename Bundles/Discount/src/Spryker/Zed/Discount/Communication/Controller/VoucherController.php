@@ -164,7 +164,7 @@ class VoucherController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return DiscountVoucherCodesTable
+     * @return \Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable
      */
     protected function getGeneratedCodesTable(Request $request)
     {
@@ -179,7 +179,7 @@ class VoucherController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function exportAction(Request $request)
     {
@@ -223,7 +223,7 @@ class VoucherController extends AbstractController
      * @param int $idPool
      * @param int $batchValue
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function generateCsvFromVouchers($idPool, $batchValue)
     {

@@ -95,7 +95,7 @@ abstract class AbstractCollector implements ExporterInterface
      * @param string $type
      * @param LocaleTransfer $locale
      *
-     * @return BatchResultInterface
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
     public function exportByType($type, LocaleTransfer $locale)
     {
@@ -129,7 +129,7 @@ abstract class AbstractCollector implements ExporterInterface
      * @param $type
      * @param string $timestamp
      *
-     * @return BatchResultInterface
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
     protected function finishExport(BatchResultInterface $batchResult, $type, $timestamp)
     {
@@ -141,7 +141,7 @@ abstract class AbstractCollector implements ExporterInterface
     }
 
     /**
-     * @return AbstractFormatter
+     * @return \Propel\Runtime\Formatter\AbstractFormatter
      */
     protected function getFormatter()
     {

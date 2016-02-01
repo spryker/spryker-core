@@ -60,7 +60,7 @@ class AddressForm extends AbstractForm
     }
 
     /**
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function getDataClass()
     {

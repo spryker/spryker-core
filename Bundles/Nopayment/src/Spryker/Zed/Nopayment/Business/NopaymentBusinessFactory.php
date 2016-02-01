@@ -19,7 +19,7 @@ class NopaymentBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Paid
+     * @return \Spryker\Zed\Nopayment\Business\Nopayment\Paid
      */
     public function createNopaymentPaid()
     {

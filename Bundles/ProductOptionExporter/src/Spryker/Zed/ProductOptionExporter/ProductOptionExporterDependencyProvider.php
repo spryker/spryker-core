@@ -20,7 +20,7 @@ class ProductOptionExporterDependencyProvider extends AbstractBundleDependencyPr
     /**
      * @param Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {

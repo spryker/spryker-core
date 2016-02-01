@@ -72,7 +72,7 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     /**
-     * @return AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     protected function getFactory()
     {
@@ -92,7 +92,7 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     /**
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacade()
     {
@@ -104,9 +104,9 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     /**
-     * @throws FacadeNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
      *
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function resolveFacade()
     {
@@ -114,7 +114,7 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     }
 
     /**
-     * @return FacadeResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver
      */
     private function getFacadeResolver()
     {

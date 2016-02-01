@@ -67,7 +67,7 @@ abstract class AbstractOperator implements OperatorInterface
     /**
      * @param ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function executeOperation(ChangeTransfer $cartChange)
     {
@@ -86,7 +86,7 @@ abstract class AbstractOperator implements OperatorInterface
     /**
      * @param CartTransfer $cart
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     private function recalculate(CartTransfer $cart)
     {
@@ -100,7 +100,7 @@ abstract class AbstractOperator implements OperatorInterface
      * @param CartTransfer $cart
      * @param ChangeTransfer $change
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     abstract protected function changeCart(CartTransfer $cart, ChangeTransfer $change);
 
@@ -112,7 +112,7 @@ abstract class AbstractOperator implements OperatorInterface
     /**
      * @param ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     protected function expandChangedItems(ChangeTransfer $change)
     {
@@ -136,7 +136,7 @@ abstract class AbstractOperator implements OperatorInterface
     /**
      * @param CartTransfer $cart
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     protected function getGroupedCartItems(CartTransfer $cart)
     {

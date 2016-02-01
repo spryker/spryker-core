@@ -39,7 +39,7 @@ class PayoneConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return PayoneStandardParameterTransfer
+     * @return \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     public function getRequestStandardParameter()
     {

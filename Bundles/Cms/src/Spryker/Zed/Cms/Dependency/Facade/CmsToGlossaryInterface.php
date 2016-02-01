@@ -32,7 +32,7 @@ interface CmsToGlossaryInterface
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createTranslationForCurrentLocale($keyName, $value, $isActive = true);
 
@@ -46,7 +46,7 @@ interface CmsToGlossaryInterface
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 
@@ -60,7 +60,7 @@ interface CmsToGlossaryInterface
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 

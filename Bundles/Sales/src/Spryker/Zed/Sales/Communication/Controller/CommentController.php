@@ -23,7 +23,7 @@ class CommentController extends AbstractController
      *
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function addAction(Request $request)
     {

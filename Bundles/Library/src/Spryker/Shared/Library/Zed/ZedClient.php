@@ -141,7 +141,7 @@ class ZedClient
      * @param Request $requestTransfer
      * @param int $timeoutInSeconds
      *
-     * @return EntityEnclosingRequest
+     * @return \Guzzle\Http\Message\EntityEnclosingRequest
      */
     protected function createGuzzleRequest($pathInfo, Request $requestTransfer, $timeoutInSeconds = null)
     {
@@ -184,7 +184,7 @@ class ZedClient
      *
      * @throws \LogicException
      *
-     * @return Request
+     * @return \Spryker\Shared\Library\Communication\Request
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
@@ -217,7 +217,7 @@ class ZedClient
      *
      * @throws Exception\InvalidZedResponseException
      *
-     * @return Response
+     * @return \Guzzle\Http\Message\Response
      */
     protected function sendRequest(EntityEnclosingRequest $request)
     {

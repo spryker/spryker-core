@@ -104,7 +104,7 @@ class TransferGeneratorTest extends Test
     }
 
     /**
-     * @return ConsoleMessenger
+     * @return \Spryker\Zed\Console\Business\Model\ConsoleMessenger
      */
     protected function getMessenger()
     {
@@ -114,7 +114,7 @@ class TransferGeneratorTest extends Test
     }
 
     /**
-     * @return ClassGenerator
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator
      */
     protected function getClassGenerator()
     {
@@ -127,7 +127,7 @@ class TransferGeneratorTest extends Test
     /**
      * @param $sourceDirectories
      *
-     * @return TransferDefinitionBuilder
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder
      */
     protected function getDefinitionBuilder($sourceDirectories)
     {

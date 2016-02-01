@@ -21,7 +21,7 @@ interface AuthToUserInterface
     /**
      * @param string $username
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username);
 
@@ -31,7 +31,7 @@ interface AuthToUserInterface
     public function hasCurrentUser();
 
     /**
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser();
 
@@ -55,7 +55,7 @@ interface AuthToUserInterface
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function updateUser(UserTransfer $user);
 
@@ -69,7 +69,7 @@ interface AuthToUserInterface
     /**
      * @param int $idUser
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserById($idUser);
 

@@ -21,7 +21,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     /**
      * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function addItem(ItemTransfer $wishlistItem)
     {
@@ -35,7 +35,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     /**
      * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseItemQuantity(ItemTransfer $wishlistItem)
     {
@@ -50,7 +50,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     /**
      * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function decreaseItemQuantity(ItemTransfer $wishlistItem)
     {
@@ -65,7 +65,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     /**
      * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItem(ItemTransfer $wishlistItem)
     {
@@ -77,7 +77,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getWishlist()
     {
@@ -88,7 +88,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function synchronizeSession()
     {
@@ -111,7 +111,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     /**
      * @param ItemTransfer $wishlistItemTransfer
      *
-     * @return WishlistChangeTransfer
+     * @return \Generated\Shared\Transfer\WishlistChangeTransfer
      */
     protected function createChangeTransfer(ItemTransfer $wishlistItemTransfer)
     {
@@ -130,7 +130,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function getCustomerTransfer()
     {

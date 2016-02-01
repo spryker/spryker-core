@@ -33,7 +33,7 @@ trait BundleDependencyProviderResolverAwareTrait
     /**
      * @param string $key
      *
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return mixed
      */
@@ -54,7 +54,7 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @throws DependencyProviderNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
      *
      * @return AbstractBundleDependencyProvider
      */
@@ -64,7 +64,7 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @return DependencyProviderResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
     protected function getDependencyProviderResolver()
     {

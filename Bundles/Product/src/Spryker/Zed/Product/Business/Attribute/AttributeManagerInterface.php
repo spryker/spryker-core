@@ -32,8 +32,8 @@ interface AttributeManagerInterface
      * @param string $attributeType
      * @param bool $isEditable
      *
-     * @throws AttributeExistsException
-     * @throws MissingAttributeTypeException
+     * @throws \Spryker\Zed\Product\Business\Exception\AttributeExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException
      *
      * @return int
      */
@@ -44,7 +44,7 @@ interface AttributeManagerInterface
      * @param string $inputType
      * @param int|null $fkParentAttributeType
      *
-     * @throws AttributeTypeExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException
      *
      * @return int
      */

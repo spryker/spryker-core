@@ -64,7 +64,7 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     /**
      * @param int $idCategoryNode
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     public function getNodeById($idCategoryNode)
     {

@@ -23,7 +23,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return TouchRecordInterface
+     * @return \Spryker\Zed\Touch\Business\Model\TouchRecordInterface
      */
     public function createTouchRecordModel()
     {
@@ -34,7 +34,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TouchInterface
+     * @return \Spryker\Zed\Touch\Business\Model\TouchInterface
      */
     public function createTouchModel()
     {

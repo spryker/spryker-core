@@ -22,7 +22,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return UserInterface
+     * @return \Spryker\Zed\User\Business\Model\UserInterface
      */
     public function createUserModel()
     {
@@ -34,7 +34,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Installer
+     * @return \Spryker\Zed\User\Business\Model\Installer
      */
     public function createInstallerModel()
     {

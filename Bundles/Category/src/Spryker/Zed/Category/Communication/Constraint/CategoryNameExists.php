@@ -49,7 +49,7 @@ class CategoryNameExists extends Constraint
     }
 
     /**
-     * @return CategoryQueryContainer
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     public function getQueryContainer()
     {
@@ -57,7 +57,7 @@ class CategoryNameExists extends Constraint
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale()
     {

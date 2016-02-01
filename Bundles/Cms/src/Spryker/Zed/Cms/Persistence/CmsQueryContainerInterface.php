@@ -15,38 +15,38 @@ interface CmsQueryContainerInterface
 {
 
     /**
-     * @return SpyCmsTemplateQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
     public function queryTemplates();
 
     /**
      * @param string $path
      *
-     * @return SpyCmsTemplateQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
     public function queryTemplateByPath($path);
 
     /**
      * @param int $id
      *
-     * @return SpyCmsTemplateQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
     public function queryTemplateById($id);
 
     /**
-     * @return SpyCmsPageQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPages();
 
     /**
-     * @return SpyCmsBlockQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     public function queryBlocks();
 
     /**
      * @param int $id
      *
-     * @return SpyCmsPageQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPageById($id);
 
@@ -54,33 +54,33 @@ interface CmsQueryContainerInterface
      * @param int $idPage
      * @param string $placeholder
      *
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMapping($idPage, $placeholder);
 
     /**
      * @param int $idMapping
      *
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingById($idMapping);
 
     /**
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappings();
 
     /**
      * @param int $idCmsPage
      *
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsByPageId($idCmsPage);
 
     /**
      * @param int $idCmsPage
      *
-     * @return SpyCmsBlockQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     public function queryBlockByIdPage($idCmsPage);
 
@@ -89,14 +89,14 @@ interface CmsQueryContainerInterface
      * @param string $blockType
      * @param string $blockValue
      *
-     * @return SpyCmsBlockQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     public function queryBlockByNameAndTypeValue($blockName, $blockType, $blockValue);
 
     /**
      * @param int $idCategoryNode
      *
-     * @return SpyCmsBlockQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     public function queryBlockByIdCategoryNode($idCategoryNode);
 

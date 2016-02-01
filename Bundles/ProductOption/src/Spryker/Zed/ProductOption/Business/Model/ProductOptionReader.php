@@ -58,7 +58,7 @@ class ProductOptionReader implements ProductOptionReaderInterface
      * @param int $idProductOptionValueUsage
      * @param string $localeCode
      *
-     * @return ProductOptionTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     public function getProductOption($idProductOptionValueUsage, $localeCode)
     {
@@ -104,7 +104,7 @@ class ProductOptionReader implements ProductOptionReaderInterface
      * @param int $idProduct
      * @param int $idLocale
      *
-     * @return ArrayCollection
+     * @return \Propel\Runtime\Collection\ArrayCollection
      */
     public function getProductOptionsByIdProductAndIdLocale($idProduct, $idLocale)
     {

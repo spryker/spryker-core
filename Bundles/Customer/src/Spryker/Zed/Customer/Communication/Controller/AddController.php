@@ -47,7 +47,7 @@ class AddController extends AbstractController
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function createCustomerTransfer()
     {

@@ -22,7 +22,7 @@ class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependen
     /**
      * @param Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
@@ -36,7 +36,7 @@ class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependen
     /**
      * @param Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function providePersistenceLayerDependencies(Container $container)
     {

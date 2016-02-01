@@ -32,7 +32,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
      * @param OrderTransfer $orderTransfer
      * @param RefundFacade $facadeRefund
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createRefundForm(OrderTransfer $orderTransfer, RefundFacade $facadeRefund)
     {
@@ -46,7 +46,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param RefundFacade $refundFacade
      *
-     * @return RefundTable
+     * @return \Spryker\Zed\Refund\Communication\Table\RefundTable
      */
     public function createRefundTable(RefundFacade $refundFacade)
     {
@@ -60,7 +60,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return SalesQueryContainer
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainer
      */
     public function getSalesQueryContainer()
     {
@@ -70,7 +70,7 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @throws \Exception
      *
-     * @return DateFormatter
+     * @return \Spryker\Shared\Library\DateFormatter
      */
     protected function createDateFormatter()
     {
@@ -80,9 +80,9 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return PayoneFacade
+     * @return \Spryker\Zed\Payone\Business\PayoneFacade
      */
     public function getPayoneFacade()
     {

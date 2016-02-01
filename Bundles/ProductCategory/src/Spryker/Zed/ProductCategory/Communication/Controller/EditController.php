@@ -220,7 +220,7 @@ class EditController extends AddController
      * @param LocaleTransfer $locale
      * @param array $data
      *
-     * @return CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     protected function updateCategory(LocaleTransfer $locale, array $data)
     {
@@ -237,7 +237,7 @@ class EditController extends AddController
      * @param LocaleTransfer $locale
      * @param array $data
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     protected function updateCategoryNode(LocaleTransfer $locale, array $data)
     {
@@ -261,7 +261,7 @@ class EditController extends AddController
      * @param LocaleTransfer $locale
      * @param array $data
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     protected function updateCategoryNodeChild(CategoryTransfer $categoryTransfer, LocaleTransfer $locale, array $data)
     {

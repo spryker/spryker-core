@@ -93,7 +93,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
      * @param string $actionName
      * @param bool $parseJsonBody
      *
-     * @return Controller
+     * @return \Silex\Controller
      */
     protected function createController(
         $path,
@@ -137,7 +137,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
      * @param string $redirectPath
      * @param int $status
      *
-     * @return Controller
+     * @return \Silex\Controller
      */
     protected function createRedirectController($path, $name, $redirectPath, $status = 302)
     {
@@ -157,7 +157,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
      * @param string $controllerName
      * @param string $actionName
      *
-     * @return Controller
+     * @return \Silex\Controller
      */
     protected function createGetController($path, $name, $bundle, $controllerName, $actionName = 'index')
     {
@@ -173,7 +173,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
      * @param string $actionName
      * @param bool $parseJsonBody
      *
-     * @return Controller
+     * @return \Silex\Controller
      */
     protected function createPostController($path, $name, $bundle, $controllerName, $actionName = 'index', $parseJsonBody = false)
     {

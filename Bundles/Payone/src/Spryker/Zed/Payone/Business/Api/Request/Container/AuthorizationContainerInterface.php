@@ -101,7 +101,7 @@ interface AuthorizationContainerInterface
     public function getSolutionVersion();
 
     /**
-     * @return ThreeDSecureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer
      */
     public function get3dsecure();
 
@@ -156,7 +156,7 @@ interface AuthorizationContainerInterface
     public function setReference($reference);
 
     /**
-     * @return PersonalContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
      */
     public function getPersonalData();
 
@@ -238,7 +238,7 @@ interface AuthorizationContainerInterface
     public function getApiVersion();
 
     /**
-     * @return ShippingContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer
      */
     public function getShippingData();
 

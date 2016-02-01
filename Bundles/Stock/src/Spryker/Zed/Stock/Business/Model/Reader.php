@@ -71,7 +71,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws InvalidArgumentException
+     * @throws \Guzzle\Common\Exception\InvalidArgumentException
      *
      * @return SpyStockProduct[]
      */
@@ -91,7 +91,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $stockType
      *
-     * @throws InvalidArgumentException
+     * @throws \Guzzle\Common\Exception\InvalidArgumentException
      *
      * @return int
      */
@@ -122,7 +122,7 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param string $stockType
      *
-     * @throws StockProductNotFoundException
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
      *
      * @return int
      */
@@ -151,7 +151,7 @@ class Reader implements ReaderInterface
      * @param int $idStockType
      * @param int $idProduct
      *
-     * @throws StockProductAlreadyExistsException
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
      *
      * @return void
      */
@@ -193,9 +193,9 @@ class Reader implements ReaderInterface
     /**
      * @param int $idStockProduct
      *
-     * @throws StockProductNotFoundException
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
      *
-     * @return SpyStockProduct
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct
      */
     public function getStockProductById($idStockProduct)
     {

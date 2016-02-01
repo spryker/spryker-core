@@ -16,7 +16,7 @@ interface DiscountConfigInterface
     /**
      * @throws \ErrorException
      *
-     * @return DiscountDecisionRulePluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface
      */
     public function getDefaultVoucherDecisionRulePlugin();
 
@@ -30,14 +30,14 @@ interface DiscountConfigInterface
     /**
      * @param string $pluginName
      *
-     * @return DiscountCalculatorPluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
     public function getCalculatorPluginByName($pluginName);
 
     /**
      * @param string $pluginName
      *
-     * @return DiscountCollectorPluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface
      */
     public function getCollectorPluginByName($pluginName);
 

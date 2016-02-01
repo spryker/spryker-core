@@ -20,7 +20,7 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
     /**
      * @param CheckoutRequestTransfer $checkoutRequest
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
     {
@@ -28,7 +28,7 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
     }
 
     /**
-     * @return CheckoutStub
+     * @return \Spryker\Client\Checkout\Zed\CheckoutStub
      */
     protected function getZedStub()
     {

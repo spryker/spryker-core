@@ -23,7 +23,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return DataImportWriterInterface
+     * @return \Spryker\Zed\ProductOption\Business\Model\DataImportWriterInterface
      */
     public function createDataImportWriterModel()
     {
@@ -35,7 +35,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionReaderInterface
+     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionReaderInterface
      */
     public function createProductOptionReaderModel()
     {

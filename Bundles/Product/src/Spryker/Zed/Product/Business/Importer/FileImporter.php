@@ -74,7 +74,7 @@ class FileImporter implements FileImporterInterface
     /**
      * @param \SplFileInfo $file
      *
-     * @return ProductBatchResult
+     * @return \Spryker\Zed\Product\Business\Model\ProductBatchResult
      */
     public function importFile(\SplFileInfo $file)
     {

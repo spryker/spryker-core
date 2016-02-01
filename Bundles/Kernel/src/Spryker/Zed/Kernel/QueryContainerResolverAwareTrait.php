@@ -31,7 +31,7 @@ trait QueryContainerResolverAwareTrait
     }
 
     /**
-     * @return AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     protected function getQueryContainer()
     {
@@ -43,9 +43,9 @@ trait QueryContainerResolverAwareTrait
     }
 
     /**
-     * @throws QueryContainerNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
      *
-     * @return AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private function resolveQueryContainer()
     {
@@ -53,7 +53,7 @@ trait QueryContainerResolverAwareTrait
     }
 
     /**
-     * @return QueryContainerResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver
      */
     private function getQueryContainerResolver()
     {

@@ -49,7 +49,7 @@ class UserTest extends Test
     /**
      * @param $data
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     private function mockAddUser($data)
     {
@@ -59,7 +59,7 @@ class UserTest extends Test
     /**
      * @param $data
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     private function mockUserTransfer($data)
     {

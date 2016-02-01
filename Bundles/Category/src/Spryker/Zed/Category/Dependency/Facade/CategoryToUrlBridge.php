@@ -34,10 +34,10 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId)
     {
@@ -67,7 +67,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     /**
      * @param UrlTransfer $urlTransfer
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveUrlAndTouch(UrlTransfer $urlTransfer)
     {
@@ -89,7 +89,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlByPath($urlString)
     {
@@ -100,7 +100,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
      * @param int $idCategoryNode
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
     {
@@ -111,7 +111,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
      * @param UrlTransfer $urlTransfer
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

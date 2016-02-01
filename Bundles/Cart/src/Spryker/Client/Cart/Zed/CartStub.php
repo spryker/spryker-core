@@ -17,7 +17,7 @@ class CartStub extends BaseStub implements CartStubInterface
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addItem(ChangeTransfer $changeTransfer)
     {
@@ -27,7 +27,7 @@ class CartStub extends BaseStub implements CartStubInterface
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeItem(ChangeTransfer $changeTransfer)
     {
@@ -37,7 +37,7 @@ class CartStub extends BaseStub implements CartStubInterface
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function increaseItemQuantity(ChangeTransfer $changeTransfer)
     {
@@ -47,7 +47,7 @@ class CartStub extends BaseStub implements CartStubInterface
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function decreaseItemQuantity(ChangeTransfer $changeTransfer)
     {
@@ -57,7 +57,7 @@ class CartStub extends BaseStub implements CartStubInterface
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addCoupon(ChangeTransfer $changeTransfer)
     {
@@ -67,7 +67,7 @@ class CartStub extends BaseStub implements CartStubInterface
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeCoupon(ChangeTransfer $changeTransfer)
     {
@@ -77,7 +77,7 @@ class CartStub extends BaseStub implements CartStubInterface
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCoupons(ChangeTransfer $changeTransfer)
     {
@@ -87,7 +87,7 @@ class CartStub extends BaseStub implements CartStubInterface
     /**
      * @param CartTransfer|TransferInterface $cartTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function recalculate(CartTransfer $cartTransfer)
     {

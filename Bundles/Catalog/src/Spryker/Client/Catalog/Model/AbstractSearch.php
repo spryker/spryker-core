@@ -84,7 +84,7 @@ abstract class AbstractSearch
     /**
      * @param Request $request
      *
-     * @return Query
+     * @return \Elastica\Query
      */
     abstract protected function createSearchQuery(Request $request);
 

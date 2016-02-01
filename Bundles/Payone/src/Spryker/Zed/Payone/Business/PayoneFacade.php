@@ -43,7 +43,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return AuthorizationResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function authorizePayment($idPayment)
     {
@@ -53,7 +53,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return AuthorizationResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -63,7 +63,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return CaptureResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer
      */
     public function capturePayment($idPayment)
     {
@@ -73,7 +73,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return DebitResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer
      */
     public function debitPayment($idPayment)
     {
@@ -83,7 +83,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param PayoneRefundTransfer $refundTransfer
      *
-     * @return RefundResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer
      */
     public function refundPayment(PayoneRefundTransfer $refundTransfer)
     {
@@ -93,7 +93,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param PayoneCreditCardTransfer $creditCardData
      *
-     * @return CreditCardCheckResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData)
     {
@@ -103,7 +103,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
-     * @return TransactionStatusResponse
+     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
      */
     public function processTransactionStatusUpdate(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer)
     {
@@ -226,7 +226,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param PayonePaymentTransfer $payment
      *
-     * @return PayoneAuthorizationCheckResponseTransfer
+     * @return \Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer
      */
     public function getAuthorizationResponse(PayonePaymentTransfer $payment)
     {
@@ -328,7 +328,7 @@ class PayoneFacade extends AbstractFacade
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
@@ -350,7 +350,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
     public function getPaymentData($idPayment)
     {

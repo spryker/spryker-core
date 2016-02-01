@@ -26,7 +26,7 @@ interface RequestInterface
     /**
      * @param string $name
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function getMetaTransfer($name);
 
@@ -75,7 +75,7 @@ interface RequestInterface
     public function setTime($time);
 
     /**
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function getTransfer();
 

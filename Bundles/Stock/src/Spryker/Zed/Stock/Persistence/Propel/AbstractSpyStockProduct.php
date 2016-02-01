@@ -23,7 +23,7 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
     /**
      * @param int $amount
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -36,7 +36,7 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
     /**
      * @param int $amount
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

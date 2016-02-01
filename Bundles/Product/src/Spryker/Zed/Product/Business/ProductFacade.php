@@ -28,7 +28,7 @@ class ProductFacade extends AbstractFacade
     /**
      * @param \SplFileInfo $file
      *
-     * @return ProductBatchResult
+     * @return \Spryker\Zed\Product\Business\Model\ProductBatchResult
      */
     public function importProductsFromFile(\SplFileInfo $file)
     {
@@ -40,7 +40,7 @@ class ProductFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -52,7 +52,7 @@ class ProductFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -64,7 +64,7 @@ class ProductFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -76,7 +76,7 @@ class ProductFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return float
      */
@@ -114,7 +114,7 @@ class ProductFacade extends AbstractFacade
      * @param string $inputType
      * @param int|null $fkParentAttributeType
      *
-     * @throws AttributeTypeExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException
      *
      * @return int
      */
@@ -130,8 +130,8 @@ class ProductFacade extends AbstractFacade
      * @param string $attributeType
      * @param bool $isEditable
      *
-     * @throws AttributeExistsException
-     * @throws MissingAttributeTypeException
+     * @throws \Spryker\Zed\Product\Business\Exception\AttributeExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException
      *
      * @return int
      */
@@ -208,11 +208,11 @@ class ProductFacade extends AbstractFacade
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createProductUrl($sku, $url, LocaleTransfer $locale)
     {
@@ -224,11 +224,11 @@ class ProductFacade extends AbstractFacade
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale)
     {
@@ -258,7 +258,7 @@ class ProductFacade extends AbstractFacade
     /**
      * @param string $concreteSku
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku)
     {

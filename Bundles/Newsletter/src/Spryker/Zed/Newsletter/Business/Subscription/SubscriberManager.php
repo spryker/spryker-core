@@ -54,7 +54,7 @@ class SubscriberManager implements SubscriberManagerInterface
     /**
      * @param NewsletterSubscriberTransfer $newsletterSubscriberTransfer
      *
-     * @return NewsletterSubscriberTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
     public function createSubscriberFromTransfer(NewsletterSubscriberTransfer $newsletterSubscriberTransfer)
     {
@@ -94,7 +94,7 @@ class SubscriberManager implements SubscriberManagerInterface
     /**
      * @param SpyNewsletterSubscriber $subscriberEntity
      *
-     * @return NewsletterSubscriberTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
     protected function convertSubscriberEntityToTransfer(SpyNewsletterSubscriber $subscriberEntity)
     {

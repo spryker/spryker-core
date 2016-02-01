@@ -60,7 +60,7 @@ class ProductTable extends AbstractTable
     /**
      * @param TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -129,7 +129,7 @@ class ProductTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     protected function getYvesProductUrl(array $item)
     {

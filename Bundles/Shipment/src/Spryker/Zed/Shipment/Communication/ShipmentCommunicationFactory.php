@@ -24,7 +24,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return MethodTable
+     * @return \Spryker\Zed\Shipment\Communication\Table\MethodTable
      */
     public function createMethodTable()
     {
@@ -34,7 +34,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCarrierForm()
     {
@@ -50,7 +50,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
      *
      * @throws \ErrorException
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createMethodForm($idMethod = null)
     {
@@ -72,7 +72,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return TaxQueryContainerInterface
+     * @return \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface
      */
     protected function getTaxQueryContainer()
     {

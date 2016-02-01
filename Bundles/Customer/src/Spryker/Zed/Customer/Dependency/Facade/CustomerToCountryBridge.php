@@ -30,7 +30,7 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
     /**
      * @param string$countryName
      *
-     * @return CountryTransfer
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferredCountryByName($countryName)
     {
@@ -38,7 +38,7 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
     }
 
     /**
-     * @return CountryCollectionTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getAvailableCountries()
     {

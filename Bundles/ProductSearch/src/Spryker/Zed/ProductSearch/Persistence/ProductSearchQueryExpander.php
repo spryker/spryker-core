@@ -38,7 +38,7 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
      * @param ModelCriteria $expandableQuery
      * @param LocaleTransfer $locale
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {
@@ -64,9 +64,9 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
     /**
      * @param ModelCriteria $expandableQuery
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected function joinSearchableProducts(ModelCriteria $expandableQuery)
     {

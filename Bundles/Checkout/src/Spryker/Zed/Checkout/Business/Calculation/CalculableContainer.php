@@ -27,7 +27,7 @@ class CalculableContainer implements CalculableInterface
     }
 
     /**
-     * @return CalculableContainerTransfer
+     * @return \Generated\Shared\Transfer\CalculableContainerTransfer
      */
     public function getCalculableObject()
     {

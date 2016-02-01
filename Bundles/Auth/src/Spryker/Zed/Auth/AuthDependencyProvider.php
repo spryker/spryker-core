@@ -21,7 +21,7 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
@@ -35,7 +35,7 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {

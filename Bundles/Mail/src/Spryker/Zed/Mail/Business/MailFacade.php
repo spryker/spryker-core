@@ -19,7 +19,7 @@ class MailFacade extends AbstractFacade
     /**
      * @param MailTransfer $mailTransfer
      *
-     * @return SendMailResponsesTransfer
+     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
     public function sendMail(MailTransfer $mailTransfer)
     {

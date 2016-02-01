@@ -18,7 +18,7 @@ class PayolutionFacadeMockBuilder
     /**
      * @param AdapterInterface $adapter
      *
-     * @return PayolutionFacade
+     * @return \Spryker\Zed\Payolution\Business\PayolutionFacade
      */
     public static function build(AdapterInterface $adapter, \PHPUnit_Framework_TestCase $testCase)
     {

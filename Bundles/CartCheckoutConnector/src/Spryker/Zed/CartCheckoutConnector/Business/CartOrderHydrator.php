@@ -64,7 +64,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function getItemTransfer()
     {
@@ -74,7 +74,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     /**
      * @param ItemTransfer $cartItemTransfer
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createItemTransfer(ItemTransfer $cartItemTransfer)
     {

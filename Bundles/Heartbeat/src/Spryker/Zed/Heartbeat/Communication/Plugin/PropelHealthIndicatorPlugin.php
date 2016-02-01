@@ -20,7 +20,7 @@ class PropelHealthIndicatorPlugin extends AbstractPlugin implements HealthIndica
 {
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doHealthCheck()
     {

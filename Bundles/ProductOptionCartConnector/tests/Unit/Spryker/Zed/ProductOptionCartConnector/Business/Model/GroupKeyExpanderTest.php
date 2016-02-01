@@ -91,7 +91,7 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     protected function createCartChangeTransfer(array $cartItems)
     {

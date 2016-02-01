@@ -21,7 +21,7 @@ class CategoryExporterFactory extends AbstractFactory
 {
 
     /**
-     * @return Navigation
+     * @return \Spryker\Client\CategoryExporter\Model\Navigation
      */
     public function createNavigation()
     {
@@ -32,7 +32,7 @@ class CategoryExporterFactory extends AbstractFactory
     }
 
     /**
-     * @return CategoryTreeBuilder
+     * @return \Spryker\Client\CategoryExporter\Builder\CategoryTreeBuilder
      */
     public function createCategoryTreeBuilder()
     {
@@ -43,9 +43,9 @@ class CategoryExporterFactory extends AbstractFactory
     }
 
     /**
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return StorageClientInterface
+     * @return \Spryker\Client\Storage\StorageClientInterface
      */
     protected function getStorageClient()
     {
@@ -53,7 +53,7 @@ class CategoryExporterFactory extends AbstractFactory
     }
 
     /**
-     * @return NavigationKeyBuilder
+     * @return \Spryker\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder
      */
     protected function createNavigationKeyBuilder()
     {
@@ -61,7 +61,7 @@ class CategoryExporterFactory extends AbstractFactory
     }
 
     /**
-     * @return KeyBuilderInterface
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected function createResourceKeyBuilder()
     {

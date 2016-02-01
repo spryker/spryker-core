@@ -16,7 +16,7 @@ class MinimumCartSubtotal
      * @param CalculableInterface $order
      * @param SpyDiscountDecisionRule $decisionRule
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function isMinimumCartSubtotalReached(CalculableInterface $order, SpyDiscountDecisionRule $decisionRule)
     {

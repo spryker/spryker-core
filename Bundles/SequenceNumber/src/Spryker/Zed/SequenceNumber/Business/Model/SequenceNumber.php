@@ -39,7 +39,7 @@ class SequenceNumber implements SequenceNumberInterface
     }
 
     /**
-     * @throws InvalidSequenceNumberException
+     * @throws \Spryker\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException
      *
      * @return string
      */
@@ -58,7 +58,7 @@ class SequenceNumber implements SequenceNumberInterface
     }
 
     /**
-     * @throws InvalidSequenceNumberException
+     * @throws \Spryker\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException
      *
      * @return int
      */
@@ -84,7 +84,7 @@ class SequenceNumber implements SequenceNumberInterface
     }
 
     /**
-     * @return SpySequenceNumber
+     * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumber
      */
     protected function getSequence()
     {

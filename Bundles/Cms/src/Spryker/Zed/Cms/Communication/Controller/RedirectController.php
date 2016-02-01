@@ -118,7 +118,7 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @return CmsToUrlInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
      */
     private function getUrlFacade()
     {
@@ -127,7 +127,7 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @return CmsToLocaleInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
      */
     private function getLocaleFacade()
     {

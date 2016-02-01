@@ -60,7 +60,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     }
 
     /**
-     * @return StandardServiceContainer
+     * @return \Propel\Runtime\ServiceContainer\StandardServiceContainer
      */
     protected function getServiceContainer()
     {

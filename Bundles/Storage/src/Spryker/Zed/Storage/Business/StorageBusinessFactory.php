@@ -19,7 +19,7 @@ class StorageBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Storage
+     * @return \Spryker\Zed\Storage\Business\Model\Storage
      */
     public function createStorage()
     {
@@ -29,7 +29,7 @@ class StorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return StorageClient
+     * @return \Spryker\Client\Storage\StorageClient
      */
     protected function getStorageClient()
     {

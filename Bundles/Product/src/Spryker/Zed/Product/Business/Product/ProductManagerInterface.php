@@ -28,7 +28,7 @@ interface ProductManagerInterface
     /**
      * @param ProductAbstractTransfer $productAbstractTransfer
      *
-     * @throws ProductAbstractExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
      *
      * @return int
      */
@@ -37,7 +37,7 @@ interface ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -47,7 +47,7 @@ interface ProductManagerInterface
      * @param ProductConcreteTransfer $productConcreteTransfer
      * @param int $idProductAbstract
      *
-     * @throws ProductConcreteExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
      *
      * @return int
      */
@@ -63,7 +63,7 @@ interface ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -79,11 +79,11 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createProductUrl($sku, $url, LocaleTransfer $locale);
 
@@ -92,11 +92,11 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
 
@@ -105,11 +105,11 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale);
 
@@ -118,18 +118,18 @@ interface ProductManagerInterface
      * @param string $url
      * @param LocaleTransfer $locale
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale);
 
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return float
      */
@@ -138,7 +138,7 @@ interface ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -147,7 +147,7 @@ interface ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return string
      */
@@ -156,7 +156,7 @@ interface ProductManagerInterface
     /**
      * @param string $concreteSku
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku);
 

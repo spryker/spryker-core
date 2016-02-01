@@ -21,7 +21,7 @@ class CalculationFacade extends AbstractFacade
     /**
      * @param CalculableInterface $calculableContainer
      *
-     * @return CalculableInterface
+     * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {
@@ -34,7 +34,7 @@ class CalculationFacade extends AbstractFacade
      * @param CalculableInterface $calculableContainer
      * @param null $calculableItems
      *
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     public function recalculateTotals(
         CalculableInterface $calculableContainer,

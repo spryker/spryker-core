@@ -15,7 +15,7 @@ interface ExceptionHandlerInterface
     /**
      * @param FlattenException $exception
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handleException(FlattenException $exception);
 

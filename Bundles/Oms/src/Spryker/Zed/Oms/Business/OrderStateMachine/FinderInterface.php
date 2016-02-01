@@ -39,14 +39,14 @@ interface FinderInterface
     /**
      * @param string $sku
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function getReservedOrderItemsForSku($sku);
 
     /**
      * @param string $sku
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function countReservedOrderItemsForSku($sku);
 

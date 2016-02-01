@@ -16,7 +16,7 @@ class DiscountWriter extends AbstractWriter
     /**
      * @param DiscountTransfer $discountTransfer
      *
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     public function create(DiscountTransfer $discountTransfer)
     {
@@ -30,9 +30,9 @@ class DiscountWriter extends AbstractWriter
     /**
      * @param DiscountTransfer $discountTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     public function update(DiscountTransfer $discountTransfer)
     {
@@ -47,7 +47,7 @@ class DiscountWriter extends AbstractWriter
     /**
      * @param DiscountTransfer $discountTransfer
      *
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     public function save(DiscountTransfer $discountTransfer)
     {

@@ -59,7 +59,7 @@ class GlossaryFacadeTest extends Test
     }
 
     /**
-     * @return LocaleFacade
+     * @return \Spryker\Zed\Locale\Business\LocaleFacade
      */
     private function getLocaleFacade()
     {
@@ -67,7 +67,7 @@ class GlossaryFacadeTest extends Test
     }
 
     /**
-     * @return GlossaryFacade
+     * @return \Spryker\Zed\Glossary\Business\GlossaryFacade
      */
     private function getGlossaryFacade()
     {
@@ -77,7 +77,7 @@ class GlossaryFacadeTest extends Test
     /**
      * @param array $locales
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     private function buildLocaleTransferObject(array $locales)
     {

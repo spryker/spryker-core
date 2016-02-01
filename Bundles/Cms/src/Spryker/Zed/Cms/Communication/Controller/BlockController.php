@@ -46,7 +46,7 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -122,7 +122,7 @@ class BlockController extends AbstractController
     /**
      * @param array $data
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     private function createPageTransfer(array $data)
     {
@@ -151,7 +151,7 @@ class BlockController extends AbstractController
     /**
      * @param array $data
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     private function createBlockTransfer(array $data)
     {
@@ -165,7 +165,7 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @return LocaleFacade
+     * @return \Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade
      */
     private function getLocaleFacade()
     {
@@ -175,7 +175,7 @@ class BlockController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function searchCategoryAction(Request $request)
     {

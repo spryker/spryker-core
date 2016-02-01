@@ -14,7 +14,7 @@ class CheckoutFactory extends AbstractFactory
 {
 
     /**
-     * @return CheckoutStubInterface
+     * @return \Spryker\Client\Checkout\Zed\CheckoutStubInterface
      */
     public function createZedStub()
     {

@@ -16,7 +16,7 @@ class NewRelicCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return Api
+     * @return \Spryker\Shared\NewRelic\Api
      */
     public function createNewRelicApi()
     {

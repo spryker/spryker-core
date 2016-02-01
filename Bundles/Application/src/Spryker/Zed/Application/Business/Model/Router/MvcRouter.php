@@ -49,7 +49,7 @@ class MvcRouter implements RouterInterface
     }
 
     /**
-     * @return RequestContext
+     * @return \Symfony\Component\Routing\RequestContext
      */
     public function getContext()
     {

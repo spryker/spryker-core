@@ -34,10 +34,10 @@ interface ProductCategoryManagerInterface
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @throws ProductCategoryMappingExistsException
-     * @throws MissingProductException
-     * @throws MissingCategoryNodeException
-     * @throws PropelException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingProductException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -62,7 +62,7 @@ interface ProductCategoryManagerInterface
      * @param int $idCategory
      * @param int $idProductAbstract
      *
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function getProductCategoryMappingById($idCategory, $idProductAbstract);
 
@@ -70,7 +70,7 @@ interface ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productIdsToAssign
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -88,7 +88,7 @@ interface ProductCategoryManagerInterface
      * @param $idCategory
      * @param array $productOrderList
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -98,7 +98,7 @@ interface ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productPreConfigList
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

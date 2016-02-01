@@ -288,7 +288,7 @@ class PayolutionFacadeGatewayTest extends Test
     }
 
     /**
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -327,7 +327,7 @@ class PayolutionFacadeGatewayTest extends Test
     }
 
     /**
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

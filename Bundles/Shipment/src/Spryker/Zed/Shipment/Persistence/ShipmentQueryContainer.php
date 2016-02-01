@@ -14,7 +14,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
 {
 
     /**
-     * @return SpyShipmentCarrierQuery
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     public function queryCarriers()
     {
@@ -22,7 +22,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     }
 
     /**
-     * @return SpyShipmentCarrierQuery
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     public function queryActiveCarriers()
     {
@@ -30,7 +30,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     }
 
     /**
-     * @return SpyShipmentMethodQuery
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryMethods()
     {
@@ -38,7 +38,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     }
 
     /**
-     * @return SpyShipmentMethodQuery
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryActiveMethods()
     {
@@ -48,7 +48,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     /**
      * @param int $idMethod
      *
-     * @return SpyShipmentMethodQuery
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryMethodByIdMethod($idMethod)
     {

@@ -14,7 +14,7 @@ class NewsletterFactory extends AbstractFactory
 {
 
     /**
-     * @return NewsletterStubInterface
+     * @return \Spryker\Client\Newsletter\Zed\NewsletterStubInterface
      */
     public function createZedNewsletterStub()
     {

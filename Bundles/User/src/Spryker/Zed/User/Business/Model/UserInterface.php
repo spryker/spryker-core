@@ -20,9 +20,9 @@ interface UserInterface
      * @param string $username
      * @param string $password
      *
-     * @throws UsernameExistsException
+     * @throws \Spryker\Zed\User\Business\Exception\UsernameExistsException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function addUser($firstName, $lastName, $username, $password);
 
@@ -44,9 +44,9 @@ interface UserInterface
     /**
      * @param UserTransfer $userTransfer
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function save(UserTransfer $userTransfer);
 
@@ -67,25 +67,25 @@ interface UserInterface
     /**
      * @param string $username
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username);
 
     /**
      * @param int $id
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserById($id);
 
     /**
      * @param UserTransfer $user
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function setCurrentUser(UserTransfer $user);
 
@@ -102,14 +102,14 @@ interface UserInterface
     public function isSystemUser(UserTransfer $user);
 
     /**
-     * @return CollectionTransfer
+     * @return \Generated\Shared\Transfer\CollectionTransfer
      */
     public function getSystemUsers();
 
     /**
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser();
 

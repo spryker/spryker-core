@@ -20,7 +20,7 @@ class CustomerMailConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return RegistrationTokenSender
+     * @return \Spryker\Zed\CustomerMailConnector\Business\Sender\RegistrationTokenSender
      */
     public function createRegistrationTokenSender()
     {
@@ -32,7 +32,7 @@ class CustomerMailConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PasswordRestoreTokenSender
+     * @return \Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoreTokenSender
      */
     public function createPasswordRestoreTokenSender()
     {
@@ -44,7 +44,7 @@ class CustomerMailConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PasswordRestoredConfirmationSender
+     * @return \Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoredConfirmationSender
      */
     public function createPasswordRestoredConfirmationSender()
     {

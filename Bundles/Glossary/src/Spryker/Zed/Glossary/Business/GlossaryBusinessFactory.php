@@ -25,7 +25,7 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return TranslationManagerInterface
+     * @return \Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface
      */
     public function createTranslationManager()
     {
@@ -39,7 +39,7 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GlossaryToTouchInterface
+     * @return \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface
      */
     protected function getTouchFacade()
     {
@@ -47,7 +47,7 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GlossaryToLocaleInterface
+     * @return \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface
      */
     protected function getLocaleFacade()
     {
@@ -55,7 +55,7 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GlossaryToMessengerInterface
+     * @return \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerInterface
      */
     protected function getMessagesFacade()
     {
@@ -63,7 +63,7 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return KeyManagerInterface
+     * @return \Spryker\Zed\Glossary\Business\Key\KeyManagerInterface
      */
     public function createKeyManager()
     {

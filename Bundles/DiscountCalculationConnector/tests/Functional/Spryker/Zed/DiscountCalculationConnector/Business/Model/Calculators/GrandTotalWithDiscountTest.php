@@ -187,7 +187,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return GrandTotalWithDiscountsTotalsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator
      */
     protected function getCalculator()
     {
@@ -198,7 +198,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     protected function getTotals()
     {
@@ -210,7 +210,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function getDiscount()
     {
@@ -218,7 +218,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return CalculableContainer
+     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
@@ -231,7 +231,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
@@ -241,7 +241,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {

@@ -51,7 +51,7 @@ class OrderManager implements OrderManagerInterface
     /**
      * @param PayonePaymentTransfer $paymentTransfer
      *
-     * @return SpyPaymentPayone
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
     protected function savePayment(PayonePaymentTransfer $paymentTransfer)
     {

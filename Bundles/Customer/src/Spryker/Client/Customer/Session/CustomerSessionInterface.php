@@ -21,14 +21,14 @@ interface CustomerSessionInterface
     public function hasCustomer();
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer();
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function setCustomer(CustomerTransfer $customerTransfer);
 

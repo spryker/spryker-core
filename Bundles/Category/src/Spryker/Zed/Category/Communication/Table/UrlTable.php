@@ -28,7 +28,7 @@ class UrlTable extends AbstractTable
     /**
      * @param TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {

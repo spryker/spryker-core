@@ -214,7 +214,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @throws MissingCategoryNodeException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
      *
      * @return int
      */
@@ -240,7 +240,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @throws MissingCategoryException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      *
      * @return int
      */
@@ -265,7 +265,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idNode
      *
-     * @return SpyCategoryNode
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
      */
     public function getNodeById($idNode)
     {
@@ -278,7 +278,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param $idCategory
      * @param $idParentNode
      *
-     * @return SpyCategoryNode
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
      */
     public function getNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
     {

@@ -36,7 +36,7 @@ class AuthorizationContainer extends AbstractAuthorizationContainer
     }
 
     /**
-     * @return BusinessContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer
      */
     public function getBusiness()
     {

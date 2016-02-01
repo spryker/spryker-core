@@ -64,7 +64,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     /**
      * @param NodeTransfer $categoryNode
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -103,7 +103,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     /**
      * @param NodeTransfer $categoryNode
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

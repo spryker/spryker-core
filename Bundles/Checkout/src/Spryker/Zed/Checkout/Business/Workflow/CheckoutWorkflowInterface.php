@@ -14,7 +14,7 @@ interface CheckoutWorkflowInterface
     /**
      * @param CheckoutRequestTransfer $checkoutRequest
      *
-     * @return CheckoutRequestTransfer
+     * @return \Generated\Shared\Transfer\CheckoutRequestTransfer
      */
     public function requestCheckout(CheckoutRequestTransfer $checkoutRequest);
 

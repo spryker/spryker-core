@@ -213,7 +213,7 @@ class Discount
     /**
      * @param SpyDiscount $discountEntity
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function hydrateDiscountTransfer(SpyDiscount $discountEntity)
     {

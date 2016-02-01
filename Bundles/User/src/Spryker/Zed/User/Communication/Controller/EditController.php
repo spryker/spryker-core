@@ -105,7 +105,7 @@ class EditController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function activateUserAction(Request $request)
     {
@@ -131,7 +131,7 @@ class EditController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deactivateUserAction(Request $request)
     {
@@ -157,7 +157,7 @@ class EditController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {

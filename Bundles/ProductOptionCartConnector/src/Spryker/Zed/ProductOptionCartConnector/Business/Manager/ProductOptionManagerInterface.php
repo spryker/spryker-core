@@ -13,7 +13,7 @@ interface ProductOptionManagerInterface
     /**
      * @param ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function expandProductOptions(ChangeTransfer $change);
 

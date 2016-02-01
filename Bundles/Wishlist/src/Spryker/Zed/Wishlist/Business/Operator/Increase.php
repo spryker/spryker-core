@@ -16,7 +16,7 @@ class Increase extends AbstractOperator
     /**
      * @param WishlistChangeTransfer $wishlistItem
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     protected function applyOperation(WishlistChangeTransfer $wishlistItem)
     {

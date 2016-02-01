@@ -46,7 +46,7 @@ class MessengerFacade extends AbstractFacade
     }
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages()
     {

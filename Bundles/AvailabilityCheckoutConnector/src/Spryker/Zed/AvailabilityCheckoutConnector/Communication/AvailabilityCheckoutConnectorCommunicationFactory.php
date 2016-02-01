@@ -18,7 +18,7 @@ class AvailabilityCheckoutConnectorCommunicationFactory extends AbstractCommunic
 {
 
     /**
-     * @return AvailabilityCheckoutConnectorToAvailabilityInterface
+     * @return \Spryker\Zed\AvailabilityCheckoutConnector\Dependency\Facade\AvailabilityCheckoutConnectorToAvailabilityInterface
      */
     public function getAvailabilityFacade()
     {

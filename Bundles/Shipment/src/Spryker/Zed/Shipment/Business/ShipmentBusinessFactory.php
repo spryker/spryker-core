@@ -21,7 +21,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Carrier
+     * @return \Spryker\Zed\Shipment\Business\Model\Carrier
      */
     public function createCarrier()
     {
@@ -29,7 +29,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Method
+     * @return \Spryker\Zed\Shipment\Business\Model\Method
      */
     public function createMethod()
     {

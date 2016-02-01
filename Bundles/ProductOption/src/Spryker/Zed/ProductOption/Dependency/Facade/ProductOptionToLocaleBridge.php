@@ -39,7 +39,7 @@ class ProductOptionToLocaleBridge implements ProductOptionToLocaleInterface
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)
     {

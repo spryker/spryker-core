@@ -114,7 +114,7 @@ class Finder implements FinderInterface
     /**
      * @param string $sku
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function getReservedOrderItemsForSku($sku)
     {
@@ -124,7 +124,7 @@ class Finder implements FinderInterface
     /**
      * @param string $sku
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function countReservedOrderItemsForSku($sku)
     {
@@ -136,7 +136,7 @@ class Finder implements FinderInterface
      * @param string $sku
      * @param bool $returnTest
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     protected function getOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
@@ -150,7 +150,7 @@ class Finder implements FinderInterface
      * @param string $sku
      * @param bool $returnTest
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function countOrderItemsForSku(array $states, $sku, $returnTest = true)
     {

@@ -20,7 +20,7 @@ class CartFacade extends AbstractFacade
     /**
      * @param ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addToCart(ChangeTransfer $cartChange)
     {
@@ -32,7 +32,7 @@ class CartFacade extends AbstractFacade
     /**
      * @param ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function increaseQuantity(ChangeTransfer $cartChange)
     {
@@ -44,7 +44,7 @@ class CartFacade extends AbstractFacade
     /**
      * @param ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeFromCart(ChangeTransfer $cartChange)
     {
@@ -56,7 +56,7 @@ class CartFacade extends AbstractFacade
     /**
      * @param ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function decreaseQuantity(ChangeTransfer $cartChange)
     {
@@ -70,7 +70,7 @@ class CartFacade extends AbstractFacade
      *
      * @param CartTransfer $cart
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function recalculate(CartTransfer $cart)
     {
@@ -83,7 +83,7 @@ class CartFacade extends AbstractFacade
     /**
      * @param ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addCouponCode(ChangeTransfer $cartChange)
     {
@@ -95,7 +95,7 @@ class CartFacade extends AbstractFacade
     /**
      * @param ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeCouponCode(ChangeTransfer $cartChange)
     {
@@ -107,7 +107,7 @@ class CartFacade extends AbstractFacade
     /**
      * @param ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCouponCodes(ChangeTransfer $cartChange)
     {

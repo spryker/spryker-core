@@ -46,7 +46,7 @@ class CustomerTable extends AbstractTable
     /**
      * @param TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -90,7 +90,7 @@ class CustomerTable extends AbstractTable
     /**
      * @param TableConfiguration $config
      *
-     * @return ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -174,7 +174,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @return SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     protected function prepareQuery()
     {

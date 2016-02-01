@@ -83,7 +83,7 @@ class SaverTest extends Test
     }
 
     /**
-     * @return PayolutionBusinessFactory
+     * @return \Spryker\Zed\Payolution\Business\PayolutionBusinessFactory
      */
     private function getPayolutionBusinessBusinessFactory()
     {
@@ -93,7 +93,7 @@ class SaverTest extends Test
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     private function getOrderTransfer()
     {
@@ -145,7 +145,7 @@ class SaverTest extends Test
     /**
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     private function createOrderEntity()
     {
@@ -188,7 +188,7 @@ class SaverTest extends Test
     /**
      * @param int $idSalesOrder
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     private function createOrderItemEntity($idSalesOrder)
     {
@@ -213,7 +213,7 @@ class SaverTest extends Test
     }
 
     /**
-     * @return SpyOmsOrderItemState
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     private function createOrderItemStateEntity()
     {
@@ -225,7 +225,7 @@ class SaverTest extends Test
     }
 
     /**
-     * @return SpyOmsOrderProcess
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     private function createOrderProcessEntity()
     {
@@ -237,7 +237,7 @@ class SaverTest extends Test
     }
 
     /**
-     * @return SpySalesOrderItemBundle
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
      */
     private function createOrderItemBundleEntity()
     {

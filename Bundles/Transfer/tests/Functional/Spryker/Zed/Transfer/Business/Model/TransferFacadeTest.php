@@ -22,7 +22,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return TransferFacade
+     * @return \Spryker\Zed\Transfer\Business\TransferFacade
      */
     private function getFacade()
     {
@@ -63,7 +63,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return TransferConfig
+     * @return \Spryker\Zed\Transfer\TransferConfig
      */
     private function getConfig()
     {

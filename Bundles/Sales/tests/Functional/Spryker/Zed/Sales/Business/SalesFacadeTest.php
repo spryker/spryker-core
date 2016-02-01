@@ -113,7 +113,7 @@ class SalesFacadeTest extends Test
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     private function getValidBaseOrderTransfer()
     {
@@ -369,7 +369,7 @@ class SalesFacadeTest extends Test
     /**
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyOmsOrderProcess
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     protected function getProcessEntity()
     {

@@ -19,7 +19,7 @@ class WishlistFactory extends AbstractFactory
 {
 
     /**
-     * @return WishlistSessionInterface
+     * @return \Spryker\Client\Wishlist\Session\WishlistSessionInterface
      */
     public function createSession()
     {
@@ -31,7 +31,7 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @return WishlistStubInterface
+     * @return \Spryker\Client\Wishlist\Zed\WishlistStubInterface
      */
     public function createZedStub()
     {
@@ -42,7 +42,7 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @return WishlistStorageInterface
+     * @return \Spryker\Client\Wishlist\Storage\WishlistStorageInterface
      */
     public function createStorage()
     {
@@ -53,7 +53,7 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @return CustomerClientInterface
+     * @return \Spryker\Client\Customer\CustomerClientInterface
      */
     public function createCustomerClient()
     {

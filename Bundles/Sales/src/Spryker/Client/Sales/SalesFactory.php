@@ -14,7 +14,7 @@ class SalesFactory extends AbstractFactory
 {
 
     /**
-     * @return SalesStubInterface
+     * @return \Spryker\Client\Sales\Zed\SalesStubInterface
      */
     public function createZedSalesStub()
     {

@@ -14,14 +14,14 @@ interface FacetAggregationBuilderInterface
     /**
      * @param string $fieldName
      *
-     * @return AbstractAggregation
+     * @return \Elastica\Aggregation\AbstractAggregation
      */
     public function createNumberFacetAggregation($fieldName);
 
     /**
      * @param string $fieldName
      *
-     * @return AbstractAggregation
+     * @return \Elastica\Aggregation\AbstractAggregation
      */
     public function createStringFacetAggregation($fieldName);
 

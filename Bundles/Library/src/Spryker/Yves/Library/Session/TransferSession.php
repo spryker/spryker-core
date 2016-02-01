@@ -40,7 +40,7 @@ class TransferSession
      * @param string $name
      * @param TransferInterface $transferObject
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function get($name, TransferInterface $transferObject)
     {

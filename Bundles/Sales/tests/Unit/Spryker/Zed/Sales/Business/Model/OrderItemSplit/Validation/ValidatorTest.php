@@ -106,7 +106,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Validator
+     * @return \Spryker\Zed\Sales\Business\Model\Split\Validation\Validator
      */
     protected function getValidator()
     {
@@ -116,7 +116,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @param int $quantity
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function getSalesOrderItem($quantity = 2)
     {

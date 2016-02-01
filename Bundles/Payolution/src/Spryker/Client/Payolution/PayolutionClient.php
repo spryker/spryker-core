@@ -20,7 +20,7 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     /**
      * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
@@ -31,7 +31,7 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
-     * @return PayolutionSession
+     * @return \Spryker\Client\Payolution\Session\PayolutionSession
      */
     protected function getSession()
     {
@@ -41,7 +41,7 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     /**
      * @param PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function storeInstallmentPaymentsInSession(PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer)
     {
@@ -59,7 +59,7 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPaymentsFromSession()
     {

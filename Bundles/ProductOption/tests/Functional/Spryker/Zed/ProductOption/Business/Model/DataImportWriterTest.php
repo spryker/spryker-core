@@ -297,9 +297,9 @@ class DataImportWriterTest extends Test
      * @param string $typeKey
      * @param string $valueKey
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyProductOptionType
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionType
      */
     private function createOptionTypeWithValue($typeKey, $valueKey)
     {
@@ -314,9 +314,9 @@ class DataImportWriterTest extends Test
      * @param SpyProduct $product
      * @param SpyProductOptionType $optionType
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyProductOptionTypeUsage
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsage
      */
     private function createProductOptionTypeUsage($product, $optionType)
     {

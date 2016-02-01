@@ -214,7 +214,7 @@ class CheckoutFacadeTest extends Test
     }
 
     /**
-     * @return CheckoutRequestTransfer
+     * @return \Generated\Shared\Transfer\CheckoutRequestTransfer
      */
     protected function getBaseCheckoutTransfer()
     {
@@ -329,7 +329,7 @@ class CheckoutFacadeTest extends Test
     }
 
     /**
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function getContainer()
     {
@@ -365,7 +365,7 @@ class CheckoutFacadeTest extends Test
     }
 
     /**
-     * @return CheckoutBusinessFactory
+     * @return \Spryker\Zed\Checkout\Business\CheckoutBusinessFactory
      */
     protected function getFactory()
     {

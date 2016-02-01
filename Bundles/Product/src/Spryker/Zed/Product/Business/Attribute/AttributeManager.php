@@ -56,9 +56,9 @@ class AttributeManager implements AttributeManagerInterface
     /**
      * @param string $attributeType
      *
-     * @throws MissingAttributeTypeException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException
      *
-     * @return SpyProductAttributeType
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeType
      */
     protected function getAttributeType($attributeType)
     {
@@ -82,8 +82,8 @@ class AttributeManager implements AttributeManagerInterface
      * @param string $attributeType
      * @param bool $isEditable
      *
-     * @throws AttributeExistsException
-     * @throws MissingAttributeTypeException
+     * @throws \Spryker\Zed\Product\Business\Exception\AttributeExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException
      *
      * @return int
      */
@@ -106,7 +106,7 @@ class AttributeManager implements AttributeManagerInterface
     /**
      * @param string $attributeName
      *
-     * @throws AttributeExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\AttributeExistsException
      *
      * @return void
      */
@@ -127,7 +127,7 @@ class AttributeManager implements AttributeManagerInterface
      * @param string $inputType
      * @param int|null $fkParentAttributeType
      *
-     * @throws AttributeTypeExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException
      *
      * @return int
      */
@@ -149,7 +149,7 @@ class AttributeManager implements AttributeManagerInterface
     /**
      * @param string $name
      *
-     * @throws AttributeTypeExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException
      *
      * @return void
      */

@@ -19,7 +19,7 @@ class ProductOptionExporterBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return ExportProcessorInterface
+     * @return \Spryker\Zed\ProductOptionExporter\Business\Model\ExportProcessorInterface
      */
     public function createProcessorModel()
     {

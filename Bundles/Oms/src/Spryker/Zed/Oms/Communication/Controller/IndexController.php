@@ -36,7 +36,7 @@ class IndexController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function drawAction(Request $request)
     {

@@ -130,7 +130,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function getOrderEntity()
     {
@@ -138,7 +138,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     protected function getPaymentEntity()
     {
@@ -146,7 +146,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return ResponseConverter
+     * @return \Spryker\Zed\Payolution\Business\Api\Converter\Converter
      */
     protected function getResponseConverter()
     {
@@ -154,7 +154,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolutionTransactionRequestLogQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery
      */
     protected function getRequestLogQuery()
     {
@@ -162,7 +162,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     protected function getStatusLogQuery()
     {
@@ -192,7 +192,7 @@ class AbstractFacadeTest extends Test
     /**
      * @param AdapterInterface $adapter
      *
-     * @return PayolutionFacade
+     * @return \Spryker\Zed\Payolution\Business\PayolutionFacade
      */
     protected function getFacadeMock(AdapterInterface $adapter)
     {

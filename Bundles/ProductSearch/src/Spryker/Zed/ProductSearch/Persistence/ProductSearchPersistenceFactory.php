@@ -31,7 +31,7 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @deprecated Use getQueryContainer() directly
      *
-     * @return ProductQueryContainerInterface
+     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected function getProductQueryContainer()
     {

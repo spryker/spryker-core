@@ -52,7 +52,7 @@ class RegionManager implements RegionManagerInterface
     /**
      * @param string $isoCode
      *
-     * @throws RegionExistsException
+     * @throws \Spryker\Zed\Country\Business\Exception\RegionExistsException
      *
      * @return void
      */

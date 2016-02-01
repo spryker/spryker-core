@@ -21,7 +21,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function addItemAction(WishlistChangeTransfer $changeTransfer)
     {
@@ -31,7 +31,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItemAction(WishlistChangeTransfer $changeTransfer)
     {
@@ -41,7 +41,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function decreaseQuantityAction(WishlistChangeTransfer $changeTransfer)
     {
@@ -51,7 +51,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseQuantityAction(WishlistChangeTransfer $changeTransfer)
     {
@@ -61,7 +61,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CustomerTransfer $customer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getCustomerWishlistAction(CustomerTransfer $customer)
     {

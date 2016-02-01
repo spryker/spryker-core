@@ -174,7 +174,7 @@ class OmsFacade extends AbstractFacade
      *
      * @param string $processName
      *
-     * @return Process
+     * @return \Spryker\Zed\Oms\Business\Process\Process
      */
     public function getProcess($processName)
     {
@@ -188,7 +188,7 @@ class OmsFacade extends AbstractFacade
     /**
      * @deprecated
      *
-     * @return Dummy
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\Dummy
      */
     public function getDummy()
     {
@@ -253,7 +253,7 @@ class OmsFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function getReservedOrderItemsForSku($sku)
     {
@@ -265,7 +265,7 @@ class OmsFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function countReservedOrderItemsForSku($sku)
     {
@@ -277,7 +277,7 @@ class OmsFacade extends AbstractFacade
     /**
      * @param string $stateName
      *
-     * @return SpyOmsOrderItemState
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getStateEntity($stateName)
     {
@@ -289,7 +289,7 @@ class OmsFacade extends AbstractFacade
     /**
      * @param string $processName
      *
-     * @return SpyOmsOrderProcess
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     public function getProcessEntity($processName)
     {
@@ -299,7 +299,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @return SpyOmsOrderItemState
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getInitialStateEntity()
     {

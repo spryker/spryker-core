@@ -20,7 +20,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param OrderListTransfer $orderListTransfer
      *
-     * @return OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrdersAction(OrderListTransfer $orderListTransfer)
     {
@@ -30,7 +30,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetailsAction(OrderTransfer $orderTransfer)
     {

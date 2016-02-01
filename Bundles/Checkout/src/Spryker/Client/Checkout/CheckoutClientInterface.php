@@ -15,7 +15,7 @@ interface CheckoutClientInterface
     /**
      * @param CheckoutRequestTransfer $requestInterface
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function requestCheckout(CheckoutRequestTransfer $requestInterface);
 

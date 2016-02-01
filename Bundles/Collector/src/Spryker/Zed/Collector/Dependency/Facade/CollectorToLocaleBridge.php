@@ -26,7 +26,7 @@ class CollectorToLocaleBridge implements CollectorToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {

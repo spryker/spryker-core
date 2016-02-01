@@ -23,7 +23,7 @@ class WishlistSession implements WishlistSessionInterface
     }
 
     /**
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getWishlist()
     {

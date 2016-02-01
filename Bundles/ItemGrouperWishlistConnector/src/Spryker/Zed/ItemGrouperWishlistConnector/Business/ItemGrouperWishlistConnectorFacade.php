@@ -18,7 +18,7 @@ class ItemGrouperWishlistConnectorFacade extends AbstractFacade
     /**
      * @param GroupableContainerTransfer $items
      *
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     public function groupOrderItems(GroupableContainerTransfer $items)
     {

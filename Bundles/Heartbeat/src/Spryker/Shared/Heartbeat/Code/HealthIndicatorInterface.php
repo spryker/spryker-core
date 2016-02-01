@@ -12,7 +12,7 @@ interface HealthIndicatorInterface
 {
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doHealthCheck();
 

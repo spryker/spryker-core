@@ -33,7 +33,7 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     }
 
     /**
-     * @return FormFactory
+     * @return \Symfony\Component\Form\FormFactory
      */
     protected function getFormFactory()
     {
@@ -44,7 +44,7 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
      * @param FormTypeInterface $formTypeInterface
      * @param array $options
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function createForm(FormTypeInterface $formTypeInterface, array $options = [])
     {

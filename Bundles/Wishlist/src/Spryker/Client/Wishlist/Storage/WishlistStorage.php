@@ -37,7 +37,7 @@ class WishlistStorage implements WishlistStorageInterface
     /**
      * @param WishlistTransfer $wishlist
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function expandProductDetails(WishlistTransfer $wishlist)
     {

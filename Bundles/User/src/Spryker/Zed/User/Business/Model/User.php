@@ -59,9 +59,9 @@ class User implements UserInterface
      * @param string $username
      * @param string $password
      *
-     * @throws UsernameExistsException
+     * @throws \Spryker\Zed\User\Business\Exception\UsernameExistsException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function addUser($firstName, $lastName, $username, $password)
     {
@@ -104,7 +104,7 @@ class User implements UserInterface
     /**
      * @param UserTransfer $userTransfer
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function save(UserTransfer $userTransfer)
     {
@@ -139,7 +139,7 @@ class User implements UserInterface
     /**
      * @param int $idUser
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function removeUser($idUser)
     {
@@ -150,9 +150,9 @@ class User implements UserInterface
     }
 
     /**
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUsers()
     {
@@ -211,9 +211,9 @@ class User implements UserInterface
     /**
      * @param string $username
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username)
     {
@@ -229,9 +229,9 @@ class User implements UserInterface
     /**
      * @param int $id
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserById($id)
     {
@@ -250,9 +250,9 @@ class User implements UserInterface
     /**
      * @param int $id
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getEntityUserById($id)
     {
@@ -301,7 +301,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return CollectionTransfer
+     * @return \Generated\Shared\Transfer\CollectionTransfer
      */
     public function getSystemUsers()
     {
@@ -326,9 +326,9 @@ class User implements UserInterface
     }
 
     /**
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser()
     {
@@ -345,7 +345,7 @@ class User implements UserInterface
     /**
      * @param SpyUser $entity
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     protected function entityToTransfer(SpyUser $entity)
     {

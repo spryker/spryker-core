@@ -44,7 +44,7 @@ class DetailsController extends AbstractController
     /**
      * @param int $idPayment
      *
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     private function getPaymentEntity($idPayment)
     {
@@ -60,7 +60,7 @@ class DetailsController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function requestLogTableAction(Request $request)
     {
@@ -73,7 +73,7 @@ class DetailsController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function statusLogTableAction(Request $request)
     {

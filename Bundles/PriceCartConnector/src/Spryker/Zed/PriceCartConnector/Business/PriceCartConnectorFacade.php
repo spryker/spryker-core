@@ -19,7 +19,7 @@ class PriceCartConnectorFacade extends AbstractFacade
      * @param ChangeTransfer $change
      * @param null $grossPriceType
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function addGrossPriceToItems(ChangeTransfer $change, $grossPriceType = null)
     {

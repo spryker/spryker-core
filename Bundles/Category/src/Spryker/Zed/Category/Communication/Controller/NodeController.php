@@ -59,7 +59,7 @@ class NodeController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function reorderAction(Request $request)
     {

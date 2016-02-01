@@ -53,16 +53,16 @@ interface AuthInterface
     /**
      * @param string $hash
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getSystemUserByHash($hash);
 
     /**
      * @param string $token
      *
-     * @throws UserNotLoggedException
+     * @throws \Spryker\Zed\Auth\Business\Exception\UserNotLoggedException
      *
      * @return mixed
      */

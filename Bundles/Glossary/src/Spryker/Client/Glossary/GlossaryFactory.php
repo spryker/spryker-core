@@ -18,7 +18,7 @@ class GlossaryFactory extends AbstractFactory
     /**
      * @param string $locale
      *
-     * @return GlossaryStorageInterface
+     * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
      */
     public function createTranslator($locale)
     {
@@ -30,7 +30,7 @@ class GlossaryFactory extends AbstractFactory
     }
 
     /**
-     * @return StorageClientInterface
+     * @return \Spryker\Client\Storage\StorageClientInterface
      */
     protected function getStorage()
     {
@@ -38,7 +38,7 @@ class GlossaryFactory extends AbstractFactory
     }
 
     /**
-     * @return KeyBuilderInterface
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected function createKeyBuilder()
     {
@@ -48,7 +48,7 @@ class GlossaryFactory extends AbstractFactory
     /**
      * @deprecated Use createKeyBuilder() instead.
      *
-     * @return KeyBuilderInterface
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected function getKeyBuilder()
     {

@@ -17,7 +17,7 @@ class Request extends \Spryker\Shared\Library\Communication\Request
     private $transfer;
 
     /**
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function getTransfer()
     {

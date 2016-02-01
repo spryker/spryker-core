@@ -40,7 +40,7 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @return PayolutionConfig
+     * @return \Spryker\Zed\Payolution\PayolutionConfig
      */
     protected function getConfig()
     {
@@ -143,7 +143,7 @@ abstract class AbstractPaymentMethod
     /**
      * @param string $gender
      *
-     * @throws GenderNotDefinedException
+     * @throws \Spryker\Zed\Payolution\Business\Exception\GenderNotDefinedException
      *
      * @return string
      */

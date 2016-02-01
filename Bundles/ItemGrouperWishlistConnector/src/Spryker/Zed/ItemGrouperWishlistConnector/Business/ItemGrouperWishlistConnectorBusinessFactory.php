@@ -19,7 +19,7 @@ class ItemGrouperWishlistConnectorBusinessFactory extends AbstractBusinessFactor
     /**
      * @deprecated Use getItemGrouperFacade() instead.
      *
-     * @return ItemGrouperWishlistConnectorToItemGrouperInterface
+     * @return \Spryker\Zed\ItemGrouperWishlistConnector\Dependency\Facade\ItemGrouperWishlistConnectorToItemGrouperInterface
      */
     public function createItemGrouperFacade()
     {
@@ -29,7 +29,7 @@ class ItemGrouperWishlistConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return ItemGrouperWishlistConnectorToItemGrouperInterface
+     * @return \Spryker\Zed\ItemGrouperWishlistConnector\Dependency\Facade\ItemGrouperWishlistConnectorToItemGrouperInterface
      */
     public function getItemGrouperFacade()
     {

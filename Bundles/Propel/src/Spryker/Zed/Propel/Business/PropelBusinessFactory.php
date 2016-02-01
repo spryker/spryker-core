@@ -41,7 +41,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return PropelSchemaInterface
+     * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaInterface
      */
     public function createModelSchema()
     {
@@ -53,7 +53,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PropelGroupedSchemaFinderInterface
+     * @return \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface
      */
     protected function createGroupedSchemaFinder()
     {
@@ -65,7 +65,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PropelSchemaFinderInterface
+     * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
      */
     protected function createSchemaFinder()
     {
@@ -77,7 +77,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PropelSchemaWriterInterface
+     * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaWriterInterface
      */
     protected function createSchemaWriter()
     {
@@ -90,7 +90,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PropelSchemaMergerInterface
+     * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaMergerInterface
      */
     protected function createSchemaMerger()
     {
@@ -100,7 +100,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DirectoryRemoverInterface
+     * @return \Spryker\Zed\Propel\Business\Model\DirectoryRemoverInterface
      */
     public function createDirectoryRemover()
     {
@@ -110,7 +110,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PostgresqlCompatibilityAdjusterInterface
+     * @return \Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjusterInterface
      */
     public function createPostgresqlCompatibilityAdjuster()
     {
@@ -120,7 +120,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Filesystem
+     * @return \Symfony\Component\Filesystem\Filesystem
      */
     protected function createFilesystem()
     {
@@ -149,7 +149,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PropelInstallConsole
+     * @return \Spryker\Zed\Propel\Communication\Console\PropelInstallConsole
      */
     protected function createPropelInstallConsole()
     {
@@ -157,7 +157,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PostgresqlCompatibilityConsole
+     * @return \Spryker\Zed\Propel\Communication\Console\PostgresqlCompatibilityConsole
      */
     protected function createPostgresqlCompatibilityConsole()
     {
@@ -165,7 +165,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return BuildModelConsole
+     * @return \Spryker\Zed\Propel\Communication\Console\BuildModelConsole
      */
     protected function createBuildModelConsole()
     {
@@ -173,7 +173,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return BuildSqlConsole
+     * @return \Spryker\Zed\Propel\Communication\Console\BuildSqlConsole
      */
     protected function createBuildSqlConsole()
     {
@@ -181,7 +181,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ConvertConfigConsole
+     * @return \Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole
      */
     protected function createConvertConfigConsole()
     {
@@ -189,7 +189,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CreateDatabaseConsole
+     * @return \Spryker\Zed\Propel\Communication\Console\CreateDatabaseConsole
      */
     protected function createCreateDatabaseConsole()
     {
@@ -197,7 +197,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiffConsole
+     * @return \Spryker\Zed\Propel\Communication\Console\DiffConsole
      */
     protected function createDiffConsole()
     {
@@ -205,7 +205,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return InsertSqlConsole
+     * @return \Spryker\Zed\Propel\Communication\Console\InsertSqlConsole
      */
     protected function createInsertSqlConsole()
     {
@@ -213,7 +213,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MigrateConsole
+     * @return \Spryker\Zed\Propel\Communication\Console\MigrateConsole
      */
     protected function createMigrateConsole()
     {
@@ -221,7 +221,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SchemaCopyConsole
+     * @return \Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole
      */
     protected function createSchemaCopyConsole()
     {

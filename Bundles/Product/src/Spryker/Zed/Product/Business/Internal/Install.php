@@ -53,7 +53,7 @@ class Install extends AbstractInstaller
     }
 
     /**
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

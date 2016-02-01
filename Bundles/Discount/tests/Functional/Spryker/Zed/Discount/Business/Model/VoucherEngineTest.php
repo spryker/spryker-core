@@ -300,7 +300,7 @@ class VoucherEngineTest extends Test
     }
 
     /**
-     * @return CalculableContainer
+     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
      */
     protected function getOrderWithTwoItems()
     {
@@ -315,7 +315,7 @@ class VoucherEngineTest extends Test
     }
 
     /**
-     * @return Calculator
+     * @return \Spryker\Zed\Discount\Business\Model\Calculator
      */
     protected function getCalculator()
     {

@@ -17,7 +17,7 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
      * @param string $value
      * @param Constraint $constraint
      *
-     * @throws UnexpectedTypeException
+     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */

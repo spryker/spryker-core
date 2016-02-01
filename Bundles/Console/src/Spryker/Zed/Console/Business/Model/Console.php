@@ -87,7 +87,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function getContainer()
     {
@@ -107,7 +107,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     protected function getFactory()
     {
@@ -127,9 +127,9 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private function resolveFactory()
     {
@@ -137,7 +137,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {
@@ -155,7 +155,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacade()
     {
@@ -163,9 +163,9 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @throws FacadeNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
      *
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function resolveFacade()
     {
@@ -173,7 +173,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return FacadeResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver
      */
     private function getFacadeResolver()
     {
@@ -193,7 +193,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     protected function getQueryContainer()
     {
@@ -267,7 +267,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return MessengerInterface
+     * @return \Spryker\Zed\Messenger\Business\Model\MessengerInterface
      */
     protected function getMessenger()
     {

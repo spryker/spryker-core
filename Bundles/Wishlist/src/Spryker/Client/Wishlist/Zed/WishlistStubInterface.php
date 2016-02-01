@@ -14,35 +14,35 @@ interface WishlistStubInterface
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function addItem(WishlistChangeTransfer $wishlistChange);
 
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItem(WishlistChangeTransfer $wishlistChange);
 
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function descreaseQuantity(WishlistChangeTransfer $wishlistChange);
 
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseQuantity(WishlistChangeTransfer $wishlistChange);
 
     /**
      * @param CustomerTransfer $customer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getCustomerWishlist(CustomerTransfer $customer);
 

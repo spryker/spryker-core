@@ -54,7 +54,7 @@ class MethodController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request)
     {
@@ -88,7 +88,7 @@ class MethodController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {

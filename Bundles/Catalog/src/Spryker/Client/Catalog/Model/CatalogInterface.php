@@ -14,7 +14,7 @@ interface CatalogInterface
     /**
      * @param int $id
      *
-     * @throws ProductNotFoundException
+     * @throws \Spryker\Client\Catalog\Model\Exception\ProductNotFoundException
      *
      * @return array
      */
@@ -24,7 +24,7 @@ interface CatalogInterface
      * @param array $ids
      * @param string|null $indexByKey
      *
-     * @throws ProductNotFoundException
+     * @throws \Spryker\Client\Catalog\Model\Exception\ProductNotFoundException
      *
      * @return array[]
      */

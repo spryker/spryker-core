@@ -40,7 +40,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function rootNodeTableAction()
     {
@@ -55,7 +55,7 @@ class IndexController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function nodeAction(Request $request)
     {
@@ -73,7 +73,7 @@ class IndexController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function nodeByNameAction(Request $request)
     {

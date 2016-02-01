@@ -26,7 +26,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $transactionId
      *
-     * @return SpyPaymentPayoneTransactionStatusLogQuery
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
      */
     public function getCurrentSequenceNumberQuery($transactionId)
     {
@@ -42,7 +42,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $transactionId
      *
-     * @return SpyPaymentPayoneQuery
+     * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
      */
     public function getPaymentByTransactionIdQuery($transactionId)
     {
@@ -58,7 +58,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      * @param int $fkPayment
      * @param string $requestName
      *
-     * @return SpyPaymentPayoneApiLogQuery
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */
     public function getApiLogByPaymentAndRequestTypeQuery($fkPayment, $requestName)
     {
@@ -74,7 +74,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $orderId
      *
-     * @return SpyPaymentPayoneQuery
+     * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
      */
     public function getPaymentByOrderId($orderId)
     {
@@ -90,7 +90,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      * @param int $orderId
      * @param string $request
      *
-     * @return SpyPaymentPayoneApiLog
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog
      */
     public function getApiLogsByOrderIdAndRequest($orderId, $request)
     {
@@ -110,7 +110,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $paymentId
      *
-     * @return SpyPaymentPayoneQuery
+     * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
      */
     public function getPaymentById($paymentId)
     {
@@ -160,7 +160,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $idSalesOrder
      *
-     * @return SpyPaymentPayoneApiLogQuery
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */
     public function getLastApiLogsByOrderId($idSalesOrder)
     {
@@ -179,7 +179,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param ObjectCollection $orders
      *
-     * @return SpyPaymentPayoneApiLogQuery
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */
     public function getApiLogsByOrderIds($orders)
     {
@@ -203,7 +203,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param ObjectCollection $orders
      *
-     * @return SpyPaymentPayoneTransactionStatusLogQuery
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
      */
     public function getTransactionStatusLogsByOrderIds($orders)
     {

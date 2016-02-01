@@ -50,7 +50,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
@@ -65,7 +65,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -86,7 +86,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function reAuthorizePayment($idPayment)
     {
@@ -103,7 +103,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function revertPayment($idPayment)
     {
@@ -120,7 +120,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function capturePayment($idPayment)
     {
@@ -137,7 +137,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function refundPayment($idPayment)
     {
@@ -154,7 +154,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     protected function getPaymentEntity($idPayment)
     {
@@ -164,7 +164,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return SpyPaymentPayolutionTransactionStatusLog
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog
      */
     protected function getLatestTransactionStatusLogItem($idPayment)
     {
@@ -178,7 +178,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
      * @param array $requestData
      * @param SpyPaymentPayolution $paymentEntity
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     protected function sendLoggedRequest(array $requestData, SpyPaymentPayolution $paymentEntity)
     {
@@ -192,7 +192,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param array $transactionRequest
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     protected function sendRequest($transactionRequest)
     {
@@ -206,7 +206,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
      * @param array $requestData
      * @param int $idPayment
      *
-     * @return SpyPaymentPayolutionTransactionRequestLog
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog
      */
     protected function logApiRequest($requestData, $idPayment)
     {

@@ -20,7 +20,7 @@ class CollectorCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getLocaleFacade() instead.
      *
-     * @return CollectorToLocaleInterface
+     * @return \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface
      */
     public function createLocaleFacade()
     {
@@ -30,7 +30,7 @@ class CollectorCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CollectorToLocaleInterface
+     * @return \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface
      */
     public function getLocaleFacade()
     {

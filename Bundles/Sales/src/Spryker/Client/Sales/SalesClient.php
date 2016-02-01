@@ -19,7 +19,7 @@ class SalesClient extends AbstractClient implements SalesClientInterface
     /**
      * @param OrderListTransfer $orderListTransfer
      *
-     * @return OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
@@ -31,7 +31,7 @@ class SalesClient extends AbstractClient implements SalesClientInterface
     /**
      * @param OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {

@@ -24,7 +24,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return LoginForm
+     * @return \Spryker\Zed\Auth\Communication\Form\LoginForm
      */
     public function createLoginForm()
     {
@@ -34,7 +34,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createResetPasswordRequestForm()
     {
@@ -44,7 +44,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createResetPasswordForm()
     {
@@ -56,7 +56,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getUserFacade() instead.
      *
-     * @return UserFacade
+     * @return \Spryker\Zed\User\Business\UserFacade
      */
     public function createUserFacade()
     {
@@ -66,7 +66,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UserFacade
+     * @return \Spryker\Zed\User\Business\UserFacade
      */
     public function getUserFacade()
     {

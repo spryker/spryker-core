@@ -127,7 +127,7 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return SequenceNumberSettingsTransfer
+     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
     public function getOrderReferenceDefaults()
     {

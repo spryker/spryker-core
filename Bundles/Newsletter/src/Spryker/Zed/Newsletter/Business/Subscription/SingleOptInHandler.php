@@ -14,7 +14,7 @@ class SingleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
     /**
      * @param NewsletterSubscriberTransfer $subscriberTransfer
      *
-     * @throws MissingNewsletterSubscriberException
+     * @throws \Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException
      *
      * @return void
      */

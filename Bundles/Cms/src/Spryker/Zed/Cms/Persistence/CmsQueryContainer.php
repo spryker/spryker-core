@@ -46,7 +46,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const VALUE = 'value';
 
     /**
-     * @return SpyCmsTemplateQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
     public function queryTemplates()
     {
@@ -58,7 +58,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param string $path
      *
-     * @return SpyCmsTemplateQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
     public function queryTemplateByPath($path)
     {
@@ -71,7 +71,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $id
      *
-     * @return SpyCmsTemplateQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
     public function queryTemplateById($id)
     {
@@ -82,7 +82,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @return SpyCmsPageQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPages()
     {
@@ -92,7 +92,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @return SpyCmsBlockQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     public function queryBlocks()
     {
@@ -113,7 +113,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @return SpyCmsPageQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPageWithTemplatesAndUrls()
     {
@@ -127,7 +127,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idLocale
      *
-     * @return SpyCmsBlockQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     public function queryPageWithTemplatesAndBlocks($idLocale)
     {
@@ -160,7 +160,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idCmsBlock
      *
-     * @return SpyCmsBlockQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     public function queryPageWithTemplatesAndBlocksById($idCmsBlock)
     {
@@ -190,7 +190,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $id
      *
-     * @return SpyCmsPageQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPageById($id)
     {
@@ -204,7 +204,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param int $idPage
      * @param string $placeholder
      *
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMapping($idPage, $placeholder)
     {
@@ -218,7 +218,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idMapping
      *
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingById($idMapping)
     {
@@ -231,7 +231,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idMapping
      *
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingWithKeyById($idMapping)
     {
@@ -244,7 +244,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappings()
     {
@@ -256,7 +256,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idCmsPage
      *
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsByPageId($idCmsPage)
     {
@@ -270,7 +270,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param int $idCmsPage
      * @param int $fkLocale
      *
-     * @return SpyCmsGlossaryKeyMappingQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsWithKeyByPageId($idCmsPage, $fkLocale)
     {
@@ -290,7 +290,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idUrl
      *
-     * @return SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlByIdWithRedirect($idUrl)
     {
@@ -301,7 +301,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idUrlRedirect
      *
-     * @return SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryRedirectById($idUrlRedirect)
     {
@@ -310,7 +310,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @return SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlsWithRedirect()
     {
@@ -321,7 +321,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param string $key
      *
-     * @return SpyGlossaryKeyQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryKey($key)
     {
@@ -332,7 +332,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idCmsPage
      *
-     * @return SpyCmsPageQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPageWithTemplatesAndUrlByIdPage($idCmsPage)
     {
@@ -350,7 +350,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idUrl
      *
-     * @return SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlById($idUrl)
     {
@@ -361,7 +361,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param string $value
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery
      */
     public function queryTranslationWithKeyByValue($value)
     {
@@ -376,7 +376,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param string $key
      *
-     * @return SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryKeyWithTranslationByKey($key)
     {
@@ -391,7 +391,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idCmsPage
      *
-     * @return SpyCmsBlockQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     public function queryBlockByIdPage($idCmsPage)
     {
@@ -404,7 +404,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param string $blockType
      * @param string $blockValue
      *
-     * @return SpyCmsBlockQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     public function queryBlockByNameAndTypeValue($blockName, $blockType, $blockValue)
     {
@@ -418,7 +418,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param string $categoryName
      * @param int $idLocale
      *
-     * @return SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\Base\SpyCategoryNodeQuery
      */
     public function queryNodeByCategoryName($categoryName, $idLocale)
     {
@@ -438,7 +438,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @return CategoryQueryContainer
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     protected function getCategoryQueryContainer()
     {
@@ -448,7 +448,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @param int $idCategoryNode
      *
-     * @return SpyCmsBlockQuery
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     public function queryBlockByIdCategoryNode($idCategoryNode)
     {

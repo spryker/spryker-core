@@ -39,7 +39,7 @@ class AclToUserBridge implements AclToUserInterface
     /**
      * @param string $username
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username)
     {
@@ -55,7 +55,7 @@ class AclToUserBridge implements AclToUserInterface
     }
 
     /**
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser()
     {

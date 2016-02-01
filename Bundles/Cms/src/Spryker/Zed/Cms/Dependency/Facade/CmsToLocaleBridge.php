@@ -26,7 +26,7 @@ class CmsToLocaleBridge implements CmsToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {

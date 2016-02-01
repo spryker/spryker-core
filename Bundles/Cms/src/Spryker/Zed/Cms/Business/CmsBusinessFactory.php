@@ -31,7 +31,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return PageManagerInterface
+     * @return \Spryker\Zed\Cms\Business\Page\PageManagerInterface
      */
     public function createPageManager()
     {
@@ -46,7 +46,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TemplateManagerInterface
+     * @return \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
      */
     public function createTemplateManager()
     {
@@ -58,7 +58,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return BlockManagerInterface
+     * @return \Spryker\Zed\Cms\Business\Block\BlockManagerInterface
      */
     public function createBlockManager()
     {
@@ -70,7 +70,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GlossaryKeyMappingManagerInterface
+     * @return \Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface
      */
     public function createGlossaryKeyMappingManager()
     {
@@ -84,7 +84,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Finder
+     * @return \Symfony\Component\Finder\Finder
      */
     protected function createFinder()
     {
@@ -92,7 +92,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsToGlossaryInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
      */
     protected function getGlossaryFacade()
     {
@@ -100,7 +100,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsToTouchInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
      */
     protected function getTouchFacade()
     {
@@ -108,7 +108,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsToUrlInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
      */
     protected function getUrlFacade()
     {

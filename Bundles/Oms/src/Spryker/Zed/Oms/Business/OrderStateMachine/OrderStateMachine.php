@@ -273,7 +273,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @throws Exception
      *
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     protected function checkCondition(array $transitions, $orderItem, StateInterface $sourceState, TransitionLogInterface $log)
     {
@@ -610,7 +610,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param array $data
      *
-     * @return ReadOnlyArrayObject
+     * @return \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject
      */
     protected function makeDataReadOnly($data)
     {
@@ -742,7 +742,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $conditionString
      *
-     * @return ConditionInterface
+     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
      */
     protected function getCondition($conditionString)
     {
@@ -756,7 +756,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param SpySalesOrderItem[] $orderItems
      *
-     * @return TransitionLogInterface
+     * @return \Spryker\Zed\Oms\Business\Util\TransitionLogInterface
      */
     protected function initTransitionLog(array $orderItems)
     {

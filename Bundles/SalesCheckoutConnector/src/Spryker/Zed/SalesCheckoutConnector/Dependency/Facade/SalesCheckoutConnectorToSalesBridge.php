@@ -29,7 +29,7 @@ class SalesCheckoutConnectorToSalesBridge implements SalesCheckoutConnectorToSal
     /**
      * @param OrderTransfer $transferOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function saveOrder(OrderTransfer $transferOrder)
     {

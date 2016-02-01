@@ -17,7 +17,7 @@ class CmsFactory extends AbstractFactory
 {
 
     /**
-     * @return CmsBlockStorageInterface
+     * @return \Spryker\Client\Cms\Storage\CmsBlockStorageInterface
      */
     public function createCmsBlockFinder()
     {
@@ -28,7 +28,7 @@ class CmsFactory extends AbstractFactory
     }
 
     /**
-     * @return StorageClientInterface
+     * @return \Spryker\Client\Storage\StorageClientInterface
      */
     protected function getStorage()
     {
@@ -36,7 +36,7 @@ class CmsFactory extends AbstractFactory
     }
 
     /**
-     * @return KeyBuilderInterface
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected function createKeyBuilder()
     {

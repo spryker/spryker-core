@@ -47,7 +47,7 @@ class BlockManager implements BlockManagerInterface
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function saveBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -65,7 +65,7 @@ class BlockManager implements BlockManagerInterface
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function saveBlockAndTouch(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -114,7 +114,7 @@ class BlockManager implements BlockManagerInterface
     /**
      * @param SpyCmsBlock $blockEntity
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function convertBlockEntityToTransfer(SpyCmsBlock $blockEntity)
     {
@@ -157,7 +157,7 @@ class BlockManager implements BlockManagerInterface
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return SpyCmsBlock
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlock
      */
     protected function createBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -172,7 +172,7 @@ class BlockManager implements BlockManagerInterface
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return SpyCmsBlock
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlock
      */
     protected function updateBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -191,7 +191,7 @@ class BlockManager implements BlockManagerInterface
     /**
      * @param int $idPage
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
      * @return void
      */
@@ -207,7 +207,7 @@ class BlockManager implements BlockManagerInterface
     /**
      * @param int $idCmsPage
      *
-     * @return SpyCmsBlock
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsBlock
      */
     protected function getCmsBlockByIdPage($idCmsPage)
     {

@@ -46,7 +46,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param string $name
      *
-     * @return SpyAclGroupQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
      */
     public function queryGroupByName($name)
     {
@@ -60,7 +60,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $id
      *
-     * @return SpyAclGroupQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
      */
     public function queryGroupById($id)
     {
@@ -72,7 +72,7 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyAclGroupQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
      */
     public function queryGroup()
     {
@@ -80,7 +80,7 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyAclRoleQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
      */
     public function queryRole()
     {
@@ -90,7 +90,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $id
      *
-     * @return SpyAclGroupQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
      */
     public function queryRoleById($id)
     {
@@ -104,7 +104,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idRole
      *
-     * @return SpyAclGroupsHasRolesQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery
      */
     public function queryRoleHasGroup($idRole)
     {
@@ -117,7 +117,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param string $name
      *
-     * @return SpyAclRoleQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
      */
     public function queryRoleByName($name)
     {
@@ -132,7 +132,7 @@ class AclQueryContainer extends AbstractQueryContainer
      * @param int $idGroup
      * @param int $idRole
      *
-     * @return SpyAclGroupsHasRolesQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery
      */
     public function queryGroupHasRoleById($idGroup, $idRole)
     {
@@ -148,7 +148,7 @@ class AclQueryContainer extends AbstractQueryContainer
      * @param int $idGroup
      * @param int $idUser
      *
-     * @return SpyAclUserHasGroupQuery
+     * @return \Orm\Zed\Acl\Persistence\Base\SpyAclUserHasGroupQuery
      */
     public function queryUserHasGroupById($idGroup, $idUser)
     {
@@ -163,7 +163,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idGroup
      *
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryGroupUsers($idGroup)
     {
@@ -190,7 +190,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idGroup
      *
-     * @return SpyAclRoleQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
      */
     public function queryGroupRoles($idGroup)
     {
@@ -206,7 +206,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $id
      *
-     * @return SpyAclRuleQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */
     public function queryRuleById($id)
     {
@@ -220,7 +220,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param $roleId
      *
-     * @return SpyAclRuleQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */
     public function queryRuleByRoleId($roleId)
     {
@@ -233,7 +233,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param ObjectCollection $relationshipCollection
      *
-     * @return SpyAclRuleQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */
     public function queryGroupRules(ObjectCollection $relationshipCollection)
     {
@@ -246,7 +246,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idGroup
      *
-     * @return SpyAclGroupsHasRolesQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery
      */
     public function queryGroupHasRole($idGroup)
     {
@@ -262,7 +262,7 @@ class AclQueryContainer extends AbstractQueryContainer
      * @param string $controller
      * @param string $action
      *
-     * @return SpyAclRuleQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */
     public function queryRuleByPathAndRoles(
         RolesTransfer $roles,
@@ -301,9 +301,9 @@ class AclQueryContainer extends AbstractQueryContainer
      * @param string $action
      * @param int $type
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyAclRuleQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */
     public function queryRuleByPathAndRole($idAclRole, $bundle, $controller, $action, $type)
     {
@@ -320,7 +320,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idUser
      *
-     * @return SpyAclGroupQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
      */
     public function queryUserGroupByIdUser($idUser)
     {
@@ -333,7 +333,7 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUsersWithGroup()
     {
@@ -360,7 +360,7 @@ class AclQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idGroup
      *
-     * @return SpyAclRoleQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
      */
     public function queryRulesFromGroup($idGroup)
     {

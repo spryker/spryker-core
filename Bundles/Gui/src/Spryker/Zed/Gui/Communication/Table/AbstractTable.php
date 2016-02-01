@@ -105,7 +105,7 @@ abstract class AbstractTable
     abstract protected function prepareData(TableConfiguration $config);
 
     /**
-     * @return DataTablesTransfer
+     * @return \Generated\Shared\Transfer\DataTablesTransfer
      */
     public function getDataTablesTransfer()
     {

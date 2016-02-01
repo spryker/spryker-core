@@ -99,7 +99,7 @@ interface CategoryTreeReaderInterface
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @throws MissingCategoryNodeException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
      *
      * @return int
      */
@@ -109,7 +109,7 @@ interface CategoryTreeReaderInterface
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @throws MissingCategoryException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      *
      * @return int
      */
@@ -118,7 +118,7 @@ interface CategoryTreeReaderInterface
     /**
      * @param int $idNode
      *
-     * @return SpyCategoryNode
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
      */
     public function getNodeById($idNode);
 

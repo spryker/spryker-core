@@ -26,7 +26,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createOrderItemSplitForm()
     {
@@ -38,7 +38,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idSalesOrder
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCustomerForm($idSalesOrder)
     {
@@ -52,7 +52,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idOrderAddress
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createAddressForm($idOrderAddress)
     {
@@ -83,7 +83,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OrdersTable
+     * @return \Spryker\Zed\Sales\Communication\Table\OrdersTable
      */
     public function createOrdersTable()
     {
@@ -94,7 +94,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return SalesToOmsInterface
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     public function getOmsFacade()
     {

@@ -22,7 +22,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return GlossaryToLocaleInterface
+     * @return \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface
      */
     protected function getLocaleFacade()
     {
@@ -53,7 +53,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getQueryContainer() instead.
      *
-     * @return GlossaryQueryContainerInterface
+     * @return \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
     public function createQueryContainer()
     {
@@ -65,7 +65,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param array $locales
      *
-     * @return TranslationTable
+     * @return \Spryker\Zed\Glossary\Communication\Table\TranslationTable
      */
     public function createTranslationTable(array $locales)
     {
@@ -82,7 +82,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
      * @param array $locales
      * @param string $type
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createTranslationForm(array $locales, $type)
     {

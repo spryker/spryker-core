@@ -22,7 +22,7 @@ class PayoneFactory extends AbstractFactory
     /**
      * @param array $defaults
      *
-     * @return HashGeneratorInterface
+     * @return \Spryker\Client\Payone\ClientApi\HashGeneratorInterface
      */
     public function createCreditCardCheckCall(array $defaults)
     {
@@ -34,7 +34,7 @@ class PayoneFactory extends AbstractFactory
     }
 
     /**
-     * @return HashInterface
+     * @return \Spryker\Shared\Payone\Dependency\HashInterface
      */
     protected function createHashProvider()
     {
@@ -42,7 +42,7 @@ class PayoneFactory extends AbstractFactory
     }
 
     /**
-     * @return ModeDetectorInterface
+     * @return \Spryker\Shared\Payone\Dependency\ModeDetectorInterface
      */
     protected function createModeDetector()
     {
@@ -50,7 +50,7 @@ class PayoneFactory extends AbstractFactory
     }
 
     /**
-     * @return HashGeneratorInterface
+     * @return \Spryker\Client\Payone\ClientApi\HashGeneratorInterface
      */
     protected function createHashGenerator()
     {
@@ -62,7 +62,7 @@ class PayoneFactory extends AbstractFactory
     /**
      * @param array $defaults
      *
-     * @return PayoneStandardParameterTransfer
+     * @return \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected function createStandardParameter(array $defaults)
     {

@@ -23,7 +23,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return SellableInterface
+     * @return \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
     public function createSellableModel()
     {
@@ -34,7 +34,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AvailabilityToStockInterface
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected function getStockFacade()
     {
@@ -42,7 +42,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AvailabilityToOmsInterface
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
     protected function getOmsFacade()
     {

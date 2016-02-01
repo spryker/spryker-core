@@ -20,7 +20,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function requestCheckoutAction(CheckoutRequestTransfer $checkoutRequestTransfer)
     {

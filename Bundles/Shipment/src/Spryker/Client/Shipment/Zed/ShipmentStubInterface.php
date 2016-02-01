@@ -15,7 +15,7 @@ interface ShipmentStubInterface
     /**
      * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
      *
-     * @return ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability);
 

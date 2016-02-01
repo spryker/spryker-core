@@ -31,7 +31,7 @@ class CountryTable extends AbstractTable
     /**
      * @param TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -50,7 +50,7 @@ class CountryTable extends AbstractTable
     /**
      * @param TableConfiguration $config
      *
-     * @return ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
     protected function prepareData(TableConfiguration $config)
     {

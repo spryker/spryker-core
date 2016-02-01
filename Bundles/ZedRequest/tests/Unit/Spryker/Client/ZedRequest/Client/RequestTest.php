@@ -23,7 +23,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      * @param TransferInterface $metaTransfer1
      * @param TransferInterface $metaTransfer2
      *
-     * @return Request
+     * @return \Spryker\Client\ZedRequest\Client\Request
      */
     protected function createFullRequest(
         TransferInterface $transfer,

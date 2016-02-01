@@ -14,7 +14,7 @@ interface PriceManagerInterface
     /**
      * @param ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function addGrossPriceToItems(ChangeTransfer $change);
 

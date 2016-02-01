@@ -27,7 +27,7 @@ class ProductSearchToLocaleBridge implements ProductSearchToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {

@@ -42,7 +42,7 @@ interface InstallerToGlossaryInterface
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function getTranslation($keyName, LocaleTransfer $locale);
 
@@ -56,7 +56,7 @@ interface InstallerToGlossaryInterface
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 
@@ -68,7 +68,7 @@ interface InstallerToGlossaryInterface
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 

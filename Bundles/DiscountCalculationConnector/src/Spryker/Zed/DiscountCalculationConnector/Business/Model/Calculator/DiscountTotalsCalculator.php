@@ -83,7 +83,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
      * @param CalculableInterface $discountableContainer
      * @param \ArrayObject|ItemTransfer[] $calculableItems
      *
-     * @return DiscountTotalsTransfer
+     * @return \Generated\Shared\Transfer\DiscountTotalsTransfer
      */
     protected function createDiscountTransfer(
         CalculableInterface $discountableContainer,
@@ -209,7 +209,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @return DiscountTotalItemTransfer
+     * @return \Generated\Shared\Transfer\DiscountTotalItemTransfer
      */
     protected function getDiscountTotalItem()
     {

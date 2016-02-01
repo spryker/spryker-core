@@ -22,7 +22,7 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
     /**
      * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
-     * @return ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {

@@ -15,7 +15,7 @@ interface TransferGeneratorInterface
     /**
      * @param SpyLocale $localeEntity
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function convertLocale(SpyLocale $localeEntity);
 

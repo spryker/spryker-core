@@ -18,7 +18,7 @@ class TransferGenerator implements TransferGeneratorInterface
     /**
      * @param SpyCategory $categoryEntity
      *
-     * @return CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function convertCategory(SpyCategory $categoryEntity)
     {
@@ -44,7 +44,7 @@ class TransferGenerator implements TransferGeneratorInterface
     /**
      * @param SpyCategoryNode $nodeEntity
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     public function convertCategoryNode(SpyCategoryNode $nodeEntity)
     {

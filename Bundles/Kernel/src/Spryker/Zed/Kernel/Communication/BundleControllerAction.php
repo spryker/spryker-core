@@ -42,7 +42,7 @@ class BundleControllerAction implements BundleControllerActionInterface
     }
 
     /**
-     * @return DashToCamelCase
+     * @return \Zend\Filter\Word\DashToCamelCase
      */
     private function getFilter()
     {

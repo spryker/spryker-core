@@ -46,7 +46,7 @@ abstract class AbstractSender
     }
 
     /**
-     * @return MailTransfer
+     * @return \Generated\Shared\Transfer\MailTransfer
      */
     protected function createMailTransfer()
     {
@@ -67,7 +67,7 @@ abstract class AbstractSender
     }
 
     /**
-     * @return MailRecipientTransfer
+     * @return \Generated\Shared\Transfer\MailRecipientTransfer
      */
     protected function createMailRecipientTransfer()
     {

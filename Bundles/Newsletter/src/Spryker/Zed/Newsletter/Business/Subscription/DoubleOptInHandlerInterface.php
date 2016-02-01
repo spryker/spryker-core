@@ -22,7 +22,7 @@ interface DoubleOptInHandlerInterface
     /**
      * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
     public function approveSubscriberByKey(NewsletterSubscriberTransfer $newsletterSubscriber);
 

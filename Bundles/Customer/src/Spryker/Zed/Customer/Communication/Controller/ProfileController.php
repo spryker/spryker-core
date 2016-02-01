@@ -99,7 +99,7 @@ class ProfileController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function sendPasswordRestoreTokenAction(Request $request)
     {
@@ -114,7 +114,7 @@ class ProfileController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function editAction(Request $request)
     {
@@ -134,7 +134,7 @@ class ProfileController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function addressesAction(Request $request)
     {
@@ -147,7 +147,7 @@ class ProfileController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function addressAction(Request $request)
     {
@@ -174,7 +174,7 @@ class ProfileController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function setDefaultShippingAddressAction(Request $request)
     {
@@ -190,7 +190,7 @@ class ProfileController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function setDefaultBillingAddressAction(Request $request)
     {

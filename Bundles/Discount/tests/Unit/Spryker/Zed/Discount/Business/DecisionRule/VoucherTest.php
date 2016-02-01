@@ -87,7 +87,7 @@ class VoucherTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     protected function createConfiguredDiscountVoucherEntity()
     {
@@ -105,7 +105,7 @@ class VoucherTest extends \PHPUnit_Framework_TestCase
     /**
      * @param $discountVoucherEntity
      *
-     * @return Voucher
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\Voucher
      */
     protected function createVoucherDecisionRule($discountVoucherEntity)
     {
@@ -113,7 +113,7 @@ class VoucherTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     protected function createDiscountVoucherEntity()
     {
@@ -121,7 +121,7 @@ class VoucherTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return SpyDiscountVoucherPool
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
     protected function createDiscountVoucherPoolEntity()
     {

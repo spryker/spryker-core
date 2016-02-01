@@ -62,7 +62,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @throw \LogicException
      *
-     * @return Request
+     * @return \Spryker\Zed\ZedRequest\Business\Client\Request
      */
     private function getRequestTransfer(AbstractGatewayController $controller, $action)
     {
@@ -93,7 +93,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      * @param AbstractGatewayController $controller
      * @param $result
      *
-     * @return Response
+     * @return \Spryker\Zed\ZedRequest\Business\Client\Response
      */
     protected function getResponse(AbstractGatewayController $controller, $result)
     {

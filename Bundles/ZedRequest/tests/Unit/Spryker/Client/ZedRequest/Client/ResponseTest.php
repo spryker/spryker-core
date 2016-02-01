@@ -22,7 +22,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     /**
      * @param TransferInterface $transfer
      *
-     * @return Response
+     * @return \Spryker\Client\ZedRequest\Client\Response
      */
     protected function createFullResponse(TransferInterface $transfer)
     {

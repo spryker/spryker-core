@@ -15,7 +15,7 @@ interface NewsletterToMailInterface
     /**
      * @param MailTransfer $mailTransfer
      *
-     * @return SendMailResponsesTransfer
+     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
     public function sendMail(MailTransfer $mailTransfer);
 

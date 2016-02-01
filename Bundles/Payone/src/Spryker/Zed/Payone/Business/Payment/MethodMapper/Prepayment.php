@@ -33,7 +33,7 @@ class Prepayment extends AbstractMapper
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return AuthorizationContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer
      */
     public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity)
     {
@@ -46,7 +46,7 @@ class Prepayment extends AbstractMapper
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
      */
     public function mapPaymentToCapture(SpyPaymentPayone $paymentEntity)
     {
@@ -63,7 +63,7 @@ class Prepayment extends AbstractMapper
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return PreAuthorizationContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer
      */
     public function mapPaymentToPreAuthorization(SpyPaymentPayone $paymentEntity)
     {
@@ -77,7 +77,7 @@ class Prepayment extends AbstractMapper
      * @param SpyPaymentPayone $paymentEntity
      * @param AbstractAuthorizationContainer $authorizationContainer
      *
-     * @return AbstractAuthorizationContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer
      */
     protected function mapPaymentToAbstractAuthorization(SpyPaymentPayone $paymentEntity, AbstractAuthorizationContainer $authorizationContainer)
     {
@@ -103,7 +103,7 @@ class Prepayment extends AbstractMapper
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return DebitContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer
      */
     public function mapPaymentToDebit(SpyPaymentPayone $paymentEntity)
     {
@@ -120,7 +120,7 @@ class Prepayment extends AbstractMapper
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return RefundContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer
      */
     public function mapPaymentToRefund(SpyPaymentPayone $paymentEntity)
     {
@@ -144,7 +144,7 @@ class Prepayment extends AbstractMapper
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return CreditCardPseudoContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer
      */
     protected function createPaymentMethodContainerFromPayment(SpyPaymentPayone $paymentEntity)
     {
@@ -156,7 +156,7 @@ class Prepayment extends AbstractMapper
     /**
      * @param PayoneAuthorizationTransfer $payoneAuthorizationTransfer
      *
-     * @return PersonalContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
      */
     protected function createAuthorizationPersonalData(PayoneAuthorizationTransfer $payoneAuthorizationTransfer)
     {

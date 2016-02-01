@@ -23,7 +23,7 @@ interface ProductQueryContainerInterface
      * @param string $skus
      * @param LocaleTransfer $locale
      *
-     * @return SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function getProductWithAttributeQuery($skus, LocaleTransfer $locale);
 
@@ -31,42 +31,42 @@ interface ProductQueryContainerInterface
      * @param string $concreteSku
      * @param int $idLocale
      *
-     * @return SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function queryProductWithAttributesAndProductAbstract($concreteSku, $idLocale);
 
     /**
      * @param $idProductAbstract
      *
-     * @return SpyTaxSetQuery
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     public function queryTaxSetForProductAbstract($idProductAbstract);
 
     /**
      * @param string $sku
      *
-     * @return SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function queryProductConcreteBySku($sku);
 
     /**
      * @param string $sku
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractBySku($sku);
 
     /**
      * @param string $attributeName
      *
-     * @return SpyProductAttributesMetadataQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery
      */
     public function queryAttributeByName($attributeName);
 
     /**
      * @param string $attributeType
      *
-     * @return SpyProductAttributeTypeQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery
      */
     public function queryAttributeTypeByName($attributeType);
 
@@ -74,7 +74,7 @@ interface ProductQueryContainerInterface
      * @param int $idProductAbstract
      * @param int $fkCurrentLocale
      *
-     * @return SpyProductAbstractLocalizedAttributesQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
     public function queryProductAbstractAttributeCollection($idProductAbstract, $fkCurrentLocale);
 
@@ -82,7 +82,7 @@ interface ProductQueryContainerInterface
      * @param int $idProductConcrete
      * @param int $fkCurrentLocale
      *
-     * @return SpyProductLocalizedAttributesQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
      */
     public function queryProductConcreteAttributeCollection($idProductConcrete, $fkCurrentLocale);
 

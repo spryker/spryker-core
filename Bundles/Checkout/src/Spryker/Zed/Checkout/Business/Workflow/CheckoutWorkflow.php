@@ -80,7 +80,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     /**
      * @param CheckoutRequestTransfer $checkoutRequest
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
     {
@@ -162,7 +162,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function doSaveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
@@ -194,7 +194,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function getOrderTransfer()
     {
@@ -255,7 +255,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     /**
      * @param \Exception $exception
      *
-     * @return CheckoutErrorTransfer
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
     protected function handleCheckoutError(\Exception $exception)
     {

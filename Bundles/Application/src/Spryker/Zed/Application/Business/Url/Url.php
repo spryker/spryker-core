@@ -45,7 +45,7 @@ class Url
      *
      * @param string $url Full URL used to create a Url object
      *
-     * @throws UrlInvalidException
+     * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
      *
      * @return self
      */

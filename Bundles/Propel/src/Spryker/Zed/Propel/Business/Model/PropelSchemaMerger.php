@@ -14,7 +14,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     /**
      * @param SplFileInfo[] $schemaFiles
      *
-     * @throws SchemaMergeException
+     * @throws \Spryker\Zed\Propel\Business\Exception\SchemaMergeException
      *
      * @return string
      */
@@ -30,7 +30,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     /**
      * @param SplFileInfo[] $schemaFiles
      *
-     * @throws SchemaMergeException
+     * @throws \Spryker\Zed\Propel\Business\Exception\SchemaMergeException
      *
      * @return void
      */
@@ -229,7 +229,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * @param \SimpleXMLElement $toXmlElement
      * @param \SimpleXMLElement $fromXmlElement
      *
-     * @throws SchemaMergeException
+     * @throws \Spryker\Zed\Propel\Business\Exception\SchemaMergeException
      *
      * @return \SimpleXMLElement
      */

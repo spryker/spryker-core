@@ -13,7 +13,7 @@ class AuthFactory extends AbstractFactory
 {
 
     /**
-     * @return TokenService
+     * @return \Spryker\Client\Auth\Token\TokenService
      */
     public function createTokenService()
     {

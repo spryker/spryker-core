@@ -50,7 +50,7 @@ class EWalletContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @return RedirectContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     public function getRedirect()
     {

@@ -233,7 +233,7 @@ class NewsletterFacadeTest extends Test
     }
 
     /**
-     * @return NewsletterSubscriberTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
     protected function createSubscriber()
     {

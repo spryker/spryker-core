@@ -36,7 +36,7 @@ class LoggerFactory
     /**
      * @param LoggerConfigInterface $loggerConfig
      *
-     * @return LoggerInterface
+     * @return \Psr\Log\LoggerInterface
      */
     protected static function createInstanceIfNotExists(LoggerConfigInterface $loggerConfig)
     {

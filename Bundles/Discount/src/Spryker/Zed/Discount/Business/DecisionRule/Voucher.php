@@ -35,7 +35,7 @@ class Voucher
     /**
      * @param string $code
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function isUsable($code)
     {
@@ -49,7 +49,7 @@ class Voucher
     /**
      * @param SpyDiscountVoucher $discountVoucherEntity
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     protected function validateDiscountVoucher(SpyDiscountVoucher $discountVoucherEntity = null)
     {

@@ -48,7 +48,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @return PayoneStandardParameterTransfer
+     * @return \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected function getStandardParameter()
     {
@@ -66,7 +66,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @return SequenceNumberProviderInterface
+     * @return \Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface
      */
     protected function getSequenceNumberProvider()
     {
@@ -88,7 +88,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     /**
      * @param string $orderReference
      *
-     * @return RedirectContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     protected function createRedirectContainer($orderReference)
     {

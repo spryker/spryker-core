@@ -48,7 +48,7 @@ class PayolutionSession implements PayolutionSessionInterface
     }
 
     /**
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPayments()
     {

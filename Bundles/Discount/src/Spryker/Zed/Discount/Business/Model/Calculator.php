@@ -192,7 +192,7 @@ class Calculator implements CalculatorInterface
     /**
      * @param array $discount
      *
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     protected function getDiscountEntity(array $discount)
     {

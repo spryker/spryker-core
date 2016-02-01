@@ -16,7 +16,7 @@ class ApplicationFactory extends AbstractFactory
 {
 
     /**
-     * @return ExceptionHandlerDispatcher
+     * @return \Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerDispatcher
      */
     public function createExceptionHandlerDispatcher()
     {

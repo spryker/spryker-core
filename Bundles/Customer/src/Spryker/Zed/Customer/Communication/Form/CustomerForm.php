@@ -38,7 +38,7 @@ class CustomerForm extends AbstractForm
     }
 
     /**
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function populateFormFields()
     {
@@ -58,7 +58,7 @@ class CustomerForm extends AbstractForm
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function getDataClass()
     {

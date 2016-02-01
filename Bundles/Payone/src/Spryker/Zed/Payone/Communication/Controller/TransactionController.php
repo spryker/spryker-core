@@ -26,7 +26,7 @@ class TransactionController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return StreamedResponse
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function statusUpdateAction(Request $request)
     {

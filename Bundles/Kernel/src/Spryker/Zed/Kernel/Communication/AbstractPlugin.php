@@ -54,7 +54,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacade()
     {
@@ -66,9 +66,9 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @throws FacadeNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
      *
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function resolveFacade()
     {
@@ -76,7 +76,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return FacadeResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver
      */
     private function getFacadeResolver()
     {
@@ -96,7 +96,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
      * @return AbstractCommunicationFactory
      */
@@ -106,7 +106,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {
@@ -126,7 +126,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     protected function getQueryContainer()
     {
@@ -138,9 +138,9 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @throws QueryContainerNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
      *
-     * @return AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private function resolveQueryContainer()
     {
@@ -148,7 +148,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return QueryContainerResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver
      */
     private function getQueryContainerResolver()
     {
@@ -156,7 +156,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return AbstractBundleConfig
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     protected function getConfig()
     {
@@ -168,9 +168,9 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @throws BundleConfigNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigNotFoundException
      *
-     * @return AbstractBundleConfig
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     private function resolveBundleConfig()
     {
@@ -178,7 +178,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return BundleConfigResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver
      */
     private function getBundleConfigResolver()
     {

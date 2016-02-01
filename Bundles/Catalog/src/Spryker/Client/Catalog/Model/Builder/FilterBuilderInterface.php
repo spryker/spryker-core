@@ -22,14 +22,14 @@ interface FilterBuilderInterface
      * @param string $greaterParam
      * @param string $lessParam
      *
-     * @return Range
+     * @return \Elastica\Filter\Range
      */
     public function createRangeFilter($fieldName, $minValue, $maxValue, $greaterParam = 'gte', $lessParam = 'lte');
 
     /**
      * @param string $fieldName
      *
-     * @return Nested
+     * @return \Elastica\Filter\Nested
      */
     public function createNestedFilter($fieldName);
 
@@ -37,7 +37,7 @@ interface FilterBuilderInterface
      * @param string $field
      * @param string $value
      *
-     * @return Term
+     * @return \Elastica\Filter\Term
      */
     public function createTermFilter($field, $value);
 
@@ -45,12 +45,12 @@ interface FilterBuilderInterface
      * @param string $field
      * @param array $values
      *
-     * @return Terms
+     * @return \Elastica\Filter\Terms
      */
     public function createTermsFilter($field, array $values);
 
     /**
-     * @return BoolAnd
+     * @return \Elastica\Filter\BoolAnd
      */
     public function createBoolAndFilter();
 

@@ -29,7 +29,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createAddOperator()
     {
@@ -44,7 +44,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createIncreaseOperator()
     {
@@ -59,7 +59,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createRemoveOperator()
     {
@@ -74,7 +74,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createDecreaseOperator()
     {
@@ -89,7 +89,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createCouponCodeAddOperator()
     {
@@ -104,7 +104,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createCouponCodeRemoveOperator()
     {
@@ -119,7 +119,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createCouponCodeClearOperator()
     {
@@ -134,7 +134,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return StorageProviderInterface
+     * @return \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
     protected function createStorageProvider()
     {
@@ -142,7 +142,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CartToItemGrouperInterface
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface
      */
     public function getItemGrouper()
     {
@@ -152,7 +152,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getCartCalculator() instead.
      *
-     * @return CartToCalculationInterface
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
      */
     public function createCartCalculator()
     {
@@ -162,7 +162,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CartToCalculationInterface
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
      */
     public function getCartCalculator()
     {
@@ -172,7 +172,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @param OperatorInterface $operator
      *
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     protected function configureCartOperator(OperatorInterface $operator)
     {

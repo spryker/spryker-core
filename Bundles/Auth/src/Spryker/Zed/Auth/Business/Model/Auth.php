@@ -236,9 +236,9 @@ class Auth implements AuthInterface
     /**
      * @param string $hash
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getSystemUserByHash($hash)
     {
@@ -264,7 +264,7 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser($token)
     {
@@ -276,9 +276,9 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      *
-     * @throws UserNotLoggedException
+     * @throws \Spryker\Zed\Auth\Business\Exception\UserNotLoggedException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function unserializeUserFromSession($token)
     {

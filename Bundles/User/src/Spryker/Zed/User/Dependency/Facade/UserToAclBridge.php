@@ -27,7 +27,7 @@ class UserToAclBridge implements UserToAclInterface
     }
 
     /**
-     * @return GroupsTransfer
+     * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getAllGroups()
     {
@@ -37,7 +37,7 @@ class UserToAclBridge implements UserToAclInterface
     /**
      * @param int $idUser
      *
-     * @return GroupsTransfer
+     * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getUserGroups($idUser)
     {

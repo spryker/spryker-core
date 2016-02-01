@@ -12,14 +12,14 @@ interface SalesToOmsInterface
 {
 
     /**
-     * @return SpyOmsOrderItemState
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getInitialStateEntity();
 
     /**
      * @param string $processName
      *
-     * @return SpyOmsOrderProcess
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     public function getProcessEntity($processName);
 

@@ -74,7 +74,7 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
     }
 
     /**
-     * @return GatewayServiceProviderPlugin
+     * @return \Spryker\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin
      */
     protected function getGatewayServiceProvider()
     {
@@ -86,7 +86,7 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
     }
 
     /**
-     * @return SessionServiceProvider
+     * @return \Silex\Provider\SessionServiceProvider
      */
     protected function getSessionServiceProvider()
     {

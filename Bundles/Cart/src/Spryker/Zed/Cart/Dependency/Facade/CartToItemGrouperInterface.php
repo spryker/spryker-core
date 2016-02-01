@@ -14,7 +14,7 @@ interface CartToItemGrouperInterface
     /**
      * @param GroupableContainerTransfer $groupAbleItems
      *
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     public function groupItemsByKey(GroupableContainerTransfer $groupAbleItems);
 

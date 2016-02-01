@@ -29,7 +29,7 @@ interface DataImportWriterInterface
      * @param array $localizedNames
      * @param float $price
      *
-     * @throws MissingProductOptionTypeException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      *
      * @return int
      */
@@ -41,7 +41,7 @@ interface DataImportWriterInterface
      * @param bool $isOptional
      * @param int $sequence
      *
-     * @throws MissingProductOptionTypeException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
      *
      * @return int
      */
@@ -52,8 +52,8 @@ interface DataImportWriterInterface
      * @param string $importKeyProductOptionValue
      * @param int $sequence
      *
-     * @throws MissingProductOptionTypeUsageException
-     * @throws MissingProductOptionValueException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
      *
      * @return int
      */
@@ -64,8 +64,8 @@ interface DataImportWriterInterface
      * @param string $importKeyProductOptionTypeA
      * @param string $importKeyProductOptionTypeB
      *
-     * @throws MissingProductOptionTypeException
-     * @throws MissingProductOptionTypeUsageException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException
      */
     public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB);
 
@@ -75,9 +75,9 @@ interface DataImportWriterInterface
      * @param string $importKeyProductOptionValueTarget
      * @param string $operator
      *
-     * @throws MissingProductOptionValueUsageException
-     * @throws MissingProductOptionValueException
-     * @throws MissingProductOptionValueUsageException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      */
     public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator);
 
@@ -87,9 +87,9 @@ interface DataImportWriterInterface
      * @param bool $isDefault
      * @param int $sequence
      *
-     * @throws MissingProductOptionValueUsageException
-     * @throws MissingProductOptionValueException
-     * @throws MissingProductOptionValueUsageException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException
+     * @throws \Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException
      *
      * @return int
      */

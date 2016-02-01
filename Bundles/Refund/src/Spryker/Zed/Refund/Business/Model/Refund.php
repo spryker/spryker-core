@@ -52,7 +52,7 @@ class Refund
     /**
      * @param RefundTransfer $refundTransfer
      *
-     * @return RefundTransfer
+     * @return \Generated\Shared\Transfer\RefundTransfer
      */
     public function saveRefund(RefundTransfer $refundTransfer)
     {

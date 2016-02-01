@@ -68,7 +68,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     /**
      * @throws \ErrorException
      *
-     * @return DiscountDecisionRulePluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface
      */
     public function getDefaultVoucherDecisionRulePlugin()
     {
@@ -84,9 +84,9 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     /**
      * @param string $pluginName
      *
-     * @throws MissingDecisionRuleException
+     * @throws \Spryker\Zed\Discount\Business\Exception\MissingDecisionRuleException
      *
-     * @return DiscountDecisionRulePluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface
      */
     public function getDecisionRulePluginByName($pluginName)
     {
@@ -114,9 +114,9 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     /**
      * @param string $pluginName
      *
-     * @throws MissingCalculatorException
+     * @throws \Spryker\Zed\Discount\Business\Exception\MissingCalculatorException
      *
-     * @return DiscountCalculatorPluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
     public function getCalculatorPluginByName($pluginName)
     {
@@ -137,9 +137,9 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     /**
      * @param string $pluginName
      *
-     * @throws MissingCollectorException
+     * @throws \Spryker\Zed\Discount\Business\Exception\MissingCollectorException
      *
-     * @return DiscountCollectorPluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface
      */
     public function getCollectorPluginByName($pluginName)
     {

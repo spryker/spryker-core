@@ -28,7 +28,7 @@ class KeyController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function ajaxAction(Request $request)
     {
@@ -65,7 +65,7 @@ class KeyController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function suggestAction(Request $request)
     {

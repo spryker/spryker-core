@@ -20,7 +20,7 @@ class ItemGrouperCheckoutConnectorBusinessFactory extends AbstractBusinessFactor
     /**
      * @deprecated Use getItemGrouperFacade() instead.
      *
-     * @return ItemGrouperCheckoutConnectorToItemGrouperInterface
+     * @return \Spryker\Zed\ItemGrouperCheckoutConnector\Dependency\Facade\ItemGrouperCheckoutConnectorToItemGrouperInterface
      */
     public function createItemGrouperFacade()
     {
@@ -30,7 +30,7 @@ class ItemGrouperCheckoutConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return ItemGrouperCheckoutConnectorToItemGrouperInterface
+     * @return \Spryker\Zed\ItemGrouperCheckoutConnector\Dependency\Facade\ItemGrouperCheckoutConnectorToItemGrouperInterface
      */
     public function getItemGrouperFacade()
     {

@@ -18,7 +18,7 @@ class DiscountCalculationConnectorCommunicationFactory extends AbstractCommunica
 {
 
     /**
-     * @return DiscountCalculationToDiscountInterface
+     * @return \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToDiscountInterface
      */
     public function getDiscountFacade()
     {

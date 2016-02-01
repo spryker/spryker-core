@@ -14,7 +14,7 @@ class AuthQueryContainer extends AbstractQueryContainer
 {
 
     /**
-     * @return SpyResetPasswordQuery
+     * @return \Orm\Zed\Auth\Persistence\Base\SpyResetPasswordQuery
      */
     public function queryResetPassword()
     {
@@ -24,7 +24,7 @@ class AuthQueryContainer extends AbstractQueryContainer
     /**
      * @param string $code
      *
-     * @return SpyResetPasswordQuery
+     * @return \Orm\Zed\Auth\Persistence\Base\SpyResetPasswordQuery
      */
     public function queryForActiveCode($code)
     {

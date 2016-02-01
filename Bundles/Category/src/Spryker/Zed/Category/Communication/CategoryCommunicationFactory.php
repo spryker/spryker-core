@@ -27,7 +27,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getCurrentLocale() instead.
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function createCurrentLocale()
     {
@@ -37,7 +37,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {
@@ -50,7 +50,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return RootNodeTable
+     * @return \Spryker\Zed\Category\Communication\Table\RootNodeTable
      */
     public function createRootNodeTable()
     {
@@ -63,7 +63,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idCategoryNode
      *
-     * @return CategoryAttributeTable
+     * @return \Spryker\Zed\Category\Communication\Table\CategoryAttributeTable
      */
     public function createCategoryAttributeTable($idCategoryNode)
     {
@@ -84,7 +84,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param $idCategoryNode
      *
-     * @return UrlTable
+     * @return \Spryker\Zed\Category\Communication\Table\UrlTable
      */
     public function createUrlTable($idCategoryNode)
     {

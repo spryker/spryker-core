@@ -19,7 +19,7 @@ class ClientResolver extends AbstractClassResolver
      *
      * @throws ClientNotFoundException
      *
-     * @return AbstractClient
+     * @return \Spryker\Client\Kernel\AbstractClient
      */
     public function resolve($callerClass)
     {

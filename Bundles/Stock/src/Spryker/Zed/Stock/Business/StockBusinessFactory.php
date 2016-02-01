@@ -27,7 +27,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CalculatorInterface
+     * @return \Spryker\Zed\Stock\Business\Model\CalculatorInterface
      */
     public function createCalculatorModel()
     {
@@ -37,7 +37,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ReaderInterface
+     * @return \Spryker\Zed\Stock\Business\Model\ReaderInterface
      */
     public function createReaderModel()
     {
@@ -48,7 +48,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return WriterInterface
+     * @return \Spryker\Zed\Stock\Business\Model\WriterInterface
      */
     public function createWriterModel()
     {
@@ -60,7 +60,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return StockToProductInterface
+     * @return \Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface
      */
     protected function getProductFacade()
     {
@@ -68,7 +68,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return StockToTouchInterface
+     * @return \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface
      */
     protected function getTouchFacade()
     {

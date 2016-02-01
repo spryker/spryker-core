@@ -13,7 +13,7 @@ class LocatorAwareExtension
 {
 
     /**
-     * @return AutoCompletion
+     * @return \Generated\Zed\Ide\AutoCompletion
      */
     public function getLocator()
     {

@@ -47,7 +47,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function executeOperation()
     {

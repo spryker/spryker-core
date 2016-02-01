@@ -21,28 +21,28 @@ interface PageManagerInterface
     /**
      * @param PageTransfer $page
      *
-     * @throws MissingTemplateException
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
-     * @throws PageExistsException
+     * @throws \Spryker\Zed\Cms\Business\Exception\PageExistsException
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     public function savePage(PageTransfer $page);
 
     /**
      * @param int $idPage
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return SpyCmsPage
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
     public function getPageById($idPage);
 
     /**
      * @param SpyCmsPage $page
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     public function convertPageEntityToTransfer(SpyCmsPage $page);
 
@@ -59,7 +59,7 @@ interface PageManagerInterface
      *
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createPageUrl(PageTransfer $page, $url);
 
@@ -70,7 +70,7 @@ interface PageManagerInterface
      *
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createPageUrlWithLocale(PageTransfer $page, $url, LocaleTransfer $localeTransfer);
 
@@ -78,7 +78,7 @@ interface PageManagerInterface
      * @param PageTransfer $page
      * @param string $url
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function savePageUrlAndTouch(PageTransfer $page, $url);
 
@@ -86,7 +86,7 @@ interface PageManagerInterface
      * @param PageTransfer $page
      * @param CmsBlockTransfer $blockTransfer
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     public function savePageBlockAndTouch(PageTransfer $page, CmsBlockTransfer $blockTransfer);
 

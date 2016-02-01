@@ -154,7 +154,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     }
 
     /**
-     * @return BundleNameFinder
+     * @return \Spryker\Zed\Kernel\BundleNameFinder
      */
     protected function getBundleNameFinder()
     {

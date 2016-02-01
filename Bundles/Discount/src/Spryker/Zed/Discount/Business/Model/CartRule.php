@@ -81,7 +81,7 @@ class CartRule implements CartRuleInterface
     /**
      * @param CartRuleTransfer $cartRuleFormTransfer
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     public function saveCartRule(CartRuleTransfer $cartRuleFormTransfer)
     {
@@ -155,7 +155,7 @@ class CartRule implements CartRuleInterface
     /**
      * @param DiscountTransfer $discountTransfer
      *
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     protected function saveDiscount($discountTransfer)
     {

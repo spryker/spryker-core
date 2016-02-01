@@ -21,7 +21,7 @@ class OmsOrderHydrator implements OmsOrderHydratorInterface
      * @param OrderTransfer $order
      * @param CheckoutRequestTransfer $request
      *
-     * @throws NoStatemachineProcessException
+     * @throws \Spryker\Zed\OmsCheckoutConnector\Business\Exception\NoStatemachineProcessException
      *
      * @return void
      */

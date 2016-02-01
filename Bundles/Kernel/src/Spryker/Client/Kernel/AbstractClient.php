@@ -32,7 +32,7 @@ abstract class AbstractClient
     }
 
     /**
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Client\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
      * @return AbstractFactory
      */
@@ -42,7 +42,7 @@ abstract class AbstractClient
     }
 
     /**
-     * @return FactoryResolver
+     * @return \Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {
@@ -50,7 +50,7 @@ abstract class AbstractClient
     }
 
     /**
-     * @return BaseStub
+     * @return \Spryker\Client\ZedRequest\Stub\BaseStub
      */
     protected function getZedStub()
     {

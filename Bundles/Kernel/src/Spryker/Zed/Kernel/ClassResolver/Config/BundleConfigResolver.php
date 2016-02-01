@@ -19,7 +19,7 @@ class BundleConfigResolver extends AbstractClassResolver
      *
      * @throws BundleConfigNotFoundException
      *
-     * @return AbstractBundleConfig
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     public function resolve($callerClass)
     {

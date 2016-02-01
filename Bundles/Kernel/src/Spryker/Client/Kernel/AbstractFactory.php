@@ -33,7 +33,7 @@ abstract class AbstractFactory
     /**
      * @param $key
      *
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return mixed
      */
@@ -54,7 +54,7 @@ abstract class AbstractFactory
     }
 
     /**
-     * @throws DependencyProviderNotFoundException
+     * @throws \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
      *
      * @return AbstractDependencyProvider
      */
@@ -64,7 +64,7 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return DependencyProviderResolver
+     * @return \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
     protected function getDependencyProviderResolver()
     {
@@ -83,7 +83,7 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return SessionClient
+     * @return \Spryker\Client\Session\SessionClient
      */
     protected function createSessionClient()
     {
@@ -91,7 +91,7 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return ZedRequestClient
+     * @return \Spryker\Client\ZedRequest\ZedRequestClient
      */
     protected function createZedRequestClient()
     {
@@ -99,7 +99,7 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return StorageClient
+     * @return \Spryker\Client\Storage\StorageClient
      */
     protected function createStorageClient()
     {
@@ -107,7 +107,7 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return SearchClient
+     * @return \Spryker\Client\Search\SearchClient
      */
     protected function createSearchClient()
     {

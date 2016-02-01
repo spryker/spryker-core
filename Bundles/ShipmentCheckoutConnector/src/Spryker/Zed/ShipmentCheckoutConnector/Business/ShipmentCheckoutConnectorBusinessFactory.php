@@ -22,7 +22,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return ShipmentOrderHydratorInterface
+     * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderHydratorInterface
      */
     public function createShipmentOrderHydrator()
     {
@@ -32,7 +32,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ShipmentOrderSaverInterface
+     * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderSaverInterface
      */
     public function createShipmentOrderSaver()
     {

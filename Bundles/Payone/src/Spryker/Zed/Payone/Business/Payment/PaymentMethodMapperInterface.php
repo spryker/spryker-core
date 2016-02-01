@@ -38,35 +38,35 @@ interface PaymentMethodMapperInterface
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return AuthorizationContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer
      */
     public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity);
 
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return PreAuthorizationContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer
      */
     public function mapPaymentToPreAuthorization(SpyPaymentPayone $paymentEntity);
 
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
      */
     public function mapPaymentToCapture(SpyPaymentPayone $paymentEntity);
 
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
      */
     public function mapPaymentToDebit(SpyPaymentPayone $paymentEntity);
 
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
      */
     public function mapPaymentToRefund(SpyPaymentPayone $paymentEntity);
 

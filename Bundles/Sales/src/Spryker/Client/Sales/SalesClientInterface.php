@@ -15,7 +15,7 @@ interface SalesClientInterface
     /**
      * @param OrderListTransfer $orderListTransfer
      *
-     * @return OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer);
 

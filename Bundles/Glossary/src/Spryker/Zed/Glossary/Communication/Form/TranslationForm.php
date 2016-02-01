@@ -189,7 +189,7 @@ class TranslationForm extends AbstractForm
     /**
      * @param int $fkGlossaryKey
      *
-     * @return SpyGlossaryKey
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
      */
     protected function getGlossaryKey($fkGlossaryKey)
     {

@@ -18,7 +18,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 {
 
     /**
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrder()
     {
@@ -26,7 +26,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItem()
     {
@@ -34,7 +34,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @return SpySalesExpenseQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
      */
     public function querySalesExpense()
     {
@@ -44,7 +44,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @var int
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByIdSalesOrder($idOrder)
     {
@@ -56,7 +56,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @var int
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsWithState($idOrder)
     {
@@ -70,7 +70,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @param int $idSalesOrderAddress
      *
-     * @return SpySalesOrderAddressQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
      */
     public function querySalesOrderAddressById($idSalesOrderAddress)
     {
@@ -83,7 +83,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @param int $idOrder
      *
-     * @return SpySalesExpenseQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
      */
     public function querySalesExpensesByOrderId($idOrder)
     {
@@ -96,7 +96,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @param $idOrderItem
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function queryOrderItemById($idOrderItem)
     {
@@ -107,7 +107,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @return SpySalesOrderCommentQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
      */
     public function queryComments()
     {
@@ -119,7 +119,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @param int $idSalesOrder
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrderById($idSalesOrder)
     {
@@ -133,7 +133,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      * @param $idCustomer
      * @param Criteria|null $criteria
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria = null)
     {
@@ -147,7 +147,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      * @param int $idSalesOrder
      * @param int $idCustomer
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrderDetails($idSalesOrder, $idCustomer)
     {

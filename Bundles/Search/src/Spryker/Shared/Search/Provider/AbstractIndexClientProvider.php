@@ -23,7 +23,7 @@ abstract class AbstractIndexClientProvider extends AbstractClientProvider
     /**
      * @throws \Exception
      *
-     * @return Index
+     * @return \Elastica\Index
      */
     protected function createZedClient()
     {

@@ -44,7 +44,7 @@ class MandrillMailSender implements MailSenderInterface
     /**
      * @param MailTransfer $mailTransfer
      *
-     * @return SendMailResponsesTransfer
+     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
@@ -66,7 +66,7 @@ class MandrillMailSender implements MailSenderInterface
     /**
      * @param array $responses
      *
-     * @return SendMailResponsesTransfer
+     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
     protected function convertResponsesToTransfer($responses)
     {

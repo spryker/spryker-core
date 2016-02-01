@@ -70,7 +70,7 @@ class VoucherCodesWriter extends AbstractWriter
     /**
      * @param VoucherCodesTransfer $voucherCodesTransfer
      *
-     * @return VoucherPoolTransfer
+     * @return \Generated\Shared\Transfer\VoucherPoolTransfer
      */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
     {
@@ -185,7 +185,7 @@ class VoucherCodesWriter extends AbstractWriter
      * @param VoucherCodesTransfer $voucherCodesTransfer
      * @param $voucherPoolCategory
      *
-     * @return SpyDiscountVoucherPool
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
     protected function saveDiscountVoucherPool(VoucherCodesTransfer $voucherCodesTransfer, $voucherPoolCategory)
     {
@@ -200,7 +200,7 @@ class VoucherCodesWriter extends AbstractWriter
      * @param VoucherCodesTransfer $voucherCodesTransfer
      * @param $voucherPool
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function saveDiscount(VoucherCodesTransfer $voucherCodesTransfer, $voucherPool)
     {
@@ -217,7 +217,7 @@ class VoucherCodesWriter extends AbstractWriter
     /**
      * @param VoucherCodesTransfer $voucherCodesTransfer
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     public function createDiscountTransfer(VoucherCodesTransfer $voucherCodesTransfer)
     {

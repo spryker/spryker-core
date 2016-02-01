@@ -104,7 +104,7 @@ class AclTest extends Test
     /**
      * @param array $data
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     private function mockAddUser(array $data)
     {

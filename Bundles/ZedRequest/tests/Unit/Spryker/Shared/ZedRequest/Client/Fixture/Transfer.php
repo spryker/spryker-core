@@ -53,7 +53,7 @@ class Transfer extends AbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return self
      */

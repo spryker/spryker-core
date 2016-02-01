@@ -20,7 +20,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return ProductOptionFacade
+     * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacade
      */
     public function getInstallerFacade()
     {

@@ -20,7 +20,7 @@ class ShipmentCheckoutConnectorCommunicationFactory extends AbstractCommunicatio
 {
 
     /**
-     * @return ShipmentFacade
+     * @return \Spryker\Zed\Shipment\Business\ShipmentFacade
      */
     public function getShipmentFacade()
     {
@@ -32,7 +32,7 @@ class ShipmentCheckoutConnectorCommunicationFactory extends AbstractCommunicatio
     /**
      * @deprecated Use getShipmentFacade() instead.
      *
-     * @return ShipmentFacade
+     * @return \Spryker\Zed\Shipment\Business\ShipmentFacade
      */
     public function createShipmentFacade()
     {

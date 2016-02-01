@@ -52,7 +52,7 @@ class TransactionStatusUpdateManager
     /**
      * @param TransactionStatusUpdateInterface $request
      *
-     * @return TransactionStatusResponse
+     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
      */
     public function processTransactionStatusUpdate(TransactionStatusUpdateInterface $request)
     {
@@ -149,7 +149,7 @@ class TransactionStatusUpdateManager
     /**
      * @param string $errorMessage
      *
-     * @return TransactionStatusResponse
+     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
      */
     protected function createErrorResponse($errorMessage)
     {
@@ -160,7 +160,7 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @return TransactionStatusResponse
+     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
      */
     protected function createSuccessResponse()
     {
@@ -172,7 +172,7 @@ class TransactionStatusUpdateManager
     /**
      * @param string $transactionId
      *
-     * @return SpyPaymentPayone
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
     protected function findPaymentByTransactionId($transactionId)
     {

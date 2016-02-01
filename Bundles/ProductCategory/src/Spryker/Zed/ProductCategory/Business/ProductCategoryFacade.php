@@ -31,10 +31,10 @@ class ProductCategoryFacade extends AbstractFacade
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @throws ProductCategoryMappingExistsException
-     * @throws MissingProductException
-     * @throws MissingCategoryNodeException
-     * @throws PropelException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingProductException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -79,7 +79,7 @@ class ProductCategoryFacade extends AbstractFacade
      * @param int $idCategory
      * @param array $productIdsToAssign
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -107,7 +107,7 @@ class ProductCategoryFacade extends AbstractFacade
      * @param int $idCategory
      * @param array $productOrderList
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

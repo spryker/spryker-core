@@ -17,7 +17,7 @@ class Calculation extends AbstractPaymentHandler implements CalculationInterface
     /**
      * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
@@ -31,7 +31,7 @@ class Calculation extends AbstractPaymentHandler implements CalculationInterface
     /**
      * @param string $requestData
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     protected function sendRequest($requestData)
     {

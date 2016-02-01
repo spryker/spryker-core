@@ -19,7 +19,7 @@ interface RuleInterface
     /**
      * @param RuleTransfer $ruleTransfer
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
      * @return mixed
      */
@@ -28,9 +28,9 @@ interface RuleInterface
     /**
      * @param RuleTransfer $RuleTransfer
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function save(RuleTransfer $RuleTransfer);
 
@@ -44,7 +44,7 @@ interface RuleInterface
     /**
      * @param int $idRole
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function getRoleRules($idRole);
 
@@ -54,7 +54,7 @@ interface RuleInterface
      * @param string $controller
      * @param string $action
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function findByRoles(
         RolesTransfer $roles,
@@ -66,23 +66,23 @@ interface RuleInterface
     /**
      * @param int $idGroup
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function getRulesForGroupId($idGroup);
 
     /**
      * @param int $id
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function getRuleById($id);
 
     /**
      * @param int $id
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
      * @return bool
      */
@@ -100,7 +100,7 @@ interface RuleInterface
     /**
      * @param UserTransfer $userTransfer
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      */
     public function registerSystemUserRules(UserTransfer $userTransfer);
 

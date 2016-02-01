@@ -20,7 +20,7 @@ class Connection extends AbstractPlugin
 {
 
     /**
-     * @return ConnectionInterface
+     * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     public function get()
     {

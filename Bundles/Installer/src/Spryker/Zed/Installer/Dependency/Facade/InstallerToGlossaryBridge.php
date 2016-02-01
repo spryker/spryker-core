@@ -61,7 +61,7 @@ class InstallerToGlossaryBridge implements InstallerToGlossaryInterface
      * @param string $keyName
      * @param LocaleTransfer $locale
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function getTranslation($keyName, LocaleTransfer $locale)
     {
@@ -74,7 +74,7 @@ class InstallerToGlossaryBridge implements InstallerToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
@@ -87,7 +87,7 @@ class InstallerToGlossaryBridge implements InstallerToGlossaryInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {

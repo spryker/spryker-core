@@ -29,9 +29,9 @@ class ExceptionHandlerDispatcher
     /**
      * @param FlattenException $exception
      *
-     * @throws UndefinedExceptionHandlerException
+     * @throws \Spryker\Yves\Application\Plugin\Exception\UndefinedExceptionHandlerException
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function dispatch(FlattenException $exception)
     {

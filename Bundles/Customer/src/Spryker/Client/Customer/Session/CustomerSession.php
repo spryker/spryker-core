@@ -44,7 +44,7 @@ class CustomerSession implements CustomerSessionInterface
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer()
     {
@@ -54,7 +54,7 @@ class CustomerSession implements CustomerSessionInterface
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function setCustomer(CustomerTransfer $customerTransfer)
     {

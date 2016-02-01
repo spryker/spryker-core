@@ -24,7 +24,7 @@ interface PayolutionSessionInterface
     public function hasInstallmentPayments();
 
     /**
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPayments();
 

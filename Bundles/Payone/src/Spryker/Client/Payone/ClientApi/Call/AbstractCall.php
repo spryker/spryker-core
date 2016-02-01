@@ -72,7 +72,7 @@ abstract class AbstractCall
     }
 
     /**
-     * @return PayoneStandardParameterTransfer
+     * @return \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected function getStandardParameter()
     {
@@ -80,7 +80,7 @@ abstract class AbstractCall
     }
 
     /**
-     * @return HashGeneratorInterface
+     * @return \Spryker\Client\Payone\ClientApi\HashGeneratorInterface
      */
     protected function getHashGenerator()
     {
@@ -88,7 +88,7 @@ abstract class AbstractCall
     }
 
     /**
-     * @return ModeDetectorInterface
+     * @return \Spryker\Shared\Payone\Dependency\ModeDetectorInterface
      */
     protected function getModeDetector()
     {

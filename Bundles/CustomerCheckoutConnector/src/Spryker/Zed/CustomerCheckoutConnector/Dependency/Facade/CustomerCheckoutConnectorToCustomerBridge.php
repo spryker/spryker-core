@@ -31,7 +31,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer(CustomerTransfer $customerTransfer)
     {
@@ -51,7 +51,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function registerCustomer(CustomerTransfer $customerTransfer)
     {
@@ -61,7 +61,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function createAddress(AddressTransfer $addressTransfer)
     {
@@ -71,7 +71,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function updateAddress(AddressTransfer $addressTransfer)
     {

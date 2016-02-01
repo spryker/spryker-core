@@ -37,7 +37,7 @@ class InvoiceTest extends Test
     }
 
     /**
-     * @return CheckoutRequestTransfer
+     * @return \Generated\Shared\Transfer\CheckoutRequestTransfer
      */
     private function getCheckoutRequestTransfer()
     {
@@ -154,7 +154,7 @@ class InvoiceTest extends Test
     }
 
     /**
-     * @return PayolutionConfig
+     * @return \Spryker\Zed\Payolution\PayolutionConfig
      */
     private function getBundleConfigMock()
     {
@@ -168,7 +168,7 @@ class InvoiceTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     private function getPaymentEntityMock()
     {

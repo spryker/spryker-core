@@ -26,7 +26,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     /**
      * @param string $itemType
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryTouchListByItemType($itemType)
     {
@@ -40,7 +40,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @param string $itemType
      * @param string $itemId
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryTouchEntry($itemType, $itemId)
     {
@@ -58,7 +58,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @param string $itemId
      * @param string $itemEvent
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryUpdateTouchEntry($itemType, $itemId, $itemEvent)
     {
@@ -78,7 +78,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function createBasicExportableQuery($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)
     {
@@ -93,7 +93,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryExportTypes()
     {
@@ -111,7 +111,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @param string $itemEvent
      * @param array $itemIds
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryTouchEntries($itemType, $itemEvent, array $itemIds)
     {
@@ -127,7 +127,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     /**
      * @param string $itemType
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryTouchDeleteStorageAndSearch($itemType)
     {
@@ -145,9 +145,9 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     /**
      * @param string $itemType
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryTouchDeleteOnlyByItemType($itemType)
     {

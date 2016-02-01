@@ -54,7 +54,7 @@ abstract class AbstractPaymentHandler
     }
 
     /**
-     * @return PayolutionConfig
+     * @return \Spryker\Zed\Payolution\PayolutionConfig
      */
     protected function getConfig()
     {
@@ -74,7 +74,7 @@ abstract class AbstractPaymentHandler
     /**
      * @param string $accountBrand
      *
-     * @throws NoMethodMapperException
+     * @throws \Spryker\Zed\Payolution\Business\Exception\NoMethodMapperException
      *
      * @return InvoiceInterface | InstallmentInterface
      */
@@ -92,7 +92,7 @@ abstract class AbstractPaymentHandler
      * @param int $min
      * @param int $max
      *
-     * @throws OrderGrandTotalException
+     * @throws \Spryker\Zed\Payolution\Business\Exception\OrderGrandTotalException
      *
      * @return void
      */

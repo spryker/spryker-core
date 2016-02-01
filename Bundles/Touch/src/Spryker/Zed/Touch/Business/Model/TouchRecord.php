@@ -43,7 +43,7 @@ class TouchRecord implements TouchRecordInterface
      * @param bool $keyChange
      *
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */

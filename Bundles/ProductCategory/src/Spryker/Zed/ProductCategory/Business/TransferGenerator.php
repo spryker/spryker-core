@@ -16,7 +16,7 @@ class TransferGenerator implements TransferGeneratorInterface
     /**
      * @param SpyProductCategory $productCategoryEntity
      *
-     * @return ProductCategoryTransfer
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer
      */
     public function convertProductCategory(SpyProductCategory $productCategoryEntity)
     {

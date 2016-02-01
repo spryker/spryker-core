@@ -38,7 +38,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -189,7 +189,7 @@ class IndexController extends AbstractController
     /**
      * @throws \ErrorException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getCurrentLocale()
     {

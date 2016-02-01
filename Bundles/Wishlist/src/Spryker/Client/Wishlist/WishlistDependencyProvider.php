@@ -21,7 +21,7 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
     /**
      * @param Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     public function provideServiceLayerDependencies(Container $container)
     {

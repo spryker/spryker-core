@@ -15,7 +15,7 @@ interface ProductSearchQueryContainerInterface
 {
 
     /**
-     * @return SpyProductSearchAttributesOperationQuery
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
      */
     public function queryFieldOperations();
 
@@ -23,7 +23,7 @@ interface ProductSearchQueryContainerInterface
      * @param array $productIds
      * @param LocaleTransfer $locale
      *
-     * @return SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function getExportableProductsByLocale(array $productIds, LocaleTransfer $locale);
 
@@ -31,7 +31,7 @@ interface ProductSearchQueryContainerInterface
      * @param int $idAttribute
      * @param string $copyTarget
      *
-     * @return SpyProductSearchAttributesOperationQuery
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
      */
     public function queryAttributeOperation($idAttribute, $copyTarget);
 
@@ -39,7 +39,7 @@ interface ProductSearchQueryContainerInterface
      * @param ModelCriteria $expandableQuery
      * @param LocaleTransfer $locale
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale);
 

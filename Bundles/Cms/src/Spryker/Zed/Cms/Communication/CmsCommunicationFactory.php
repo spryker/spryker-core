@@ -30,7 +30,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return CmsPageTable
+     * @return \Spryker\Zed\Cms\Communication\Table\CmsPageTable
      */
     public function createCmsPageTable()
     {
@@ -43,7 +43,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idLocale
      *
-     * @return CmsBlockTable
+     * @return \Spryker\Zed\Cms\Communication\Table\CmsBlockTable
      */
     public function createCmsBlockTable($idLocale)
     {
@@ -54,7 +54,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsRedirectTable
+     * @return \Spryker\Zed\Cms\Communication\Table\CmsRedirectTable
      */
     public function createCmsRedirectTable()
     {
@@ -70,7 +70,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      * @param array $placeholders
      * @param array $searchArray
      *
-     * @return CmsGlossaryTable
+     * @return \Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable
      */
     public function createCmsGlossaryTable($idPage, $fkLocale, array $placeholders = null, array $searchArray = null)
     {
@@ -84,7 +84,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      * @param string $formType
      * @param int $idPage
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCmsPageForm($formType, $idPage = null)
     {
@@ -105,7 +105,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      * @param string $formType
      * @param int $idCmsBlock
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCmsBlockForm($formType, $idCmsBlock = null)
     {
@@ -124,7 +124,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      * @param string $formType
      * @param int $idUrl
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCmsRedirectForm($formType, $idUrl = null)
     {
@@ -144,7 +144,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      * @param array $placeholder
      * @param CmsFacade $cmsFacade
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCmsGlossaryForm($idPage, $idMapping, $placeholder, $cmsFacade)
     {
@@ -168,7 +168,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsToLocaleInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
      */
     public function getLocaleFacade()
     {

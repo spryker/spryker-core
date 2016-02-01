@@ -20,7 +20,7 @@ class WishlistFacade extends AbstractFacade
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function addItem(WishlistChangeTransfer $wishlistChange)
     {
@@ -30,7 +30,7 @@ class WishlistFacade extends AbstractFacade
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItem(WishlistChangeTransfer $wishlistChange)
     {
@@ -40,7 +40,7 @@ class WishlistFacade extends AbstractFacade
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function decreaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
@@ -50,7 +50,7 @@ class WishlistFacade extends AbstractFacade
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
@@ -60,7 +60,7 @@ class WishlistFacade extends AbstractFacade
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getCustomerWishlist(CustomerTransfer $customerTransfer)
     {

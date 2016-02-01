@@ -30,7 +30,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return SubscriptionRequestHandler
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler
      */
     public function createSubscriptionRequestHandler()
     {
@@ -42,7 +42,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubscriptionManagerInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface
      */
     protected function createSubscriptionManager()
     {
@@ -52,7 +52,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubscriberManagerInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface
      */
     protected function createSubscriberManager()
     {
@@ -63,7 +63,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubscriberOptInHandlerInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface
      */
     public function createSingleOptInHandler()
     {
@@ -93,7 +93,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubscriberKeyGeneratorInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface
      */
     protected function createSubscriberKeyGenerator()
     {

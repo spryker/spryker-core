@@ -17,9 +17,9 @@ interface BulkWriterInterface
      * @param string $name
      *
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyPriceType
+     * @return \Orm\Zed\Price\Persistence\SpyPriceType
      */
     public function createPriceType($name);
 

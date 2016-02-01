@@ -20,7 +20,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function calculateInstallmentPaymentsAction(CheckoutRequestTransfer $checkoutRequestTransfer)
     {

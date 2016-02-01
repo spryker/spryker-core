@@ -204,7 +204,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
     /**
      * @param $transferClassName
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     private function createTransferObject($transferClassName)
     {

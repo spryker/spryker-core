@@ -57,7 +57,7 @@ class Catalog implements CatalogInterface
     /**
      * @param int $id
      *
-     * @throws ProductNotFoundException
+     * @throws \Spryker\Client\Catalog\Model\Exception\ProductNotFoundException
      *
      * @return array
      */

@@ -27,7 +27,7 @@ class SequenceNumberBusinessFactory extends AbstractBusinessFactory
      * @param int $min
      * @param int $max
      *
-     * @return RandomNumberGeneratorInterface
+     * @return \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface
      */
     public function createRandomNumberGenerator($min = 1, $max = 1)
     {
@@ -40,7 +40,7 @@ class SequenceNumberBusinessFactory extends AbstractBusinessFactory
     /**
      * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
      *
-     * @return SequenceNumberInterface
+     * @return \Spryker\Zed\SequenceNumber\Business\Model\SequenceNumberInterface
      */
     public function createSequenceNumber(SequenceNumberSettingsTransfer $sequenceNumberSettings)
     {

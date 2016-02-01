@@ -23,7 +23,7 @@ interface ProductOptionQueryContainerInterface
     /**
      * @param string $importKeyProductOptionType
      *
-     * @return SpyProductOptionTypeQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery
      */
     public function queryProductOptionTypeByImportKey($importKeyProductOptionType);
 
@@ -31,14 +31,14 @@ interface ProductOptionQueryContainerInterface
      * @param int $fkProductOptionType
      * @param int $fkLocale
      *
-     * @return SpyProductOptionTypeTranslationQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslationQuery
      */
     public function queryProductOptionTypeTranslationByFks($fkProductOptionType, $fkLocale);
 
     /**
      * @param int $idProductOptionValue
      *
-     * @return SpyProductOptionValueQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */
     public function queryOptionValueById($idProductOptionValue);
 
@@ -46,14 +46,14 @@ interface ProductOptionQueryContainerInterface
      * @param string $importKeyProductOptionValue
      * @param int $fkProductOptionType
      *
-     * @return SpyProductOptionValueQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */
     public function queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyProductOptionValue, $fkProductOptionType);
 
     /**
      * @param string $importKeyProductOptionValue
      *
-     * @return SpyProductOptionValueQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */
     public function queryProductOptionValueByImportKey($importKeyProductOptionValue);
 
@@ -61,14 +61,14 @@ interface ProductOptionQueryContainerInterface
      * @param int $fkProductOptionValue
      * @param int $fkLocale
      *
-     * @return SpyProductOptionValueTranslationQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslationQuery
      */
     public function queryProductOptionValueTranslationByFks($fkProductOptionValue, $fkLocale);
 
     /**
      * @param int $idProductOptionTypeUsage
      *
-     * @return SpyProductOptionTypeUsageQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery
      */
     public function queryProductOptionTypeUsageById($idProductOptionTypeUsage);
 
@@ -76,14 +76,14 @@ interface ProductOptionQueryContainerInterface
      * @param int $fkProduct
      * @param int $fkProductOptionType
      *
-     * @return SpyProductOptionTypeUsageQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery
      */
     public function queryProductOptionTypeUsageByFKs($fkProduct, $fkProductOptionType);
 
     /**
      * @param int $idProductOptionValueUsage
      *
-     * @return SpyProductOptionValueUsageQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery
      */
     public function queryProductOptionValueUsageById($idProductOptionValueUsage);
 
@@ -91,7 +91,7 @@ interface ProductOptionQueryContainerInterface
      * @param int $fkProductOptionTypeUsage
      * @param int $fkProductOptionValue
      *
-     * @return SpyProductOptionValueUsageQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery
      */
     public function queryProductOptionValueUsageByFKs($fkProductOptionTypeUsage, $fkProductOptionValue);
 
@@ -99,7 +99,7 @@ interface ProductOptionQueryContainerInterface
      * @param int $fkProductOptionTypeUsage
      * @param int $fkProductOptionType
      *
-     * @return SpyProductOptionValueUsageQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery
      */
     public function queryProductOptionValueUsageIdByFKs($fkProductOptionTypeUsage, $fkProductOptionType);
 
@@ -107,7 +107,7 @@ interface ProductOptionQueryContainerInterface
      * @param int $fkProductOptionTypeUsageA
      * @param int $fkProductOptionTypeUsageB
      *
-     * @return SpyProductOptionTypeUsageExclusionQuery
+     * @return \Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionTypeUsageExclusionQuery
      */
     public function queryProductOptionTypeUsageExclusionByFks($fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB);
 
@@ -115,28 +115,28 @@ interface ProductOptionQueryContainerInterface
      * @param int $fkProductOptionValueUsageA
      * @param int $fkProductOptionValueUsageB
      *
-     * @return SpyProductOptionValueUsageConstraintQuery
+     * @return \Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionValueUsageConstraintQuery
      */
     public function queryProductOptionValueUsageConstraintsByFks($fkProductOptionValueUsageA, $fkProductOptionValueUsageB);
 
     /**
      * @param int $idProductOptionType
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAssociatedProductAbstractIdsForProductOptionType($idProductOptionType);
 
     /**
      * @param int $idProductOptionValue
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAssociatedProductAbstractIdsForProductOptionValue($idProductOptionValue);
 
     /**
      * @param int $idProductOptionTypeUsage
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractIdForProductOptionTypeUsage($idProductOptionTypeUsage);
 
@@ -144,14 +144,14 @@ interface ProductOptionQueryContainerInterface
      * @param int $idProductOptionValueUsage
      * @param int $idLocale
      *
-     * @return SpyProductOptionValueUsageQuery
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery
      */
     public function queryProductOptionValueUsageWithAssociatedAttributes($idProductOptionValueUsage, $idLocale);
 
     /**
      * @param int $idProductOptionValueUsage
      *
-     * @return SpyTaxSetQuery
+     * @return \Orm\Zed\Tax\Persistence\Base\SpyTaxSetQuery
      */
     public function queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage);
 

@@ -55,7 +55,7 @@ class Doctor
     }
 
     /**
-     * @return HealthReportTransfer
+     * @return \Generated\Shared\Transfer\HealthReportTransfer
      */
     public function getReport()
     {

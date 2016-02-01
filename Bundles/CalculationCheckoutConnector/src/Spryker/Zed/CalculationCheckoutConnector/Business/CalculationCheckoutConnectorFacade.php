@@ -44,7 +44,7 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade
     /**
      * @param CalculableContainer $calculableContainer
      *
-     * @return CalculableInterface
+     * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
      */
     public function recalculate(CalculableContainer $calculableContainer)
     {

@@ -17,7 +17,7 @@ interface DiscountDecisionRulePluginInterface
      * @param DiscountTransfer $discountTransfer
      * @param CalculableInterface $discountableContainer
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function check(
         DiscountTransfer $discountTransfer,

@@ -39,7 +39,7 @@ class PriceFacade extends AbstractFacade
     /**
      * @param string $name
      *
-     * @return SpyPriceType
+     * @return \Orm\Zed\Price\Persistence\SpyPriceType
      */
     public function createPriceType($name)
     {

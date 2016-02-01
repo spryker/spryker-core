@@ -16,7 +16,7 @@ class DiscountDecisionRuleWriter extends AbstractWriter
     /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      *
-     * @return SpyDiscountDecisionRule
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
     public function create(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
@@ -30,9 +30,9 @@ class DiscountDecisionRuleWriter extends AbstractWriter
     /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyDiscountDecisionRule
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
     public function update(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {

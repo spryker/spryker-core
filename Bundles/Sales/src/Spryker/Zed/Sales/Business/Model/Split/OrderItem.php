@@ -60,7 +60,7 @@ class OrderItem implements ItemInterface
      *
      * @throws \Exception
      *
-     * @return ItemSplitResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
     public function split($idSalesOrderItem, $quantityToSplit)
     {
@@ -95,7 +95,7 @@ class OrderItem implements ItemInterface
     }
 
     /**
-     * @return ConnectionInterface
+     * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     protected function getConnection()
     {
@@ -137,7 +137,7 @@ class OrderItem implements ItemInterface
      * @param SpySalesOrderItem $salesOrderItem
      * @param int $quantity
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function createSalesOrderItemCopy(SpySalesOrderItem $salesOrderItem, $quantity)
     {
@@ -156,7 +156,7 @@ class OrderItem implements ItemInterface
      * @param SpySalesOrderItemOption $salesOrderItemOption
      * @param SpySalesOrderItem $copyOfSalesOrderItem
      *
-     * @return SpySalesOrderItemOption
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption
      */
     protected function createOrderItemOptionCopy(
         SpySalesOrderItemOption $salesOrderItemOption,

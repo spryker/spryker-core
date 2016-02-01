@@ -38,7 +38,7 @@ class PriceManager implements PriceManagerInterface
     /**
      * @param ChangeTransfer $change
      *
-     * @throws PriceMissingException
+     * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
      * @return ItemTransfer[]
      */

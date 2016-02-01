@@ -96,7 +96,7 @@ class GlossaryController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
@@ -138,7 +138,7 @@ class GlossaryController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function searchAction(Request $request)
     {
@@ -187,7 +187,7 @@ class GlossaryController extends AbstractController
     /**
      * @param array $data
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     private function createKeyMappingTransfer(array $data)
     {
@@ -207,7 +207,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @return CmsToLocaleInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
      */
     private function getLocaleFacade()
     {
@@ -216,7 +216,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @return CmsToGlossaryInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
      */
     private function getGlossaryFacade()
     {
@@ -325,7 +325,7 @@ class GlossaryController extends AbstractController
      * @param array $data
      * @param LocaleTransfer $localeTransfer
      *
-     * @return KeyTranslationTransfer
+     * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
     private function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer)
     {
@@ -349,9 +349,9 @@ class GlossaryController extends AbstractController
     /**
      * @param $idPage
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return SpyCmsPage
+     * @return \Orm\Zed\Cms\Persistence\Base\SpyCmsPage
      */
     private function findCmsPageById($idPage)
     {
@@ -389,7 +389,7 @@ class GlossaryController extends AbstractController
     /**
      * @param SpyCmsBlock $blockEntity
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     protected function createBlockTransfer(SpyCmsBlock $blockEntity)
     {

@@ -12,7 +12,7 @@ interface KernelToMessengerInterface
 {
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages();
 

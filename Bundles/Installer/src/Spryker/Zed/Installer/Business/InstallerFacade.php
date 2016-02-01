@@ -33,7 +33,7 @@ class InstallerFacade extends AbstractFacade
     }
 
     /**
-     * @return GlossaryInstaller
+     * @return \Spryker\Zed\Installer\Business\Model\GlossaryInstaller
      */
     public function getGlossaryInstaller()
     {

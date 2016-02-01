@@ -18,7 +18,7 @@ class ItemGrouperCheckoutConnectorFacade extends AbstractFacade
     /**
      * @param GroupableContainerTransfer $orderItems
      *
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     public function groupOrderItems(GroupableContainerTransfer $orderItems)
     {

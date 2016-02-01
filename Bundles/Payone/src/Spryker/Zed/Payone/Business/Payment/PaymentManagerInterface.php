@@ -30,42 +30,42 @@ interface PaymentManagerInterface
     /**
      * @param PayoneRefundTransfer $refundTransfer
      *
-     * @return RefundResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer
      */
     public function refundPayment(PayoneRefundTransfer $refundTransfer);
 
     /**
      * @param int $idPayment
      *
-     * @return DebitResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer
      */
     public function debitPayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return AuthorizationResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function authorizePayment($idPayment);
 
     /**
      * @param $idPayment
      *
-     * @return AuthorizationResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function preAuthorizePayment($idPayment);
 
     /**
      * @param $idPayment
      *
-     * @return CaptureResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer
      */
     public function capturePayment($idPayment);
 
     /**
      * @param PayoneCreditCardTransfer $creditCardData
      *
-     * @return CreditCardCheckResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData);
 
@@ -101,14 +101,14 @@ interface PaymentManagerInterface
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
      * @param int $idPayment
      *
-     * @return PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
     public function getPaymentData($idPayment);
 

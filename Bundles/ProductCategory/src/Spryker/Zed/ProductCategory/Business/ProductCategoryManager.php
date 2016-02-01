@@ -110,10 +110,10 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @throws ProductCategoryMappingExistsException
-     * @throws MissingProductException
-     * @throws MissingCategoryNodeException
-     * @throws PropelException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingProductException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -139,7 +139,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @throws ProductCategoryMappingExistsException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException
      *
      * @return void
      */
@@ -187,7 +187,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param int $idProductAbstract
      *
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function getProductCategoryMappingById($idCategory, $idProductAbstract)
     {
@@ -223,7 +223,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productIdsToAssign
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -249,7 +249,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productOrderList
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -276,7 +276,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productPreConfigList
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

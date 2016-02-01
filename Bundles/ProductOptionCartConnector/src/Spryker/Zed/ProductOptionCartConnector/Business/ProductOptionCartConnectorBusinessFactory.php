@@ -20,7 +20,7 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return ProductOptionManagerInterface
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Manager\ProductOptionManagerInterface
      */
     public function createProductOptionManager()
     {
@@ -30,7 +30,7 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GroupKeyExpander
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander
      */
     public function createGroupKeyExpander()
     {

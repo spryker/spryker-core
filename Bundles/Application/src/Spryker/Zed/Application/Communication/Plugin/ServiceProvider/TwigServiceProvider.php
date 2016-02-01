@@ -131,7 +131,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      *
      * @param array $parameters
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function render(array $parameters = [])
     {

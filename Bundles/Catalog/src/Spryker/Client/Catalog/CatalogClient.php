@@ -16,7 +16,7 @@ class CatalogClient extends AbstractClient
 {
 
     /**
-     * @return Catalog
+     * @return \Spryker\Client\Catalog\Model\Catalog
      */
     public function createCatalogModel()
     {
@@ -27,7 +27,7 @@ class CatalogClient extends AbstractClient
      * @param Request $request
      * @param array $category
      *
-     * @return FacetSearch
+     * @return \Spryker\Client\Catalog\Model\FacetSearch
      */
     public function createFacetSearch(Request $request, array $category)
     {
@@ -37,7 +37,7 @@ class CatalogClient extends AbstractClient
     /**
      * @param Request $request
      *
-     * @return FulltextSearch
+     * @return \Spryker\Client\Catalog\Model\FulltextSearch
      */
     public function createFulltextSearch(Request $request)
     {
@@ -45,7 +45,7 @@ class CatalogClient extends AbstractClient
     }
 
     /**
-     * @return FacetConfig
+     * @return \Spryker\Client\Catalog\Model\FacetConfig
      */
     public function createFacetConfig()
     {

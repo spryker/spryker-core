@@ -192,7 +192,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * @param string $property
      *
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return void
      */
@@ -210,7 +210,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * @param string $property
      *
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return void
      */
@@ -240,7 +240,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * Performance-Speedup. We do not want another instance of the filter for each property.
      *
-     * @return UnderscoreToCamelCase
+     * @return \Zend\Filter\Word\UnderscoreToCamelCase
      */
     private function getFilterUnderscoreToCamelCase()
     {

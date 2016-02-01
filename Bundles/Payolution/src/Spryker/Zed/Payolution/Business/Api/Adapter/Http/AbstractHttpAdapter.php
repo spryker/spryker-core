@@ -86,7 +86,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     /**
      * @param object $request
      *
-     * @throws ApiHttpRequestException
+     * @throws \Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException
      *
      * @return string
      */

@@ -33,7 +33,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return TransactionInterface
+     * @return \Spryker\Zed\Payolution\Business\Payment\Handler\Transaction\TransactionInterface
      */
     public function createPaymentTransactionHandler()
     {
@@ -55,7 +55,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CalculationInterface
+     * @return \Spryker\Zed\Payolution\Business\Payment\Handler\Calculation\CalculationInterface
      */
     public function createPaymentCalculationHandler()
     {
@@ -76,7 +76,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
      * @param string $gatewayUrl
      * @param string $contentType
      *
-     * @return AdapterInterface
+     * @return \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface
      */
     protected function createAdapter($gatewayUrl, $contentType)
     {
@@ -84,7 +84,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SaverInterface
+     * @return \Spryker\Zed\Payolution\Business\Order\SaverInterface
      */
     public function createOrderSaver()
     {
@@ -92,7 +92,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ConverterInterface
+     * @return \Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface
      */
     public function createConverter()
     {
@@ -100,7 +100,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransactionStatusLogInterface
+     * @return \Spryker\Zed\Payolution\Business\Log\TransactionStatusLogInterface
      */
     public function createTransactionStatusLog()
     {
@@ -108,7 +108,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Invoice
+     * @return \Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice
      */
     protected function createInvoice()
     {
@@ -116,7 +116,7 @@ class PayolutionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Installment
+     * @return \Spryker\Zed\Payolution\Business\Payment\Method\Installment\Installment
      */
     protected function createInstallment()
     {

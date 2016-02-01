@@ -14,7 +14,7 @@ class AvailabilityCartConnectorCommunicationFactory extends AbstractCommunicatio
 {
 
     /**
-     * @return AvailabilityCartConnectorToAvailabilityInterface
+     * @return \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface
      */
     public function getAvailabilityFacade()
     {

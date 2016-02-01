@@ -43,7 +43,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Collector
+     * @return \Spryker\Zed\Collector\Business\Exporter\Collector
      */
     public function createYvesKeyValueExporter()
     {
@@ -56,7 +56,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getTouchQueryContainer() instead
      *
-     * @return TouchQueryContainer
+     * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected function createTouchQueryContainer()
     {
@@ -66,7 +66,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TouchQueryContainer
+     * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected function getTouchQueryContainer()
     {
@@ -74,7 +74,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ExporterInterface
+     * @return \Spryker\Zed\Collector\Business\Exporter\ExporterInterface
      */
     protected function createKeyValueExporter()
     {
@@ -95,7 +95,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return WriterInterface
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
      */
     protected function createKeyValueWriter()
     {
@@ -105,7 +105,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MarkerInterface
+     * @return \Spryker\Zed\Collector\Business\Exporter\MarkerInterface
      */
     public function createKeyValueMarker()
     {
@@ -117,7 +117,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RedisReader
+     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\KeyValue\RedisReader
      */
     protected function createRedisReader()
     {
@@ -127,7 +127,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return KvMarkerKeyBuilder
+     * @return \Spryker\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder
      */
     protected function createKvMarkerKeyBuilder()
     {
@@ -135,7 +135,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return FailedResultInterface
+     * @return \Spryker\Zed\Collector\Business\Model\FailedResultInterface
      */
     protected function createFailedResultModel()
     {
@@ -143,7 +143,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return BatchResultInterface
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
     protected function createBatchResultModel()
     {
@@ -151,7 +151,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TouchUpdaterInterface
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
      */
     protected function createExporterWriterSearchTouchUpdater()
     {
@@ -159,7 +159,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TouchUpdaterInterface
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
      */
     protected function createExporterWriterKeyValueTouchUpdater()
     {
@@ -167,7 +167,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Collector
+     * @return \Spryker\Zed\Collector\Business\Exporter\Collector
      */
     public function createYvesSearchExporter()
     {
@@ -184,7 +184,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Collector
+     * @return \Spryker\Zed\Collector\Business\Exporter\Collector
      */
     public function createYvesSearchUpdateExporter()
     {
@@ -201,7 +201,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      * @param WriterInterface $searchWriter
      * @param CollectorConfig $config
      *
-     * @return SearchCollector
+     * @return \Spryker\Zed\Collector\Business\Exporter\SearchCollector
      */
     protected function createElasticsearchExporter(WriterInterface $searchWriter, CollectorConfig $config)
     {
@@ -222,7 +222,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ElasticsearchWriter
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter
      */
     protected function createSearchWriter()
     {
@@ -236,7 +236,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return WriterInterface
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
      */
     protected function createSearchUpdateWriter()
     {
@@ -252,7 +252,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MarkerInterface
+     * @return \Spryker\Zed\Collector\Business\Exporter\MarkerInterface
      */
     public function createSearchMarker()
     {
@@ -264,7 +264,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ElasticsearchMarkerWriter
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter
      */
     protected function createSearchMarkerWriter()
     {
@@ -278,7 +278,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ElasticsearchMarkerReader
+     * @return \Spryker\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader
      */
     protected function createSearchMarkerReader()
     {
@@ -290,7 +290,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SearchMarkerKeyBuilder
+     * @return \Spryker\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder
      */
     protected function createSearchMarkerKeyBuilder()
     {
@@ -300,7 +300,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @param MessengerInterface $messenger
      *
-     * @return InstallElasticsearch
+     * @return \Spryker\Zed\Collector\Business\Internal\InstallElasticsearch
      */
     public function createInstaller(MessengerInterface $messenger)
     {

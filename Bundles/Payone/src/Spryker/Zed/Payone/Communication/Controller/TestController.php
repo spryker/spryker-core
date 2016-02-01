@@ -401,7 +401,7 @@ class TestController extends AbstractController
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function getOrder()
     {

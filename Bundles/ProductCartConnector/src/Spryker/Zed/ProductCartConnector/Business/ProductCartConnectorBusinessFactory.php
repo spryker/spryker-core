@@ -20,7 +20,7 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return ProductManagerInterface
+     * @return \Spryker\Zed\ProductCartConnector\Business\Manager\ProductManagerInterface
      */
     public function createProductManager()
     {

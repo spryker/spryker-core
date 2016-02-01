@@ -15,7 +15,7 @@ interface CheckoutStubInterface
     /**
      * @param CheckoutRequestTransfer $transferCheckout
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function requestCheckout(CheckoutRequestTransfer $transferCheckout);
 

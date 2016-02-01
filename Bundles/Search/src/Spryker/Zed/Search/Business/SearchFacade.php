@@ -44,7 +44,7 @@ class SearchFacade extends AbstractFacade
     }
 
     /**
-     * @return Response
+     * @return \Elastica\Response
      */
     public function delete()
     {
@@ -55,7 +55,7 @@ class SearchFacade extends AbstractFacade
      * @param string $key
      * @param string $type
      *
-     * @return Document
+     * @return \Elastica\Document
      */
     public function getDocument($key, $type)
     {

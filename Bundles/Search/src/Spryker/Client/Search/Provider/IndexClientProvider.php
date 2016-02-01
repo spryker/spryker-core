@@ -13,7 +13,7 @@ class IndexClientProvider extends AbstractIndexClientProvider
 {
 
     /**
-     * @return Index
+     * @return \Elastica\Index
      */
     public function getClient()
     {

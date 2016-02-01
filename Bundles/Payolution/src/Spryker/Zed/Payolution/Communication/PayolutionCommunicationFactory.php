@@ -23,7 +23,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return Payments
+     * @return \Spryker\Zed\Payolution\Communication\Table\Payments
      */
     public function createPaymentsTable()
     {
@@ -35,7 +35,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idPayment
      *
-     * @return RequestLog
+     * @return \Spryker\Zed\Payolution\Communication\Table\RequestLog
      */
     public function createRequestLogTable($idPayment)
     {
@@ -47,7 +47,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idPayment
      *
-     * @return StatusLog
+     * @return \Spryker\Zed\Payolution\Communication\Table\StatusLog
      */
     public function createStatusLogTable($idPayment)
     {
@@ -57,7 +57,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return PayolutionToMailInterface
+     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMailInterface
      */
     public function getMailFacade()
     {
@@ -65,7 +65,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return PayolutionToGlossaryInterface
+     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToGlossaryInterface
      */
     public function getGlossaryFacade()
     {

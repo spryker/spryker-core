@@ -29,7 +29,7 @@ class ShipmentCheckoutConnectorToShipmentBridge implements ShipmentCheckoutConne
     /**
      * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransferTransfer
      *
-     * @return ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransferTransfer)
     {

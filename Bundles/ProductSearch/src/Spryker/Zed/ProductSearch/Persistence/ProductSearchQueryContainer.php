@@ -23,7 +23,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
 {
 
     /**
-     * @return SpyProductSearchAttributesOperationQuery
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
      */
     public function queryFieldOperations()
     {
@@ -45,7 +45,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      * @param array $productIds
      * @param LocaleTransfer $locale
      *
-     * @return SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function getExportableProductsByLocale(array $productIds, LocaleTransfer $locale)
     {
@@ -76,7 +76,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      * @param int $idAttribute
      * @param string $copyTarget
      *
-     * @return SpyProductSearchAttributesOperationQuery
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
      */
     public function queryAttributeOperation($idAttribute, $copyTarget)
     {
@@ -92,7 +92,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      * @param ModelCriteria $expandableQuery
      * @param LocaleTransfer $locale
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {

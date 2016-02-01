@@ -69,7 +69,7 @@ class Propel implements StorageInterface
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistChangeTransfer
+     * @return \Generated\Shared\Transfer\WishlistChangeTransfer
      */
     public function addItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -104,7 +104,7 @@ class Propel implements StorageInterface
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -136,7 +136,7 @@ class Propel implements StorageInterface
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -146,7 +146,7 @@ class Propel implements StorageInterface
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function decreaseItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -158,7 +158,7 @@ class Propel implements StorageInterface
      * @param int $idWishlist
      * @param ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return SpyWishlistItem
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItem
      */
     protected function createNewWishlistItem(
         ItemTransfer $wishlistItemTransfer,
@@ -205,7 +205,7 @@ class Propel implements StorageInterface
     /**
      * @param int $idCustomer
      *
-     * @return SpyWishlist
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlist
      */
     protected function createWishlistEntity($idCustomer)
     {
@@ -219,7 +219,7 @@ class Propel implements StorageInterface
     /**
      * @param int $idCustomer
      *
-     * @return SpyWishlist
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlist
      */
     protected function getWishlistEntity($idCustomer)
     {

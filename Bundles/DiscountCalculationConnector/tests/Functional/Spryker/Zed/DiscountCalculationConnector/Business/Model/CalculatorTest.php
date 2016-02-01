@@ -220,7 +220,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return StackExecutor
+     * @return \Spryker\Zed\Calculation\Business\Model\StackExecutor
      */
     protected function getCalculator()
     {
@@ -228,7 +228,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return OrderItemsTransfer
+     * @return \Generated\Shared\Transfer\OrderItemsTransfer
      */
     protected function getItemCollection()
     {
@@ -236,7 +236,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return DiscountItemsTransfer
+     * @return \Generated\Shared\Transfer\DiscountItemsTransfer
      */
     protected function getPriceDiscountCollection()
     {
@@ -244,7 +244,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return ExpensesTransfer
+     * @return \Generated\Shared\Transfer\ExpensesTransfer
      */
     protected function getExpenseCollection()
     {
@@ -252,7 +252,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function getPriceDiscount()
     {
@@ -260,7 +260,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return CalculableContainer
+     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
@@ -273,7 +273,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
@@ -281,7 +281,7 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @return ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {

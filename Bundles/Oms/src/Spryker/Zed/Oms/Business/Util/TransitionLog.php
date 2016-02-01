@@ -155,7 +155,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param SpySalesOrderItem $salesOrderItem
      *
-     * @return SpyOmsTransitionLog
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog
      */
     protected function initEntity(SpySalesOrderItem $salesOrderItem)
     {
@@ -227,7 +227,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @return SpyOmsTransitionLog
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog
      */
     protected function getEntity()
     {

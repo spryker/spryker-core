@@ -21,7 +21,7 @@ class ShipmentFacade extends AbstractFacade
     /**
      * @param ShipmentCarrierTransfer $carrierTransfer
      *
-     * @return ShipmentCarrierTransfer
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer)
     {
@@ -34,7 +34,7 @@ class ShipmentFacade extends AbstractFacade
     /**
      * @param ShipmentMethodTransfer $methodTransfer
      *
-     * @return ShipmentCarrierTransfer
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
     public function createMethod(ShipmentMethodTransfer $methodTransfer)
     {
@@ -47,7 +47,7 @@ class ShipmentFacade extends AbstractFacade
     /**
      * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
-     * @return ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
@@ -60,7 +60,7 @@ class ShipmentFacade extends AbstractFacade
     /**
      * @param $idMethod
      *
-     * @return ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function getShipmentMethodTransferById($idMethod)
     {
@@ -99,7 +99,7 @@ class ShipmentFacade extends AbstractFacade
     /**
      * @param ShipmentMethodTransfer $methodTransfer
      *
-     * @return ShipmentCarrierTransfer
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {

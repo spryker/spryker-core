@@ -135,7 +135,7 @@ class ExpenseTotalsCalculator implements
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      *
-     * @return ExpenseTotalsTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTotalsTransfer
      */
     protected function createExpenseTotalTransfer(
         CalculableInterface $calculableContainer,

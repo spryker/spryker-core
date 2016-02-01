@@ -35,7 +35,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PriceCartToPriceInterface
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
      */
     protected function getPriceFacade()
     {

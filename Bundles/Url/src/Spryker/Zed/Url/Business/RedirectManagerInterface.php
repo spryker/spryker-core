@@ -22,11 +22,11 @@ interface RedirectManagerInterface
      * @param string $toUrl
      * @param int $status
      *
-     * @throws MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyUrlRedirect
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect
      */
     public function createRedirect($toUrl, $status = 301);
 
@@ -41,24 +41,24 @@ interface RedirectManagerInterface
     /**
      * @param SpyUrlRedirect $redirectEntity
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function convertRedirectEntityToTransfer(SpyUrlRedirect $redirectEntity);
 
     /**
      * @param RedirectTransfer $redirect
      *
-     * @throws MissingUrlException
-     * @throws RedirectExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\RedirectExistsException
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function saveRedirect(RedirectTransfer $redirect);
 
     /**
      * @param RedirectTransfer $redirect
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function saveRedirectAndTouch(RedirectTransfer $redirect);
 
@@ -72,10 +72,10 @@ interface RedirectManagerInterface
      * @param LocaleTransfer $locale
      * @param int $idUrlRedirect
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect);
 
@@ -84,7 +84,7 @@ interface RedirectManagerInterface
      * @param LocaleTransfer $locale
      * @param int $idUrlRedirect
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect);
 

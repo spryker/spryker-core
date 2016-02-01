@@ -15,7 +15,7 @@ interface ConverterInterface
     /**
      * @param string $stringData
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function toTransactionResponseTransfer($stringData);
 
@@ -29,7 +29,7 @@ interface ConverterInterface
     /**
      * @param string $stringData
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function toCalculationResponseTransfer($stringData);
 

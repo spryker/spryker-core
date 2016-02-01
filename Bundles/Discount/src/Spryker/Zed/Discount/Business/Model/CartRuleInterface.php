@@ -18,7 +18,7 @@ interface CartRuleInterface
     /**
      * @param CartRuleTransfer $cartRuleFormTransfer
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     public function saveCartRule(CartRuleTransfer $cartRuleFormTransfer);
 

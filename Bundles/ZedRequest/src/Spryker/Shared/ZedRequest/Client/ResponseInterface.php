@@ -114,7 +114,7 @@ interface ResponseInterface
     public function setSuccess($success);
 
     /**
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function getTransfer();
 

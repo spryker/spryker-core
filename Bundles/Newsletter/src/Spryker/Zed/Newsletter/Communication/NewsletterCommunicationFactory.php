@@ -21,7 +21,7 @@ class NewsletterCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return NewsletterToMailInterface
+     * @return \Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface
      */
     public function getMailFacade()
     {
@@ -29,7 +29,7 @@ class NewsletterCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return NewsletterToGlossaryInterface
+     * @return \Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToGlossaryInterface
      */
     public function getGlossaryFacade()
     {

@@ -33,7 +33,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function expandProductCategoryPathQuery(
         ModelCriteria $query,
@@ -47,7 +47,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     protected function queryProductCategoryMappings()
     {
@@ -55,7 +55,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductCategoryMappingsByCategoryId($idCategory)
     {
@@ -68,7 +68,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @param int $idCategory
      * @param int $idProductAbstract
      *
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductCategoryMappingByIds($idCategory, $idProductAbstract)
     {
@@ -85,7 +85,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale)
     {
@@ -107,7 +107,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     /**
      * @param int $idProductAbstract
      *
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryLocalizedProductCategoryMappingByIdProduct($idProductAbstract)
     {
@@ -121,7 +121,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @param int $idCategory
      * @param LocaleTransfer $locale
      *
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale)
     {
@@ -184,7 +184,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @param LocaleTransfer $locale
      * @param int $idExcludedCategory null
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractCollectionBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null)
     {
@@ -253,7 +253,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @param int $idCategory
      * @param int $idProductAbstract
      *
-     * @return SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function queryProductCategoryPreconfig($idCategory, $idProductAbstract)
     {

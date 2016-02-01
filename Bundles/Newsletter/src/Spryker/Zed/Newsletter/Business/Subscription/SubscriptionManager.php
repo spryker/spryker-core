@@ -79,7 +79,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
     /**
      * @param NewsletterTypeTransfer $newsletterType
      *
-     * @throws MissingNewsletterTypeException
+     * @throws \Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterTypeException
      *
      * @return int
      */

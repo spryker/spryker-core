@@ -13,12 +13,12 @@ interface CartClientInterface
 {
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function getCart();
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCart();
 
@@ -30,14 +30,14 @@ interface CartClientInterface
     /**
      * @param ItemTransfer $itemTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addItem(ItemTransfer $itemTransfer);
 
     /**
      * @param ItemTransfer $itemTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeItem(ItemTransfer $itemTransfer);
 
@@ -45,7 +45,7 @@ interface CartClientInterface
      * @param ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function changeItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
 
@@ -53,7 +53,7 @@ interface CartClientInterface
      * @param ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function decreaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
 
@@ -61,31 +61,31 @@ interface CartClientInterface
      * @param ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function increaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function recalculate();
 
     /**
      * @param string $coupon
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addCoupon($coupon);
 
     /**
      * @param string $coupon
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeCoupon($coupon);
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCoupons();
 

@@ -19,7 +19,7 @@ class UserQueryContainer extends AbstractQueryContainer
     /**
      * @param string $username
      *
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUserByUsername($username)
     {
@@ -32,7 +32,7 @@ class UserQueryContainer extends AbstractQueryContainer
     /**
      * @param int $id
      *
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUserById($id)
     {
@@ -43,7 +43,7 @@ class UserQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUsers()
     {
@@ -54,7 +54,7 @@ class UserQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUser()
     {

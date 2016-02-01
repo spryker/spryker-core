@@ -66,7 +66,7 @@ class EditController extends AbstractController
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function createCustomerTransfer()
     {
@@ -74,7 +74,7 @@ class EditController extends AbstractController
     }
 
     /**
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function createAddressTransfer()
     {
@@ -129,7 +129,7 @@ class EditController extends AbstractController
      * @param int $idCustomer
      * @param int $billingAddress
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function createCustomAddressTransfer($idCustomer, $billingAddress)
     {

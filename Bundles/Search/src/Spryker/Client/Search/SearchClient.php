@@ -16,7 +16,7 @@ class SearchClient extends AbstractClient
 {
 
     /**
-     * @return Index
+     * @return \Elastica\Index
      */
     public function getIndexClient()
     {

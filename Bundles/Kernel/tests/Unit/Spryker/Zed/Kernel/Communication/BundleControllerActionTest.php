@@ -32,7 +32,7 @@ class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Request
+     * @return \Symfony\Component\HttpFoundation\Request
      */
     private function getRequestTestObject()
     {

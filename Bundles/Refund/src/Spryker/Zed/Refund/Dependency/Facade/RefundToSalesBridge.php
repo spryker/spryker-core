@@ -31,7 +31,7 @@ class RefundToSalesBridge implements RefundToSalesInterface
      * @param int $idSalesOrderItem
      * @param int $quantity
      *
-     * @return ItemSplitResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
     public function splitSalesOrderItem($idSalesOrderItem, $quantity)
     {
@@ -52,7 +52,7 @@ class RefundToSalesBridge implements RefundToSalesInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
     {

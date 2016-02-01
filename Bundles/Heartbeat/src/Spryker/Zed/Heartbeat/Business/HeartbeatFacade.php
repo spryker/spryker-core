@@ -24,7 +24,7 @@ class HeartbeatFacade extends AbstractFacade
     }
 
     /**
-     * @return HealthReportTransfer
+     * @return \Generated\Shared\Transfer\HealthReportTransfer
      */
     public function getReport()
     {

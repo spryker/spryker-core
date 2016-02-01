@@ -106,7 +106,7 @@ class PoolController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function categoriesTableAction()
     {
@@ -130,7 +130,7 @@ class PoolController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function poolTableAction()
     {
@@ -144,7 +144,7 @@ class PoolController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function categorySuggestAction(Request $request)
     {

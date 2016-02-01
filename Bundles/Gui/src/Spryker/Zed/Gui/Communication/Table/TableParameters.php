@@ -11,7 +11,7 @@ class TableParameters
     /**
      * @param Request $request
      *
-     * @return DataTablesTransfer
+     * @return \Generated\Shared\Transfer\DataTablesTransfer
      */
     public static function getTableParameters(Request $request)
     {

@@ -33,7 +33,7 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param int $idNode
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     public function getNodeById($idNode)
     {

@@ -27,7 +27,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getQueryContainer() instead.
      *
-     * @return CustomerQueryContainerInterface
+     * @return \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
     public function createQueryContainer()
     {
@@ -37,7 +37,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CustomerTable
+     * @return \Spryker\Zed\Customer\Communication\Table\CustomerTable
      */
     public function createCustomerTable()
     {
@@ -47,7 +47,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idCustomer
      *
-     * @return AddressTable
+     * @return \Spryker\Zed\Customer\Communication\Table\AddressTable
      */
     public function createCustomerAddressTable($idCustomer)
     {
@@ -59,7 +59,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      *
      * @throws \ErrorException
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCustomerForm($formActionType)
     {
@@ -69,7 +69,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createAddressForm()
     {

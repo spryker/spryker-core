@@ -28,7 +28,7 @@ interface TimeoutInterface
      * @param DateTime $currentTime
      *
      * @throws Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -40,7 +40,7 @@ interface TimeoutInterface
      * @param SpySalesOrderItem $orderItem
      *
      * @throws Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

@@ -21,7 +21,7 @@ class CountryCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return CountryTable
+     * @return \Spryker\Zed\Country\Communication\Table\CountryTable
      */
     public function createCountryTable()
     {
@@ -31,7 +31,7 @@ class CountryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UserQueryContainer
+     * @return \Spryker\Zed\User\Persistence\UserQueryContainer
      */
     protected function getUserQueryContainer()
     {

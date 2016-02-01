@@ -16,7 +16,7 @@ class TaxProductConnectorFacade extends AbstractFacade
 {
 
     /**
-     * @return TaxChangeTouchPlugin
+     * @return \Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin
      */
     public function getTaxChangeTouchPlugin()
     {

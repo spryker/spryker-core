@@ -40,7 +40,7 @@ class RefundPlugin  extends AbstractPlugin implements CommandByOrderInterface
     /**
      * @param SpySalesOrder $orderEntity
      *
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     protected function getPaymentEntity(SpySalesOrder $orderEntity)
     {

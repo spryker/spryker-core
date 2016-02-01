@@ -30,7 +30,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * @return SessionInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     protected function getContainer()
     {
@@ -263,7 +263,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      *
      * @param string $name
      *
-     * @return SessionBagInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface
      */
     public function getBag($name)
     {
@@ -273,7 +273,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Gets session meta.
      *
-     * @return MetadataBag
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag
      */
     public function getMetadataBag()
     {

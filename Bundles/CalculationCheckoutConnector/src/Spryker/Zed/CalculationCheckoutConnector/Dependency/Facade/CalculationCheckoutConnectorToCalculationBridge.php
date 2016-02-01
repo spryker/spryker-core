@@ -28,7 +28,7 @@ class CalculationCheckoutConnectorToCalculationBridge implements CalculationChec
     /**
      * @param CalculableInterface $calculableContainer
      *
-     * @return CalculableInterface
+     * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {

@@ -36,7 +36,7 @@ class Saver implements SaverInterface
      * @param PayolutionPaymentTransfer $paymentTransfer
      * @param int $idSalesOrder
      *
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     private function savePaymentForOrder(PayolutionPaymentTransfer $paymentTransfer, $idSalesOrder)
     {

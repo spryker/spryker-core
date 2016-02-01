@@ -15,7 +15,7 @@ class ZedRequestFactory extends AbstractFactory
 {
 
     /**
-     * @return ZedClient
+     * @return \Spryker\Client\ZedRequest\Client\ZedClient
      */
     public function createClient()
     {
@@ -25,7 +25,7 @@ class ZedRequestFactory extends AbstractFactory
     }
 
     /**
-     * @return HttpClient
+     * @return \Spryker\Client\ZedRequest\Client\HttpClient
      *
      * @todo remove Factory usage: https://spryker.atlassian.net/browse/CD-439
      */

@@ -27,7 +27,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -49,7 +49,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {

@@ -30,7 +30,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function addItem(WishlistChangeTransfer $wishlistChange)
     {
@@ -40,7 +40,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItem(WishlistChangeTransfer $wishlistChange)
     {
@@ -50,7 +50,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function descreaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
@@ -60,7 +60,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
@@ -70,7 +70,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param CustomerTransfer $customer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getCustomerWishlist(CustomerTransfer $customer)
     {

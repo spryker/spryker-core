@@ -31,21 +31,21 @@ interface CustomerClientInterface
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function registerCustomer(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      *
      * @deprecated Use sendPasswordRestoreMail() instead
      */
@@ -54,33 +54,33 @@ interface CustomerClientInterface
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function restorePassword(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function deleteCustomer(CustomerTransfer $customerTransfer);
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer();
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function setCustomer(CustomerTransfer $customerTransfer);
 
@@ -104,84 +104,84 @@ interface CustomerClientInterface
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return AddressesTransfer
+     * @return \Generated\Shared\Transfer\AddressesTransfer
      */
     public function getAddresses(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomerByEmail(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function updateCustomer(CustomerTransfer $customerTransfer);
 
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function updateCustomerPassword(CustomerTransfer $customerTransfer);
 
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function getAddress(AddressTransfer $addressTransfer);
 
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function updateAddress(AddressTransfer $addressTransfer);
 
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function createAddress(AddressTransfer $addressTransfer);
 
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function deleteAddress(AddressTransfer $addressTransfer);
 
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function setDefaultShippingAddress(AddressTransfer $addressTransfer);
 
     /**
      * @param AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer);
 

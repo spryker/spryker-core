@@ -17,19 +17,19 @@ interface RoleInterface
     /**
      * @param string $name
      *
-     * @throws RoleNameExistsException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function addRole($name);
 
     /**
      * @param RoleTransfer $data
      *
-     * @throws RoleNameExistsException
-     * @throws RoleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function save(RoleTransfer $data);
 
@@ -50,30 +50,30 @@ interface RoleInterface
     /**
      * @param int $idUser
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getUserRoles($idUser);
 
     /**
      * @param int $idGroup
      *
-     * @throws GroupNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getGroupRoles($idGroup);
 
     /**
      * @param int $id
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getRoleById($id);
 
     /**
      * @param int $idRole
      *
-     * @throws RoleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException
      *
      * @return bool
      */
@@ -82,7 +82,7 @@ interface RoleInterface
     /**
      * @param string $name
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getByName($name);
 

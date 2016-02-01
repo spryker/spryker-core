@@ -62,10 +62,10 @@ class OrderManager
     /**
      * @param OrderTransfer $orderTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Exception
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function saveOrder(OrderTransfer $orderTransfer)
     {
@@ -95,9 +95,9 @@ class OrderManager
     /**
      * @param OrderTransfer $orderTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function saveOrderEntity(OrderTransfer $orderTransfer)
     {
@@ -126,7 +126,7 @@ class OrderManager
      * @param $orderEntity
      * @param $orderProcess
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -207,7 +207,7 @@ class OrderManager
     /**
      * @param OrderListTransfer $orderListTransfer
      *
-     * @return OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
@@ -228,7 +228,7 @@ class OrderManager
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
@@ -260,7 +260,7 @@ class OrderManager
     /**
      * @param OrderListTransfer $orderListTransfer
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected function createOrderListQuery(OrderListTransfer $orderListTransfer)
     {

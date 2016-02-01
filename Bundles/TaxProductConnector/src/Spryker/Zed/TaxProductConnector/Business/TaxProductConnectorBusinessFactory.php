@@ -22,7 +22,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return TaxChangePluginInterface
+     * @return \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface
      */
     public function createTaxChangeTouchPlugin()
     {
@@ -33,7 +33,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TaxProductConnectorToProductInterface
+     * @return \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface
      */
     protected function getProductFacade()
     {

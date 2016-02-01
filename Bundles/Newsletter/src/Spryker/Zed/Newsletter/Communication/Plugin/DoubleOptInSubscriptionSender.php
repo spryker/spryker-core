@@ -80,7 +80,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     }
 
     /**
-     * @return MailTransfer
+     * @return \Generated\Shared\Transfer\MailTransfer
      */
     protected function createMailTransfer()
     {
@@ -101,7 +101,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     }
 
     /**
-     * @return MailRecipientTransfer
+     * @return \Generated\Shared\Transfer\MailRecipientTransfer
      */
     protected function createMailRecipientTransfer()
     {

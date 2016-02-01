@@ -14,7 +14,7 @@ class DiscountCollectorWriter extends AbstractWriter
     /**
      * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return SpyDiscountCollector
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollector
      */
     public function create(DiscountCollectorTransfer $discountCollectorTransfer)
     {
@@ -28,7 +28,7 @@ class DiscountCollectorWriter extends AbstractWriter
     /**
      * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return SpyDiscountCollector
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollector
      */
     public function save(DiscountCollectorTransfer $discountCollectorTransfer)
     {
@@ -42,7 +42,7 @@ class DiscountCollectorWriter extends AbstractWriter
     /**
      * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return SpyDiscountCollector
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollector
      */
     public function update(DiscountCollectorTransfer $discountCollectorTransfer)
     {

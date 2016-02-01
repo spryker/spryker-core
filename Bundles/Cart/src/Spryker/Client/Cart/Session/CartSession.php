@@ -29,7 +29,7 @@ class CartSession implements CartSessionInterface
     }
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function getCart()
     {

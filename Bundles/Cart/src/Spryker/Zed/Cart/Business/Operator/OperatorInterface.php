@@ -16,7 +16,7 @@ interface OperatorInterface
     /**
      * @param ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function executeOperation(ChangeTransfer $cartChange);
 

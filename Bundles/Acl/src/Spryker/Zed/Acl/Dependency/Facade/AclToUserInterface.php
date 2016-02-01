@@ -21,7 +21,7 @@ interface AclToUserInterface
     /**
      * @param string $username
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username);
 
@@ -31,7 +31,7 @@ interface AclToUserInterface
     public function hasCurrentUser();
 
     /**
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser();
 

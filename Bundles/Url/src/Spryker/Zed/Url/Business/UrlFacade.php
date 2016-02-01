@@ -26,10 +26,10 @@ class UrlFacade extends AbstractFacade
      * @param string $resourceType
      * @param int $idResource
      *
-     * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
     {
@@ -44,10 +44,10 @@ class UrlFacade extends AbstractFacade
      * @param string $resourceType
      * @param int $idResource
      *
-     * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrlForCurrentLocale($url, $resourceType, $idResource)
     {
@@ -60,7 +60,7 @@ class UrlFacade extends AbstractFacade
     /**
      * @param UrlTransfer $urlTransfer
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveUrl(UrlTransfer $urlTransfer)
     {
@@ -96,9 +96,9 @@ class UrlFacade extends AbstractFacade
     /**
      * @param string $urlString
      *
-     * @throws MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlByPath($urlString)
     {
@@ -111,9 +111,9 @@ class UrlFacade extends AbstractFacade
     /**
      * @param int $idUrl
      *
-     * @throws MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlById($idUrl)
     {
@@ -165,11 +165,11 @@ class UrlFacade extends AbstractFacade
      * @param string $toUrl
      * @param int $status
      *
-     * @throws MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function createRedirect($toUrl, $status = 303)
     {
@@ -183,7 +183,7 @@ class UrlFacade extends AbstractFacade
      * @param string $toUrl
      * @param int $status
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function createRedirectAndTouch($toUrl, $status = 303)
     {
@@ -198,10 +198,10 @@ class UrlFacade extends AbstractFacade
      * @param LocaleTransfer $locale
      * @param int $idUrlRedirect
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect)
     {
@@ -215,7 +215,7 @@ class UrlFacade extends AbstractFacade
      * @param LocaleTransfer $locale
      * @param int $idUrlRedirect
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect)
     {
@@ -227,7 +227,7 @@ class UrlFacade extends AbstractFacade
     /**
      * @param RedirectTransfer $redirect
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function saveRedirect(RedirectTransfer $redirect)
     {
@@ -251,7 +251,7 @@ class UrlFacade extends AbstractFacade
     /**
      * @param UrlTransfer $urlTransfer
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveUrlAndTouch(UrlTransfer $urlTransfer)
     {
@@ -275,7 +275,7 @@ class UrlFacade extends AbstractFacade
     /**
      * @param RedirectTransfer $redirect
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function saveRedirectAndTouch(RedirectTransfer $redirect)
     {
@@ -288,7 +288,7 @@ class UrlFacade extends AbstractFacade
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
     {

@@ -14,7 +14,7 @@ class SearchFactory extends AbstractFactory
 {
 
     /**
-     * @return ZedClient
+     * @return \Spryker\Client\ZedRequest\Client\ZedClient
      */
     public function createIndexClient()
     {
@@ -22,7 +22,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return IndexClientProvider
+     * @return \Spryker\Client\Search\Provider\IndexClientProvider
      */
     protected function createProviderIndexClientProvider()
     {

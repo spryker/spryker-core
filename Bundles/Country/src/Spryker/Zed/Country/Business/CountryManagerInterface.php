@@ -38,7 +38,7 @@ interface CountryManagerInterface
     /**
      * @param string $iso2code
      *
-     * @throws MissingCountryException
+     * @throws \Spryker\Zed\Country\Business\Exception\MissingCountryException
      *
      * @return int
      */
@@ -47,12 +47,12 @@ interface CountryManagerInterface
     /**
      * @param string $countryName
      *
-     * @return CountryTransfer
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferredCountryByName($countryName);
 
     /**
-     * @return CountryCollectionTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getCountryCollection();
 

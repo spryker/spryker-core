@@ -17,7 +17,7 @@ abstract class AbstractPersistenceFactory extends AbstractFactory implements Per
      * @param AbstractBundleDependencyProvider $dependencyProvider
      * @param Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,

@@ -31,7 +31,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param string $keyName
      *
-     * @return SpyGlossaryKeyQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryKey($keyName)
     {
@@ -44,7 +44,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param string $keyName
      *
-     * @return SpyGlossaryKeyQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryActiveKeysByName($keyName)
     {
@@ -55,7 +55,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
-     * @return SpyGlossaryKeyQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryKeys()
     {
@@ -66,7 +66,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      * @param string $keyName
      * @param string $localeName
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationByNames($keyName, $localeName)
     {
@@ -84,7 +84,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslations()
     {
@@ -95,7 +95,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      * @param int $idKey
      * @param int $idLocale
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationByIds($idKey, $idLocale)
     {
@@ -110,7 +110,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param int $idSpyGlossaryTranslation
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationById($idSpyGlossaryTranslation)
     {
@@ -123,7 +123,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param string $localeName
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationsByLocale($localeName)
     {
@@ -140,7 +140,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      * @param int $localeId
      * @param int $glossaryKeyId
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationByIdLocaleAndKeyId($localeId, $glossaryKeyId)
     {
@@ -154,7 +154,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param int $fkGlossaryKeyId
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationsByKeyId($fkGlossaryKeyId)
     {
@@ -167,7 +167,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param string $keyName
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationsByKey($keyName)
     {
@@ -183,7 +183,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param SpyGlossaryTranslationQuery $query
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinTranslationQueryWithKeysAndLocales(SpyGlossaryTranslationQuery $query)
     {
@@ -202,9 +202,9 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param array $localeIds
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyGlossaryKeyQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryKeysAndTranslationsForEachLanguage(array $localeIds)
     {
@@ -236,7 +236,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param array $relevantLocales
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryAllMissingTranslations(array $relevantLocales)
     {
@@ -250,9 +250,9 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param array $relevantLocales
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryAllPossibleTranslations(array $relevantLocales)
     {
@@ -265,9 +265,9 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      * @param SpyGlossaryKeyQuery $keyQuery
      * @param array $relevantLocales
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected function joinKeyQueryWithRelevantLocalesAndTranslations(
         SpyGlossaryKeyQuery $keyQuery,
@@ -311,7 +311,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param ModelCriteria $query
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryDistinctKeysFromQuery(ModelCriteria $query)
     {
@@ -326,7 +326,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param ModelCriteria $query
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryDistinctLocalesFromQuery(ModelCriteria $query)
     {
@@ -342,7 +342,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      * @param int $idKey
      * @param array $relevantLocales
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryMissingTranslationsForKey($idKey, array $relevantLocales)
     {
@@ -357,7 +357,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param int $idKey
      *
-     * @return SpyGlossaryKeyQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     protected function queryKeyById($idKey)
     {
@@ -367,7 +367,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param string $key
      *
-     * @return SpyGlossaryKeyQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryByKey($key)
     {
@@ -380,7 +380,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     /**
      * @param string $value
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationByValue($value)
     {

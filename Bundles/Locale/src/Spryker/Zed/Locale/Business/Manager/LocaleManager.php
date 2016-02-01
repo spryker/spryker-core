@@ -42,9 +42,9 @@ class LocaleManager
     /**
      * @param string $localeName
      *
-     * @throws MissingLocaleException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)
     {
@@ -65,11 +65,11 @@ class LocaleManager
     /**
      * @param string $localeName
      *
-     * @throws LocaleExistsException
+     * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function createLocale($localeName)
     {
@@ -105,7 +105,7 @@ class LocaleManager
     /**
      * @param string $localeName
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */

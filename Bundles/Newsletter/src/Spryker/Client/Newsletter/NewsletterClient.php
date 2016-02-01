@@ -21,7 +21,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -32,7 +32,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -43,7 +43,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     /**
      * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
@@ -54,7 +54,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -65,7 +65,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     /**
      * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {

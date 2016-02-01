@@ -45,7 +45,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
      * @param string $key
      * @param mixed $value
      *
-     * @return ArrayContainsKeyEqualToConstraint
+     * @return \Spryker\Shared\Library\PHPUnit\Constraints\ArrayContainsKeyEqualToConstraint
      */
     protected function arrayContainsKeyEqualTo($key, $value)
     {

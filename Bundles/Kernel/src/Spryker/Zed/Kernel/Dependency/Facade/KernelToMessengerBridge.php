@@ -26,7 +26,7 @@ class KernelToMessengerBridge implements KernelToMessengerInterface
     }
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages()
     {

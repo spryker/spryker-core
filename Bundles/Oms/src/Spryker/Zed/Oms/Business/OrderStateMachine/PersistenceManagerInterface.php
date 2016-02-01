@@ -15,19 +15,19 @@ interface PersistenceManagerInterface
     /**
      * @param string $stateName
      *
-     * @return SpyOmsOrderItemState
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getStateEntity($stateName);
 
     /**
      * @param string $processName
      *
-     * @return SpyOmsOrderProcess
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     public function getProcessEntity($processName);
 
     /**
-     * @return SpyOmsOrderItemState
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getInitialStateEntity();
 

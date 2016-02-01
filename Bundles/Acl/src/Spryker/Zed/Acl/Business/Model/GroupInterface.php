@@ -20,33 +20,33 @@ interface GroupInterface
     /**
      * @param string $name
      *
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function addGroup($name);
 
     /**
      * @param GroupTransfer $group
      *
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function updateGroup(GroupTransfer $group);
 
     /**
      * @param GroupTransfer $group
      *
-     * @throws GroupNameExistsException
-     * @throws GroupNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNameExistsException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function save(GroupTransfer $group);
 
     /**
      * @param int $id
      *
-     * @throws GroupNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
-     * @return SpyAclGroup
+     * @return \Orm\Zed\Acl\Persistence\SpyAclGroup
      */
     public function getEntityGroupById($id);
 
@@ -57,21 +57,21 @@ interface GroupInterface
     public function removeUser($idGroup, $idUser);
 
     /**
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function getAllGroups();
 
     /**
      * @param GroupTransfer $group
      *
-     * @throws GroupNameExistsException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNameExistsException
      */
     public function assertGroupHasName(GroupTransfer $group);
 
     /**
      * @param GroupTransfer $group
      *
-     * @throws GroupNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      */
     public function assertGroupExists(GroupTransfer $group);
 
@@ -110,14 +110,14 @@ interface GroupInterface
      *
      * @param int $idUser
      *
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function getUserGroup($idUser);
 
     /**
      * @param int $idUser
      *
-     * @return GroupsTransfer
+     * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getUserGroups($idUser);
 
@@ -125,7 +125,7 @@ interface GroupInterface
      * @param int $idRole
      * @param int $idGroup
      *
-     * @throws GroupAlreadyHasRoleException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException
      *
      * @return int
      */
@@ -135,7 +135,7 @@ interface GroupInterface
      * @param int $idGroup
      * @param int $idUser
      *
-     * @throws GroupAlreadyHasRoleException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException
      *
      * @return int
      */
@@ -144,23 +144,23 @@ interface GroupInterface
     /**
      * @param string $name
      *
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function getByName($name);
 
     /**
      * @param int $id
      *
-     * @throws GroupNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
-     * @return GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function getGroupById($id);
 
     /**
      * @param int $id
      *
-     * @throws GroupNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
      * @return bool
      */
@@ -169,9 +169,9 @@ interface GroupInterface
     /**
      * @param int $idGroup
      *
-     * @throws GroupNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getRoles($idGroup);
 

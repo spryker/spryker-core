@@ -16,7 +16,7 @@ interface ExporterInterface
      * @param string $type
      * @param LocaleTransfer $locale
      *
-     * @return BatchResultInterface
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
     public function exportByType($type, LocaleTransfer $locale);
 

@@ -15,42 +15,42 @@ interface TransactionInterface
     /**
      * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer);
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function preAuthorizePayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function reAuthorizePayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function revertPayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function capturePayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function refundPayment($idPayment);
 

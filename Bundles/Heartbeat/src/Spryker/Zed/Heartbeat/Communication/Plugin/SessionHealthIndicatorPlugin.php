@@ -20,7 +20,7 @@ class SessionHealthIndicatorPlugin extends AbstractPlugin implements HealthIndic
 {
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doHealthCheck()
     {

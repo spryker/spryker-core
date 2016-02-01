@@ -19,7 +19,7 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     /**
      * GlossaryToLocaleBridge constructor.
      *
-     * @param LocaleFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade
      */
     public function __construct($localeFacade)
     {
@@ -29,7 +29,7 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)
     {
@@ -37,7 +37,7 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {
@@ -55,7 +55,7 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function createLocale($localeName)
     {

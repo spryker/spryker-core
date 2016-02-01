@@ -115,7 +115,7 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function getPriceDiscount()
     {
@@ -123,7 +123,7 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return CalculableContainer
+     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
@@ -133,7 +133,7 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
@@ -143,7 +143,7 @@ class ExpenseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {

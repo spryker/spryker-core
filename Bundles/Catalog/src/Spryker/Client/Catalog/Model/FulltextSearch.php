@@ -17,7 +17,7 @@ class FulltextSearch extends AbstractSearch
     /**
      * @param Request $request
      *
-     * @return Query
+     * @return \Elastica\Query
      */
     protected function createSearchQuery(Request $request)
     {

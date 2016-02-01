@@ -18,7 +18,7 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
     const BASE_IMAGE_PATH = '/private/tmp/';
 
     /**
-     * @return Filesystem
+     * @return \Spryker\Zed\Product\Business\Model\Filesystem
      */
     protected function getFilesystemMock()
     {

@@ -78,7 +78,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function getTransfer()
     {
@@ -122,7 +122,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @return ActiveRecordInterface
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
     public function getEntity()
     {

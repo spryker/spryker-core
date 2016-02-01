@@ -20,7 +20,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
      *
-     * @return ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getAvailableMethodsAction(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability)
     {

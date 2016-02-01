@@ -111,7 +111,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param int $idPool
      *
-     * @return AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     protected function getVoucherCodesTransfer($idPool)
     {

@@ -26,7 +26,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Doctor
+     * @return \Spryker\Zed\Heartbeat\Business\Ambulance\Doctor
      */
     public function createDoctor()
     {
@@ -36,7 +36,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return HealthIndicatorInterface
+     * @return \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface
      */
     public function createPropelHealthIndicator()
     {
@@ -44,7 +44,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return HealthIndicatorInterface
+     * @return \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface
      */
     public function createSearchHealthIndicator()
     {
@@ -56,7 +56,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     /**
      * @throws \Exception
      *
-     * @return ElasticaClient
+     * @return \Elastica\Client
      */
     protected function createElasticaClient()
     {
@@ -70,7 +70,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return HealthIndicatorInterface
+     * @return \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface
      */
     public function createSessionHealthIndicator()
     {
@@ -78,7 +78,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return HealthIndicatorInterface
+     * @return \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface
      */
     public function createStorageHealthIndicator()
     {
@@ -90,7 +90,7 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     /**
      * @throws \Exception
      *
-     * @return PredisClient
+     * @return \Predis\Client
      */
     protected function createPredisClient()
     {

@@ -75,7 +75,7 @@ class Builder implements BuilderInterface
     /**
      * @param string $processName
      *
-     * @return ProcessInterface
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface
      */
     public function createProcess($processName)
     {

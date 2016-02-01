@@ -22,7 +22,7 @@ class ProductCartPlugin extends AbstractPlugin implements ItemExpanderPluginInte
     /**
      * @param ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function expandItems(ChangeTransfer $change)
     {

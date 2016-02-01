@@ -130,7 +130,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param string $paymentMethodName
      *
-     * @throws InvalidPaymentMethodException
+     * @throws \Spryker\Zed\Payone\Business\Exception\InvalidPaymentMethodException
      *
      * @return PaymentMethodMapperInterface
      */
@@ -149,7 +149,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param int $idPayment
      *
-     * @return AuthorizationResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function authorizePayment($idPayment)
     {
@@ -164,7 +164,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param int $idPayment
      *
-     * @return AuthorizationResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -180,7 +180,7 @@ class PaymentManager implements PaymentManagerInterface
      * @param SpyPaymentPayone $paymentEntity
      * @param AuthorizationContainerInterface $requestContainer
      *
-     * @return AuthorizationResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     protected function performAuthorizationRequest(SpyPaymentPayone $paymentEntity, AuthorizationContainerInterface $requestContainer)
     {
@@ -208,7 +208,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param int $idPayment
      *
-     * @return SpyPaymentPayone
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
     protected function getPaymentEntity($idPayment)
     {
@@ -218,7 +218,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param int $idPayment
      *
-     * @return CaptureResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer
      */
     public function capturePayment($idPayment)
     {
@@ -241,7 +241,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param int $idPayment
      *
-     * @return DebitResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer
      */
     public function debitPayment($idPayment)
     {
@@ -264,7 +264,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param PayoneCreditCardTransfer $creditCardData
      *
-     * @return CreditCardCheckResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData)
     {
@@ -282,7 +282,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param PayoneRefundTransfer $refundTransfer
      *
-     * @return RefundResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer
      */
     public function refundPayment(PayoneRefundTransfer $refundTransfer)
     {
@@ -307,7 +307,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param OrderTransfer $orderTransfer
      *
-     * @return PayonePaymentTransfer
+     * @return \Generated\Shared\Transfer\PayonePaymentTransfer
      */
     protected function getPayment(OrderTransfer $orderTransfer)
     {
@@ -328,7 +328,7 @@ class PaymentManager implements PaymentManagerInterface
      * @param SpyPaymentPayone $paymentEntity
      * @param AuthorizationResponseContainer $responseContainer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -341,7 +341,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param string $transactionId
      *
-     * @return SpyPaymentPayone
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
     protected function findPaymentByTransactionId($transactionId)
     {
@@ -352,9 +352,9 @@ class PaymentManager implements PaymentManagerInterface
      * @param SpyPaymentPayone $paymentEntity
      * @param AbstractRequestContainer $container
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyPaymentPayoneApiLog
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog
      */
     protected function initializeApiLog(SpyPaymentPayone $paymentEntity, AbstractRequestContainer $container)
     {
@@ -376,7 +376,7 @@ class PaymentManager implements PaymentManagerInterface
      * @param SpyPaymentPayoneApiLog $apiLogEntity
      * @param AuthorizationResponseContainer $responseContainer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -396,7 +396,7 @@ class PaymentManager implements PaymentManagerInterface
      * @param SpyPaymentPayoneApiLog $apiLogEntity
      * @param CaptureResponseContainer $responseContainer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -414,7 +414,7 @@ class PaymentManager implements PaymentManagerInterface
      * @param SpyPaymentPayoneApiLog $apiLogEntity
      * @param DebitResponseContainer $responseContainer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -464,7 +464,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param int $idOrder
      *
-     * @return PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
     public function getPaymentData($idOrder)
     {
@@ -573,7 +573,7 @@ class PaymentManager implements PaymentManagerInterface
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {

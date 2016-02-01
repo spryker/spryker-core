@@ -39,7 +39,7 @@ class Group
     /**
      * @param GroupableContainerTransfer $groupableItems
      *
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     public function groupByKey(GroupableContainerTransfer $groupableItems)
     {
