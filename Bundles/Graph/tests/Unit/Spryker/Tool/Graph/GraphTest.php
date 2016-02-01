@@ -85,9 +85,7 @@ class GraphTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddEdge()
     {
-        $adapter = $this->getGraph();
-        $adapter->addNode(self::NODE_A);
-        $adapter->addNode(self::NODE_B);
+        $adapter = $this->getGraphWithNodes();
 
         $this->assertInstanceOf(Graph::class, $adapter->addEdge(self::NODE_A, self::NODE_B));
     }
@@ -97,9 +95,7 @@ class GraphTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddEdgeWithAttributes()
     {
-        $adapter = $this->getGraph();
-        $adapter->addNode(self::NODE_A);
-        $adapter->addNode(self::NODE_B);
+        $adapter = $this->getGraphWithNodes();
 
         $this->assertInstanceOf(Graph::class, $adapter->addEdge(self::NODE_A, self::NODE_B, self::ATTRIBUTES));
     }
@@ -161,6 +157,17 @@ class GraphTest extends \PHPUnit_Framework_TestCase
         $adapterMock->method('render')->willReturn('');
 
         return $adapterMock;
+    }
+
+    /**
+     * @return Graph
+     */
+    private function getGraphWithNodes()
+    {
+        $adapter = $this->getGraph();
+        $adapter->addNode(self::NODE_A);
+        $adapter->addNode(self::NODE_B);
+        return $adapter;
     }
 
 }

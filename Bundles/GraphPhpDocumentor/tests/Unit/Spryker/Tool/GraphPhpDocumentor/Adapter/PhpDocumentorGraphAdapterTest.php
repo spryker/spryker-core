@@ -140,7 +140,7 @@ class PhpDocumentorGraphAdapterTest extends \PHPUnit_Framework_TestCase
         $adapter = new PhpDocumentorGraphAdapter($phpDocumentorMock);
         $adapter->create(self::GRAPH_NAME);
 
-        $this->assertInternalType('string', $adapter->render('svg', 'filename'));
+        $this->assertInternalType('string', $adapter->render('svg', sys_get_temp_dir() . '/filename'));
     }
 
     /**

@@ -53,15 +53,28 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
         $this->graph = $this->createPhpDocumentorGraph();
         $this->graph->setName($name);
 
-        if ($strict) {
-            $this->graph->setType($directed ? 'strict digraph' : 'strict graph');
-        } else {
-            $this->graph->setType($directed ? 'digraph' : 'graph');
-        }
+        $type = $this->getType($directed, $strict);
+        $this->graph->setType($type);
 
         $this->addAttributesTo($attributes, $this->graph);
 
         return $this;
+    }
+
+    /**
+     * @param bool $directed
+     * @param bool $strict
+     *
+     * @return string
+     */
+    private function getType($directed, $strict)
+    {
+        $type = $directed ? 'digraph' : 'graph';
+        if ($strict) {
+            $type = 'strict ' . $type;
+        }
+
+        return $type;
     }
 
     /**
