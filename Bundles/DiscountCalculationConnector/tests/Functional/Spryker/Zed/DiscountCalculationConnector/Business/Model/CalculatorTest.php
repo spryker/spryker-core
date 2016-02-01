@@ -7,7 +7,6 @@
 namespace Functional\Spryker\Zed\DiscountCalculationConnector\Business\Model;
 
 use Codeception\TestCase\Test;
-use Spryker\Shared\DiscountCalculationConnector\DiscountCalculationConnectorConstants;
 use Generated\Shared\Transfer\DiscountItemsTransfer;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;

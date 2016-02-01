@@ -32,7 +32,7 @@ abstract class AbstractDependencyFinder
     /**
      * @param AbstractDependencyTree $dependencyTree
      *
-     * @return $this
+     * @return self
      */
     public function setDependencyTree(AbstractDependencyTree $dependencyTree)
     {
@@ -52,7 +52,7 @@ abstract class AbstractDependencyFinder
     /**
      * @param FileInfoExtractor $fileInfoExtractor
      *
-     * @return $this
+     * @return self
      */
     public function setFileInfoExtractor(FileInfoExtractor $fileInfoExtractor)
     {

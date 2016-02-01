@@ -40,7 +40,7 @@ class LocatorQueryContainer extends AbstractDependencyFinder
             $foreignClassName = $this->getClassName($toBundle);
             $dependencyInformation = [
                 DependencyTree::META_FOREIGN_LAYER => self::LAYER_PERSISTENCE,
-                DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName
+                DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName,
             ];
             $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
         }

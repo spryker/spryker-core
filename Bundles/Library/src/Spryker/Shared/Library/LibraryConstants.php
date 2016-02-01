@@ -4,7 +4,6 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-
 namespace Spryker\Shared\Library;
 
 use Spryker\Shared\Application\ApplicationConstants;

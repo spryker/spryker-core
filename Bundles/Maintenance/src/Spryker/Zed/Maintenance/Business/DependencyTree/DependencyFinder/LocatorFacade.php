@@ -11,6 +11,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocatorFacade extends AbstractDependencyFinder
 {
+
     const BUNDLE = 'bundle';
 
     /**
@@ -40,7 +41,7 @@ class LocatorFacade extends AbstractDependencyFinder
             $foreignClassName = $this->getClassName($toBundle);
             $dependencyInformation = [
                 DependencyTree::META_FOREIGN_LAYER => self::LAYER_BUSINESS,
-                DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName
+                DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName,
             ];
             $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
         }

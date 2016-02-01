@@ -61,6 +61,7 @@ class CountryFacade extends AbstractFacade
 
     /**
      * @param string $countryName
+     *
      * @deprecated Use getPreferredCountryByName()
      *
      * @return CountryTransfer

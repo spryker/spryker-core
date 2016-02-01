@@ -42,7 +42,7 @@ class LocatorClient extends AbstractDependencyFinder
             $foreignClassName = $this->getClassName($toBundle);
             $dependencyInformation = [
                 DependencyTree::META_FOREIGN_LAYER => self::NO_LAYER,
-                DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName
+                DependencyTree::META_FOREIGN_CLASS_NAME => $foreignClassName,
             ];
             $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
         }

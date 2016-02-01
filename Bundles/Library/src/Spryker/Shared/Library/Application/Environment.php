@@ -85,7 +85,6 @@ class Environment
         $errorCode = error_reporting();
         self::initializeErrorHandler();
 
-
         require_once APPLICATION_SPRYKER_ROOT . '/Library/src/Spryker/Shared/Library/Autoloader.php';
 
         Autoloader::unregister();

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Maintenance\Business;
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter;
 
 /**
  * @method MaintenanceBusinessFactory getFactory()
@@ -140,4 +139,5 @@ class MaintenanceFacade extends AbstractFacade
     {
         $this->getFactory()->createComposerJsonUpdater()->update();
     }
+
 }
