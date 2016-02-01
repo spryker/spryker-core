@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Customer\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 
 class CustomerToLocaleBridge implements CustomerToLocaleInterface

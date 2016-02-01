@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Kernel\ClassResolver\Client;
 
-use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\ClassResolver\AbstractClassResolver;
 
 class ClientResolver extends AbstractClassResolver

@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Url\Dependency;
 
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Generated\Shared\Transfer\LocaleTransfer;
 
 class UrlToLocaleBridge implements UrlToLocaleInterface
 {

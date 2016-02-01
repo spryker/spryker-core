@@ -8,11 +8,9 @@ namespace Spryker\Zed\Glossary\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Spryker\Zed\Glossary\Communication\Table\TranslationTable;
-use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Spryker\Zed\Glossary\GlossaryConfig;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @method GlossaryQueryContainerInterface getQueryContainer()

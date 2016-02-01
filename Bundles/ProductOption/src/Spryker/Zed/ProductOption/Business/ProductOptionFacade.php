@@ -7,11 +7,6 @@
 namespace Spryker\Zed\ProductOption\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
-use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
-use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
-use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 
 /**
  * @method ProductOptionBusinessFactory getFactory()

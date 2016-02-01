@@ -8,7 +8,6 @@ namespace Spryker\Zed\Wishlist\Business\Operator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Wishlist\Business\Storage\StorageInterface;
 use Spryker\Zed\Wishlist\Dependency\PostSavePluginInterface;
 use Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface;

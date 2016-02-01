@@ -8,7 +8,6 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade;
 
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 
 class ShipmentCheckoutConnectorToShipmentBridge implements ShipmentCheckoutConnectorToShipmentInterface
 {

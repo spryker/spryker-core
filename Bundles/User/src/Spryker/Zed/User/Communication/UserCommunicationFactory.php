@@ -12,11 +12,9 @@ use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 use Spryker\Zed\User\Communication\Table\UsersTable;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
-use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
 use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Spryker\Zed\User\UserDependencyProvider;
 use Spryker\Zed\User\UserConfig;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @method UserQueryContainer getQueryContainer()

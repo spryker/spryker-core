@@ -10,14 +10,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
-use Spryker\Zed\Cms\Business\Exception\MissingPageException;
-use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
-use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 /**
  * @method CmsBusinessFactory getFactory()

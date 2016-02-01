@@ -12,9 +12,7 @@ use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
 use Spryker\Zed\Shipment\Communication\Table\MethodTable;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
-use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentConfig;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @method ShipmentQueryContainer getQueryContainer()

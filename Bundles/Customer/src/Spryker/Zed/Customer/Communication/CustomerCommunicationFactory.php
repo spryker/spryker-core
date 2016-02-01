@@ -11,10 +11,8 @@ use Spryker\Zed\Customer\Communication\Form\CustomerForm;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
 use Spryker\Zed\Customer\Communication\Table\CustomerTable;
-use Symfony\Component\Form\FormInterface;
 use Spryker\Zed\Customer\CustomerConfig;
 
 /**

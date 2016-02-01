@@ -5,11 +5,6 @@
 
 namespace Spryker\Zed\Glossary\Business\Key;
 
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
-use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
-
 interface KeyManagerInterface
 {
 

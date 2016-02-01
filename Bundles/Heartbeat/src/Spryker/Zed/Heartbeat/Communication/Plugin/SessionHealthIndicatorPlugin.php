@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Heartbeat\Communication\Plugin;
 
-use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 use Spryker\Zed\Heartbeat\Business\HeartbeatFacade;

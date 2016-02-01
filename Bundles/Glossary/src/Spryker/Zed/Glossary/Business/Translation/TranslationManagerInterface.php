@@ -7,11 +7,6 @@ namespace Spryker\Zed\Glossary\Business\Translation;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
-use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
-use Spryker\Zed\Glossary\Business\Exception\TranslationExistsException;
 
 interface TranslationManagerInterface
 {

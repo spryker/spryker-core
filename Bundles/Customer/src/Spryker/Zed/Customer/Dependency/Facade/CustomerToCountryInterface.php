@@ -6,9 +6,6 @@
 
 namespace Spryker\Zed\Customer\Dependency\Facade;
 
-use Generated\Shared\Transfer\CountryCollectionTransfer;
-use Generated\Shared\Transfer\CountryTransfer;
-
 interface CustomerToCountryInterface
 {
 

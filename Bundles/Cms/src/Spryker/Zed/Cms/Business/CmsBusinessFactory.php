@@ -12,14 +12,7 @@ use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Cms\Business\Block\BlockManagerInterface;
-use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface;
-use Spryker\Zed\Cms\Business\Page\PageManagerInterface;
-use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\CmsDependencyProvider;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Symfony\Component\Finder\Finder;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 

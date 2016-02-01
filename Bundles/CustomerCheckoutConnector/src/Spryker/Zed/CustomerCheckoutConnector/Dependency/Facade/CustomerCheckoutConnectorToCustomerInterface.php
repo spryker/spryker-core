@@ -7,7 +7,6 @@
 namespace Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerCheckoutConnectorToCustomerInterface

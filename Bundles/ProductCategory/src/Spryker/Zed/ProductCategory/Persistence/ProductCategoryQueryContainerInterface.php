@@ -8,8 +8,6 @@ namespace Spryker\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
 interface ProductCategoryQueryContainerInterface
 {

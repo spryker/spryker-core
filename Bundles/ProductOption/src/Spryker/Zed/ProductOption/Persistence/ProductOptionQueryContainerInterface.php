@@ -6,17 +6,6 @@
 
 namespace Spryker\Zed\ProductOption\Persistence;
 
-use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionTypeUsageExclusionQuery;
-use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionValueUsageConstraintQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslationQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslationQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Tax\Persistence\Base\SpyTaxSetQuery;
-
 interface ProductOptionQueryContainerInterface
 {
 

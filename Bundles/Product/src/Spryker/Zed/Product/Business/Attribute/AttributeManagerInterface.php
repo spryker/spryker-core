@@ -6,10 +6,6 @@
 
 namespace Spryker\Zed\Product\Business\Attribute;
 
-use Spryker\Zed\Product\Business\Exception\AttributeExistsException;
-use Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException;
-use Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException;
-
 interface AttributeManagerInterface
 {
 

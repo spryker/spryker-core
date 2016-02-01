@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Payolution\Communication\Controller;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Payolution\Business\PayolutionFacade;
 

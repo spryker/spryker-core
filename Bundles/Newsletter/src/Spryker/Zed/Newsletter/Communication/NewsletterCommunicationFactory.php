@@ -7,8 +7,6 @@
 namespace Spryker\Zed\Newsletter\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToGlossaryInterface;
-use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface;
 use Spryker\Zed\Newsletter\NewsletterConfig;
 use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;

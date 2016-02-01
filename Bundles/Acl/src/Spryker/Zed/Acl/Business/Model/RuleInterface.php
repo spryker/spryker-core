@@ -10,8 +10,6 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Acl\AclConstants;
-use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
-use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 interface RuleInterface
 {

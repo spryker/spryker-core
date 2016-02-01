@@ -6,8 +6,6 @@
 namespace Spryker\Zed\Glossary\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Exception\PropelException;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 
 interface GlossaryQueryContainerInterface

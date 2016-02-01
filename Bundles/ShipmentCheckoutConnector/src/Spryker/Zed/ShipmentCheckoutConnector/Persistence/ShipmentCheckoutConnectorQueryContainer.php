@@ -6,10 +6,6 @@
 namespace Spryker\Zed\ShipmentCheckoutConnector\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
 
 class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer implements ShipmentCheckoutConnectorQueryContainerInterface

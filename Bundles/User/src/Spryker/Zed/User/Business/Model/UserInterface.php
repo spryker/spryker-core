@@ -6,10 +6,7 @@
 
 namespace Spryker\Zed\User\Business\Model;
 
-use Generated\Shared\Transfer\CollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\User\Business\Exception\UsernameExistsException;
-use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 interface UserInterface
 {

@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Oms\Communication\Controller;
 
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Country\Persistence\SpyCountry;

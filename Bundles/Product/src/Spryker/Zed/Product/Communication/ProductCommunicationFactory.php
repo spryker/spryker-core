@@ -9,13 +9,9 @@ namespace Spryker\Zed\Product\Communication;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Product\Communication\Table\ProductTable;
-use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToProductOptionInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Product\ProductConfig;
 use Spryker\Zed\Product\ProductDependencyProvider;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 
 /**
  * @method ProductQueryContainer getQueryContainer()

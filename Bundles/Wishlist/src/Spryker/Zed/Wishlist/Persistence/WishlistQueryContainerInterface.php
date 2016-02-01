@@ -4,9 +4,6 @@
  */
 namespace Spryker\Zed\Wishlist\Persistence;
 
-use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
-use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
-
 interface WishlistQueryContainerInterface
 {
 

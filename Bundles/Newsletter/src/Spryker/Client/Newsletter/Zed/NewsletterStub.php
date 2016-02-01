@@ -7,9 +7,7 @@
 namespace Spryker\Client\Newsletter\Zed;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class NewsletterStub implements NewsletterStubInterface

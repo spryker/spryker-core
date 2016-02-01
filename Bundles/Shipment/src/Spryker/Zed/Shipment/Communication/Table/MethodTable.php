@@ -12,7 +12,6 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
 class MethodTable extends AbstractTable
 {

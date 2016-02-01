@@ -2,13 +2,8 @@
 
 namespace Spryker\Client\Kernel;
 
-use Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Client\Session\SessionClient;
-use Spryker\Client\ZedRequest\ZedRequestClient;
-use Spryker\Client\Storage\StorageClient;
-use Spryker\Client\Search\SearchClient;
 
 abstract class AbstractFactory
 {

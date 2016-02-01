@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Shipment;
 
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 

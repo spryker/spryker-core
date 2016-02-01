@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Glossary\Dependency\Facade;
 
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Generated\Shared\Transfer\LocaleTransfer;
 
 class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
 {

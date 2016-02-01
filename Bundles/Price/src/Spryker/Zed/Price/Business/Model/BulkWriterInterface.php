@@ -7,8 +7,6 @@
 namespace Spryker\Zed\Price\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Orm\Zed\Price\Persistence\SpyPriceType;
-use Propel\Runtime\Exception\PropelException;
 
 interface BulkWriterInterface
 {

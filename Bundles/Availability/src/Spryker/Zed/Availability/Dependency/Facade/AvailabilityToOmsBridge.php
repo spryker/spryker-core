@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Business\OmsFacade;
 
 class AvailabilityToOmsBridge implements AvailabilityToOmsInterface

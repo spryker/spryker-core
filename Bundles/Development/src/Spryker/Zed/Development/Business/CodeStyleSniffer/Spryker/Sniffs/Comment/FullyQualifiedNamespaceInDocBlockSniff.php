@@ -113,6 +113,7 @@ class FullyQualifiedNamespaceInDocBlockSniff implements \PHP_CodeSniffer_Sniff
         if ($tokens[$beginningOfLine - 2]['type'] === 'T_DOC_COMMENT_CLOSE_TAG') {
             return $beginningOfLine - 2;
         }
+
         return null;
     }
 

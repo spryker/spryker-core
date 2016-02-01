@@ -8,10 +8,6 @@ namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Url\Business\Exception\MissingUrlException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
-use Spryker\Zed\Url\Persistence\Exception\MissingResourceException;
 use Orm\Zed\Url\Persistence\SpyUrl;
 
 interface UrlManagerInterface

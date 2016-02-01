@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Newsletter\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
 
 interface NewsletterToGlossaryInterface
 {

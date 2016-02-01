@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 interface ProductToLocaleInterface
 {
 

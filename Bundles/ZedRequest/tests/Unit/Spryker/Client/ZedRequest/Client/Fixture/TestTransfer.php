@@ -7,7 +7,6 @@
 namespace Unit\Spryker\Client\ZedRequest\Client\Fixture;
 
 use Spryker\Shared\Transfer\AbstractTransfer;
-use Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException;
 
 class TestTransfer extends AbstractTransfer
 {

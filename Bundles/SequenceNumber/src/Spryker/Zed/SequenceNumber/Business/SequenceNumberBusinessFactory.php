@@ -10,8 +10,6 @@ use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumber;
 use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
-use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumberInterface;
 use Spryker\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainerInterface;
 use Spryker\Zed\SequenceNumber\SequenceNumberConfig;
 use Propel\Runtime\Propel;

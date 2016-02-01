@@ -6,12 +6,9 @@
 
 namespace Spryker\Zed\Locale\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 /**
  * @method LocaleBusinessFactory getFactory()
@@ -50,7 +47,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function getCurrentLocaleName()
     {
-        return \Spryker\Shared\Kernel\Store::getInstance()->getCurrentLocale();
+        return Store::getInstance()->getCurrentLocale();
     }
 
     /**

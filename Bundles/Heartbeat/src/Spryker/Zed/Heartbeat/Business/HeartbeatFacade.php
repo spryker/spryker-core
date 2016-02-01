@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Heartbeat\Business;
 
-use Generated\Shared\Transfer\HealthReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

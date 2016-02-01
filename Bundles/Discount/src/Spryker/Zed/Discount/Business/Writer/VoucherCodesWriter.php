@@ -8,7 +8,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 
 class VoucherCodesWriter extends AbstractWriter
 {

@@ -8,14 +8,11 @@ namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
-use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
-use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
-use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 
 class Writer implements WriterInterface

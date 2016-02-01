@@ -8,11 +8,8 @@ namespace Spryker\Zed\Refund\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Refund\Business\Model\Refund;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
 use Spryker\Zed\Refund\RefundDependencyProvider;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 use Spryker\Zed\Refund\RefundConfig;
 
 /**

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Price\Business\Model;
 
 use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainer;
-use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Spryker\Zed\Price\PriceConfig;
 

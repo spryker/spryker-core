@@ -6,7 +6,6 @@
 namespace Spryker\Client\Glossary;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Glossary\Storage\GlossaryStorageInterface;
 
 /**
  * @method GlossaryFactory getFactory()

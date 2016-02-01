@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Kernel\Dependency\Facade;
 
-use Generated\Shared\Transfer\FlashMessagesTransfer;
-
 interface KernelToMessengerInterface
 {
 

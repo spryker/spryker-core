@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Messenger\Business;
 
-use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 

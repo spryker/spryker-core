@@ -9,7 +9,6 @@ namespace Spryker\Client\Session;
 use Spryker\Client\Kernel\AbstractClient;
 use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 
 class SessionClient extends AbstractClient implements SessionClientInterface
 {

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Country\Communication\Table;
 
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;

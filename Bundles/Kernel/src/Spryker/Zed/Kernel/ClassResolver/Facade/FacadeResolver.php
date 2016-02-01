@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\Facade;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class FacadeResolver extends AbstractClassResolver

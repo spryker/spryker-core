@@ -8,7 +8,6 @@ namespace Spryker\Client\Sales;
 
 use Spryker\Client\Sales\Zed\SalesStub;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Sales\Zed\SalesStubInterface;
 
 class SalesFactory extends AbstractFactory
 {

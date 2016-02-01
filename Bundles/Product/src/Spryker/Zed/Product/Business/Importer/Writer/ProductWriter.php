@@ -8,7 +8,6 @@ namespace Spryker\Zed\Product\Business\Importer\Writer;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Shared\Product\Model\ProductAbstractInterface;
 
 class ProductWriter implements ProductWriterInterface
 {

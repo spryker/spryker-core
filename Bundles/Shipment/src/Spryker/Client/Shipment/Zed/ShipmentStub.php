@@ -7,7 +7,6 @@
 namespace Spryker\Client\Shipment\Zed;
 
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class ShipmentStub implements ShipmentStubInterface

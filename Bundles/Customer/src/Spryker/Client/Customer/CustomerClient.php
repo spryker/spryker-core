@@ -8,10 +8,7 @@ namespace Spryker\Client\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\AddressesTransfer;
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\ZedRequest\Client\Response;
 
 /**
  * @method CustomerFactory getFactory()

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Wishlist\Business\Model\Customer;
 use Spryker\Zed\Wishlist\Business\Operator\AbstractOperator;
-use Spryker\Zed\Wishlist\Business\Storage\StorageInterface;
 use Spryker\Zed\Wishlist\Business\Storage\Propel;
 use Spryker\Zed\Wishlist\Business\Storage\InMemory;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;

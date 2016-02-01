@@ -9,9 +9,6 @@ namespace Spryker\Zed\Cms\Business\Mapping;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
-use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 
 interface GlossaryKeyMappingManagerInterface
 {

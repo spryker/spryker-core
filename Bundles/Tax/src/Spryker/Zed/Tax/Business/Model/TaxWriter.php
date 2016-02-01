@@ -15,7 +15,6 @@ use Spryker\Zed\Tax\TaxConfig;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Collection\Collection;
 
 class TaxWriter implements TaxWriterInterface

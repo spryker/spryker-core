@@ -7,9 +7,7 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Spryker\Zed\Url\Business\UrlFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
 
 class CmsToUrlBridge implements CmsToUrlInterface
 {

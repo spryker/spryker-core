@@ -7,7 +7,6 @@
 namespace Spryker\Client\Payolution\Zed;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class PayolutionStub implements PayolutionStubInterface

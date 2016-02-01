@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Wishlist\Dependency\Facade;
 
 use Spryker\Zed\Product\Business\ProductFacade;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class WishlistToProductBridge implements WishlistToProductInterface
 {

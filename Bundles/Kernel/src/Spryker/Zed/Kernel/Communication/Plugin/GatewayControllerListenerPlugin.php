@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
 use Spryker\Zed\Kernel\Communication\KernelCommunicationFactory;
-use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Spryker\Zed\Messenger\MessengerConfig;

@@ -17,8 +17,6 @@ use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
  */

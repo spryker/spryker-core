@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Cms\Business\Template;
 
 use Generated\Shared\Transfer\CmsTemplateTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
 use Spryker\Zed\Cms\CmsConfig;

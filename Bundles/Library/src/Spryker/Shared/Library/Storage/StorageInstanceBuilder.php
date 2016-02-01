@@ -9,8 +9,6 @@ namespace Spryker\Shared\Library\Storage;
 use Elastica\Client;
 use Spryker\Shared\Config;
 use Spryker\Shared\Library\LibraryConstants;
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface as KeyValueReadInterface;
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface as KeyValueReadWriteInterface;
 
 /**
  * Class StorageInstanceBuilder

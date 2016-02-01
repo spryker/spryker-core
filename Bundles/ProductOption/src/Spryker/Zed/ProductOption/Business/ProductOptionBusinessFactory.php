@@ -11,8 +11,6 @@ use Spryker\Zed\ProductOption\Business\Model\DataImportWriter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
-use Spryker\Zed\ProductOption\Business\Model\DataImportWriterInterface;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionReaderInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 
 /**

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Oms\OmsConstants;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;

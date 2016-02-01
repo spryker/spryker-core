@@ -10,8 +10,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Cart\Session\CartSessionInterface;
-use Spryker\Client\Cart\Zed\CartStubInterface;
 
 /**
  * @method CartFactory getFactory()

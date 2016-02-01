@@ -20,8 +20,6 @@ use Spryker\Zed\Cms\Communication\CmsCommunicationFactory;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;

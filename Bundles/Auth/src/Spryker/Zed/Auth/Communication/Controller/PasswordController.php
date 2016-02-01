@@ -11,7 +11,6 @@ use Spryker\Zed\Auth\Business\AuthFacade;
 use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
 

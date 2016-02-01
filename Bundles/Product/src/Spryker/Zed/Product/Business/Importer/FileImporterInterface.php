@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Product\Business\Importer;
 
-use Spryker\Zed\Product\Business\Model\ProductBatchResult;
-
 interface FileImporterInterface
 {
 

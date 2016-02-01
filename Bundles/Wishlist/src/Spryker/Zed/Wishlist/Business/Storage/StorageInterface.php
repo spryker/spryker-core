@@ -5,7 +5,6 @@
 namespace Spryker\Zed\Wishlist\Business\Storage;
 
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 
 interface StorageInterface
 {

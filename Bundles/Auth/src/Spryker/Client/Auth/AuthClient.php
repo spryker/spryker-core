@@ -7,7 +7,6 @@
 namespace Spryker\Client\Auth;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Auth\Token\TokenService;
 
 /**
  * @method AuthFactory getFactory()

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Product\Business\Internal;
 
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
-use Propel\Runtime\Exception\PropelException;
 
 class Install extends AbstractInstaller
 {

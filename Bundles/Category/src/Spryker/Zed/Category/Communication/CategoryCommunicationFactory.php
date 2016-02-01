@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Category\Communication;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;

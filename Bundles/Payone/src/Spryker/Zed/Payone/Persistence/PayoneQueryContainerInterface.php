@@ -6,13 +6,8 @@
 
 namespace Spryker\Zed\Payone\Persistence;
 
-use Propel\Runtime\Collection\ObjectCollection;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery;
 
 interface PayoneQueryContainerInterface
 {

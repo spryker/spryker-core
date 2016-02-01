@@ -10,11 +10,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Auth\Communication\Form\LoginForm;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
-use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\Auth\AuthDependencyProvider;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @method AuthConfig getConfig()

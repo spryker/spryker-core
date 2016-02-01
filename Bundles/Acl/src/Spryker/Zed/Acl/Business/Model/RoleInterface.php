@@ -7,9 +7,6 @@
 namespace Spryker\Zed\Acl\Business\Model;
 
 use Generated\Shared\Transfer\RoleTransfer;
-use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
-use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
-use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
 
 interface RoleInterface
 {

@@ -2,10 +2,8 @@
 
 namespace Spryker\Zed\Console\Business\Model;
 
-use Silex\Application;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\DialogHelper;
-use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Output\OutputInterface;
 
 trait Helper

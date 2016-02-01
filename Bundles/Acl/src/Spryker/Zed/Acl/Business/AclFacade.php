@@ -6,9 +6,7 @@
 
 namespace Spryker\Zed\Acl\Business;
 
-use Generated\Shared\Transfer\GroupsTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
-use Generated\Shared\Transfer\RulesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RoleTransfer;

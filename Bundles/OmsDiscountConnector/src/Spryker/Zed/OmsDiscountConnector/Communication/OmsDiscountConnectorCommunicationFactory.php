@@ -7,7 +7,6 @@
 namespace Spryker\Zed\OmsDiscountConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\OmsDiscountConnector\Dependency\Facade\OmsDiscountConnectorToDiscountInterface;
 use Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorDependencyProvider;
 use Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorConfig;
 

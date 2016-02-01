@@ -7,12 +7,6 @@
 namespace Spryker\Zed\ProductCategory\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;

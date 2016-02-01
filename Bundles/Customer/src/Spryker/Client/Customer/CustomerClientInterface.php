@@ -8,8 +8,6 @@ namespace Spryker\Client\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\AddressesTransfer;
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 interface CustomerClientInterface
 {

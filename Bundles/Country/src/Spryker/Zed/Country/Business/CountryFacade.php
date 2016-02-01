@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Country\Business;
 
-use Generated\Shared\Transfer\CountryCollectionTransfer;
-use Generated\Shared\Transfer\CountryTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 

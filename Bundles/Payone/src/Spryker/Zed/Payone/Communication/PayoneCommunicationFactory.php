@@ -7,8 +7,6 @@
 namespace Spryker\Zed\Payone\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Payone\Dependency\Facade\PayoneToOmsInterface;
-use Spryker\Zed\Payone\Dependency\Facade\PayoneToRefundInterface;
 use Spryker\Zed\Payone\PayoneConfig;
 use Spryker\Zed\Payone\PayoneDependencyProvider;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;

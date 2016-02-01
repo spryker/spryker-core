@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Cart;
 
-use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
 interface CartClientInterface

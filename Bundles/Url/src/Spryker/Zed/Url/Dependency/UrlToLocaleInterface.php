@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Url\Dependency;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 interface UrlToLocaleInterface
 {
 

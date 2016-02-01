@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\Event;
@@ -15,8 +14,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 
 /**
  * @method OmsBusinessFactory getFactory()

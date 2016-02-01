@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Auth\Business;
 
-use Spryker\Client\Session\SessionClientInterface;
-use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
@@ -15,7 +13,6 @@ use Spryker\Zed\Auth\Business\Model\Auth;
 use Spryker\Zed\Auth\Business\Model\PasswordReset;
 use Spryker\Zed\Auth\AuthDependencyProvider;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
-use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
 /**
  * @method AuthConfig getConfig()

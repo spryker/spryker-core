@@ -7,11 +7,6 @@
 namespace Spryker\Zed\Discount\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 
 /**
  * Class DiscountQueryContainer

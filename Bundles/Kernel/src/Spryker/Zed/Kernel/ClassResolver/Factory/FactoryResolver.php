@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\Factory;
 
-use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class FactoryResolver extends AbstractClassResolver

@@ -8,21 +8,14 @@ namespace Spryker\Zed\ProductCategory\Communication;
 
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsBridge;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductBridge;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryConfig;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @method ProductCategoryQueryContainer getQueryContainer()

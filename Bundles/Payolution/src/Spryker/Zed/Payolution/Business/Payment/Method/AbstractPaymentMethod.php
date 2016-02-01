@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Payolution\Business\Exception\GenderNotDefinedException;

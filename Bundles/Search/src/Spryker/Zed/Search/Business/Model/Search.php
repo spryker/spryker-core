@@ -6,9 +6,7 @@
 
 namespace Spryker\Zed\Search\Business\Model;
 
-use Elastica\Document;
 use Elastica\Exception\ResponseException;
-use Elastica\Response;
 use Spryker\Client\Search\SearchClient;
 
 class Search

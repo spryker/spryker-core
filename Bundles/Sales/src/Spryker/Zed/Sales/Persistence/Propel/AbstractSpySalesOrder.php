@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Sales\Persistence\Propel;
 
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrder as BaseSpySalesOrder;
 
 /**

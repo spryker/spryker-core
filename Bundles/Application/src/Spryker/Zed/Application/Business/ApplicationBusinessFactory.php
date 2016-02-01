@@ -27,15 +27,7 @@ use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportSearch;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\InstallDemoData;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder;
-use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface;
-use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
-use Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface;
-use Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface;
 use Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder;
-use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinderInterface;
-use Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface;
-use Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface;
-use Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface;
 
 /**
  * @method ApplicationConfig getConfig()

@@ -9,8 +9,6 @@ namespace Spryker\Zed\Discount\Business;
 use Spryker\Zed\Discount\Business\Model\VoucherCode;
 use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
 use Spryker\Zed\Discount\Business\Model\CartRule;
-use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Business\Calculator\Fixed;
 use Spryker\Zed\Discount\Business\Calculator\Percentage;
@@ -21,16 +19,13 @@ use Spryker\Zed\Discount\Business\Collector\Expense;
 use Spryker\Zed\Discount\Business\Collector\ItemProductOption;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Model\Calculator;
-use Spryker\Zed\Discount\Business\Model\CartRuleInterface;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
-use Spryker\Zed\Discount\Business\Model\VoucherCodeInterface;
 use Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Discount\Business\DecisionRule\Voucher;
 use Spryker\Zed\Discount\Business\Writer\VoucherCodesWriter;
@@ -43,7 +38,6 @@ use Spryker\Zed\Discount\Business\Model\VoucherEngine;
 use Spryker\Zed\Discount\Business\Model\CalculatorInterface;
 use Spryker\Zed\Discount\Business\Collector\CollectorInterface;
 use Spryker\Zed\Discount\Business\Model\DecisionRuleEngine;
-use Spryker\Shared\Kernel\Store;
 
 /**
  * @method DiscountConfig getConfig()

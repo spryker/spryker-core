@@ -7,9 +7,6 @@ namespace Spryker\Client\Customer\Zed;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\AddressesTransfer;
-use Generated\Shared\Transfer\CustomerResponseTransfer;
-use Spryker\Client\ZedRequest\Client\Response;
 
 interface CustomerStubInterface
 {

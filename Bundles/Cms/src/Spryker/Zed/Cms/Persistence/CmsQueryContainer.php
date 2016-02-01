@@ -9,10 +9,8 @@ namespace Spryker\Zed\Cms\Persistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Shared\Cms\CmsConstants;
-use Orm\Zed\Category\Persistence\Base\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
@@ -23,12 +21,9 @@ use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
-use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {

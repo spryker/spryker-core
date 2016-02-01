@@ -18,7 +18,6 @@ use DateTime;
 use Exception;
 use ErrorException;
 use Propel\Runtime\Collection\ObjectCollection;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Library\Log;
 
 class Timeout implements TimeoutInterface

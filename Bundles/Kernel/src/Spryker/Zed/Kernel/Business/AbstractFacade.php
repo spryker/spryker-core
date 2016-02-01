@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\Business;
 
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractFacade

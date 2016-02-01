@@ -8,7 +8,6 @@ namespace Spryker\Zed\Wishlist\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

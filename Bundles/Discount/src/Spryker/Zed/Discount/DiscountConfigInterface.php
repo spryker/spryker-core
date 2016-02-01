@@ -6,10 +6,6 @@
 
 namespace Spryker\Zed\Discount;
 
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-
 interface DiscountConfigInterface
 {
 

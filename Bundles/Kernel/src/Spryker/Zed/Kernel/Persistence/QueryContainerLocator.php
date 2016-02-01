@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\Persistence;
 
-use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Shared\Kernel\AbstractLocator;
 

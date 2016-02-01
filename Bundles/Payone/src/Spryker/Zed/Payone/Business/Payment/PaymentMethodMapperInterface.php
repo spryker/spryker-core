@@ -7,9 +7,6 @@
 namespace Spryker\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 

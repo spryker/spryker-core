@@ -12,7 +12,6 @@ use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method ShipmentCommunicationFactory getFactory()

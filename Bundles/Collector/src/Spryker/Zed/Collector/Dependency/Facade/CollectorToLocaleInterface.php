@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Collector\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 interface CollectorToLocaleInterface
 {
 

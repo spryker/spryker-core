@@ -14,7 +14,6 @@ use Orm\Zed\Acl\Persistence\SpyAclRuleQuery;
 use Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery;
 use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery;
 use Orm\Zed\User\Persistence\SpyUserQuery;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Spryker\Zed\Acl\AclConfig;
 
 /**

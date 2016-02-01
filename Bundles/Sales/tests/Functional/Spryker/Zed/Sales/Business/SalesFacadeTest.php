@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Kernel\Container;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;

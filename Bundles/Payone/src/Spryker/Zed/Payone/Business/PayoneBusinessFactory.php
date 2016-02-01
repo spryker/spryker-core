@@ -19,20 +19,14 @@ use Spryker\Zed\Payone\Business\Order\OrderManager;
 use Spryker\Zed\Payone\Business\Payment\PaymentManager;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
-use Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
-use Spryker\Zed\Payone\Business\Payment\PaymentManagerInterface;
-use Spryker\Zed\Payone\Business\Order\OrderManagerInterface;
 use Spryker\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
 use Spryker\Zed\Payone\PayoneConfig;
-use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
-use Spryker\Shared\Payone\Dependency\HashInterface;
 use Spryker\Zed\Payone\PayoneDependencyProvider;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainer;
-use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder;
 
 /**

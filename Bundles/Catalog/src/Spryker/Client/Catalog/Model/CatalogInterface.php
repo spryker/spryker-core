@@ -6,8 +6,6 @@
 
 namespace Spryker\Client\Catalog\Model;
 
-use Spryker\Client\Catalog\Model\Exception\ProductNotFoundException;
-
 interface CatalogInterface
 {
 

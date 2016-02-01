@@ -9,7 +9,6 @@ namespace Spryker\Zed\Country\Business;
 use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use Spryker\Zed\Country\Business\Internal\Install;
 use Spryker\Zed\Country\CountryConfig;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;

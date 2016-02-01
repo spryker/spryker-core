@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Price\Business\Model;
 
-use Orm\Zed\Price\Persistence\SpyPriceType;
-
 interface ReaderInterface
 {
 

@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 interface ProductCartConnectorToProductInterface
 {
 

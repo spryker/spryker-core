@@ -8,11 +8,8 @@ namespace Spryker\Zed\Acl\Business;
 
 use Spryker\Zed\Acl\Business\Model\Role;
 use Spryker\Zed\Acl\Business\Model\Group;
-use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Acl\AclConfig;
-use Spryker\Zed\Acl\Business\Model\GroupInterface;
-use Spryker\Zed\Acl\Business\Model\RoleInterface;
 use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Business\Model\RuleValidator;
 use Spryker\Zed\Acl\Business\Model\Installer;

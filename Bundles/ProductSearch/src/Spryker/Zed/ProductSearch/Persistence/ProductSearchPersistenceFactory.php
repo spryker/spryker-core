@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductSearch\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductSearch\ProductSearchConfig;
 
 /**

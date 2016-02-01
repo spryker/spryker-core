@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Kernel;
 
-use Generated\Zed\Ide\AutoCompletion;
-
 class Container extends \Pimple
 {
 

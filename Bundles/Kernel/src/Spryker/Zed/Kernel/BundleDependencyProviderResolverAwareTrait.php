@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel;
 
-use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 

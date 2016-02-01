@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Payolution\Dependency\Facade;
 
 use Generated\Shared\Transfer\MailTransfer;
-use Generated\Shared\Transfer\SendMailResponsesTransfer;
 
 interface PayolutionToMailInterface
 {

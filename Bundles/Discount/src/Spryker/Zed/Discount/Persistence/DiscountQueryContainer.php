@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Discount\Persistence;
 
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;

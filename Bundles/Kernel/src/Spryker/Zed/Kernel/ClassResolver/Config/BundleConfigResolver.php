@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\Config;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class BundleConfigResolver extends AbstractClassResolver

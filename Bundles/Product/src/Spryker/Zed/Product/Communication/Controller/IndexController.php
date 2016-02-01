@@ -2,7 +2,6 @@
 
 namespace Spryker\Zed\Product\Communication\Controller;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Product\Business\ProductFacade;

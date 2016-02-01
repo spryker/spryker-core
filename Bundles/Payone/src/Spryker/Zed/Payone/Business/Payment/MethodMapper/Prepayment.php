@@ -8,7 +8,6 @@ namespace Spryker\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrepaymentContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;

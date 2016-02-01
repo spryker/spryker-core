@@ -10,7 +10,6 @@ use Elastica\Client as ElasticaClient;
 use Predis\Client as PredisClient;
 use Spryker\Shared\Config;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 use Spryker\Zed\Heartbeat\Business\Assistant\PropelHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\SearchHealthIndicator;

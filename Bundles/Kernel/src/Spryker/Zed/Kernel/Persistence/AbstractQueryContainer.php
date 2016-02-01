@@ -6,11 +6,8 @@
 
 namespace Spryker\Zed\Kernel\Persistence;
 
-use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;

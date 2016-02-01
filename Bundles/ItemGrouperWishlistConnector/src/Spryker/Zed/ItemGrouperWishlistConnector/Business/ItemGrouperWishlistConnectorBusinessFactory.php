@@ -5,7 +5,6 @@
  */
 namespace Spryker\Zed\ItemGrouperWishlistConnector\Business;
 
-use Spryker\Zed\ItemGrouperWishlistConnector\Dependency\Facade\ItemGrouperWishlistConnectorToItemGrouperInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorDependencyProvider;
 use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorConfig;

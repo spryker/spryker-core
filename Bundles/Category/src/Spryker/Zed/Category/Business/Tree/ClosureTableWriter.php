@@ -8,7 +8,6 @@ namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
-use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTable;

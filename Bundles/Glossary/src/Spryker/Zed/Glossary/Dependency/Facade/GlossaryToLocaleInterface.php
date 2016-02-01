@@ -6,10 +6,6 @@
 
 namespace Spryker\Zed\Glossary\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
-
 interface GlossaryToLocaleInterface
 {
 

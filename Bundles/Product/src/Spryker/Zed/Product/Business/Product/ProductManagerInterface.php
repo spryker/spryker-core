@@ -9,11 +9,6 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException;
-use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 interface ProductManagerInterface
 {

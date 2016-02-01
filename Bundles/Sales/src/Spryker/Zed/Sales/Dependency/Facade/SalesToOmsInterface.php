@@ -3,8 +3,6 @@
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 

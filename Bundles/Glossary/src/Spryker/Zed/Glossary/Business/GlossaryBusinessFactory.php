@@ -5,14 +5,9 @@
 
 namespace Spryker\Zed\Glossary\Business;
 
-use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerInterface;
 use Spryker\Zed\Glossary\Business\Key\KeyManager;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManager;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Glossary\Business\Key\KeyManagerInterface;
-use Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface;
-use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
-use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Glossary\GlossaryConfig;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;

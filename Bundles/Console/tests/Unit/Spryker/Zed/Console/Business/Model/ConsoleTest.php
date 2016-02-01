@@ -6,9 +6,6 @@
 
 namespace Unit\Spryker\Zed\Console\Business\Model\Console;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock;
 
 class ConsoleTest extends \PHPUnit_Framework_TestCase

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\Communication;
 
-use Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerInterface;
 use Spryker\Zed\Kernel\KernelDependencyProvider;
 
 class KernelCommunicationFactory extends AbstractCommunicationFactory

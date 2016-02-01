@@ -7,8 +7,6 @@
 namespace Spryker\Zed\Cms\Business\Template;
 
 use Generated\Shared\Transfer\CmsTemplateTransfer;
-use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
-use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
 
 interface TemplateManagerInterface
 {

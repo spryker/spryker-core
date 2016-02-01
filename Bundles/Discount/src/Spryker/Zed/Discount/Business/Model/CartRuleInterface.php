@@ -3,7 +3,6 @@
 namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\CartRuleTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
 
 interface CartRuleInterface
 {

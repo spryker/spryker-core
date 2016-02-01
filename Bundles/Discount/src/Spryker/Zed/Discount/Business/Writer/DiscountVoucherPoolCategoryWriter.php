@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory;
 
 class DiscountVoucherPoolCategoryWriter extends AbstractWriter

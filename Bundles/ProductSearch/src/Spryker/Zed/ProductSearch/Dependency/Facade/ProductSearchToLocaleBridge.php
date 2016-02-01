@@ -6,7 +6,6 @@
 namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Generated\Shared\Transfer\LocaleTransfer;
 
 class ProductSearchToLocaleBridge implements ProductSearchToLocaleInterface
 {

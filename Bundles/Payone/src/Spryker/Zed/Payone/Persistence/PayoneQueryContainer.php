@@ -7,10 +7,8 @@
 namespace Spryker\Zed\Payone\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItemQuery;

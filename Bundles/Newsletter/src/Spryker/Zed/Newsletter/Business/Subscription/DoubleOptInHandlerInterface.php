@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
 
 interface DoubleOptInHandlerInterface
 {

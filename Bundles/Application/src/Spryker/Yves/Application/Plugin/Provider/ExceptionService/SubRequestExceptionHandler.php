@@ -9,7 +9,6 @@ namespace Spryker\Yves\Application\Plugin\Provider\ExceptionService;
 use Spryker\Shared\Application\Communication\Application;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class SubRequestExceptionHandler implements ExceptionHandlerInterface

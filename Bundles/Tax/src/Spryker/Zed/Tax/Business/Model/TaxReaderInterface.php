@@ -6,13 +6,6 @@
 
 namespace Spryker\Zed\Tax\Business\Model;
 
-use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
-use Generated\Shared\Transfer\TaxRateCollectionTransfer;
-use Generated\Shared\Transfer\TaxSetCollectionTransfer;
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
-
 interface TaxReaderInterface
 {
 

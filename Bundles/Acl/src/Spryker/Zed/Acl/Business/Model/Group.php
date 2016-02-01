@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\GroupsTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use Orm\Zed\Acl\Persistence\SpyAclGroup;
 use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRoles;
@@ -21,7 +20,6 @@ use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Spryker\Zed\Acl\Business\Exception\GroupNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
 use Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
-use Spryker\Zed\Acl\Business\Exception\GroupAlreadyHasUserException;
 
 class Group implements GroupInterface
 {

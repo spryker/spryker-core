@@ -8,7 +8,6 @@ namespace Spryker\Client\Search;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Provider\IndexClientProvider;
-use Spryker\Client\ZedRequest\Client\ZedClient;
 
 class SearchFactory extends AbstractFactory
 {

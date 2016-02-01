@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Maintenance\Business\InstalledPackages;
 
-use Generated\Shared\Transfer\InstalledPackagesTransfer;
-
 interface InstalledPackageFinderInterface
 {
 

@@ -15,7 +15,6 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
-use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;

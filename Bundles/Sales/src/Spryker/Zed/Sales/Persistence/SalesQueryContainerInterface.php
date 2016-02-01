@@ -7,10 +7,6 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
-use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 
 interface SalesQueryContainerInterface
 {

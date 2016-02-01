@@ -11,11 +11,8 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\ProductCategory\Business\Exception\MissingProductException;
-use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
@@ -23,7 +20,6 @@ use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterf
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {

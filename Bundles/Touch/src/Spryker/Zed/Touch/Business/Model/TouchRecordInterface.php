@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Touch\Business\Model;
 
-use Propel\Runtime\Exception\PropelException;
-
 interface TouchRecordInterface
 {
 

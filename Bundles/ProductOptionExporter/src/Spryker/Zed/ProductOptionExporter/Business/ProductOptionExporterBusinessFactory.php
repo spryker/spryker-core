@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductOptionExporter\Business;
 
 use Spryker\Zed\ProductOptionExporter\Business\Model\ExportProcessor;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOptionExporter\Business\Model\ExportProcessorInterface;
 use Spryker\Zed\ProductOptionExporter\ProductOptionExporterDependencyProvider;
 use Spryker\Zed\ProductOptionExporter\ProductOptionExporterConfig;
 

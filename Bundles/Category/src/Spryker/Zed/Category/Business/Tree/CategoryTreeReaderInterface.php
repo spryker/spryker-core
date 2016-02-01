@@ -8,8 +8,6 @@ namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
-use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
 
 interface CategoryTreeReaderInterface
 {

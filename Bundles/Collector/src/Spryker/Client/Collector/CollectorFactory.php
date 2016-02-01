@@ -9,8 +9,6 @@ namespace Spryker\Client\Collector;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder;
 use Spryker\Client\Collector\Matcher\UrlMatcher;
-use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Client\Storage\StorageClient;
 
 class CollectorFactory extends AbstractFactory
 {

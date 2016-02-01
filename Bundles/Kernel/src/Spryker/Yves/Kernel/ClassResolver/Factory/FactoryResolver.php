@@ -6,7 +6,6 @@
 
 namespace Spryker\Yves\Kernel\ClassResolver\Factory;
 
-use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
 class FactoryResolver extends AbstractClassResolver

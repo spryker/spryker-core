@@ -11,7 +11,6 @@ use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Orm\Zed\Acl\Persistence\SpyAclRole;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
-use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;

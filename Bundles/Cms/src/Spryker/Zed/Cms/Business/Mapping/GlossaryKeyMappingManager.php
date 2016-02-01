@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use Spryker\Zed\Cms\Business\Page\PageManagerInterface;

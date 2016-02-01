@@ -6,10 +6,6 @@
 
 namespace Spryker\Zed\Payolution\Persistence;
 
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
-
 interface PayolutionQueryContainerInterface
 {
 

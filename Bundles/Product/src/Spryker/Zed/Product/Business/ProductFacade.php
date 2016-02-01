@@ -9,15 +9,8 @@ namespace Spryker\Zed\Product\Business;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Product\Business\Exception\AttributeExistsException;
-use Spryker\Zed\Product\Business\Exception\AttributeTypeExistsException;
-use Spryker\Zed\Product\Business\Exception\MissingAttributeTypeException;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
-use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 
 /**
  * @method ProductBusinessFactory getFactory()

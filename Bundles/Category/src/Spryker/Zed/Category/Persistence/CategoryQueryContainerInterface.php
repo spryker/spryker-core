@@ -5,14 +5,8 @@
 namespace Spryker\Zed\Category\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
-use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
-use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
-use Orm\Zed\Category\Persistence\SpyCategoryQuery;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 interface CategoryQueryContainerInterface
 {

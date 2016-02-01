@@ -8,8 +8,6 @@ namespace Spryker\Zed\Payolution\Business;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

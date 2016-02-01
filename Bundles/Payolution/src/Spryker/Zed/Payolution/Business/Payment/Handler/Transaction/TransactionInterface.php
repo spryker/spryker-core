@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Handler\Transaction;
 
-use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 
 interface TransactionInterface

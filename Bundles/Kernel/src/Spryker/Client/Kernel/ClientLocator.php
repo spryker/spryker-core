@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Kernel;
 
-use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Kernel\AbstractLocator;
 

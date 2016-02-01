@@ -6,11 +6,6 @@
 
 namespace Spryker\Zed\ProductOption\Business\Model;
 
-use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;
-use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueException;
-use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionTypeUsageException;
-use Spryker\Zed\ProductOption\Business\Exception\MissingProductOptionValueUsageException;
-
 interface DataImportWriterInterface
 {
 

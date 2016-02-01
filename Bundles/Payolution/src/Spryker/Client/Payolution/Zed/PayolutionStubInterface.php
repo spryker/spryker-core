@@ -7,7 +7,6 @@
 namespace Spryker\Client\Payolution\Zed;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 
 interface PayolutionStubInterface
 {

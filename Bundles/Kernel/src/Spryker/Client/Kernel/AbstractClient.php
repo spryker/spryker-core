@@ -6,9 +6,7 @@
 
 namespace Spryker\Client\Kernel;
 
-use Spryker\Client\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Client\ZedRequest\Stub\BaseStub;
 use Spryker\Shared\ZedRequest\Client\Message;
 
 abstract class AbstractClient

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Cms\Communication\Controller;
 
-use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Communication;
 use Spryker\Zed\Discount\Communication\Form\CartRuleForm;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Generated\Shared\Transfer\DataTablesTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\Communication\Form\CollectorPluginForm;
 use Spryker\Zed\Discount\Communication\Form\DecisionRuleForm;
 use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
@@ -22,10 +21,8 @@ use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Spryker\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use Spryker\Zed\Discount\Communication\Table\VoucherPoolTable;
-use Symfony\Component\Form\FormInterface;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**

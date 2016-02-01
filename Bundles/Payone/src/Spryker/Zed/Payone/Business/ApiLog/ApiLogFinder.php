@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 
 class ApiLogFinder
 {

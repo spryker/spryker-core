@@ -19,7 +19,6 @@ use Spryker\Zed\Acl\Communication\Table\GroupUsersTable;
 use Spryker\Zed\Acl\Communication\Table\RoleTable;
 use Spryker\Zed\Acl\Communication\Table\RulesetTable;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
-use Spryker\Zed\User\Business\UserFacade;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;

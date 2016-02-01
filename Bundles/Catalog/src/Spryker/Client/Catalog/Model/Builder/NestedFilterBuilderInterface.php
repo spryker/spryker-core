@@ -6,8 +6,6 @@
 
 namespace Spryker\Client\Catalog\Model\Builder;
 
-use Elastica\Filter\Nested;
-
 /**
  * Class FilterBuilder
  */

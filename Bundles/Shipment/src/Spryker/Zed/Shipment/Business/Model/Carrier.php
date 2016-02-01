@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrier;
 
 class Carrier

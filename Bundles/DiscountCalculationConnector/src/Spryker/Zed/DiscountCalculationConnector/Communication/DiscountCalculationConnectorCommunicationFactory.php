@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Communication;
 
-use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToDiscountInterface;
 use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorConfig;

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Payolution\Business\Api\Adapter\Http;
 use Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\Exception\RequestException;
-use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 
 class Guzzle extends AbstractHttpAdapter
 {

@@ -10,8 +10,6 @@ use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Container;
-use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
 abstract class AbstractCommunicationFactory extends AbstractFactory

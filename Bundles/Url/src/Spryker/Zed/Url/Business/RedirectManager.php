@@ -8,12 +8,8 @@ namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Url\Business\Exception\MissingRedirectException;
-use Spryker\Zed\Url\Business\Exception\RedirectExistsException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Spryker\Zed\Url\Dependency\UrlToTouchInterface;
 use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;

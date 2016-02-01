@@ -5,9 +5,6 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Persistence;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-
 interface ShipmentCheckoutConnectorQueryContainerInterface
 {
 

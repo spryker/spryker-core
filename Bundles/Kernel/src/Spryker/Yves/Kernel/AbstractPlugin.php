@@ -7,9 +7,7 @@
 namespace Spryker\Yves\Kernel;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractPlugin

@@ -17,7 +17,6 @@ use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;

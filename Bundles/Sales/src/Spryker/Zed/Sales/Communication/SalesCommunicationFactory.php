@@ -9,14 +9,12 @@ namespace Spryker\Zed\Sales\Communication;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\SalesConfig;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @method SalesQueryContainerInterface getQueryContainer()

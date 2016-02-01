@@ -9,8 +9,6 @@ namespace Spryker\Zed\Touch\Business;
 use Spryker\Zed\Touch\Business\Model\Touch;
 use Spryker\Zed\Touch\Business\Model\TouchRecord;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Touch\Business\Model\TouchInterface;
-use Spryker\Zed\Touch\Business\Model\TouchRecordInterface;
 use Spryker\Zed\Touch\TouchDependencyProvider;
 use Spryker\Zed\Touch\TouchConfig;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;

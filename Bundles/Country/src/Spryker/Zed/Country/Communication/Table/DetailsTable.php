@@ -5,7 +5,6 @@ namespace Spryker\Zed\Country\Communication\Table;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class DetailsTable extends AbstractTable
 {

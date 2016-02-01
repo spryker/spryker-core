@@ -10,10 +10,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\ProductCategory\Business\Exception\MissingProductException;
-use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
-use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 

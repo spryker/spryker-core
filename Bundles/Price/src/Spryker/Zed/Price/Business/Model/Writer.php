@@ -10,8 +10,6 @@ use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
-use Orm\Zed\Price\Persistence\SpyPriceType;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Price\PriceConfig;
 use Spryker\Zed\Price\Business\Exception\ProductPriceChangeException;
 

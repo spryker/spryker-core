@@ -6,9 +6,6 @@
 
 namespace Spryker\Zed\Payolution\Business\Api\Converter;
 
-use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
-
 interface ConverterInterface
 {
 

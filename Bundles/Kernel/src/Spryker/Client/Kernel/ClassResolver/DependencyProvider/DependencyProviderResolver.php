@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Kernel\ClassResolver\DependencyProvider;
 
-use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyProviderResolver extends AbstractClassResolver

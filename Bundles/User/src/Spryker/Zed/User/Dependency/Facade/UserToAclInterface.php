@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\User\Dependency\Facade;
 
-use Generated\Shared\Transfer\GroupsTransfer;
-
 interface UserToAclInterface
 {
 

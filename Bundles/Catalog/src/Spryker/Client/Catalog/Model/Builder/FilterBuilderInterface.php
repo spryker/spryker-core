@@ -6,12 +6,6 @@
 
 namespace Spryker\Client\Catalog\Model\Builder;
 
-use Elastica\Filter\BoolAnd;
-use Elastica\Filter\Nested;
-use Elastica\Filter\Range;
-use Elastica\Filter\Term;
-use Elastica\Filter\Terms;
-
 interface FilterBuilderInterface
 {
 

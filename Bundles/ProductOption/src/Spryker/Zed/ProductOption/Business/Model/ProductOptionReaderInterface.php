@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\ProductOption\Business\Model;
 
-use Generated\Shared\Transfer\ProductOptionTransfer;
-
 interface ProductOptionReaderInterface
 {
 

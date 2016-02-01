@@ -6,9 +6,6 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
-
 interface PersistenceManagerInterface
 {
 

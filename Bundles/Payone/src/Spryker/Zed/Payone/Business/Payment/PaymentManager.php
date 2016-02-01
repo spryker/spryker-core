@@ -38,7 +38,6 @@ use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
 
 class PaymentManager implements PaymentManagerInterface

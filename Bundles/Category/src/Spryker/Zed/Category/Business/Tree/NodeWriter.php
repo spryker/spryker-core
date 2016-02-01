@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;

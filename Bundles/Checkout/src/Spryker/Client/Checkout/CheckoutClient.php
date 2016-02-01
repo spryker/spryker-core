@@ -7,9 +7,7 @@
 namespace Spryker\Client\Checkout;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Checkout\Zed\CheckoutStub;
 
 /**
  * @method CheckoutFactory getFactory()

@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 
 interface ExporterInterface
 {

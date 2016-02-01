@@ -8,8 +8,6 @@ namespace Spryker\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\CmsDependencyProvider;

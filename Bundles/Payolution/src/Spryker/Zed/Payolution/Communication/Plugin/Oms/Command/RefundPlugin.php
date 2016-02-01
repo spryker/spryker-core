@@ -9,7 +9,6 @@ namespace Spryker\Zed\Payolution\Communication\Plugin\Oms\Command;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;

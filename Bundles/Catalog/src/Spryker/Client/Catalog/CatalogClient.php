@@ -3,11 +3,7 @@
 namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Catalog\Model\FacetConfig;
-use Spryker\Client\Catalog\Model\FacetSearch;
-use Spryker\Client\Catalog\Model\FulltextSearch;
 use Symfony\Component\HttpFoundation\Request;
-use Spryker\Client\Catalog\Model\Catalog;
 
 /**
  * @method CatalogFactory getFactory()

@@ -7,7 +7,6 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Shared\Checkout\CheckoutConstants;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Checkout\Business\Calculation\CalculableContainer;
 
 /**

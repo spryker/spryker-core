@@ -7,7 +7,6 @@
 namespace Spryker\Zed\StockSalesConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\StockSalesConnector\Dependency\Facade\StockToSalesFacadeInterface;
 use Spryker\Zed\StockSalesConnector\StockSalesConnectorDependencyProvider;
 
 class StockSalesConnectorBusinessFactory extends AbstractBusinessFactory

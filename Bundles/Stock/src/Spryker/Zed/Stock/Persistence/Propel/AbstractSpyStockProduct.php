@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Stock\Persistence\Propel;
 
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Stock\Persistence\Base\SpyStockProduct as BaseSpyStockProduct;
 
 /**

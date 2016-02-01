@@ -10,8 +10,6 @@ use Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 use Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductInterface;
-use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**

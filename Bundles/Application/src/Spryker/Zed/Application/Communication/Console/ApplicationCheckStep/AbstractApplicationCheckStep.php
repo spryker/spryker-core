@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Application\Communication\Console\ApplicationCheckStep;
 
-use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;

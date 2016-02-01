@@ -7,8 +7,6 @@
 namespace Spryker\Zed\Storage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Zed\Collector\Business\CollectorFacade;
 use Spryker\Zed\Storage\Communication\Table\StorageTable;
 use Spryker\Zed\Storage\StorageDependencyProvider;
 use Spryker\Zed\Storage\StorageConfig;

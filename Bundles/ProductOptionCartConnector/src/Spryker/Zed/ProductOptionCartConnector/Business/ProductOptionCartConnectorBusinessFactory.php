@@ -9,7 +9,6 @@ use Spryker\Zed\ProductOptionCartConnector\Business\Manager\ProductOptionManager
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyProvider;
-use Spryker\Zed\ProductOptionCartConnector\Business\Manager\ProductOptionManagerInterface;
 use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorConfig;
 
 /**

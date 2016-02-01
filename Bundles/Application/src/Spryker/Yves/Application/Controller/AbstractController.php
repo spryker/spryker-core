@@ -6,21 +6,16 @@
 
 namespace Spryker\Yves\Application\Controller;
 
-use Generated\Client\Ide\AutoCompletion;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Spryker\Yves\Application\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Locator;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 abstract class AbstractController

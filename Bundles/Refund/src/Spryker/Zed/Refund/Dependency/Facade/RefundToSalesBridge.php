@@ -7,9 +7,7 @@
 namespace Spryker\Zed\Refund\Dependency\Facade;
 
 use Spryker\Zed\Sales\Business\SalesFacade;
-use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 
 class RefundToSalesBridge implements RefundToSalesInterface
 {

@@ -7,7 +7,6 @@
 namespace Spryker\Yves\Application\Plugin\Provider\ExceptionService;
 
 use Symfony\Component\Debug\Exception\FlattenException;
-use Symfony\Component\HttpFoundation\Response;
 
 interface ExceptionHandlerInterface
 {

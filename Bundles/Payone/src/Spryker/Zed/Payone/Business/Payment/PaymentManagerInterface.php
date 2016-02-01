@@ -13,11 +13,6 @@ use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 
 interface PaymentManagerInterface
 {

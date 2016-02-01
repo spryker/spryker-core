@@ -7,9 +7,7 @@
 namespace Spryker\Zed\Newsletter\Business;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

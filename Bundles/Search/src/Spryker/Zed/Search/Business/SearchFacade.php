@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Search\Business;
 
-use Elastica\Document;
-use Elastica\Response;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 

@@ -6,10 +6,6 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
-use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
-use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
-use Orm\Zed\Stock\Persistence\SpyStockProduct;
-
 interface ReaderInterface
 {
 

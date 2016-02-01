@@ -5,8 +5,6 @@
  */
 namespace Spryker\Zed\Sales\Business\Model\Split;
 
-use Generated\Shared\Transfer\ItemSplitResponseTransfer;
-
 interface ItemInterface
 {
 

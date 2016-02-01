@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Locale\Persistence;
 
-use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
-
 interface LocaleQueryContainerInterface
 {
 

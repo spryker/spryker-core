@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\DependencyProvider;
 
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyProviderResolver extends AbstractClassResolver

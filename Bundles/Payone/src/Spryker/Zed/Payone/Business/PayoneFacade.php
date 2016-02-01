@@ -11,18 +11,11 @@ use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
-use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
-use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 
 /**
  * @method PayoneBusinessFactory getFactory()

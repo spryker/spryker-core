@@ -8,7 +8,6 @@ namespace Spryker\Zed\Touch\Business\Model;
 
 use DateTime;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;

@@ -14,7 +14,6 @@ use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\CmsCommunicationFactory;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
-use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

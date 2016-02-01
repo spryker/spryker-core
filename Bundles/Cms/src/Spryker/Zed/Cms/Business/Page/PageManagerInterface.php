@@ -9,10 +9,6 @@ namespace Spryker\Zed\Cms\Business\Page;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Cms\Business\Exception\MissingPageException;
-use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
-use Spryker\Zed\Cms\Business\Exception\PageExistsException;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 
 interface PageManagerInterface

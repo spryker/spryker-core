@@ -9,7 +9,6 @@ namespace Functional\Spryker\Zed\Acl\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;

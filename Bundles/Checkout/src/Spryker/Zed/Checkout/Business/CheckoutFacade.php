@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Checkout\Business;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

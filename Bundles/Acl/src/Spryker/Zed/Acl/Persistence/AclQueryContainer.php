@@ -8,23 +8,16 @@ namespace Spryker\Zed\Acl\Persistence;
 
 use Generated\Shared\Transfer\RolesTransfer;
 use Propel\Runtime\ActiveQuery\Join;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
-use Orm\Zed\Acl\Persistence\Base\SpyAclUserHasGroupQuery;
 use Orm\Zed\Acl\Persistence\Map\SpyAclGroupsHasRolesTableMap;
 use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;
 use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
 use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
 use Orm\Zed\Acl\Persistence\Map\SpyAclUserHasGroupTableMap;
-use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
-use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery;
-use Orm\Zed\Acl\Persistence\SpyAclRuleQuery;
-use Orm\Zed\Acl\Persistence\SpyAclRoleQuery;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Orm\Zed\User\Persistence\SpyUserQuery;
 
 /**
  * @method AclPersistenceFactory getFactory()

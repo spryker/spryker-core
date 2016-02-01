@@ -7,7 +7,6 @@
 namespace Spryker\Client\Checkout;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 
 interface CheckoutClientInterface
 {

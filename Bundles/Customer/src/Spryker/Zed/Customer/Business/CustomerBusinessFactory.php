@@ -6,15 +6,11 @@
 
 namespace Spryker\Zed\Customer\Business;
 
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 

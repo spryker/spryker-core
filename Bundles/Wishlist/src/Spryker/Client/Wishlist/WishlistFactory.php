@@ -10,10 +10,6 @@ use Spryker\Client\Wishlist\Storage\WishlistStorage;
 use Spryker\Client\Wishlist\Zed\WishlistStub;
 use Spryker\Client\Wishlist\Session\WishlistSession;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Customer\CustomerClientInterface;
-use Spryker\Client\Wishlist\Session\WishlistSessionInterface;
-use Spryker\Client\Wishlist\Storage\WishlistStorageInterface;
-use Spryker\Client\Wishlist\Zed\WishlistStubInterface;
 
 class WishlistFactory extends AbstractFactory
 {

@@ -6,8 +6,6 @@
 
 namespace Unit\Spryker\Zed\Product\Business\Model;
 
-use Spryker\Zed\Product\Business\Model\Filesystem;
-
 class FilesystemTest extends \PHPUnit_Framework_TestCase
 {
 

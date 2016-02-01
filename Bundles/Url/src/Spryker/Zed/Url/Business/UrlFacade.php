@@ -9,10 +9,7 @@ namespace Spryker\Zed\Url\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Url\Business\Exception\MissingUrlException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
  * @method UrlBusinessFactory getFactory()

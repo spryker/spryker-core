@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Search;
 
-use Elastica\Index;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**

@@ -6,10 +6,7 @@
 
 namespace Spryker\Zed\Customer\Persistence;
 
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 
 interface CustomerQueryContainerInterface extends QueryContainerInterface
 {

@@ -22,7 +22,6 @@ use DateTime;
 use Exception;
 use LogicException;
 use Propel\Runtime\Propel;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
 class OrderStateMachine implements OrderStateMachineInterface
 {

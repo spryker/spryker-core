@@ -13,7 +13,6 @@ use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Auth\Business\AuthFacade;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
-use Generated\Shared\Transfer\UserTransfer;
 
 /**
  * @group Spryker

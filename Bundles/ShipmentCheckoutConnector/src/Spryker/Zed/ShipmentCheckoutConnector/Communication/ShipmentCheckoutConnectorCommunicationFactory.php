@@ -7,7 +7,6 @@
 namespace Spryker\Zed\ShipmentCheckoutConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
 use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig;
 use Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainer;

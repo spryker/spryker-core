@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
 interface CmsToUrlInterface

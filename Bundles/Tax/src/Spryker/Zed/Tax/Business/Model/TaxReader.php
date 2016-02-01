@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateCollectionTransfer;
 use Generated\Shared\Transfer\TaxSetCollectionTransfer;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 
 class TaxReader implements TaxReaderInterface

@@ -6,7 +6,6 @@ namespace Spryker\Client\Wishlist\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistStubInterface
 {
