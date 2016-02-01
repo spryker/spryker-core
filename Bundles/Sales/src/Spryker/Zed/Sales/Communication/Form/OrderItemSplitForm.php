@@ -6,50 +6,20 @@
 
 namespace Spryker\Zed\Sales\Communication\Form;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
-class OrderItemSplitForm extends AbstractForm
+class OrderItemSplitForm extends AbstractType
 {
 
     const FIELD_QUANTITY = 'quantity';
     const FIELD_ID_ORDER_ITEM = 'id_order_item';
     const FIELD_ID_ORDER = 'id_order';
+
     const VALIDATE_MESSAGE_NUMERIC = 'Please provide numeric value.';
     const VALIDATION_MESSAGE_QUANTITY = 'Please provide quantity.';
-
-    /**
-     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    protected $orderItem;
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
-     */
-    public function __construct(SpySalesOrderItem $orderItem = null)
-    {
-        $this->orderItem = $orderItem;
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        parent::setDefaultOptions($resolver);
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
-    }
 
     /**
      * @return string
@@ -67,40 +37,76 @@ class OrderItemSplitForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_QUANTITY, 'text', [
-                'label' => 'Quantity',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank([
-                        'message' => self::VALIDATION_MESSAGE_QUANTITY,
-                    ]),
-                    $this->getConstraints()->createConstraintRegex([
-                        'pattern' => '/^\d+$/',
-                        'message' => self::VALIDATE_MESSAGE_NUMERIC,
-                    ]),
-                ],
-            ])
-            ->add(self::FIELD_ID_ORDER_ITEM, 'hidden')
-            ->add(self::FIELD_ID_ORDER, 'hidden')
-            ->add('Split', 'submit', [
-                'attr' => [
-                    'class' => 'btn btn-sm btn-primary',
-                ],
-            ]);
+        $builder->setAction('/sales/order-item-split/split');
+
+        $this
+            ->addQuantityField($builder)
+            ->addIdOrderItemField($builder)
+            ->addIdOrderField($builder)
+            ->addSubmitButton($builder);
     }
 
     /**
-     * @return array
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
      */
-    public function populateFormFields()
+    protected function addQuantityField(FormBuilderInterface $builder)
     {
-        if ($this->orderItem === null) {
-            return [];
-        }
+        $builder->add(self::FIELD_QUANTITY, 'text', [
+            'label' => 'Quantity',
+            'constraints' => [
+                new NotBlank([
+                    'message' => self::VALIDATION_MESSAGE_QUANTITY,
+                ]),
+                new Regex([
+                    'pattern' => '/^\d+$/',
+                    'message' => self::VALIDATE_MESSAGE_NUMERIC,
+                ]),
+            ],
+        ]);
 
-        return [
-            self::FIELD_ID_ORDER_ITEM => $this->orderItem->getIdSalesOrderItem(),
-            self::FIELD_ID_ORDER => $this->orderItem->getFkSalesOrder(),
-        ];
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addIdOrderItemField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_ORDER_ITEM, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addIdOrderField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_ORDER, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addSubmitButton(FormBuilderInterface $builder)
+    {
+        $builder->add('Split', 'submit', [
+            'attr' => [
+                'class' => 'btn btn-sm btn-primary',
+            ],
+        ]);
+
+        return $this;
     }
 
 }

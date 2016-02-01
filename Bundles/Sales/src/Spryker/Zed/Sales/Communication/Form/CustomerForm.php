@@ -2,39 +2,20 @@
 
 namespace Spryker\Zed\Sales\Communication\Form;
 
-use Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery;
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CustomerForm extends AbstractForm
+class CustomerForm extends AbstractType
 {
 
     const FIELD_FIRST_NAME = 'first_name';
     const FIELD_LAST_NAME = 'last_name';
     const FIELD_SALUTATION = 'salutation';
     const FIELD_EMAIL = 'email';
-    const SUBMIT = 'submit';
 
-    protected $orderQuery;
-
-    protected $idOrder;
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery $orderQuery
-     */
-    public function __construct(SpySalesOrderQuery $orderQuery)
-    {
-        $this->orderQuery = $orderQuery;
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
-    }
+    const OPTION_SALUTATION_CHOICES = 'salutation_choices';
 
     /**
      * @return string
@@ -45,6 +26,18 @@ class CustomerForm extends AbstractForm
     }
 
     /**
+     * @param OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -52,54 +45,77 @@ class CustomerForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this
+            ->addSalutationField($builder, $options[self::OPTION_SALUTATION_CHOICES])
+            ->addFirstNameField($builder)
+            ->addLastNameField($builder)
+            ->addEmailField($builder);
+    }
+
+    /**
+     * @param array $choices
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    public function addSalutationField(FormBuilderInterface $builder, array $choices)
+    {
         $builder
             ->add(self::FIELD_SALUTATION, 'choice', [
                 'label' => 'Salutation',
                 'placeholder' => '-select-',
-                'choices' => $this->getSalutationOptions(),
-            ])
-            ->add(self::FIELD_FIRST_NAME, 'text', [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->add(self::FIELD_LAST_NAME, 'text', [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->add(self::FIELD_EMAIL, 'text', [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
+                'choices' => $choices,
             ]);
+
+        return $this;
     }
 
     /**
-     * @return array
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
      */
-    protected function getSalutationOptions()
+    public function addFirstNameField(FormBuilderInterface $builder)
     {
-        return [
-            SpyCustomerTableMap::COL_SALUTATION_MR => SpyCustomerTableMap::COL_SALUTATION_MR,
-            SpyCustomerTableMap::COL_SALUTATION_MRS => SpyCustomerTableMap::COL_SALUTATION_MRS,
-            SpyCustomerTableMap::COL_SALUTATION_DR => SpyCustomerTableMap::COL_SALUTATION_DR,
-        ];
+        $builder->add(self::FIELD_FIRST_NAME, 'text', [
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
     }
 
     /**
-     * @return array
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
      */
-    public function populateFormFields()
+    public function addLastNameField(FormBuilderInterface $builder)
     {
-        $order = $this->orderQuery->findOne();
+        $builder->add(self::FIELD_LAST_NAME, 'text', [
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
 
-        return [
-            self::FIELD_FIRST_NAME => $order->getFirstName(),
-            self::FIELD_LAST_NAME => $order->getLastName(),
-            self::FIELD_SALUTATION => $order->getSalutation(),
-            self::FIELD_EMAIL => $order->getEmail(),
-        ];
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    public function addEmailField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_EMAIL, 'text', [
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
     }
 
 }
