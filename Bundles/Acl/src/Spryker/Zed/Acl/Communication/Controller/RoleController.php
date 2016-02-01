@@ -132,35 +132,6 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param $idAclRole
-     *
-     * @return FormInterface
-     */
-    protected function createAndHandleRuleSetForm(Request $request, $idAclRole)
-    {
-        $ruleTransfer = new RuleTransfer();
-        $ruleTransfer->setFkAclRole($idAclRole);
-
-        $ruleSetForm = $this->getFactory()
-            ->createRulesetForm($ruleTransfer)
-            ->handleRequest($request);
-
-        if ($ruleSetForm->isValid()) {
-            $ruleTransfer = $this->getFacade()
-                ->addRule($ruleSetForm->getData());
-
-            if ($ruleTransfer->getIdAclRule()) {
-                $this->addSuccessMessage('RuleSet successfully added.');
-            } else {
-                $this->addErrorMessage('Failed to add RuleSet.');
-            }
-        }
-
-        return $ruleSetForm;
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -176,7 +147,7 @@ class RoleController extends AbstractController
 
         $groupsHavingThisRole = $this->getQueryContainer()->queryRoleHasGroup($idRole)->count();
         if ($groupsHavingThisRole > 0) {
-            $this->addErrorMessage('Not possible to delete, role have groups assigned.');
+            $this->addErrorMessage('Unable to delete because role has groups assigned.');
 
             return $this->redirectResponse(self::ACL_ROLE_LIST_URL);
         }
@@ -204,14 +175,45 @@ class RoleController extends AbstractController
 
     /**
      * @param Request $request
+     * @param $idAclRole
+     *
+     * @return FormInterface
+     */
+    protected function createAndHandleRuleSetForm(Request $request, $idAclRole)
+    {
+        $dataProvider = $this->getFactory()->createAclRuleSetFormDataProvider();
+
+        $ruleSetForm = $this->getFactory()
+            ->createRuleSetForm(
+                $dataProvider->getData($idAclRole),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
+
+        if ($ruleSetForm->isValid()) {
+            $ruleTransfer = new RuleTransfer();
+            $ruleTransfer = $ruleTransfer->fromArray($ruleSetForm->getData());
+
+            $ruleTransfer = $this->getFacade()->addRule($ruleTransfer);
+
+            if ($ruleTransfer->getIdAclRule()) {
+                $this->addSuccessMessage('Rule successfully added.');
+            } else {
+                $this->addErrorMessage('Failed to add Rule.');
+            }
+        }
+
+        return $ruleSetForm;
+    }
+
+    /**
+     * @param Request $request
      * @param FormInterface $roleForm
      *
      * @return void
      */
     protected function handleRoleForm(Request $request, FormInterface $roleForm)
     {
-        $roleForm->handleRequest($request);
-
         if ($roleForm->isValid()) {
             $formData = $roleForm->getData();
 

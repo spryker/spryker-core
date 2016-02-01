@@ -6,23 +6,26 @@
 
 namespace Spryker\Zed\Acl\Communication;
 
-use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Acl\Communication\Form\DataProvider\AclRoleFormDataProvider;
+use Spryker\Zed\Acl\Communication\Form\DataProvider\AclRuleSetFormDataProvider;
 use Spryker\Zed\Acl\Communication\Table\GroupTable;
+use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Acl\Communication\Form\RoleForm;
-use Spryker\Zed\Acl\Communication\Form\RulesetForm;
+use Spryker\Zed\Acl\Communication\Form\RuleForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Acl\Communication\Table\GroupUsersTable;
 use Spryker\Zed\Acl\Communication\Table\RoleTable;
 use Spryker\Zed\Acl\Communication\Table\RulesetTable;
+use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
- * @method \Spryker\Zed\Acl\AclConfig getConfig()
+ * @method AclQueryContainer getQueryContainer()
+ * @method AclConfig getConfig()
  */
 class AclCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -60,7 +63,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getGroupRoleListByGroupId() instead.
      *
-     * @param int $idAclGroup
+     * @param $idAclGroup
      *
      * @return array
      */
@@ -151,14 +154,26 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
+     * @param array $data
+     * @param array $options
      *
-     * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
-    public function createRulesetForm(RuleTransfer $ruleTransfer)
+    public function createRuleSetForm(array $data = [], array $options = [])
     {
-        return $this->getFormFactory()
-            ->create(new RulesetForm(), $ruleTransfer);
+        $formType = new RuleForm();
+
+        return $this->getFormFactory()->create($formType, $data, $options);
+    }
+
+    /**
+     * @return AclRuleSetFormDataProvider
+     */
+    public function createAclRuleSetFormDataProvider()
+    {
+        return new AclRuleSetFormDataProvider(
+            $this->getProvidedDependency(AclDependencyProvider::FACADE_ACL)
+        );
     }
 
     /**

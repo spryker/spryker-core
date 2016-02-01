@@ -37,7 +37,7 @@ class RoleForm extends AbstractType
     {
         $builder
             ->add(self::FIELD_NAME, 'text', [
-                'label' => 'Role name',
+                'label' => 'Name',
                 'constraints' => [
                     new NotBlank(),
                 ],
