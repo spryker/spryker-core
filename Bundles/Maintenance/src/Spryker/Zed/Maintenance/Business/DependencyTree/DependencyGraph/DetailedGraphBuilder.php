@@ -6,8 +6,7 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
-use Spryker\Zed\Library\GraphViz\GraphViz;
-use Spryker\Zed\Library\GraphViz\GraphVizInterface;
+use Spryker\Tool\Graph\GraphInterface;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
@@ -54,11 +53,11 @@ class DetailedGraphBuilder implements GraphBuilderInterface
     ];
 
     /**
-     * @param GraphVizInterface $graphViz
+     * @param GraphInterface $graph
      */
-    public function __construct(GraphVizInterface $graphViz)
+    public function __construct(GraphInterface $graph)
     {
-        $this->graph = $graphViz;
+        $this->graph = $graph;
     }
 
     /**
@@ -183,8 +182,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
             [
                 'label' => $this->getForeignUsage($dependencyInformation[DependencyTree::META_FINDER]) . ' : ' . $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME],
                 'fontsize' => 8,
-            ],
-            $group
+            ]
         );
     }
 

@@ -1,0 +1,8 @@
+{
+  "name": "spryker/tool-graph",
+  "autoload": {
+    "psr-4": {
+      "Spryker\\Tool\\Graph": "src/"
+    }
+  }
+}

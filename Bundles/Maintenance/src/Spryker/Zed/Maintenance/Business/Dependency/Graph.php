@@ -6,8 +6,7 @@
 
 namespace Spryker\Zed\Maintenance\Business\Dependency;
 
-use Spryker\Zed\Library\GraphViz\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Zed\Library\GraphViz\GraphVizInterface;
+use Spryker\Tool\Graph\GraphInterface;
 
 class Graph
 {
@@ -33,16 +32,16 @@ class Graph
     protected $format = 'svg';
 
     /**
-     * @var GraphVizInterface
+     * @var GraphInterface
      */
     protected $graph;
 
     /**
      * @param BundleParser $bundleParser
      * @param Manager $manager
-     * @param GraphVizInterface $graph
+     * @param GraphInterface $graph
      */
-    public function __construct(BundleParser $bundleParser, Manager $manager, GraphVizInterface $graph)
+    public function __construct(BundleParser $bundleParser, Manager $manager, GraphInterface $graph)
     {
         $this->bundleParser = $bundleParser;
         $this->manager = $manager;

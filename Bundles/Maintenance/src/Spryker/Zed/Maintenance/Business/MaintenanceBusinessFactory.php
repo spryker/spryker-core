@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Maintenance\Business;
 
-use Spryker\Zed\Library\GraphViz\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Zed\Library\GraphViz\GraphViz;
+use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Tool\Graph\Graph;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\BranchAliasUpdater;
@@ -49,7 +49,7 @@ use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Maintenance\Business\Dependency\BundleParser;
-use Spryker\Zed\Maintenance\Business\Dependency\Graph;
+use Spryker\Zed\Maintenance\Business\Dependency\Graph as DependencyGraph;
 use Spryker\Zed\Maintenance\Business\Dependency\Manager;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder as ComposerInstalledPackageFinder;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
@@ -144,7 +144,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         $bundleParser = $this->createDependencyBundleParser();
         $manager = $this->createDependencyManager();
 
-        return new Graph($bundleParser, $manager, $this->createGraphViz('Bundle Graph'));
+        return new DependencyGraph($bundleParser, $manager, $this->createGraphViz('Bundle Graph'));
     }
 
     /**
@@ -153,12 +153,12 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      * @param bool $directed
      * @param bool $strict
      *
-     * @return GraphViz
+     * @return Graph
      */
     protected function createGraphViz($name, array $attributes = [], $directed = true, $strict = true)
     {
         $adapter = $this->createGraphVizAdapter();
-        $graph = new GraphViz($adapter, $name, $attributes, $directed, $strict);
+        $graph = new Graph($adapter, $name, $attributes, $directed, $strict);
 
         return $graph;
     }

@@ -4,14 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Library\GraphViz\Adapter;
+namespace Spryker\Tool\GraphPhpDocumentor\Adapter;
 
 use phpDocumentor\GraphViz\Edge;
 use phpDocumentor\GraphViz\Graph;
 use phpDocumentor\GraphViz\Node;
-use Spryker\Zed\Library\GraphViz\Graph\PhpDocumentorGraph;
+use Spryker\Tool\Graph\GraphAdapterInterface;
+use Spryker\Tool\GraphPhpDocumentor\PhpDocumentorGraph;
 
-class PhpDocumentorGraphAdapter implements AdapterInterface
+class PhpDocumentorGraphAdapter implements GraphAdapterInterface
 {
 
     /**

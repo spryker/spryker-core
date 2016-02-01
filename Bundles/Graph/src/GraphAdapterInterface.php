@@ -4,11 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Library\GraphViz\Adapter;
+namespace Spryker\Tool\Graph;
 
-use Spryker\Zed\Library\GraphViz\GraphVizInterface;
-
-interface AdapterInterface extends GraphVizInterface
+interface GraphAdapterInterface extends GraphInterface
 {
 
     /**

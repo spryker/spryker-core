@@ -26,8 +26,8 @@ use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Spryker\Zed\Category\CategoryConfig;
-use Spryker\Zed\Library\GraphViz\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Zed\Library\GraphViz\GraphViz;
+use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Tool\Graph\Graph;
 
 /**
  * @method CategoryQueryContainer getQueryContainer()
@@ -91,8 +91,9 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createGraphViz()
     {
-        $adapter = new PhpDocumentorGraphAdapter();
-        return new GraphViz($adapter, 'Category Tree');
+        $adapter = $this->createGraphAdapter();
+
+        return new Graph($adapter, 'Category Tree');
     }
 
     /**
@@ -219,6 +220,15 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryTransferGenerator()
     {
         return new TransferGenerator();
+    }
+
+    /**
+     * @return PhpDocumentorGraphAdapter
+     */
+    protected function createGraphAdapter()
+    {
+        $adapter = new PhpDocumentorGraphAdapter();
+        return $adapter;
     }
 
 }

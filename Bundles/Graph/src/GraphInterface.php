@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Library\GraphViz;
+namespace Spryker\Tool\Graph;
 
-interface GraphVizInterface
+interface GraphInterface
 {
 
     const DEFAULT_GROUP = 'default';

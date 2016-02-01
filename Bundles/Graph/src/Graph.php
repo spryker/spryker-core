@@ -4,26 +4,24 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Library\GraphViz;
+namespace Spryker\Tool\Graph;
 
-use Spryker\Zed\Library\GraphViz\Adapter\AdapterInterface;
-
-class GraphViz implements GraphVizInterface
+class Graph implements GraphInterface
 {
 
     /**
-     * @var AdapterInterface
+     * @var GraphAdapterInterface
      */
     private $adapter;
 
     /**
-     * @param AdapterInterface $adapter
+     * @param GraphAdapterInterface $adapter
      * @param string $name
      * @param array $attributes
      * @param bool $directed
      * @param bool $strict
      */
-    public function __construct(AdapterInterface $adapter, $name, array $attributes = [], $directed = true, $strict = true)
+    public function __construct(GraphAdapterInterface $adapter, $name, array $attributes = [], $directed = true, $strict = true)
     {
         $this->adapter = $adapter;
         $this->adapter->create($name, $attributes, $directed, $strict);

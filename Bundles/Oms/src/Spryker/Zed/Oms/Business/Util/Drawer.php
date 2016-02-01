@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Spryker\Zed\Library\GraphViz\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Zed\Library\GraphViz\GraphViz;
+use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Tool\Graph\Graph;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
@@ -73,7 +73,7 @@ class Drawer implements DrawerInterface
         $this->conditionModels = $conditions;
 
         $adapter = new PhpDocumentorGraphAdapter();
-        $this->graph = new GraphViz($adapter, 'G', $this->graphDefault, true, false);
+        $this->graph = new Graph($adapter, 'G', $this->graphDefault, true, false);
     }
 
     /**

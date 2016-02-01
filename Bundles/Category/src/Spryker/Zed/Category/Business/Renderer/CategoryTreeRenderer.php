@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Zed\Library\GraphViz\GraphVizInterface;
+use Spryker\Tool\Graph\GraphInterface;
 
 class CategoryTreeRenderer
 {
@@ -33,16 +33,16 @@ class CategoryTreeRenderer
     protected $locale;
 
     /**
-     * @var GraphVizInterface
+     * @var GraphInterface
      */
     protected $graph;
 
     /**
      * @param CategoryQueryContainer $queryContainer
      * @param LocaleTransfer $locale
-     * @param GraphVizInterface $graph
+     * @param GraphInterface $graph
      */
-    public function __construct(CategoryQueryContainer $queryContainer, LocaleTransfer $locale, GraphVizInterface $graph)
+    public function __construct(CategoryQueryContainer $queryContainer, LocaleTransfer $locale, GraphInterface $graph)
     {
         $this->queryContainer = $queryContainer;
         $this->locale = $locale;

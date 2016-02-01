@@ -6,26 +6,23 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
-use Spryker\Zed\Library\GraphViz\Adapter\AdapterInterface;
-use Spryker\Zed\Library\GraphViz\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Zed\Library\GraphViz\GraphViz;
-use Spryker\Zed\Library\GraphViz\GraphVizInterface;
+use Spryker\Tool\Graph\GraphInterface;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 
 class SimpleGraphBuilder implements GraphBuilderInterface
 {
 
     /**
-     * @var GraphVizInterface
+     * @var GraphInterface
      */
     private $graph;
 
     /**
-     * @param GraphVizInterface $graphViz
+     * @param GraphInterface $graph
      */
-    public function __construct(GraphVizInterface $graphViz)
+    public function __construct(GraphInterface $graph)
     {
-        $this->graph = $graphViz;
+        $this->graph = $graph;
     }
 
     /**
