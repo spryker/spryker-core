@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Spryker\Tool\Graph\GraphInterface;
-use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
 use Spryker\Tool\Graph\Graph;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
