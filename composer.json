@@ -76,8 +76,8 @@
       "Spryker\\Shared\\Library": "Bundles/Library/src/"
     },
     "psr-4": {
-      "Spryker\\Tool\\Graph": "Bundles/Graph/src/",
-      "Spryker\\Tool\\GraphPhpDocumentor": "Bundles/GraphPhpDocumentor/src/"
+      "Spryker\\Tool\\Graph\\": "Bundles/Graph/src/",
+      "Spryker\\Tool\\GraphPhpDocumentor\\": "Bundles/GraphPhpDocumentor/src/"
     }
   },
   "bin": [

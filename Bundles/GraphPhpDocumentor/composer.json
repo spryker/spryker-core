@@ -2,7 +2,7 @@
   "name": "spryker/tool-graph-phpdocumentor",
   "autoload": {
     "psr-4": {
-      "Spryker\\Tool\\GraphPhpDocumentor": "src/"
+      "Spryker\\Tool\\GraphPhpDocumentor\\": "src/"
     }
   },
   "require": {
