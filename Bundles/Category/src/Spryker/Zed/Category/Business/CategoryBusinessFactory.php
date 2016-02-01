@@ -227,8 +227,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createGraphAdapter()
     {
-        $adapter = new PhpDocumentorGraphAdapter();
-        return $adapter;
+        return new PhpDocumentorGraphAdapter();
     }
 
 }

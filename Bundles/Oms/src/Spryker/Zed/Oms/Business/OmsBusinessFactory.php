@@ -6,6 +6,9 @@
 
 namespace Spryker\Zed\Oms\Business;
 
+use Spryker\Tool\Graph\Graph;
+use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Tool\GraphPhpDocumentor\PhpDocumentorGraph;
 use Spryker\Zed\Oms\Business\Process\ProcessSelector;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Process\Process;
@@ -183,9 +186,29 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createUtilDrawer()
     {
         return new Drawer(
-                $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
-                $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS)
-            ); // @TODO do not inject the whole config, just inject what is needed
+            $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
+            $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
+            $this->createGraph()
+        );
+    }
+
+    /**
+     * @return Graph
+     */
+    protected function createGraph()
+    {
+        $adapter = $this->createGraphAdapter();
+        $graph = new Graph($adapter, 'Statemachine', $this->getConfig()->getGraphDefaults(), true, false);
+
+        return $graph;
+    }
+
+    /**
+     * @return PhpDocumentorGraphAdapter
+     */
+    protected function createGraphAdapter()
+    {
+        return new PhpDocumentorGraphAdapter();
     }
 
     /**

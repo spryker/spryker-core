@@ -11,6 +11,8 @@
     }
   },
   "require": {
+    "spryker/tool-graph": "^1.0.0",
+    "spryker/tool-graph-phpdocumentor": "^1.0.0"
   },
   "require-dev": {
   }

@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
+use Spryker\Tool\Graph\GraphInterface;
 use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
 use Spryker\Tool\Graph\Graph;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
@@ -15,8 +16,6 @@ use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 
 class Drawer implements DrawerInterface
 {
-
-    protected $graphDefault = ['fontname' => 'Verdana', 'labelfontname' => 'Verdana', 'nodesep' => 0.6, 'ranksep' => 0.8];
 
     protected $attributesProcess = ['fontname' => 'Verdana', 'fillcolor' => '#cfcfcf', 'style' => 'filled', 'color' => '#ffffff', 'fontsize' => 12, 'fontcolor' => 'black'];
 
@@ -59,21 +58,20 @@ class Drawer implements DrawerInterface
     protected $commands;
 
     /**
-     * @var GraphViz
+     * @var Graph
      */
     protected $graph;
 
     /**
      * @param array $commands
      * @param array $conditions
+     * @param GraphInterface $graph
      */
-    public function __construct(array $commands, array $conditions)
+    public function __construct(array $commands, array $conditions, GraphInterface $graph)
     {
         $this->commandModels = $commands;
         $this->conditionModels = $conditions;
-
-        $adapter = new PhpDocumentorGraphAdapter();
-        $this->graph = new Graph($adapter, 'G', $this->graphDefault, true, false);
+        $this->graph = $graph;
     }
 
     /**
