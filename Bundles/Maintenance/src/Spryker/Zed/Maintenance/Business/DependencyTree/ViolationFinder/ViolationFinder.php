@@ -43,4 +43,5 @@ class ViolationFinder implements ViolationFinderInterface
 
         return $isViolation;
     }
+
 }

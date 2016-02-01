@@ -32,10 +32,12 @@ class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
         );
     }
 
-    public function replaceNotYetFunction()
+    public function replaceStaticFunction()
     {
-        //TODO: Baz::x();
         \Pyz\Zed\Foo\Bar\Baz::x();
+
+        //TODO
+        return \Pyz\Zed\Foo\Bar\Baz::x();
     }
 
     public function doNotReplaceFunction()

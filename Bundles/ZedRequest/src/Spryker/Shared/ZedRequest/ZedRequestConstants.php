@@ -23,4 +23,5 @@ interface ZedRequestConstants
     const TRANSFER_USERNAME = ApplicationConstants::TRANSFER_USERNAME;
 
     const ZED_API_SSL_ENABLED = ApplicationConstants::ZED_API_SSL_ENABLED;
+
 }

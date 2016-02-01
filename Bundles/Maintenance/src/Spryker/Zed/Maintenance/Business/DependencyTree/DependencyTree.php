@@ -96,5 +96,4 @@ class DependencyTree extends AbstractDependencyTree
         return ($bundle === $to);
     }
 
-
 }
