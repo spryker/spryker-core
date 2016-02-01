@@ -42,7 +42,7 @@ abstract class AbstractDependencyFinder
     }
 
     /**
-     * @return AbstractDependencyTree
+     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\AbstractDependencyTree
      */
     public function getDependencyTree()
     {

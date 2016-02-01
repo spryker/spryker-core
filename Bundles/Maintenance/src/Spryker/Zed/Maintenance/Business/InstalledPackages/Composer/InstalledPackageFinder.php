@@ -34,7 +34,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     }
 
     /**
-     * @return InstalledPackagesTransfer
+     * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     public function findInstalledPackages()
     {

@@ -26,7 +26,7 @@ class InstalledPackageCollectorFilter implements InstalledPackageCollectorInterf
     }
 
     /**
-     * @return InstalledPackagesTransfer
+     * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     public function getInstalledPackages()
     {

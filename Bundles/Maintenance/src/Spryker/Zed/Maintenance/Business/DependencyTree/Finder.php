@@ -55,7 +55,7 @@ class Finder
     /**
      * @throws \Exception
      *
-     * @return SfFinder
+     * @return \Symfony\Component\Finder\Finder
      */
     public function getFiles()
     {

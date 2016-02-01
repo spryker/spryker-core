@@ -32,7 +32,7 @@ class InstalledPackageCollector implements InstalledPackageCollectorInterface
     }
 
     /**
-     * @return InstalledPackagesTransfer
+     * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     public function getInstalledPackages()
     {
