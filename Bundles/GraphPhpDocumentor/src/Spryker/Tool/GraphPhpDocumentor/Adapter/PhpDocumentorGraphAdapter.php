@@ -69,7 +69,8 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      */
     private function getType($directed, $strict)
     {
-        $type = $directed ? 'digraph' : 'graph';
+        $type = $directed ? self::DIRECTED_GRAPH : self::GRAPH;
+
         if ($strict) {
             $type = 'strict ' . $type;
         }
