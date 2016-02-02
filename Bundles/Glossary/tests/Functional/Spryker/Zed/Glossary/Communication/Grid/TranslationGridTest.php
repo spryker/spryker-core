@@ -22,7 +22,7 @@ class TranslationGridTest extends Test
 {
 
     /**
-     * @var SpyGlossaryKeyQuery
+     * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery
      */
     private $query;
 

@@ -22,7 +22,7 @@ class BundleParser
     protected $coreBundleNamespaces = ['Spryker'];
 
     /**
-     * @var MaintenanceConfig
+     * @var \Spryker\Zed\Maintenance\MaintenanceConfig
      */
     protected $config;
 

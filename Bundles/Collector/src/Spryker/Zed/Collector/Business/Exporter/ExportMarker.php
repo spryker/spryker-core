@@ -15,17 +15,17 @@ class ExportMarker implements MarkerInterface
 {
 
     /**
-     * @var WriterInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
      */
     private $writer;
 
     /**
-     * @var ReaderInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface
      */
     private $reader;
 
     /**
-     * @var KeyBuilderInterface
+     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     private $keyBuilder;
 

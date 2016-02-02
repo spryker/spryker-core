@@ -14,7 +14,7 @@ class SubscriberManager implements SubscriberManagerInterface
 {
 
     /**
-     * @var NewsletterQueryContainer
+     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer
      */
     protected $queryContainer;
 
@@ -36,7 +36,7 @@ class SubscriberManager implements SubscriberManagerInterface
     /**
      * @param string $email
      *
-     * @return NewsletterSubscriberTransfer|null
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer|null
      */
     public function loadSubscriberByEmail($email)
     {

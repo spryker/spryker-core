@@ -63,7 +63,7 @@ interface SalesQueryContainerInterface
 
     /**
      * @param $idCustomer
-     * @param Criteria|null $criteria
+     * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */

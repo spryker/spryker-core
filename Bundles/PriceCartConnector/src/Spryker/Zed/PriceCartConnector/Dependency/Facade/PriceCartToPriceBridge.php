@@ -11,7 +11,7 @@ class PriceCartToPriceBridge implements PriceCartToPriceInterface
 {
 
     /**
-     * @var PriceFacade
+     * @var \Spryker\Zed\Price\Business\PriceFacade
      */
     protected $priceFacade;
 

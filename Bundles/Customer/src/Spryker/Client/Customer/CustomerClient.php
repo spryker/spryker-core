@@ -38,7 +38,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer)
     {
@@ -190,7 +190,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function login(CustomerTransfer $customerTransfer)
     {

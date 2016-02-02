@@ -12,7 +12,7 @@ class OmsDiscountConnectorToDiscountBridge implements OmsDiscountConnectorToDisc
 {
 
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 

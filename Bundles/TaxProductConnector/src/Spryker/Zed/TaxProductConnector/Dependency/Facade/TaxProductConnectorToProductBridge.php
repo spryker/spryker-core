@@ -11,7 +11,7 @@ class TaxProductConnectorToProductBridge implements TaxProductConnectorToProduct
 {
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $productFacade;
 

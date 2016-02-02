@@ -14,7 +14,7 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
 {
 
     /**
-     * @var CategoryFacade
+     * @var \Spryker\Zed\Category\Business\CategoryFacade
      */
     protected $categoryFacade;
 

@@ -21,7 +21,7 @@ class FacetSearch extends AbstractSearch
 {
 
     /**
-     * @var NestedFilterBuilderInterface
+     * @var \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface
      */
     protected $filterBuilder;
 

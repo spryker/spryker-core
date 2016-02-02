@@ -22,7 +22,7 @@ class SearchTable extends AbstractTable
     protected $defaultLimit = 1000;
 
     /**
-     * @var SearchClient
+     * @var \Spryker\Client\Search\SearchClient
      */
     protected $searchClient;
 

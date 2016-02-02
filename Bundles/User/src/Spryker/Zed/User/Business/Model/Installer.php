@@ -13,7 +13,7 @@ class Installer implements InstallerInterface
 {
 
     /**
-     * @var UserQueryContainer
+     * @var \Spryker\Zed\User\Persistence\UserQueryContainer
      */
     protected $queryContainer;
 
@@ -23,7 +23,7 @@ class Installer implements InstallerInterface
     protected $user;
 
     /**
-     * @var UserConfig
+     * @var \Spryker\Zed\User\UserConfig
      */
     protected $settings;
 

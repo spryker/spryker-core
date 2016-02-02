@@ -35,7 +35,7 @@ class Process implements ProcessInterface
     protected $file;
 
     /**
-     * @var DrawerInterface
+     * @var \Spryker\Zed\Oms\Business\Util\DrawerInterface
      */
     protected $drawer;
 

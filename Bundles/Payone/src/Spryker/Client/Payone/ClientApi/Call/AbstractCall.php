@@ -15,17 +15,17 @@ abstract class AbstractCall
 {
 
     /**
-     * @var PayoneStandardParameterTransfer
+     * @var \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected $standardParameter;
 
     /**
-     * @var HashGeneratorInterface
+     * @var \Spryker\Client\Payone\ClientApi\HashGeneratorInterface
      */
     protected $hashGenerator;
 
     /**
-     * @var ModeDetectorInterface
+     * @var \Spryker\Shared\Payone\Dependency\ModeDetectorInterface
      */
     protected $modeDetector;
 

@@ -22,12 +22,12 @@ class TranslationTable extends AbstractTable
     const URL_GLOSSARY_EDIT = '/glossary/edit/';
 
     /**
-     * @var SpyGlossaryTranslationQuery
+     * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery
      */
     protected $glossaryQuery;
 
     /**
-     * @var SpyGlossaryTranslationQuery
+     * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery
      */
     protected $subGlossaryQuery;
 

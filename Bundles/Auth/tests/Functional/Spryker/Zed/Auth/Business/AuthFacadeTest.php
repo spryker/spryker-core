@@ -18,7 +18,7 @@ class AuthFacadeTest extends Test
     const TEST_MAIL = 'username@example.com';
 
     /**
-     * @var AuthFacade
+     * @var \Spryker\Zed\Auth\Business\AuthFacade
      */
     protected $authFacade;
 

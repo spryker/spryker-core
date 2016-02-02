@@ -15,7 +15,7 @@ class PayolutionSession implements PayolutionSessionInterface
     const PAYOLUTION_SESSION_IDENTIFIER = 'payolution session identifier';
 
     /**
-     * @var SessionInterface
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     private $session;
 

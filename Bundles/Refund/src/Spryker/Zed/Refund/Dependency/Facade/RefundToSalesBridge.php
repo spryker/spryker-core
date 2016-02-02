@@ -13,7 +13,7 @@ class RefundToSalesBridge implements RefundToSalesInterface
 {
 
     /**
-     * @var SalesFacade
+     * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected $salesFacade;
 

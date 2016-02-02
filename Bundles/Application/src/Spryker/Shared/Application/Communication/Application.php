@@ -33,7 +33,7 @@ class Application extends \Silex\Application
      *
      * @see createBuilder()
      *
-     * @param string|FormTypeInterface $type The type of the form
+     * @param string|\Symfony\Component\Form\FormTypeInterface $type The type of the form
      * @param mixed $data The initial data
      * @param array $options The options
      *

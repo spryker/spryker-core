@@ -48,7 +48,7 @@ class DiscountDecisionRuleWriter extends AbstractWriter
     /**
      * @param \Generated\Shared\Transfer\DecisionRuleTransfer $decisionRuleTransfer
      *
-     * @return SpyDiscountDecisionRule|null
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule|null
      */
     public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
     {

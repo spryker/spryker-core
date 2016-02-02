@@ -28,7 +28,7 @@ class CmsGlossaryForm extends AbstractForm
     const FIELD_TEMPLATE_NAME = 'templateName';
 
     /**
-     * @var SpyCmsGlossaryKeyMappingQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     protected $glossaryByIdQuery;
 
@@ -48,7 +48,7 @@ class CmsGlossaryForm extends AbstractForm
     protected $placeholder;
 
     /**
-     * @var CmsFacade
+     * @var \Spryker\Zed\Cms\Business\CmsFacade
      */
     protected $cmsFacade;
 

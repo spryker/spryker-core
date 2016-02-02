@@ -12,7 +12,7 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
 {
 
     /**
-     * @var FilterTransfer
+     * @var \Generated\Shared\Transfer\FilterTransfer
      */
     protected $filterTransfer;
 

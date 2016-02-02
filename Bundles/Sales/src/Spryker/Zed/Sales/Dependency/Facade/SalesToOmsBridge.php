@@ -14,7 +14,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
 {
 
     /**
-     * @var OmsFacade
+     * @var \Spryker\Zed\Oms\Business\OmsFacade
      */
     protected $omsFacade;
 

@@ -53,7 +53,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
     protected $port = 3306;
 
     /**
-     * @var ApiInterface
+     * @var \Spryker\Shared\NewRelic\ApiInterface
      */
     protected $newRelicApi;
 

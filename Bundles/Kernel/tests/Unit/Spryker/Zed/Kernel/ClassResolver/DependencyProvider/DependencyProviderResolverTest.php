@@ -47,7 +47,7 @@ class DependencyProviderResolverTest extends AbstractResolverTest
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|DependencyProviderResolver
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
     protected function getResolverMock(array $methods)
     {

@@ -24,12 +24,12 @@ class DataProcessorTest extends Test
 {
 
     /**
-     * @var ProductOptionExporterFacade
+     * @var \Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade
      */
     private $facade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

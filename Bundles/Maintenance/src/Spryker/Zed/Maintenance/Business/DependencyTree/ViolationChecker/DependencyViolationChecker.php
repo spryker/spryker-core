@@ -15,17 +15,17 @@ class DependencyViolationChecker implements DependencyViolationCheckerInterface
 {
 
     /**
-     * @var DependencyTreeReaderInterface
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
      */
     private $treeReader;
 
     /**
-     * @var ViolationFinderInterface
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinderInterface
      */
     private $violationFinder;
 
     /**
-     * @var DependencyFilter
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\DependencyFilter
      */
     private $dependencyFilter;
 

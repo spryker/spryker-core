@@ -28,27 +28,27 @@ class AbstractFacadeTest extends Test
 {
 
     /**
-     * @var SpySalesOrder
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     private $orderEntity;
 
     /**
-     * @var SpyPaymentPayolution
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     private $paymentEntity;
 
     /**
-     * @var ResponseConverter
+     * @var \Spryker\Zed\Payolution\Business\Api\Converter\Converter
      */
     private $responseConverter;
 
     /**
-     * @var SpyPaymentPayolutionTransactionRequestLogQuery
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery
      */
     private $requestLogQuery;
 
     /**
-     * @var SpyPaymentPayolutionTransactionStatusLogQuery
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     private $statusLogQuery;
 
@@ -169,7 +169,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolutionTransactionRequestLog[]|ObjectCollection
+     * @return SpyPaymentPayolutionTransactionRequestLog[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getRequestLogCollectionForPayment()
     {
@@ -179,7 +179,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolutionTransactionStatusLog[]|ObjectCollection
+     * @return SpyPaymentPayolutionTransactionStatusLog[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getStatusLogCollectionForPayment()
     {

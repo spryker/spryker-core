@@ -40,7 +40,7 @@ class SalesFacadeTest extends Test
 {
 
     /**
-     * @var SalesFacade
+     * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected $salesFacade;
 

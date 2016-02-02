@@ -19,7 +19,7 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var Locator
+     * @var \Spryker\Zed\Kernel\Locator
      */
     private $locator;
 

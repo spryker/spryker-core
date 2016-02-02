@@ -13,7 +13,7 @@ class CalculationCheckoutConnectorToCalculationBridge implements CalculationChec
 {
 
     /**
-     * @var CalculationFacade
+     * @var \Spryker\Zed\Calculation\Business\CalculationFacade
      */
     protected $calculationFacade;
 

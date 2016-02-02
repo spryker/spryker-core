@@ -16,7 +16,7 @@ class CategoryNameExists extends Constraint
     public $message = 'A category with the name {{ value }} already exists in the Database!';
 
     /**
-     * @var CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     protected $queryContainer;
 
@@ -26,7 +26,7 @@ class CategoryNameExists extends Constraint
     protected $idCategory;
 
     /**
-     * @var LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
 

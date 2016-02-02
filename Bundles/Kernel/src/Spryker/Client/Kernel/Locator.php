@@ -13,7 +13,7 @@ class Locator implements LocatorLocatorInterface
 {
 
     /**
-     * @var BundleProxy
+     * @var \Spryker\Shared\Kernel\BundleProxy
      */
     private $bundleProxy;
 

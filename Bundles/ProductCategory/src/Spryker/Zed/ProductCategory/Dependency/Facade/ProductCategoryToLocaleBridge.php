@@ -11,7 +11,7 @@ class ProductCategoryToLocaleBridge implements ProductCategoryToLocaleInterface
 {
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 

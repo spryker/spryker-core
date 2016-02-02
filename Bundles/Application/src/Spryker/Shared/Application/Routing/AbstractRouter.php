@@ -17,12 +17,12 @@ abstract class AbstractRouter implements RouterInterface
 {
 
     /**
-     * @var RequestContext
+     * @var \Symfony\Component\Routing\RequestContext
      */
     protected $context;
 
     /**
-     * @var Application
+     * @var \Silex\Application
      */
     protected $app;
 

@@ -14,7 +14,7 @@ class KeyManager implements KeyManagerInterface
 {
 
     /**
-     * @var GlossaryQueryContainerInterface
+     * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
     protected $queryContainer;
 

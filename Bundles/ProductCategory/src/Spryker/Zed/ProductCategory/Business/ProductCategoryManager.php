@@ -25,37 +25,37 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 {
 
     /**
-     * @var CategoryQueryContainerInterface
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
 
     /**
-     * @var ProductCategoryQueryContainerInterface
+     * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
      */
     protected $productCategoryQueryContainer;
 
     /**
-     * @var ProductCategoryToProductInterface
+     * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     protected $productFacade;
 
     /**
-     * @var ProductCategoryToCategoryInterface
+     * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
      */
     protected $categoryFacade;
 
     /**
-     * @var ProductCategoryToTouchInterface
+     * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var ProductCategoryToCmsInterface
+     * @var \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface
      */
     protected $cmsFacade;
 
     /**
-     * @var ConnectionInterface
+     * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $connection;
 

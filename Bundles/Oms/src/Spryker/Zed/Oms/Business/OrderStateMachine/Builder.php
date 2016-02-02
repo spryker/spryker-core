@@ -27,22 +27,22 @@ class Builder implements BuilderInterface
     protected static $processBuffer = [];
 
     /**
-     * @var EventInterface
+     * @var \Spryker\Zed\Oms\Business\Process\EventInterface
      */
     protected $event;
 
     /**
-     * @var StateInterface
+     * @var \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     protected $state;
 
     /**
-     * @var TransitionInterface
+     * @var \Spryker\Zed\Oms\Business\Process\TransitionInterface
      */
     protected $transition;
 
     /**
-     * @var ProcessInterface
+     * @var \Spryker\Zed\Oms\Business\Process\ProcessInterface
      */
     protected $process;
 

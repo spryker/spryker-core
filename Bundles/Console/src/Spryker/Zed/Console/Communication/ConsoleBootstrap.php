@@ -18,7 +18,7 @@ class ConsoleBootstrap extends Application
 {
 
     /**
-     * @var ConsoleFacade
+     * @var \Spryker\Zed\Console\Business\ConsoleFacade
      */
     private $facade;
 

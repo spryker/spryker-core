@@ -21,7 +21,7 @@ class CmsRedirectTable extends AbstractTable
     const REQUEST_ID_URL = 'id-url';
 
     /**
-     * @var SpyUrlQuery
+     * @var \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     protected $urlQuery;
 

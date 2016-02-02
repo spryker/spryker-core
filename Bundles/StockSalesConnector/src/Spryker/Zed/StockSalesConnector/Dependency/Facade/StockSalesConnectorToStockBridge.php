@@ -12,7 +12,7 @@ class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInte
 {
 
     /**
-     * @var StockFacade
+     * @var \Spryker\Zed\Stock\Business\StockFacade
      */
     protected $stockFacade;
 

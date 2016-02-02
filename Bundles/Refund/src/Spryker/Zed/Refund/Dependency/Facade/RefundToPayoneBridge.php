@@ -14,7 +14,7 @@ class RefundToPayoneBridge implements RefundToPayoneInterface
 {
 
     /**
-     * @var PayoneFacade
+     * @var \Spryker\Zed\Payone\Business\PayoneFacade
      */
     protected $payoneFacade;
 

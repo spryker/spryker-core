@@ -19,12 +19,12 @@ class RefundTable extends AbstractTable
     const PARAM_ID_REFUND = 'id-refund';
 
     /**
-     * @var RefundFacade
+     * @var \Spryker\Zed\Refund\Business\RefundFacade
      */
     protected $refundFacade;
 
     /**
-     * @var DateFormatter
+     * @var \Spryker\Shared\Library\DateFormatter
      */
     protected $dateFormatter;
 

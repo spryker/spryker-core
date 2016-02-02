@@ -13,7 +13,7 @@ class InstallElasticsearch extends AbstractInstaller
 {
 
     /**
-     * @var Client
+     * @var \Elastica\Client
      */
     private $client;
 

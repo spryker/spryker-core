@@ -26,17 +26,17 @@ class PriceBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @var PriceQueryContainer
+     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainer
      */
     private $queryContainer;
 
     /**
-     * @var PriceToTouchInterface
+     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var PriceToProductInterface
+     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface
      */
     protected $productFacade;
 

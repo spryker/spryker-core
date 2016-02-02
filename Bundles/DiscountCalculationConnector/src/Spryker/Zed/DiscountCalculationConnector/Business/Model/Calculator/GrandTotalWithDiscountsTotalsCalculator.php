@@ -16,7 +16,7 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
 {
 
     /**
-     * @var SubtotalTotalsCalculatorInterface
+     * @var \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface
      */
     protected $grandTotalsCalculator;
 

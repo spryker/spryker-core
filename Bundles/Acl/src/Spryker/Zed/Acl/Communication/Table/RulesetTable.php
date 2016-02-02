@@ -20,7 +20,7 @@ class RulesetTable extends AbstractTable
     const EMPTY_HEADER_NAME = 'empty';
 
     /**
-     * @var AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
      */
     protected $aclQueryContainer;
 

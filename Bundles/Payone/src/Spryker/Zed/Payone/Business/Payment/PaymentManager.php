@@ -47,27 +47,27 @@ class PaymentManager implements PaymentManagerInterface
     const LOG_TYPE_TRANSACTION_STATUS_LOG = 'SpyPaymentPayoneTransactionStatusLog';
 
     /**
-     * @var AdapterInterface
+     * @var \Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface
      */
     protected $executionAdapter;
 
     /**
-     * @var PayoneQueryContainerInterface
+     * @var \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var PayoneStandardParameterTransfer
+     * @var \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected $standardParameter;
 
     /**
-     * @var SequenceNumberProviderInterface
+     * @var \Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface
      */
     protected $sequenceNumberProvider;
 
     /**
-     * @var ModeDetectorInterface
+     * @var \Spryker\Shared\Payone\Dependency\ModeDetectorInterface
      */
     protected $modeDetector;
 

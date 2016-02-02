@@ -18,12 +18,12 @@ class RefundManager
 {
 
     /**
-     * @var RefundQueryContainerInterface
+     * @var \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface
      */
     protected $refundQueryContainer;
 
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $salesQueryContainer;
 

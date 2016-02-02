@@ -11,7 +11,7 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
 {
 
     /**
-     * @var CountryFacade
+     * @var \Spryker\Zed\Country\Business\CountryFacade
      */
     protected $countryFacade;
 

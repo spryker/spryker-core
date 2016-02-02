@@ -15,12 +15,12 @@ class Install extends AbstractInstaller
 {
 
     /**
-     * @var Writer
+     * @var \Spryker\Zed\Price\Business\Model\Writer
      */
     protected $writer;
 
     /**
-     * @var PriceConfig
+     * @var \Spryker\Zed\Price\PriceConfig
      */
     protected $config;
 

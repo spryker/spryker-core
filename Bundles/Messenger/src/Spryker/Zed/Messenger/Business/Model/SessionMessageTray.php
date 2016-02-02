@@ -14,7 +14,7 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
 {
 
     /**
-     * @var SessionInterface
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     protected $session;
 

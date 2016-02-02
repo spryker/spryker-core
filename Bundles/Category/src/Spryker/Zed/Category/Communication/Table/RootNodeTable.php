@@ -26,7 +26,7 @@ class RootNodeTable extends AbstractTable
     const PARAM_ID_PARENT_NODE = 'id-parent-node';
 
     /**
-     * @var CategoryQueryContainerInterface
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
 

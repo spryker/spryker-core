@@ -20,7 +20,7 @@ class Writer implements WriterInterface
     const ENTITY_NOT_FOUND = 'entity not found';
 
     /**
-     * @var PriceQueryContainer
+     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainer
      */
     protected $queryContainer;
 
@@ -30,12 +30,12 @@ class Writer implements WriterInterface
     protected $reader;
 
     /**
-     * @var PriceToTouchInterface
+     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var PriceConfig
+     * @var \Spryker\Zed\Price\PriceConfig
      */
     protected $priceSettings;
 

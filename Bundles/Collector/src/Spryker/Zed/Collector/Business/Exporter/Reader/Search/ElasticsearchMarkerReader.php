@@ -18,12 +18,12 @@ class ElasticsearchMarkerReader implements ReaderInterface
     const META_ATTRIBUTE = '_meta';
 
     /**
-     * @var Client
+     * @var \Elastica\Client
      */
     protected $client;
 
     /**
-     * @var Index
+     * @var \Elastica\Index
      */
     protected $index;
 

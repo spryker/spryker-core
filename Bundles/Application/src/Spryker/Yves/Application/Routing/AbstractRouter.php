@@ -22,7 +22,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
 {
 
     /**
-     * @var RequestContext
+     * @var \Symfony\Component\Routing\RequestContext
      */
     protected $context;
 

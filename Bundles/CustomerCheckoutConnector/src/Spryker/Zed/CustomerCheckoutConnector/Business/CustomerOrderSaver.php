@@ -15,7 +15,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
 
     /**
-     * @var CustomerCheckoutConnectorToCustomerInterface
+     * @var \Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface
      */
     private $customerFacade;
 

@@ -16,7 +16,7 @@ class PriceManager implements PriceManagerInterface
 {
 
     /**
-     * @var PriceCartToPriceInterface
+     * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
      */
     private $priceFacade;
 

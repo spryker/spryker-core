@@ -22,12 +22,12 @@ class CountryFacadeTest extends Test
     const ISO2_CODE = 'qx';
 
     /**
-     * @var CountryFacade
+     * @var \Spryker\Zed\Country\Business\CountryFacade
      */
     protected $countryFacade;
 
     /**
-     * @var CountryQueryContainerInterface
+     * @var \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
     protected $countryQueryContainer;
 

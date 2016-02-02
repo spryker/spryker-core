@@ -16,7 +16,7 @@ class NoInlineAssignmentFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'NoInlineAssignmentFixer';
 
     /**
-     * @var NoInlineAssignmentFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\NoInlineAssignmentFixer
      */
     protected $fixer;
 

@@ -15,7 +15,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     const KEY_CONTROLLER = '%controller%';
 
     /**
-     * @var BundleControllerActionInterface
+     * @var \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface
      */
     protected $bundleControllerAction;
 

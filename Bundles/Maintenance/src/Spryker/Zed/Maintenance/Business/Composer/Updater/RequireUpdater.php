@@ -19,12 +19,12 @@ class RequireUpdater implements UpdaterInterface
     const RELEASE_OPERATOR = '^';
 
     /**
-     * @var DependencyTreeReaderInterface
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
      */
     private $dependencyTreeReader;
 
     /**
-     * @var TreeFilterInterface
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilterInterface
      */
     private $treeFilter;
 

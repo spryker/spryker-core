@@ -32,7 +32,7 @@ class Graph
     protected $format = 'svg';
 
     /**
-     * @var GraphInterface
+     * @var \Spryker\Tool\Graph\GraphInterface
      */
     protected $graph;
 

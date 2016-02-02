@@ -25,17 +25,17 @@ class DataImportWriter implements DataImportWriterInterface
 {
 
     /**
-     * @var ProductOptionQueryContainerInterface
+     * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var ProductOptionToProductInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface
      */
     protected $productFacade;
 
     /**
-     * @var ProductOptionToLocaleInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
      */
     protected $localeFacade;
 

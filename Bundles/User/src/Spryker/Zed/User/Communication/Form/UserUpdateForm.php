@@ -18,7 +18,7 @@ class UserUpdateForm extends UserForm
     protected $idUser;
 
     /**
-     * @var UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacade
      */
     protected $userFacade;
 

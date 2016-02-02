@@ -33,12 +33,12 @@ class CartFacadeTest extends Test
     const DUMMY_2_SKU_PRODUCT_CONCRETE = 'CONCRETE2';
 
     /**
-     * @var CartFacade
+     * @var \Spryker\Zed\Cart\Business\CartFacade
      */
     private $cartFacade;
 
     /**
-     * @var PriceFacade
+     * @var \Spryker\Zed\Price\Business\PriceFacade
      */
     private $priceFacade;
 

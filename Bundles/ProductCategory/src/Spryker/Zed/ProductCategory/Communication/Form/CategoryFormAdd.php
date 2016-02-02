@@ -29,17 +29,17 @@ class CategoryFormAdd extends AbstractForm
     const FK_NODE_CATEGORY = 'fk_category';
 
     /**
-     * @var CategoryQueryContainerInterface
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
 
     /**
-     * @var ProductCategoryQueryContainerInterface
+     * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
      */
     protected $productCategoryQueryContainer;
 
     /**
-     * @var LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
 

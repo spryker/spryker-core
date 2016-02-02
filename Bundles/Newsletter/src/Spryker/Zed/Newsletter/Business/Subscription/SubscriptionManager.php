@@ -16,7 +16,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
 {
 
     /**
-     * @var NewsletterQueryContainer
+     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer
      */
     protected $queryContainer;
 
@@ -104,7 +104,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
      *
-     * @return SpyNewsletterSubscription|null
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscription|null
      */
     protected function getSubscription(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType)
     {

@@ -21,7 +21,7 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
 {
 
     /**
-     * @var ProductQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
 

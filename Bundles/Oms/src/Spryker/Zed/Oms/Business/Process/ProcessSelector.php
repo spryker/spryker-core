@@ -12,7 +12,7 @@ class ProcessSelector
 {
 
     /**
-     * @var OmsConfig
+     * @var \Spryker\Zed\Oms\OmsConfig
      */
     protected $config;
 

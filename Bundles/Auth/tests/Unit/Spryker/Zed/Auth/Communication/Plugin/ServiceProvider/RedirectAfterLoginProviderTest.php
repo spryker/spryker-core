@@ -222,7 +222,7 @@ class RedirectAfterLoginProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|RedirectAfterLoginProvider
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider
      */
     private function getRedirectAfterLoginProvider(array $methods = [])
     {

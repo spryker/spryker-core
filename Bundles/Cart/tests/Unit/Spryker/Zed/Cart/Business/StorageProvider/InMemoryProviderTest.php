@@ -23,7 +23,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     const COUPON_CODE_2 = 'coupon code 2';
 
     /**
-     * @var StorageProviderInterface
+     * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
     private $provider;
 
@@ -280,7 +280,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
      * @param string $itemId
      * @param int $itemQuantity
      *
-     * @return ItemTransfer|ItemTransfer|AbstractTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer|\Generated\Shared\Transfer\ItemTransfer|\Spryker\Shared\Transfer\AbstractTransfer
      */
     protected function createItem($itemId, $itemQuantity)
     {

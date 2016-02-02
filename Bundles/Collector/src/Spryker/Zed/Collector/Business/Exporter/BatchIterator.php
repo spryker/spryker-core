@@ -23,7 +23,7 @@ class BatchIterator implements CountableIteratorInterface
     protected $chunkSize = 100;
 
     /**
-     * @var ModelCriteria
+     * @var \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected $query;
 

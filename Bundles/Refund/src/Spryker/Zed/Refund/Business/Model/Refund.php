@@ -20,17 +20,17 @@ class Refund
 {
 
     /**
-     * @var RefundToSalesInterface
+     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
      */
     protected $salesFacade;
 
     /**
-     * @var RefundToOmsInterface
+     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface
      */
     protected $omsFacade;
 
     /**
-     * @var SalesQueryContainer
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainer
      */
     protected $salesQueryContainer;
 

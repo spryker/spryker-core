@@ -18,7 +18,7 @@ class CartClient extends AbstractClient implements CartClientInterface
 {
 
     /**
-     * @return CartTransfer|CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\CartTransfer
      */
     public function getCart()
     {

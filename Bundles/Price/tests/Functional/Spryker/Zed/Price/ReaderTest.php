@@ -31,12 +31,12 @@ class ReaderTest extends Test
     const DUMMY_PRICE_2 = 100;
 
     /**
-     * @var PriceFacade
+     * @var \Spryker\Zed\Price\Business\PriceFacade
      */
     private $priceFacade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

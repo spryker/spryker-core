@@ -37,17 +37,17 @@ abstract class AbstractSearch
     protected $facetConfig;
 
     /**
-     * @var Index
+     * @var \Elastica\Index
      */
     protected $searchIndex;
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 
     /**
-     * @var FacetAggregationBuilderInterface
+     * @var \Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface
      */
     protected $facetAggregationBuilder;
 
@@ -57,12 +57,12 @@ abstract class AbstractSearch
     protected $facetFilterHandler;
 
     /**
-     * @var AggregationExtractorInterface
+     * @var \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface
      */
     protected $facetExtractor;
 
     /**
-     * @var AggregationExtractorInterface
+     * @var \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface
      */
     protected $rangeExtractor;
 

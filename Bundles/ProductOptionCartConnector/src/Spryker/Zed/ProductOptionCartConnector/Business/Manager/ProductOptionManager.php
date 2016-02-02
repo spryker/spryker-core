@@ -13,7 +13,7 @@ class ProductOptionManager implements ProductOptionManagerInterface
 {
 
     /**
-     * @var ProductOptionCartConnectorToProductOptionInterface
+     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
      */
     private $productOptionFacade;
 

@@ -12,7 +12,7 @@ class DiscountCheckoutConnectorToDiscountBridge implements DiscountCheckoutConne
 {
 
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 

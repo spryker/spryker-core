@@ -15,7 +15,7 @@ class RequestLog extends AbstractTable
 {
 
     /**
-     * @var SpyPaymentPayolutionTransactionRequestLogQuery
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery
      */
     private $requestLogQuery;
 

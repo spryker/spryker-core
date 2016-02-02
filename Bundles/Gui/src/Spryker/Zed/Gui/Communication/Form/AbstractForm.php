@@ -15,12 +15,12 @@ abstract class AbstractForm extends SharedAbstractForm
 {
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 
     /**
-     * @var ConstraintsPlugin
+     * @var \Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin
      */
     protected $constraintsPlugin;
 

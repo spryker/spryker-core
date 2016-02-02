@@ -22,22 +22,22 @@ class CartRule implements CartRuleInterface
     const COLLECTOR_ITERATOR = 'collector_';
 
     /**
-     * @var DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
-     * @var DiscountDecisionRuleWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter
      */
     protected $discountDecisionRuleWriter;
 
     /**
-     * @var DiscountWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountWriter
      */
     protected $discountWriter;
 
@@ -52,7 +52,7 @@ class CartRule implements CartRuleInterface
     ];
 
     /**
-     * @var DiscountCollectorWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter
      */
     protected $discountCollectorWriter;
 

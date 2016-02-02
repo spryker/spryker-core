@@ -13,7 +13,7 @@ class PayoneToRefundBridge implements PayoneToRefundInterface
 {
 
     /**
-     * @var RefundFacade
+     * @var \Spryker\Zed\Refund\Business\RefundFacade
      */
     protected $refundFacade;
 

@@ -14,7 +14,7 @@ class RedisWriter implements WriterInterface
 {
 
     /**
-     * @var ReadWriteInterface|RedisReadWrite
+     * @var \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface|\Spryker\Shared\Library\Storage\Adapter\KeyValue\RedisReadWrite
      */
     protected $redis;
 

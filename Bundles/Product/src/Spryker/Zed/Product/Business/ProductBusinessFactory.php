@@ -32,7 +32,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @var ProductManager
+     * @var \Spryker\Zed\Product\Business\Product\ProductManager
      */
     protected $productManager;
 

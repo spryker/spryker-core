@@ -15,12 +15,12 @@ class TransferDefinitionBuilder extends AbstractDefinitionBuilder
 {
 
     /**
-     * @var TransferDefinitionLoader
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader
      */
     private $loader;
 
     /**
-     * @var TransferDefinitionMerger
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger
      */
     private $merger;
 

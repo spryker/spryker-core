@@ -16,7 +16,7 @@ class PhpdocPipeFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'PhpdocPipeFixer';
 
     /**
-     * @var PhpdocPipeFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\PhpdocPipeFixer
      */
     protected $fixer;
 

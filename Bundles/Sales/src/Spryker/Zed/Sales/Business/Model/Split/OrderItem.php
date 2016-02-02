@@ -20,17 +20,17 @@ class OrderItem implements ItemInterface
     const SPLIT_MARKER = 'split#';
 
     /**
-     * @var ConnectionInterface
+     * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $databaseConnection;
 
     /**
-     * @var ValidatorInterface
+     * @var \Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface
      */
     protected $validator;
 
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $salesQueryContainer;
 

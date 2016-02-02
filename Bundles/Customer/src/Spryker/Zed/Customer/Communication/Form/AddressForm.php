@@ -21,12 +21,12 @@ class AddressForm extends AbstractForm
     const PREFERED_COUNTRY_NAME = 'Germany';
 
     /**
-     * @var CountryFacade
+     * @var \Spryker\Zed\Country\Business\CountryFacade
      */
     protected $countryFacade;
 
     /**
-     * @var CustomerQueryContainer
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
      */
     protected $customerQueryContainer;
 

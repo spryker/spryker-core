@@ -110,7 +110,7 @@ class AbstractPluginTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|FooPlugin
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Unit\Spryker\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin
      */
     protected function getPluginMock(array $methods)
     {

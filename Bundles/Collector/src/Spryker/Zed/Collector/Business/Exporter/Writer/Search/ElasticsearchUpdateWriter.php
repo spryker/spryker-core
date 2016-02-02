@@ -15,12 +15,12 @@ class ElasticsearchUpdateWriter implements WriterInterface
 {
 
     /**
-     * @var Client
+     * @var \Elastica\Client
      */
     protected $client;
 
     /**
-     * @var Index
+     * @var \Elastica\Index
      */
     protected $index;
 

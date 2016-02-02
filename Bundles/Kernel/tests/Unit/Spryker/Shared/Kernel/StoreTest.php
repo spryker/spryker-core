@@ -18,7 +18,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     private $Store;
 

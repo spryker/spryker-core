@@ -33,7 +33,7 @@ class Calculator implements CalculatorInterface
     protected $collectorResolver;
 
     /**
-     * @var DiscountToMessengerInterface
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected $messengerFacade;
 

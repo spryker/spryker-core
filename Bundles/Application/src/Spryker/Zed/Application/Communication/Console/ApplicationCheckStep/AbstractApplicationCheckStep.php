@@ -22,12 +22,12 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     use LoggerAwareTrait;
 
     /**
-     * @var AbstractFacade
+     * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected $facade;
 
     /**
-     * @var ApplicationCommunicationFactory
+     * @var \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory
      */
     protected $communicationFactory;
 

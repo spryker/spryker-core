@@ -26,22 +26,22 @@ abstract class AbstractController
     const FLASH_MESSAGES_INFO = 'flash.messages.info';
 
     /**
-     * @var Application
+     * @var \Spryker\Yves\Application\Application
      */
     private $application;
 
     /**
-     * @var AbstractFactory
+     * @var \Spryker\Yves\Kernel\AbstractFactory
      */
     private $factory;
 
     /**
-     * @var FlashBagInterface
+     * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
      */
     private $flashBag;
 
     /**
-     * @var AbstractClient
+     * @var \Spryker\Client\Kernel\AbstractClient
      */
     private $client;
 

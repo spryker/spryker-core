@@ -25,7 +25,7 @@ class Group implements GroupInterface
 {
 
     /**
-     * @var AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
      */
     protected $queryContainer;
 

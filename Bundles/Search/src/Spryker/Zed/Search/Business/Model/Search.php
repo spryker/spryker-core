@@ -13,7 +13,7 @@ class Search
 {
 
     /**
-     * @var SearchClient
+     * @var \Spryker\Client\Search\SearchClient
      */
     private $searchClient;
 

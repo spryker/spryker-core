@@ -14,7 +14,7 @@ class VoucherPoolCategoryTable extends AbstractTable
     const URL_DISCOUNT_POOL_EDIT_CATEGORY = '/discount/pool/edit-category';
 
     /**
-     * @var SpyDiscountVoucherPoolCategoryQuery
+     * @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery
      */
     protected $categoriesQuery;
 

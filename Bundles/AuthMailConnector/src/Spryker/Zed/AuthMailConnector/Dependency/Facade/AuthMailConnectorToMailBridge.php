@@ -13,7 +13,7 @@ class AuthMailConnectorToMailBridge implements AuthMailConnectorToMailInterface
 {
 
     /**
-     * @var MailFacade
+     * @var \Spryker\Zed\Mail\Business\MailFacade
      */
     protected $mailFacade;
 

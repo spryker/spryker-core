@@ -24,22 +24,22 @@ class RefundForm extends AbstractForm
     const FIELD_EXPENSES = 'expenses';
 
     /**
-     * @var SpyRefundQuery
+     * @var \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
     protected $refundQuery;
 
     /**
-     * @var RefundFacade
+     * @var \Spryker\Zed\Refund\Business\RefundFacade
      */
     protected $refundFacade;
 
     /**
-     * @var OrderTransfer
+     * @var \Generated\Shared\Transfer\OrderTransfer
      */
     protected $orderTransfer;
 
     /**
-     * @var PaymentDataPluginInterface
+     * @var \Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface
      */
     protected $paymentDataPlugin;
 

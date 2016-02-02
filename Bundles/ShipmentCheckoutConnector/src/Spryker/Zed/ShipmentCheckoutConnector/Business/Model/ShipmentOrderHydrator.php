@@ -15,7 +15,7 @@ class ShipmentOrderHydrator implements ShipmentOrderHydratorInterface
 {
 
     /**
-     * @var ShipmentCheckoutConnectorQueryContainerInterface
+     * @var \Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainerInterface
      */
     protected $queryContainer;
 

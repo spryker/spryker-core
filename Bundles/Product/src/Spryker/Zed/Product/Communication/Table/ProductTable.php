@@ -19,17 +19,17 @@ class ProductTable extends AbstractTable
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
-     * @var SpyProductAbstractQuery
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected $productQuery;
 
     /**
-     * @var ProductToUrlInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
     protected $urlFacade;
 
     /**
-     * @var LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $localeTransfer;
 

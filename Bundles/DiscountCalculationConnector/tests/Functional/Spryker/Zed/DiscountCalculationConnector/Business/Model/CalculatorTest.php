@@ -45,7 +45,7 @@ class CalculatorTest extends Test
     const EXPENSE_TYPE_SHIPPING = 'shipping';
 
     /**
-     * @var LocatorLocatorInterface|AutoCompletion
+     * @var \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

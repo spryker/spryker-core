@@ -12,7 +12,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
 {
 
     /**
-     * @var FlashMessagesTransfer
+     * @var \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     protected static $messages;
 

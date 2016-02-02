@@ -23,12 +23,12 @@ class AuthTest extends Test
 {
 
     /**
-     * @var AuthFacade
+     * @var \Spryker\Zed\Auth\Business\AuthFacade
      */
     protected $authFacade;
 
     /**
-     * @var UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacade
      */
     protected $userFacade;
 

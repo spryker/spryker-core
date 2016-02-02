@@ -32,12 +32,12 @@ class ProductOptionReader implements ProductOptionReaderInterface
     const COL_TRANSLATION_VALUE_ALIAS = 'value';
 
     /**
-     * @var ProductOptionQueryContainerInterface
+     * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var ProductOptionToLocaleInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
      */
     protected $localeFacade;
 

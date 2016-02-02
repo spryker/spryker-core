@@ -16,7 +16,7 @@ class CategoryWriter implements CategoryWriterInterface
 {
 
     /**
-     * @var CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     protected $queryContainer;
 

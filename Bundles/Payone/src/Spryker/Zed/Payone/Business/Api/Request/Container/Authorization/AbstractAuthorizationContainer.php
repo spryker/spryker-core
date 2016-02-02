@@ -72,7 +72,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     protected $shippingData;
 
     /**
-     * @var AbstractPaymentMethodContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer
      */
     protected $paymentMethod;
 
@@ -82,7 +82,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     protected $_3dsecure;
 
     /**
-     * @var TransactionContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     protected $invoicing;
 

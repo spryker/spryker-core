@@ -16,6 +16,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
     {
         return [
             T_FUNCTION,
+            T_VARIABLE,
         ];
     }
 
@@ -27,12 +28,13 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
      */
     public function process(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
     {
-        $docBlockEndIndex = $this->findDocBlockEndForFunction($phpCsFile, $stackPointer);
+        $tokens = $phpCsFile->getTokens();
+
+        $docBlockEndIndex = $this->findRelatedDocBlock($phpCsFile, $stackPointer);
+
         if (!$docBlockEndIndex) {
             return;
         }
-
-        $tokens = $phpCsFile->getTokens();
 
         $docBlockStartIndex = $tokens[$docBlockEndIndex]['comment_opener'];
 
@@ -40,7 +42,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
             if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
                 continue;
             }
-            if (!in_array($tokens[$i]['content'], ['@return', '@param', '@throws'])) {
+            if (!in_array($tokens[$i]['content'], ['@return', '@param', '@throws', '@var'])) {
                 continue;
             }
 
@@ -50,17 +52,33 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
                 continue;
             }
 
-            $className = $tokens[$classNameIndex]['content'];
+            $content = $tokens[$classNameIndex]['content'];
 
             // Fix a Sniffer bug with param having the variable also part of the content
             $appendix = '';
             if ($tokens[$i]['content'] === '@param') {
-                $spaceIndex = strpos($className, ' ');
+                $spaceIndex = strpos($content, ' ');
 
-                $appendix = substr($className, $spaceIndex);
-                $className = substr($className, 0, $spaceIndex);
+                $appendix = substr($content, $spaceIndex);
+                $content = substr($content, 0, $spaceIndex);
             }
 
+            $classNames = explode('|', $content);
+            $this->fixClassNames($phpCsFile, $classNameIndex, $classNames, $appendix);
+        }
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     * @param int $classNameIndex
+     * @param array $classNames
+     * @param string $appendix
+     * @return void
+     */
+    protected function fixClassNames(\PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array $classNames, $appendix)
+    {
+        $result = [];
+        foreach ($classNames as $key => $className) {
             if (strpos($className, '\\') !== false) {
                 continue;
             }
@@ -70,10 +88,24 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
                 continue;
             }
 
-            $fix = $phpCsFile->addFixableError($className . ' => ' . $useStatement, $classNameIndex);
-            if ($fix) {
-                $phpCsFile->fixer->replaceToken($classNameIndex, $useStatement . $appendix);
-            }
+            $classNames[$key] = $useStatement;
+            $result[$className] = $useStatement;
+        }
+
+        if (!$result) {
+            return;
+        }
+
+        $message = [];
+        foreach ($result as $className => $useStatement) {
+            $message[] = $className . ' => ' . $useStatement;
+        }
+
+        $fix = $phpCsFile->addFixableError(implode(', ', $message), $classNameIndex);
+        if ($fix) {
+            $newContent = implode('|', $classNames);
+
+            $phpCsFile->fixer->replaceToken($classNameIndex, $newContent . $appendix);
         }
     }
 
@@ -100,7 +132,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
      *
      * @return int|null Stackpointer value of docblock end tag, or null if cannot be found
      */
-    protected function findDocBlockEndForFunction(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
+    protected function findRelatedDocBlock(\PHP_CodeSniffer_File $phpCsFile, $stackPointer)
     {
         $tokens = $phpCsFile->getTokens();
 

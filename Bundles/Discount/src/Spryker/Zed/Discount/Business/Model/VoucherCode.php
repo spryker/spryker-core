@@ -12,7 +12,7 @@ class VoucherCode implements VoucherCodeInterface
 {
 
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 

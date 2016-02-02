@@ -21,12 +21,12 @@ class TaxWriter implements TaxWriterInterface
 {
 
     /**
-     * @var TaxQueryContainerInterface
+     * @var \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var TaxConfig
+     * @var \Spryker\Zed\Tax\TaxConfig
      */
     protected $taxSettings;
 

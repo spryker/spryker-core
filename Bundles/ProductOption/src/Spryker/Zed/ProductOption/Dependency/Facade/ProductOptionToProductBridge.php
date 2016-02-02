@@ -11,7 +11,7 @@ class ProductOptionToProductBridge implements ProductOptionToProductInterface
 {
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $productFacade;
 

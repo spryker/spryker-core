@@ -14,7 +14,7 @@ class NewsletterStub implements NewsletterStubInterface
 {
 
     /**
-     * @var ZedRequestClient
+     * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
     protected $zedStub;
 

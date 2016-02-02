@@ -14,7 +14,7 @@ class NewsletterToMailBridge implements NewsletterToMailInterface
 {
 
     /**
-     * @var MailFacade
+     * @var \Spryker\Zed\Mail\Business\MailFacade
      */
     protected $mailFacade;
 

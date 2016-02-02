@@ -19,7 +19,7 @@ class DiscountSaver implements DiscountSaverInterface
 {
 
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
@@ -29,7 +29,7 @@ class DiscountSaver implements DiscountSaverInterface
     protected $voucherCodesUsed = [];
 
     /**
-     * @var DiscountCheckoutConnectorToDiscountInterface
+     * @var \Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface
      */
     protected $discountFacade;
 

@@ -12,7 +12,7 @@ class ProductToUrlBridge implements ProductToUrlInterface
 {
 
     /**
-     * @var UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacade
      */
     protected $urlFacade;
 

@@ -34,7 +34,7 @@ class NoInlineAssignmentFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      *
      * @return void
      */
@@ -109,7 +109,7 @@ class NoInlineAssignmentFixer extends AbstractFixer
     /**
      * @param int $index
      * @param int $endIndex
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      * @param int &$indexEqualSign
      *
      * @return bool

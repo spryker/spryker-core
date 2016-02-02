@@ -13,7 +13,7 @@ class PayolutionToMailBridge implements PayolutionToMailInterface
 {
 
     /**
-     * @var MailFacade
+     * @var \Spryker\Zed\Mail\Business\MailFacade
      */
     protected $mailFacade;
 

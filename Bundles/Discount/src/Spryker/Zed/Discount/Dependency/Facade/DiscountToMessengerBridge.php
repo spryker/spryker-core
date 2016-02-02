@@ -13,7 +13,7 @@ class DiscountToMessengerBridge implements DiscountToMessengerInterface
 {
 
     /**
-     * @var MessengerFacade
+     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
      */
     protected $messengerFacade;
 

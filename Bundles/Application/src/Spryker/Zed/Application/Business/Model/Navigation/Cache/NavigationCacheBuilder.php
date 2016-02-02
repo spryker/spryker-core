@@ -12,7 +12,7 @@ class NavigationCacheBuilder
 {
 
     /**
-     * @var NavigationCollectorInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface
      */
     private $navigationCollector;
 

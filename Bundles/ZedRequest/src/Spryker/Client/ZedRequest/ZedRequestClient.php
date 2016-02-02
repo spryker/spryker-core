@@ -18,7 +18,7 @@ class ZedRequestClient extends AbstractClient
 {
 
     /**
-     * @var ZedClient
+     * @var \Spryker\Client\ZedRequest\Client\ZedClient
      */
     private $zedClient;
 

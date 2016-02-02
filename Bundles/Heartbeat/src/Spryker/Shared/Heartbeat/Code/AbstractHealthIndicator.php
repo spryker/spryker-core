@@ -14,7 +14,7 @@ abstract class AbstractHealthIndicator implements HealthIndicatorInterface
 {
 
     /**
-     * @var HealthReportTransfer
+     * @var \Generated\Shared\Transfer\HealthReportTransfer
      */
     private $healthIndicatorReport;
 

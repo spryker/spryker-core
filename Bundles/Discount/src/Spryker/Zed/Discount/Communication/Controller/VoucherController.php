@@ -33,7 +33,7 @@ class VoucherController extends AbstractController
     const MESSAGE_TYPE_SUCCESS = 'success';
 
     /**
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createSingleAction(Request $request)
     {
@@ -71,7 +71,7 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createMultipleAction(Request $request)
     {

@@ -19,7 +19,7 @@ class Payments extends AbstractTable
     const PARAM_ID_PAYMENT = 'id-payment';
 
     /**
-     * @var SpyPaymentPayolutionQuery
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
      */
     private $paymentPayolutionQuery;
 

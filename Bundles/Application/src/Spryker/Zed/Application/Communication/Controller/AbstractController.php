@@ -26,27 +26,27 @@ abstract class AbstractController
     const TWIG_MESSENGER_PLUGIN = 'TwigMessengerPlugin';
 
     /**
-     * @var Application
+     * @var \Silex\Application
      */
     private $application;
 
     /**
-     * @var AbstractCommunicationFactory
+     * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private $factory;
 
     /**
-     * @var AbstractFacade
+     * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private $facade;
 
     /**
-     * @var AbstractQueryContainer
+     * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private $queryContainer;
 
     /**
-     * @var MessengerFacade
+     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
      */
     private $messengerFacade;
 

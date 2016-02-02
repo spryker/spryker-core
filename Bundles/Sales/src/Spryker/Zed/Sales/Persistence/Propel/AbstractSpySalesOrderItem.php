@@ -29,7 +29,7 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
     protected $statusChanged = false;
 
     /**
-     * @param ConnectionInterface|null $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $con
      *
      * @return bool
      */
@@ -41,7 +41,7 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
     }
 
     /**
-     * @param ConnectionInterface|null $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $con
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

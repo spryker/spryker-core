@@ -16,7 +16,7 @@ class NoIsNullFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'NoIsNullFixer';
 
     /**
-     * @var NoIsNullFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\NoIsNullFixer
      */
     protected $fixer;
 

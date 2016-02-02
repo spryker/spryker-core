@@ -12,7 +12,7 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
 {
 
     /**
-     * @var PayoneQueryContainerInterface
+     * @var \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface
      */
     protected $queryContainer;
 

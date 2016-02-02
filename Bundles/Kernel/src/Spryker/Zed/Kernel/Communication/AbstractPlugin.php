@@ -18,7 +18,7 @@ abstract class AbstractPlugin
 {
 
     /**
-     * @var AbstractFacade
+     * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private $facade;
 
@@ -28,12 +28,12 @@ abstract class AbstractPlugin
     private $factory;
 
     /**
-     * @var AbstractBundleConfig
+     * @var \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     private $config;
 
     /**
-     * @var AbstractQueryContainer
+     * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private $queryContainer;
 

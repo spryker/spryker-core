@@ -17,7 +17,7 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
     const KEY_STORE = '%store%';
 
     /**
-     * @var ClassInfo
+     * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo
      */
     private $classInfo;
 

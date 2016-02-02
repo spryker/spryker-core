@@ -12,7 +12,7 @@ class SalesCheckoutConnectorToSalesBridge implements SalesCheckoutConnectorToSal
 {
 
     /**
-     * @var SalesFacade
+     * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected $salesFacade;
 

@@ -11,7 +11,7 @@ class UrlToTouchBridge implements UrlToTouchInterface
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 

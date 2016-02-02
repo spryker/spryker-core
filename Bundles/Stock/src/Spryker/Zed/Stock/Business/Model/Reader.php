@@ -20,12 +20,12 @@ class Reader implements ReaderInterface
     const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**
-     * @var StockQueryContainer
+     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var StockToProductInterface
+     * @var \Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface
      */
     protected $productFacade;
 

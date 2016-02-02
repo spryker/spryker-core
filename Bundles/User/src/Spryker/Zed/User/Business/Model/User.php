@@ -24,17 +24,17 @@ class User implements UserInterface
     const USER_BUNDLE_SESSION_KEY = 'user';
 
     /**
-     * @var UserQueryContainer
+     * @var \Spryker\Zed\User\Persistence\UserQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var SessionInterface
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     protected $session;
 
     /**
-     * @var UserConfig
+     * @var \Spryker\Zed\User\UserConfig
      */
     protected $settings;
 

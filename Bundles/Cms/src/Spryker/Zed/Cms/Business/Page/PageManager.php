@@ -25,32 +25,32 @@ class PageManager implements PageManagerInterface
 {
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @var TemplateManagerInterface
+     * @var \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
      */
     protected $templateManager;
 
     /**
-     * @var BlockManagerInterface
+     * @var \Spryker\Zed\Cms\Business\Block\BlockManagerInterface
      */
     protected $blockManager;
 
     /**
-     * @var CmsToGlossaryInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @var CmsToTouchInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var CmsToUrlInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
      */
     protected $urlFacade;
 

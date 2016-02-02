@@ -14,17 +14,17 @@ class DependencyGraphBuilder
 {
 
     /**
-     * @var GraphBuilderInterface
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\GraphBuilderInterface
      */
     private $graphBuilder;
 
     /**
-     * @var DependencyTreeReaderInterface
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
      */
     private $dependencyTreeReader;
 
     /**
-     * @var TreeFilter
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter
      */
     private $filter;
 

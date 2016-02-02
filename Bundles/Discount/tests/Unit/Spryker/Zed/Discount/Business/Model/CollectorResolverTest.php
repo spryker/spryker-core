@@ -156,7 +156,7 @@ class CollectorResolverTest extends Test
     /**
      * @param array $collectedItems
      *
-     * @return DiscountCollectorPluginInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createCollectorPluginMock(array $collectedItems)
     {
@@ -173,7 +173,7 @@ class CollectorResolverTest extends Test
     /**
      * @param array $collectorPlugins
      *
-     * @return DiscountConfigInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Discount\DiscountConfigInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function getDiscountCollectorConfigurator(array $collectorPlugins)
     {

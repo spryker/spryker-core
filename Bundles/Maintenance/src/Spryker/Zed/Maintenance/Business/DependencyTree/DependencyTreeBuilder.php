@@ -23,7 +23,7 @@ class DependencyTreeBuilder
     private $dependencyTree;
 
     /**
-     * @var DependencyTreeWriterInterface
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeWriter\DependencyTreeWriterInterface
      */
     private $writer;
 
@@ -45,7 +45,7 @@ class DependencyTreeBuilder
     }
 
     /**
-     * @param AbstractDependencyFinder|array $dependencyChecker
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\AbstractDependencyFinder|array $dependencyChecker
      *
      * @return self
      */

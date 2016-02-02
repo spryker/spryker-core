@@ -17,12 +17,12 @@ class ElasticsearchMarkerWriter implements WriterInterface
     const WRITER_NAME = 'elasticsearch-marker-writer';
 
     /**
-     * @var Client
+     * @var \Elastica\Client
      */
     protected $client;
 
     /**
-     * @var Index
+     * @var \Elastica\Index
      */
     protected $index;
 

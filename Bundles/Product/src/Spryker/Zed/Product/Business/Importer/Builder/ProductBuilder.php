@@ -23,7 +23,7 @@ class ProductBuilder implements ProductBuilderInterface
     /**
      * @param array $data
      *
-     * @return ProductAbstractTransfer|ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|\Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function buildProduct(array $data)
     {
@@ -75,7 +75,7 @@ class ProductBuilder implements ProductBuilderInterface
     /**
      * @param array $data
      *
-     * @return ProductAbstractTransfer|ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|\Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected function generateTypedProduct(array &$data)
     {

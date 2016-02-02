@@ -32,12 +32,12 @@ class Customer
     const BCRYPT_SALT = '';
 
     /**
-     * @var CustomerQueryContainerInterface
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var CustomerReferenceGeneratorInterface
+     * @var \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface
      */
     protected $customerReferenceGenerator;
 
@@ -57,7 +57,7 @@ class Customer
     protected $registrationTokenSender = [];
 
     /**
-     * @var CustomerConfig
+     * @var \Spryker\Zed\Customer\CustomerConfig
      */
     protected $customerConfig;
 

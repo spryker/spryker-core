@@ -30,12 +30,12 @@ class TaxChangeTouchPluginTest extends Test
     private $productAbstractIds = [];
 
     /**
-     * @var TaxProductConnectorFacade
+     * @var \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade
      */
     private $taxProductConnectorFacade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

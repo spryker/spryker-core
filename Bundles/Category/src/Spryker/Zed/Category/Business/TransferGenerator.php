@@ -27,7 +27,7 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyCategory[]|ObjectCollection $categoryEntityList
+     * @param SpyCategory[]|\Propel\Runtime\Collection\ObjectCollection $categoryEntityList
      *
      * @return CategoryTransfer[]
      */
@@ -53,7 +53,7 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyCategoryNode[]|ObjectCollection $categoryNodeEntityList
+     * @param SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection $categoryNodeEntityList
      *
      * @return NodeTransfer[]
      */

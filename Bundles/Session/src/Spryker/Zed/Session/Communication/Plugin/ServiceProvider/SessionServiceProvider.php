@@ -23,7 +23,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 {
 
     /**
-     * @var SessionClientInterface
+     * @var \Spryker\Client\Session\SessionClientInterface
      */
     private $client;
 

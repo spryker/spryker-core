@@ -21,7 +21,7 @@ class SequenceNumberTest extends Test
 {
 
     /**
-     * @var SequenceNumberFacade
+     * @var \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade
      */
     protected $sequenceNumberFacade;
 

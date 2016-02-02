@@ -30,12 +30,12 @@ class Rule implements RuleInterface
     protected $group;
 
     /**
-     * @var AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacade
      */
     protected $facadeUser;
 
@@ -45,7 +45,7 @@ class Rule implements RuleInterface
     protected $rulesValidator;
 
     /**
-     * @var AclConfig
+     * @var \Spryker\Zed\Acl\AclConfig
      */
     protected $settings;
 

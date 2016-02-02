@@ -15,7 +15,7 @@ class CodeExists extends Constraint
     public $message = 'The Code {{ value }} already exists in the Database!';
 
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $queryContainer;
 

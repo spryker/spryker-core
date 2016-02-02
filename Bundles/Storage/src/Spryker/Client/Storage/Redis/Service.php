@@ -15,7 +15,7 @@ class Service implements ServiceInterface
     const KV_PREFIX = 'kv:';
 
     /**
-     * @var ClientInterface
+     * @var \Predis\ClientInterface
      */
     private $client;
 

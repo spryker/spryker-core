@@ -15,12 +15,12 @@ class WishlistStorage implements WishlistStorageInterface
 {
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     private $storageClient;
 
     /**
-     * @var ProductClientInterface
+     * @var \Spryker\Client\Product\ProductClientInterface
      */
     private $productClient;
 

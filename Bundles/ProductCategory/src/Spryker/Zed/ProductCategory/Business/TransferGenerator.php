@@ -25,7 +25,7 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyProductCategory[]|ObjectCollection $productCategoryEntityList
+     * @param SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection $productCategoryEntityList
      *
      * @return ProductCategoryTransfer[]
      */

@@ -31,12 +31,12 @@ abstract class AbstractTable
     const PARAMETER_VALUE = 'value';
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 
@@ -86,7 +86,7 @@ abstract class AbstractTable
     protected $tableIdentifier;
 
     /**
-     * @var DataTablesTransfer
+     * @var \Generated\Shared\Transfer\DataTablesTransfer
      */
     protected $dataTablesTransfer;
 
@@ -620,7 +620,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param string|Url $url
+     * @param string|\Spryker\Zed\Application\Business\Url\Url $url
      * @param string $title
      * @param array $defaultOptions
      * @param array $customOptions

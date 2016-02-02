@@ -16,7 +16,7 @@ class CollectorResolver
     const OPERATOR_AND = 'AND';
 
     /**
-     * @var DiscountConfigInterface
+     * @var \Spryker\Zed\Discount\DiscountConfigInterface
      */
     protected $discountConfig;
 

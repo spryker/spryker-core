@@ -18,7 +18,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
 {
 
     /**
-     * @var CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     protected $queryContainer;
 

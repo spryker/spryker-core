@@ -25,7 +25,7 @@ class GroupUsersTable extends AbstractTable
     const COL_OPTIONS = 'Options';
 
     /**
-     * @var SpyAclGroupQuery
+     * @var \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
      */
     protected $hasGroupQuery;
 

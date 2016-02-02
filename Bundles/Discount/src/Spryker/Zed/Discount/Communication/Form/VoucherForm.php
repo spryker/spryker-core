@@ -25,7 +25,7 @@ class VoucherForm extends AbstractForm
     const FIELD_CODE_LENGTH = 'code_length';
 
     /**
-     * @var DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
     protected $discountQueryContainer;
 
@@ -35,7 +35,7 @@ class VoucherForm extends AbstractForm
     protected $isMultiple;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
 

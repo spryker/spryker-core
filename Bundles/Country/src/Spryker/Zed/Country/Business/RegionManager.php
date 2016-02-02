@@ -14,7 +14,7 @@ class RegionManager implements RegionManagerInterface
 {
 
     /**
-     * @var CountryQueryContainerInterface
+     * @var \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
     protected $countryQueryContainer;
 

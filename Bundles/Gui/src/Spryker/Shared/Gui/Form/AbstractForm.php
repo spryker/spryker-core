@@ -32,12 +32,12 @@ abstract class AbstractForm implements FormTypeInterface
     abstract public function buildForm(FormBuilderInterface $builder, array $options);
 
     /**
-     * @return TransferInterface|array
+     * @return \Spryker\Shared\Transfer\TransferInterface|array
      */
     abstract public function populateFormFields();
 
     /**
-     * @return TransferInterface|null
+     * @return \Spryker\Shared\Transfer\TransferInterface|null
      */
     abstract protected function getDataClass();
 

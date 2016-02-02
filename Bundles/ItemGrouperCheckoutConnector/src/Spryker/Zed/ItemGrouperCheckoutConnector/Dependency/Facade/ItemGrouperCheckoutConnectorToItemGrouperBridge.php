@@ -13,7 +13,7 @@ class ItemGrouperCheckoutConnectorToItemGrouperBridge implements ItemGrouperChec
 {
 
     /**
-     * @var ItemGrouperFacade
+     * @var \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade
      */
     protected $itemGrouperFacade;
 

@@ -11,7 +11,7 @@ class CheckoutToOmsBridge implements CheckoutToOmsInterface
 {
 
     /**
-     * @var OmsFacade
+     * @var \Spryker\Zed\Oms\Business\OmsFacade
      */
     protected $omsFacade;
 

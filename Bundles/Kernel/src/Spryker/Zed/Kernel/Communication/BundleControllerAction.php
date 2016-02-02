@@ -14,12 +14,12 @@ class BundleControllerAction implements BundleControllerActionInterface
 {
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
 
     /**
-     * @var DashToCamelCase
+     * @var \Zend\Filter\Word\DashToCamelCase
      */
     private $filter;
 

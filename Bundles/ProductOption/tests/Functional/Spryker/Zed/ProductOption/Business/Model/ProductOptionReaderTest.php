@@ -45,27 +45,27 @@ class ProductOptionReaderTest extends Test
     protected $ids = [];
 
     /**
-     * @var ProductOptionFacade
+     * @var \Spryker\Zed\ProductOption\Business\ProductOptionFacade
      */
     protected $facade;
 
     /**
-     * @var ProductOptionToLocaleInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
      */
     private $localeFacade;
 
     /**
-     * @var ProductOptionToProductInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface
      */
     private $productFacade;
 
     /**
-     * @var ProductQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     private $productQueryContainer;
 
     /**
-     * @var ProductOptionQueryContainer
+     * @var \Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer
      */
     private $productOptionQueryContainer;
 

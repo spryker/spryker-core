@@ -14,7 +14,7 @@ class MarkDownWriter implements MarkDownWriterInterface
     const SEPARATOR = ';';
 
     /**
-     * @var InstalledPackagesTransfer
+     * @var \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     private $installedPackages;
 

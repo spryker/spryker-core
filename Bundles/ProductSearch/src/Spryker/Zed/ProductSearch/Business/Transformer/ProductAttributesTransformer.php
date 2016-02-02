@@ -18,17 +18,17 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
     protected $fieldOperations = [];
 
     /**
-     * @var OperationLocatorInterface
+     * @var \Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface
      */
     private $operationLocator;
 
     /**
-     * @var OperationInterface
+     * @var \Spryker\Zed\ProductSearch\Business\Operation\OperationInterface
      */
     private $defaultOperation;
 
     /**
-     * @var ProductSearchQueryContainerInterface
+     * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
     private $queryContainer;
 
@@ -192,7 +192,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
     }
 
     /**
-     * @return SpyProductSearchAttributesOperation[]|ObjectCollection
+     * @return SpyProductSearchAttributesOperation[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getFieldOperations()
     {

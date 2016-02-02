@@ -19,17 +19,17 @@ class NodeUrlManager implements NodeUrlManagerInterface
 {
 
     /**
-     * @var CategoryTreeReaderInterface
+     * @var \Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface
      */
     protected $categoryTreeReader;
 
     /**
-     * @var UrlPathGeneratorInterface
+     * @var \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface
      */
     protected $urlPathGenerator;
 
     /**
-     * @var CategoryToUrlInterface
+     * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface
      */
     protected $urlFacade;
 

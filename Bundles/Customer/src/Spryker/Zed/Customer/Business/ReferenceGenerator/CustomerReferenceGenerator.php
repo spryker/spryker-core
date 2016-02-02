@@ -13,12 +13,12 @@ class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
 {
 
     /**
-     * @var CustomerToSequenceNumberInterface
+     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface
      */
     protected $facadeSequenceNumber;
 
     /**
-     * @var SequenceNumberSettingsTransfer
+     * @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
     protected $sequenceNumberSettings;
 

@@ -14,7 +14,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
 {
 
     /**
-     * @var PayolutionQueryContainerInterface
+     * @var \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface
      */
     private $queryContainer;
 

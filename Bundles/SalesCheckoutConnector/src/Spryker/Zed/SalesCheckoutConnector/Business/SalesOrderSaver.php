@@ -14,7 +14,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
 {
 
     /**
-     * @var SalesCheckoutConnectorToSalesInterface
+     * @var \Spryker\Zed\SalesCheckoutConnector\Dependency\Facade\SalesCheckoutConnectorToSalesInterface
      */
     protected $salesFacade;
 

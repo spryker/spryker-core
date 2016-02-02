@@ -13,7 +13,7 @@ abstract class AbstractOptInHandler
 {
 
     /**
-     * @var NewsletterQueryContainer
+     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer
      */
     protected $queryContainer;
 

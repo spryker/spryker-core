@@ -29,7 +29,7 @@ class SubscriptionRequestHandler
     protected $subscriberManager;
 
     /**
-     * @var NewsletterQueryContainer
+     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer
      */
     protected $queryContainer;
 

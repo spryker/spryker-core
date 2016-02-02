@@ -29,27 +29,27 @@ class TranslationManager implements TranslationManagerInterface
     const LOCALE_PREFIX = 'locale_';
 
     /**
-     * @var GlossaryQueryContainerInterface
+     * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
     protected $glossaryQueryContainer;
 
     /**
-     * @var GlossaryToTouchInterface
+     * @var \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var KeyManagerInterface
+     * @var \Spryker\Zed\Glossary\Business\Key\KeyManagerInterface
      */
     protected $keyManager;
 
     /**
-     * @var GlossaryToLocaleInterface
+     * @var \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface
      */
     protected $localeFacade;
 
     /**
-     * @var GlossaryToMessengerInterface
+     * @var \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerInterface
      */
     protected $messengerFacade;
 
@@ -193,7 +193,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
@@ -349,7 +349,7 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param string $keyName
      * @param array $data
-     * @param LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return string
      */

@@ -31,12 +31,12 @@ class VoucherPoolTable extends AbstractTable
     const SPACE_SEPARATOR = ' ';
 
     /**
-     * @var SpyDiscountVoucherPoolQuery
+     * @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
      */
     protected $poolQuery;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
 

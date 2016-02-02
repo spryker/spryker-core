@@ -13,7 +13,7 @@ class Doctor
 {
 
     /**
-     * @var HealthReportTransfer
+     * @var \Generated\Shared\Transfer\HealthReportTransfer
      */
     protected $healthReport;
 

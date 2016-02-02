@@ -23,7 +23,7 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
 {
 
     /**
-     * @var GatewayControllerListenerInterface
+     * @var \Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface
      */
     protected $controllerListener;
 

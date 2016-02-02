@@ -36,12 +36,12 @@ class ProductCartPluginTest extends Test
     const PRODUCT_CONCRETE_NAME = 'Product concrete name';
 
     /**
-     * @var ProductCartConnectorFacade
+     * @var \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade
      */
     private $productCartConnectorFacade;
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     private $localeFacade;
 

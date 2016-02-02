@@ -97,7 +97,7 @@ class Manager
     }
 
     /**
-     * @return Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|SplFileInfo[]
      */
     protected function collectCoreBundles()
     {

@@ -13,7 +13,7 @@ class CustomerToSequenceNumberBridge implements CustomerToSequenceNumberInterfac
 {
 
     /**
-     * @var SequenceNumberFacade
+     * @var \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade
      */
     protected $sequenceNumberFacade;
 

@@ -13,7 +13,7 @@ class ItemGrouperWishlistConnectorToItemGrouperBridge implements ItemGrouperWish
 {
 
     /**
-     * @var ItemGrouperFacade
+     * @var \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade
      */
     protected $itemGrouperFacade;
 

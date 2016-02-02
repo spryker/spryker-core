@@ -13,7 +13,7 @@ class ModelResult
 {
 
     /**
-     * @var ActiveRecordInterface
+     * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
     protected $entity = null;
 
@@ -23,7 +23,7 @@ class ModelResult
     protected $entityModifiedColumns = [];
 
     /**
-     * @var TransferInterface
+     * @var \Spryker\Shared\Transfer\TransferInterface
      */
     protected $transfer = null;
 

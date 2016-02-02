@@ -26,12 +26,12 @@ class GlossaryFacadeTest extends Test
     const GLOSSARY_KEY = 'glossary_key';
 
     /**
-     * @var SpyGlossaryKeyQuery
+     * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery
      */
     private $query;
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
 

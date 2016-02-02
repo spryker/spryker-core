@@ -15,7 +15,7 @@ trait LoggerTrait
     /**
      * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
      *
-     * @return LoggerInterface|null
+     * @return \Psr\Log\LoggerInterface|null
      */
     protected function getLogger(LoggerConfigInterface $loggerConfig = null)
     {

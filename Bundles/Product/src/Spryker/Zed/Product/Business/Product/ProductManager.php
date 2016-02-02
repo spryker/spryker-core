@@ -34,22 +34,22 @@ class ProductManager implements ProductManagerInterface
     const COL_NAME = 'SpyProductLocalizedAttributes.Name';
 
     /**
-     * @var ProductQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
 
     /**
-     * @var ProductToTouchInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var ProductToUrlInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
     protected $urlFacade;
 
     /**
-     * @var ProductToLocaleInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
     protected $localeFacade;
 

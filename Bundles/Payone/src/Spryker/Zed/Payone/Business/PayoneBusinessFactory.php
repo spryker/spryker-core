@@ -37,7 +37,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @var PayoneStandardParameterTransfer
+     * @var \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     private $standardParameter;
 

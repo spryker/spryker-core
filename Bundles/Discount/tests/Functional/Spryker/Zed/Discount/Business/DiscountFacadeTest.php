@@ -68,12 +68,12 @@ class DiscountFacadeTest extends Test
     const DISCOUNT_VOUCHER_POOL_CATEGORY = 'discount-voucher-pool-category';
 
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

@@ -16,7 +16,7 @@ class CookieServiceProvider implements ServiceProviderInterface
 {
 
     /**
-     * @var YvesApplication
+     * @var \Spryker\Yves\Application\Application
      */
     private $app;
 

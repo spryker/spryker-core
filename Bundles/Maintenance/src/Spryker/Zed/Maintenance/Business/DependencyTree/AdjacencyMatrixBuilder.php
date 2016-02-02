@@ -13,12 +13,12 @@ class AdjacencyMatrixBuilder
 {
 
     /**
-     * @var DependencyTreeReaderInterface
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
      */
     private $dependencyTreeReader;
 
     /**
-     * @var TreeFilter
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter
      */
     private $filter;
 

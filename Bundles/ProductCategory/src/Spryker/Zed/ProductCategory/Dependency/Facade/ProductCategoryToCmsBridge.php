@@ -12,7 +12,7 @@ class ProductCategoryToCmsBridge implements ProductCategoryToCmsInterface
 {
 
     /**
-     * @var CmsFacade
+     * @var \Spryker\Zed\Cms\Business\CmsFacade
      */
     protected $cmsFacade;
 

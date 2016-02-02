@@ -20,7 +20,7 @@ class GroupTable extends AbstractTable
     const EDIT_PARAMETER = 'id-group';
 
     /**
-     * @var SpyAclGroupQuery
+     * @var \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
      */
     protected $aclGroupQuery;
 

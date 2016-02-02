@@ -14,7 +14,7 @@ class MockOrderSaver implements CheckoutSaveOrderInterface
 {
 
     /**
-     * @var CheckoutResponseTransfer
+     * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     private $checkoutResponse;
 

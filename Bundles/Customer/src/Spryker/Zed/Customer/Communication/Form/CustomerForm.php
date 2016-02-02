@@ -22,7 +22,7 @@ class CustomerForm extends AbstractForm
     protected $formActionType;
 
     /**
-     * @var CustomerQueryContainerInterface
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
     protected $customerQueryContainer;
 

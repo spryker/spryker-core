@@ -16,7 +16,7 @@ class ShortCastFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'ShortCastFixer';
 
     /**
-     * @var ShortCastFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\ShortCastFixer
      */
     protected $fixer;
 

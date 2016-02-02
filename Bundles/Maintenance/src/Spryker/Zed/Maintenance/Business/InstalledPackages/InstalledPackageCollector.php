@@ -17,7 +17,7 @@ class InstalledPackageCollector implements InstalledPackageCollectorInterface
     private $installedPackageFinder;
 
     /**
-     * @var InstalledPackagesTransfer
+     * @var \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     private $installedPackageCollection;
 

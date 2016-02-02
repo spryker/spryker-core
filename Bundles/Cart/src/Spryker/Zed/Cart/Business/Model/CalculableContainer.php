@@ -13,7 +13,7 @@ class CalculableContainer implements CalculableInterface
 {
 
     /**
-     * @var CartTransfer
+     * @var \Generated\Shared\Transfer\CartTransfer
      */
     private $cart;
 

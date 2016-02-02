@@ -20,27 +20,27 @@ class Auth implements AuthInterface
 {
 
     /**
-     * @var SessionClientInterface
+     * @var \Spryker\Client\Session\SessionClientInterface
      */
     protected $session;
 
     /**
-     * @var AuthToUserBridge
+     * @var \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge
      */
     protected $userFacade;
 
     /**
-     * @var AuthBusinessFactory
+     * @var \Spryker\Zed\Auth\Business\AuthBusinessFactory
      */
     protected $businessFactory;
 
     /**
-     * @var AuthConfig
+     * @var \Spryker\Zed\Auth\AuthConfig
      */
     protected $authConfig;
 
     /**
-     * @var StaticToken
+     * @var \Spryker\Zed\Auth\Business\Client\StaticToken
      */
     protected $staticToken;
 

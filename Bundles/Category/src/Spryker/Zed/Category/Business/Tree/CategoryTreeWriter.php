@@ -33,17 +33,17 @@ class CategoryTreeWriter
     protected $categoryTreeReader;
 
     /**
-     * @var NodeUrlManagerInterface
+     * @var \Spryker\Zed\Category\Business\Manager\NodeUrlManagerInterface
      */
     protected $nodeUrlManager;
 
     /**
-     * @var CategoryToTouchInterface
+     * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var ConnectionInterface
+     * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $connection;
 

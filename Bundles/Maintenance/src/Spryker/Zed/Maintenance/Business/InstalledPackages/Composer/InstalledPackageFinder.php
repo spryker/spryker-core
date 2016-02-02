@@ -14,7 +14,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
 {
 
     /**
-     * @var InstalledPackagesTransfer
+     * @var \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     private $collection;
 
