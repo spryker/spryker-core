@@ -21,7 +21,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
      */
     public function calculateDiscountTotals(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->getDiscountTotalsCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()->createDiscountTotalsCalculator()->recalculate($quoteTransfer);
     }
 
     /**
@@ -31,7 +31,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
      */
     public function removeAllCalculatedDiscounts(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->getRemoveAllCalculatedDiscountsCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()->createRemoveAllCalculatedDiscountsCalculator()->recalculate($quoteTransfer);
     }
 
     /**
@@ -41,7 +41,17 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
      */
     public function calculateGrandTotalWithDiscounts(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->getGrandTotalWithDiscountsCalculator()->recalculate($quoteTransfer);
+        $this->getFactory()->createGrandTotalWithDiscountsCalculator()->recalculate($quoteTransfer);
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function calculateSumGrossCalculatedDiscountAmount(QuoteTransfer $quoteTransfer)
+    {
+        $this->getFactory()->createSumGrossCalculatedDiscountAmountCalculator()->recalculate($quoteTransfer);
     }
 
 }

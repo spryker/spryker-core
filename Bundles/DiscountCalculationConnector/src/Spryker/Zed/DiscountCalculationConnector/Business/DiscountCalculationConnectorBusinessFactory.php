@@ -6,12 +6,11 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\SumGrossCalculatedDiscountAmountCalculator;
 
 class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -19,7 +18,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     /**
      * @return DiscountTotalsCalculator
      */
-    public function getDiscountTotalsCalculator()
+    public function createDiscountTotalsCalculator()
     {
         return new DiscountTotalsCalculator();
     }
@@ -27,7 +26,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     /**
      * @return GrandTotalWithDiscountsCalculator
      */
-    public function getGrandTotalWithDiscountsCalculator()
+    public function createGrandTotalWithDiscountsCalculator()
     {
         return new GrandTotalWithDiscountsCalculator();
     }
@@ -35,8 +34,18 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     /**
      * @return RemoveAllCalculatedDiscountsCalculator
      */
-    public function getRemoveAllCalculatedDiscountsCalculator()
+    public function createRemoveAllCalculatedDiscountsCalculator()
     {
         return new RemoveAllCalculatedDiscountsCalculator();
     }
+
+    /**
+     * @return SumGrossCalculatedDiscountAmountCalculator
+     */
+    public function createSumGrossCalculatedDiscountAmountCalculator()
+    {
+        return new SumGrossCalculatedDiscountAmountCalculator();
+    }
+
+
 }

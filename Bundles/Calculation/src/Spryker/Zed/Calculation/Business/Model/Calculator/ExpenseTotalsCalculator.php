@@ -21,7 +21,9 @@ class ExpenseTotalsCalculator implements CalculatorInterface
         $quoteTransfer->requireTotals();
 
         $quoteTransfer->getTotals()
-            ->setExpenseTotal($this->getCalculatedExpenseTotalAmount($quoteTransfer));
+            ->setExpenseTotal(
+                $this->getCalculatedExpenseTotalAmount($quoteTransfer)
+            );
     }
 
     /**

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,29 +12,21 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
+use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\SumGrossCalculatedDiscountAmountCalculator;
 
-
-/**
- * @group Spryker
- * @group Zed
- * @group DiscountCalculationConnector
- * @group Business
- * @group DiscountTotalsCalculator
- */
-class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
+class SumGrossCalculatedDiscountAmountTest extends \PHPUnit_Framework_TestCase
 {
     const ITEM_GROSS_PRICE_WITH_OPTIONS = 500;
     const ITEM_GROSS_UNIT_PRICE_WITH_OPTIONS = 250;
     const ITEM_QUANTITY = 2;
     const UNIT_GROSS_AMOUNT = 10;
 
-
     /**
      * @return void
      */
-    public function testCalculateTotalsShouldSumAllDiscounts()
+    public function testCalculateTotalsShouldUpdateItemDiscountGrossSumAmounts()
     {
-        $discountTotalsCalculator = $this->createDiscountTotalsCalculator();
+        $discountTotalsCalculator = $this->createSumGrossCalculatedDiscountAmountCalculator();
 
         $calculatedDiscountFixtures = $this->getCalculatedDiscountFixtures();
 
@@ -48,8 +39,60 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $discountTotalsCalculator->recalculate($quoteTransfer);
 
-        $this->assertEquals(120, $quoteTransfer->getTotals()->getDiscountTotal());
+        $itemTransfer = $quoteTransfer->getItems()[0];
 
+        $expectedItemDiscountAmount = 0;
+        foreach ($itemTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
+            $expectedItemDiscountAmount += $calculatedDiscountTransfer->getSumGrossAmount();
+        }
+
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            foreach ($productOptionTransfer->getCalculatedDiscounts() as $calculatedOptionDiscountTransfer) {
+                $expectedItemDiscountAmount += $calculatedOptionDiscountTransfer->getSumGrossAmount();
+            }
+        }
+
+        $this->assertEquals(
+            self::ITEM_GROSS_PRICE_WITH_OPTIONS - $expectedItemDiscountAmount,
+            $itemTransfer->getSumGrossPriceWithProductOptionAndDiscountAmounts()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateTotalsShouldUpdateItemDiscountGrossUnitAmounts()
+    {
+        $discountTotalsCalculator = $this->createSumGrossCalculatedDiscountAmountCalculator();
+
+        $calculatedDiscountFixtures = $this->getCalculatedDiscountFixtures();
+
+        $quoteTransfer = $this->createQuoteTransferWithFixtureData(
+            self::ITEM_QUANTITY,
+            self::ITEM_GROSS_PRICE_WITH_OPTIONS,
+            self::ITEM_GROSS_UNIT_PRICE_WITH_OPTIONS,
+            $calculatedDiscountFixtures
+        );
+
+        $discountTotalsCalculator->recalculate($quoteTransfer);
+
+        $itemTransfer = $quoteTransfer->getItems()[0];
+
+        $expectedItemDiscountAmount = 0;
+        foreach ($itemTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
+            $expectedItemDiscountAmount += $calculatedDiscountTransfer->getUnitGrossAmount();
+        }
+
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            foreach ($productOptionTransfer->getCalculatedDiscounts() as $calculatedOptionDiscountTransfer) {
+                $expectedItemDiscountAmount += $calculatedOptionDiscountTransfer->getUnitGrossAmount();
+            }
+        }
+
+        $this->assertEquals(
+            self::ITEM_GROSS_UNIT_PRICE_WITH_OPTIONS - $expectedItemDiscountAmount,
+            $itemTransfer->getUnitGrossPriceWithProductOptionAndDiscountAmounts()
+        );
     }
 
     /**
@@ -81,9 +124,6 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
             $calculatedDiscountTransfer = $this->createCalculatedDiscountTransfer();
             $calculatedDiscountTransfer->setQuantity($calculatedDiscount['quantity']);
             $calculatedDiscountTransfer->setUnitGrossAmount($calculatedDiscount['unitGrossAmount']);
-            $calculatedDiscountTransfer->setSumGrossAmount(
-                $calculatedDiscount['unitGrossAmount'] * $calculatedDiscount['quantity']
-            );
             $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
             foreach ($itemTransfer->getProductOptions() as $productOption) {
@@ -134,11 +174,11 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return DiscountTotalsCalculator
+     * @return SumGrossCalculatedDiscountAmountCalculator
      */
-    protected function createDiscountTotalsCalculator()
+    protected function createSumGrossCalculatedDiscountAmountCalculator()
     {
-        return new DiscountTotalsCalculator();
+        return new SumGrossCalculatedDiscountAmountCalculator();
     }
 
     /**

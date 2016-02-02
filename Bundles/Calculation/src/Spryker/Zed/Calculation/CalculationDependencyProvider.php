@@ -6,11 +6,10 @@
 
 namespace Spryker\Zed\Calculation;
 
-use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseGrossSumAmountCalculator;
+use Spryker\Zed\Calculation\Communication\Plugin\ExpensesGrossSumAmountCalculatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Container;
-
 use Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\ItemGrossAmountsCalculatorPlugin;
@@ -61,7 +60,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
             new SubtotalTotalsCalculatorPlugin(),
 
             //Expenses (e.g. shipping)
-            new ExpenseGrossSumAmountCalculator(),
+            new ExpensesGrossSumAmountCalculatorPlugin(),
             new ExpenseTotalsCalculatorPlugin(),
 
             //GrandTotal
