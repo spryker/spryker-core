@@ -16,12 +16,23 @@ class RoleForm extends AbstractType
     const FIELD_ID_ROLE = 'id_acl_role';
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'role';
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public /**
+     * @return void
+     */
+    function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
             ->addNameField($builder)
@@ -35,13 +46,12 @@ class RoleForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(self::FIELD_NAME, 'text', [
-                'label' => 'Name',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ]);
+        $builder->add(self::FIELD_NAME, 'text', [
+            'label' => 'Name',
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
 
         return $this;
     }
@@ -53,20 +63,11 @@ class RoleForm extends AbstractType
      */
     protected function addRoleField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(self::FIELD_ID_ROLE, 'hidden', [
-                'label' => 'Role name',
-            ]);
+        $builder->add(self::FIELD_ID_ROLE, 'hidden', [
+            'label' => 'Role name',
+        ]);
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'role';
     }
 
 }

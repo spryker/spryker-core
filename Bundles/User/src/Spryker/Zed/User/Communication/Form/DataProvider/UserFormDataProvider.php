@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\User\Communication\Form\DataProvider;
 
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
@@ -31,6 +30,7 @@ class UserFormDataProvider
 
     /**
      * @param UserToAclInterface $aclFacade
+     * @param UserFacade $userFacade
      */
     public function __construct(UserToAclInterface $aclFacade, UserFacade $userFacade)
     {
@@ -39,6 +39,8 @@ class UserFormDataProvider
     }
 
     /**
+     * @param int $idUser
+     *
      * @return array
      */
     public function getData($idUser)
@@ -88,17 +90,6 @@ class UserFormDataProvider
     protected function formatGroupName($groupName)
     {
         return str_replace('_', ' ', ucfirst($groupName));
-    }
-
-    /**
-     * @return array
-     */
-    protected function getStatusSelectChoices()
-    {
-        return array_combine(
-            SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS),
-            SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS)
-        );
     }
 
     /**

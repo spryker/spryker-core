@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Spryker\Zed\User\Communication\Form;
 
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -24,6 +24,26 @@ class UserForm extends AbstractType
     const FIELD_LAST_NAME = 'last_name';
     const FIELD_PASSWORD = 'password';
     const FIELD_STATUS = 'status';
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'user';
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setRequired(self::OPTION_GROUP_CHOICES);
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -140,47 +160,6 @@ class UserForm extends AbstractType
             ]);
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'user';
-    }
-
-    /**
-     * @param OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setRequired(self::OPTION_GROUP_CHOICES);
-    }
-
-    /**
-     * @param string $groupName
-     *
-     * @return string
-     */
-    protected function formatGroupName($groupName)
-    {
-        return str_replace('_', ' ', ucfirst($groupName));
-    }
-
-    /**
-     * @return array
-     */
-    protected function getStatusSelectChoices()
-    {
-        return array_combine(
-            SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS),
-            SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS)
-        );
     }
 
 }

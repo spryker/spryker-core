@@ -47,7 +47,9 @@ class AclGroupFormDataProvider
      */
     public function getOptions()
     {
-        return [];
+        return [
+            GroupForm::OPTION_ROLE_CHOICES => $this->getAvailableRoleList(),
+        ];
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\User\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserFormDataProvider;
+use Spryker\Zed\User\Communication\Form\DataProvider\UserUpdateFormDataProvider;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 use Spryker\Zed\User\Communication\Table\UsersTable;
@@ -29,9 +30,9 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createResetPasswordForm(UserFacade $userFacade)
     {
-        $form = new ResetPasswordForm($userFacade);
+        $formType = new ResetPasswordForm($userFacade);
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($formType);
     }
 
     /**
@@ -48,7 +49,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      * @param array $data
      * @param array $options
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createUserForm(array $data = [], array $options = [])
     {
@@ -76,6 +77,17 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     public function createUserFormDataProvider()
     {
         return new UserFormDataProvider(
+            $this->getAclFacade(),
+            $this->getProvidedDependency(UserDependencyProvider::FACADE_USER)
+        );
+    }
+
+    /**
+     * @return UserUpdateFormDataProvider
+     */
+    public function createUserUpdateFormDataProvider()
+    {
+        return new UserUpdateFormDataProvider(
             $this->getAclFacade(),
             $this->getProvidedDependency(UserDependencyProvider::FACADE_USER)
         );

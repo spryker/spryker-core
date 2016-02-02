@@ -5,12 +5,13 @@
 
 namespace Spryker\Zed\User\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ResetPasswordForm extends AbstractForm
+class ResetPasswordForm extends AbstractType
 {
 
     const FIELD_CURRENT_PASSWORD = 'current_password';
@@ -32,43 +33,6 @@ class ResetPasswordForm extends AbstractForm
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return void
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(self::FIELD_CURRENT_PASSWORD, 'password', [
-            'label' => 'Current password',
-            'constraints' => [
-                $this->getConstraints()->createConstraintNotBlank(),
-                new CurrentPassword([
-                    'facadeUser' => $this->userFacade,
-                ]),
-            ],
-        ])
-        ->add(self::FIELD_PASSWORD, 'repeated', [
-            'constraints' => [
-                $this->getConstraints()->createConstraintNotBlank(),
-            ],
-            'invalid_message' => 'The password fields must match.',
-            'first_options' => ['label' => 'Password'],
-            'second_options' => ['label' => 'Repeat Password'],
-            'required' => true,
-            'type' => 'password',
-        ]);
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
-    }
-
-    /**
      * @return string
      */
     public function getName()
@@ -77,13 +41,57 @@ class ResetPasswordForm extends AbstractForm
     }
 
     /**
-     * Set the values for fields
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return array
+     * @return void
      */
-    public function populateFormFields()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return [];
+        $this
+            ->addCurrentPasswordField($builder)
+            ->addPasswordField($builder);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCurrentPasswordField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_CURRENT_PASSWORD, 'password', [
+            'label' => 'Current password',
+            'constraints' => [
+                new NotBlank(),
+                new CurrentPassword([
+                    'facadeUser' => $this->userFacade,
+                ]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addPasswordField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_PASSWORD, 'repeated', [
+            'constraints' => [
+                new NotBlank(),
+            ],
+            'invalid_message' => 'The password fields must match.',
+            'first_options' => ['label' => 'Password'],
+            'second_options' => ['label' => 'Repeat Password'],
+            'required' => true,
+            'type' => 'password',
+        ]);
+
+        return $this;
     }
 
 }

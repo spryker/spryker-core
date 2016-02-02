@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,9 +7,23 @@
 namespace Spryker\Zed\User\Communication\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserUpdateForm extends UserForm
 {
+    const OPTION_STATUS_CHOICES = 'status_choices';
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setRequired(self::OPTION_STATUS_CHOICES);
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -23,7 +38,7 @@ class UserUpdateForm extends UserForm
         $builder->remove(self::FIELD_PASSWORD);
 
         $builder->add(self::FIELD_STATUS, 'choice', [
-            'choices' => $this->getStatusSelectChoices(),
+            'choices' => $options[self::OPTION_STATUS_CHOICES],
         ]);
     }
 
