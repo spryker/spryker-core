@@ -20,7 +20,7 @@ class Role implements RoleInterface
 {
 
     /**
-     * @var AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
      */
     protected $queryContainer;
 

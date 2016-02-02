@@ -12,7 +12,7 @@ class ProductSearchToCollectorBridge implements ProductSearchToCollectorInterfac
 {
 
     /**
-     * @var CollectorFacade
+     * @var \Spryker\Zed\Collector\Business\CollectorFacade
      */
     protected $collectorFacade;
 

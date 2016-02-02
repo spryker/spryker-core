@@ -14,7 +14,7 @@ class InstallProductSearch extends AbstractInstaller
 {
 
     /**
-     * @var Client
+     * @var \Elastica\Client
      */
     protected $client;
 

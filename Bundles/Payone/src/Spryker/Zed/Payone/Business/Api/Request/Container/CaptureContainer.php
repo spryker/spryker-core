@@ -39,12 +39,12 @@ class CaptureContainer extends AbstractRequestContainer
     protected $currency;
 
     /**
-     * @var BusinessContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer
      */
     protected $business;
 
     /**
-     * @var TransactionContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     protected $invoicing;
 

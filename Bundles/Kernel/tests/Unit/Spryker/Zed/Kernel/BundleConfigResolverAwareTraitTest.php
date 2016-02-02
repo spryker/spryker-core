@@ -32,7 +32,7 @@ class BundleConfigResolverAwareTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|BundleConfigResolverAwareTrait
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\BundleConfigResolverAwareTrait
      */
     private function getBundleConfigResolverAwareTraitMock()
     {
@@ -40,7 +40,7 @@ class BundleConfigResolverAwareTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractBundleConfig
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\AbstractBundleConfig
      */
     private function getAbstractBundleConfigMock()
     {

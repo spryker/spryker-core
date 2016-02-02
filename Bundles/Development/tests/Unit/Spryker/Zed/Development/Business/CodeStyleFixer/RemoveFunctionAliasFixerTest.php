@@ -16,7 +16,7 @@ class RemoveFunctionAliasFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'RemoveFunctionAliasFixer';
 
     /**
-     * @var RemoveFunctionAliasFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\RemoveFunctionAliasFixer
      */
     protected $fixer;
 

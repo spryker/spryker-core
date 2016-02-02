@@ -21,7 +21,7 @@ interface TransferGeneratorInterface
     public function convertProductCategory(SpyProductCategory $productCategoryEntity);
 
     /**
-     * @param SpyProductCategory[]|ObjectCollection $productCategoryEntityList
+     * @param SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection $productCategoryEntityList
      *
      * @return ProductCategoryTransfer[]
      */

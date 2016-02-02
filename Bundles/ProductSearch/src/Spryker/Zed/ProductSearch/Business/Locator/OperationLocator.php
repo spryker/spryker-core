@@ -31,7 +31,7 @@ class OperationLocator implements OperationLocatorInterface
     /**
      * @param string $name
      *
-     * @return OperationInterface|null
+     * @return \Spryker\Zed\ProductSearch\Business\Operation\OperationInterface|null
      */
     public function findOperationByName($name = self::COPY_TO_FIELD)
     {

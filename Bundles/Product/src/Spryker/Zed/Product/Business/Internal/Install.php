@@ -13,7 +13,7 @@ class Install extends AbstractInstaller
 {
 
     /**
-     * @var AttributeManagerInterface
+     * @var \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
     protected $attributeManager;
 

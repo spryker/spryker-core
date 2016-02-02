@@ -23,7 +23,7 @@ interface TransferGeneratorInterface
     public function convertCategory(SpyCategory $categoryEntity);
 
     /**
-     * @param SpyCategory[]|ObjectCollection $categoryEntityList
+     * @param SpyCategory[]|\Propel\Runtime\Collection\ObjectCollection $categoryEntityList
      *
      * @return CategoryTransfer[]
      */
@@ -37,7 +37,7 @@ interface TransferGeneratorInterface
     public function convertCategoryNode(SpyCategoryNode $nodeEntity);
 
     /**
-     * @param SpyCategoryNode[]|ObjectCollection $categoryNodeEntityList
+     * @param SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection $categoryNodeEntityList
      *
      * @return NodeTransfer[]
      */

@@ -37,7 +37,7 @@ class DistributorTest extends Test
     const DISCOUNT_AMOUNT_NEGATIVE = -100;
 
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 

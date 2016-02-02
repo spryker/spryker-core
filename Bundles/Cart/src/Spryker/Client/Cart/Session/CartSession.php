@@ -16,7 +16,7 @@ class CartSession implements CartSessionInterface
     const CART_SESSION_ITEM_COUNT_IDENTIFIER = 'cart item count session identifier';
 
     /**
-     * @var SessionInterface
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     private $session;
 

@@ -17,7 +17,7 @@ class AttributeManager implements AttributeManagerInterface
 {
 
     /**
-     * @var ProductQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
 

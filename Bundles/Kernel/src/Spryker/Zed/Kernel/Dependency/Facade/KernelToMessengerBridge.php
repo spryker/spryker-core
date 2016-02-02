@@ -12,7 +12,7 @@ class KernelToMessengerBridge implements KernelToMessengerInterface
 {
 
     /**
-     * @var MessengerFacade
+     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
      */
     protected $messengerFacade;
 

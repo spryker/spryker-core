@@ -22,7 +22,7 @@ class LoggerFactory
     /**
      * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
      *
-     * @return LoggerInterface|null
+     * @return \Psr\Log\LoggerInterface|null
      */
     public static function getInstance(LoggerConfigInterface $loggerConfig = null)
     {

@@ -19,7 +19,7 @@ abstract class AbstractPlugin
     private $factory;
 
     /**
-     * @var AbstractClient
+     * @var \Spryker\Client\Kernel\AbstractClient
      */
     private $client;
 

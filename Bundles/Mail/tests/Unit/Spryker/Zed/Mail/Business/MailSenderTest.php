@@ -37,7 +37,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
     protected $inclusionHandler;
 
     /**
-     * @var MandrillMailSender
+     * @var \Spryker\Zed\Mail\Business\MandrillMailSender
      */
     protected $mailSender;
 

@@ -14,7 +14,7 @@ class MockOrderHydrator implements CheckoutOrderHydrationInterface
 {
 
     /**
-     * @var OrderTransfer
+     * @var \Generated\Shared\Transfer\OrderTransfer
      */
     private $orderTransfer;
 

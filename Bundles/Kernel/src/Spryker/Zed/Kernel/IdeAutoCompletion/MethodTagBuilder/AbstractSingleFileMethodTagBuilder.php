@@ -102,7 +102,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
      * @param string $name
      * @param string $pattern
      *
-     * @return bool|SplFileInfo
+     * @return bool|\Symfony\Component\Finder\SplFileInfo
      */
     protected function findByNameAndPattern($name, $pattern)
     {
@@ -127,7 +127,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
      * @param string $fileName
      * @param string $path
      *
-     * @return bool|SplFileInfo
+     * @return bool|\Symfony\Component\Finder\SplFileInfo
      */
     private function getFileIn($fileName, $path)
     {

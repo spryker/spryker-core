@@ -25,27 +25,27 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
 
     /**
-     * @var CmsToGlossaryInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @var TemplateManagerInterface
+     * @var \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
      */
     protected $templateManager;
 
     /**
-     * @var PageManagerInterface
+     * @var \Spryker\Zed\Cms\Business\Page\PageManagerInterface
      */
     protected $pageManager;
 
     /**
-     * @var ConnectionInterface
+     * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $connection;
 
@@ -240,7 +240,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $placeholder
      * @param string $value
-     * @param LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      * @param bool $autoGlossaryKeyIncrement
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
@@ -342,7 +342,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     /**
      * @param string $keyName
      * @param string $value
-     * @param LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
@@ -377,7 +377,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @param string $placeholder
      * @param string $keyName
      * @param string $value
-     * @param LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */

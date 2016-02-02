@@ -20,12 +20,12 @@ class ExportProcessor implements ExportProcessorInterface
     const CONSTRAINT_ALWAYS = 'ALWAYS';
 
     /**
-     * @var ProductOptionExporterToProductOptionInterface
+     * @var \Spryker\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductOptionInterface
      */
     protected $productOptionFacade;
 
     /**
-     * @var ProductOptionExporterToProductInterface
+     * @var \Spryker\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductInterface
      */
     protected $productFacade;
 

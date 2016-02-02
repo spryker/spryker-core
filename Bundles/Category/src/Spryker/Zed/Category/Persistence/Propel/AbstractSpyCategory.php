@@ -26,7 +26,7 @@ abstract class AbstractSpyCategory extends BaseSpyCategory
     /**
      * @param int $idLocale
      *
-     * @return SpyCategoryAttribute[]|ObjectCollection
+     * @return SpyCategoryAttribute[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getLocalisedAttributes($idLocale)
     {

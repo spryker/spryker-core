@@ -15,12 +15,12 @@ class InMemory implements StorageInterface
 {
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $facadeProduct;
 
     /**
-     * @var WishlistTransfer
+     * @var \Generated\Shared\Transfer\WishlistTransfer
      */
     protected $wishlistTransfer;
 

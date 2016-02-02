@@ -11,7 +11,7 @@ class ProductOptionToLocaleBridge implements ProductOptionToLocaleInterface
 {
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 

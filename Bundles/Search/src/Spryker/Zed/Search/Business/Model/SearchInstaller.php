@@ -18,7 +18,7 @@ class SearchInstaller implements SearchInstallerInterface
     private $installer;
 
     /**
-     * @var MessengerInterface
+     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
      */
     private $messenger;
 

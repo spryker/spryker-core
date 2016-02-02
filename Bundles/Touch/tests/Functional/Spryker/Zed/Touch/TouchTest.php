@@ -24,12 +24,12 @@ class TouchTest extends Test
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 
     /**
-     * @var TouchQueryContainerInterface
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected $touchQueryContainer;
 

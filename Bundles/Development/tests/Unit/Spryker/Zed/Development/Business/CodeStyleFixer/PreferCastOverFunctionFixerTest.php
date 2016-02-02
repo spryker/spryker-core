@@ -17,7 +17,7 @@ class PreferCastOverFunctionFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'PreferCastOverFunctionFixer';
 
     /**
-     * @var PreferCastOverFunctionFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\PreferCastOverFunctionFixer
      */
     protected $fixer;
 

@@ -25,12 +25,12 @@ class Catalog implements CatalogInterface
     const PRODUCT_VARIETY_BUNDLE = 'Bundle';
 
     /**
-     * @var KeyBuilderInterface
+     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected $productKeyBuilder;
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     protected $storageReader;
 

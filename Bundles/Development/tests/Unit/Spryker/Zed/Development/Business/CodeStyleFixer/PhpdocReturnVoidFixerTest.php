@@ -16,7 +16,7 @@ class PhpdocReturnVoidFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'PhpdocReturnVoidFixer';
 
     /**
-     * @var PhpdocReturnVoidFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\PhpdocReturnVoidFixer
      */
     protected $fixer;
 

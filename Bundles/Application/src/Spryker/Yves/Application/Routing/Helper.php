@@ -10,7 +10,7 @@ class Helper
 {
 
     /**
-     * @var Application
+     * @var \Silex\Application
      */
     protected $app;
 

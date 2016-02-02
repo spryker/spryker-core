@@ -13,7 +13,7 @@ class PayolutionStub implements PayolutionStubInterface
 {
 
     /**
-     * @var ZedRequestClient
+     * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
     protected $zedRequestClient;
 

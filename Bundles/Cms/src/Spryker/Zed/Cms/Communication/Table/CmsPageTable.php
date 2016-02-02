@@ -20,7 +20,7 @@ class CmsPageTable extends AbstractTable
     const REQUEST_ID_PAGE = 'id-page';
 
     /**
-     * @var SpyCmsPageQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     protected $pageQuery;
 

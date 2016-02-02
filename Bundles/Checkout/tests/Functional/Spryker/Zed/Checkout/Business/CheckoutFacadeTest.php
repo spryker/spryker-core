@@ -39,7 +39,7 @@ class CheckoutFacadeTest extends Test
 {
 
     /**
-     * @var CheckoutFacade
+     * @var \Spryker\Zed\Checkout\Business\CheckoutFacade
      */
     protected $checkoutFacade;
 

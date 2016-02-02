@@ -12,7 +12,7 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
 {
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $productFacade;
 

@@ -149,7 +149,7 @@ class GraphTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|GraphAdapterInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Tool\Graph\GraphAdapterInterface
      */
     private function createAdapterMock()
     {

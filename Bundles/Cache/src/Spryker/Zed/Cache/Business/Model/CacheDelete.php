@@ -14,7 +14,7 @@ class CacheDelete
 {
 
     /**
-     * @var CacheConfig
+     * @var \Spryker\Zed\Cache\CacheConfig
      */
     protected $config;
 

@@ -20,12 +20,12 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
 {
 
     /**
-     * @var ControllerCollection
+     * @var \Silex\ControllerCollection
      */
     private $controllerCollection;
 
     /**
-     * @var Application
+     * @var \Silex\Application
      */
     private $app;
 
@@ -50,7 +50,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     /**
      * @param \Silex\Application $app
      *
-     * @return mixed|ControllerCollection
+     * @return mixed|\Silex\ControllerCollection
      */
     public function connect(Application $app)
     {

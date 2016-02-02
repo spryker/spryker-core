@@ -19,7 +19,7 @@ class FileImporter implements FileImporterInterface
 {
 
     /**
-     * @var DataValidatorInterface
+     * @var \Spryker\Zed\Product\Business\Validator\DataValidatorInterface
      */
     protected $importProductValidator;
 
@@ -29,12 +29,12 @@ class FileImporter implements FileImporterInterface
     protected $fileReader;
 
     /**
-     * @var ProductBuilderInterface
+     * @var \Spryker\Zed\Product\Business\Builder\ProductBuilderInterface
      */
     protected $productBuilder;
 
     /**
-     * @var ProductWriterInterface
+     * @var \Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface
      */
     protected $productWriter;
 
@@ -46,7 +46,7 @@ class FileImporter implements FileImporterInterface
     private $invalidProducts = [];
 
     /**
-     * @var ProductBatchResultInterface
+     * @var \Spryker\Zed\Product\Business\Model\ProductBatchResultInterface
      */
     private $productBatchResult;
 
@@ -126,7 +126,7 @@ class FileImporter implements FileImporterInterface
     /**
      * @param array $data
      *
-     * @return ProductAbstractTransfer|ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|\Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected function process(array $data)
     {

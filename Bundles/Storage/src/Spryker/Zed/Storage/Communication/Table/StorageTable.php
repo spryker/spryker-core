@@ -16,7 +16,7 @@ class StorageTable extends AbstractTable
     const ACTIONS = 'Actions';
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     protected $storageClient;
 

@@ -16,17 +16,17 @@ abstract class AbstractSender
 {
 
     /**
-     * @var CustomerMailConnectorConfig
+     * @var \Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig
      */
     protected $config;
 
     /**
-     * @var CustomerMailConnectorToMailInterface
+     * @var \Spryker\Zed\CustomerMailConnector\Dependency\Facade\CustomerMailConnectorToMailInterface
      */
     protected $mailFacade;
 
     /**
-     * @var CustomerMailConnectorToGlossaryInterface
+     * @var \Spryker\Zed\CustomerMailConnector\Dependency\Facade\CustomerMailConnectorToGlossaryInterface
      */
     protected $glossaryFacade;
 

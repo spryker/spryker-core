@@ -11,7 +11,7 @@ class BaseMessageTray
 {
 
     /**
-     * @var MessengerToGlossaryInterface
+     * @var \Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface
      */
     protected $glossaryFacade;
 

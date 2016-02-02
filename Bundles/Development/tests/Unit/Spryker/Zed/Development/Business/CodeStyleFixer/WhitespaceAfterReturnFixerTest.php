@@ -17,7 +17,7 @@ class WhitespaceAfterReturnFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'WhitespaceAfterReturnFixer';
 
     /**
-     * @var WhitespaceAfterReturnFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\WhitespaceAfterReturnFixer
      */
     protected $fixer;
 

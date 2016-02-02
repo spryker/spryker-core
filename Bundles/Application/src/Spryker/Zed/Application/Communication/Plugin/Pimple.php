@@ -19,7 +19,7 @@ class Pimple extends AbstractPlugin
 {
 
     /**
-     * @var Application
+     * @var \Spryker\Shared\Application\Communication\Application
      */
     protected static $application;
 

@@ -13,7 +13,7 @@ class PayoneToOmsBridge implements PayoneToOmsInterface
 {
 
     /**
-     * @var OmsFacade
+     * @var \Spryker\Zed\Oms\Business\OmsFacade
      */
     protected $omsFacade;
 

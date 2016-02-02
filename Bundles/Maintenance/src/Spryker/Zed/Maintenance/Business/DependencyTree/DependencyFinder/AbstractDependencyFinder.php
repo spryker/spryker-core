@@ -20,12 +20,12 @@ abstract class AbstractDependencyFinder
     const LAYER_COMMUNICATION = 'Communication';
 
     /**
-     * @var AbstractDependencyTree
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\AbstractDependencyTree
      */
     private $dependencyTree;
 
     /**
-     * @var FileInfoExtractor
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor
      */
     private $fileInfoExtractor;
 

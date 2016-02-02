@@ -13,7 +13,7 @@ class NavigationCollector implements NavigationCollectorInterface
 {
 
     /**
-     * @var NavigationSchemaFinderInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinderInterface
      */
     private $navigationSchemaFinder;
 

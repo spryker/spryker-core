@@ -17,7 +17,7 @@ class OrderManager implements OrderManagerInterface
 {
 
     /**
-     * @var PayoneConfig
+     * @var \Spryker\Zed\Payone\PayoneConfig
      */
     private $config;
 

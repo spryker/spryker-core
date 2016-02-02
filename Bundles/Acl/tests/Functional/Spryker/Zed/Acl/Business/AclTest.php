@@ -24,17 +24,17 @@ class AclTest extends Test
 {
 
     /**
-     * @var AclFacade
+     * @var \Spryker\Zed\Acl\Business\AclFacade
      */
     protected $facade;
 
     /**
-     * @var UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacade
      */
     protected $userFacade;
 
     /**
-     * @var RolesTransfer
+     * @var \Generated\Shared\Transfer\RolesTransfer
      */
     protected $rolesTransfer;
 

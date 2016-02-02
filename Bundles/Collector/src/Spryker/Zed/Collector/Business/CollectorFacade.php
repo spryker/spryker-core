@@ -21,7 +21,7 @@ class CollectorFacade extends AbstractFacade
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param OutputInterface|null $output
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
      * @return BatchResultInterface[]
      */

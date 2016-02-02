@@ -14,12 +14,12 @@ class DiscountVoucherCodesTable extends AbstractTable
 {
 
     /**
-     * @var SpyDiscountQuery
+     * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     protected $discountQueryContainer;
 
     /**
-     * @var DataTablesTransfer
+     * @var \Generated\Shared\Transfer\DataTablesTransfer
      */
     protected $dataTablesTransfer;
 

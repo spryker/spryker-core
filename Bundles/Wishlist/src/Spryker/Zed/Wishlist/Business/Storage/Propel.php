@@ -21,27 +21,27 @@ class Propel implements StorageInterface
 {
 
     /**
-     * @var WishlistQueryContainerInterface
+     * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
      */
     protected $wishlistQueryContainer;
 
     /**
-     * @var CustomerTransfer
+     * @var \Generated\Shared\Transfer\CustomerTransfer
      */
     protected $customerTransfer;
 
     /**
-     * @var WishlistTransfer
+     * @var \Generated\Shared\Transfer\WishlistTransfer
      */
     protected $wishlistTransfer;
 
     /**
-     * @var Customer
+     * @var \Spryker\Zed\Wishlist\Business\Model\Customer
      */
     protected $customer;
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $facadeProduct;
 
@@ -181,7 +181,7 @@ class Propel implements StorageInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItemTransfer
      * @param int $idWishlist
      *
-     * @return SpyWishlistItem|null
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItem|null
      */
     protected function getWishlistItemEntity(ItemTransfer $wishlistItemTransfer, $idWishlist)
     {

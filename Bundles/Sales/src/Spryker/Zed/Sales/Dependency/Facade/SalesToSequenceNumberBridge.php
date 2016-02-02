@@ -13,7 +13,7 @@ class SalesToSequenceNumberBridge implements SalesToSequenceNumberInterface
 {
 
     /**
-     * @var SequenceNumberFacade
+     * @var \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade
      */
     protected $sequenceNumberFacade;
 

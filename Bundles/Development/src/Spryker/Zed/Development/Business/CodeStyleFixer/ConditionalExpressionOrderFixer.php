@@ -42,7 +42,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     /**
      * @see http://php.net/manual/en/language.operators.precedence.php
      *
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      *
      * @return void
      */
@@ -125,7 +125,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      * @param int $comparisonIndex
      *
      * @return int
@@ -150,7 +150,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      * @param int $index
      *
      * @return int
@@ -207,7 +207,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      * @param int $index
      * @param int $leftIndexStart
      * @param int int $leftIndexEnd

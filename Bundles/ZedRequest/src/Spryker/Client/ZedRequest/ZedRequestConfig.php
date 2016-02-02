@@ -13,7 +13,7 @@ class ZedRequestConfig
 {
 
     /**
-     * @var Config
+     * @var \Spryker\Shared\Config
      */
     protected $config;
 

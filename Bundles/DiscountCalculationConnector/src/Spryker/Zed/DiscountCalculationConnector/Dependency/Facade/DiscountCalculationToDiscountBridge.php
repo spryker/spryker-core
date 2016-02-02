@@ -13,7 +13,7 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
 {
 
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 

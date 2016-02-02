@@ -24,7 +24,7 @@ class DiscountsTable extends AbstractTable
     const URL_DISCOUNT_CART_RULE_EDIT = '/discount/cart-rule/edit';
 
     /**
-     * @var SpyDiscountQuery
+     * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     protected $discountQuery;
 

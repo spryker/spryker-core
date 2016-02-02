@@ -23,7 +23,7 @@ class Writer implements WriterInterface
     const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**
-     * @var StockQueryContainer
+     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainer
      */
     protected $queryContainer;
 
@@ -33,7 +33,7 @@ class Writer implements WriterInterface
     protected $reader;
 
     /**
-     * @var StockToTouchInterface
+     * @var \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface
      */
     protected $touchFacade;
 

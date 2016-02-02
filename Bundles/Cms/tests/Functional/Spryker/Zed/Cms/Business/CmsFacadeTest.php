@@ -33,37 +33,37 @@ class CmsFacadeTest extends Test
 {
 
     /**
-     * @var CmsFacade
+     * @var \Spryker\Zed\Cms\Business\CmsFacade
      */
     protected $cmsFacade;
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @var GlossaryFacade
+     * @var \Spryker\Zed\Glossary\Business\GlossaryFacade
      */
     protected $glossaryFacade;
 
     /**
-     * @var UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacade
      */
     protected $urlFacade;
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 
     /**
-     * @var GlossaryQueryContainerInterface
+     * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
     protected $glossaryQueryContainer;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

@@ -11,7 +11,7 @@ class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 

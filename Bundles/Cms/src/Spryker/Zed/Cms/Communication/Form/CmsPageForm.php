@@ -27,12 +27,12 @@ class CmsPageForm extends AbstractForm
     const FIELD_IS_ACTIVE = 'is_active';
 
     /**
-     * @var SpyCmsTemplateQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
     protected $templateQuery;
 
     /**
-     * @var SpyCmsPageQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     protected $pageUrlByIdQuery;
 
@@ -47,7 +47,7 @@ class CmsPageForm extends AbstractForm
     protected $idPage;
 
     /**
-     * @var CmsToUrlInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
      */
     protected $urlFacade;
 

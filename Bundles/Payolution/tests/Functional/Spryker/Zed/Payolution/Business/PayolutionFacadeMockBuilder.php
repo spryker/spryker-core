@@ -52,7 +52,7 @@ class PayolutionFacadeMockBuilder
     /**
      * @param \PHPUnit_Framework_TestCase $testCase
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|PayolutionBusinessFactory
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payolution\Business\PayolutionBusinessFactory
      */
     protected static function getBusinessFactoryMock(\PHPUnit_Framework_TestCase $testCase)
     {

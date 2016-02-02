@@ -32,7 +32,7 @@ class QueryContainerResolverAwareTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|QueryContainerResolverAwareTrait
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\QueryContainerResolverAwareTrait
      */
     private function getQueryContainerResolverAwareTraitMock()
     {
@@ -40,7 +40,7 @@ class QueryContainerResolverAwareTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractQueryContainer
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private function getAbstractQueryContainerMock()
     {

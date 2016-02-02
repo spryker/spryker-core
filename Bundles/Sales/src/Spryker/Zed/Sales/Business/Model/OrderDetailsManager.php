@@ -25,12 +25,12 @@ class OrderDetailsManager
 {
 
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var SalesToOmsInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     protected $omsFacade;
 

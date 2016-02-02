@@ -12,7 +12,7 @@ class AvailabilityCheckoutConnectorToAvailabilityBridge implements AvailabilityC
 {
 
     /**
-     * @var AvailabilityFacade
+     * @var \Spryker\Zed\Availability\Business\AvailabilityFacade
      */
     protected $availabilityFacade;
 

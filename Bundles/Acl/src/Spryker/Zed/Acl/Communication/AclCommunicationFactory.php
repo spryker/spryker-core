@@ -147,7 +147,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
-     * @return Form|FormInterface
+     * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
      */
     public function createRulesetForm(RuleTransfer $ruleTransfer)
     {

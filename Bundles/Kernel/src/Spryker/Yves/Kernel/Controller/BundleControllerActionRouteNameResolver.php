@@ -16,12 +16,12 @@ class BundleControllerActionRouteNameResolver implements RouteNameResolverInterf
 {
 
     /**
-     * @var BundleControllerActionInterface
+     * @var \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface
      */
     private $bundleControllerAction;
 
     /**
-     * @var CamelCaseToDash
+     * @var \Zend\Filter\Word\CamelCaseToDash
      */
     private $filter;
 

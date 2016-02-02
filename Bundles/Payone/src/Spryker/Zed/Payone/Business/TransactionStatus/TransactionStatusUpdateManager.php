@@ -19,17 +19,17 @@ class TransactionStatusUpdateManager
 {
 
     /**
-     * @var PayoneQueryContainerInterface
+     * @var \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var PayoneStandardParameterTransfer
+     * @var \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected $standardParameter;
 
     /**
-     * @var HashGenerator
+     * @var \Spryker\Zed\Payone\Business\Key\HashGenerator
      */
     protected $hashGenerator;
 
@@ -125,7 +125,7 @@ class TransactionStatusUpdateManager
     /**
      * @param \Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface $request
      *
-     * @return bool|TransactionStatusResponse
+     * @return bool|\Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
      */
     protected function validate(TransactionStatusUpdateInterface $request)
     {
@@ -328,7 +328,7 @@ class TransactionStatusUpdateManager
      * @param int $idSalesOrderItem
      * @param string $status
      *
-     * @return SpyPaymentPayoneTransactionStatusLog|null
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog|null
      */
     private function getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status)
     {

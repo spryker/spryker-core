@@ -67,7 +67,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected static $timeoutInSeconds = 60;
 
     /**
-     * @var AuthClientInterface
+     * @var \Spryker\Client\Auth\AuthClientInterface
      */
     protected $authClient;
 
@@ -100,7 +100,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param TransferInterface|null $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
      * @param null $timeoutInSeconds
      * @param bool $isBackgroundRequest

@@ -23,12 +23,12 @@ class GroupForm extends AbstractForm
     const VALIDATE_EDIT = 'edit';
 
     /**
-     * @var AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 

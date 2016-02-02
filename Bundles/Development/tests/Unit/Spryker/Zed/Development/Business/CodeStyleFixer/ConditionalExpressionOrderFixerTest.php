@@ -16,7 +16,7 @@ class ConditionalExpressionOrderFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'ConditionalExpressionOrderFixer';
 
     /**
-     * @var ConditionalExpressionOrderFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\ConditionalExpressionOrderFixer
      */
     protected $fixer;
 

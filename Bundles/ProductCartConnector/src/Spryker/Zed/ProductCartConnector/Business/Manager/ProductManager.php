@@ -14,7 +14,7 @@ class ProductManager implements ProductManagerInterface
 {
 
     /**
-     * @var ProductCartConnectorToProductInterface
+     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
      */
     private $productFacade;
 

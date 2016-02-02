@@ -217,7 +217,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|DiscountItemsTransfer $discounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountItemsTransfer $discounts
      *
      * @return int
      */

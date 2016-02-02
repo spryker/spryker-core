@@ -32,7 +32,7 @@ class MethodTable extends AbstractTable
     const ID_METHOD_PARAMETER = 'id-method';
 
     /**
-     * @var SpyShipmentMethodQuery
+     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     protected $methodQuery;
 

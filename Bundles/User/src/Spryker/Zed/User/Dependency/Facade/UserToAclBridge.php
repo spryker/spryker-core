@@ -11,7 +11,7 @@ class UserToAclBridge implements UserToAclInterface
 {
 
     /**
-     * @var AclFacade
+     * @var \Spryker\Zed\Acl\Business\AclFacade
      */
     protected $aclFacade;
 

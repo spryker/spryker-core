@@ -12,7 +12,7 @@ class Group
 {
 
     /**
-     * @var ItemTransfer
+     * @var \Generated\Shared\Transfer\ItemTransfer
      */
     private $groupedItems = [];
 

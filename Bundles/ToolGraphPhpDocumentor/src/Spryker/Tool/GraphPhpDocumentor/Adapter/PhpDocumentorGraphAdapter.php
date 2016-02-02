@@ -16,12 +16,12 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
 {
 
     /**
-     * @var Graph
+     * @var \phpDocumentor\GraphViz\Graph
      */
     private $graph;
 
     /**
-     * @param PhpDocumentorGraph|null $graph
+     * @param \Spryker\Tool\GraphPhpDocumentor\PhpDocumentorGraph|null $graph
      */
     public function __construct(PhpDocumentorGraph $graph = null)
     {
@@ -169,7 +169,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
 
     /**
      * @param array $attributes
-     * @param Edge|Node|Graph $element
+     * @param \phpDocumentor\GraphViz\Edge|\phpDocumentor\GraphViz\Node|\phpDocumentor\GraphViz\Graph $element
      *
      * @return void
      */

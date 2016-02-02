@@ -32,7 +32,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
 {
 
     /**
-     * @var SprykerApplication
+     * @var \Spryker\Yves\Application\Application
      */
     private $app;
 

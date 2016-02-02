@@ -49,7 +49,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $postSaveHookStack;
 
     /**
-     * @var CheckoutToOmsInterface
+     * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface
      */
     protected $omsFacade;
 

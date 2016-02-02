@@ -18,7 +18,7 @@ class DateFormatterTwigExtension extends \Twig_Extension
     ];
 
     /**
-     * @var DateFormatter
+     * @var \Spryker\Shared\Library\DateFormatter
      */
     private $dateFormatter;
 

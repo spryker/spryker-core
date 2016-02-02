@@ -15,7 +15,7 @@ class CurrentPasswordValidator extends ConstraintValidator
 
     /**
      * @param mixed $value
-     * @param Constraint|CurrentPassword $constraint
+     * @param \Symfony\Component\Validator\Constraint|CurrentPassword $constraint
      *
      * @return void
      */

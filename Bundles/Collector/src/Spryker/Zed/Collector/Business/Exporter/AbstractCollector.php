@@ -26,22 +26,22 @@ abstract class AbstractCollector implements ExporterInterface
     protected $collectorPlugins = [];
 
     /**
-     * @var FailedResultInterface
+     * @var \Spryker\Zed\Collector\Business\Model\FailedResultInterface
      */
     protected $failedResultPrototype;
 
     /**
-     * @var BatchResultInterface
+     * @var \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
     protected $batchResultPrototype;
 
     /**
-     * @var WriterInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
      */
     protected $writer;
 
     /**
-     * @var TouchUpdaterInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
      */
     protected $touchUpdater;
 
@@ -51,7 +51,7 @@ abstract class AbstractCollector implements ExporterInterface
     protected $marker;
 
     /**
-     * @var TouchQueryContainer
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected $queryContainer;
 

@@ -13,7 +13,7 @@ class CartToItemGrouperBridge implements CartToItemGrouperInterface
 {
 
     /**
-     * @var ItemGrouperFacade
+     * @var \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade
      */
     protected $itemGrouperFacade;
 

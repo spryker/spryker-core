@@ -23,7 +23,7 @@ class CategoryTreeRenderer
     protected $fontSize = 11;
 
     /**
-     * @var CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     protected $queryContainer;
 
@@ -33,7 +33,7 @@ class CategoryTreeRenderer
     protected $locale;
 
     /**
-     * @var GraphInterface
+     * @var \Spryker\Tool\Graph\GraphInterface
      */
     protected $graph;
 

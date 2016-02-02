@@ -29,12 +29,12 @@ class CartRuleForm extends AbstractRuleForm
     const DATE_NOW = 'now';
 
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
 

@@ -17,7 +17,7 @@ class ResetPasswordForm extends AbstractForm
     const FIELD_PASSWORD = 'password';
 
     /**
-     * @var UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacade
      */
     protected $userFacade;
 

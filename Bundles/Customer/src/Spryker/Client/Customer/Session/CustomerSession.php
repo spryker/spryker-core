@@ -15,7 +15,7 @@ class CustomerSession implements CustomerSessionInterface
     const SESSION_KEY = 'customer data';
 
     /**
-     * @var SessionClientInterface
+     * @var \Spryker\Client\Session\SessionClientInterface
      */
     private $sessionClient;
 

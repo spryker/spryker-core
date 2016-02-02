@@ -12,7 +12,7 @@ class Request extends \Spryker\Shared\Library\Communication\Request
 {
 
     /**
-     * @var TransferInterface
+     * @var \Spryker\Shared\Transfer\TransferInterface
      */
     private $transfer;
 

@@ -16,7 +16,7 @@ class MethodArgumentDefaultValueFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'MethodArgumentDefaultValueFixer';
 
     /**
-     * @var MethodArgumentDefaultValueFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\MethodArgumentDefaultValueFixer
      */
     protected $fixer;
 

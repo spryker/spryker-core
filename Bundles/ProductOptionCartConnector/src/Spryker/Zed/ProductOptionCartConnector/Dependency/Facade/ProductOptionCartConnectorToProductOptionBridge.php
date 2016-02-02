@@ -11,7 +11,7 @@ class ProductOptionCartConnectorToProductOptionBridge implements ProductOptionCa
 {
 
     /**
-     * @var ProductOptionFacade
+     * @var \Spryker\Zed\ProductOption\Business\ProductOptionFacade
      */
     protected $productOptionFacade;
 

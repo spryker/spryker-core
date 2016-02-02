@@ -30,22 +30,22 @@ class VoucherEngine
     protected $remainingCodesToGenerate = null;
 
     /**
-     * @var DiscountConfigInterface
+     * @var \Spryker\Zed\Discount\DiscountConfigInterface
      */
     protected $settings;
 
     /**
-     * @var DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var DiscountToMessengerInterface
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected $messengerFacade;
 
     /**
-     * @var ConnectionInterface
+     * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $connection;
 

@@ -20,7 +20,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 {
 
     /**
-     * @var PriceCalculationHelperInterface
+     * @var \Spryker\Zed\Calculation\Business\Model\PriceCalculationHelperInterface
      */
     protected $priceCalculationHelper;
 
@@ -71,7 +71,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param ItemTransfer|ItemTransfer $taxableItem
+     * @param \Generated\Shared\Transfer\ItemTransfer|\Generated\Shared\Transfer\ItemTransfer $taxableItem
      *
      * @return void
      */

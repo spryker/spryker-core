@@ -10,7 +10,7 @@ class DetailsTable extends AbstractTable
 {
 
     /**
-     * @var SpyCountryQuery
+     * @var \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
     protected $countryQuery;
 

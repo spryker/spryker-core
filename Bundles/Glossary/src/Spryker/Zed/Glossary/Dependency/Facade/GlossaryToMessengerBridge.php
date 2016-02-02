@@ -13,7 +13,7 @@ class GlossaryToMessengerBridge implements GlossaryToMessengerInterface
 {
 
     /**
-     * @var MessengerFacade
+     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
      */
     protected $messengerFacade;
 

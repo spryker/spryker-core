@@ -47,7 +47,7 @@ class ConfigResolverTest extends AbstractResolverTest
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|BundleConfigResolver
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver
      */
     protected function getResolverMock(array $methods)
     {

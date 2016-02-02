@@ -23,17 +23,17 @@ class CalculatorTest extends Test
 {
 
     /**
-     * @var StockFacade
+     * @var \Spryker\Zed\Stock\Business\StockFacade
      */
     private $stockFacade;
 
     /**
-     * @var StockQueryContainer
+     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainer
      */
     private $stockQueryContainer;
 
     /**
-     * @var SpyProduct
+     * @var \Orm\Zed\Product\Persistence\SpyProduct
      */
     private $productEntity;
 

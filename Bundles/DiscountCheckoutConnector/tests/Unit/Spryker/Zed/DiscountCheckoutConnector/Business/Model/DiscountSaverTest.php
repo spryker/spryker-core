@@ -160,7 +160,7 @@ class DiscountSaverTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     private function getDiscountQueryContainerMock(array $methods = [])
     {
@@ -173,7 +173,7 @@ class DiscountSaverTest extends \PHPUnit_Framework_TestCase
      * @param array $discountSaverMethods
      * @param array $queryContainerMethods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountSaver
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver
      */
     private function getDiscountSaverMock(array $discountSaverMethods = [], array $queryContainerMethods = [])
     {

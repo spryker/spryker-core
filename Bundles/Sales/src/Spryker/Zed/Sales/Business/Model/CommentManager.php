@@ -15,7 +15,7 @@ class CommentManager
 {
 
     /**
-     * @var SalesQueryContainer
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainer
      */
     protected $queryContainer;
 

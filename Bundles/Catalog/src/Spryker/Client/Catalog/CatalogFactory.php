@@ -27,7 +27,7 @@ class CatalogFactory extends AbstractFactory
 {
 
     /**
-     * @var Catalog
+     * @var \Generated\Client\Ide\FactoryAutoCompletion\Catalog
      */
     protected $factory;
 

@@ -16,22 +16,22 @@ class PasswordReset
 {
 
     /**
-     * @var AuthQueryContainer
+     * @var \Spryker\Zed\Auth\Persistence\AuthQueryContainer
      */
     protected $authQueryContainer;
 
     /**
-     * @var AuthPasswordResetSenderInterface
+     * @var \Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface
      */
     protected $userPasswordResetNotificationSender;
 
     /**
-     * @var AuthToUserBridge
+     * @var \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge
      */
     protected $facadeUser;
 
     /**
-     * @var AuthConfig
+     * @var \Spryker\Zed\Auth\AuthConfig
      */
     protected $authConfig;
 

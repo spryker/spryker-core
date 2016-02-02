@@ -12,7 +12,7 @@ class Storage
 {
 
     /**
-     * @var StorageClient
+     * @var \Spryker\Client\Storage\StorageClient
      */
     private $storageClient;
 

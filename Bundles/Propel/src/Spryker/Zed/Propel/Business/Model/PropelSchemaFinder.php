@@ -27,7 +27,7 @@ class PropelSchemaFinder implements PropelSchemaFinderInterface
     }
 
     /**
-     * @return Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|SplFileInfo[]
      */
     public function getSchemaFiles()
     {

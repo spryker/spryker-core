@@ -13,7 +13,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
 {
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     private $storage;
 

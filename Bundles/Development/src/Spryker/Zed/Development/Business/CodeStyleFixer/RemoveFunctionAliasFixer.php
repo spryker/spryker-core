@@ -54,7 +54,7 @@ class RemoveFunctionAliasFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      *
      * @return void
      */

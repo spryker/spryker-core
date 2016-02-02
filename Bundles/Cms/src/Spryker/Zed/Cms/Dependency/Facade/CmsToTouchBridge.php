@@ -11,7 +11,7 @@ class CmsToTouchBridge implements CmsToTouchInterface
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 

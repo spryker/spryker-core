@@ -21,17 +21,17 @@ abstract class AbstractOperator implements OperatorInterface
 {
 
     /**
-     * @var StorageProviderInterface
+     * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
     protected $storageProvider;
 
     /**
-     * @var LoggerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     protected $messenger;
 
     /**
-     * @var CartToCalculationInterface
+     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
      */
     protected $cartCalculator;
 
@@ -41,7 +41,7 @@ abstract class AbstractOperator implements OperatorInterface
     protected $itemExpanderPlugins = [];
 
     /**
-     * @var CartToItemGrouperInterface
+     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface
      */
     protected $itemGrouperFacade;
 

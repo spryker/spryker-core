@@ -13,7 +13,7 @@ class ShipmentCheckoutConnectorToShipmentBridge implements ShipmentCheckoutConne
 {
 
     /**
-     * @var ShipmentFacade
+     * @var \Spryker\Zed\Shipment\Business\ShipmentFacade
      */
     protected $shipmentFacade;
 

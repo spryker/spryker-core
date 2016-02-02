@@ -13,12 +13,12 @@ class NavigationCollectorCacheDecorator implements NavigationCollectorInterface
 {
 
     /**
-     * @var NavigationCollectorInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface
      */
     private $navigationCollector;
 
     /**
-     * @var NavigationCacheInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface
      */
     private $navigationCache;
 

@@ -23,7 +23,7 @@ class UsersTable extends AbstractTable
     const PARAM_ID_USER = 'id-user';
 
     /**
-     * @var UserQueryContainer
+     * @var \Spryker\Zed\User\Persistence\UserQueryContainer
      */
     protected $userQueryContainer;
 

@@ -88,7 +88,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      *
      * @return void
      */
@@ -164,7 +164,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      *
      * @return void
      */
@@ -257,7 +257,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      *
      * @return array
      */
@@ -283,7 +283,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      * @param array $useIndexes
      *
      * @return array
@@ -347,7 +347,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      * @param array $namespaceStatements
      *
      * @return void
@@ -380,7 +380,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      * @param array $useStatement
      * @param int $useStatementStartIndex
      *
@@ -477,7 +477,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      *
      * @return void
      */

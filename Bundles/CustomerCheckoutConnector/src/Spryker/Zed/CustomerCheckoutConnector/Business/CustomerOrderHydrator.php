@@ -16,7 +16,7 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
 {
 
     /**
-     * @var CustomerCheckoutConnectorToCustomerInterface
+     * @var \Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface
      */
     private $customerFacade;
 

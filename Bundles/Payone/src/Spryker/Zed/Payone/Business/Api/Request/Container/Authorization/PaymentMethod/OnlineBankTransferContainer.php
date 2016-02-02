@@ -47,7 +47,7 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
     protected $bic;
 
     /**
-     * @var RedirectContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     protected $redirect;
 

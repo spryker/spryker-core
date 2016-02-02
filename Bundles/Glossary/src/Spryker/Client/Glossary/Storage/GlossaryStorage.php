@@ -12,12 +12,12 @@ class GlossaryStorage implements GlossaryStorageInterface
 {
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     private $storage;
 
     /**
-     * @var KeyBuilderInterface
+     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     private $keyBuilder;
 

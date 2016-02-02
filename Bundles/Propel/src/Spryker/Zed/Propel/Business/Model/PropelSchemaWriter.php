@@ -11,7 +11,7 @@ class PropelSchemaWriter implements PropelSchemaWriterInterface
 {
 
     /**
-     * @var Filesystem
+     * @var \Symfony\Component\Filesystem\Filesystem
      */
     private $filesystem;
 

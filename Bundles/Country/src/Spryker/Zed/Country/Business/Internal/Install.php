@@ -17,7 +17,7 @@ class Install extends AbstractInstaller
 {
 
     /**
-     * @var CountryConfig
+     * @var \Spryker\Zed\Country\CountryConfig
      */
     protected $countrySettings;
 
@@ -27,27 +27,27 @@ class Install extends AbstractInstaller
     protected $version;
 
     /**
-     * @var CldrDataProviderInterface
+     * @var \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface
      */
     protected $cldrDataProvider;
 
     /**
-     * @var CldrDataProviderInterface
+     * @var \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface
      */
     protected $codeMappingsProvider;
 
     /**
-     * @var CldrDataProviderInterface
+     * @var \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface
      */
     protected $postalCodeDataProvider;
 
     /**
-     * @var CountryManagerInterface
+     * @var \Spryker\Zed\Country\Business\CountryManagerInterface
      */
     protected $countryManager;
 
     /**
-     * @var RegionManagerInterface
+     * @var \Spryker\Zed\Country\Business\RegionManagerInterface
      */
     protected $regionManager;
 

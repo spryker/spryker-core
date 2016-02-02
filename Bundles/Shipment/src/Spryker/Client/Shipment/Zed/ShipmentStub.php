@@ -13,7 +13,7 @@ class ShipmentStub implements ShipmentStubInterface
 {
 
     /**
-     * @var ZedRequestClient
+     * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
     protected $zedStub;
 

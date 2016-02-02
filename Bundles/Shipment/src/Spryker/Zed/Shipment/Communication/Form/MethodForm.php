@@ -34,17 +34,17 @@ class MethodForm extends AbstractForm
     const FIELD_TAX_SET = 'fkTaxSet';
 
     /**
-     * @var SpyShipmentMethodQuery
+     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     protected $methodQuery;
 
     /**
-     * @var SpyShipmentCarrierQuery
+     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     protected $carrierQuery;
 
     /**
-     * @var SpyTaxSetQuery
+     * @var \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     protected $taxSetQuery;
 
@@ -59,7 +59,7 @@ class MethodForm extends AbstractForm
     protected $idMethod;
 
     /**
-     * @var ShipmentConfig
+     * @var \Spryker\Zed\Shipment\ShipmentConfig
      */
     protected $shipmentConfig;
 

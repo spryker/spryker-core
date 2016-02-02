@@ -20,7 +20,7 @@ class CarrierForm extends AbstractForm
     const CARRIER_ID = 'carrier_id';
 
     /**
-     * @var SpyShipmentCarrierQuery
+     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     protected $carrierQuery;
 

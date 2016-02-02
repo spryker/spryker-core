@@ -36,7 +36,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return AbstractApplicationCheckStep[]
      */
@@ -54,7 +54,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption
      */
@@ -69,7 +69,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase
      */
@@ -84,7 +84,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteGeneratedDirectory
      */
@@ -114,7 +114,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall
      */
@@ -129,7 +129,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportKeyValue
      */
@@ -144,7 +144,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface|null $logger
      *
      * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportSearch
      */

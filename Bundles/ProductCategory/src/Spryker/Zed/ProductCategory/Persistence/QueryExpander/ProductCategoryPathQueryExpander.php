@@ -19,12 +19,12 @@ class ProductCategoryPathQueryExpander
 {
 
     /**
-     * @var LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
 
     /**
-     * @var CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     protected $categoryQueryContainer;
 

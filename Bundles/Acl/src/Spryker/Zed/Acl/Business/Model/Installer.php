@@ -32,12 +32,12 @@ class Installer implements InstallerInterface
     protected $rule;
 
     /**
-     * @var AclToUserInterface
+     * @var \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
      */
     protected $facadeUser;
 
     /**
-     * @var AclConfig
+     * @var \Spryker\Zed\Acl\AclConfig
      */
     protected $config;
 

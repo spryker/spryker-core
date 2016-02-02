@@ -17,7 +17,7 @@ class SprykerUseStatementFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'SprykerUseStatementFixer';
 
     /**
-     * @var SprykerUseStatementFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\SprykerUseStatementFixer
      */
     protected $fixer;
 

@@ -30,12 +30,12 @@ class TranslationForm extends AbstractForm
     const TYPE_DATA_EMPTY = 'empty_data';
 
     /**
-     * @var SpyGlossaryTranslationQuery
+     * @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     protected $glossaryTranslationQuery;
 
     /**
-     * @var SpyGlossaryKeyQuery
+     * @var \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     protected $glossaryKeyQuery;
 

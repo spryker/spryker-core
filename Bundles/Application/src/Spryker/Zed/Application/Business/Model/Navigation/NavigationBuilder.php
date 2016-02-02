@@ -17,12 +17,12 @@ class NavigationBuilder
     const PATH = 'path';
 
     /**
-     * @var NavigationCollectorInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface
      */
     private $navigationCollector;
 
     /**
-     * @var MenuFormatterInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface
      */
     private $menuFormatter;
 

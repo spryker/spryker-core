@@ -48,7 +48,7 @@ class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Process
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Process\Process
      */
     private function getProcessMockWithSuccessFullResponse()
     {
@@ -68,7 +68,7 @@ class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Process
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Process\Process
      */
     private function getProcessMockWithErrorResponse()
     {

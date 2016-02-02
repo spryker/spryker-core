@@ -26,7 +26,7 @@ class UserForm extends AbstractForm
     protected $allAclGroups;
 
     /**
-     * @var UserToAclInterface
+     * @var \Spryker\Zed\User\Dependency\Facade\UserToAclInterface
      */
     protected $aclFacade;
 

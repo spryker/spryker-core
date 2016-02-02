@@ -13,12 +13,12 @@ class Sellable implements SellableInterface
 {
 
     /**
-     * @var AvailabilityToOmsInterface
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
     protected $omsFacade;
 
     /**
-     * @var AvailabilityToStockInterface
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected $stockFacade;
 

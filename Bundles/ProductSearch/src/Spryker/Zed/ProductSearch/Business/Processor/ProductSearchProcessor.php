@@ -18,7 +18,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
     protected $storeName = '';
 
     /**
-     * @var KeyBuilderInterface
+     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     private $keyBuilder;
 

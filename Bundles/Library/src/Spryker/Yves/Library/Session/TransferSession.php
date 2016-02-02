@@ -13,7 +13,7 @@ class TransferSession
 {
 
     /**
-     * @var Session
+     * @var \Symfony\Component\HttpFoundation\Session\Session
      */
     protected $session;
 

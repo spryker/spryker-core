@@ -12,7 +12,7 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
 {
 
     /**
-     * @var StockFacade
+     * @var \Spryker\Zed\Stock\Business\StockFacade
      */
     protected $stockFacade;
 

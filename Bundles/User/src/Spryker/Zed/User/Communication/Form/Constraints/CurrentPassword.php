@@ -18,7 +18,7 @@ class CurrentPassword extends Constraint
     protected $message = 'Incorrect current password provided.';
 
     /**
-     * @var UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacade
      */
     protected $facadeUser;
 

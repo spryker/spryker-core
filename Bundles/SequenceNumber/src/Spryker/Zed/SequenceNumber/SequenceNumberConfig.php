@@ -13,7 +13,7 @@ class SequenceNumberConfig extends AbstractBundleConfig
 {
 
     /**
-     * @param SequenceNumberSettingsTransfer|null $settings
+     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer|null $settings
      *
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */

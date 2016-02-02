@@ -16,12 +16,12 @@ class LocaleManager
 {
 
     /**
-     * @var LocaleQueryContainerInterface
+     * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
     protected $localeQueryContainer;
 
     /**
-     * @var TransferGeneratorInterface
+     * @var \Spryker\Zed\Locale\Business\TransferGeneratorInterface
      */
     protected $transferGenerator;
 

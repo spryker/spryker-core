@@ -27,17 +27,17 @@ class TransferServer
     protected $repeatIsActive = false;
 
     /**
-     * @var RequestInterface
+     * @var \Spryker\Shared\ZedRequest\Client\RequestInterface
      */
     private $request;
 
     /**
-     * @var HttpRequest
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $httpRequest;
 
     /**
-     * @var ResponseInterface|Response
+     * @var \Spryker\Shared\ZedRequest\Client\ResponseInterface|\Spryker\Shared\Library\Communication\Response
      */
     protected $response;
 

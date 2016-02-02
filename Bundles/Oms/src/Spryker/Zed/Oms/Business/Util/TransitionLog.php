@@ -24,7 +24,7 @@ class TransitionLog implements TransitionLogInterface
     const ARGV = 'argv';
 
     /**
-     * @var OmsQueryContainerInterface
+     * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
     protected $queryContainer;
 

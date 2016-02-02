@@ -12,7 +12,7 @@ class WishlistToProductBridge implements WishlistToProductInterface
 {
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $productFacade;
 

@@ -21,12 +21,12 @@ class MvcRouter implements RouterInterface
 {
 
     /**
-     * @var RequestContext
+     * @var \Symfony\Component\Routing\RequestContext
      */
     private $context;
 
     /**
-     * @var Application
+     * @var \Silex\Application
      */
     private $app;
 

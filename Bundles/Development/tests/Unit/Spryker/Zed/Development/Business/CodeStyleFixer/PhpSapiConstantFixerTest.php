@@ -16,7 +16,7 @@ class PhpSapiConstantFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'PhpSapiConstantFixer';
 
     /**
-     * @var PhpSapiConstantFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\PhpSapiConstantFixer
      */
     protected $fixer;
 

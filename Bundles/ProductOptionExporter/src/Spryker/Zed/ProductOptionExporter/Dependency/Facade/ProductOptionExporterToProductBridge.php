@@ -11,7 +11,7 @@ class ProductOptionExporterToProductBridge implements ProductOptionExporterToPro
 {
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $productFacade;
 

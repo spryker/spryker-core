@@ -13,7 +13,7 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
 {
 
     /**
-     * @var UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacade
      */
     protected $urlFacade;
 

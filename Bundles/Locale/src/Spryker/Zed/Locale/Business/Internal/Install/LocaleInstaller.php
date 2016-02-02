@@ -19,7 +19,7 @@ class LocaleInstaller extends AbstractInstaller
     protected $localeFile;
 
     /**
-     * @var LocaleQueryContainerInterface
+     * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
     protected $localeQueryContainer;
 

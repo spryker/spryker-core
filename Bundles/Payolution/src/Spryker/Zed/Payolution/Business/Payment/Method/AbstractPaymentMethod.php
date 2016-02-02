@@ -26,7 +26,7 @@ abstract class AbstractPaymentMethod
     ];
 
     /**
-     * @var PayolutionConfig
+     * @var \Spryker\Zed\Payolution\PayolutionConfig
      */
     protected $config;
 

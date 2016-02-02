@@ -23,7 +23,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     protected $transferMetadata = [];
 
     /**
-     * @var UnderscoreToCamelCase
+     * @var \Zend\Filter\Word\UnderscoreToCamelCase
      */
     private static $filterUnderscoreToCamelCase;
 

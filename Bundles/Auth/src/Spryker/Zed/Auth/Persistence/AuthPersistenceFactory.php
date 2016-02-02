@@ -18,7 +18,7 @@ class AuthPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @var AuthPersistence
+     * @var \Generated\Zed\Ide\FactoryAutoCompletion\AuthPersistence
      */
     protected $factory;
 

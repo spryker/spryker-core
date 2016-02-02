@@ -13,12 +13,12 @@ class UrlMatcher implements UrlMatcherInterface
 {
 
     /**
-     * @var KeyBuilderInterface
+     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected $urlKeyBuilder;
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     protected $keyValueReader;
 

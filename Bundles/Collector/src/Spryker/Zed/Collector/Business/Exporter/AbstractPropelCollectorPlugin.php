@@ -28,7 +28,7 @@ abstract class AbstractPropelCollectorPlugin
     private $chunkSize = 100;
 
     /**
-     * @var TouchQueryContainerInterface
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected $touchQueryContainer;
 

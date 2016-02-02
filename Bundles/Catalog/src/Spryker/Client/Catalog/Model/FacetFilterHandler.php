@@ -16,7 +16,7 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
 {
 
     /**
-     * @var NestedFilterBuilderInterface
+     * @var \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface
      */
     protected $nestedFilterBuilder;
 

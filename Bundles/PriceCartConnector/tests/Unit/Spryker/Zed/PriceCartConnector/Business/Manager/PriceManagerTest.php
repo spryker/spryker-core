@@ -72,7 +72,7 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PriceFacadeStub|PriceFacade
+     * @return \Unit\Spryker\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub|\Spryker\Zed\Price\Business\PriceFacade
      */
     private function createPriceFacadeStub()
     {

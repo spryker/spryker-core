@@ -13,7 +13,7 @@ class SimpleGraphBuilder implements GraphBuilderInterface
 {
 
     /**
-     * @var GraphInterface
+     * @var \Spryker\Tool\Graph\GraphInterface
      */
     private $graph;
 

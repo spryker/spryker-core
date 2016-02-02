@@ -14,9 +14,9 @@ class FilterControllerEvent extends SymfonyFilterControllerEvent
 {
 
     /**
-     * @param HttpKernelInterface|null $kernel
+     * @param \Symfony\Component\HttpKernel\HttpKernelInterface|null $kernel
      * @param null $controller
-     * @param Request|null $request
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
      * @param null $requestType
      */
     public function __construct(

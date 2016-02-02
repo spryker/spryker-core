@@ -246,7 +246,7 @@ trait SpyTrait
 {
 
     /**
-     * @var SpySalesOrderItem
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected $propelModelCopy;
 

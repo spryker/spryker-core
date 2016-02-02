@@ -36,17 +36,17 @@ class VoucherCodesForm extends AbstractRuleForm
     protected $availablePoolCategories;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
 
     /**
-     * @var CamelCaseToUnderscore
+     * @var \Zend\Filter\Word\CamelCaseToUnderscore
      */
     protected $camelCaseToUnderscore;
 
     /**
-     * @var DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
     protected $discountQueryContainer;
 

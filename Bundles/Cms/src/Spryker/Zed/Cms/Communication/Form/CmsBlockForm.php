@@ -30,12 +30,12 @@ class CmsBlockForm extends AbstractForm
     const FIELD_IS_ACTIVE = 'is_active';
 
     /**
-     * @var SpyCmsTemplateQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
     protected $templateQuery;
 
     /**
-     * @var SpyCmsBlockQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     protected $blockPageByIdQuery;
 

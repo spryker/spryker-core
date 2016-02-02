@@ -26,12 +26,12 @@ abstract class AbstractOperator
     protected $postSavePlugins = [];
 
     /**
-     * @var StorageInterface
+     * @var \Spryker\Zed\Wishlist\Business\Storage\StorageInterface
      */
     protected $storage;
 
     /**
-     * @var WishlistChangeTransfer
+     * @var \Generated\Shared\Transfer\WishlistChangeTransfer
      */
     private $wishlistChange;
 

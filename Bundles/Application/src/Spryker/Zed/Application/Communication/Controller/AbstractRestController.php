@@ -18,7 +18,7 @@ abstract class AbstractRestController
     const DELETE = 'DELETE';
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 

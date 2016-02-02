@@ -28,7 +28,7 @@ class Cronjobs
     ];
 
     /**
-     * @var SetupConfig
+     * @var \Spryker\Zed\Setup\SetupConfig
      */
     protected $config;
 

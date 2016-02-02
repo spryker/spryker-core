@@ -12,7 +12,7 @@ class CollectorToLocaleBridge implements CollectorToLocaleInterface
 {
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 

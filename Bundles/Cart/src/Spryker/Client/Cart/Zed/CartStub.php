@@ -15,7 +15,7 @@ class CartStub extends BaseStub implements CartStubInterface
 {
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -25,7 +25,7 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -35,7 +35,7 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -45,7 +45,7 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -55,7 +55,7 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -65,7 +65,7 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -75,7 +75,7 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */
@@ -85,7 +85,7 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param CartTransfer|TransferInterface $cartTransfer
+     * @param \Generated\Shared\Transfer\CartTransfer|\Spryker\Shared\Transfer\TransferInterface $cartTransfer
      *
      * @return \Generated\Shared\Transfer\CartTransfer
      */

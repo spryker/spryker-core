@@ -23,22 +23,22 @@ class UrlManager implements UrlManagerInterface
     const ITEM_TYPE_URL = 'url';
 
     /**
-     * @var UrlQueryContainerInterface
+     * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
     protected $urlQueryContainer;
 
     /**
-     * @var UrlToLocaleInterface
+     * @var \Spryker\Zed\Url\Dependency\UrlToLocaleInterface
      */
     protected $localeFacade;
 
     /**
-     * @var UrlToTouchInterface
+     * @var \Spryker\Zed\Url\Dependency\UrlToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var ConnectionInterface
+     * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $connection;
 

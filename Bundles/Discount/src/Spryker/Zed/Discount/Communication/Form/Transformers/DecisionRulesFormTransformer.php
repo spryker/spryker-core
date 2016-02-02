@@ -27,12 +27,12 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
     const DECISION_RULES = 'decision_rules';
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $config;
 
     /**
-     * @var CamelCaseToUnderscore
+     * @var \Zend\Filter\Word\CamelCaseToUnderscore
      */
     protected $camelCaseToUnderscoreFilter;
 

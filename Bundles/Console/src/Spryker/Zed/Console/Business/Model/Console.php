@@ -32,37 +32,37 @@ class Console extends SymfonyCommand
     use Helper;
 
     /**
-     * @var InputInterface
+     * @var \Symfony\Component\Console\Input\InputInterface
      */
     protected $input;
 
     /**
-     * @var OutputInterface
+     * @var \Symfony\Component\Console\Output\OutputInterface
      */
     protected $output;
 
     /**
-     * @var AbstractCommunicationFactory
+     * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private $factory;
 
     /**
-     * @var AbstractFacade
+     * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private $facade;
 
     /**
-     * @var Container
+     * @var \Spryker\Zed\Kernel\Container
      */
     private $container;
 
     /**
-     * @var AbstractQueryContainer
+     * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private $queryContainer;
 
     /**
-     * @var LoggerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     protected $messenger;
 

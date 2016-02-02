@@ -9,7 +9,7 @@ class CalculableContainer implements CalculableInterface
 {
 
     /**
-     * @var OrderTransfer
+     * @var \Generated\Shared\Transfer\OrderTransfer
      */
     private $order;
 

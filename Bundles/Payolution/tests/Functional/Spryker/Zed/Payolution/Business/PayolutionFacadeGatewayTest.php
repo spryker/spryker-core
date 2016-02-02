@@ -34,12 +34,12 @@ class PayolutionFacadeGatewayTest extends Test
 {
 
     /**
-     * @var SpySalesOrder
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     private $orderEntity;
 
     /**
-     * @var SpyPaymentPayolution
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     private $paymentEntity;
 
@@ -49,7 +49,7 @@ class PayolutionFacadeGatewayTest extends Test
     private $enableTests = false;
 
     /**
-     * @var PayolutionFacade
+     * @var \Spryker\Zed\Payolution\Business\PayolutionFacade
      */
     private $payolutionFacade;
 

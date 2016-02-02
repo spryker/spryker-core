@@ -31,17 +31,17 @@ class MenuFormatter implements MenuFormatterInterface
     const CHILD_IS_ACTIVE = 'child_is_active';
 
     /**
-     * @var UrlUniqueValidatorInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface
      */
     protected $urlUniqueValidator;
 
     /**
-     * @var MenuLevelValidatorInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface
      */
     protected $menuLevelValidator;
 
     /**
-     * @var UrlBuilderInterface
+     * @var \Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface
      */
     protected $urlBuilder;
 

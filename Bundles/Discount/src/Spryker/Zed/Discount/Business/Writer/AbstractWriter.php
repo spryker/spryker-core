@@ -12,7 +12,7 @@ abstract class AbstractWriter
 {
 
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     private $queryContainer;
 

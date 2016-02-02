@@ -76,7 +76,7 @@ class TransferDefinitionLoader
     /**
      * @param array $sourceDirectories
      *
-     * @return Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|SplFileInfo[]
      */
     private function getXmlTransferDefinitionFiles(array $sourceDirectories)
     {

@@ -22,7 +22,7 @@ class TransferController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return Response|array
+     * @return \Symfony\Component\HttpFoundation\Response|array
      */
     public function repeatAction(Request $request)
     {

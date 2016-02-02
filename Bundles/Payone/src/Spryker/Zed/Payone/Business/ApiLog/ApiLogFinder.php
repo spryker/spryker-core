@@ -17,7 +17,7 @@ class ApiLogFinder
 {
 
     /**
-     * @var PayoneQueryContainerInterface
+     * @var \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface
      */
     private $queryContainer;
 

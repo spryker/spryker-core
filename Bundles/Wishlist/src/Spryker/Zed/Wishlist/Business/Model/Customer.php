@@ -14,12 +14,12 @@ class Customer
 {
 
     /**
-     * @var WishlistQueryContainerInterface
+     * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
      */
     protected $wishlistQueryContainer;
 
     /**
-     * @var CustomerTransfer
+     * @var \Generated\Shared\Transfer\CustomerTransfer
      */
     protected $customerTransfer;
 

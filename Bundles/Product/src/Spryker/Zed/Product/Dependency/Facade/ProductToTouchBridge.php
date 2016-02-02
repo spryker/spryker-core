@@ -11,7 +11,7 @@ class ProductToTouchBridge implements ProductToTouchInterface
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 

@@ -14,7 +14,7 @@ class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
 {
 
     /**
-     * @var CheckoutResponseTransfer
+     * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     protected $checkoutResponse;
 

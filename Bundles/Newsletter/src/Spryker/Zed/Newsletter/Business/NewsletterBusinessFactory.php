@@ -71,7 +71,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubscriberOptInHandlerInterface|DoubleOptInHandlerInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface|\Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface
      */
     public function createDoubleOptInHandler()
     {

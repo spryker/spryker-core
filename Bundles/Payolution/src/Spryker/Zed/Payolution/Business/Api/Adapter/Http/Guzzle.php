@@ -16,7 +16,7 @@ class Guzzle extends AbstractHttpAdapter
     const DEFAULT_TIMEOUT = 45;
 
     /**
-     * @var GuzzleClient
+     * @var \Guzzle\Http\Client
      */
     protected $client;
 

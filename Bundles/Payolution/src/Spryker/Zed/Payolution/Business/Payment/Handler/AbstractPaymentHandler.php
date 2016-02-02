@@ -19,17 +19,17 @@ abstract class AbstractPaymentHandler
 {
 
     /**
-     * @var AdapterInterface
+     * @var \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface
      */
     protected $executionAdapter;
 
     /**
-     * @var ConverterInterface
+     * @var \Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface
      */
     protected $converter;
 
     /**
-     * @var PayolutionConfig
+     * @var \Spryker\Zed\Payolution\PayolutionConfig
      */
     protected $config;
 

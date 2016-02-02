@@ -31,7 +31,7 @@ class SellableTest extends Test
 {
 
     /**
-     * @var AvailabilityFacade
+     * @var \Spryker\Zed\Availability\Business\AvailabilityFacade
      */
     private $availabilityFacade;
 

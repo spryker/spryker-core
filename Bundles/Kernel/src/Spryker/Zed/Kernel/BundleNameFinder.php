@@ -56,7 +56,7 @@ class BundleNameFinder extends AbstractBundle
     }
 
     /**
-     * @return Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|SplFileInfo[]
      */
     protected function getFinder()
     {

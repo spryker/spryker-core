@@ -25,22 +25,22 @@ class UrlFacadeTest extends Test
 {
 
     /**
-     * @var UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacade
      */
     protected $urlFacade;
 
     /**
-     * @var UrlQueryContainerInterface
+     * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
     protected $urlQueryContainer;
 
     /**
-     * @var TouchQueryContainer
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected $touchQueryContainer;
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 

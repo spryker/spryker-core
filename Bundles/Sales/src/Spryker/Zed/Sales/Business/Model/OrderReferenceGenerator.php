@@ -14,12 +14,12 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
 {
 
     /**
-     * @var SalesToSequenceNumberInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface
      */
     protected $sequenceNumberFacade;
 
     /**
-     * @var SequenceNumberSettingsTransfer
+     * @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
     protected $sequenceNumberSettings;
 

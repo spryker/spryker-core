@@ -13,7 +13,7 @@ trait QueryContainerResolverAwareTrait
 {
 
     /**
-     * @var AbstractQueryContainer
+     * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private $queryContainer;
 

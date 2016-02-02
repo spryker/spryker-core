@@ -13,7 +13,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
 {
 
     /**
-     * @var CustomerFacade
+     * @var \Spryker\Zed\Customer\Business\CustomerFacade
      */
     protected $customerFacade;
 

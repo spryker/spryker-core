@@ -25,17 +25,17 @@ class RedirectManager implements RedirectManagerInterface
     protected $urlManager;
 
     /**
-     * @var UrlQueryContainerInterface
+     * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
     protected $urlQueryContainer;
 
     /**
-     * @var UrlToTouchInterface
+     * @var \Spryker\Zed\Url\Dependency\UrlToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var ConnectionInterface
+     * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $connection;
 

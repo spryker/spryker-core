@@ -14,7 +14,7 @@ class CustomerMailConnectorToMailBridge implements CustomerMailConnectorToMailIn
 {
 
     /**
-     * @var MailFacade
+     * @var \Spryker\Zed\Mail\Business\MailFacade
      */
     protected $mailFacade;
 

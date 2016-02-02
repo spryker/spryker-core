@@ -27,12 +27,12 @@ class OrdersTable extends AbstractTable
     const PARAM_ID_SALES_ORDER = 'id-sales-order';
 
     /**
-     * @var SpySalesOrderQuery
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected $orderQuery;
 
     /**
-     * @var SpySalesOrderItemQuery
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     protected $orderItemQuery;
 

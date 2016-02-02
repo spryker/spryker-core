@@ -24,17 +24,17 @@ class Address
 {
 
     /**
-     * @var CustomerQueryContainer
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var CustomerToCountryInterface
+     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface
      */
     private $countryFacade;
 
     /**
-     * @var CustomerToLocaleInterface
+     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
      */
     private $localeFacade;
 

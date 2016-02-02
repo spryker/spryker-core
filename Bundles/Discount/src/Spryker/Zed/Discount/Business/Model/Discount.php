@@ -29,7 +29,7 @@ class Discount
     const KEY_ERRORS = 'errors';
 
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -39,7 +39,7 @@ class Discount
     protected $decisionRule;
 
     /**
-     * @var CalculableInterface
+     * @var \Spryker\Zed\Calculation\Business\Model\CalculableInterface
      */
     protected $discountContainer;
 
@@ -54,7 +54,7 @@ class Discount
     protected $calculatorPlugins;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountSettings;
 
@@ -64,12 +64,12 @@ class Discount
     protected $calculator;
 
     /**
-     * @var DistributorInterface
+     * @var \Spryker\Zed\Discount\Business\Distributor\DistributorInterface
      */
     protected $distributor;
 
     /**
-     * @var DiscountToMessengerInterface
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected $messengerFacade;
 

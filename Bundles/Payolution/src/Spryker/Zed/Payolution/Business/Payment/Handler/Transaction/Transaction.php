@@ -22,7 +22,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
 {
 
     /**
-     * @var PayolutionQueryContainerInterface
+     * @var \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface
      */
     private $queryContainer;
 

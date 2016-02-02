@@ -11,7 +11,7 @@ class PriceToTouchBridge implements PriceToTouchInterface
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 

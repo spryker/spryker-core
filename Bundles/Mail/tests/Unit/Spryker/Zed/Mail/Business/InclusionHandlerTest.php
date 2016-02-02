@@ -16,7 +16,7 @@ class InclusionHandlerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var InclusionHandlerInterface
+     * @var \Spryker\Zed\Mail\Business\InclusionHandlerInterface
      */
     protected $inclusionHandler;
 

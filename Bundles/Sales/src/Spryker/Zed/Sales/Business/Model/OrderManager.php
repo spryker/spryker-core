@@ -26,17 +26,17 @@ class OrderManager
 {
 
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var SalesToCountryInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
      */
     protected $countryFacade;
 
     /**
-     * @var SalesToOmsInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     protected $omsFacade;
 
@@ -160,9 +160,9 @@ class OrderManager
     }
 
     /**
-     * @param AddressTransfer|null $address
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $address
      *
-     * @return SpySalesOrderAddress|null
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress|null
      */
     protected function saveAddressTransfer(AddressTransfer $address)
     {
@@ -244,7 +244,7 @@ class OrderManager
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return SpySalesOrder[]|ObjectCollection
+     * @return SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getOrderCollection(OrderListTransfer $orderListTransfer)
     {

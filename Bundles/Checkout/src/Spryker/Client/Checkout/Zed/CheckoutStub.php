@@ -14,7 +14,7 @@ class CheckoutStub implements CheckoutStubInterface
 {
 
     /**
-     * @var ZedClient
+     * @var \Spryker\Client\ZedRequest\Client\ZedClient
      */
     protected $zedStub;
 

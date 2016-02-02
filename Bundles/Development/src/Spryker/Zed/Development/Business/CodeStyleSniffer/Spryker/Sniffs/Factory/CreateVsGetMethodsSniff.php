@@ -137,7 +137,7 @@ class CreateVsGetMethodsSniff implements \PHP_CodeSniffer_Sniff
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      * @param int $stackPointer
      *
      * @return bool
@@ -159,7 +159,7 @@ class CreateVsGetMethodsSniff implements \PHP_CodeSniffer_Sniff
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      * @param int $stackPointer
      *
      * @return bool
@@ -183,7 +183,7 @@ class CreateVsGetMethodsSniff implements \PHP_CodeSniffer_Sniff
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
      * @param int $stackPointer
      *
      * @return bool

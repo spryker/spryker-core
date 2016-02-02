@@ -12,7 +12,7 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 

@@ -14,12 +14,12 @@ class TransferGenerator
 {
 
     /**
-     * @var GeneratorInterface
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
     private $generator;
 
     /**
-     * @var DefinitionBuilderInterface
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
     private $definitionBuilder;
 

@@ -13,7 +13,7 @@ interface NavigationSchemaFinderInterface
 {
 
     /**
-     * @return Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|SplFileInfo[]
      */
     public function getSchemaFiles();
 

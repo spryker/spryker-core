@@ -16,7 +16,7 @@ class Collector
 {
 
     /**
-     * @var TouchQueryContainer
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected $queryContainer;
 

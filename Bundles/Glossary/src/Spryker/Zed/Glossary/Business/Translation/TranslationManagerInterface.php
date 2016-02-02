@@ -106,7 +106,7 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
@@ -123,7 +123,7 @@ interface TranslationManagerInterface
     /**
      * @param string $keyName
      * @param array $data
-     * @param LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return string
      */

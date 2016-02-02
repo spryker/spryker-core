@@ -31,7 +31,7 @@ class SessionHandlerFile implements \SessionHandlerInterface
     protected $savePath;
 
     /**
-     * @var ApiInterface
+     * @var \Spryker\Shared\NewRelic\ApiInterface
      */
     protected $newRelicApi;
 

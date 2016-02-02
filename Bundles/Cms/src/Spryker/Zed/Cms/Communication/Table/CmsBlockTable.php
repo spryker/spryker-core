@@ -24,7 +24,7 @@ class CmsBlockTable extends AbstractTable
     const PARAM_CMS_BLOCK_EDIT = '/cms/block/edit/';
 
     /**
-     * @var SpyCmsBlockQuery
+     * @var \Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery
      */
     protected $cmsBlockQuery;
 

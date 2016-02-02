@@ -19,17 +19,17 @@ class Reader implements ReaderInterface
     const SKU_UNKNOWN = 'sku unknown';
 
     /**
-     * @var PriceQueryContainer
+     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var PriceToProductInterface
+     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface
      */
     protected $productFacade;
 
     /**
-     * @var PriceConfig
+     * @var \Spryker\Zed\Price\PriceConfig
      */
     protected $priceSettings;
 

@@ -19,17 +19,17 @@ class TemplateManager implements TemplateManagerInterface
 {
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @var CmsConfig
+     * @var \Spryker\Zed\Cms\CmsConfig
      */
     protected $config;
 
     /**
-     * @var Finder
+     * @var \Symfony\Component\Finder\Finder
      */
     protected $finder;
 

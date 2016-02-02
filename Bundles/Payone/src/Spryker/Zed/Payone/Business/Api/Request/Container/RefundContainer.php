@@ -49,12 +49,12 @@ class RefundContainer extends AbstractRequestContainer
     protected $use_customerdata;
 
     /**
-     * @var BankAccountContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer
      */
     protected $paymentMethod;
 
     /**
-     * @var TransactionContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
      */
     protected $invoicing;
 

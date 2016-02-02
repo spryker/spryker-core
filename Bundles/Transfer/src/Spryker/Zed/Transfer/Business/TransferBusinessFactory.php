@@ -50,7 +50,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransferDefinitionBuilder|DefinitionBuilderInterface
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder|\Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
     protected function createTransferDefinitionBuilder()
     {

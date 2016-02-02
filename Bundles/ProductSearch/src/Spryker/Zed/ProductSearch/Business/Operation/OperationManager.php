@@ -13,7 +13,7 @@ class OperationManager implements OperationManagerInterface
 {
 
     /**
-     * @var ProductSearchQueryContainerInterface
+     * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
     protected $productSearchQueryContainer;
 

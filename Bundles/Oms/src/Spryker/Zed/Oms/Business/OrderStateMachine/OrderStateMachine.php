@@ -40,7 +40,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $states = [];
 
     /**
-     * @var OmsQueryContainerInterface
+     * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -55,12 +55,12 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $builder;
 
     /**
-     * @var TransitionLogInterface
+     * @var \Spryker\Zed\Oms\Business\Util\TransitionLogInterface
      */
     protected $transitionLog;
 
     /**
-     * @var ReadOnlyArrayObject
+     * @var \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject
      */
     protected $activeProcesses;
 
@@ -104,7 +104,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $eventId
      * @param SpySalesOrderItem[] $orderItems
-     * @param array|ReadOnlyArrayObject $data
+     * @param array|\Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return array
      */
@@ -727,7 +727,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @throws LogicException
      *
-     * @return CommandByOrderInterface|CommandByItemInterface
+     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface
      */
     protected function getCommand($commandString)
     {

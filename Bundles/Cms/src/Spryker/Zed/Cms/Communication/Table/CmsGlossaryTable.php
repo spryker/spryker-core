@@ -25,7 +25,7 @@ class CmsGlossaryTable extends AbstractTable
     const URL_CMS_GLOSSARY_DELETE = '/cms/glossary/delete/';
 
     /**
-     * @var SpyCmsGlossaryKeyMappingQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     protected $glossaryQuery;
 

@@ -13,7 +13,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
 {
 
     /**
-     * @var UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacade
      */
     protected $urlFacade;
 

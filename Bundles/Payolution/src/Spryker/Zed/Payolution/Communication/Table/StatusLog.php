@@ -17,7 +17,7 @@ class StatusLog extends AbstractTable
     const FIELD_DETAILS = 'FIELD_DETAILS';
 
     /**
-     * @var SpyPaymentPayolutionTransactionStatusLogQuery
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     private $statusLogQuery;
 

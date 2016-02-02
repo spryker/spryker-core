@@ -17,7 +17,7 @@ class SubRequestExceptionHandler implements ExceptionHandlerInterface
     const DEFAULT_URL_NAME_PREFIX = 'error/';
 
     /**
-     * @var Application
+     * @var \Spryker\Shared\Application\Communication\Application
      */
     protected $application;
 

@@ -23,7 +23,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**
-     * @var Container
+     * @var \Spryker\Zed\Kernel\Container
      *
      * @return \Spryker\Zed\Kernel\Container
      */

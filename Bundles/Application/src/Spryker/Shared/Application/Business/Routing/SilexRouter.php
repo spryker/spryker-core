@@ -27,7 +27,7 @@ class SilexRouter implements RouterInterface
     protected $app;
 
     /**
-     * @var RequestContext
+     * @var \Symfony\Component\Routing\RequestContext
      */
     protected $context;
 

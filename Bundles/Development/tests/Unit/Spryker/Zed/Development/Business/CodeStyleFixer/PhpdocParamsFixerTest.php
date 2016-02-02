@@ -16,7 +16,7 @@ class PhpdocParamsFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'PhpdocParamsFixer';
 
     /**
-     * @var PhpdocParamsFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\PhpdocParamsFixer
      */
     protected $fixer;
 

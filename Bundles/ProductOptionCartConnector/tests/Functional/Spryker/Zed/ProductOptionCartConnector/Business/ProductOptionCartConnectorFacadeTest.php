@@ -24,7 +24,7 @@ class ProductOptionCartConnectorFacadeTest extends Test
     const LOCALE_CODE = 'xx_XX';
 
     /**
-     * @var ProductOptionCartConnectorFacade
+     * @var \Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade
      */
     private $facade;
 

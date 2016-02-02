@@ -14,7 +14,7 @@ class RedisReader implements ReaderInterface
 {
 
     /**
-     * @var ReadInterface
+     * @var \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface
      */
     protected $redis;
 

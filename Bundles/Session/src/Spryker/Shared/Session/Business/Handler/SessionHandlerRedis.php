@@ -17,7 +17,7 @@ class SessionHandlerRedis implements \SessionHandlerInterface
     const METRIC_SESSION_READ_TIME = 'Redis/Session_read_time';
 
     /**
-     * @var Client
+     * @var \Predis\Client
      */
     protected $connection = null;
 
@@ -37,7 +37,7 @@ class SessionHandlerRedis implements \SessionHandlerInterface
     protected $savePath;
 
     /**
-     * @var ApiInterface
+     * @var \Spryker\Shared\NewRelic\ApiInterface
      */
     protected $newRelicApi;
 

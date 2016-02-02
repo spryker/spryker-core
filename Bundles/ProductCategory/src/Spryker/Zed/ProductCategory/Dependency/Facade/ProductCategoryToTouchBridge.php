@@ -11,7 +11,7 @@ class ProductCategoryToTouchBridge implements ProductCategoryToTouchInterface
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 

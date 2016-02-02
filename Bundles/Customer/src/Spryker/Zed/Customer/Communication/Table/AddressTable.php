@@ -22,7 +22,7 @@ class AddressTable extends AbstractTable
     const COL_COMPANY = 'Company';
 
     /**
-     * @var CustomerQueryContainer
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
      */
     protected $customerQueryContainer;
 

@@ -22,7 +22,7 @@ class RoleTable extends AbstractTable
     const DELETE_ROLE_URL = '/acl/role/delete';
 
     /**
-     * @var AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
      */
     protected $aclQueryContainer;
 

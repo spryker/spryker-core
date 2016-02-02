@@ -176,7 +176,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return AddressesTransfer|null
+     * @return \Generated\Shared\Transfer\AddressesTransfer|null
      */
     public function addressesAction(CustomerTransfer $customerTransfer)
     {
@@ -255,7 +255,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer|null
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function deleteAddressAction(AddressTransfer $addressTransfer)
     {

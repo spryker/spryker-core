@@ -21,7 +21,7 @@ class OrderItemSplitForm extends AbstractForm
     const VALIDATION_MESSAGE_QUANTITY = 'Please provide quantity.';
 
     /**
-     * @var SpySalesOrderItem
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected $orderItem;
 

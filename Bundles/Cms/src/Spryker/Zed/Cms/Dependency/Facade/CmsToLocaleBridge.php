@@ -12,7 +12,7 @@ class CmsToLocaleBridge implements CmsToLocaleInterface
 {
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 

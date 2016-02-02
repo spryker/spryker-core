@@ -12,7 +12,7 @@ class AclToUserBridge implements AclToUserInterface
 {
 
     /**
-     * @var UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacade
      */
     protected $userFacade;
 

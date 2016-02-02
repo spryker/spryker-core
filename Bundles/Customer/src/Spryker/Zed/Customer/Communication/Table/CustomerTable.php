@@ -30,7 +30,7 @@ class CustomerTable extends AbstractTable
     const COL_LAST_NAME = 'last_name';
 
     /**
-     * @var CustomerQueryContainer
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
      */
     protected $customerQueryContainer;
 

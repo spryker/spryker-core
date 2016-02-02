@@ -19,12 +19,12 @@ class OrderItemMatrix
     const COL_STATE = 'COL_STATE';
 
     /**
-     * @var OmsQueryContainerInterface
+     * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var OmsConfig
+     * @var \Spryker\Zed\Oms\OmsConfig
      */
     protected $config;
 
@@ -200,7 +200,7 @@ class OrderItemMatrix
     }
 
     /**
-     * @param ObjectCollection|SpySalesOrderItem[] $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection|SpySalesOrderItem[] $orderItems
      *
      * @return array
      */

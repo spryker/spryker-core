@@ -18,17 +18,17 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
 {
 
     /**
-     * @var PayoneStandardParameterTransfer
+     * @var \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     private $standardParameter;
 
     /**
-     * @var SequenceNumberProviderInterface
+     * @var \Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface
      */
     private $sequenceNumberProvider;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $storeConfig;
 

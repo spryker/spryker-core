@@ -257,8 +257,8 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param CartSessionInterface|null $cartSession
-     * @param CartStubInterface|null $cartStub
+     * @param \Spryker\Client\Cart\Session\CartSessionInterface|null $cartSession
+     * @param \Spryker\Client\Cart\Zed\CartStubInterface|null $cartStub
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
@@ -287,7 +287,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     /**
      * @param $factoryMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|CartClient
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\CartClient
      */
     private function getCartClientMock($factoryMock)
     {
@@ -318,7 +318,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CartStubInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\Zed\CartStubInterface
      */
     private function getStubMock()
     {

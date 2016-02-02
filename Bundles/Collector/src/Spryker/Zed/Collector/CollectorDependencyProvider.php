@@ -19,7 +19,7 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     const STORAGE_PLUGINS = 'storage plugins';
 
     /**
-     * @var Container
+     * @var \Spryker\Zed\Kernel\Container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
@@ -35,7 +35,7 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @var Container
+     * @var \Spryker\Zed\Kernel\Container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
