@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Sniffs\Comment;
+namespace Spryker\Sniffs\Commenting;
 
-class FullyQualifiedNamespaceInDocBlockSniff implements \PHP_CodeSniffer_Sniff
+class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
 {
 
     /**
