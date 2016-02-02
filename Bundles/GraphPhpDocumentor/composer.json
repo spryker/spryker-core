@@ -1,5 +1,5 @@
 {
-  "name": "spryker/tool-graph-php-documentor",
+  "name": "spryker/graph-php-documentor",
   "require": {
     "spryker/tool-graph": "^1.0.0",
     "phpdocumentor/graphviz": "~1.0.0"
