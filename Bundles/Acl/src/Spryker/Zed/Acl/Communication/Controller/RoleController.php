@@ -91,7 +91,7 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */
@@ -171,10 +171,10 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param $idAclRole
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function createAndHandleRuleSetForm(Request $request, $idAclRole)
     {
@@ -204,8 +204,8 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param FormInterface $roleForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\FormInterface $roleForm
      *
      * @return void
      */

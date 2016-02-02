@@ -25,7 +25,6 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use Spryker\Zed\Discount\Communication\Table\VoucherPoolTable;
-use Symfony\Component\Form\FormInterface;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**
@@ -49,7 +48,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return VoucherFormDataProvider
+     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider
      */
     public function createVoucherFormDataProvider()
     {
@@ -107,7 +106,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      * @param array $formData
      * @param array $formOptions
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCartRuleForm(array $formData = [], array $formOptions = [])
     {
@@ -119,7 +118,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      *
-     * @return CartRuleFormDataProvider
+     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\CartRuleFormDataProvider
      */
     public function createCartRuleFormDataProvider(DiscountFacade $discountFacade)
     {
@@ -140,7 +139,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      * @param array $formData
      * @param array $formOptions
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createVoucherCodesForm(array $formData = [], array $formOptions = [])
     {
@@ -150,7 +149,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return DecisionRulesFormTransformer
+     * @return \Spryker\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer
      */
     public function createDecisionRulesFormTransformer()
     {
@@ -166,7 +165,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return VoucherCodesFormDataProvider
+     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherCodesFormDataProvider
      */
     public function createVoucherCodesFormDataProvider()
     {
@@ -174,7 +173,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createDecisionRuleForm()
     {

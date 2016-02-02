@@ -26,8 +26,8 @@ class AddressFormDataProvider extends AbstractCustomerDataProvider
     protected $customerQueryContainer;
 
     /**
-     * @param CustomerToCountryInterface $countryFacade
-     * @param CustomerQueryContainerInterface $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
      */
     public function __construct(CustomerToCountryInterface $countryFacade, CustomerQueryContainerInterface $customerQueryContainer)
     {

@@ -27,8 +27,8 @@ class VoucherFormDataProvider
     protected $discountConfig;
 
     /**
-     * @param DiscountQueryContainer $discountQueryContainer
-     * @param DiscountConfig $discountConfig
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
+     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
      */
     public function __construct(DiscountQueryContainer $discountQueryContainer, DiscountConfig $discountConfig)
     {
@@ -80,7 +80,7 @@ class VoucherFormDataProvider
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPoolEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPoolEntity
      *
      * @return string
      */

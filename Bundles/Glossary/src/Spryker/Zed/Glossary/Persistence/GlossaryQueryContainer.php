@@ -395,7 +395,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      * @param array $locales
      *
      * @throws PropelException
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryGlossaryKeyTranslationsByLocale($fkGlossaryKey, array $locales)
     {

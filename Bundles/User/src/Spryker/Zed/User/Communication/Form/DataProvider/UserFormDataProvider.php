@@ -29,8 +29,8 @@ class UserFormDataProvider
     protected $userFacade;
 
     /**
-     * @param UserToAclInterface $aclFacade
-     * @param UserFacade $userFacade
+     * @param \Spryker\Zed\User\Dependency\Facade\UserToAclInterface $aclFacade
+     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      */
     public function __construct(UserToAclInterface $aclFacade, UserFacade $userFacade)
     {

@@ -101,7 +101,7 @@ class MethodForm extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */

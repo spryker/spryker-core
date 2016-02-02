@@ -57,7 +57,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return MethodFormDataProvider
+     * @return \Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider
      */
     public function createMethodFormDataProvider()
     {

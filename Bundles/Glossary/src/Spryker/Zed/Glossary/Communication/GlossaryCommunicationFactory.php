@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Glossary\Communication;
 
-use Spryker\Shared\Gui\Form\DataProvider\FormDataProviderInterface;
 use Spryker\Zed\Glossary\Communication\Form\DataProvider\TranslationFormDataProvider;
 use Spryker\Zed\Glossary\Communication\Form\UpdateTranslationForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -100,7 +99,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return TranslationFormDataProvider
+     * @return \Spryker\Zed\Glossary\Communication\Form\DataProvider\TranslationFormDataProvider
      */
     public function createTranslationDataProvider()
     {

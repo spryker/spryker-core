@@ -21,7 +21,7 @@ class EditController extends AbstractController
     const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */

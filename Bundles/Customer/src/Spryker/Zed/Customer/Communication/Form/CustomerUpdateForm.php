@@ -18,7 +18,7 @@ class CustomerUpdateForm extends CustomerForm
     const OPTION_ADDRESS_CHOICES = 'address_choices';
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
@@ -30,7 +30,7 @@ class CustomerUpdateForm extends CustomerForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void
@@ -45,7 +45,7 @@ class CustomerUpdateForm extends CustomerForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return self
      */
@@ -61,7 +61,7 @@ class CustomerUpdateForm extends CustomerForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
      * @return self
@@ -78,7 +78,7 @@ class CustomerUpdateForm extends CustomerForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
      * @return self

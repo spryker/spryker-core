@@ -128,7 +128,7 @@ interface GlossaryQueryContainerInterface
      * @param int $fkGlossaryKey
      * @param array $locales
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryGlossaryKeyTranslationsByLocale($fkGlossaryKey, array $locales);
 

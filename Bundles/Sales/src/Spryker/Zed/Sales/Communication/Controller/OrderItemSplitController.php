@@ -21,7 +21,7 @@ class OrderItemSplitController extends AbstractController
     const SPLIT_SUCCESS_MESSAGE = 'Order item with "%d" was successfully split.';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

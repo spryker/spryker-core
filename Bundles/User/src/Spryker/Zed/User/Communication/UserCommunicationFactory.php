@@ -72,7 +72,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UserFormDataProvider
+     * @return \Spryker\Zed\User\Communication\Form\DataProvider\UserFormDataProvider
      */
     public function createUserFormDataProvider()
     {
@@ -83,7 +83,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UserUpdateFormDataProvider
+     * @return \Spryker\Zed\User\Communication\Form\DataProvider\UserUpdateFormDataProvider
      */
     public function createUserUpdateFormDataProvider()
     {

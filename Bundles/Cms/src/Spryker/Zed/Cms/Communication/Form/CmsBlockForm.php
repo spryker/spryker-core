@@ -45,7 +45,7 @@ class CmsBlockForm extends AbstractType
     protected $cmsQueryContainer;
 
     /**
-     * @param CmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      */
     public function __construct(CmsQueryContainerInterface $cmsQueryContainer)
     {
@@ -61,7 +61,7 @@ class CmsBlockForm extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */

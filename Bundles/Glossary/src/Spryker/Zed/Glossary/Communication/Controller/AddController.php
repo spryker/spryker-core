@@ -19,7 +19,7 @@ class AddController extends AbstractController
     const FORM_ADD_TYPE = 'add';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */

@@ -36,7 +36,7 @@ class DecisionRuleForm extends AbstractRuleForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return self
      */
@@ -52,7 +52,7 @@ class DecisionRuleForm extends AbstractRuleForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return self
      */
@@ -66,7 +66,7 @@ class DecisionRuleForm extends AbstractRuleForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return self
      */
@@ -82,7 +82,7 @@ class DecisionRuleForm extends AbstractRuleForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return self
      */

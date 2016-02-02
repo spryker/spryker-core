@@ -13,7 +13,7 @@ class OrderItemSplitDataProvider
 {
 
     /**
-     * @param SpySalesOrderItem $orderItemEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      *
      * @return array
      */

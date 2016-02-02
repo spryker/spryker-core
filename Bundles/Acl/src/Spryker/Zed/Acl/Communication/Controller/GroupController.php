@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RoleTransfer;
 use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -159,9 +158,9 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function removeUserFromGroupAction(Request $request)
     {

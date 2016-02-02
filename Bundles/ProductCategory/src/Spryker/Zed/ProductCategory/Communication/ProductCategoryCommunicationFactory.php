@@ -174,7 +174,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CategoryFormAddDataProvider
+     * @return \Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormAddDataProvider
      */
     public function createCategoryFormAddDataProvider()
     {
@@ -198,7 +198,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CategoryFormEditDataProvider
+     * @return \Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormEditDataProvider
      */
     public function createCategoryFormEditDataProvider()
     {
@@ -222,7 +222,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CategoryFormDeleteDataProvider
+     * @return \Spryker\Zed\ProductCategory\Communication\Form\DataProvider\CategoryFormDeleteDataProvider
      */
     public function createCategoryFormDeleteDataProvider()
     {

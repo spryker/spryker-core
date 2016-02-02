@@ -77,9 +77,9 @@ interface CmsToUrlInterface
     public function saveUrlAndTouch(UrlTransfer $urlTransfer);
 
     /**
-     * @param RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function saveRedirectAndTouch(RedirectTransfer $redirect);
 

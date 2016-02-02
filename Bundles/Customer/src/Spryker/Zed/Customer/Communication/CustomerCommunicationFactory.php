@@ -68,7 +68,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CustomerFormDataProvider
+     * @return \Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerFormDataProvider
      */
     public function createCustomerFormDataProvider()
     {
@@ -89,7 +89,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CustomerUpdateFormDataProvider
+     * @return \Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerUpdateFormDataProvider
      */
     public function createCustomerUpdateFormDataProvider()
     {
@@ -110,7 +110,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return AddressFormDataProvider
+     * @return \Spryker\Zed\Customer\Communication\Form\DataProvider\AddressFormDataProvider
      */
     public function createAddressFormDataProvider()
     {

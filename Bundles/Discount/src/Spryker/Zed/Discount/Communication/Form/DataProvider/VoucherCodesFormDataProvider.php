@@ -20,7 +20,7 @@ class VoucherCodesFormDataProvider
     protected $discountQueryContainer;
 
     /**
-     * @param DiscountQueryContainer $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
      */
     public function __construct(DiscountQueryContainer $discountQueryContainer)
     {
@@ -70,7 +70,7 @@ class VoucherCodesFormDataProvider
     /**
      * @param int $idPool
      *
-     * @return VoucherCodesTransfer
+     * @return \Generated\Shared\Transfer\VoucherCodesTransfer
      */
     protected function getVoucherCodesTransfer($idPool)
     {

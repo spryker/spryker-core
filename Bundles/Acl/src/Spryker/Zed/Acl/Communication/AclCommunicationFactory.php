@@ -20,7 +20,6 @@ use Spryker\Zed\Acl\Communication\Table\GroupUsersTable;
 use Spryker\Zed\Acl\Communication\Table\RoleTable;
 use Spryker\Zed\Acl\Communication\Table\RulesetTable;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -110,7 +109,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      * @param array $data
      * @param array $options
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createGroupForm(array $data = [], array $options = [])
     {
@@ -122,7 +121,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return AclGroupFormDataProvider
+     * @return \Spryker\Zed\Acl\Communication\Form\DataProvider\AclGroupFormDataProvider
      */
     public function createGroupFormDataProvider()
     {
@@ -153,7 +152,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return AclRoleFormDataProvider
+     * @return \Spryker\Zed\Acl\Communication\Form\DataProvider\AclRoleFormDataProvider
      */
     public function createAclRoleFormDataProvider()
     {
@@ -166,7 +165,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      * @param array $data
      * @param array $options
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createRuleForm(array $data = [], array $options = [])
     {
@@ -176,7 +175,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return AclRuleFormDataProvider
+     * @return \Spryker\Zed\Acl\Communication\Form\DataProvider\AclRuleFormDataProvider
      */
     public function createAclRuleFormDataProvider()
     {

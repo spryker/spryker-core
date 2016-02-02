@@ -21,9 +21,6 @@ use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -299,12 +296,12 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $glossaryMappingArray
      * @param string $placeholder
      * @param int $idPage
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createPlaceholderForm(Request $request, array $glossaryMappingArray, $placeholder, $idPage)
     {

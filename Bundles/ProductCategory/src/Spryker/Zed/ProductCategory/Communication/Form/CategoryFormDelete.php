@@ -16,7 +16,7 @@ class CategoryFormDelete extends CategoryFormEdit
     const DELETE_CHILDREN = 'delete_children';
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void
@@ -31,7 +31,7 @@ class CategoryFormDelete extends CategoryFormEdit
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return self
      */
@@ -46,7 +46,7 @@ class CategoryFormDelete extends CategoryFormEdit
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
      * @return self

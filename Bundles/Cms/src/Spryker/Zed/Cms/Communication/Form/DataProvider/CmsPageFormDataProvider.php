@@ -29,7 +29,7 @@ class CmsPageFormDataProvider
     protected $cmsQueryContainer;
 
     /**
-     * @param CmsQueryContainer $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainer $cmsQueryContainer
      */
     public function __construct(CmsQueryContainer $cmsQueryContainer)
     {

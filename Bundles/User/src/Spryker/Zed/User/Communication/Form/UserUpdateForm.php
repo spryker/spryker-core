@@ -14,7 +14,7 @@ class UserUpdateForm extends UserForm
     const OPTION_STATUS_CHOICES = 'status_choices';
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */

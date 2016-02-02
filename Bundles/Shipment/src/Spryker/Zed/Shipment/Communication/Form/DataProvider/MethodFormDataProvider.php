@@ -32,8 +32,8 @@ class MethodFormDataProvider
     protected $plugins;
 
     /**
-     * @param ShipmentQueryContainerInterface $shipmentQueryContainer
-     * @param TaxQueryContainerInterface $taxQueryContainer
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $shipmentQueryContainer
+     * @param \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface $taxQueryContainer
      * @param array $plugins
      */
     public function __construct(

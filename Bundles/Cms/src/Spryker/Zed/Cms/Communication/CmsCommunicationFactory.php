@@ -95,7 +95,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsPageFormDataProvider
+     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider
      */
     public function createCmsPageFormDataProvider()
     {
@@ -116,7 +116,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsBlockFormDataProvider
+     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsBlockFormDataProvider
      */
     public function createCmsBlockFormDataProvider()
     {
@@ -138,7 +138,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsRedirectFormDataProvider
+     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider
      */
     public function createCmsRedirectFormDataProvider()
     {
@@ -160,7 +160,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsGlossaryFormDataProvider
+     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider
      */
     public function createCmsGlossaryFormDataProvider()
     {

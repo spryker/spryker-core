@@ -27,8 +27,8 @@ class AbstractCategoryFormDataProvider
     protected $locale;
 
     /**
-     * @param CategoryQueryContainerInterface $categoryQueryContainer
-     * @param LocaleTransfer $locale
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      */
     public function __construct(CategoryQueryContainerInterface $categoryQueryContainer, LocaleTransfer $locale)
     {
@@ -98,7 +98,7 @@ class AbstractCategoryFormDataProvider
     }
 
     /**
-     * @param SpyCategoryNode $node
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
      *
      * @return string
      */

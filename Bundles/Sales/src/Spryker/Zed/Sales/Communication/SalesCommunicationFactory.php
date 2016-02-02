@@ -48,7 +48,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CustomerFormDataProvider
+     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider
      */
     public function createCustomerFormDataProvider()
     {
@@ -69,7 +69,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return AddressFormDataProvider
+     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider
      */
     public function createAddressFormDataProvider()
     {
@@ -100,7 +100,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OrderItemSplitDataProvider
+     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\OrderItemSplitDataProvider
      */
     public function createOrderItemSplitDataProvider()
     {
