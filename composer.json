@@ -1,8 +1,7 @@
 {
   "name": "spryker/spryker",
   "require":{
-    "spryker/tool-graph": "^1.0.0",
-    "spryker/tool-graph-php-documentor": "^1.0.0"
+    "phpdocumentor/graphviz": "~1.0.0"
   },
   "require-dev": {
     "knplabs/github-api": "1.4.7",
