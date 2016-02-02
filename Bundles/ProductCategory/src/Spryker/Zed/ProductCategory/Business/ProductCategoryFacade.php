@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -58,7 +57,7 @@ class ProductCategoryFacade extends AbstractFacade
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return ProductCategoryTransfer[]
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
      */
     public function getCategoriesByProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {

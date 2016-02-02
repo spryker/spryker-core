@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Communication\Controller;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Category\Communication\CategoryCommunicationFactory;
-use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Symfony\Component\HttpFoundation\Request;
@@ -102,7 +101,7 @@ class IndexController extends AbstractController
     {
         $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
 
-        /** @var CategoryAttributeTable $table */
+        /** @var \Spryker\Zed\Category\Communication\Table\CategoryAttributeTable $table */
         $table = $this->getFactory()
             ->createCategoryAttributeTable($idCategory);
 

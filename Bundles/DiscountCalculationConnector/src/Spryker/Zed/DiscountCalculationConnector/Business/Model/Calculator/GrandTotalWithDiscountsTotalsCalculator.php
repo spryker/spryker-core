@@ -8,7 +8,6 @@ namespace Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface;
 
@@ -21,13 +20,13 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
     protected $grandTotalsCalculator;
 
     /**
-     * @var DiscountTotalsCalculatorInterface
+     * @var \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculatorInterface
      */
     protected $discountTotalsCalculator;
 
     /**
      * @param \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface $grandTotalsCalculator
-     * @param DiscountTotalsCalculatorInterface $discountTotalsCalculator
+     * @param \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculatorInterface $discountTotalsCalculator
      */
     public function __construct(
         DiscountCalculationToCalculationInterface $grandTotalsCalculator,

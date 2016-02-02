@@ -6,14 +6,12 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-
 interface OrderStateMachineInterface
 {
 
     /**
      * @param string $eventId
-     * @param SpySalesOrderItem[] $orderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param array $data
      *
      * @return array
@@ -21,7 +19,7 @@ interface OrderStateMachineInterface
     public function triggerEvent($eventId, array $orderItems, $data);
 
     /**
-     * @param SpySalesOrderItem[] $orderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param array $data
      * @param array $logContext
      *

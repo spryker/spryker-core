@@ -18,12 +18,12 @@ class Doctor
     protected $healthReport;
 
     /**
-     * @var HealthIndicatorInterface[]
+     * @var \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface[]
      */
     protected $healthIndicator;
 
     /**
-     * @param HealthIndicatorInterface[] $healthIndicator
+     * @param \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface[] $healthIndicator
      */
     public function __construct(array $healthIndicator)
     {

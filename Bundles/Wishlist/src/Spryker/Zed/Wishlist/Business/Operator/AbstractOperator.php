@@ -6,22 +6,19 @@
 
 namespace Spryker\Zed\Wishlist\Business\Operator;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Spryker\Zed\Wishlist\Business\Storage\StorageInterface;
-use Spryker\Zed\Wishlist\Dependency\PostSavePluginInterface;
-use Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
 abstract class AbstractOperator
 {
 
     /**
-     * @var PreSavePluginInterface[]
+     * @var \Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface[]
      */
     protected $preSavePlugins = [];
 
     /**
-     * @var PostSavePluginInterface[]
+     * @var \Spryker\Zed\Wishlist\Dependency\PostSavePluginInterface[]
      */
     protected $postSavePlugins = [];
 
@@ -58,7 +55,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return void
      */
@@ -72,7 +69,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return void
      */
@@ -86,7 +83,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param PreSavePluginInterface[] $preSavePlugins
+     * @param \Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface[] $preSavePlugins
      *
      * @return void
      */
@@ -96,7 +93,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param PostSavePluginInterface[] $postSavePlugins
+     * @param \Spryker\Zed\Wishlist\Dependency\PostSavePluginInterface[] $postSavePlugins
      *
      * @return void
      */

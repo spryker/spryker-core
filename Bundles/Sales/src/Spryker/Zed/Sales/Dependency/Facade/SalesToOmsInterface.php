@@ -4,7 +4,6 @@ namespace Spryker\Zed\Sales\Dependency\Facade;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface SalesToOmsInterface
 {
@@ -44,7 +43,7 @@ interface SalesToOmsInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag);
 

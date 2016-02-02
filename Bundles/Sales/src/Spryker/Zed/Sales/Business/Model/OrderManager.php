@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\AddressTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
@@ -41,7 +40,7 @@ class OrderManager
     protected $omsFacade;
 
     /**
-     * @var OrderReferenceGeneratorInterface
+     * @var \Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface
      */
     protected $orderReferenceGenerator;
 
@@ -244,7 +243,7 @@ class OrderManager
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getOrderCollection(OrderListTransfer $orderListTransfer)
     {

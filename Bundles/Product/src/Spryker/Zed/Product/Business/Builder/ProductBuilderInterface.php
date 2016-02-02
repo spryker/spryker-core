@@ -6,9 +6,6 @@
 
 namespace Spryker\Zed\Product\Business\Builder;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 interface ProductBuilderInterface
 {
 

@@ -39,14 +39,14 @@ interface TransitionInterface
     public function hasCondition();
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      *
      * @return void
      */
     public function setEvent($event);
 
     /**
-     * @return EventInterface
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface
      */
     public function getEvent();
 
@@ -56,26 +56,26 @@ interface TransitionInterface
     public function hasEvent();
 
     /**
-     * @param StateInterface $source
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $source
      *
      * @return void
      */
     public function setSource($source);
 
     /**
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     public function getSource();
 
     /**
-     * @param StateInterface $target
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $target
      *
      * @return void
      */
     public function setTarget($target);
 
     /**
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     public function getTarget();
 

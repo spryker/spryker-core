@@ -21,7 +21,6 @@ use Spryker\Zed\Setup\Communication\Console\Npm\RunnerConsole;
 use Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
 use Spryker\Zed\Setup\SetupConfig;
 use Spryker\Zed\Setup\SetupDependencyProvider;
-use Symfony\Component\Console\Command\Command;
 
 /**
  * @method SetupConfig getConfig()
@@ -82,7 +81,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Command[]
+     * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()
     {

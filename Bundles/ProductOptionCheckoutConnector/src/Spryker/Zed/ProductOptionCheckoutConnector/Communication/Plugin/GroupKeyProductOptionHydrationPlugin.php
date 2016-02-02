@@ -57,7 +57,7 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     }
 
     /**
-     * @param ProductOptionTransfer[] $options
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $options
      *
      * @return array
      */
@@ -74,7 +74,7 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     }
 
     /**
-     * @param ProductOptionTransfer[] $sortedProductOptions
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $sortedProductOptions
      *
      * @return string
      */

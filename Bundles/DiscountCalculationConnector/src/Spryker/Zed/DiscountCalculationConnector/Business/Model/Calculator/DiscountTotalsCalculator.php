@@ -81,7 +81,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
-     * @param \ArrayObject|ItemTransfer[] $calculableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return \Generated\Shared\Transfer\DiscountTotalsTransfer
      */
@@ -103,9 +103,9 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
-     * @param \ArrayObject|ItemTransfer[] $calculableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
-     * @return array|DiscountTotalItemTransfer[]
+     * @return array|\Generated\Shared\Transfer\DiscountTotalItemTransfer[]
      */
     protected function calculateDiscountTotals(
         CalculableInterface $discountableContainer,
@@ -125,8 +125,8 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $calculableItems
-     * @param array|DiscountTotalItemTransfer[] $discountTotalItemCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
+     * @param array|\Generated\Shared\Transfer\DiscountTotalItemTransfer[] $discountTotalItemCollection
      *
      * @return void
      */
@@ -165,7 +165,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param array|DiscountTotalItemTransfer[] $discountTotalItemCollection
+     * @param array|\Generated\Shared\Transfer\DiscountTotalItemTransfer[] $discountTotalItemCollection
      * @param int $quantity
      *
      * @return void
@@ -237,7 +237,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|ExpenseTransfer[] $expenses
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
      *
      * @return int
      */
@@ -257,7 +257,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|ProductOptionTransfer[] $options
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $options
      *
      * @return int
      */

@@ -91,6 +91,7 @@ class DependencyController extends AbstractController
     {
         if (!$request->query->get('bundle', false)) {
             $this->addErrorMessage('You must specify a bundle for which the graph should be build');
+
             return $this->redirectResponse('/maintenance/dependency');
         }
 

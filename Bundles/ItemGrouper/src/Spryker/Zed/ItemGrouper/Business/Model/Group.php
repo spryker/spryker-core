@@ -6,7 +6,6 @@
 namespace Spryker\Zed\ItemGrouper\Business\Model;
 
 use Generated\Shared\Transfer\GroupableContainerTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 
 class Group
 {

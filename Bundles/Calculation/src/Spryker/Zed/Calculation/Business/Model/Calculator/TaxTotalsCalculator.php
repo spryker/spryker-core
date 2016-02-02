@@ -9,7 +9,6 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
@@ -25,7 +24,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     protected $priceCalculationHelper;
 
     /**
-     * @var TaxSetTransfer[]
+     * @var \Generated\Shared\Transfer\TaxSetTransfer[]
      */
     private $calculatedTaxSets = [];
 
@@ -40,7 +39,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param ItemTransfer[]|ItemTransfer[] $calculableItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -55,7 +54,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param ItemTransfer[]|ItemTransfer[] $calculableItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */

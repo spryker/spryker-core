@@ -32,7 +32,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RefundManager
+     * @return \Spryker\Zed\Refund\Business\RefundManager
      */
     public function createRefundManager()
     {

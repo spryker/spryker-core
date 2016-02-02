@@ -10,10 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Refund\Business\RefundBusinessFactory as SprykerRefundBusinessFactory;
-use Orm\Zed\Refund\Persistence\SpyRefund;
 use Spryker\Zed\Refund\RefundDependencyProvider;
-use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesExpense;
 
 /**
  * @method SprykerRefundBusinessFactory getFactory()
@@ -36,7 +33,7 @@ class RefundFacade extends AbstractFacade
     /**
      * @param int $idSalesOrder
      *
-     * @return RefundTransfer[]
+     * @return \Generated\Shared\Transfer\RefundTransfer[]
      */
     public function getRefundsByIdSalesOrder($idSalesOrder)
     {
@@ -45,7 +42,7 @@ class RefundFacade extends AbstractFacade
         $refunds = $refundQueryContainer->queryRefundsByIdSalesOrder($idSalesOrder)->find();
 
         $result = [];
-        /** @var SpyRefund $refund */
+        /** @var \Orm\Zed\Refund\Persistence\SpyRefund $refund */
         foreach ($refunds as $refund) {
             $result[] = (new RefundTransfer())->fromArray($refund->toArray(), true);
         }
@@ -80,7 +77,7 @@ class RefundFacade extends AbstractFacade
     /**
      * @param $idOrder
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem[]
      */
     public function getRefundableItems($idOrder)
     {
@@ -90,7 +87,7 @@ class RefundFacade extends AbstractFacade
     /**
      * @param $idOrder
      *
-     * @return SpySalesExpense[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense[]
      */
     public function getRefundableExpenses($idOrder)
     {

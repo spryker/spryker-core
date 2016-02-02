@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\Communication;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
@@ -23,7 +22,7 @@ abstract class AbstractPlugin
     private $facade;
 
     /**
-     * @var AbstractCommunicationFactory
+     * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private $factory;
 
@@ -80,7 +79,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     protected function getFactory()
     {
@@ -94,7 +93,7 @@ abstract class AbstractPlugin
     /**
      * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private function resolveFactory()
     {

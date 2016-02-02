@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -181,7 +180,7 @@ class SalesFacade extends AbstractFacade
     /**
      * @param int $idSalesOrder
      *
-     * @return RefundTransfer[]
+     * @return \Generated\Shared\Transfer\RefundTransfer[]
      */
     public function getRefunds($idSalesOrder)
     {

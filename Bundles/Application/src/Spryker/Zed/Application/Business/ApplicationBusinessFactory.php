@@ -18,7 +18,6 @@ use Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Application\ApplicationConfig;
-use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteGeneratedDirectory;
@@ -38,7 +37,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Psr\Log\LoggerInterface|null $logger
      *
-     * @return AbstractApplicationCheckStep[]
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\AbstractApplicationCheckStep[]
      */
     public function createCheckSteps(LoggerInterface $logger = null)
     {

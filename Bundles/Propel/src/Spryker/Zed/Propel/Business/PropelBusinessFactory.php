@@ -15,7 +15,6 @@ use Spryker\Zed\Propel\Business\Model\PropelSchema;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Console\Command\Command;
 use Spryker\Zed\Propel\Communication\Console\BuildModelConsole;
 use Spryker\Zed\Propel\Communication\Console\BuildSqlConsole;
 use Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole;
@@ -123,7 +122,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Command[]
+     * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()
     {

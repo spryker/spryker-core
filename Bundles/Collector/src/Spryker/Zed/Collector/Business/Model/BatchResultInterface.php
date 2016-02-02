@@ -47,7 +47,7 @@ interface BatchResultInterface
     public function setTotalCount($totalCount);
 
     /**
-     * @param FailedResultInterface $failed
+     * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failed
      */
     public function addFailedResult(FailedResultInterface $failed);
 

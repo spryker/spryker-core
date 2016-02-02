@@ -16,15 +16,14 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch;
-use Spryker\Zed\ProductSearch\Business\Operation\OperationInterface;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
+use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer;
 use Spryker\Zed\ProductSearch\ProductSearchConfig;
 use Spryker\Zed\ProductSearch\Business\Operation\AddToResult;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToField;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToMultiField;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
-use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer;
 
 /**
  * @method ProductSearchConfig getConfig()
@@ -39,7 +38,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductAttributesTransformer()
     {
         return new ProductAttributesTransformer(
-            $this->getProductSearchQueryContainer(),
+            $this->getQueryContainer(),
             $this->createOperationLocator(),
             $this->createDefaultOperation()
         );
@@ -114,27 +113,31 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     protected function createOperationManager()
     {
         return new OperationManager(
-            $this->getProductSearchQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
     /**
-     * @deprecated Use getProductSearchQueryContainer() instead.
+     * @deprecated Use getQueryContainer() instead.
      *
      * @return \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
     protected function createProductSearchQueryContainer()
     {
-        trigger_error('Deprecated, use getProductSearchQueryContainer() instead.', E_USER_DEPRECATED);
+        trigger_error('Deprecated, use getQueryContainer() instead.', E_USER_DEPRECATED);
 
-        return $this->getProductSearchQueryContainer();
+        return $this->getQueryContainer();
     }
 
     /**
+     * @deprecated Use getQueryContainer() directly.
+     *
      * @return \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
     protected function getProductSearchQueryContainer()
     {
+        trigger_error('Deprecated, use getQueryContainer() instead.', E_USER_DEPRECATED);
+
         return $this->getQueryContainer();
     }
 
@@ -195,7 +198,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array|OperationInterface[]
+     * @return array|\Spryker\Zed\ProductSearch\Business\Operation\OperationInterface[]
      */
     protected function getPossibleOperations()
     {

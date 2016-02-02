@@ -11,7 +11,6 @@ use Elastica\Index;
 use Elastica\Query;
 use Elastica\Query\Filtered;
 use Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface;
-use Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface;
 use Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,13 +31,13 @@ class FacetSearch extends AbstractSearch
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param FacetConfig $facetConfig
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
      * @param \Elastica\Index $searchIndex
      * @param \Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface $facetAggregation
-     * @param FacetFilterHandlerInterface $facetFilterHandler
+     * @param \Spryker\Client\Catalog\Model\FacetFilterHandlerInterface $facetFilterHandler
      * @param \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface $facetExtractor
      * @param \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface $rangeExtractor
-     * @param CatalogInterface $catalogModel
+     * @param \Spryker\Client\Catalog\Model\CatalogInterface $catalogModel
      * @param array $category
      */
     public function __construct(

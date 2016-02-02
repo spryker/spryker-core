@@ -16,12 +16,12 @@ interface EventJournalInterface
     public function setDataCollector(DataCollectorInterface $dataCollector);
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      */
     public function applyCollectors(EventInterface $event);
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      */
     public function saveEvent(EventInterface $event);
 

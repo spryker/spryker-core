@@ -22,7 +22,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     /**
      * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
-     * @throws ControllerNotFoundException
+     * @throws \Spryker\Shared\Kernel\ClassResolver\Controller\ControllerNotFoundException
      *
      * @return object
      */

@@ -6,9 +6,7 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
@@ -60,7 +58,7 @@ class SubtotalTotalsCalculator implements
     }
 
     /**
-     * @param \ArrayObject|ProductOptionTransfer[] $options
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $options
      *
      * @return int
      */
@@ -75,7 +73,7 @@ class SubtotalTotalsCalculator implements
     }
 
     /**
-     * @param \ArrayObject|ExpenseTransfer[] $expenses
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
      *
      * @return int
      */

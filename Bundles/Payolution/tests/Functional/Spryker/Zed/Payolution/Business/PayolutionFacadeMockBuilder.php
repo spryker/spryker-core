@@ -7,7 +7,6 @@
 namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
 

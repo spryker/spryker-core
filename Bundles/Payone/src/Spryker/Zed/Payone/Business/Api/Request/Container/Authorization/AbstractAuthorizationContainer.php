@@ -62,12 +62,12 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     protected $narrative_text;
 
     /**
-     * @var PersonalContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
      */
     protected $personalData;
 
     /**
-     * @var ShippingContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer
      */
     protected $shippingData;
 
@@ -77,7 +77,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     protected $paymentMethod;
 
     /**
-     * @var ThreeDSecureContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer
      */
     protected $_3dsecure;
 
@@ -223,7 +223,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     }
 
     /**
-     * @param PersonalContainer $personalData
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer $personalData
      *
      * @return void
      */
@@ -233,7 +233,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     }
 
     /**
-     * @return PersonalContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
      */
     public function getPersonalData()
     {
@@ -241,7 +241,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     }
 
     /**
-     * @param ShippingContainer $delivery
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer $delivery
      *
      * @return void
      */
@@ -251,7 +251,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     }
 
     /**
-     * @return ShippingContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer
      */
     public function getShippingData()
     {
@@ -277,7 +277,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     }
 
     /**
-     * @param ThreeDSecureContainer $secure
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer $secure
      *
      * @return void
      */
@@ -287,7 +287,7 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     }
 
     /**
-     * @return ThreeDSecureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer
      */
     public function get3dsecure()
     {

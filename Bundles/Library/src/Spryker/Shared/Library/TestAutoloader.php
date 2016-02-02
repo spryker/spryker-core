@@ -20,7 +20,7 @@ class TestAutoloader
     ];
 
     /**
-     * @var Autoloader
+     * @var \Spryker\Shared\Library\Autoloader
      */
     private static $instance;
 
@@ -71,7 +71,7 @@ class TestAutoloader
     }
 
     /**
-     * @return Autoloader
+     * @return \Spryker\Shared\Library\Autoloader
      */
     public static function unregister()
     {

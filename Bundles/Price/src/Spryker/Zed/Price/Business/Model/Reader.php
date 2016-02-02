@@ -6,10 +6,7 @@
 
 namespace Spryker\Zed\Price\Business\Model;
 
-use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
-use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Orm\Zed\Price\Persistence\SpyPriceType;
-use Spryker\Zed\Price\PriceConfig;
 
 class Reader implements ReaderInterface
 {
@@ -61,7 +58,7 @@ class Reader implements ReaderInterface
         $priceTypes = [];
         $priceTypeEntities = $this->queryContainer->queryAllPriceTypes()->find();
 
-        /** @var SpyPriceType $priceType */
+        /** @var \Orm\Zed\Price\Persistence\SpyPriceType $priceType */
         foreach ($priceTypeEntities as $priceType) {
             $priceTypes[] = $priceType->getName();
         }

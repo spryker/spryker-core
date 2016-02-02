@@ -37,7 +37,7 @@ class TransactionContainer extends AbstractContainer
     protected $invoiceappendix;
 
     /**
-     * @var ItemContainer[]
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer[]
      */
     protected $items = [];
 
@@ -66,7 +66,7 @@ class TransactionContainer extends AbstractContainer
     }
 
     /**
-     * @param ItemContainer $item
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer $item
      *
      * @return void
      */
@@ -76,7 +76,7 @@ class TransactionContainer extends AbstractContainer
     }
 
     /**
-     * @param ItemContainer[] $items
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer[] $items
      *
      * @return void
      */
@@ -86,7 +86,7 @@ class TransactionContainer extends AbstractContainer
     }
 
     /**
-     * @return ItemContainer[]
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\ItemContainer[]
      */
     public function getItems()
     {

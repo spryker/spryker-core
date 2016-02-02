@@ -13,12 +13,12 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
 {
 
     /**
-     * @var PropelSchemaFinderInterface
+     * @var \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
      */
     protected $schemaFinder;
 
     /**
-     * @param PropelSchemaFinderInterface $schemaFinder
+     * @param \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface $schemaFinder
      */
     public function __construct(PropelSchemaFinderInterface $schemaFinder)
     {
@@ -77,7 +77,7 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
     }
 
     /**
-     * @param DOMDocument $dom
+     * @param \DOMDocument $dom
      *
      * @return int
      */
@@ -96,7 +96,7 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
     }
 
     /**
-     * @param DOMDocument $dom
+     * @param \DOMDocument $dom
      *
      * @return int
      */
@@ -125,7 +125,7 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $file
      *
-     * @return DOMDocument
+     * @return \DOMDocument
      */
     protected function createDomDocumentFromFile(SplFileInfo $file)
     {

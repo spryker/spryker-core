@@ -27,9 +27,9 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyCategory[]|\Propel\Runtime\Collection\ObjectCollection $categoryEntityList
+     * @param \Orm\Zed\Category\Persistence\SpyCategory[]|\Propel\Runtime\Collection\ObjectCollection $categoryEntityList
      *
-     * @return CategoryTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryTransfer[]
      */
     public function convertCategoryCollection(ObjectCollection $categoryEntityList)
     {
@@ -53,9 +53,9 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection $categoryNodeEntityList
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection $categoryNodeEntityList
      *
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function convertCategoryNodeCollection(ObjectCollection $categoryNodeEntityList)
     {

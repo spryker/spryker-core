@@ -6,7 +6,6 @@
 
 namespace Spryker\Yves\Application\Plugin\Provider;
 
-use Spryker\Yves\Application\Application as YvesApplication;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;

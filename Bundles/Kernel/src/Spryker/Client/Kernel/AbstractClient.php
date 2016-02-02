@@ -13,12 +13,12 @@ abstract class AbstractClient
 {
 
     /**
-     * @var AbstractFactory
+     * @var \Spryker\Client\Kernel\AbstractFactory
      */
     private $factory;
 
     /**
-     * @return AbstractFactory
+     * @return \Spryker\Client\Kernel\AbstractFactory
      */
     protected function getFactory()
     {
@@ -32,7 +32,7 @@ abstract class AbstractClient
     /**
      * @throws \Spryker\Client\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractFactory
+     * @return \Spryker\Client\Kernel\AbstractFactory
      */
     private function resolveFactory()
     {
@@ -63,7 +63,7 @@ abstract class AbstractClient
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedInfoMessages()
     {
@@ -71,7 +71,7 @@ abstract class AbstractClient
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedSuccessMessages()
     {

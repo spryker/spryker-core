@@ -10,7 +10,6 @@ use Codeception\TestCase\Test;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;
-use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 use Orm\Zed\Country\Persistence\SpyCountry;
 
 /**

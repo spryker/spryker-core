@@ -129,7 +129,6 @@ class GraphTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderWithFileName()
     {
-
         $this->assertInternalType('string', $this->getGraph()->render('svg', 'filename'));
     }
 
@@ -167,6 +166,7 @@ class GraphTest extends \PHPUnit_Framework_TestCase
         $adapter = $this->getGraph();
         $adapter->addNode(self::NODE_A);
         $adapter->addNode(self::NODE_B);
+
         return $adapter;
     }
 

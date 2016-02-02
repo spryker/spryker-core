@@ -6,7 +6,6 @@
 
 namespace Spryker\Shared\Sales\Code;
 
-use Spryker\Shared\Sales\Transfer\OrderItem;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
@@ -51,7 +50,7 @@ abstract class AbstractItemGrouper
         $index = [];
         $methodName = 'get' . ucfirst($key);
 
-        /** @var OrderItem $item */
+        /** @var \Spryker\Shared\Sales\Transfer\OrderItem $item */
         foreach ($items as $item) {
             $groupKey = $item->$methodName();
             if (isset($index[$groupKey])) {

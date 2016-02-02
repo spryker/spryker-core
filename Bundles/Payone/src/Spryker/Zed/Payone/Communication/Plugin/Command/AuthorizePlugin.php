@@ -10,7 +10,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Payone\Business\PayoneFacade;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
@@ -30,7 +29,7 @@ class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        /** @var SpyPaymentPayone $paymentEntity */
+        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity */
         $paymentEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
         $this->getFacade()->authorizePayment($paymentEntity->getFkSalesOrder());
 

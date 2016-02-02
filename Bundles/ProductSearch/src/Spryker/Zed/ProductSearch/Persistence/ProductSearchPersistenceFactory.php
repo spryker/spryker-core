@@ -18,7 +18,7 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return ProductSearchQueryExpanderInterface
+     * @return \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryExpanderInterface
      */
     public function createProductSearchQueryExpander()
     {

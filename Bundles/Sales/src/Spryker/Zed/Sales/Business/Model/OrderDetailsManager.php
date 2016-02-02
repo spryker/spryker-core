@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Library\Copy;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
-use Spryker\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -35,7 +34,7 @@ class OrderDetailsManager
     protected $omsFacade;
 
     /**
-     * @var PaymentLogReceiverInterface[]
+     * @var \Spryker\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface[]
      */
     protected $logReceiverPluginStack;
 

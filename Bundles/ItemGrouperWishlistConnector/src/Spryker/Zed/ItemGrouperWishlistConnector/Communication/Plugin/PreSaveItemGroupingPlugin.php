@@ -7,7 +7,6 @@
 namespace Spryker\Zed\ItemGrouperWishlistConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\GroupableContainerTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ItemGrouperWishlistConnector\Business\ItemGrouperWishlistConnectorFacade;
 use Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface;
@@ -21,7 +20,7 @@ class PreSaveItemGroupingPlugin extends AbstractPlugin implements PreSavePluginI
 {
 
     /**
-     * @param ItemTransfer[] $itemsCollection
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsCollection
      *
      * @return void
      */

@@ -9,8 +9,6 @@ namespace Spryker\Zed\Collector\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Collector\Business\Model\BatchResult;
-use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -23,7 +21,7 @@ class CollectorFacade extends AbstractFacade
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
-     * @return BatchResultInterface[]
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
     public function exportKeyValueForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
@@ -35,7 +33,7 @@ class CollectorFacade extends AbstractFacade
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return BatchResult[]
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
      */
     public function exportSearchForLocale(LocaleTransfer $locale)
     {
@@ -47,7 +45,7 @@ class CollectorFacade extends AbstractFacade
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return BatchResult[]
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
      */
     public function updateSearchForLocale(LocaleTransfer $locale)
     {

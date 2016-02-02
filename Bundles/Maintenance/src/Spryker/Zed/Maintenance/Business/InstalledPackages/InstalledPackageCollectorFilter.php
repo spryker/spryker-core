@@ -13,12 +13,12 @@ class InstalledPackageCollectorFilter implements InstalledPackageCollectorInterf
 {
 
     /**
-     * @var InstalledPackageCollectorInterface
+     * @var \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface
      */
     private $installedPackageCollector;
 
     /**
-     * @param InstalledPackageCollectorInterface $installedPackageCollector
+     * @param \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface $installedPackageCollector
      */
     public function __construct(InstalledPackageCollectorInterface $installedPackageCollector)
     {

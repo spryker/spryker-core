@@ -6,7 +6,6 @@
 
 namespace Spryker\Shared\Heartbeat\Code;
 
-use Generated\Shared\Transfer\HealthReportTransfer;
 use Generated\Shared\Transfer\HealthDetailTransfer;
 use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 

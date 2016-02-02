@@ -10,7 +10,7 @@ class FilterChain implements FilterInterface
 {
 
     /**
-     * @var FilterInterface[]|Callable[]
+     * @var \Spryker\Shared\Library\Filter\FilterInterface[]|Callable[]
      */
     private $filters = [];
 
@@ -47,7 +47,7 @@ class FilterChain implements FilterInterface
     }
 
     /**
-     * @param FilterInterface|Callable $filter
+     * @param \Spryker\Shared\Library\Filter\FilterInterface|Callable $filter
      *
      * @return self
      */

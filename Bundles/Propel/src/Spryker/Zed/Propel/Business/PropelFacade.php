@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Propel\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Symfony\Component\Console\Command\Command;
 
 /**
  * @method PropelBusinessFactory getFactory()
@@ -47,7 +46,7 @@ class PropelFacade extends AbstractFacade
     }
 
     /**
-     * @return Command[]
+     * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()
     {

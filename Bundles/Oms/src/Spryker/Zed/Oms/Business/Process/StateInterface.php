@@ -10,14 +10,14 @@ interface StateInterface
 {
 
     /**
-     * @param TransitionInterface[] $incomingTransitions
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface[] $incomingTransitions
      *
      * @return void
      */
     public function setIncomingTransitions(array $incomingTransitions);
 
     /**
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getIncomingTransitions();
 
@@ -27,14 +27,14 @@ interface StateInterface
     public function hasIncomingTransitions();
 
     /**
-     * @param TransitionInterface[] $outgoingTransitions
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface[] $outgoingTransitions
      *
      * @return void
      */
     public function setOutgoingTransitions(array $outgoingTransitions);
 
     /**
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getOutgoingTransitions();
 
@@ -44,14 +44,14 @@ interface StateInterface
     public function hasOutgoingTransitions();
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      *
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getOutgoingTransitionsByEvent(EventInterface $event);
 
     /**
-     * @return EventInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getEvents();
 
@@ -60,7 +60,7 @@ interface StateInterface
      *
      * @throws \Exception
      *
-     * @return EventInterface
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface
      */
     public function getEvent($id);
 
@@ -77,14 +77,14 @@ interface StateInterface
     public function hasAnyEvent();
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      *
      * @return void
      */
     public function addIncomingTransition(TransitionInterface $transition);
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      *
      * @return void
      */
@@ -103,14 +103,14 @@ interface StateInterface
     public function getName();
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      *
      * @return void
      */
     public function setProcess($process);
 
     /**
-     * @return ProcessInterface
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface
      */
     public function getProcess();
 
@@ -134,7 +134,7 @@ interface StateInterface
     /**
      * @throws \Exception
      *
-     * @return EventInterface
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface
      */
     public function getOnEnterEvent();
 
@@ -146,7 +146,7 @@ interface StateInterface
     /**
      * @throws \Exception
      *
-     * @return EventInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getTimeoutEvents();
 

@@ -39,7 +39,7 @@ class FacadeLocator extends AbstractLocator
      *
      * @throws FacadeNotFoundException
      *
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     public function locate($bundle)
     {

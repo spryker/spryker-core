@@ -9,7 +9,6 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
@@ -17,7 +16,6 @@ use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
@@ -169,7 +167,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolutionTransactionRequestLog[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getRequestLogCollectionForPayment()
     {
@@ -179,7 +177,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolutionTransactionStatusLog[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getStatusLogCollectionForPayment()
     {

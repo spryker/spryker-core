@@ -8,10 +8,7 @@ namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Oms\Business\Process\Process;
-use Spryker\Zed\Oms\Business\Process\Event;
 use Propel\Runtime\Collection\ObjectCollection;
-use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
@@ -103,7 +100,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @return Process[]
+     * @return \Spryker\Zed\Oms\Business\Process\Process[]
      */
     public function getProcesses()
     {
@@ -198,7 +195,7 @@ class OmsFacade extends AbstractFacade
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return Event[]
+     * @return \Spryker\Zed\Oms\Business\Process\Event[]
      */
     public function getGroupedManuallyExecutableEvents(SpySalesOrder $order)
     {
@@ -211,7 +208,7 @@ class OmsFacade extends AbstractFacade
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag)
     {
@@ -224,7 +221,7 @@ class OmsFacade extends AbstractFacade
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag)
     {
@@ -237,7 +234,7 @@ class OmsFacade extends AbstractFacade
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
-     * @return SpyOmsTransitionLog[]
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
      */
     public function getLogForOrder(SpySalesOrder $order, array $logContext = [])
     {

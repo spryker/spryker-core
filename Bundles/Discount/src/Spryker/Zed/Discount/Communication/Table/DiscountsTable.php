@@ -71,7 +71,7 @@ class DiscountsTable extends AbstractTable
             ->where('fk_discount_voucher_pool IS NULL');
 
         $queryResult = $this->runQuery($query, $config, true);
-        /** @var SpyDiscount $item */
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscount $item */
         foreach ($queryResult as $item) {
             $chosenDecisionRules = array_column($item->getDecisionRules()->toArray(), self::DECISION_RULE_PLUGIN);
 

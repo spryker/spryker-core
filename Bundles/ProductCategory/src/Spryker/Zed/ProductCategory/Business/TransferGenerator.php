@@ -25,9 +25,9 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection $productCategoryEntityList
+     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection $productCategoryEntityList
      *
-     * @return ProductCategoryTransfer[]
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
      */
     public function convertProductCategoryCollection(ObjectCollection $productCategoryEntityList)
     {

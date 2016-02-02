@@ -7,7 +7,6 @@
 namespace Spryker\Client\Cms\Storage;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Spryker\Client\Storage\StorageClientInterface;
 
 class CmsBlockStorage implements CmsBlockStorageInterface
 {

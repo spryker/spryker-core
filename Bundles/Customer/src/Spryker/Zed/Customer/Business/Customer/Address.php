@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CountryNotFoundException;

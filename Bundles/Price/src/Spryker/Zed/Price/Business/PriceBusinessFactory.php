@@ -11,8 +11,6 @@ use Spryker\Zed\Price\Business\Model\Writer;
 use Spryker\Zed\Price\Business\Model\Reader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Price\Persistence\PriceQueryContainer;
-use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
-use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Spryker\Zed\Price\Business\Internal\Install;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Price\PriceConfig;

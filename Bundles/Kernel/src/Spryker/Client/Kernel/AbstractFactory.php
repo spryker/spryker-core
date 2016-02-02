@@ -9,12 +9,12 @@ abstract class AbstractFactory
 {
 
     /**
-     * @var Container
+     * @var \Spryker\Client\Kernel\Container
      */
     private $container;
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
      * @return self
      */
@@ -51,7 +51,7 @@ abstract class AbstractFactory
     /**
      * @throws \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
      *
-     * @return AbstractDependencyProvider
+     * @return \Spryker\Client\Kernel\AbstractDependencyProvider
      */
     protected function resolveDependencyProvider()
     {
@@ -67,8 +67,8 @@ abstract class AbstractFactory
     }
 
     /**
-     * @param AbstractDependencyProvider $dependencyProvider
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\AbstractDependencyProvider $dependencyProvider
+     * @param \Spryker\Client\Kernel\Container $container
      *
      * @return void
      */

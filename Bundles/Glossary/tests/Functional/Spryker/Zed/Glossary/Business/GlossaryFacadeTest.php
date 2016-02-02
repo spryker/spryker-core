@@ -10,8 +10,6 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @group Spryker

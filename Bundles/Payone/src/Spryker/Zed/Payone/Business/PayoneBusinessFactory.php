@@ -17,7 +17,6 @@ use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProvider;
 use Spryker\Zed\Payone\Business\Api\Adapter\Http\Guzzle;
 use Spryker\Zed\Payone\Business\Order\OrderManager;
 use Spryker\Zed\Payone\Business\Payment\PaymentManager;
-use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;

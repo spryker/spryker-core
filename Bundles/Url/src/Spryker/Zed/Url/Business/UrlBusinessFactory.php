@@ -19,7 +19,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return UrlManagerInterface
+     * @return \Spryker\Zed\Url\Business\UrlManagerInterface
      */
     public function createUrlManager()
     {
@@ -32,7 +32,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RedirectManagerInterface
+     * @return \Spryker\Zed\Url\Business\RedirectManagerInterface
      */
     public function createRedirectManager()
     {

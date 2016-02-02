@@ -8,10 +8,7 @@ namespace Spryker\Zed\Refund\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Orm\Zed\Refund\Persistence\SpyRefund;
 use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
-use Orm\Zed\Sales\Persistence\SpySalesExpense;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class RefundManager
@@ -73,7 +70,7 @@ class RefundManager
     /**
      * @param int $idOrder
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getRefundableItems($idOrder)
     {
@@ -89,7 +86,7 @@ class RefundManager
     /**
      * @param int $idOrder
      *
-     * @return SpySalesExpense[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense[]
      */
     public function getRefundableExpenses($idOrder)
     {
@@ -105,7 +102,7 @@ class RefundManager
     /**
      * @param $idOrder
      *
-     * @return SpyRefund[]
+     * @return \Orm\Zed\Refund\Persistence\SpyRefund[]
      */
     public function getRefunds($idOrder)
     {

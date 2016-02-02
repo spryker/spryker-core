@@ -9,7 +9,6 @@ namespace Spryker\Zed\Development\Business\CodeStyleFixer;
 use Symfony\CS\AbstractFixer;
 use Symfony\CS\DocBlock\DocBlock;
 use Symfony\CS\FixerInterface;
-use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
 
 class PhpdocReturnVoidFixer extends AbstractFixer
@@ -44,7 +43,7 @@ class PhpdocReturnVoidFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      *
      * @return void
      */
@@ -110,7 +109,7 @@ class PhpdocReturnVoidFixer extends AbstractFixer
     /**
      * For right now we only try to fix void
      *
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      * @param int $index
      *
      * @return string|null
@@ -148,7 +147,7 @@ class PhpdocReturnVoidFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      * @param int $index
      * @param int|null $braceCounter
      *
@@ -185,7 +184,7 @@ class PhpdocReturnVoidFixer extends AbstractFixer
     /**
      * If no docblock can be found we use the beginning of the line.
      *
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      * @param int $index
      *
      * @return int
@@ -213,7 +212,7 @@ class PhpdocReturnVoidFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      * @param int $docBlockIndex
      * @param string $returnType
      *

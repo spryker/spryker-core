@@ -24,7 +24,7 @@ interface ResponseInterface
     public function fromArray(array $values);
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getErrorMessages();
 
@@ -43,14 +43,14 @@ interface ResponseInterface
     public function addErrorMessages(array $errorMessages);
 
     /**
-     * @param Message $errorMessage
+     * @param \Spryker\Shared\ZedRequest\Client\Message $errorMessage
      *
      * @return self
      */
     public function addErrorMessage(Message $errorMessage);
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getInfoMessages();
 
@@ -62,7 +62,7 @@ interface ResponseInterface
     public function hasInfoMessage($messageString);
 
     /**
-     * @param Message $message
+     * @param \Spryker\Shared\ZedRequest\Client\Message $message
      *
      * @return self
      */
@@ -76,7 +76,7 @@ interface ResponseInterface
     public function addInfoMessages(array $messages);
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getSuccessMessages();
 
@@ -95,7 +95,7 @@ interface ResponseInterface
     public function addSuccessMessages(array $successMessages);
 
     /**
-     * @param Message $successMessage
+     * @param \Spryker\Shared\ZedRequest\Client\Message $successMessage
      *
      * @return self
      */

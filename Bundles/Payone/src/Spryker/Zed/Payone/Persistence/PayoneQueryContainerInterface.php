@@ -6,9 +6,6 @@
 
 namespace Spryker\Zed\Payone\Persistence;
 
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
-
 interface PayoneQueryContainerInterface
 {
 
@@ -59,7 +56,7 @@ interface PayoneQueryContainerInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return SpyPaymentPayoneTransactionStatusLog[]
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog[]
      */
     public function getTransactionStatusLogsBySalesOrder($idSalesOrder);
 
@@ -67,7 +64,7 @@ interface PayoneQueryContainerInterface
      * @param int $idSalesOrderItem
      * @param array $ids
      *
-     * @return SpyPaymentPayoneTransactionStatusLogOrderItem[]
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem[]
      */
     public function getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids);
 

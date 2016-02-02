@@ -14,7 +14,7 @@ class ReadOnlyArrayObject extends \ArrayObject
     /**
      * @param mixed $value
      *
-     * @throws LogicException
+     * @throws \LogicException
      *
      * @return void
      */
@@ -26,7 +26,7 @@ class ReadOnlyArrayObject extends \ArrayObject
     /**
      * @param mixed $input
      *
-     * @throws LogicException
+     * @throws \LogicException
      *
      * @return void
      */
@@ -39,7 +39,7 @@ class ReadOnlyArrayObject extends \ArrayObject
      * @param mixed $index
      * @param mixed $newval
      *
-     * @throws LogicException
+     * @throws \LogicException
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class ReadOnlyArrayObject extends \ArrayObject
     /**
      * @param mixed $index
      *
-     * @throws LogicException
+     * @throws \LogicException
      *
      * @return void
      */

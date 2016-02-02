@@ -9,7 +9,6 @@ namespace Spryker\Client\ZedRequest;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Client\ZedRequest\Client\ZedClient;
-use Spryker\Shared\ZedRequest\Client\Message;
 
 /**
  * @method ZedRequestFactory getFactory()
@@ -48,7 +47,7 @@ class ZedRequestClient extends AbstractClient
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getLastResponseInfoMessages()
     {
@@ -56,7 +55,7 @@ class ZedRequestClient extends AbstractClient
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getLastResponseErrorMessages()
     {
@@ -64,7 +63,7 @@ class ZedRequestClient extends AbstractClient
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getLastResponseSuccessMessages()
     {

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Console\Business\Model;
 
-use Psr\Log\LoggerInterface;
 use Silex\Application;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;

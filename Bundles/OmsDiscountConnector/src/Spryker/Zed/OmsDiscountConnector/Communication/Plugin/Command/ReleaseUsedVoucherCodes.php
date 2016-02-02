@@ -19,7 +19,7 @@ class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderI
 {
 
     /**
-     * @param SpySalesOrder[] $orderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *

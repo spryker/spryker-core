@@ -38,7 +38,7 @@ class EditController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /** @var CustomerTransfer $data */
+            /** @var \Generated\Shared\Transfer\CustomerTransfer $data */
             $data = $form->getData();
 
             $this->getFacade()

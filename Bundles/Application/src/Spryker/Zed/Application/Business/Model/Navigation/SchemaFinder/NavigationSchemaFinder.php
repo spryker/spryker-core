@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class NavigationSchemaFinder implements NavigationSchemaFinderInterface
 {
@@ -33,7 +32,7 @@ class NavigationSchemaFinder implements NavigationSchemaFinderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     public function getSchemaFiles()
     {

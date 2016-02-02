@@ -13,12 +13,12 @@ class ExceptionHandlerDispatcher
 {
 
     /**
-     * @var ExceptionHandlerInterface[]
+     * @var \Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface[]
      */
     protected $exceptionHandlers;
 
     /**
-     * @param ExceptionHandlerInterface[] $exceptionHandlers
+     * @param \Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface[] $exceptionHandlers
      */
     public function __construct(array $exceptionHandlers)
     {

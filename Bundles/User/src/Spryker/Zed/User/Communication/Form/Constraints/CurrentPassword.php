@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\User\Communication\Form\Constraints;
 
-use Spryker\Zed\User\Business\UserFacade;
 use Symfony\Component\Validator\Constraint;
 
 class CurrentPassword extends Constraint

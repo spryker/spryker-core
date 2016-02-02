@@ -16,7 +16,7 @@ class FactoryResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
      * @return \Spryker\Yves\Kernel\AbstractFactory
      */

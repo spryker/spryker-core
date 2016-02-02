@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Category\Persistence\SpyCategoryNode;
 
 interface CategoryTreeReaderInterface
 {
@@ -16,7 +15,7 @@ interface CategoryTreeReaderInterface
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
      */
     public function getChildren($idNode, LocaleTransfer $locale);
 
@@ -123,21 +122,21 @@ interface CategoryTreeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
      */
     public function getAllNodesByIdCategory($idCategory);
 
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
      */
     public function getMainNodesByIdCategory($idCategory);
 
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
      */
     public function getNotMainNodesByIdCategory($idCategory);
 
@@ -145,12 +144,12 @@ interface CategoryTreeReaderInterface
      * @param int $idParentNode
      * @param int $idLocale
      *
-     * @return SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
      */
     public function getCategoryNodesWithOrder($idParentNode, $idLocale);
 
     /**
-     * @return SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
      */
     public function getRootNodes();
 

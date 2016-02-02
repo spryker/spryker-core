@@ -107,10 +107,10 @@ class Converter implements ConverterInterface
     }
 
     /**
-     * @param DOMDocument $xml
+     * @param \DOMDocument $xml
      * @param array $data
      *
-     * @return DOMDocument
+     * @return \DOMDocument
      */
     protected function createXml(DOMDocument $xml, array $data)
     {
@@ -133,10 +133,10 @@ class Converter implements ConverterInterface
     }
 
     /**
-     * @param DOMDocument $xml
+     * @param \DOMDocument $xml
      * @param array $data
      *
-     * @return DOMElement
+     * @return \DOMElement
      */
     protected function createXmlElement(DOMDocument $xml, array $data)
     {
@@ -151,10 +151,10 @@ class Converter implements ConverterInterface
     }
 
     /**
-     * @param DOMElement $element
+     * @param \DOMElement $element
      * @param array $data
      *
-     * @return DOMElement
+     * @return \DOMElement
      */
     protected function fillXmlAttributes(DOMElement $element, array $data)
     {

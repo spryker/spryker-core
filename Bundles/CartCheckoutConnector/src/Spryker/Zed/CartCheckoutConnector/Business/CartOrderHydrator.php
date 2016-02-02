@@ -29,7 +29,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $cartItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
      *
      * @return \ArrayObject
      */

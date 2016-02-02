@@ -21,7 +21,7 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
 
     /**
      * @param array $array
-     * @param string|FilterSetInterface $filterSet
+     * @param string|\Spryker\Zed\Library\Sanitize\FilterSetInterface $filterSet
      */
     public function __construct(array $array, $filterSet)
     {
@@ -30,14 +30,14 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
     }
 
     /**
-     * @param string|FilterSetInterface $filterSet
+     * @param string|\Spryker\Zed\Library\Sanitize\FilterSetInterface $filterSet
      *
      * @return void
      */
     protected function initFilters($filterSet)
     {
         if (is_string($filterSet) && class_exists($filterSet)) {
-            /** @var FilterSetInterface $filterSetClass */
+            /** @var \Spryker\Zed\Library\Sanitize\FilterSetInterface $filterSetClass */
             $filterSetClass = new $filterSet();
             $this->filters = $filterSetClass->getFilters();
         } elseif ($filterSet instanceof FilterSetInterface) {
@@ -57,7 +57,7 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
         }
 
         $result = $array;
-        /** @var FilterInterface $filter */
+        /** @var \Spryker\Zed\Library\Sanitize\FilterInterface $filter */
         foreach ($this->filters as $filter) {
             $result = $filter->filter($result);
         }

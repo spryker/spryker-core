@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 /**
  * @method DiscountFacade getFacade()
@@ -18,7 +17,7 @@ class Fixed extends AbstractCalculator
 {
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
      * @param int $number
      *
      * @return float

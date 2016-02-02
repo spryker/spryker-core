@@ -10,7 +10,7 @@ class Transition implements TransitionInterface
 {
 
     /**
-     * @var EventInterface
+     * @var \Spryker\Zed\Oms\Business\Process\EventInterface
      */
     protected $event;
 
@@ -25,12 +25,12 @@ class Transition implements TransitionInterface
     protected $happy;
 
     /**
-     * @var StateInterface
+     * @var \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     protected $source;
 
     /**
-     * @var StateInterface
+     * @var \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     protected $target;
 
@@ -79,7 +79,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      *
      * @return void
      */
@@ -89,7 +89,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @return EventInterface
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface
      */
     public function getEvent()
     {
@@ -105,7 +105,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @param StateInterface $source
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $source
      *
      * @return void
      */
@@ -115,7 +115,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     public function getSource()
     {
@@ -123,7 +123,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @param StateInterface $target
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $target
      *
      * @return void
      */
@@ -133,7 +133,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     public function getTarget()
     {

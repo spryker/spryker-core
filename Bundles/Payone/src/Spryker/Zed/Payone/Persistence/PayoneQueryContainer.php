@@ -9,12 +9,9 @@ namespace Spryker\Zed\Payone\Persistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItemQuery;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQueryContainerInterface
 {
@@ -123,7 +120,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $idIdSalesOrder
      *
-     * @return SpyPaymentPayoneTransactionStatusLog[]
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog[]
      */
     public function getTransactionStatusLogsBySalesOrder($idIdSalesOrder)
     {
@@ -142,7 +139,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      * @param int $idSalesOrderItem
      * @param array $ids
      *
-     * @return SpyPaymentPayoneTransactionStatusLogOrderItem[]
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem[]
      */
     public function getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids)
     {
@@ -182,7 +179,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     public function getApiLogsByOrderIds($orders)
     {
         $ids = [];
-        /** @var SpySalesOrder $order */
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrder $order */
         foreach ($orders as $order) {
             $ids[] = $order->getIdSalesOrder();
         }
@@ -206,7 +203,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     public function getTransactionStatusLogsByOrderIds($orders)
     {
         $ids = [];
-        /** @var SpySalesOrder $order */
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrder $order */
         foreach ($orders as $order) {
             $ids[] = $order->getIdSalesOrder();
         }

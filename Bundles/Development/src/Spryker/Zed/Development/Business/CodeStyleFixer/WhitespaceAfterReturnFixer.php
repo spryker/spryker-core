@@ -8,7 +8,6 @@ namespace Spryker\Zed\Development\Business\CodeStyleFixer;
 
 use Symfony\CS\AbstractFixer;
 use Symfony\CS\FixerInterface;
-use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
 
 class WhitespaceAfterReturnFixer extends AbstractFixer
@@ -30,7 +29,7 @@ class WhitespaceAfterReturnFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      *
      * @return void
      */

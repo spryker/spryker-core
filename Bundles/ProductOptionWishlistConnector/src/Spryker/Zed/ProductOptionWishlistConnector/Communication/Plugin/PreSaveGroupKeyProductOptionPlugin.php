@@ -52,7 +52,7 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     }
 
     /**
-     * @param ProductOptionTransfer[] $options
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $options
      *
      * @return array
      */
@@ -69,7 +69,7 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     }
 
     /**
-     * @param ProductOptionTransfer[] $sortedProductOptions
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $sortedProductOptions
      *
      * @return string
      */

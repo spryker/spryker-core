@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Installer\Business;
 
 use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
-use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Installer\InstallerConfig;
 use Spryker\Zed\Installer\InstallerDependencyProvider;
@@ -19,7 +18,7 @@ class InstallerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
      */
     public function getInstallers()
     {
@@ -27,7 +26,7 @@ class InstallerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
      */
     public function getDemoDataInstallers()
     {

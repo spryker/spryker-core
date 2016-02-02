@@ -6,19 +6,18 @@
 namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class Aggregate implements CollectorInterface
 {
 
     /**
-     * @var CollectorInterface[]
+     * @var \Spryker\Zed\Discount\Business\Collector\CollectorInterface[]
      */
     protected $collectors = [];
 
     /**
-     * @param CollectorInterface[] $collectors
+     * @param \Spryker\Zed\Discount\Business\Collector\CollectorInterface[] $collectors
      */
     public function __construct(array $collectors)
     {
@@ -28,7 +27,7 @@ class Aggregate implements CollectorInterface
     /**
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
-     * @return OrderTransfer[]
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
     public function collect(CalculableInterface $container, DiscountCollectorTransfer $discountCollectorTransfer)
     {

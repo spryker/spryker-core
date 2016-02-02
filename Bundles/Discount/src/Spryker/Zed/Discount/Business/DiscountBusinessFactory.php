@@ -35,8 +35,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
 use Spryker\Zed\Discount\Business\Model\Discount;
 use Spryker\Zed\Discount\Business\Model\VoucherEngine;
-use Spryker\Zed\Discount\Business\Model\CalculatorInterface;
-use Spryker\Zed\Discount\Business\Collector\CollectorInterface;
 use Spryker\Zed\Discount\Business\Model\DecisionRuleEngine;
 
 /**
@@ -105,7 +103,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getAvailableCalculatorPlugins() instead.
      *
-     * @return CalculatorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\CalculatorInterface[]
      */
     public function createAvailableCalculatorPlugins()
     {
@@ -115,7 +113,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CalculatorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\CalculatorInterface[]
      */
     public function getAvailableCalculatorPlugins()
     {
@@ -125,7 +123,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getAvailableCollectorPlugins() instead.
      *
-     * @return CollectorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Collector\CollectorInterface[]
      */
     public function createAvailableCollectorPlugins()
     {
@@ -135,7 +133,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CollectorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Collector\CollectorInterface[]
      */
     public function getAvailableCollectorPlugins()
     {

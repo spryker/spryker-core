@@ -7,7 +7,6 @@
 namespace Spryker\Client\Checkout\Zed;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Spryker\Client\ZedRequest\Client\ZedClient;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CheckoutStub implements CheckoutStubInterface

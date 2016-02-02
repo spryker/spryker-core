@@ -33,7 +33,7 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
     }
 
     /**
-     * @param CategoryFieldNotBlank $constraint
+     * @param \Spryker\Zed\ProductCategory\Communication\Form\Constraints\CategoryFieldNotBlank $constraint
      *
      * @return bool
      */

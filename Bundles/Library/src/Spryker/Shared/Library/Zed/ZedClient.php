@@ -166,7 +166,7 @@ class ZedClient
         $pathInfo .= $char . 'yvesRequestId=' . $requestId;
 
         $client->setUserAgent('Yves 2.0');
-        /** @var EntityEnclosingRequest $request */
+        /** @var \Guzzle\Http\Message\EntityEnclosingRequest $request */
         $request = $client->post($pathInfo);
         $request->addHeader('X-Yves-Host', 1);
 

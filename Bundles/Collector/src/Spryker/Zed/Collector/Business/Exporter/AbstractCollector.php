@@ -21,7 +21,7 @@ abstract class AbstractCollector implements ExporterInterface
     const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
-     * @var CollectorPluginInterface[]
+     * @var \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
      */
     protected $collectorPlugins = [];
 
@@ -46,7 +46,7 @@ abstract class AbstractCollector implements ExporterInterface
     protected $touchUpdater;
 
     /**
-     * @var MarkerInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\MarkerInterface
      */
     protected $marker;
 
@@ -58,7 +58,7 @@ abstract class AbstractCollector implements ExporterInterface
     /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $queryContainer
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
-     * @param MarkerInterface $marker
+     * @param \Spryker\Zed\Collector\Business\Exporter\MarkerInterface $marker
      * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failedResultPrototype
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResultPrototype
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater

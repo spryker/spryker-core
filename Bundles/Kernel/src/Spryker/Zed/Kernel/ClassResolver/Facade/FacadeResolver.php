@@ -16,7 +16,7 @@ class FacadeResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @throws FacadeNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
      *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */

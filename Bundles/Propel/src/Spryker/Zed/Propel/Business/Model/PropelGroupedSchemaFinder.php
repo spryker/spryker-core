@@ -16,7 +16,7 @@ class PropelGroupedSchemaFinder implements PropelGroupedSchemaFinderInterface
     protected $schemaFinder;
 
     /**
-     * @param PropelSchemaFinderInterface $schemaFinder
+     * @param \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface $schemaFinder
      */
     public function __construct(PropelSchemaFinderInterface $schemaFinder)
     {

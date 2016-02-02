@@ -10,12 +10,12 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
 {
 
     /**
-     * @var FilterBuilderInterface
+     * @var \Spryker\Client\Catalog\Model\Builder\FilterBuilderInterface
      */
     protected $filterBuilder;
 
     /**
-     * @param FilterBuilderInterface $filterBuilder
+     * @param \Spryker\Client\Catalog\Model\Builder\FilterBuilderInterface $filterBuilder
      */
     public function __construct(FilterBuilderInterface $filterBuilder)
     {

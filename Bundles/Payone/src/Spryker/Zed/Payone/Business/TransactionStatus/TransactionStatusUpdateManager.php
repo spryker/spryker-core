@@ -274,7 +274,7 @@ class TransactionStatusUpdateManager
             return false;
         }
 
-        /** @var SpyPaymentPayoneTransactionStatusLog $statusLog */
+        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog $statusLog */
         $statusLog = array_shift($statusLogs);
 
         $statuses = [
@@ -338,7 +338,7 @@ class TransactionStatusUpdateManager
             return null;
         }
 
-        /** @var SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
+        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
         $transactionStatusLog = array_shift($transactionStatusLogs);
 
         if ($transactionStatusLog->getStatus() !== $status) {
@@ -352,7 +352,7 @@ class TransactionStatusUpdateManager
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
-     * @return SpyPaymentPayoneTransactionStatusLog[]
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog[]
      */
     private function getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem)
     {
@@ -369,7 +369,7 @@ class TransactionStatusUpdateManager
             ->getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, array_keys($ids))
             ->find();
 
-        /** @var SpyPaymentPayoneTransactionStatusLogOrderItem $relation */
+        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem $relation */
         foreach ($relations as $relation) {
             unset($ids[$relation->getIdPaymentPayoneTransactionStatusLog()]);
         }

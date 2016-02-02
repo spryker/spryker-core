@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Touch\Business\TouchBusinessFactory;
 use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**

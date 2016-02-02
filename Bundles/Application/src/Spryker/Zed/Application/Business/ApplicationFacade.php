@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Application\Business;
 
-use Spryker\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 
@@ -19,7 +18,7 @@ class ApplicationFacade extends AbstractFacade
     /**
      * @param \Psr\Log\LoggerInterface $logger
      *
-     * @return AbstractApplicationCheckStep[]
+     * @return \Spryker\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep[]
      */
     public function getCheckSteps(LoggerInterface $logger = null)
     {

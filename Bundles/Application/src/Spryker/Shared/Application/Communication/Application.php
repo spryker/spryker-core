@@ -11,9 +11,6 @@ use Silex\Application\TwigTrait;
 use Silex\Application\UrlGeneratorTrait;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Symfony\Cmf\Component\Routing\ChainRouter;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\Routing\RouterInterface;
 
 class Application extends \Silex\Application
@@ -39,13 +36,13 @@ class Application extends \Silex\Application
      *
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      *
-     * @return FormInterface The form named after the type
+     * @return \Symfony\Component\Form\FormInterface The form named after the type
      *
      * @deprecated Use buildForm() instead.
      */
     public function createForm($type = 'form', $data = null, array $options = [])
     {
-        /** @var FormInterface $form */
+        /** @var \Symfony\Component\Form\FormInterface $form */
         $form = $this['form.factory']->create($type, $data, $options);
         $request = ($this[self::REQUEST_STACK]) ? $this[self::REQUEST_STACK]->getCurrentRequest() : $this[self::REQUEST];
         $form->handleRequest($request);
@@ -57,9 +54,9 @@ class Application extends \Silex\Application
      * @param \Spryker\Shared\Gui\Form\AbstractForm $form
      * @param array $options The options
      *
-     * @throws InvalidOptionsException if any given option is not applicable to the given type
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      *
-     * @return FormInterface The form named after the type
+     * @return \Symfony\Component\Form\FormInterface The form named after the type
      */
     public function buildForm(AbstractForm $form, array $options = [])
     {

@@ -11,8 +11,6 @@ use Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandler;
 use Spryker\Zed\Newsletter\Business\Subscription\SingleOptInHandler;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriberManager;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManager;
-use Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface;
-use Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler;
 use Spryker\Zed\Newsletter\NewsletterConfig;
 use Spryker\Zed\Newsletter\NewsletterDependencyProvider;

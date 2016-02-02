@@ -6,7 +6,6 @@
 
 namespace Spryker\Yves\Kernel;
 
-use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 
@@ -14,7 +13,7 @@ abstract class AbstractPlugin
 {
 
     /**
-     * @var FactoryInterface
+     * @var \Spryker\Yves\Kernel\FactoryInterface
      */
     private $factory;
 
@@ -24,7 +23,7 @@ abstract class AbstractPlugin
     private $client;
 
     /**
-     * @return FactoryInterface
+     * @return \Spryker\Yves\Kernel\FactoryInterface
      */
     protected function getFactory()
     {
@@ -38,7 +37,7 @@ abstract class AbstractPlugin
     /**
      * @throws \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractFactory
+     * @return \Spryker\Yves\Kernel\AbstractFactory
      */
     private function resolveFactory()
     {

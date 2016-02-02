@@ -5,8 +5,6 @@ namespace Spryker\Zed\Discount\Communication\Table;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
-use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -91,7 +89,7 @@ class DiscountVoucherCodesTable extends AbstractTable
 
         $result = [];
 
-        /** @var SpyDiscountVoucher $code */
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $code */
         foreach ($collectionObject as $code) {
             $result[] = [
                 SpyDiscountVoucherTableMap::COL_CODE => $code->getCode(),

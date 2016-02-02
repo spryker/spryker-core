@@ -79,7 +79,7 @@ class CartFacadeTest extends Test
 
         $this->assertCount(2, $changedCart->getItems());
 
-        /** @var ItemTransfer $item */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $item */
         foreach ($cart->getItems() as $item) {
             if ($item->getSku() === $cartItem->getSku()) {
                 $this->assertEquals($cartItem->getQuantity(), $item->getQuantity());
@@ -116,7 +116,7 @@ class CartFacadeTest extends Test
         $cartItems = $changedCart->getItems();
         $this->assertCount(2, $cartItems);
 
-        /** @var ItemTransfer $changedItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
         $changedItem = $cartItems[1];
         $this->assertEquals(3, $changedItem->getQuantity());
 
@@ -175,7 +175,7 @@ class CartFacadeTest extends Test
         $changedCart = $this->cartFacade->decreaseQuantity($cartChange);
         $cartItems = $changedCart->getItems();
         $this->assertCount(1, $cartItems);
-        /** @var ItemTransfer $changedItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
         $changedItem = $cartItems[0];
         $this->assertEquals(2, $changedItem->getQuantity());
     }

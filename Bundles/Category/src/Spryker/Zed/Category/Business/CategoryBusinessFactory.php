@@ -208,7 +208,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransferGeneratorInterface
+     * @return \Spryker\Zed\Category\Business\TransferGeneratorInterface
      */
     public function createCategoryTransferGenerator()
     {

@@ -75,7 +75,7 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      *
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getAllNodesByIdCategory($idCategory)
     {
@@ -91,7 +91,7 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      *
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getMainNodesByIdCategory($idCategory)
     {
@@ -107,7 +107,7 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      *
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getNotMainNodesByIdCategory($idCategory)
     {
@@ -223,7 +223,7 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getRootNodes()
     {

@@ -24,7 +24,7 @@ class DependencyTree extends AbstractDependencyTree
     const META_LAYER = 'layer';
 
     /**
-     * @var FileInfoExtractor
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor
      */
     private $fileInfoExtractor;
 
@@ -34,7 +34,7 @@ class DependencyTree extends AbstractDependencyTree
     private $engineBundles;
 
     /**
-     * @param FileInfoExtractor $fileInfoExtractor
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor $fileInfoExtractor
      * @param array $engineBundles
      */
     public function __construct(FileInfoExtractor $fileInfoExtractor, array $engineBundles)

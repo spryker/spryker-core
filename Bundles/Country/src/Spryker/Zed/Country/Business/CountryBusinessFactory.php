@@ -48,7 +48,7 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CountryManagerInterface
+     * @return \Spryker\Zed\Country\Business\CountryManagerInterface
      */
     public function createCountryManager()
     {
@@ -58,7 +58,7 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RegionManagerInterface
+     * @return \Spryker\Zed\Country\Business\RegionManagerInterface
      */
     protected function createRegionManager()
     {

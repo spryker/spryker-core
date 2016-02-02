@@ -32,7 +32,7 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransferGeneratorInterface
+     * @return \Spryker\Zed\Locale\Business\TransferGeneratorInterface
      */
     protected function createTransferGenerator()
     {

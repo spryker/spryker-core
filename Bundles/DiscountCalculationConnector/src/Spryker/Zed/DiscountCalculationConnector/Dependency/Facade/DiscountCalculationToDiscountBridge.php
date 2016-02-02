@@ -6,7 +6,6 @@
 namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscountInterface
@@ -28,7 +27,7 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
     /**
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
-     * @return SpyDiscount[]
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
     public function calculateDiscounts(CalculableInterface $calculableContainer)
     {

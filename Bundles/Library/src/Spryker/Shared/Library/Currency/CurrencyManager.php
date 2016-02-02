@@ -18,7 +18,7 @@ class CurrencyManager
     const PRICE_PRECISION = 100;
 
     /**
-     * @var CurrencyInterface
+     * @var \Spryker\Shared\Library\Currency\CurrencyInterface
      */
     private static $currency;
 
@@ -44,7 +44,7 @@ class CurrencyManager
     }
 
     /**
-     * @param CurrencyInterface $currency
+     * @param \Spryker\Shared\Library\Currency\CurrencyInterface $currency
      *
      * @return void
      */
@@ -64,7 +64,7 @@ class CurrencyManager
     }
 
     /**
-     * @return CurrencyInterface
+     * @return \Spryker\Shared\Library\Currency\CurrencyInterface
      */
     public static function getDefaultCurrency()
     {
@@ -78,7 +78,7 @@ class CurrencyManager
     /**
      * @param string $currencyIsoCode
      *
-     * @return CurrencyInterface
+     * @return \Spryker\Shared\Library\Currency\CurrencyInterface
      */
     protected static function loadCurrencyClass($currencyIsoCode)
     {
@@ -151,7 +151,7 @@ class CurrencyManager
     }
 
     /**
-     * @param CurrencyInterface $currency
+     * @param \Spryker\Shared\Library\Currency\CurrencyInterface $currency
      * @param int|float $value
      * @param bool $includeSymbol
      *
@@ -176,7 +176,7 @@ class CurrencyManager
     }
 
     /**
-     * @param CurrencyInterface $currency
+     * @param \Spryker\Shared\Library\Currency\CurrencyInterface $currency
      * @param int|float $value
      *
      * @return string

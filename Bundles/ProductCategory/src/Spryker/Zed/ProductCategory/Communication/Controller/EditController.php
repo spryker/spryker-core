@@ -431,7 +431,7 @@ class EditController extends AddController
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
      */
     protected function getCategoryChildren($idCategoryNode, LocaleTransfer $locale)
     {

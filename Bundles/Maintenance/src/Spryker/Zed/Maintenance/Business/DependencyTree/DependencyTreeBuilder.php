@@ -6,19 +6,18 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree;
 
-use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\AbstractDependencyFinder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeWriter\DependencyTreeWriterInterface;
 
 class DependencyTreeBuilder
 {
 
     /**
-     * @var Finder
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\Finder
      */
     private $finder;
 
     /**
-     * @var AbstractDependencyTree
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\AbstractDependencyTree
      */
     private $dependencyTree;
 
@@ -28,13 +27,13 @@ class DependencyTreeBuilder
     private $writer;
 
     /**
-     * @var AbstractDependencyFinder[]
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\AbstractDependencyFinder[]
      */
     private $dependencyChecker = [];
 
     /**
-     * @param Finder $finder
-     * @param AbstractDependencyTree $report
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\Finder $finder
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\AbstractDependencyTree $report
      * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeWriter\DependencyTreeWriterInterface $writer
      */
     public function __construct(Finder $finder, AbstractDependencyTree $report, DependencyTreeWriterInterface $writer)

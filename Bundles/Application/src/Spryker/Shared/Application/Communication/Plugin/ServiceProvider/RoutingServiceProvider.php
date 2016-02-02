@@ -21,7 +21,7 @@ class RoutingServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['url_matcher'] = $app->share(function () use ($app) {
-            /** @var ChainRouter $chainRouter */
+            /** @var \Symfony\Cmf\Component\Routing\ChainRouter $chainRouter */
             $chainRouter = $app['routers'];
             $chainRouter->setContext($app['request_context']);
 

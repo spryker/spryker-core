@@ -19,7 +19,7 @@ class PreSaveSkuGroupKeyPlugin extends AbstractPlugin implements PreSavePluginIn
 {
 
     /**
-     * @param ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return void
      */

@@ -9,24 +9,24 @@ class PropelSchema implements PropelSchemaInterface
 {
 
     /**
-     * @var PropelGroupedSchemaFinderInterface
+     * @var \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface
      */
     private $finder;
 
     /**
-     * @var PropelSchemaWriterInterface
+     * @var \Spryker\Zed\Propel\Business\Model\PropelSchemaWriterInterface
      */
     private $writer;
 
     /**
-     * @var PropelSchemaMergerInterface
+     * @var \Spryker\Zed\Propel\Business\Model\PropelSchemaMergerInterface
      */
     private $merger;
 
     /**
-     * @param PropelGroupedSchemaFinderInterface $finder
-     * @param PropelSchemaWriterInterface $writer
-     * @param PropelSchemaMergerInterface $merger
+     * @param \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface $finder
+     * @param \Spryker\Zed\Propel\Business\Model\PropelSchemaWriterInterface $writer
+     * @param \Spryker\Zed\Propel\Business\Model\PropelSchemaMergerInterface $merger
      */
     public function __construct(
         PropelGroupedSchemaFinderInterface $finder,

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\CommentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderComment;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class CommentManager

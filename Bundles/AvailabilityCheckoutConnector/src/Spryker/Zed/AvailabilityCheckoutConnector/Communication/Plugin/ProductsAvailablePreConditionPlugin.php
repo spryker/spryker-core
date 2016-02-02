@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\AvailabilityCheckoutConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -57,7 +56,7 @@ class ProductsAvailablePreConditionPlugin extends AbstractPlugin implements Chec
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return array
      */

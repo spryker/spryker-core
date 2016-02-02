@@ -16,7 +16,7 @@ class CodeExistsValidator extends ConstraintValidator
      * Checks if the passed value is valid.
      *
      * @param mixed $value The value that should be validated
-     * @param \Symfony\Component\Validator\Constraint|CodeExists $constraint The constraint for the validation
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\Discount\Communication\Constraint\CodeExists $constraint The constraint for the validation
      *
      * @api
      *
@@ -40,7 +40,7 @@ class CodeExistsValidator extends ConstraintValidator
 
     /**
      * @param string $value
-     * @param \Symfony\Component\Validator\Constraint|CodeExists $constraint
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\Discount\Communication\Constraint\CodeExists $constraint
      *
      * @return void
      */

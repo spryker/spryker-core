@@ -17,7 +17,7 @@ class SalesCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return SalesOrderSaverInterface
+     * @return \Spryker\Zed\SalesCheckoutConnector\Business\SalesOrderSaverInterface
      */
     public function createSalesOrderSaver()
     {

@@ -59,7 +59,7 @@ class MvcRouter implements RouterInterface
     /**
      * Gets the RouteCollection instance associated with this Router.
      *
-     * @return RouteCollection A RouteCollection instance
+     * @return \Symfony\Component\Routing\RouteCollection A RouteCollection instance
      */
     public function getRouteCollection()
     {

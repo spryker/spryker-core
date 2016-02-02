@@ -41,7 +41,7 @@ class ZedRequestFactory extends AbstractFactory
     }
 
     /**
-     * @return ZedRequestConfig
+     * @return \Spryker\Client\ZedRequest\ZedRequestConfig
      */
     protected function getConfig()
     {

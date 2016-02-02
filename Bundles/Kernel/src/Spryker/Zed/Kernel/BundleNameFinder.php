@@ -8,7 +8,6 @@ namespace Spryker\Zed\Kernel;
 
 use Spryker\Shared\Kernel\AbstractBundle;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class BundleNameFinder extends AbstractBundle
 {
@@ -56,7 +55,7 @@ class BundleNameFinder extends AbstractBundle
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     protected function getFinder()
     {

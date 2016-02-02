@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
@@ -18,7 +17,7 @@ abstract class AbstractCalculator extends AbstractDiscountPlugin implements Disc
 {
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
      * @param float $number
      *
      * @return int

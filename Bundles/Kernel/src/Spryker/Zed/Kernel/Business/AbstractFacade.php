@@ -12,12 +12,12 @@ abstract class AbstractFacade
 {
 
     /**
-     * @var BusinessFactoryInterface
+     * @var \Spryker\Zed\Kernel\Business\BusinessFactoryInterface
      */
     private $factory;
 
     /**
-     * @param AbstractBusinessFactory $factory
+     * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $factory
      *
      * @return self
      */
@@ -29,7 +29,7 @@ abstract class AbstractFacade
     }
 
     /**
-     * @return BusinessFactoryInterface
+     * @return \Spryker\Zed\Kernel\Business\BusinessFactoryInterface
      */
     protected function getFactory()
     {
@@ -43,7 +43,7 @@ abstract class AbstractFacade
     /**
      * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractBusinessFactory
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
      */
     private function resolveFactory()
     {

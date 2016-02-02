@@ -25,7 +25,7 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @return AbstractClassResolver
+     * @return \Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver
      */
     public function setCallerClass($callerClass)
     {

@@ -38,7 +38,7 @@ class OmsConfig extends AbstractBundleConfig
             'fontname' => 'Verdana',
             'labelfontname' => 'Verdana',
             'nodesep' => 0.6,
-            'ranksep' => 0.8
+            'ranksep' => 0.8,
         ];
     }
 

@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 
@@ -24,7 +23,7 @@ class ItemExpense extends AbstractDiscountPlugin implements DiscountCollectorPlu
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return DiscountableInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\DiscountableInterface[]
      */
     public function collect(
         DiscountTransfer $discount,

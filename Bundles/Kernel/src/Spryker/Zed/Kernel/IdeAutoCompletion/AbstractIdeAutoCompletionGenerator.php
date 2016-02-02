@@ -40,7 +40,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     protected $options;
 
     /**
-     * @var MethodTagBuilderInterface[]
+     * @var \Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\MethodTagBuilderInterface[]
      */
     protected $methodTagBuilder = [];
 

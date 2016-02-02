@@ -54,12 +54,12 @@ class ProductManager implements ProductManagerInterface
     protected $localeFacade;
 
     /**
-     * @var SpyProductAbstract[]
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
     protected $productAbstractCollectionBySkuCache = [];
 
     /**
-     * @var SpyProduct[]
+     * @var \Orm\Zed\Product\Persistence\SpyProduct[]
      */
     protected $productConcreteCollectionBySkuCache = [];
 

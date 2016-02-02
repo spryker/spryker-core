@@ -7,13 +7,12 @@
 namespace Spryker\Zed\Heartbeat;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class HeartbeatConfig extends AbstractBundleConfig
 {
 
     /**
-     * @return HealthIndicatorInterface[]
+     * @return \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface[]
      */
     public function getHealthIndicator()
     {

@@ -6,7 +6,6 @@
 
 namespace Spryker\Shared\Log;
 
-use Psr\Log\LoggerInterface;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
 trait LoggerTrait

@@ -2,8 +2,6 @@
 
 namespace Spryker\Client\Kernel;
 
-use Generated\Client\Ide\AutoCompletion;
-
 class Container extends \Pimple
 {
 

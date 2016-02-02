@@ -189,7 +189,7 @@ class PayolutionFacadeGatewayTest extends Test
         $facade = $this->payolutionFacade;
         $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
-        /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
         $preAuthorizationStatusLogEntity = $this
             ->paymentEntity
             ->getSpyPaymentPayolutionTransactionStatusLogs()
@@ -235,7 +235,7 @@ class PayolutionFacadeGatewayTest extends Test
         $facade = $this->payolutionFacade;
         $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
-        /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
         $preAuthorizationStatusLogEntity = $this
             ->paymentEntity
             ->getSpyPaymentPayolutionTransactionStatusLogs()

@@ -141,7 +141,7 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     /**
      * @param int $idCategory
      *
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getNotMainNodesByIdCategory($idCategory)
     {

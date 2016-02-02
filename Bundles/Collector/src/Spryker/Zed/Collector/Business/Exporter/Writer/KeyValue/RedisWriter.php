@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue;
 
 use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\RedisReadWrite;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class RedisWriter implements WriterInterface

@@ -131,7 +131,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|SpyProduct[] $productConcreteCollectionCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productConcreteCollectionCollection
      *
      * @return array
      */

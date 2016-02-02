@@ -8,7 +8,6 @@ namespace Spryker\Zed\Oms\Business;
 
 use Spryker\Tool\Graph\Graph;
 use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Tool\GraphPhpDocumentor\PhpDocumentorGraph;
 use Spryker\Zed\Oms\Business\Process\ProcessSelector;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Process\Process;

@@ -18,9 +18,9 @@ class StackExecutor
 
     /**
      * @param array $calculatorStack
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
-     * @return CalculableInterface
+     * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
      */
     public function recalculate(array $calculatorStack, CalculableInterface $calculableContainer)
     {
@@ -42,7 +42,7 @@ class StackExecutor
 
     /**
      * @param array $calculatorStack
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return \Generated\Shared\Transfer\TotalsTransfer

@@ -13,7 +13,6 @@ use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 
@@ -25,7 +24,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
     /**
-     * @param SpySalesOrderItem[] $orderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *

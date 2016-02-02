@@ -18,7 +18,7 @@ class MailBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return MailSenderInterface
+     * @return \Spryker\Zed\Mail\Business\MailSenderInterface
      */
     public function createMailSender()
     {
@@ -39,7 +39,7 @@ class MailBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return InclusionHandlerInterface
+     * @return \Spryker\Zed\Mail\Business\InclusionHandlerInterface
      */
     protected function createInclusionHandler()
     {

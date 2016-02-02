@@ -10,12 +10,12 @@ class ComposerUpdaterComposite implements UpdaterInterface
 {
 
     /**
-     * @var UpdaterInterface[]
+     * @var \Spryker\Zed\Maintenance\Business\Composer\Updater\UpdaterInterface[]
      */
     private $updater;
 
     /**
-     * @param UpdaterInterface $updater
+     * @param \Spryker\Zed\Maintenance\Business\Composer\Updater\UpdaterInterface $updater
      *
      * @return self
      */

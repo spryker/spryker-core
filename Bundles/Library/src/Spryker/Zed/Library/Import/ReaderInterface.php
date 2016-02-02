@@ -12,7 +12,7 @@ interface ReaderInterface
     /**
      * @param mixed $inputData
      *
-     * @return Input
+     * @return \Spryker\Zed\Library\Import\Input
      */
     public function read($inputData);
 

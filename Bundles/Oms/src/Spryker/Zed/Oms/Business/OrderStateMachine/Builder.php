@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use Spryker\Zed\Oms\Business\Process\EventInterface;
-use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 use SimpleXMLElement;
@@ -17,12 +16,12 @@ class Builder implements BuilderInterface
 {
 
     /**
-     * @var SimpleXMLElement
+     * @var \SimpleXMLElement
      */
     protected $rootElement;
 
     /**
-     * @var ProcessInterface[]
+     * @var \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     protected static $processBuffer = [];
 
@@ -84,7 +83,7 @@ class Builder implements BuilderInterface
 
             $this->mergeSubProcessFiles();
 
-            /** @var ProcessInterface[] $processMap */
+            /** @var \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap */
             $processMap = [];
 
             list($processMap, $mainProcess) = $this->createSubProcess($processMap);
@@ -120,8 +119,8 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param SimpleXMLElement $fromXmlElement
-     * @param SimpleXMLElement $intoXmlNode
+     * @param \SimpleXMLElement $fromXmlElement
+     * @param \SimpleXMLElement $intoXmlNode
      *
      * @return void
      */
@@ -132,7 +131,7 @@ class Builder implements BuilderInterface
             return;
         }
 
-        /** @var SimpleXMLElement $xmlElement */
+        /** @var \SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
             $child = $intoXmlNode->addChild($xmlElement->getName(), $xmlElement);
             $attributes = $xmlElement->attributes();
@@ -147,7 +146,7 @@ class Builder implements BuilderInterface
     /**
      * @param string $fileName
      *
-     * @return SimpleXMLElement
+     * @return \SimpleXMLElement
      */
     protected function loadXmlFromFileName($fileName)
     {
@@ -159,7 +158,7 @@ class Builder implements BuilderInterface
     /**
      * @param string $processName
      *
-     * @return SimpleXMLElement
+     * @return \SimpleXMLElement
      */
     protected function loadXmlFromProcessName($processName)
     {
@@ -169,7 +168,7 @@ class Builder implements BuilderInterface
     /**
      * @param string $xml
      *
-     * @return SimpleXMLElement
+     * @return \SimpleXMLElement
      */
     protected function loadXml($xml)
     {
@@ -209,7 +208,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param ProcessInterface[] $processMap
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap
      *
      * @return array
      */
@@ -218,7 +217,7 @@ class Builder implements BuilderInterface
         $mainProcess = null;
         $xmlProcesses = $this->rootElement->children();
 
-        /** @var SimpleXMLElement $xmlProcess */
+        /** @var \SimpleXMLElement $xmlProcess */
         foreach ($xmlProcesses as $xmlProcess) {
             $process = clone $this->process;
             $processName = $this->getAttributeString($xmlProcess, 'name');
@@ -237,7 +236,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param ProcessInterface[] $processMap
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap
      *
      * @return void
      */
@@ -261,9 +260,9 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param ProcessInterface[] $processMap
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap
      *
-     * @return ProcessInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     protected function createStates(array $processMap)
     {
@@ -276,7 +275,7 @@ class Builder implements BuilderInterface
 
             if (!empty($xmlProcess->states)) {
                 $xmlStates = $xmlProcess->states->children();
-                /** @var SimpleXMLElement $xmlState */
+                /** @var \SimpleXMLElement $xmlState */
                 foreach ($xmlStates as $xmlState) {
                     $state = clone $this->state;
                     $state->setName($this->getAttributeString($xmlState, 'name'));
@@ -301,11 +300,11 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param ProcessInterface[] $stateToProcessMap
-     * @param ProcessInterface[] $processMap
-     * @param EventInterface[] $eventMap
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $stateToProcessMap
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap
+     * @param \Spryker\Zed\Oms\Business\Process\EventInterface[] $eventMap
      *
-     * @throws LogicException
+     * @throws \LogicException
      *
      * @return void
      */
@@ -359,7 +358,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param SimpleXMLElement $xmlElement
+     * @param \SimpleXMLElement $xmlElement
      * @param string $attributeName
      *
      * @return string
@@ -373,7 +372,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param SimpleXMLElement $xmlElement
+     * @param \SimpleXMLElement $xmlElement
      * @param string $attributeName
      *
      * @return bool

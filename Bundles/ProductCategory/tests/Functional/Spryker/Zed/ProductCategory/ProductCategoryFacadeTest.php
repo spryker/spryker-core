@@ -12,12 +12,10 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 
 /**

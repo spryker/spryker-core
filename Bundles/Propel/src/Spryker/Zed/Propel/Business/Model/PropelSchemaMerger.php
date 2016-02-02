@@ -12,7 +12,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 {
 
     /**
-     * @param SplFileInfo[] $schemaFiles
+     * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\SchemaMergeException
      *
@@ -28,7 +28,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param SplFileInfo[] $schemaFiles
+     * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\SchemaMergeException
      *
@@ -110,7 +110,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param SplFileInfo[] $schemaFiles
+     * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
      * @throws \ErrorException
      *

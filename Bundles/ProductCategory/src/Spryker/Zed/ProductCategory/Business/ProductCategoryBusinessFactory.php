@@ -19,7 +19,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return ProductCategoryManagerInterface
+     * @return \Spryker\Zed\ProductCategory\Business\ProductCategoryManagerInterface
      */
     public function createProductCategoryManager()
     {
@@ -157,7 +157,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransferGeneratorInterface
+     * @return \Spryker\Zed\ProductCategory\Business\TransferGeneratorInterface
      */
     public function createProductCategoryTransferGenerator()
     {

@@ -6,15 +6,13 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-use Generated\Shared\Transfer\RefundTransfer;
-
 interface SalesToRefundInterface
 {
 
     /**
      * @param int $idSalesOrder
      *
-     * @return RefundTransfer[]
+     * @return \Generated\Shared\Transfer\RefundTransfer[]
      */
     public function getRefundsByIdSalesOrder($idSalesOrder);
 

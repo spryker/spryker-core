@@ -18,18 +18,18 @@ abstract class AbstractOptInHandler
     protected $queryContainer;
 
     /**
-     * @var SubscriberKeyGeneratorInterface
+     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface
      */
     protected $subscriberKeyGenerator;
 
     /**
-     * @var SubscriberOptInSenderInterface[]
+     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface[]
      */
     protected $subscriberOptInSenders;
 
     /**
      * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
-     * @param SubscriberKeyGeneratorInterface $subscriberKeyGenerator
+     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface $subscriberKeyGenerator
      */
     public function __construct(NewsletterQueryContainer $queryContainer, SubscriberKeyGeneratorInterface $subscriberKeyGenerator)
     {

@@ -8,7 +8,6 @@ namespace Functional\Spryker\Zed\TaxProductConnector\Business\Plugin;
 
 use Codeception\TestCase\Test;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
-use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;

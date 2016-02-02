@@ -11,7 +11,6 @@ use Spryker\Zed\Nopayment\Business\NopaymentFacade;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Nopayment\Communication\NopaymentCommunicationFactory;
 
 /**
@@ -22,7 +21,7 @@ class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInt
 {
 
     /**
-     * @param SpySalesOrderItem[] $orderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *

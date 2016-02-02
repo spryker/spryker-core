@@ -10,7 +10,6 @@ use Codeception\TestCase\Test;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Spryker\Zed\Tax\Business\TaxFacade;
-use Generated\Zed\Ide\AutoCompletion;
 
 /**
  * @group Business

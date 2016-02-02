@@ -8,8 +8,6 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 
 class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
 {
@@ -34,14 +32,14 @@ class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
         $this->assertEquals($expectedResponse->getProcessingReasonCode(), $response->getProcessingReasonCode());
         $this->assertEquals($expectedResponse->getProcessingStatusCode(), $response->getProcessingStatusCode());
 
-        /** @var SpyPaymentPayolutionTransactionRequestLog $requestLog */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog $requestLog */
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(1, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION, $requestLog->getPaymentCode());
         $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertNull($requestLog->getReferenceId());
 
-        /** @var SpyPaymentPayolutionTransactionStatusLog $statusLog */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $statusLog */
         $statusLog = $this->getStatusLogCollectionForPayment()->getLast();
         $this->assertEquals(1, $this->getStatusLogCollectionForPayment()->count());
         $this->matchStatusLogWithResponse($statusLog, $expectedResponse);
@@ -67,7 +65,7 @@ class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
         $this->assertEquals($expectedResponse->getProcessingReasonCode(), $response->getProcessingReasonCode());
         $this->assertEquals($expectedResponse->getProcessingStatusCode(), $response->getProcessingStatusCode());
 
-        /** @var SpyPaymentPayolutionTransactionStatusLog $statusLog */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $statusLog */
         $statusLog = $this->getStatusLogCollectionForPayment()->getLast();
         $this->assertEquals(1, $this->getStatusLogCollectionForPayment()->count());
         $this->matchStatusLogWithResponse($statusLog, $expectedResponse);

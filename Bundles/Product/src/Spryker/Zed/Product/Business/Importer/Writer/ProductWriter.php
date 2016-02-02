@@ -13,18 +13,18 @@ class ProductWriter implements ProductWriterInterface
 {
 
     /**
-     * @var ProductAbstractWriterInterface
+     * @var \Spryker\Zed\Product\Business\Importer\Writer\ProductAbstractWriterInterface
      */
     protected $productAbstractWriter;
 
     /**
-     * @var ProductConcreteWriterInterface
+     * @var \Spryker\Zed\Product\Business\Importer\Writer\ProductConcreteWriterInterface
      */
     protected $productWriter;
 
     /**
-     * @param ProductAbstractWriterInterface $productAbstractWriter
-     * @param ProductConcreteWriterInterface $productConcreteWriter
+     * @param \Spryker\Zed\Product\Business\Importer\Writer\ProductAbstractWriterInterface $productAbstractWriter
+     * @param \Spryker\Zed\Product\Business\Importer\Writer\ProductConcreteWriterInterface $productConcreteWriter
      */
     public function __construct(
         ProductAbstractWriterInterface $productAbstractWriter,

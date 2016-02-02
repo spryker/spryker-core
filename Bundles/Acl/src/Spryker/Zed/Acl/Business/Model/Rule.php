@@ -19,13 +19,12 @@ use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Orm\Zed\Acl\Persistence\SpyAclRule;
 use Spryker\Zed\Library\Copy;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
-use Spryker\Zed\User\Business\UserFacade;
 
 class Rule implements RuleInterface
 {
 
     /**
-     * @var Group
+     * @var \Spryker\Zed\Acl\Business\Model\Group
      */
     protected $group;
 
@@ -40,7 +39,7 @@ class Rule implements RuleInterface
     protected $facadeUser;
 
     /**
-     * @var RuleValidator
+     * @var \Spryker\Zed\Acl\Business\Model\RuleValidator
      */
     protected $rulesValidator;
 
@@ -50,11 +49,11 @@ class Rule implements RuleInterface
     protected $settings;
 
     /**
-     * @param GroupInterface $group
+     * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
-     * @param RuleValidator $rulesValidator
-     * @param RuleValidator $rulesValidator
+     * @param \Spryker\Zed\Acl\Business\Model\RuleValidator $rulesValidator
+     * @param \Spryker\Zed\Acl\Business\Model\RuleValidator $rulesValidator
      * @param \Spryker\Zed\Acl\AclConfig $settings
      */
     public function __construct(
