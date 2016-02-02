@@ -6,7 +6,7 @@
     }
   },
   "require": {
-    "spryker/tool-graph": "^1.0",
+    "spryker/tool-graph": "^1.0.0",
     "phpdocumentor/graphviz": "~1.0.0"
   },
   "require-dev": {
