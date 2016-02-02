@@ -34,7 +34,7 @@ class UrlGeneratorServiceProvider extends AbstractPlugin implements ServiceProvi
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

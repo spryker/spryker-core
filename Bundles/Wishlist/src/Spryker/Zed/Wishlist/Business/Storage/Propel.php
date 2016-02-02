@@ -46,11 +46,11 @@ class Propel implements StorageInterface
     protected $facadeProduct;
 
     /**
-     * @param WishlistQueryContainerInterface $wishlistQueryContainer
-     * @param Customer $customer
-     * @param WishlistTransfer $wishlistTransfer
-     * @param CustomerTransfer $customerTransfer
-     * @param ProductFacade $facadeProduct
+     * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $wishlistQueryContainer
+     * @param \Spryker\Zed\Wishlist\Business\Model\Customer $customer
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Spryker\Zed\Product\Business\ProductFacade $facadeProduct
      */
     public function __construct(
         WishlistQueryContainerInterface $wishlistQueryContainer,
@@ -67,9 +67,9 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistChangeTransfer
+     * @return \Generated\Shared\Transfer\WishlistChangeTransfer
      */
     public function addItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -102,9 +102,9 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -134,9 +134,9 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -144,9 +144,9 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function decreaseItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -154,11 +154,11 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param ItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItemTransfer
      * @param int $idWishlist
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return SpyWishlistItem
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItem
      */
     protected function createNewWishlistItem(
         ItemTransfer $wishlistItemTransfer,
@@ -178,7 +178,7 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param ItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItemTransfer
      * @param int $idWishlist
      *
      * @return SpyWishlistItem|null
@@ -205,7 +205,7 @@ class Propel implements StorageInterface
     /**
      * @param int $idCustomer
      *
-     * @return SpyWishlist
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlist
      */
     protected function createWishlistEntity($idCustomer)
     {
@@ -219,7 +219,7 @@ class Propel implements StorageInterface
     /**
      * @param int $idCustomer
      *
-     * @return SpyWishlist
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlist
      */
     protected function getWishlistEntity($idCustomer)
     {
@@ -231,7 +231,7 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param SpyWishlistItem $wishlistItemEntity
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItemEntity
      *
      * @return void
      */
@@ -241,8 +241,8 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param SpyWishlistItem $wishlistItemEntity
-     * @param ItemTransfer $wishlistItemTransfer
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItemEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $wishlistItemTransfer
      *
      * @return void
      */

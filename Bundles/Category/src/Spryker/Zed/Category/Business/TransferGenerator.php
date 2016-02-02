@@ -16,9 +16,9 @@ class TransferGenerator implements TransferGeneratorInterface
 {
 
     /**
-     * @param SpyCategory $categoryEntity
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      *
-     * @return CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function convertCategory(SpyCategory $categoryEntity)
     {
@@ -42,9 +42,9 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyCategoryNode $nodeEntity
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $nodeEntity
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     public function convertCategoryNode(SpyCategoryNode $nodeEntity)
     {

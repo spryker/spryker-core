@@ -11,8 +11,6 @@ use Spryker\Zed\ProductOption\Business\Model\DataImportWriter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
-use Spryker\Zed\ProductOption\Business\Model\DataImportWriterInterface;
-use Spryker\Zed\ProductOption\Business\Model\ProductOptionReaderInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 
 /**
@@ -23,7 +21,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return DataImportWriterInterface
+     * @return \Spryker\Zed\ProductOption\Business\Model\DataImportWriterInterface
      */
     public function createDataImportWriterModel()
     {
@@ -35,7 +33,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionReaderInterface
+     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionReaderInterface
      */
     public function createProductOptionReaderModel()
     {

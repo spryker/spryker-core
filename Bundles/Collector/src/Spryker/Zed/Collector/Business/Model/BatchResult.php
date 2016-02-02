@@ -174,7 +174,7 @@ class BatchResult implements BatchResultInterface
     }
 
     /**
-     * @param LocaleTransfer $processedLocale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $processedLocale
      *
      * @return void
      */

@@ -32,7 +32,7 @@ class BundleParser
     protected $bundleConfig;
 
     /**
-     * @param MaintenanceConfig $config
+     * @param \Spryker\Zed\Maintenance\MaintenanceConfig $config
      */
     public function __construct(MaintenanceConfig $config)
     {

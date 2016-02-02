@@ -24,7 +24,7 @@ class ContainerKeyNotFoundException extends \Exception
     }
 
     /**
-     * @param ClassInfo $callerClassInfo
+     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
      * @param string $key
      *
      * @return string

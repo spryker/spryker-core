@@ -2,7 +2,6 @@
 
 namespace Spryker\Zed\Product\Communication\Controller;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Product\Business\ProductFacade;
@@ -38,7 +37,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -50,7 +49,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -106,7 +105,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param SpyProduct $product
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $product
      *
      * @return array
      */
@@ -160,7 +159,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param SpyProductAbstract $productAbstract
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstract
      * @param int $idLocale
      *
      * @return array
@@ -189,7 +188,7 @@ class IndexController extends AbstractController
     /**
      * @throws \ErrorException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getCurrentLocale()
     {

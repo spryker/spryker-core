@@ -34,8 +34,8 @@ class AdjacencyMatrixBuilder
 
     /**
      * @param array $bundleList
-     * @param DependencyTreeReaderInterface $dependencyTreeReader
-     * @param TreeFilter $filter
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface $dependencyTreeReader
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter $filter
      */
     public function __construct(
         array $bundleList,
@@ -56,7 +56,6 @@ class AdjacencyMatrixBuilder
         $this->buildMatrixStructure();
 
         foreach ($dependencyTree as $dependency) {
-
             $bundle = $dependency[DependencyTree::META_BUNDLE];
             $foreignBundle = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
             $info = $this->matrix[$bundle][$foreignBundle];

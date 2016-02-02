@@ -65,7 +65,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
 
     /**
      * @param string $name
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return self
      */
@@ -155,7 +155,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     }
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return self
      */

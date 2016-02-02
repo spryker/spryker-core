@@ -21,7 +21,7 @@ class Converter implements ConverterInterface
     /**
      * @param string $stringData
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function toTransactionResponseTransfer($stringData)
     {
@@ -44,7 +44,7 @@ class Converter implements ConverterInterface
     /**
      * @param string $stringData
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function toCalculationResponseTransfer($stringData)
     {
@@ -66,7 +66,7 @@ class Converter implements ConverterInterface
     /**
      * @param array $data
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     protected function arrayToTransactionResponseTransfer(array $data)
     {
@@ -172,7 +172,7 @@ class Converter implements ConverterInterface
     /**
      * @param string $xmlString
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     protected function xmlToCalculationResponseTransfer($xmlString)
     {
@@ -214,7 +214,7 @@ class Converter implements ConverterInterface
     /**
      * @param array $data
      *
-     * @return PayolutionCalculationPaymentDetailTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationPaymentDetailTransfer
      */
     protected function arrayToCalculationPaymentDetailTransfer(array $data)
     {
@@ -242,7 +242,7 @@ class Converter implements ConverterInterface
     /**
      * @param array $data
      *
-     * @return PayolutionCalculationInstallmentTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationInstallmentTransfer
      */
     protected function arrayToCalculationInstallmentTransfer(array $data)
     {

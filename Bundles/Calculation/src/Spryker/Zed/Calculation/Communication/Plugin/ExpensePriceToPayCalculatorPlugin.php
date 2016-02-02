@@ -20,7 +20,7 @@ class ExpensePriceToPayCalculatorPlugin extends AbstractPlugin implements Calcul
 {
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
      */

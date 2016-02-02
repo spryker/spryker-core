@@ -44,7 +44,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function createTestCustomerTransfer()
     {
@@ -56,9 +56,9 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function createTestAddressTransfer(CustomerTransfer $customerTransfer)
     {
@@ -75,7 +75,7 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function createTestCustomer()
     {
@@ -87,9 +87,9 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function createTestAddress(CustomerTransfer $customerTransfer)
     {
@@ -100,9 +100,9 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getTestCustomerTransfer(CustomerTransfer $customerTransfer)
     {

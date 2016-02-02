@@ -22,8 +22,8 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return string
      */

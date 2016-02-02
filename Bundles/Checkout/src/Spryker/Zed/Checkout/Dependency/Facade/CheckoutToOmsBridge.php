@@ -18,7 +18,7 @@ class CheckoutToOmsBridge implements CheckoutToOmsInterface
     /**
      * SalesToOmsBridge constructor.
      *
-     * @param OmsFacade $omsFacade
+     * @param \Spryker\Zed\Oms\Business\OmsFacade $omsFacade
      */
     public function __construct($omsFacade)
     {

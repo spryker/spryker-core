@@ -18,7 +18,7 @@ class RefundToOmsBridge implements RefundToOmsInterface
     protected $omsFacade;
 
     /**
-     * @param OmsFacade $omsFacade
+     * @param \Spryker\Zed\Oms\Business\OmsFacade $omsFacade
      */
     public function __construct($omsFacade)
     {
@@ -27,7 +27,7 @@ class RefundToOmsBridge implements RefundToOmsInterface
 
     /**
      * @param string $eventId
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
      *

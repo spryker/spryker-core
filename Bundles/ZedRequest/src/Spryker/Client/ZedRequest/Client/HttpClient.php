@@ -18,7 +18,7 @@ class HttpClient extends AbstractHttpClient
     protected $rawToken;
 
     /**
-     * @param AuthClientInterface $authClient
+     * @param \Spryker\Client\Auth\AuthClientInterface $authClient
      * @param string $baseUrl
      * @param string $rawToken
      */

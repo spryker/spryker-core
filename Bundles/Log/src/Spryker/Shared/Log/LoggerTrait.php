@@ -13,7 +13,7 @@ trait LoggerTrait
 {
 
     /**
-     * @param LoggerConfigInterface $loggerConfig
+     * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
      *
      * @return LoggerInterface|null
      */

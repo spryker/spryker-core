@@ -18,9 +18,9 @@ class DiscountCalculationConnectorDependencyProvider extends AbstractBundleDepen
     const FACADE_DISCOUNT = 'discount facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -32,9 +32,9 @@ class DiscountCalculationConnectorDependencyProvider extends AbstractBundleDepen
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {

@@ -54,9 +54,9 @@ class CategoryFormAdd extends AbstractForm
     protected $idParentNode;
 
     /**
-     * @param CategoryQueryContainerInterface $categoryQueryContainer
-     * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
-     * @param LocaleTransfer $locale
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idCategory
      * @param int $idParentNode
      */
@@ -75,7 +75,7 @@ class CategoryFormAdd extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void
@@ -169,7 +169,7 @@ class CategoryFormAdd extends AbstractForm
     }
 
     /**
-     * @param SpyCategoryNode $node
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
      *
      * @return string
      */

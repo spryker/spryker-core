@@ -53,8 +53,8 @@ class CmsGlossaryForm extends AbstractForm
     protected $cmsFacade;
 
     /**
-     * @param SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery
-     * @param CmsFacade $cmsFacade
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery
+     * @param \Spryker\Zed\Cms\Business\CmsFacade $cmsFacade
      * @param int $idPage
      * @param int $idMapping
      * @param array $placeholder
@@ -85,7 +85,7 @@ class CmsGlossaryForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

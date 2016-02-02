@@ -13,19 +13,19 @@ interface SubscriberManagerInterface
     /**
      * @param string $email
      *
-     * @return NewsletterSubscriberTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
     public function loadSubscriberByEmail($email);
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriberTransfer
      *
-     * @return NewsletterSubscriberTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
     public function createSubscriberFromTransfer(NewsletterSubscriberTransfer $newsletterSubscriberTransfer);
 
     /**
-     * @param NewsletterSubscriberTransfer $subscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriber
      *
      * @return void
      */

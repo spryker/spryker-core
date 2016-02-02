@@ -9,8 +9,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Payolution\Communication\Table\Payments;
 use Spryker\Zed\Payolution\Communication\Table\RequestLog;
 use Spryker\Zed\Payolution\Communication\Table\StatusLog;
-use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToGlossaryInterface;
-use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMailInterface;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use Spryker\Zed\Payolution\PayolutionDependencyProvider;
@@ -23,7 +21,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return Payments
+     * @return \Spryker\Zed\Payolution\Communication\Table\Payments
      */
     public function createPaymentsTable()
     {
@@ -35,7 +33,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idPayment
      *
-     * @return RequestLog
+     * @return \Spryker\Zed\Payolution\Communication\Table\RequestLog
      */
     public function createRequestLogTable($idPayment)
     {
@@ -47,7 +45,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idPayment
      *
-     * @return StatusLog
+     * @return \Spryker\Zed\Payolution\Communication\Table\StatusLog
      */
     public function createStatusLogTable($idPayment)
     {
@@ -57,7 +55,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return PayolutionToMailInterface
+     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMailInterface
      */
     public function getMailFacade()
     {
@@ -65,7 +63,7 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return PayolutionToGlossaryInterface
+     * @return \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToGlossaryInterface
      */
     public function getGlossaryFacade()
     {

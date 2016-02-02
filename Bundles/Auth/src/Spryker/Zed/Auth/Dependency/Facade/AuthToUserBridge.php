@@ -18,7 +18,7 @@ class AuthToUserBridge implements AuthToUserInterface
     protected $userFacade;
 
     /**
-     * @param UserFacade $userFacade
+     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      */
     public function __construct($userFacade)
     {
@@ -26,7 +26,7 @@ class AuthToUserBridge implements AuthToUserInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return bool
      */
@@ -38,7 +38,7 @@ class AuthToUserBridge implements AuthToUserInterface
     /**
      * @param string $username
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username)
     {
@@ -54,7 +54,7 @@ class AuthToUserBridge implements AuthToUserInterface
     }
 
     /**
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser()
     {
@@ -83,9 +83,9 @@ class AuthToUserBridge implements AuthToUserInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function updateUser(UserTransfer $user)
     {
@@ -93,7 +93,7 @@ class AuthToUserBridge implements AuthToUserInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return mixed
      */
@@ -105,7 +105,7 @@ class AuthToUserBridge implements AuthToUserInterface
     /**
      * @param int $idUser
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserById($idUser)
     {

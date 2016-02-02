@@ -9,13 +9,12 @@ namespace Spryker\Client\Payolution;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Payolution\Session\PayolutionSession;
 use Spryker\Client\Payolution\Zed\PayolutionStub;
-use Spryker\Client\Payolution\Zed\PayolutionStubInterface;
 
 class PayolutionFactory extends AbstractFactory
 {
 
     /**
-     * @return PayolutionSession
+     * @return \Spryker\Client\Payolution\Session\PayolutionSession
      */
     public function createPayolutionSession()
     {
@@ -23,7 +22,7 @@ class PayolutionFactory extends AbstractFactory
     }
 
     /**
-     * @return PayolutionStubInterface
+     * @return \Spryker\Client\Payolution\Zed\PayolutionStubInterface
      */
     public function createPayolutionStub()
     {

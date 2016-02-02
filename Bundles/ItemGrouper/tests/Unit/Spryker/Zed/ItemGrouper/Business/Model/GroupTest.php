@@ -56,7 +56,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     protected function getGroupableContainer()
     {

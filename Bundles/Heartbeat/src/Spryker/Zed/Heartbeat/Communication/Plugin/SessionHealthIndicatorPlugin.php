@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Heartbeat\Communication\Plugin;
 
-use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 use Spryker\Zed\Heartbeat\Business\HeartbeatFacade;
@@ -20,7 +19,7 @@ class SessionHealthIndicatorPlugin extends AbstractPlugin implements HealthIndic
 {
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doHealthCheck()
     {

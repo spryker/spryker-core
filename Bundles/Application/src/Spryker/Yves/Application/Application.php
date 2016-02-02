@@ -6,9 +6,7 @@
 
 namespace Spryker\Yves\Application;
 
-use Elastica\Client;
 use Spryker\Shared\Application\Communication\Application as SharedApplication;
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
 use Spryker\Yves\Library\Session\TransferSession;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -16,7 +14,7 @@ class Application extends SharedApplication
 {
 
     /**
-     * @return Session
+     * @return \Symfony\Component\HttpFoundation\Session\Session
      */
     public function getSession()
     {
@@ -24,7 +22,7 @@ class Application extends SharedApplication
     }
 
     /**
-     * @return TransferSession
+     * @return \Spryker\Yves\Library\Session\TransferSession
      */
     public function getTransferSession()
     {
@@ -32,7 +30,7 @@ class Application extends SharedApplication
     }
 
     /**
-     * @return ReadInterface
+     * @return \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface
      */
     public function getStorageKeyValue()
     {
@@ -40,7 +38,7 @@ class Application extends SharedApplication
     }
 
     /**
-     * @return Client
+     * @return \Elastica\Client
      */
     public function getStorageElasticsearch()
     {

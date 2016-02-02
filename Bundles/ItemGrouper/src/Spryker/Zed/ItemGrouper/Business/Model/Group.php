@@ -37,9 +37,9 @@ class Group
     }
 
     /**
-     * @param GroupableContainerTransfer $groupableItems
+     * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupableItems
      *
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     public function groupByKey(GroupableContainerTransfer $groupableItems)
     {
@@ -59,7 +59,7 @@ class Group
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return void
      */
@@ -79,7 +79,7 @@ class Group
     }
 
     /**
-     * @param GroupableContainerTransfer $groupableItems
+     * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupableItems
      *
      * @return bool
      */
@@ -89,7 +89,7 @@ class Group
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return void
      */

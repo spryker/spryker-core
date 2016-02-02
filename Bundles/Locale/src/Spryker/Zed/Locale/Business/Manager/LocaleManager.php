@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Locale\Business\Manager;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 use Spryker\Zed\Locale\Business\TransferGeneratorInterface;
@@ -28,8 +26,8 @@ class LocaleManager
     protected $transferGenerator;
 
     /**
-     * @param LocaleQueryContainerInterface $localeQueryContainer
-     * @param TransferGeneratorInterface $transferGenerator
+     * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
+     * @param \Spryker\Zed\Locale\Business\TransferGeneratorInterface $transferGenerator
      */
     public function __construct(
         LocaleQueryContainerInterface $localeQueryContainer,
@@ -42,9 +40,9 @@ class LocaleManager
     /**
      * @param string $localeName
      *
-     * @throws MissingLocaleException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)
     {
@@ -65,11 +63,11 @@ class LocaleManager
     /**
      * @param string $localeName
      *
-     * @throws LocaleExistsException
+     * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function createLocale($localeName)
     {
@@ -105,7 +103,7 @@ class LocaleManager
     /**
      * @param string $localeName
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */

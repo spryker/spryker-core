@@ -43,7 +43,7 @@ class UpdateStockPlugin extends AbstractPlugin
     }
 
     /**
-     * @param StockProductTransfer $transferStockProduct
+     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
      */

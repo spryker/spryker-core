@@ -23,7 +23,7 @@ class CurrentPassword extends Constraint
     protected $facadeUser;
 
     /**
-     * @return UserFacade
+     * @return \Spryker\Zed\User\Business\UserFacade
      */
     public function getFacadeUser()
     {

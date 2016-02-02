@@ -40,8 +40,8 @@ class OrderItem implements ItemInterface
     protected $calculator;
 
     /**
-     * @param ValidatorInterface $validator
-     * @param SalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface $validator
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      * @param CalculatorInterface $splitCalculator
      */
     public function __construct(
@@ -60,7 +60,7 @@ class OrderItem implements ItemInterface
      *
      * @throws \Exception
      *
-     * @return ItemSplitResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
     public function split($idSalesOrderItem, $quantityToSplit)
     {
@@ -95,7 +95,7 @@ class OrderItem implements ItemInterface
     }
 
     /**
-     * @return ConnectionInterface
+     * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     protected function getConnection()
     {
@@ -107,7 +107,7 @@ class OrderItem implements ItemInterface
     }
 
     /**
-     * @param ConnectionInterface $databaseConnection
+     * @param \Propel\Runtime\Connection\ConnectionInterface $databaseConnection
      *
      * @return void
      */
@@ -117,7 +117,7 @@ class OrderItem implements ItemInterface
     }
 
     /**
-     * @param SpySalesOrderItem $salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      * @param int $quantity
      *
      * @return SpySalesOrderItem;
@@ -134,10 +134,10 @@ class OrderItem implements ItemInterface
     }
 
     /**
-     * @param SpySalesOrderItem $salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      * @param int $quantity
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function createSalesOrderItemCopy(SpySalesOrderItem $salesOrderItem, $quantity)
     {
@@ -153,10 +153,10 @@ class OrderItem implements ItemInterface
     }
 
     /**
-     * @param SpySalesOrderItemOption $salesOrderItemOption
-     * @param SpySalesOrderItem $copyOfSalesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $salesOrderItemOption
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $copyOfSalesOrderItem
      *
-     * @return SpySalesOrderItemOption
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption
      */
     protected function createOrderItemOptionCopy(
         SpySalesOrderItemOption $salesOrderItemOption,
@@ -172,7 +172,7 @@ class OrderItem implements ItemInterface
     }
 
     /**
-     * @param SpySalesOrderItem $salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      * @param int $quantity
      *
      * @return void

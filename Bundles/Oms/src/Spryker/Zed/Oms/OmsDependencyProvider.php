@@ -21,9 +21,9 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -41,7 +41,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Overwrite in project
      *
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return ConditionInterface[]
      */
@@ -53,7 +53,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Overwrite in project
      *
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return CommandInterface[]
      */
@@ -64,7 +64,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */

@@ -7,7 +7,6 @@ namespace Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade;
 
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConnectorToCustomerInterface
@@ -21,7 +20,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     /**
      * CustomerCheckoutConnectorToCustomerBridge constructor.
      *
-     * @param CustomerFacade $customerFacade
+     * @param \Spryker\Zed\Customer\Business\CustomerFacade $customerFacade
      */
     public function __construct($customerFacade)
     {
@@ -29,9 +28,9 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer(CustomerTransfer $customerTransfer)
     {
@@ -39,7 +38,7 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
@@ -49,9 +48,9 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function registerCustomer(CustomerTransfer $customerTransfer)
     {
@@ -59,9 +58,9 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function createAddress(AddressTransfer $addressTransfer)
     {
@@ -69,9 +68,9 @@ class CustomerCheckoutConnectorToCustomerBridge implements CustomerCheckoutConne
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function updateAddress(AddressTransfer $addressTransfer)
     {

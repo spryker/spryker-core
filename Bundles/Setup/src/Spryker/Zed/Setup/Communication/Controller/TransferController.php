@@ -20,7 +20,7 @@ class TransferController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return Response|array
      */

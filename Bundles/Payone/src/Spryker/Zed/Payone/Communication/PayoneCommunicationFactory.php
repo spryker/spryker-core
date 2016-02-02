@@ -7,8 +7,6 @@
 namespace Spryker\Zed\Payone\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Payone\Dependency\Facade\PayoneToOmsInterface;
-use Spryker\Zed\Payone\Dependency\Facade\PayoneToRefundInterface;
 use Spryker\Zed\Payone\PayoneConfig;
 use Spryker\Zed\Payone\PayoneDependencyProvider;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
@@ -23,7 +21,7 @@ class PayoneCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getOmsFacade() instead.
      *
-     * @return PayoneToOmsInterface
+     * @return \Spryker\Zed\Payone\Dependency\Facade\PayoneToOmsInterface
      */
     public function createOmsFacade()
     {
@@ -33,7 +31,7 @@ class PayoneCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return PayoneToOmsInterface
+     * @return \Spryker\Zed\Payone\Dependency\Facade\PayoneToOmsInterface
      */
     public function getOmsFacade()
     {
@@ -43,7 +41,7 @@ class PayoneCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getRefundFacade() instead.
      *
-     * @return PayoneToRefundInterface
+     * @return \Spryker\Zed\Payone\Dependency\Facade\PayoneToRefundInterface
      */
     public function createRefundFacade()
     {
@@ -53,7 +51,7 @@ class PayoneCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return PayoneToRefundInterface
+     * @return \Spryker\Zed\Payone\Dependency\Facade\PayoneToRefundInterface
      */
     public function getRefundFacade()
     {

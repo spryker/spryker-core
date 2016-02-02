@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Glossary\Business\Key;
 
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
 use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
@@ -20,7 +19,7 @@ class KeyManager implements KeyManagerInterface
     protected $queryContainer;
 
     /**
-     * @param GlossaryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface $queryContainer
      */
     public function __construct(GlossaryQueryContainerInterface $queryContainer)
     {
@@ -31,7 +30,7 @@ class KeyManager implements KeyManagerInterface
      * @param string $currentKeyName
      * @param string $newKeyName
      *
-     * @throws MissingKeyException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      *
      * @return bool
      */
@@ -50,7 +49,7 @@ class KeyManager implements KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @throws MissingKeyException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      *
      * @return void
      */
@@ -81,9 +80,9 @@ class KeyManager implements KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @throws MissingKeyException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      *
-     * @return SpyGlossaryKey
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
      */
     public function getKey($keyName)
     {
@@ -119,8 +118,8 @@ class KeyManager implements KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @throws KeyExistsException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -138,7 +137,7 @@ class KeyManager implements KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @throws KeyExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
      *
      * @return void
      */
@@ -157,7 +156,7 @@ class KeyManager implements KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @throws MissingKeyException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      *
      * @return int
      */

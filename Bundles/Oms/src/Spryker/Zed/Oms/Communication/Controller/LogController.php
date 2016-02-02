@@ -22,7 +22,7 @@ class LogController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return mixed
      */
@@ -34,7 +34,7 @@ class LogController extends AbstractController
     }
 
         /**
-         * @param Request $request
+         * @param \Symfony\Component\HttpFoundation\Request $request
          *
          * @return mixed
          */

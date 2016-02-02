@@ -18,7 +18,6 @@ use DateTime;
 use Exception;
 use ErrorException;
 use Propel\Runtime\Collection\ObjectCollection;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Library\Log;
 
 class Timeout implements TimeoutInterface
@@ -40,7 +39,7 @@ class Timeout implements TimeoutInterface
     protected $stateIdToModelBuffer = [];
 
     /**
-     * @param OmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      */
     public function __construct(OmsQueryContainerInterface $queryContainer)
     {
@@ -68,12 +67,12 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param ProcessInterface $process
-     * @param SpySalesOrderItem $orderItem
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param DateTime $currentTime
      *
      * @throws Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -106,12 +105,12 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string $stateId
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @throws Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -128,7 +127,7 @@ class Timeout implements TimeoutInterface
 
     /**
      * @param DateTime $currentTime
-     * @param EventInterface $event
+     * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      *
      * @return DateTime
      */
@@ -152,9 +151,9 @@ class Timeout implements TimeoutInterface
 
     /**
      * @param string $stateId
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      *
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     protected function getStateFromProcess($stateId, ProcessInterface $process)
     {
@@ -166,7 +165,7 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      *
      * @return array
      */
@@ -185,7 +184,7 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @return ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
     protected function findItemsWithExpiredTimeouts()
     {

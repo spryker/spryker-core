@@ -45,7 +45,7 @@ class ProductOptionOrderHydratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProductOptionOrderHydrator
+     * @return \Spryker\Zed\ProductOptionCheckoutConnector\Business\ProductOptionOrderHydrator
      */
     public function getHydrator()
     {
@@ -53,7 +53,7 @@ class ProductOptionOrderHydratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     private function getOrderFixture()
     {
@@ -67,7 +67,7 @@ class ProductOptionOrderHydratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return CheckoutRequestTransfer
+     * @return \Generated\Shared\Transfer\CheckoutRequestTransfer
      */
     private function getRequestFixture()
     {

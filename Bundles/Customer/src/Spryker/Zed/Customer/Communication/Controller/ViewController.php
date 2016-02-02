@@ -22,7 +22,7 @@ class ViewController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -50,7 +50,7 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function createCustomerTransfer()
     {

@@ -6,9 +6,7 @@
 
 namespace Spryker\Zed\Search\Business\Model;
 
-use Elastica\Document;
 use Elastica\Exception\ResponseException;
-use Elastica\Response;
 use Spryker\Client\Search\SearchClient;
 
 class Search
@@ -20,7 +18,7 @@ class Search
     private $searchClient;
 
     /**
-     * @param SearchClient $searchClient
+     * @param \Spryker\Client\Search\SearchClient $searchClient
      */
     public function __construct(SearchClient $searchClient)
     {
@@ -60,7 +58,7 @@ class Search
     }
 
     /**
-     * @return Response
+     * @return \Elastica\Response
      */
     public function delete()
     {
@@ -71,7 +69,7 @@ class Search
      * @param string $key
      * @param string $type
      *
-     * @return Document
+     * @return \Elastica\Document
      */
     public function getDocument($key, $type)
     {

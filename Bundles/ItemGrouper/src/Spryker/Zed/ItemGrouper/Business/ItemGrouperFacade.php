@@ -15,9 +15,9 @@ class ItemGrouperFacade extends AbstractFacade
 {
 
     /**
-     * @param GroupableContainerTransfer $groupAbleItems
+     * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupAbleItems
      *
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     public function groupItemsByKey(GroupableContainerTransfer $groupAbleItems)
     {
@@ -25,9 +25,9 @@ class ItemGrouperFacade extends AbstractFacade
     }
 
     /**
-     * @param GroupableContainerTransfer $groupableItems
+     * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupableItems
      *
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     public function groupItemsByKeyForNewCollection(GroupableContainerTransfer $groupableItems)
     {

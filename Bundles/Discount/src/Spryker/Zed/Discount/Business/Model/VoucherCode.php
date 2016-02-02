@@ -17,7 +17,7 @@ class VoucherCode implements VoucherCodeInterface
     protected $discountQueryContainer;
 
     /**
-     * @param DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
     public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {
@@ -79,7 +79,7 @@ class VoucherCode implements VoucherCodeInterface
     }
 
     /**
-     * @param SpyDiscountVoucher $discountVoucherEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
      *
      * @return void
      */
@@ -90,7 +90,7 @@ class VoucherCode implements VoucherCodeInterface
     }
 
     /**
-     * @param SpyDiscountVoucher $discountVoucherEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
      *
      * @return void
      */
@@ -101,7 +101,7 @@ class VoucherCode implements VoucherCodeInterface
     }
 
     /**
-     * @param SpyDiscountVoucher $voucherEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $voucherEntity
      *
      * @return bool
      */
@@ -117,7 +117,7 @@ class VoucherCode implements VoucherCodeInterface
     }
 
     /**
-     * @param SpyDiscountVoucher $discountVoucherEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
      *
      * @return void
      */

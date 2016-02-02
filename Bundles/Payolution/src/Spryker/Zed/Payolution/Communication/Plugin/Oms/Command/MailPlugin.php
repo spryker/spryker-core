@@ -26,8 +26,8 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
 
     /**
      * @param SpySalesOrderItem[] $orderItems
-     * @param SpySalesOrder $orderEntity
-     * @param ReadOnlyArrayObject $data
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return array
      */
@@ -49,7 +49,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
     }
 
     /**
-     * @param PayolutionConfig $config
+     * @param \Spryker\Zed\Payolution\PayolutionConfig $config
      *
      * @return string
      */
@@ -59,7 +59,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      * @param string $email
      *
      * @return void
@@ -72,8 +72,8 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
     }
 
     /**
-     * @param MailTransfer $mailTransfer
-     * @param PayolutionConfig $config
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param \Spryker\Zed\Payolution\PayolutionConfig $config
      *
      * @return void
      */
@@ -91,8 +91,8 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
     }
 
     /**
-     * @param MailTransfer $mailTransfer
-     * @param PayolutionConfig $config
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param \Spryker\Zed\Payolution\PayolutionConfig $config
      *
      * @return void
      */

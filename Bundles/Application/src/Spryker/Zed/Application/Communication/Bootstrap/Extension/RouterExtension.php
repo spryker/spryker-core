@@ -16,7 +16,7 @@ class RouterExtension implements RouterExtensionInterface
 {
 
     /**
-     * @param Application $app
+     * @param \Spryker\Shared\Application\Communication\Application $app
      *
      * @return RouterInterface[]
      */

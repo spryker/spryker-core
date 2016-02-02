@@ -33,7 +33,7 @@ class ElasticsearchMarkerReader implements ReaderInterface
     protected $type;
 
     /**
-     * @param Client $searchClient
+     * @param \Elastica\Client $searchClient
      * @param string $indexName
      * @param string $type
      */

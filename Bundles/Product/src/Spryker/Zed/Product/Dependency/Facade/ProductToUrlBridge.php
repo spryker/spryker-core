@@ -7,8 +7,6 @@ namespace Spryker\Zed\Product\Dependency\Facade;
 
 use Spryker\Zed\Url\Business\UrlFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
 
 class ProductToUrlBridge implements ProductToUrlInterface
 {
@@ -21,7 +19,7 @@ class ProductToUrlBridge implements ProductToUrlInterface
     /**
      * CmsToUrlBridge constructor.
      *
-     * @param UrlFacade $urlFacade
+     * @param \Spryker\Zed\Url\Business\UrlFacade $urlFacade
      */
     public function __construct($urlFacade)
     {
@@ -30,14 +28,14 @@ class ProductToUrlBridge implements ProductToUrlInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId)
     {
@@ -58,7 +56,7 @@ class ProductToUrlBridge implements ProductToUrlInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
     {

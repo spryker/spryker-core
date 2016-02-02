@@ -12,7 +12,7 @@ interface ShipmentMethodTaxCalculationPluginInterface
 {
 
     /**
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
      * @param int $defaultEffectiveTaxRate
      *
      * @return int $defaultEffectiveTaxRate

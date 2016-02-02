@@ -25,7 +25,7 @@ abstract class AbstractInstallerPlugin extends AbstractPlugin implements Messeng
     protected $messenger;
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return self
      */

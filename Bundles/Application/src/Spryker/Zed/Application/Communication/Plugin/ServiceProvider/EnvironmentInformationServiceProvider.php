@@ -21,7 +21,7 @@ class EnvironmentInformationServiceProvider extends AbstractPlugin implements Se
 {
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -30,7 +30,7 @@ class EnvironmentInformationServiceProvider extends AbstractPlugin implements Se
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

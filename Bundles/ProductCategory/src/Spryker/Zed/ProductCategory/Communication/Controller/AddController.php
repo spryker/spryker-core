@@ -26,7 +26,7 @@ class AddController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */
@@ -60,9 +60,9 @@ class AddController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function productCategoryTableAction(Request $request)
     {
@@ -79,9 +79,9 @@ class AddController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function productTableAction(Request $request)
     {
@@ -100,7 +100,7 @@ class AddController extends AbstractController
     /**
      * @param array $data
      *
-     * @return CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     protected function createCategoryTransferFromData(array $data)
     {
@@ -111,7 +111,7 @@ class AddController extends AbstractController
     /**
      * @param array $data
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     protected function createCategoryNodeTransferFromData(array $data)
     {

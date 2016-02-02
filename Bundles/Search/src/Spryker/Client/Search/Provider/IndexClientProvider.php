@@ -6,14 +6,13 @@
 
 namespace Spryker\Client\Search\Provider;
 
-use Elastica\Index;
 use Spryker\Shared\Search\Provider\AbstractIndexClientProvider;
 
 class IndexClientProvider extends AbstractIndexClientProvider
 {
 
     /**
-     * @return Index
+     * @return \Elastica\Index
      */
     public function getClient()
     {

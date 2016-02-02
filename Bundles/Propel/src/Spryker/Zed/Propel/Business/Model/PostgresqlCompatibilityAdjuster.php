@@ -123,7 +123,7 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
     }
 
     /**
-     * @param SplFileInfo $file
+     * @param \Symfony\Component\Finder\SplFileInfo $file
      *
      * @return DOMDocument
      */

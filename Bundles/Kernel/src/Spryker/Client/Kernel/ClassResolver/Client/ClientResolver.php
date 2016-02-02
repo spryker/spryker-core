@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Kernel\ClassResolver\Client;
 
-use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\ClassResolver\AbstractClassResolver;
 
 class ClientResolver extends AbstractClassResolver
@@ -19,7 +18,7 @@ class ClientResolver extends AbstractClassResolver
      *
      * @throws ClientNotFoundException
      *
-     * @return AbstractClient
+     * @return \Spryker\Client\Kernel\AbstractClient
      */
     public function resolve($callerClass)
     {

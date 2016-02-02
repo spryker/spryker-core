@@ -180,9 +180,9 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @param Application $application
-     * @param BundleControllerActionInterface $bundleControllerAction
-     * @param RouteNameResolver $routeResolver
+     * @param \Silex\Application $application
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Yves\Kernel\Controller\RouteNameResolver $routeResolver
      *
      * @return string
      */

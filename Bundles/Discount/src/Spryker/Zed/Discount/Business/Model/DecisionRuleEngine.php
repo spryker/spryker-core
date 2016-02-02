@@ -15,11 +15,11 @@ class DecisionRuleEngine implements DecisionRuleInterface
 {
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param CalculableInterface $discountableContainer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
      * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function evaluate(
         DiscountTransfer $discountTransfer,

@@ -35,7 +35,7 @@ class DependencyTreeBuilder
     /**
      * @param Finder $finder
      * @param AbstractDependencyTree $report
-     * @param DependencyTreeWriterInterface $writer
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeWriter\DependencyTreeWriterInterface $writer
      */
     public function __construct(Finder $finder, AbstractDependencyTree $report, DependencyTreeWriterInterface $writer)
     {

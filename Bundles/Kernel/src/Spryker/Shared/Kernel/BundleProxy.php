@@ -56,7 +56,7 @@ class BundleProxy
     }
 
     /**
-     * @param LocatorInterface $locator
+     * @param \Spryker\Shared\Kernel\Locator\LocatorInterface $locator
      *
      * @return self
      */

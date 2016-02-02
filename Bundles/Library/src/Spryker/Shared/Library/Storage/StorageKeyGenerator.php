@@ -9,9 +9,9 @@ namespace Spryker\Shared\Library\Storage;
 use Spryker\Shared\Kernel\Store;
 
 abstract class StorageKeyGenerator
- {
+{
 
-     const KEY_SEPARATOR = '.';
+    const KEY_SEPARATOR = '.';
 
     /**
      * @param string $key
@@ -37,4 +37,4 @@ abstract class StorageKeyGenerator
         return $storeName . self::KEY_SEPARATOR . $key;
     }
 
- }
+}

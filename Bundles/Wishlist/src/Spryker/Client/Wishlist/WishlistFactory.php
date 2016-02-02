@@ -10,16 +10,12 @@ use Spryker\Client\Wishlist\Storage\WishlistStorage;
 use Spryker\Client\Wishlist\Zed\WishlistStub;
 use Spryker\Client\Wishlist\Session\WishlistSession;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Customer\CustomerClientInterface;
-use Spryker\Client\Wishlist\Session\WishlistSessionInterface;
-use Spryker\Client\Wishlist\Storage\WishlistStorageInterface;
-use Spryker\Client\Wishlist\Zed\WishlistStubInterface;
 
 class WishlistFactory extends AbstractFactory
 {
 
     /**
-     * @return WishlistSessionInterface
+     * @return \Spryker\Client\Wishlist\Session\WishlistSessionInterface
      */
     public function createSession()
     {
@@ -31,7 +27,7 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @return WishlistStubInterface
+     * @return \Spryker\Client\Wishlist\Zed\WishlistStubInterface
      */
     public function createZedStub()
     {
@@ -42,7 +38,7 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @return WishlistStorageInterface
+     * @return \Spryker\Client\Wishlist\Storage\WishlistStorageInterface
      */
     public function createStorage()
     {
@@ -53,7 +49,7 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @return CustomerClientInterface
+     * @return \Spryker\Client\Customer\CustomerClientInterface
      */
     public function createCustomerClient()
     {

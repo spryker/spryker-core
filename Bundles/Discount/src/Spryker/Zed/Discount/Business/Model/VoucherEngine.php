@@ -50,10 +50,10 @@ class VoucherEngine
     protected $connection;
 
     /**
-     * @param DiscountConfigInterface $settings
-     * @param DiscountQueryContainer $queryContainer
-     * @param DiscountToMessengerInterface $messengerFacade
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Discount\DiscountConfigInterface $settings
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
         DiscountConfigInterface $settings,
@@ -68,9 +68,9 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      *
-     * @return VoucherCreateInfoTransfer
+     * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
     public function createVoucherCodes(VoucherTransfer $voucherTransfer)
     {
@@ -89,10 +89,10 @@ class VoucherEngine
     }
 
     /**
-     * @param SpyDiscountVoucherPool $voucherPoolEntity
-     * @param TransferInterface $voucherTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $voucherPoolEntity
+     * @param \Spryker\Shared\Transfer\TransferInterface $voucherTransfer
      *
-     * @return VoucherCreateInfoTransfer
+     * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
     protected function saveBatchVoucherCodes(SpyDiscountVoucherPool $voucherPoolEntity, TransferInterface $voucherTransfer)
     {
@@ -103,9 +103,9 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherCreateInfoTransfer $voucherCreateInfoInterface
+     * @param \Generated\Shared\Transfer\VoucherCreateInfoTransfer $voucherCreateInfoInterface
      *
-     * @return VoucherCreateInfoTransfer
+     * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
     protected function acceptVoucherCodesTransation(VoucherCreateInfoTransfer $voucherCreateInfoInterface)
     {
@@ -121,11 +121,11 @@ class VoucherEngine
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPool
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPool
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      * @param int $quantiy
      *
-     * @return VoucherCreateInfoTransfer
+     * @return \Generated\Shared\Transfer\VoucherCreateInfoTransfer
      */
     protected function generateAndSaveVoucherCodes(SpyDiscountVoucherPool $discountVoucherPool, VoucherTransfer $voucherTransfer, $quantiy)
     {
@@ -191,11 +191,11 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function createVoucherCode(VoucherTransfer $voucherTransfer)
     {
@@ -249,7 +249,7 @@ class VoucherEngine
     }
 
     /**
-     * @param SpyDiscountVoucherPool $voucherPoolEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $voucherPoolEntity
      * @param string $code
      *
      * @return string
@@ -271,7 +271,7 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      *
      * @return int
      */

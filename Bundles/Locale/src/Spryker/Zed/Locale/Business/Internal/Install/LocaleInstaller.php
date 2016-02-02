@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Locale\Business\Internal\Install;
 
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 
@@ -25,7 +24,7 @@ class LocaleInstaller extends AbstractInstaller
     protected $localeQueryContainer;
 
     /**
-     * @param LocaleQueryContainerInterface $localeQueryContainer
+     * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param string $localeFile
      */
     public function __construct(LocaleQueryContainerInterface $localeQueryContainer, $localeFile)
@@ -43,7 +42,7 @@ class LocaleInstaller extends AbstractInstaller
     }
 
     /**
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

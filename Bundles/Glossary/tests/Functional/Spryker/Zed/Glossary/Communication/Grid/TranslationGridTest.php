@@ -63,7 +63,7 @@ class TranslationGridTest extends Test
     }
 
     /**
-     * @return LocaleFacade
+     * @return \Spryker\Zed\Locale\Business\LocaleFacade
      */
     private function getLocaleFacade()
     {
@@ -71,7 +71,7 @@ class TranslationGridTest extends Test
     }
 
     /**
-     * @return GlossaryQueryContainer
+     * @return \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer
      */
     private function getGlossaryQueryContainer()
     {

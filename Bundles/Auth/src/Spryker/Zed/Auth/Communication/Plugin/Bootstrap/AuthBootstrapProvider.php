@@ -22,7 +22,7 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
 {
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -31,7 +31,7 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

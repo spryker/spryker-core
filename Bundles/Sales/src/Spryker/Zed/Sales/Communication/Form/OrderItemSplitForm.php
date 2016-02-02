@@ -26,7 +26,7 @@ class OrderItemSplitForm extends AbstractForm
     protected $orderItem;
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      */
     public function __construct(SpySalesOrderItem $orderItem = null)
     {
@@ -34,7 +34,7 @@ class OrderItemSplitForm extends AbstractForm
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
@@ -60,7 +60,7 @@ class OrderItemSplitForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

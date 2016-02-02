@@ -29,7 +29,7 @@ class Percentage extends AbstractCalculator
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return string
      */

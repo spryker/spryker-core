@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\Event;
@@ -15,8 +14,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 
 /**
  * @method OmsBusinessFactory getFactory()
@@ -174,7 +171,7 @@ class OmsFacade extends AbstractFacade
      *
      * @param string $processName
      *
-     * @return Process
+     * @return \Spryker\Zed\Oms\Business\Process\Process
      */
     public function getProcess($processName)
     {
@@ -188,7 +185,7 @@ class OmsFacade extends AbstractFacade
     /**
      * @deprecated
      *
-     * @return Dummy
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\Dummy
      */
     public function getDummy()
     {
@@ -199,7 +196,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return Event[]
      */
@@ -211,7 +208,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
      * @return SpySalesOrderItem[]
@@ -224,7 +221,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
      * @return SpySalesOrderItem[]
@@ -237,7 +234,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
      * @return SpyOmsTransitionLog[]
@@ -253,7 +250,7 @@ class OmsFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function getReservedOrderItemsForSku($sku)
     {
@@ -265,7 +262,7 @@ class OmsFacade extends AbstractFacade
     /**
      * @param string $sku
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function countReservedOrderItemsForSku($sku)
     {
@@ -277,7 +274,7 @@ class OmsFacade extends AbstractFacade
     /**
      * @param string $stateName
      *
-     * @return SpyOmsOrderItemState
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getStateEntity($stateName)
     {
@@ -289,7 +286,7 @@ class OmsFacade extends AbstractFacade
     /**
      * @param string $processName
      *
-     * @return SpyOmsOrderProcess
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     public function getProcessEntity($processName)
     {
@@ -299,7 +296,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @return SpyOmsOrderItemState
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getInitialStateEntity()
     {
@@ -309,7 +306,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $transferOrder
+     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
      *
      * @return string
      */
@@ -320,7 +317,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return string
      */
@@ -333,7 +330,7 @@ class OmsFacade extends AbstractFacade
 
     /**
      * @param string $eventId
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
      *
@@ -350,7 +347,7 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
      * @param array $data
      *
@@ -367,7 +364,7 @@ class OmsFacade extends AbstractFacade
 
     /**
      * @param string $eventId
-     * @param OrderTransfer $orderItem
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderItem
      * @param array $logContext
      * @param array $data
      *

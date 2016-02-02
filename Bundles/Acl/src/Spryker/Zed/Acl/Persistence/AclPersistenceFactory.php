@@ -14,7 +14,6 @@ use Orm\Zed\Acl\Persistence\SpyAclRuleQuery;
 use Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery;
 use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery;
 use Orm\Zed\User\Persistence\SpyUserQuery;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Spryker\Zed\Acl\AclConfig;
 
 /**
@@ -25,7 +24,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return SpyAclGroupQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
      */
     public function createGroupQuery()
     {
@@ -33,7 +32,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return SpyAclRuleQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */
     public function createRuleQuery()
     {
@@ -41,7 +40,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return SpyAclRoleQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
      */
     public function createRoleQuery()
     {
@@ -49,7 +48,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return SpyAclGroupsHasRolesQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery
      */
     public function createGroupHasRoleQuery()
     {
@@ -57,7 +56,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return SpyAclUserHasGroupQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery
      */
     public function createUserHasRoleQuery()
     {
@@ -65,7 +64,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function createUserQuery()
     {
@@ -73,7 +72,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return SpyAclUserHasGroupQuery
+     * @return \Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery
      */
     public function createUserHasGroupQuery()
     {
@@ -83,7 +82,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @throws \ErrorException
      *
-     * @return UserQueryContainer
+     * @return \Spryker\Zed\User\Persistence\UserQueryContainer
      */
     protected function getUserQueryContainer()
     {

@@ -22,7 +22,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     protected $queryContainer;
 
     /**
-     * @param ShipmentCheckoutConnectorQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainerInterface $queryContainer
      */
     public function __construct(ShipmentCheckoutConnectorQueryContainerInterface $queryContainer)
     {
@@ -30,8 +30,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */

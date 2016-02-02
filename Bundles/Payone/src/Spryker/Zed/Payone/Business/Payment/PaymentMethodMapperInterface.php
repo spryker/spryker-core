@@ -7,9 +7,6 @@
 namespace Spryker\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
-use Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 
@@ -22,51 +19,51 @@ interface PaymentMethodMapperInterface
     public function getName();
 
     /**
-     * @param SequenceNumberProviderInterface $sequenceNumberProvider
+     * @param \Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface $sequenceNumberProvider
      *
      * @return void
      */
     public function setSequenceNumberProvider(SequenceNumberProviderInterface $sequenceNumberProvider);
 
     /**
-     * @param PayoneStandardParameterTransfer $standardParameter
+     * @param \Generated\Shared\Transfer\PayoneStandardParameterTransfer $standardParameter
      *
      * @return void
      */
     public function setStandardParameter(PayoneStandardParameterTransfer $standardParameter);
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return AuthorizationContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer
      */
     public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity);
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return PreAuthorizationContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer
      */
     public function mapPaymentToPreAuthorization(SpyPaymentPayone $paymentEntity);
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
      */
     public function mapPaymentToCapture(SpyPaymentPayone $paymentEntity);
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
      */
     public function mapPaymentToDebit(SpyPaymentPayone $paymentEntity);
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
      */
     public function mapPaymentToRefund(SpyPaymentPayone $paymentEntity);
 

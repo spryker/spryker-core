@@ -44,7 +44,7 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return SequenceNumberSettingsTransfer
+     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
     public function getCustomerReferenceDefaults()
     {

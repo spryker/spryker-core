@@ -28,7 +28,7 @@ class GlossaryInstaller extends AbstractInstaller
     protected $yamlParser;
 
     /**
-     * @param InstallerToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Installer\Dependency\Facade\InstallerToGlossaryInterface $glossaryFacade
      * @param array $paths
      */
     public function __construct(InstallerToGlossaryInterface $glossaryFacade, array $paths = [])

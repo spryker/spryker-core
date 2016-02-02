@@ -9,13 +9,8 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use DateTime;
 
 interface OmsQueryContainerInterface
@@ -25,21 +20,21 @@ interface OmsQueryContainerInterface
      * @param array $states
      * @param string $processName
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByState(array $states, $processName);
 
     /**
      * @param $idOrder
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByIdOrder($idOrder);
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return SpyOmsTransitionLogQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
      */
     public function queryLogForOrder(SpySalesOrder $order);
 
@@ -47,14 +42,14 @@ interface OmsQueryContainerInterface
      * @param int $idOrder
      * @param bool $orderById
      *
-     * @return SpyOmsTransitionLogQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
      */
     public function queryLogByIdOrder($idOrder, $orderById = true);
 
     /**
      * @param DateTime $now
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsWithExpiredTimeouts(DateTime $now);
 
@@ -63,7 +58,7 @@ interface OmsQueryContainerInterface
      * @param string $sku
      * @param bool $returnTest
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function countSalesOrderItemsForSku(array $states, $sku, $returnTest = true);
 
@@ -72,35 +67,35 @@ interface OmsQueryContainerInterface
      * @param string $sku
      * @param bool $returnTest
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsForSku(array $states, $sku, $returnTest = true);
 
     /**
      * @param array $orderItemIds
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItems(array $orderItemIds);
 
     /**
      * @param int $idOrder
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrderById($idOrder);
 
     /**
      * @param array|string[] $activeProcesses
      *
-     * @return SpyOmsOrderProcessQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
      */
     public function getActiveProcesses(array $activeProcesses);
 
     /**
      * @param array $orderItemStates
      *
-     * @return SpyOmsOrderItemStateQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
      */
     public function getOrderItemStates(array $orderItemStates);
 
@@ -108,14 +103,14 @@ interface OmsQueryContainerInterface
      * @param array $processIds
      * @param array $stateBlacklist
      *
-     * @return SpySalesOrderItemQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function queryMatrixOrderItems(array $processIds, array $stateBlacklist);
 
     /**
      * @param string[] $orderItemStates
      *
-     * @return SpyOmsOrderItemStateQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
      */
     public function querySalesOrderItemStatesByName(array $orderItemStates);
 

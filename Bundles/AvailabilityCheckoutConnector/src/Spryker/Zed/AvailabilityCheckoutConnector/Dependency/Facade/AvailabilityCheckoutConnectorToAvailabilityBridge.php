@@ -17,7 +17,7 @@ class AvailabilityCheckoutConnectorToAvailabilityBridge implements AvailabilityC
     protected $availabilityFacade;
 
     /**
-     * @param AvailabilityFacade $availabilityFacade
+     * @param \Spryker\Zed\Availability\Business\AvailabilityFacade $availabilityFacade
      */
     public function __construct($availabilityFacade)
     {

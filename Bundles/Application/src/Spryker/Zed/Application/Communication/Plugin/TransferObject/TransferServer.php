@@ -83,7 +83,7 @@ class TransferServer
     }
 
     /**
-     * @return Request
+     * @return \Spryker\Zed\ZedRequest\Business\Client\Request
      */
     public function getRequest()
     {
@@ -103,7 +103,7 @@ class TransferServer
     }
 
     /**
-     * @return HttpRequest
+     * @return \Symfony\Component\HttpFoundation\Request
      */
     private function getHttpRequest()
     {
@@ -115,7 +115,7 @@ class TransferServer
     }
 
     /**
-     * @param HttpRequest $httpRequest
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return self
      */
@@ -127,7 +127,7 @@ class TransferServer
     }
 
     /**
-     * @param ResponseInterface $response
+     * @param \Spryker\Shared\ZedRequest\Client\ResponseInterface $response
      *
      * @return self
      */
@@ -139,7 +139,7 @@ class TransferServer
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function send()
     {

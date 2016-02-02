@@ -13,14 +13,14 @@ interface RuleValidatorInterface
 {
 
     /**
-     * @param RulesTransfer $rules
+     * @param \Generated\Shared\Transfer\RulesTransfer $rules
      *
      * @return mixed
      */
     public function setRules(RulesTransfer $rules);
 
     /**
-     * @param RuleTransfer $rule
+     * @param \Generated\Shared\Transfer\RuleTransfer $rule
      *
      * @return mixed
      */
@@ -37,7 +37,7 @@ interface RuleValidatorInterface
     public function getDeniedRules();
 
     /**
-     * @param RuleTransfer $rule
+     * @param \Generated\Shared\Transfer\RuleTransfer $rule
      * @param string $bundle
      * @param string $controller
      * @param string $action

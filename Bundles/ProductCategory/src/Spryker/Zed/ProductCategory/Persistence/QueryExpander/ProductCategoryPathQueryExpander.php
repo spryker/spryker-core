@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategory\Persistence\QueryExpander;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
@@ -30,8 +29,8 @@ class ProductCategoryPathQueryExpander
     protected $categoryQueryContainer;
 
     /**
-     * @param CategoryQueryContainer $categoryQueryContainer
-     * @param LocaleTransfer $locale
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $categoryQueryContainer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      */
     public function __construct(
         CategoryQueryContainer $categoryQueryContainer,
@@ -42,13 +41,13 @@ class ProductCategoryPathQueryExpander
     }
 
     /**
-     * @param ModelCriteria $expandableQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function expandQuery(ModelCriteria $expandableQuery, $excludeDirectParent = true, $excludeRoot = true)
     {

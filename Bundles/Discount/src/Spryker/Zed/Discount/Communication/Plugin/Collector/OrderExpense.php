@@ -20,9 +20,9 @@ class OrderExpense extends AbstractDiscountPlugin implements DiscountCollectorPl
 {
 
     /**
-     * @param DiscountTransfer $discount
-     * @param CalculableInterface $container
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discount
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return DiscountableInterface[]
      */

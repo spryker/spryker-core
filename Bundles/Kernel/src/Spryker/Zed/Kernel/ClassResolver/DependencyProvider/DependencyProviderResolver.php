@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\DependencyProvider;
 
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyProviderResolver extends AbstractClassResolver
@@ -19,7 +18,7 @@ class DependencyProviderResolver extends AbstractClassResolver
      *
      * @throws DependencyProviderNotFoundException
      *
-     * @return AbstractBundleDependencyProvider
+     * @return \Spryker\Zed\Kernel\AbstractBundleDependencyProvider
      */
     public function resolve($callerClass)
     {

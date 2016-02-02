@@ -9,7 +9,6 @@ namespace Spryker\Zed\Url\Persistence;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
-use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
@@ -22,7 +21,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     /**
      * @param string $url
      *
-     * @return SpyUrl
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
     public function queryUrl($url)
     {
@@ -43,7 +42,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     /**
      * @param int $id
      *
-     * @return SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlById($id)
     {
@@ -54,7 +53,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
-     * @return SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrls()
     {
@@ -64,7 +63,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
-     * @return SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlsWithRedirect()
     {
@@ -77,7 +76,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
-     * @return SpyUrlRedirectQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
     public function queryRedirects()
     {
@@ -89,7 +88,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     /**
      * @param int $idUrlRedirect
      *
-     * @return SpyUrlRedirectQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
     public function queryRedirectById($idUrlRedirect)
     {
@@ -112,7 +111,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     /**
      * @param int $id
      *
-     * @return SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlByIdWithRedirect($id)
     {
@@ -129,7 +128,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      * @param int $idCategoryNode
      * @param int $idLocale
      *
-     * @return SpyUrlQuery
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
     {

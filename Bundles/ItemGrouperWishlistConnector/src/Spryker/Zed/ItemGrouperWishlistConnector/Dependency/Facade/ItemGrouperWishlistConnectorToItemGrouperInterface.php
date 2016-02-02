@@ -12,9 +12,9 @@ interface ItemGrouperWishlistConnectorToItemGrouperInterface
 {
 
     /**
-     * @param GroupableContainerTransfer $groupAbleItems
+     * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupAbleItems
      *
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     public function groupItemsByKey(GroupableContainerTransfer $groupAbleItems);
 

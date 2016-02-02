@@ -18,7 +18,7 @@ class ItemGrouperCheckoutConnectorToItemGrouperBridge implements ItemGrouperChec
     protected $itemGrouperFacade;
 
     /**
-     * @param ItemGrouperFacade $itemGrouperFacade
+     * @param \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade $itemGrouperFacade
      */
     public function __construct($itemGrouperFacade)
     {
@@ -26,9 +26,9 @@ class ItemGrouperCheckoutConnectorToItemGrouperBridge implements ItemGrouperChec
     }
 
     /**
-     * @param GroupableContainerTransfer $groupAbleItems
+     * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupAbleItems
      *
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     public function groupItemsByKey(GroupableContainerTransfer $groupAbleItems)
     {

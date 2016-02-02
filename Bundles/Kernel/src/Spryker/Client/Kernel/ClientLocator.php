@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Kernel;
 
-use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Kernel\AbstractLocator;
 
@@ -33,7 +32,7 @@ class ClientLocator extends AbstractLocator
     /**
      * @param string $bundle
      *
-     * @throws ClientNotFoundException
+     * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
      *
      * @return AbstractClient
      */
@@ -43,7 +42,7 @@ class ClientLocator extends AbstractLocator
     }
 
     /**
-     * @return ClientResolver
+     * @return \Spryker\Client\Kernel\ClassResolver\Client\ClientResolver
      */
     private function getClientResolver()
     {

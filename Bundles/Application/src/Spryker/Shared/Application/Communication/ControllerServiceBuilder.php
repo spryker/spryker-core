@@ -15,9 +15,9 @@ class ControllerServiceBuilder
 
     /**
      * @param \Pimple $application
-     * @param BundleControllerActionInterface $bundleControllerAction
-     * @param AbstractControllerResolver $controllerResolver
-     * @param RouteNameResolverInterface $routeNameResolver
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\ClassResolver\Controller\AbstractControllerResolver $controllerResolver
+     * @param \Spryker\Shared\Kernel\Communication\RouteNameResolverInterface $routeNameResolver
      *
      * @return string
      */

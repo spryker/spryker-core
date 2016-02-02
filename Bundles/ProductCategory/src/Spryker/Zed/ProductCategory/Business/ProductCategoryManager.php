@@ -11,11 +11,8 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\ProductCategory\Business\Exception\MissingProductException;
-use Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface;
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
@@ -23,7 +20,6 @@ use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterf
 use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {
@@ -64,13 +60,13 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $connection;
 
     /**
-     * @param CategoryQueryContainerInterface $categoryQueryContainer
-     * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
-     * @param ProductCategoryToProductInterface $productFacade
-     * @param ProductCategoryToCategoryInterface $categoryFacade
-     * @param ProductCategoryToTouchInterface $touchFacade
-     * @param ProductCategoryToCmsInterface $cmsFacade
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface $categoryFacade
+     * @param \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface $touchFacade
+     * @param \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface $cmsFacade
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -93,7 +89,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -108,12 +104,12 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws ProductCategoryMappingExistsException
-     * @throws MissingProductException
-     * @throws MissingCategoryNodeException
-     * @throws PropelException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingProductException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -137,9 +133,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws ProductCategoryMappingExistsException
+     * @throws \Spryker\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException
      *
      * @return void
      */
@@ -159,7 +155,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return SpyProductCategory[]
      */
@@ -172,7 +168,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return SpyProductCategory[]
      */
@@ -187,7 +183,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param int $idProductAbstract
      *
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function getProductCategoryMappingById($idCategory, $idProductAbstract)
     {
@@ -223,7 +219,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productIdsToAssign
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -249,7 +245,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productOrderList
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -276,7 +272,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productPreConfigList
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -302,9 +298,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param NodeTransfer $sourceNodeTransfer
-     * @param NodeTransfer $destinationNodeTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $sourceNodeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $destinationNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -331,7 +327,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
     /**
      * @param $idCategory
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -347,9 +343,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
-     * @param NodeTransfer $categoryNodeTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return int
      */
@@ -377,7 +373,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -407,7 +403,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */

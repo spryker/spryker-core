@@ -5,7 +5,6 @@ namespace Spryker\Zed\Customer\Communication\Form;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,7 +27,7 @@ class CustomerForm extends AbstractForm
     protected $customerQueryContainer;
 
     /**
-     * @param CustomerQueryContainerInterface $customerQueryContainerInterface
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainerInterface
      * @param string $formActionType
      */
     public function __construct(CustomerQueryContainerInterface $customerQueryContainerInterface, $formActionType)
@@ -38,7 +37,7 @@ class CustomerForm extends AbstractForm
     }
 
     /**
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function populateFormFields()
     {
@@ -58,7 +57,7 @@ class CustomerForm extends AbstractForm
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function getDataClass()
     {
@@ -66,7 +65,7 @@ class CustomerForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

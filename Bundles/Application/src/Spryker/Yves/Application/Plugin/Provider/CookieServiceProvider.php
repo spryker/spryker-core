@@ -21,7 +21,7 @@ class CookieServiceProvider implements ServiceProviderInterface
     private $app;
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -36,7 +36,7 @@ class CookieServiceProvider implements ServiceProviderInterface
     /**
      * Handles transparent Cookie insertion
      *
-     * @param FilterResponseEvent $event The event to handle
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event The event to handle
      *
      * @return void
      */
@@ -50,7 +50,7 @@ class CookieServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

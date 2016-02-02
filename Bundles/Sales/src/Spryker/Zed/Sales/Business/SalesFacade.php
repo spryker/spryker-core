@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Sales\Business;
 
-use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -14,7 +13,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
  * @method SalesBusinessFactory getFactory()
@@ -23,9 +21,9 @@ class SalesFacade extends AbstractFacade
 {
 
     /**
-     * @param CommentTransfer $commentTransfer
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
-     * @return CommentTransfer
+     * @return \Generated\Shared\Transfer\CommentTransfer
      */
     public function saveComment(CommentTransfer $commentTransfer)
     {
@@ -73,7 +71,7 @@ class SalesFacade extends AbstractFacade
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
@@ -83,9 +81,9 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function saveOrder(OrderTransfer $orderTransfer)
     {
@@ -98,7 +96,7 @@ class SalesFacade extends AbstractFacade
      * @param int $idSalesOrderItem
      * @param int $quantity
      *
-     * @return ItemSplitResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
     public function splitSalesOrderItem($idSalesOrderItem, $quantity)
     {
@@ -107,7 +105,7 @@ class SalesFacade extends AbstractFacade
 
     /**
      * @param int $idRefund
-     * @param OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
+     * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
      *
      * @return void
      */
@@ -119,10 +117,10 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idOrder
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     public function updateOrderCustomer(OrderTransfer $orderTransfer, $idOrder)
     {
@@ -132,7 +130,7 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param AddressTransfer $addressesTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
      * @return mixed
@@ -157,9 +155,9 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
@@ -169,9 +167,9 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {

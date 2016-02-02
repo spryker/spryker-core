@@ -32,9 +32,9 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return AuthorizationContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer
      */
     public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity)
     {
@@ -45,9 +45,9 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return CaptureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CaptureContainer
      */
     public function mapPaymentToCapture(SpyPaymentPayone $paymentEntity)
     {
@@ -62,9 +62,9 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return PreAuthorizationContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer
      */
     public function mapPaymentToPreAuthorization(SpyPaymentPayone $paymentEntity)
     {
@@ -75,10 +75,10 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
-     * @param AbstractAuthorizationContainer $authorizationContainer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer $authorizationContainer
      *
-     * @return AbstractAuthorizationContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer
      */
     protected function mapPaymentToAbstractAuthorization(SpyPaymentPayone $paymentEntity, AbstractAuthorizationContainer $authorizationContainer)
     {
@@ -102,9 +102,9 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param PayoneCreditCardTransfer $payoneCreditCardTransfer
+     * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $payoneCreditCardTransfer
      *
-     * @return CreditCardCheckContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer
      */
     public function mapCreditCardCheck(PayoneCreditCardTransfer $payoneCreditCardTransfer)
     {
@@ -123,9 +123,9 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return DebitContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\DebitContainer
      */
     public function mapPaymentToDebit(SpyPaymentPayone $paymentEntity)
     {
@@ -140,9 +140,9 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return RefundContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer
      */
     public function mapPaymentToRefund(SpyPaymentPayone $paymentEntity)
     {
@@ -156,9 +156,9 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param SpyPaymentPayone $paymentEntity
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return CreditCardPseudoContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer
      */
     protected function createPaymentMethodContainerFromPayment(SpyPaymentPayone $paymentEntity)
     {
@@ -171,9 +171,9 @@ class CreditCardPseudo extends AbstractMapper
     }
 
     /**
-     * @param PayoneAuthorizationTransfer $payoneAuthorizationTransfer
+     * @param \Generated\Shared\Transfer\PayoneAuthorizationTransfer $payoneAuthorizationTransfer
      *
-     * @return PersonalContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
      */
     protected function createAuthorizationPersonalData(PayoneAuthorizationTransfer $payoneAuthorizationTransfer)
     {

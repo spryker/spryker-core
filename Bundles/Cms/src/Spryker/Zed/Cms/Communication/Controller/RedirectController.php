@@ -8,8 +8,6 @@ namespace Spryker\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\CmsDependencyProvider;
@@ -80,7 +78,7 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -118,7 +116,7 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @return CmsToUrlInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
      */
     private function getUrlFacade()
     {
@@ -127,7 +125,7 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @return CmsToLocaleInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
      */
     private function getLocaleFacade()
     {

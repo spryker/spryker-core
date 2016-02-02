@@ -8,7 +8,6 @@ namespace Unit\Spryker\Zed\Kernel\Communication\Plugin\Fixture;
 
 use Spryker\Shared\Library\Communication\Request;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
-use Spryker\Zed\ZedRequest\Business\Client\Request as ZedRequest;
 
 class TransferServer extends CoreTransferServer
 {
@@ -19,7 +18,7 @@ class TransferServer extends CoreTransferServer
     private $fixtureRequest;
 
     /**
-     * @param Request $request
+     * @param \Spryker\Shared\Library\Communication\Request $request
      *
      * @return self
      */
@@ -31,7 +30,7 @@ class TransferServer extends CoreTransferServer
     }
 
     /**
-     * @return ZedRequest
+     * @return \Spryker\Zed\ZedRequest\Business\Client\Request
      */
     public function getRequest()
     {

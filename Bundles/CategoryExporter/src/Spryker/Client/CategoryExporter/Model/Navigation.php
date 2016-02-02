@@ -23,8 +23,8 @@ class Navigation
     private $urlBuilder;
 
     /**
-     * @param StorageClientInterface $keyValueReader
-     * @param KeyBuilderInterface $urlBuilder
+     * @param \Spryker\Client\Storage\StorageClientInterface $keyValueReader
+     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $urlBuilder
      */
     public function __construct(StorageClientInterface $keyValueReader, KeyBuilderInterface $urlBuilder)
     {

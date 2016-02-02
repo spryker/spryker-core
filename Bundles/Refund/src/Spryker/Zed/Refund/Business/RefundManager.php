@@ -28,8 +28,8 @@ class RefundManager
     protected $salesQueryContainer;
 
     /**
-     * @param RefundQueryContainerInterface $refundQueryContainer
-     * @param SalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface $refundQueryContainer
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      */
     public function __construct(RefundQueryContainerInterface $refundQueryContainer, SalesQueryContainerInterface $salesQueryContainer)
     {
@@ -38,7 +38,7 @@ class RefundManager
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
      */

@@ -27,15 +27,7 @@ use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportSearch;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\InstallDemoData;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder;
-use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface;
-use Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
-use Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface;
-use Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface;
 use Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder;
-use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinderInterface;
-use Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface;
-use Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface;
-use Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface;
 
 /**
  * @method ApplicationConfig getConfig()
@@ -64,7 +56,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @param LoggerInterface|null $logger
      *
-     * @return CodeCeption
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption
      */
     public function createCheckStepCodeCeption(LoggerInterface $logger = null)
     {
@@ -79,7 +71,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @param LoggerInterface|null $logger
      *
-     * @return DeleteDatabase
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase
      */
     public function createCheckStepDeleteDatabase(LoggerInterface $logger = null)
     {
@@ -94,7 +86,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @param LoggerInterface|null $logger
      *
-     * @return DeleteGeneratedDirectory
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteGeneratedDirectory
      */
     public function createCheckStepDeleteGeneratedDirectory(LoggerInterface $logger = null)
     {
@@ -107,9 +99,9 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface $logger
      *
-     * @return InstallDemoData
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\InstallDemoData
      */
     public function createCheckStepInstallDemoData(LoggerInterface $logger = null)
     {
@@ -124,7 +116,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @param LoggerInterface|null $logger
      *
-     * @return SetupInstall
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\SetupInstall
      */
     public function createCheckStepSetupInstall(LoggerInterface $logger = null)
     {
@@ -139,7 +131,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @param LoggerInterface|null $logger
      *
-     * @return ExportKeyValue
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportKeyValue
      */
     public function createCheckStepExportKeyValue(LoggerInterface $logger = null)
     {
@@ -154,7 +146,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     /**
      * @param LoggerInterface|null $logger
      *
-     * @return ExportSearch
+     * @return \Spryker\Zed\Application\Business\Model\ApplicationCheckStep\ExportSearch
      */
     public function createCheckStepExportSearch(LoggerInterface $logger = null)
     {
@@ -167,7 +159,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return NavigationBuilder
+     * @return \Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder
      */
     public function createNavigationBuilder()
     {
@@ -179,7 +171,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return NavigationCacheBuilder
+     * @return \Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuilder
      */
     public function createNavigationCacheBuilder()
     {
@@ -190,7 +182,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MenuFormatterInterface
+     * @return \Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface
      */
     protected function createMenuFormatter()
     {
@@ -206,7 +198,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return NavigationSchemaFinderInterface
+     * @return \Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinderInterface
      */
     protected function createNavigationSchemaFinder()
     {
@@ -217,7 +209,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return NavigationCollectorInterface
+     * @return \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface
      */
     protected function createNavigationCollector()
     {
@@ -228,7 +220,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PathExtractorInterface
+     * @return \Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface
      */
     protected function createPathExtractor()
     {
@@ -236,7 +228,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return UrlBuilderInterface
+     * @return \Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface
      */
     protected function createUrlBuilder()
     {
@@ -244,7 +236,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return UrlUniqueValidatorInterface
+     * @return \Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface
      */
     protected function createUrlUniqueValidator()
     {
@@ -252,7 +244,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MenuLevelValidatorInterface
+     * @return \Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface
      */
     protected function createMenuLevelValidator()
     {
@@ -262,7 +254,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return NavigationCacheInterface
+     * @return \Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface
      */
     protected function createNavigationCache()
     {
@@ -273,7 +265,7 @@ class ApplicationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return NavigationCollectorInterface
+     * @return \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface
      */
     protected function createCachedNavigationCollector()
     {

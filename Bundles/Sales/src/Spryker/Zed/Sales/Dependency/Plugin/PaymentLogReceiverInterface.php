@@ -12,7 +12,7 @@ interface PaymentLogReceiverInterface
 {
 
     /**
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return array
      */

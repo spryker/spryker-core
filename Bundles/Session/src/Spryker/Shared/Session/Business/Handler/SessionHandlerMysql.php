@@ -58,7 +58,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
     protected $newRelicApi;
 
     /**
-     * @param ApiInterface $newRelicApi
+     * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      * @param array $hosts
      * @param string|null $user
      * @param string|null $password

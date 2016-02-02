@@ -8,7 +8,6 @@ namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
-use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTable;
@@ -24,7 +23,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     protected $queryContainer;
 
     /**
-     * @param CategoryQueryContainer $categoryTreeRepository
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $categoryTreeRepository
      */
     public function __construct(
         CategoryQueryContainer $categoryTreeRepository
@@ -33,7 +32,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
      * @return void
      */
@@ -62,9 +61,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -101,9 +100,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

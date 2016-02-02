@@ -26,7 +26,7 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
     protected $discountTotalsCalculator;
 
     /**
-     * @param DiscountCalculationToCalculationInterface $grandTotalsCalculator
+     * @param \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface $grandTotalsCalculator
      * @param DiscountTotalsCalculatorInterface $discountTotalsCalculator
      */
     public function __construct(
@@ -38,8 +38,8 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $container
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      * @param $items
      *
      * @return void
@@ -57,8 +57,8 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param $calculableItems
      *
      * @return int
@@ -78,8 +78,8 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param $calculableItems
      *
      * @return int

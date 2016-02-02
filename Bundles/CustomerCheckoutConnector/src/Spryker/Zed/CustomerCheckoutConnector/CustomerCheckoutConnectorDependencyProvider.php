@@ -16,9 +16,9 @@ class CustomerCheckoutConnectorDependencyProvider extends AbstractBundleDependen
     const FACADE_CUSTOMER = 'customer facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {

@@ -18,7 +18,7 @@ class GlossaryToMessengerBridge implements GlossaryToMessengerInterface
     protected $messengerFacade;
 
     /**
-     * @param MessengerFacade $messengerFacade
+     * @param \Spryker\Zed\Messenger\Business\MessengerFacade $messengerFacade
      */
     public function __construct($messengerFacade)
     {
@@ -26,7 +26,7 @@ class GlossaryToMessengerBridge implements GlossaryToMessengerInterface
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */

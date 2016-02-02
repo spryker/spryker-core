@@ -7,16 +7,15 @@
 namespace Spryker\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\VoucherPoolTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 
 class DiscountVoucherPoolWriter extends AbstractWriter
 {
 
     /**
-     * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $discountVoucherPoolTransfer
      *
-     * @return SpyDiscountVoucherPool
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
     public function create(VoucherPoolTransfer $discountVoucherPoolTransfer)
     {
@@ -28,11 +27,11 @@ class DiscountVoucherPoolWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $discountVoucherPoolTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyDiscountVoucherPool
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
     public function update(VoucherPoolTransfer $discountVoucherPoolTransfer)
     {
@@ -46,9 +45,9 @@ class DiscountVoucherPoolWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherPoolTransfer $voucherPoolTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $voucherPoolTransfer
      *
-     * @return SpyDiscountVoucherPool
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
     public function save(VoucherPoolTransfer $voucherPoolTransfer)
     {

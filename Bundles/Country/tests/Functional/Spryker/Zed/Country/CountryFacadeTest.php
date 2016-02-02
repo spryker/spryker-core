@@ -43,7 +43,7 @@ class CountryFacadeTest extends Test
     }
 
     /**
-     * @return MessengerInterface
+     * @return \Spryker\Zed\Messenger\Business\Model\MessengerInterface
      */
     protected function getMockLogger()
     {

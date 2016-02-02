@@ -16,11 +16,11 @@ class Copy
     /**
      * TODO arguments must be switched entityToTransfer i expect entity to be the first argument
      *
-     * @param AbstractTransfer $transfer
-     * @param ActiveRecordInterface $entity
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param bool $enrich
      *
-     * @return AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     public static function entityToTransfer(AbstractTransfer $transfer, ActiveRecordInterface $entity, $enrich = false)
     {
@@ -60,11 +60,11 @@ class Copy
     }
 
     /**
-     * @param AbstractTransfer $transfer
-     * @param ActiveRecordInterface $entity
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param bool $enrich
      *
-     * @return ActiveRecordInterface
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
     public static function transferToEntity(AbstractTransfer $transfer, ActiveRecordInterface $entity, $enrich = false)
     {
@@ -125,10 +125,10 @@ class Copy
      *  WARNING: Be carefull using this method and think if this is
      *  what you need!
      *
-     * @param AbstractTransfer $transfer
-     * @param ActiveRecordInterface $entity
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      *
-     * @return ActiveRecordInterface
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
     public static function transferToEntityNoNullValues(AbstractTransfer $transfer, ActiveRecordInterface $entity)
     {
@@ -147,7 +147,7 @@ class Copy
 
     /**
      * @param $transferCollection
-     * @param Collection $entityCollection
+     * @param \Propel\Runtime\Collection\Collection $entityCollection
      * @param $enrich
      *
      * @return mixed
@@ -165,10 +165,10 @@ class Copy
 
     /**
      * @param $transferCollection
-     * @param Collection $entityCollection
+     * @param \Propel\Runtime\Collection\Collection $entityCollection
      * @param $enrich
      *
-     * @return Collection
+     * @return \Propel\Runtime\Collection\Collection
      */
     private static function transferCollectionToEntityCollection($transferCollection, Collection $entityCollection, $enrich)
     {
@@ -183,7 +183,7 @@ class Copy
     }
 
     /**
-     * @param AbstractTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
      * @param $enrich
      *
      * @return array
@@ -212,7 +212,7 @@ class Copy
     }
 
     /**
-     * @param AbstractTransfer $transfer
+     * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
      * @param $enrich
      *
      * @return array

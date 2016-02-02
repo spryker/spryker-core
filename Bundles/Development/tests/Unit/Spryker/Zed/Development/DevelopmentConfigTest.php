@@ -12,7 +12,7 @@ class DevelopmentConfigTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return DevelopmentConfig
+     * @return \Spryker\Zed\Development\DevelopmentConfig
      */
     private function getConfig()
     {

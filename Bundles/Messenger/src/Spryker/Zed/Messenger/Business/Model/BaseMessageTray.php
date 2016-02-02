@@ -16,7 +16,7 @@ class BaseMessageTray
     protected $glossaryFacade;
 
     /**
-     * @param MessengerToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface $glossaryFacade
      */
     public function __construct(MessengerToGlossaryInterface $glossaryFacade)
     {

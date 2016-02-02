@@ -27,7 +27,7 @@ class SearchTable extends AbstractTable
     protected $searchClient;
 
     /**
-     * @param SearchClient $searchClient
+     * @param \Spryker\Client\Search\SearchClient $searchClient
      */
     public function __construct(SearchClient $searchClient)
     {
@@ -35,9 +35,9 @@ class SearchTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -56,7 +56,7 @@ class SearchTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

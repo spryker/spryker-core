@@ -10,8 +10,6 @@ use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Container;
-use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
 abstract class AbstractCommunicationFactory extends AbstractFactory
@@ -20,8 +18,8 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     const FORM_FACTORY = 'form.factory';
 
     /**
-     * @param AbstractBundleDependencyProvider $dependencyProvider
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */
@@ -33,7 +31,7 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     }
 
     /**
-     * @return FormFactory
+     * @return \Symfony\Component\Form\FormFactory
      */
     protected function getFormFactory()
     {
@@ -41,10 +39,10 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     }
 
     /**
-     * @param FormTypeInterface $formTypeInterface
+     * @param \Symfony\Component\Form\FormTypeInterface $formTypeInterface
      * @param array $options
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function createForm(FormTypeInterface $formTypeInterface, array $options = [])
     {

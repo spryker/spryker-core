@@ -9,7 +9,6 @@ namespace Spryker\Zed\Country\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Country\CountryDependencyProvider;
 use Spryker\Zed\Country\Communication\Table\CountryTable;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Spryker\Zed\Country\CountryConfig;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 
@@ -21,7 +20,7 @@ class CountryCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return CountryTable
+     * @return \Spryker\Zed\Country\Communication\Table\CountryTable
      */
     public function createCountryTable()
     {
@@ -31,7 +30,7 @@ class CountryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UserQueryContainer
+     * @return \Spryker\Zed\User\Persistence\UserQueryContainer
      */
     protected function getUserQueryContainer()
     {

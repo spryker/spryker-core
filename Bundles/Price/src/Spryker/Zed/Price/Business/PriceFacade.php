@@ -8,7 +8,6 @@ namespace Spryker\Zed\Price\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Orm\Zed\Price\Persistence\SpyPriceType;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
@@ -39,7 +38,7 @@ class PriceFacade extends AbstractFacade
     /**
      * @param string $name
      *
-     * @return SpyPriceType
+     * @return \Orm\Zed\Price\Persistence\SpyPriceType
      */
     public function createPriceType($name)
     {
@@ -47,7 +46,7 @@ class PriceFacade extends AbstractFacade
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @return mixed
      */
@@ -57,7 +56,7 @@ class PriceFacade extends AbstractFacade
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
      */
@@ -78,7 +77,7 @@ class PriceFacade extends AbstractFacade
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
      * @return void
      */

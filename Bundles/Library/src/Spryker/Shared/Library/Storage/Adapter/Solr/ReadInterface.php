@@ -20,7 +20,7 @@ interface ReadInterface
     public function createSelect();
 
     /**
-     * @param QueryInterface $query
+     * @param \Solarium\Core\Query\QueryInterface $query
      *
      * @return \Solarium\QueryType\Select\Result\Result
      */

@@ -13,11 +13,6 @@ use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 
 interface PaymentManagerInterface
 {
@@ -28,92 +23,92 @@ interface PaymentManagerInterface
     public function registerPaymentMethodMapper(PaymentMethodMapperInterface $paymentMethodMapper);
 
     /**
-     * @param PayoneRefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\PayoneRefundTransfer $refundTransfer
      *
-     * @return RefundResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer
      */
     public function refundPayment(PayoneRefundTransfer $refundTransfer);
 
     /**
      * @param int $idPayment
      *
-     * @return DebitResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer
      */
     public function debitPayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return AuthorizationResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function authorizePayment($idPayment);
 
     /**
      * @param $idPayment
      *
-     * @return AuthorizationResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function preAuthorizePayment($idPayment);
 
     /**
      * @param $idPayment
      *
-     * @return CaptureResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer
      */
     public function capturePayment($idPayment);
 
     /**
-     * @param PayoneCreditCardTransfer $creditCardData
+     * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $creditCardData
      *
-     * @return CreditCardCheckResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData);
 
     /**
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
      * @return array
      */
     public function getPaymentLogs(ObjectCollection $orders);
 
     /**
-     * @param PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer
+     * @param \Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer
      *
      * @return array
      */
     public function getCreditCardCheckRequestData(PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer);
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
     public function isRefundPossible(OrderTransfer $orderTransfer);
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
     public function isPaymentDataRequired(OrderTransfer $orderTransfer);
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
      * @param int $idPayment
      *
-     * @return PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
     public function getPaymentData($idPayment);
 
     /**
-     * @param PaymentDataTransfer $paymentDataTransfer
+     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentDataTransfer
      * @param int $idOrder
      *
      * @return void

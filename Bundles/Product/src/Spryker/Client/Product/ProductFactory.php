@@ -9,10 +9,6 @@ namespace Spryker\Client\Product;
 use Spryker\Client\Product\KeyBuilder\ProductResourceKeyBuilder;
 use Spryker\Client\Product\Storage\ProductStorage;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Product\Storage\ProductStorageInterface;
-use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use Spryker\Client\Locale\LocaleClient;
 
 class ProductFactory extends AbstractFactory
 {
@@ -20,7 +16,7 @@ class ProductFactory extends AbstractFactory
     /**
      * @param string $locale
      *
-     * @return ProductStorageInterface
+     * @return \Spryker\Client\Product\Storage\ProductStorageInterface
      */
     public function createProductStorage($locale)
     {
@@ -32,7 +28,7 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return StorageClientInterface
+     * @return \Spryker\Client\Storage\StorageClientInterface
      */
     protected function getStorage()
     {
@@ -40,7 +36,7 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return KeyBuilderInterface
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected function createKeyBuilder()
     {
@@ -48,7 +44,7 @@ class ProductFactory extends AbstractFactory
     }
 
     /**
-     * @return LocaleClient
+     * @return \Spryker\Client\Locale\LocaleClient
      */
     public function getLocaleClient()
     {

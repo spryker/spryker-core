@@ -17,7 +17,7 @@ class BeforeBootExtension implements BeforeBootExtensionInterface
 {
 
     /**
-     * @param Application $app
+     * @param \Spryker\Shared\Application\Communication\Application $app
      *
      * @return void
      */

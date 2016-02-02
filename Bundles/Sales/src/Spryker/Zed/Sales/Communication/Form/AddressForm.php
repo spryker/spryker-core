@@ -35,7 +35,7 @@ class AddressForm extends AbstractForm
     protected $addressQuery;
 
     /**
-     * @param SpySalesOrderAddressQuery $addressQuery
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery $addressQuery
      */
     public function __construct(SpySalesOrderAddressQuery $addressQuery)
     {

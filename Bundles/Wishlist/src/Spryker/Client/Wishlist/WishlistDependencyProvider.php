@@ -19,9 +19,9 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
     const CLIENT_CUSTOMER = 'client customer';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     public function provideServiceLayerDependencies(Container $container)
     {

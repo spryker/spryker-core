@@ -14,7 +14,6 @@ use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\CmsCommunicationFactory;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
-use Spryker\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -42,7 +41,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -53,7 +52,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -84,7 +83,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -124,7 +123,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @return UrlFacade
+     * @return \Spryker\Zed\Url\Business\UrlFacade
      */
     private function getUrlFacade()
     {
@@ -135,7 +134,7 @@ class PageController extends AbstractController
     /**
      * @param $data
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     private function createPageTransfer($data)
     {
@@ -147,10 +146,10 @@ class PageController extends AbstractController
 
     /**
      * @param int $idUrl
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param array $data
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     private function createUrlTransfer($idUrl, $pageTransfer, array $data)
     {

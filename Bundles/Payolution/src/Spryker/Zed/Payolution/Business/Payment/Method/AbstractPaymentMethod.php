@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Method;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Spryker\Shared\Library\Currency\CurrencyManager;
 use Spryker\Zed\Payolution\Business\Exception\GenderNotDefinedException;
@@ -32,7 +31,7 @@ abstract class AbstractPaymentMethod
     protected $config;
 
     /**
-     * @param PayolutionConfig $config
+     * @param \Spryker\Zed\Payolution\PayolutionConfig $config
      */
     public function __construct(PayolutionConfig $config)
     {
@@ -40,7 +39,7 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @return PayolutionConfig
+     * @return \Spryker\Zed\Payolution\PayolutionConfig
      */
     protected function getConfig()
     {
@@ -96,7 +95,7 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $paymentCode
      * @param string $uniqueId
      *
@@ -143,7 +142,7 @@ abstract class AbstractPaymentMethod
     /**
      * @param string $gender
      *
-     * @throws GenderNotDefinedException
+     * @throws \Spryker\Zed\Payolution\Business\Exception\GenderNotDefinedException
      *
      * @return string
      */
@@ -157,7 +156,7 @@ abstract class AbstractPaymentMethod
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return string
      */

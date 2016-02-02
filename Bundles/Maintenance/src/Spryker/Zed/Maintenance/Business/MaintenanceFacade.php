@@ -16,7 +16,7 @@ class MaintenanceFacade extends AbstractFacade
 {
 
     /**
-     * @return InstalledPackagesTransfer
+     * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     public function getInstalledPackages()
     {
@@ -24,7 +24,7 @@ class MaintenanceFacade extends AbstractFacade
     }
 
     /**
-     * @param InstalledPackagesTransfer $installedPackages
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $installedPackages
      *
      * @return void
      */

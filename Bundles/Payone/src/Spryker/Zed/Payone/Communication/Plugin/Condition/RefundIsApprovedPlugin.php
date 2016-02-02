@@ -20,7 +20,7 @@ class RefundIsApprovedPlugin extends AbstractPlugin
     const NAME = 'RefundIsApprovedPlugin';
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

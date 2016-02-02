@@ -22,7 +22,7 @@ class NavigationCacheBuilder
     private $navigationCache;
 
     /**
-     * @param NavigationCollectorInterface $navigationCollector
+     * @param \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface $navigationCollector
      * @param NavigationCacheInterface $navigationCache
      */
     public function __construct(NavigationCollectorInterface $navigationCollector, NavigationCacheInterface $navigationCache)

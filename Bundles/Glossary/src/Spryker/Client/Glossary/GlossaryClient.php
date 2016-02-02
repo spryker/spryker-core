@@ -6,7 +6,6 @@
 namespace Spryker\Client\Glossary;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Glossary\Storage\GlossaryStorageInterface;
 
 /**
  * @method GlossaryFactory getFactory()
@@ -29,7 +28,7 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
     /**
      * @param $localeName
      *
-     * @return GlossaryStorageInterface
+     * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
      */
     private function createTranslator($localeName)
     {

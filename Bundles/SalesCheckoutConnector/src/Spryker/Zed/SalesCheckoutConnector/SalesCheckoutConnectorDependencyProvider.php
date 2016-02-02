@@ -16,9 +16,9 @@ class SalesCheckoutConnectorDependencyProvider extends AbstractBundleDependencyP
     const FACADE_SALES = 'sales facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {

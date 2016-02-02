@@ -23,8 +23,8 @@ class Sellable implements SellableInterface
     protected $stockFacade;
 
     /**
-     * @param AvailabilityToOmsInterface $omsFacade
-     * @param AvailabilityToStockInterface $stockFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      */
     public function __construct(
         AvailabilityToOmsInterface $omsFacade,

@@ -43,7 +43,7 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return string|null
      */

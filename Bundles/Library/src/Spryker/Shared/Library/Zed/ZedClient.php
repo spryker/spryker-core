@@ -81,7 +81,7 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      * @param array $metaTransfers
      * @param null $timeoutInSeconds
      * @param bool $isBackgroundRequest
@@ -138,10 +138,10 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param Request $requestTransfer
+     * @param \Spryker\Shared\Library\Communication\Request $requestTransfer
      * @param int $timeoutInSeconds
      *
-     * @return EntityEnclosingRequest
+     * @return \Guzzle\Http\Message\EntityEnclosingRequest
      */
     protected function createGuzzleRequest($pathInfo, Request $requestTransfer, $timeoutInSeconds = null)
     {
@@ -179,12 +179,12 @@ class ZedClient
     }
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      * @param array $metaTransfers
      *
      * @throws \LogicException
      *
-     * @return Request
+     * @return \Spryker\Shared\Library\Communication\Request
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
@@ -213,11 +213,11 @@ class ZedClient
     }
 
     /**
-     * @param EntityEnclosingRequest $request
+     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
      *
      * @throws Exception\InvalidZedResponseException
      *
-     * @return Response
+     * @return \Guzzle\Http\Message\Response
      */
     protected function sendRequest(EntityEnclosingRequest $request)
     {
@@ -230,7 +230,7 @@ class ZedClient
     }
 
     /**
-     * @param Response $response
+     * @param \Guzzle\Http\Message\Response $response
      *
      * @throws Exception\InvalidZedResponseException
      *
@@ -251,7 +251,7 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param Request $requestTransfer
+     * @param \Spryker\Shared\Library\Communication\Request $requestTransfer
      * @param string $rawBody
      *
      * @return void
@@ -263,7 +263,7 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param Response $responseTransfer
+     * @param \Guzzle\Http\Message\Response $responseTransfer
      * @param string $rawBody
      *
      * @return void
@@ -276,7 +276,7 @@ class ZedClient
     /**
      * @param string $pathInfo
      * @param string $subType
-     * @param ObjectInterface $transfer
+     * @param \Spryker\Shared\Library\Communication\ObjectInterface $transfer
      * @param string $rawBody
      *
      * @return void
@@ -312,7 +312,7 @@ class ZedClient
     }
 
     /**
-     * @param EntityEnclosingRequest $request
+     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
      *
      * @return void
      */

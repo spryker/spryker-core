@@ -21,8 +21,8 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 {
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $discountableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return void
@@ -37,7 +37,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param CalculableInterface $discountableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return int
@@ -62,7 +62,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return int
      */
@@ -80,10 +80,10 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param CalculableInterface $discountableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
      * @param \ArrayObject|ItemTransfer[] $calculableItems
      *
-     * @return DiscountTotalsTransfer
+     * @return \Generated\Shared\Transfer\DiscountTotalsTransfer
      */
     protected function createDiscountTransfer(
         CalculableInterface $discountableContainer,
@@ -102,7 +102,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param CalculableInterface $discountableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
      * @param \ArrayObject|ItemTransfer[] $calculableItems
      *
      * @return array|DiscountTotalItemTransfer[]
@@ -164,7 +164,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param array|DiscountTotalItemTransfer[] $discountTotalItemCollection
      * @param int $quantity
      *
@@ -191,8 +191,8 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param DiscountTotalItemTransfer $discountTotalItemTransfer
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTotalItemTransfer $discountTotalItemTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return void
      */
@@ -209,7 +209,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @return DiscountTotalItemTransfer
+     * @return \Generated\Shared\Transfer\DiscountTotalItemTransfer
      */
     protected function getDiscountTotalItem()
     {
@@ -277,7 +277,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param CalculableInterface $discountableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
      *
      * @return int
      */

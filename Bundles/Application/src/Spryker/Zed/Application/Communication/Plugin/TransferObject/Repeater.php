@@ -43,8 +43,8 @@ class Repeater extends AbstractPlugin
     }
 
     /**
-     * @param RequestInterface $transferObject
-     * @param HttpRequest $httpRequest
+     * @param \Spryker\Shared\ZedRequest\Client\RequestInterface $transferObject
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return void
      */

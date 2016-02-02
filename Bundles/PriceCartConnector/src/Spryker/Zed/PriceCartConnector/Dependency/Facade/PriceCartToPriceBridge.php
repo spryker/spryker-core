@@ -16,7 +16,7 @@ class PriceCartToPriceBridge implements PriceCartToPriceInterface
     protected $priceFacade;
 
     /**
-     * @param PriceFacade $priceFacade
+     * @param \Spryker\Zed\Price\Business\PriceFacade $priceFacade
      */
     public function __construct($priceFacade)
     {

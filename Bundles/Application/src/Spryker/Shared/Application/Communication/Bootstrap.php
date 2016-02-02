@@ -98,7 +98,7 @@ class Bootstrap
     }
 
     /**
-     * @param BeforeBootExtensionInterface $beforeBootExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\BeforeBootExtensionInterface $beforeBootExtension
      *
      * @return self
      */
@@ -122,7 +122,7 @@ class Bootstrap
     }
 
     /**
-     * @param AfterBootExtensionInterface $afterBootExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\AfterBootExtensionInterface $afterBootExtension
      *
      * @return self
      */
@@ -146,7 +146,7 @@ class Bootstrap
     }
 
     /**
-     * @param TwigExtensionInterface $twigExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface $twigExtension
      *
      * @return self
      */
@@ -174,7 +174,7 @@ class Bootstrap
     }
 
     /**
-     * @param GlobalTemplateVariableExtensionInterface $globalTemplateVariableExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\GlobalTemplateVariableExtensionInterface $globalTemplateVariableExtension
      *
      * @return self
      */
@@ -217,7 +217,7 @@ class Bootstrap
     }
 
     /**
-     * @param ServiceProviderExtensionInterface $serviceProviderExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface $serviceProviderExtension
      *
      * @return self
      */
@@ -259,7 +259,7 @@ class Bootstrap
     }
 
     /**
-     * @param RouterExtensionInterface $routerExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\RouterExtensionInterface $routerExtension
      *
      * @return self
      */

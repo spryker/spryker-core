@@ -46,9 +46,9 @@ class MenuFormatter implements MenuFormatterInterface
     protected $urlBuilder;
 
     /**
-     * @param UrlUniqueValidatorInterface $urlUniqueValidator
-     * @param MenuLevelValidatorInterface $menuLevelValidator
-     * @param UrlBuilderInterface $urlBuilder
+     * @param \Spryker\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidatorInterface $urlUniqueValidator
+     * @param \Spryker\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidatorInterface $menuLevelValidator
+     * @param \Spryker\Zed\Application\Business\Model\Url\UrlBuilderInterface $urlBuilder
      */
     public function __construct(
         UrlUniqueValidatorInterface $urlUniqueValidator,

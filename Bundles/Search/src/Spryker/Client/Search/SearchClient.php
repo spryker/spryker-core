@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Search;
 
-use Elastica\Index;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -16,7 +15,7 @@ class SearchClient extends AbstractClient
 {
 
     /**
-     * @return Index
+     * @return \Elastica\Index
      */
     public function getIndexClient()
     {

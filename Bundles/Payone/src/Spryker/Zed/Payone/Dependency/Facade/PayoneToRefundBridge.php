@@ -18,7 +18,7 @@ class PayoneToRefundBridge implements PayoneToRefundInterface
     protected $refundFacade;
 
     /**
-     * @param RefundFacade $refundFacade
+     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
      */
     public function __construct($refundFacade)
     {
@@ -26,7 +26,7 @@ class PayoneToRefundBridge implements PayoneToRefundInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
      */

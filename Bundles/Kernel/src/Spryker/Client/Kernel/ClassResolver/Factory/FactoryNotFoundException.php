@@ -15,7 +15,7 @@ class FactoryNotFoundException extends \Exception
 {
 
     /**
-     * @param ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
     public function __construct(ClassInfo $callerClassInfo)
     {
@@ -23,7 +23,7 @@ class FactoryNotFoundException extends \Exception
     }
 
     /**
-     * @param ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      *
      * @return string
      */

@@ -21,7 +21,7 @@ interface HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      * @param array $metaTransfers
      * @param null $timeoutInSeconds
      * @param bool $isBackgroundRequest

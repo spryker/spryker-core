@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\Kernel\Dependency\Facade;
 
-use Generated\Shared\Transfer\FlashMessagesTransfer;
-
 interface KernelToMessengerInterface
 {
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages();
 

@@ -20,9 +20,9 @@ class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginIn
 {
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function expandItems(ChangeTransfer $change)
     {

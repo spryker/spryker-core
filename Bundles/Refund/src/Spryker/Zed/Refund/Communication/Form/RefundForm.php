@@ -44,9 +44,9 @@ class RefundForm extends AbstractForm
     protected $paymentDataPlugin;
 
     /**
-     * @param RefundFacade $refundFacade
-     * @param OrderTransfer $orderTransfer
-     * @param PaymentDataPluginInterface $paymentDataPlugin
+     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface $paymentDataPlugin
      */
     public function __construct(RefundFacade $refundFacade, OrderTransfer $orderTransfer, PaymentDataPluginInterface $paymentDataPlugin)
     {
@@ -72,7 +72,7 @@ class RefundForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

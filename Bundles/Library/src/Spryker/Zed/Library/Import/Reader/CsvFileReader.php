@@ -42,7 +42,7 @@ class CsvFileReader implements ReaderInterface
     /**
      * @param mixed $filepath
      *
-     * @return Input
+     * @return \Spryker\Zed\Library\Import\Input
      */
     public function read($filepath)
     {

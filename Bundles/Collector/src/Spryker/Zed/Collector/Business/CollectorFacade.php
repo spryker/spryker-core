@@ -20,7 +20,7 @@ class CollectorFacade extends AbstractFacade
 {
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param OutputInterface|null $output
      *
      * @return BatchResultInterface[]
@@ -33,7 +33,7 @@ class CollectorFacade extends AbstractFacade
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return BatchResult[]
      */
@@ -45,7 +45,7 @@ class CollectorFacade extends AbstractFacade
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return BatchResult[]
      */
@@ -57,7 +57,7 @@ class CollectorFacade extends AbstractFacade
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
      */

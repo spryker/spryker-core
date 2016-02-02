@@ -8,7 +8,6 @@ namespace Spryker\Zed\Product\Business\Importer\Writer;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Shared\Product\Model\ProductAbstractInterface;
 
 class ProductWriter implements ProductWriterInterface
 {
@@ -36,7 +35,7 @@ class ProductWriter implements ProductWriterInterface
     }
 
     /**
-     * @param ProductAbstractInterface $product
+     * @param \Spryker\Shared\Product\Model\ProductAbstractInterface $product
      *
      * @return bool
      */

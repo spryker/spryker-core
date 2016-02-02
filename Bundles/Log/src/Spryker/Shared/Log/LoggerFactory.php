@@ -20,7 +20,7 @@ class LoggerFactory
     protected static $loggers = [];
 
     /**
-     * @param LoggerConfigInterface $loggerConfig
+     * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
      *
      * @return LoggerInterface|null
      */
@@ -34,9 +34,9 @@ class LoggerFactory
     }
 
     /**
-     * @param LoggerConfigInterface $loggerConfig
+     * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
      *
-     * @return LoggerInterface
+     * @return \Psr\Log\LoggerInterface
      */
     protected static function createInstanceIfNotExists(LoggerConfigInterface $loggerConfig)
     {

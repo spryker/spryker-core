@@ -38,9 +38,9 @@ class CategoryTreeRenderer
     protected $graph;
 
     /**
-     * @param CategoryQueryContainer $queryContainer
-     * @param LocaleTransfer $locale
-     * @param GraphInterface $graph
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Tool\Graph\GraphInterface $graph
      */
     public function __construct(CategoryQueryContainer $queryContainer, LocaleTransfer $locale, GraphInterface $graph)
     {
@@ -65,7 +65,7 @@ class CategoryTreeRenderer
     }
 
     /**
-     * @param SpyCategoryNode $node
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
      *
      * @return void
      */
@@ -104,7 +104,7 @@ class CategoryTreeRenderer
     }
 
     /**
-     * @param SpyCategoryNode $node
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
      *
      * @return string
      */
@@ -114,7 +114,7 @@ class CategoryTreeRenderer
     }
 
     /**
-     * @param SpyCategoryNode $node
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
      *
      * @return string
      */
@@ -124,7 +124,7 @@ class CategoryTreeRenderer
     }
 
     /**
-     * @param SpyCategoryNode $node
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
      *
      * @return void
      */
@@ -139,7 +139,7 @@ class CategoryTreeRenderer
     }
 
     /**
-     * @param SpyCategory $categoryEntity
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      *
      * @return string
      */

@@ -8,7 +8,6 @@ namespace Spryker\Zed\User\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Orm\Zed\User\Persistence\SpyUserQuery;
 
 /**
  * @method UserPersistenceFactory getFactory()
@@ -19,7 +18,7 @@ class UserQueryContainer extends AbstractQueryContainer
     /**
      * @param string $username
      *
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUserByUsername($username)
     {
@@ -32,7 +31,7 @@ class UserQueryContainer extends AbstractQueryContainer
     /**
      * @param int $id
      *
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUserById($id)
     {
@@ -43,7 +42,7 @@ class UserQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUsers()
     {
@@ -54,7 +53,7 @@ class UserQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUser()
     {

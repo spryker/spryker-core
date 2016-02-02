@@ -31,13 +31,13 @@ class FacetSearch extends AbstractSearch
     protected $category;
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param FacetConfig $facetConfig
-     * @param Index $searchIndex
-     * @param FacetAggregationBuilderInterface $facetAggregation
+     * @param \Elastica\Index $searchIndex
+     * @param \Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface $facetAggregation
      * @param FacetFilterHandlerInterface $facetFilterHandler
-     * @param AggregationExtractorInterface $facetExtractor
-     * @param AggregationExtractorInterface $rangeExtractor
+     * @param \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface $facetExtractor
+     * @param \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface $rangeExtractor
      * @param CatalogInterface $catalogModel
      * @param array $category
      */
@@ -66,9 +66,9 @@ class FacetSearch extends AbstractSearch
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return Query
+     * @return \Elastica\Query
      */
     protected function createSearchQuery(Request $request)
     {
@@ -85,7 +85,7 @@ class FacetSearch extends AbstractSearch
     }
 
     /**
-     * @param Query $query
+     * @param \Elastica\Query $query
      *
      * @return void
      */

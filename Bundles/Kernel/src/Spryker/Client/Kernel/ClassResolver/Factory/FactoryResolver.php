@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Kernel\ClassResolver\Factory;
 
-use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Kernel\ClassResolver\AbstractClassResolver;
 
 class FactoryResolver extends AbstractClassResolver
@@ -19,7 +18,7 @@ class FactoryResolver extends AbstractClassResolver
      *
      * @throws FactoryNotFoundException
      *
-     * @return AbstractFactory
+     * @return \Spryker\Client\Kernel\AbstractFactory
      */
     public function resolve($callerClass)
     {

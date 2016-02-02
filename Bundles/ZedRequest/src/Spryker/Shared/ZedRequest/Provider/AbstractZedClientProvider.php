@@ -24,7 +24,7 @@ abstract class AbstractZedClientProvider extends AbstractClientProvider
     /**
      * @throws \Exception
      *
-     * @return AbstractZedClient
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClient
      */
     protected function createZedClient()
     {

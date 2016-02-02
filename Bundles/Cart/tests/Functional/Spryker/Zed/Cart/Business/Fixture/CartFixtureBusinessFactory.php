@@ -9,7 +9,7 @@ class CartFixtureBusinessFactory extends CartBusinessFactory
 {
 
     /**
-     * @return CartConfig
+     * @return \Spryker\Zed\Cart\CartConfig
      */
     public function getConfig()
     {

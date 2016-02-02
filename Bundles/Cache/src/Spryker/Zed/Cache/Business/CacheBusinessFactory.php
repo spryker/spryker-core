@@ -17,7 +17,7 @@ class CacheBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CacheDelete
+     * @return \Spryker\Zed\Cache\Business\Model\CacheDelete
      */
     public function createCacheDelete()
     {

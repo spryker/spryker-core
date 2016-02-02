@@ -35,7 +35,7 @@ class AbstractDiscountPlugin extends AbstractPlugin
     }
 
     /**
-     * @return CurrencyManager
+     * @return \Spryker\Shared\Library\Currency\CurrencyManager
      */
     protected function getCurrencyManager()
     {

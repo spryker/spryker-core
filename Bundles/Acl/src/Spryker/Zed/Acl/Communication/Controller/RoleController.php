@@ -44,7 +44,7 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -56,7 +56,7 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */
@@ -86,9 +86,9 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
@@ -116,9 +116,9 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function rulesetTableAction(Request $request)
     {
@@ -131,7 +131,7 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */
@@ -169,8 +169,8 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Form $rulesetForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\Form $rulesetForm
      * @param int $idRole
      *
      * @return void
@@ -191,8 +191,8 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Form $roleForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\Form $roleForm
      *
      * @return void
      */

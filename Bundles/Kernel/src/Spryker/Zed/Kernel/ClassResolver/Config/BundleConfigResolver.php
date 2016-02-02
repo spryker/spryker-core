@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\Config;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class BundleConfigResolver extends AbstractClassResolver
@@ -19,7 +18,7 @@ class BundleConfigResolver extends AbstractClassResolver
      *
      * @throws BundleConfigNotFoundException
      *
-     * @return AbstractBundleConfig
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     public function resolve($callerClass)
     {

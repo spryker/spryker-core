@@ -14,7 +14,7 @@ interface ProductSearchProcessorInterface
     /**
      * @param array $productsRaw
      * @param array $processedProducts
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */

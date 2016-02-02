@@ -12,8 +12,8 @@ interface DiscountOrderHydratorInterface
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $request);
 

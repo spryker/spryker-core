@@ -25,7 +25,7 @@ class Voucher
     protected $discountQueryContainer;
 
     /**
-     * @param DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
     public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {
@@ -35,7 +35,7 @@ class Voucher
     /**
      * @param string $code
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function isUsable($code)
     {
@@ -47,9 +47,9 @@ class Voucher
     }
 
     /**
-     * @param SpyDiscountVoucher $discountVoucherEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     protected function validateDiscountVoucher(SpyDiscountVoucher $discountVoucherEntity = null)
     {
@@ -80,7 +80,7 @@ class Voucher
     }
 
     /**
-     * @param SpyDiscountVoucher $discountVoucherEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
      *
      * @return bool
      */

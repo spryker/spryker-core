@@ -8,11 +8,8 @@ namespace Spryker\Zed\Console\Business\Model;
 
 use Psr\Log\LoggerInterface;
 use Silex\Application;
-use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Container;
@@ -75,7 +72,7 @@ class Console extends SymfonyCommand
     private $exitCode = 0;
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return self
      */
@@ -87,7 +84,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function getContainer()
     {
@@ -95,7 +92,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param AbstractCommunicationFactory $factory
+     * @param \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $factory
      *
      * @return self
      */
@@ -107,7 +104,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     protected function getFactory()
     {
@@ -127,9 +124,9 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private function resolveFactory()
     {
@@ -137,7 +134,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {
@@ -145,7 +142,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param AbstractFacade $facade
+     * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
      *
      * @return void
      */
@@ -155,7 +152,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacade()
     {
@@ -163,9 +160,9 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @throws FacadeNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
      *
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function resolveFacade()
     {
@@ -173,7 +170,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return FacadeResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver
      */
     private function getFacadeResolver()
     {
@@ -181,7 +178,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param AbstractQueryContainer $queryContainer
+     * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer
      *
      * @return self
      */
@@ -193,7 +190,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     protected function getQueryContainer()
     {
@@ -201,8 +198,8 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -267,7 +264,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @return MessengerInterface
+     * @return \Spryker\Zed\Messenger\Business\Model\MessengerInterface
      */
     protected function getMessenger()
     {

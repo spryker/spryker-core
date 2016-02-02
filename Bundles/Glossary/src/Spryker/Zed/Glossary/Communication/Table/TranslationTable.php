@@ -37,7 +37,7 @@ class TranslationTable extends AbstractTable
     protected $locales;
 
     /**
-     * @param SpyGlossaryTranslationQuery $glossaryQuery
+     * @param \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery $glossaryQuery
      */
     public function __construct(SpyGlossaryTranslationQuery $glossaryQuery, SpyGlossaryTranslationQuery $subGlossaryKey, array $locales)
     {

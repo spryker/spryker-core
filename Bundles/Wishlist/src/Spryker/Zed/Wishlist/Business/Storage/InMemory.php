@@ -25,8 +25,8 @@ class InMemory implements StorageInterface
     protected $wishlistTransfer;
 
     /**
-     * @param WishlistTransfer $wishlistTransfer
-     * @param ProductFacade $facadeProduct
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param \Spryker\Zed\Product\Business\ProductFacade $facadeProduct
      */
     public function __construct(WishlistTransfer $wishlistTransfer, ProductFacade $facadeProduct)
     {
@@ -35,9 +35,9 @@ class InMemory implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function addItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -58,9 +58,9 @@ class InMemory implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -77,9 +77,9 @@ class InMemory implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -87,9 +87,9 @@ class InMemory implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function decreaseItems(WishlistChangeTransfer $wishlistChange)
     {
@@ -98,7 +98,7 @@ class InMemory implements StorageInterface
 
     /**
      * @param array $wishlistIndex
-     * @param ItemTransfer $itemToChange
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemToChange
      *
      * @return void
      */
@@ -115,7 +115,7 @@ class InMemory implements StorageInterface
 
     /**
      * @param int $index
-     * @param ItemTransfer $itemToChange
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemToChange
      *
      * @return void
      */

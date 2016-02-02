@@ -60,7 +60,7 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param RulesTransfer $rules
+     * @param \Generated\Shared\Transfer\RulesTransfer $rules
      *
      * @return self
      */
@@ -82,7 +82,7 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param RuleTransfer $rule
+     * @param \Generated\Shared\Transfer\RuleTransfer $rule
      *
      * @return void
      */
@@ -100,7 +100,7 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param RuleTransfer $rule
+     * @param \Generated\Shared\Transfer\RuleTransfer $rule
      *
      * @return int
      */
@@ -110,7 +110,7 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param RuleTransfer $rule
+     * @param \Generated\Shared\Transfer\RuleTransfer $rule
      *
      * @return int
      */
@@ -136,7 +136,7 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @param RuleTransfer $rule
+     * @param \Generated\Shared\Transfer\RuleTransfer $rule
      * @param string $bundle
      * @param string $controller
      * @param string $action

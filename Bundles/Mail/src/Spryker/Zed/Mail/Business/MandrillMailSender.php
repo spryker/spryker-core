@@ -42,9 +42,9 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return SendMailResponsesTransfer
+     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
@@ -66,7 +66,7 @@ class MandrillMailSender implements MailSenderInterface
     /**
      * @param array $responses
      *
-     * @return SendMailResponsesTransfer
+     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
     protected function convertResponsesToTransfer($responses)
     {
@@ -89,7 +89,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param SendMailResponsesTransfer $responses
+     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $responses
      *
      * @return bool
      */
@@ -123,7 +123,7 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return array
      */

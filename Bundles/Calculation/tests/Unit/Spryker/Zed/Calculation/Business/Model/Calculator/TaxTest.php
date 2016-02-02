@@ -240,7 +240,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return TaxTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator
      */
     private function getCalculator()
     {
@@ -248,7 +248,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return CalculableContainer
+     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
      */
     private function getOrderTransfer()
     {
@@ -258,7 +258,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     private function getItemTransfer()
     {
@@ -268,7 +268,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     private function getExpenseTransfer()
     {
@@ -278,7 +278,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProductOptionTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     private function getProductOptionTransfer()
     {
@@ -288,7 +288,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     private function getTotalsTransfer()
     {

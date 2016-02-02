@@ -84,7 +84,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderItem
+     * @return \Spryker\Zed\Sales\Business\Model\Split\OrderItem
      */
     protected function createOrderItemSplitter(OrderItemSpy $orderItem, $quantityForOld)
     {
@@ -253,7 +253,7 @@ trait SpyTrait
     /**
      * @param bool|false $deepCopy
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function copy($deepCopy = false)
     {
@@ -263,7 +263,7 @@ trait SpyTrait
     }
 
     /**
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function getCreatedCopy()
     {

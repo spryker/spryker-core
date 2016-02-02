@@ -9,7 +9,6 @@ namespace Spryker\Zed\Country\Business;
 use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use Spryker\Zed\Country\Business\Internal\Install;
 use Spryker\Zed\Country\CountryConfig;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;
@@ -22,9 +21,9 @@ class CountryBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
-     * @return Install
+     * @return \Spryker\Zed\Country\Business\Internal\Install
      */
     public function createInstaller(MessengerInterface $messenger)
     {
@@ -71,7 +70,7 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string $filePath
      *
-     * @return CldrDataProviderInterface
+     * @return \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface
      */
     protected function createCldrDataProvider($filePath)
     {

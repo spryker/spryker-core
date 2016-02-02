@@ -29,8 +29,8 @@ class RequireUpdater implements UpdaterInterface
     private $treeFilter;
 
     /**
-     * @param DependencyTreeReaderInterface $dependencyTreeReader
-     * @param TreeFilterInterface $treeFilter
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface $dependencyTreeReader
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilterInterface $treeFilter
      */
     public function __construct(DependencyTreeReaderInterface $dependencyTreeReader, TreeFilterInterface $treeFilter)
     {

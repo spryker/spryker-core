@@ -8,15 +8,13 @@ namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
-use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
 
 interface CategoryTreeReaderInterface
 {
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return SpyCategoryNode[]
      */
@@ -24,7 +22,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
      *
      * @return array
@@ -40,7 +38,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
@@ -67,7 +65,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
@@ -77,7 +75,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
@@ -89,7 +87,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -97,9 +95,9 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws MissingCategoryNodeException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
      *
      * @return int
      */
@@ -107,9 +105,9 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws MissingCategoryException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      *
      * @return int
      */
@@ -118,7 +116,7 @@ interface CategoryTreeReaderInterface
     /**
      * @param int $idNode
      *
-     * @return SpyCategoryNode
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
      */
     public function getNodeById($idNode);
 
@@ -158,7 +156,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
@@ -166,7 +164,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -174,7 +172,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */

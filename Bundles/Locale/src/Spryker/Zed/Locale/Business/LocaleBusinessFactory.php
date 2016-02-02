@@ -21,7 +21,7 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return LocaleManager
+     * @return \Spryker\Zed\Locale\Business\Manager\LocaleManager
      */
     public function createLocaleManager()
     {
@@ -40,9 +40,9 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
-     * @return LocaleInstaller
+     * @return \Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller
      */
     public function createInstaller(MessengerInterface $messenger)
     {

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Collector\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 
 class CollectorToLocaleBridge implements CollectorToLocaleInterface
@@ -18,7 +17,7 @@ class CollectorToLocaleBridge implements CollectorToLocaleInterface
     protected $localeFacade;
 
     /**
-     * @param LocaleFacade $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {
@@ -26,7 +25,7 @@ class CollectorToLocaleBridge implements CollectorToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {

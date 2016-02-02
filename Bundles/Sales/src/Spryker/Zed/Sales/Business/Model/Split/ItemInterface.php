@@ -5,8 +5,6 @@
  */
 namespace Spryker\Zed\Sales\Business\Model\Split;
 
-use Generated\Shared\Transfer\ItemSplitResponseTransfer;
-
 interface ItemInterface
 {
 
@@ -16,7 +14,7 @@ interface ItemInterface
      *
      * @throws \Exception
      *
-     * @return ItemSplitResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
     public function split($idSalesOrderItem, $quantityToSplit);
 

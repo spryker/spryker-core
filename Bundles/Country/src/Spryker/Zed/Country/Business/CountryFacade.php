@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Country\Business;
 
-use Generated\Shared\Transfer\CountryCollectionTransfer;
-use Generated\Shared\Transfer\CountryTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 
@@ -18,7 +16,7 @@ class CountryFacade extends AbstractFacade
 {
 
     /**
-     * @param LoggerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
@@ -48,7 +46,7 @@ class CountryFacade extends AbstractFacade
     }
 
     /**
-     * @return CountryCollectionTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getAvailableCountries()
     {
@@ -64,7 +62,7 @@ class CountryFacade extends AbstractFacade
      *
      * @deprecated Use getPreferredCountryByName()
      *
-     * @return CountryTransfer
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferedCountryByName($countryName)
     {
@@ -76,7 +74,7 @@ class CountryFacade extends AbstractFacade
     /**
      * @param string $countryName
      *
-     * @return CountryTransfer
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferredCountryByName($countryName)
     {

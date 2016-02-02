@@ -57,9 +57,9 @@ class CmsPageForm extends AbstractForm
     protected $pageUrl;
 
     /**
-     * @param SpyCmsTemplateQuery $templateQuery
-     * @param SpyCmsPageQuery $pageUrlByIdQuery
-     * @param CmsToUrlInterface $urlFacade
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery $templateQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageQuery $pageUrlByIdQuery
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
      * @param string $formType
      * @param int $idPage
      */
@@ -89,7 +89,7 @@ class CmsPageForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

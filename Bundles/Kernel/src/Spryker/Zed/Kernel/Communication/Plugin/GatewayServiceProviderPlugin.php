@@ -28,7 +28,7 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
     protected $controllerListener;
 
     /**
-     * @param GatewayControllerListenerInterface $controllerListener
+     * @param \Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface $controllerListener
      *
      * @return void
      */
@@ -38,7 +38,7 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

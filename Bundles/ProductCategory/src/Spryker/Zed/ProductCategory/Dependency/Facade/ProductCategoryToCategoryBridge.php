@@ -21,7 +21,7 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     /**
      * ProductCategoryToCategoryBridge constructor.
      *
-     * @param CategoryFacade $categoryFacade
+     * @param \Spryker\Zed\Category\Business\CategoryFacade $categoryFacade
      */
     public function __construct($categoryFacade)
     {
@@ -30,7 +30,7 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -41,7 +41,7 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return int
      */
@@ -52,7 +52,7 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return int
      */
@@ -64,7 +64,7 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     /**
      * @param int $idCategoryNode
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     public function getNodeById($idCategoryNode)
     {
@@ -72,8 +72,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return int
      */
@@ -83,8 +83,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $createUrlPath
      *
      * @return int
@@ -95,8 +95,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -107,7 +107,7 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $deleteChildren
      *
      * @return int
@@ -128,8 +128,8 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */

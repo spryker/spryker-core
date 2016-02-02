@@ -36,7 +36,7 @@ class ClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param DefinitionInterface $definition
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface $definition
      *
      * @return string
      */

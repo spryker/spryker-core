@@ -30,9 +30,9 @@ class ExportMarker implements MarkerInterface
     private $keyBuilder;
 
     /**
-     * @param WriterInterface $writer
-     * @param ReaderInterface $reader
-     * @param KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
+     * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $reader
+     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      */
     public function __construct(
         WriterInterface $writer,
@@ -46,7 +46,7 @@ class ExportMarker implements MarkerInterface
 
     /**
      * @param string $exportType
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \DateTime
      */
@@ -65,7 +65,7 @@ class ExportMarker implements MarkerInterface
 
     /**
      * @param string $exportType
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $timestamp
      *
      * @return void

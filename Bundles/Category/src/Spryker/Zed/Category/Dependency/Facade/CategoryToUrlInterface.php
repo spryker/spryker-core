@@ -8,23 +8,20 @@ namespace Spryker\Zed\Category\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Category\Business\Exception\MissingUrlException;
-use Spryker\Zed\Category\Business\Exception\UrlExistsException;
 
 interface CategoryToUrlInterface
 {
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Category\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $resourceId);
 
@@ -39,9 +36,9 @@ interface CategoryToUrlInterface
     public function touchUrlDeleted($idUrl);
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveUrlAndTouch(UrlTransfer $urlTransfer);
 
@@ -55,25 +52,25 @@ interface CategoryToUrlInterface
     /**
      * @param string $urlString
      *
-     * @throws MissingUrlException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingUrlException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlByPath($urlString);
 
     /**
      * @param int $idCategoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @throws MissingUrlException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingUrlException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

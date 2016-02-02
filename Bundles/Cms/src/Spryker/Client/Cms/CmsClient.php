@@ -13,7 +13,7 @@ class CmsClient extends AbstractClient implements CmsClientInterface
 {
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return array
      */

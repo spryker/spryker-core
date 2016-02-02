@@ -42,7 +42,7 @@ class CsvReader implements IteratorReaderInterface
     /**
      * @param \SplFileInfo $file
      *
-     * @throws FileNotFoundException
+     * @throws \Symfony\Component\Filesystem\Exception\FileNotFoundException
      *
      * @return \Iterator
      */
@@ -68,9 +68,9 @@ class CsvReader implements IteratorReaderInterface
     /**
      * @param \SplFileInfo $file
      *
-     * @throws FileNotFoundException
+     * @throws \Symfony\Component\Filesystem\Exception\FileNotFoundException
      *
-     * @return Reader
+     * @return \League\Csv\Reader
      */
     protected function getFileReader(\SplFileInfo $file)
     {

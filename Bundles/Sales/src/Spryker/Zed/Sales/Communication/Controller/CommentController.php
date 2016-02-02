@@ -21,9 +21,9 @@ class CommentController extends AbstractController
     /**
      * @TODO check if we can remove this method
      *
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function addAction(Request $request)
     {

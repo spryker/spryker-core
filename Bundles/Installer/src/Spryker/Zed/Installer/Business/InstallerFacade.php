@@ -8,7 +8,6 @@ namespace Spryker\Zed\Installer\Business;
 
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
 
 /**
  * @method InstallerBusinessFactory getFactory()
@@ -33,7 +32,7 @@ class InstallerFacade extends AbstractFacade
     }
 
     /**
-     * @return GlossaryInstaller
+     * @return \Spryker\Zed\Installer\Business\Model\GlossaryInstaller
      */
     public function getGlossaryInstaller()
     {

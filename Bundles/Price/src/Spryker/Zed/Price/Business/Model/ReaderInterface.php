@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Price\Business\Model;
 
-use Orm\Zed\Price\Persistence\SpyPriceType;
-
 interface ReaderInterface
 {
 
@@ -27,7 +25,7 @@ interface ReaderInterface
     /**
      * @param string $priceTypeNameName
      *
-     * @return SpyPriceType
+     * @return \Orm\Zed\Price\Persistence\SpyPriceType
      */
     public function getPriceTypeByName($priceTypeNameName);
 

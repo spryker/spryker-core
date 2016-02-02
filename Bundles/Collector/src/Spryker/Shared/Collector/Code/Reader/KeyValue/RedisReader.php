@@ -21,7 +21,7 @@ class RedisReader implements ReaderInterface
     /**
      * Constructor
      *
-     * @param ReadWriteInterface $kvAdapter
+     * @param \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface $kvAdapter
      */
     public function __construct(ReadWriteInterface $kvAdapter)
     {

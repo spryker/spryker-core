@@ -20,7 +20,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @param int $idTaxRate
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function getAbstractAbstractIdsForTaxRate($idTaxRate)
     {
@@ -42,7 +42,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @param int $idTaxSet
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function getProductAbstractIdsForTaxSet($idTaxSet)
     {

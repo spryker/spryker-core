@@ -10,7 +10,6 @@ use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountT
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator;
 use Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface;
 use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
 use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorConfig;
 
@@ -21,7 +20,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
 {
 
     /**
-     * @return DiscountTotalsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator
      */
     public function createDiscountTotalsCalculator()
     {
@@ -29,7 +28,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return GrandTotalWithDiscountsTotalsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator
      */
     public function createGrandTotalWithDiscountsTotalsCalculator()
     {
@@ -43,7 +42,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return RemoveAllCalculatedDiscountsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator
      */
     public function createRemoveAllCalculatedDiscountsCalculator()
     {
@@ -51,7 +50,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return DiscountCalculationToCalculationInterface
+     * @return \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface
      */
     public function getCalculationFacade()
     {

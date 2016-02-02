@@ -18,7 +18,7 @@ class GlossaryToTouchBridge implements GlossaryToTouchInterface
     /**
      * GlossaryToTouchBridge constructor.
      *
-     * @param TouchFacade $touchFacade
+     * @param \Spryker\Zed\Touch\Business\TouchFacade $touchFacade
      */
     public function __construct($touchFacade)
     {

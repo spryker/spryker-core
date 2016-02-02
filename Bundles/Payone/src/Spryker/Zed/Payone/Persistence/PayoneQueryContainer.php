@@ -7,10 +7,8 @@
 namespace Spryker\Zed\Payone\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItemQuery;
@@ -26,7 +24,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $transactionId
      *
-     * @return SpyPaymentPayoneTransactionStatusLogQuery
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
      */
     public function getCurrentSequenceNumberQuery($transactionId)
     {
@@ -42,7 +40,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $transactionId
      *
-     * @return SpyPaymentPayoneQuery
+     * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
      */
     public function getPaymentByTransactionIdQuery($transactionId)
     {
@@ -58,7 +56,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      * @param int $fkPayment
      * @param string $requestName
      *
-     * @return SpyPaymentPayoneApiLogQuery
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */
     public function getApiLogByPaymentAndRequestTypeQuery($fkPayment, $requestName)
     {
@@ -74,7 +72,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $orderId
      *
-     * @return SpyPaymentPayoneQuery
+     * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
      */
     public function getPaymentByOrderId($orderId)
     {
@@ -90,7 +88,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      * @param int $orderId
      * @param string $request
      *
-     * @return SpyPaymentPayoneApiLog
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog
      */
     public function getApiLogsByOrderIdAndRequest($orderId, $request)
     {
@@ -110,7 +108,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $paymentId
      *
-     * @return SpyPaymentPayoneQuery
+     * @return \Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery
      */
     public function getPaymentById($paymentId)
     {
@@ -160,7 +158,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @param int $idSalesOrder
      *
-     * @return SpyPaymentPayoneApiLogQuery
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */
     public function getLastApiLogsByOrderId($idSalesOrder)
     {
@@ -177,9 +175,9 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
-     * @return SpyPaymentPayoneApiLogQuery
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */
     public function getApiLogsByOrderIds($orders)
     {
@@ -201,9 +199,9 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
-     * @return SpyPaymentPayoneTransactionStatusLogQuery
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery
      */
     public function getTransactionStatusLogsByOrderIds($orders)
     {

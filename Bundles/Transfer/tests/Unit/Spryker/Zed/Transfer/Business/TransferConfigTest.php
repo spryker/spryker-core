@@ -13,7 +13,7 @@ class TransferConfigTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return TransferConfig
+     * @return \Spryker\Zed\Transfer\TransferConfig
      */
     private function getConfig()
     {

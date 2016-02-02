@@ -22,10 +22,10 @@ class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionI
 {
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function checkCondition(
         CheckoutRequestTransfer $checkoutRequestTransfer,
@@ -44,8 +44,8 @@ class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionI
     }
 
     /**
-     * @param PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */

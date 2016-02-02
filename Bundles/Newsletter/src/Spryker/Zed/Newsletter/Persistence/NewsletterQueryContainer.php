@@ -18,7 +18,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
      * @param string $email
      * @param string $newsletterTypeName
      *
-     * @return SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionByEmailAndNewsletterTypeName($email, $newsletterTypeName)
     {
@@ -39,7 +39,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
      * @param string $subscriberKey
      * @param string $newsletterTypeName
      *
-     * @return SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionBySubscriberKeyAndNewsletterTypeName($subscriberKey, $newsletterTypeName)
     {
@@ -60,7 +60,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
      * @param int $idCustomer
      * @param string $newsletterTypeName
      *
-     * @return SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
      */
     public function querySubscriptionByIdCustomerAndNewsletterTypeName($idCustomer, $newsletterTypeName)
     {
@@ -78,7 +78,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyNewsletterSubscriberQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
      */
     public function querySubscriber()
     {
@@ -86,7 +86,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyNewsletterSubscriptionQuery
+     * @return \Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery
      */
     public function querySubscription()
     {
@@ -94,7 +94,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyNewsletterTypeQuery
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterTypeQuery
      */
     public function queryNewsletterType()
     {

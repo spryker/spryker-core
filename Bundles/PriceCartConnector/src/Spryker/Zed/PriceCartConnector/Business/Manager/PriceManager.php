@@ -26,7 +26,7 @@ class PriceManager implements PriceManagerInterface
     private $grossPriceType;
 
     /**
-     * @param PriceCartToPriceInterface $priceFacade
+     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param null $grossPriceType
      */
     public function __construct(PriceCartToPriceInterface $priceFacade, $grossPriceType = null)
@@ -36,9 +36,9 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @throws PriceMissingException
+     * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
      * @return ItemTransfer[]
      */

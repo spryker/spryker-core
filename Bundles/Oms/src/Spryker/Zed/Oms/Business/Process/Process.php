@@ -45,7 +45,7 @@ class Process implements ProcessInterface
     protected $subProcesses = [];
 
     /**
-     * @param DrawerInterface $drawer
+     * @param \Spryker\Zed\Oms\Business\Util\DrawerInterface $drawer
      */
     public function __construct(DrawerInterface $drawer)
     {

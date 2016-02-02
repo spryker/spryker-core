@@ -8,7 +8,6 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade;
 
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 
 class ShipmentCheckoutConnectorToShipmentBridge implements ShipmentCheckoutConnectorToShipmentInterface
 {
@@ -19,7 +18,7 @@ class ShipmentCheckoutConnectorToShipmentBridge implements ShipmentCheckoutConne
     protected $shipmentFacade;
 
     /**
-     * @param ShipmentFacade $shipmentFacade
+     * @param \Spryker\Zed\Shipment\Business\ShipmentFacade $shipmentFacade
      */
     public function __construct($shipmentFacade)
     {
@@ -27,9 +26,9 @@ class ShipmentCheckoutConnectorToShipmentBridge implements ShipmentCheckoutConne
     }
 
     /**
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransferTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransferTransfer
      *
-     * @return ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransferTransfer)
     {

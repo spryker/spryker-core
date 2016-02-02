@@ -142,7 +142,7 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @param RedirectContainer $redirect
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
      *
      * @return void
      */
@@ -152,7 +152,7 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @return RedirectContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     public function getRedirect()
     {

@@ -34,7 +34,7 @@ class TouchUpdater implements TouchUpdaterInterface
 
     /**
      * @param int $idTouch
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return SpyTouchStorage
      */

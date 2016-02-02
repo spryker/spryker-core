@@ -7,9 +7,7 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Spryker\Zed\Url\Business\UrlFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
 
 class CmsToUrlBridge implements CmsToUrlInterface
 {
@@ -20,7 +18,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
     protected $urlFacade;
 
     /**
-     * @param UrlFacade $urlFacade
+     * @param \Spryker\Zed\Url\Business\UrlFacade $urlFacade
      */
     public function __construct($urlFacade)
     {
@@ -32,10 +30,10 @@ class CmsToUrlBridge implements CmsToUrlInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrlForCurrentLocale($url, $resourceType, $idResource)
     {
@@ -44,14 +42,14 @@ class CmsToUrlBridge implements CmsToUrlInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
     {
@@ -82,7 +80,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      * @param string $toUrl
      * @param int $status
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function createRedirectAndTouch($toUrl, $status = 303)
     {
@@ -91,10 +89,10 @@ class CmsToUrlBridge implements CmsToUrlInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect)
     {
@@ -102,9 +100,9 @@ class CmsToUrlBridge implements CmsToUrlInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveUrlAndTouch(UrlTransfer $urlTransfer)
     {

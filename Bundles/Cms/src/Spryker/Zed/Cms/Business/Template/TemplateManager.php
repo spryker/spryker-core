@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Cms\Business\Template;
 
 use Generated\Shared\Transfer\CmsTemplateTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
 use Spryker\Zed\Cms\CmsConfig;
@@ -35,9 +34,9 @@ class TemplateManager implements TemplateManagerInterface
     protected $finder;
 
     /**
-     * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param CmsConfig $config
-     * @param Finder $finder
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\CmsConfig $config
+     * @param \Symfony\Component\Finder\Finder $finder
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
@@ -53,9 +52,9 @@ class TemplateManager implements TemplateManagerInterface
      * @param string $name
      * @param string $path
      *
-     * @throws TemplateExistsException
+     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateExistsException
      *
-     * @return CmsTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     public function createTemplate($name, $path)
     {
@@ -73,7 +72,7 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param string $path
      *
-     * @throws TemplateExistsException
+     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateExistsException
      *
      * @return void
      */
@@ -114,9 +113,9 @@ class TemplateManager implements TemplateManagerInterface
     }
 
     /**
-     * @param SpyCmsTemplate $template
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsTemplate $template
      *
-     * @return CmsTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     protected function convertTemplateEntityToTransfer(SpyCmsTemplate $template)
     {
@@ -127,9 +126,9 @@ class TemplateManager implements TemplateManagerInterface
     }
 
     /**
-     * @param CmsTemplateTransfer $cmsTemplate
+     * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplate
      *
-     * @return CmsTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     public function saveTemplate(CmsTemplateTransfer $cmsTemplate)
     {
@@ -141,9 +140,9 @@ class TemplateManager implements TemplateManagerInterface
     }
 
     /**
-     * @param CmsTemplateTransfer $cmsTemplate
+     * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplate
      *
-     * @return CmsTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     protected function createTemplateFromTransfer(CmsTemplateTransfer $cmsTemplate)
     {
@@ -159,14 +158,14 @@ class TemplateManager implements TemplateManagerInterface
     }
 
     /**
-     * @param CmsTemplateTransfer $cmsTemplate
+     * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplate
      *
-     * @throws MissingTemplateException
-     * @throws TemplateExistsException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
+     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateExistsException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return CmsTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     protected function updateTemplateFromTransfer(CmsTemplateTransfer $cmsTemplate)
     {
@@ -189,9 +188,9 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param int $idTemplate
      *
-     * @throws MissingTemplateException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      *
-     * @return CmsTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     public function getTemplateById($idTemplate)
     {
@@ -203,9 +202,9 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param string $path
      *
-     * @throws MissingTemplateException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      *
-     * @return CmsTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     public function getTemplateByPath($path)
     {
@@ -225,9 +224,9 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @param int $idTemplate
      *
-     * @throws MissingTemplateException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      *
-     * @return SpyCmsTemplate
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplate
      */
     protected function getTemplateEntityById($idTemplate)
     {

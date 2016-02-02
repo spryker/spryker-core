@@ -19,7 +19,7 @@ class CustomerPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function createSpyCustomerQuery()
     {
@@ -27,7 +27,7 @@ class CustomerPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return SpyCustomerAddressQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
     public function createSpyCustomerAddressQuery()
     {

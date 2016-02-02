@@ -17,7 +17,7 @@ class ApplicationFacade extends AbstractFacade
 {
 
     /**
-     * @param LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface $logger
      *
      * @return AbstractApplicationCheckStep[]
      */
@@ -27,7 +27,7 @@ class ApplicationFacade extends AbstractFacade
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
      */
@@ -37,7 +37,7 @@ class ApplicationFacade extends AbstractFacade
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
      */
@@ -47,7 +47,7 @@ class ApplicationFacade extends AbstractFacade
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
      */
@@ -57,7 +57,7 @@ class ApplicationFacade extends AbstractFacade
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
      */
@@ -67,7 +67,7 @@ class ApplicationFacade extends AbstractFacade
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
      */
@@ -77,7 +77,7 @@ class ApplicationFacade extends AbstractFacade
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
      */
@@ -87,7 +87,7 @@ class ApplicationFacade extends AbstractFacade
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param \Psr\Log\LoggerInterface $logger
      *
      * @return void
      */

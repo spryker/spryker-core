@@ -38,7 +38,7 @@ class CreditCardCheck extends AbstractCall
     }
 
     /**
-     * @return CreditCardCheckContainer
+     * @return \Spryker\Client\Payone\ClientApi\Request\CreditCardCheck
      */
     public function mapCreditCardCheckData()
     {

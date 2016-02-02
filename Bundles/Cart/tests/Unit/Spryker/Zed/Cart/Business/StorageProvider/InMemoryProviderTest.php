@@ -265,7 +265,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
      * @param string $itemId
      * @param int $itemQuantity
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     protected function createCartWithItem($itemId, $itemQuantity)
     {

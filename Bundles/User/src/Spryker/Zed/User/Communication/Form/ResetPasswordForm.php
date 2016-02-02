@@ -24,7 +24,7 @@ class ResetPasswordForm extends AbstractForm
     /**
      * ResetPasswordForm constructor.
      *
-     * @param UserFacade $userFacade
+     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      */
     public function __construct(UserFacade $userFacade)
     {
@@ -32,7 +32,7 @@ class ResetPasswordForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

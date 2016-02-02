@@ -20,7 +20,7 @@ class NopaymentConditionPlugin extends AbstractPlugin implements ConditionInterf
 {
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool
      */

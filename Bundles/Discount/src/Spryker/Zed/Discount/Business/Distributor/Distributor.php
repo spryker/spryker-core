@@ -19,7 +19,7 @@ class Distributor implements DistributorInterface
 
     /**
      * @param DiscountableInterface[] $discountableObjects
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return void
      */
@@ -73,7 +73,7 @@ class Distributor implements DistributorInterface
     }
 
     /**
-     * @param DiscountableInterface $discountableItemTransfer
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface $discountableItemTransfer
      *
      * @return int
      */

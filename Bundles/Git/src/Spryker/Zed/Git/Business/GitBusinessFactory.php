@@ -30,7 +30,7 @@ class GitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GitFlowUpdateConsole
+     * @return \Spryker\Zed\Git\Communication\Console\GitFlowUpdateConsole
      */
     protected function createGitFlowUpdateConsole()
     {
@@ -38,7 +38,7 @@ class GitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GitFlowUpdateConsole
+     * @return \Spryker\Zed\Git\Communication\Console\GitFlowUpdateConsole
      */
     protected function createGitFlowFinishConsole()
     {

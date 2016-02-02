@@ -10,7 +10,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Spryker\Zed\Gui\Communication\Form\AbstractForm;
@@ -51,8 +50,8 @@ class TranslationForm extends AbstractForm
     protected $type;
 
     /**
-     * @param SpyGlossaryTranslationQuery $glossaryTranslationQuery
-     * @param SpyGlossaryKeyQuery $glossaryKeyQuery
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $glossaryTranslationQuery
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery $glossaryKeyQuery
      * @param array $locales
      * @param string $type
      */
@@ -81,7 +80,7 @@ class TranslationForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void
@@ -189,7 +188,7 @@ class TranslationForm extends AbstractForm
     /**
      * @param int $fkGlossaryKey
      *
-     * @return SpyGlossaryKey
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
      */
     protected function getGlossaryKey($fkGlossaryKey)
     {

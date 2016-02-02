@@ -24,9 +24,9 @@ class TransactionController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return StreamedResponse
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function statusUpdateAction(Request $request)
     {
@@ -78,7 +78,7 @@ class TransactionController extends AbstractController
     }
 
     /**
-     * @param TransactionStatusResponse $response
+     * @param \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse $response
      * @param int $transactionId
      * @param array $dataArray
      *

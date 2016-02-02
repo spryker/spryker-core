@@ -30,8 +30,8 @@ class ExportProcessor implements ExportProcessorInterface
     protected $productFacade;
 
     /**
-     * @param ProductOptionExporterToProductOptionInterface $productOptionFacade
-     * @param ProductOptionExporterToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductOptionInterface $productOptionFacade
+     * @param \Spryker\Zed\ProductOptionExporter\Dependency\Facade\ProductOptionExporterToProductInterface $productFacade
      */
     public function __construct(
         ProductOptionExporterToProductOptionInterface $productOptionFacade,
@@ -44,7 +44,7 @@ class ExportProcessor implements ExportProcessorInterface
     /**
      * @param array $resultSet
      * @param array $processedResultSet
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */

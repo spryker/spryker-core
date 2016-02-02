@@ -18,7 +18,7 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
     protected $discountFacade;
 
     /**
-     * @param DiscountFacade $discountFacade
+     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      */
     public function __construct($discountFacade)
     {
@@ -26,7 +26,7 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
     }
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return SpyDiscount[]
      */

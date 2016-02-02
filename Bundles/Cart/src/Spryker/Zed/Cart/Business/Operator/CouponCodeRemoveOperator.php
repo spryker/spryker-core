@@ -14,10 +14,10 @@ class CouponCodeRemoveOperator extends AbstractOperator
 {
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     protected function changeCart(CartTransfer $cart, ChangeTransfer $change)
     {

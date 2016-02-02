@@ -14,7 +14,7 @@ class Console extends AbstractWriter
     const TYPE = 'console';
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return bool
      */

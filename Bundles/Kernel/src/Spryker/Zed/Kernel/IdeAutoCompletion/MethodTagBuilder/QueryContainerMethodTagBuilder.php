@@ -16,7 +16,7 @@ class QueryContainerMethodTagBuilder extends AbstractSingleFileMethodTagBuilder
     const FILE_NAME_SUFFIX = 'QueryContainer.php';
 
     /**
-     * @param OptionsResolver $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */

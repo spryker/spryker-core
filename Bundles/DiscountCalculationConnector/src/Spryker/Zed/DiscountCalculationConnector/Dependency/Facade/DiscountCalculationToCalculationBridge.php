@@ -18,7 +18,7 @@ class DiscountCalculationToCalculationBridge implements DiscountCalculationToCal
     protected $calculationFacade;
 
     /**
-     * @param CalculationFacade $calculationFacade
+     * @param \Spryker\Zed\Calculation\Business\CalculationFacade $calculationFacade
      */
     public function __construct($calculationFacade)
     {
@@ -26,8 +26,8 @@ class DiscountCalculationToCalculationBridge implements DiscountCalculationToCal
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param $calculableItems
      *
      * @return void

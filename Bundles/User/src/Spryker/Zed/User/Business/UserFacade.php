@@ -8,7 +8,6 @@ namespace Spryker\Zed\User\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\UserTransfer;
-use Generated\Shared\Transfer\CollectionTransfer;
 
 /**
  * @method UserBusinessFactory getFactory()
@@ -41,7 +40,7 @@ class UserFacade extends AbstractFacade
     /**
      * @param string $username
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username)
     {
@@ -53,7 +52,7 @@ class UserFacade extends AbstractFacade
     /**
      * @param int $idUser
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserById($idUser)
     {
@@ -68,7 +67,7 @@ class UserFacade extends AbstractFacade
      * @param string $username
      * @param string $password
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function addUser($firstName, $lastName, $username, $password)
     {
@@ -78,11 +77,11 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @throws Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function updateUser(UserTransfer $user)
     {
@@ -92,7 +91,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return mixed
      */
@@ -104,7 +103,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser()
     {
@@ -137,7 +136,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return bool
      */
@@ -149,7 +148,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @return CollectionTransfer
+     * @return \Generated\Shared\Transfer\CollectionTransfer
      */
     public function getSystemUsers()
     {
@@ -159,7 +158,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUsers()
     {

@@ -15,7 +15,7 @@ class FacadeNotFoundException extends \Exception
 {
 
     /**
-     * @param ClassInfo $callerClassInfo
+     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
     public function __construct(ClassInfo $callerClassInfo)
     {
@@ -23,7 +23,7 @@ class FacadeNotFoundException extends \Exception
     }
 
     /**
-     * @param ClassInfo $callerClassInfo
+     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
      *
      * @return string
      */

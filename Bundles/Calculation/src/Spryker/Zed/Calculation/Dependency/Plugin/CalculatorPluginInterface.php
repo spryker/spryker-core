@@ -12,7 +12,7 @@ interface CalculatorPluginInterface
 {
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      */
     public function recalculate(CalculableInterface $calculableContainer);
 

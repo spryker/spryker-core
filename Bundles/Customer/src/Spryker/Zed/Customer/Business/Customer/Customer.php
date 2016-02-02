@@ -12,11 +12,9 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
-use Spryker\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
 use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
@@ -64,9 +62,9 @@ class Customer
     protected $customerConfig;
 
     /**
-     * @param QueryContainerInterface $queryContainer
-     * @param CustomerReferenceGeneratorInterface $customerReferenceGenerator
-     * @param CustomerConfig $customerConfig
+     * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
+     * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
      */
     public function __construct(QueryContainerInterface $queryContainer, CustomerReferenceGeneratorInterface $customerReferenceGenerator, CustomerConfig $customerConfig)
     {
@@ -90,7 +88,7 @@ class Customer
     }
 
     /**
-     * @param PasswordRestoredConfirmationSenderPluginInterface $sender
+     * @param \Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface $sender
      *
      * @return void
      */
@@ -100,7 +98,7 @@ class Customer
     }
 
     /**
-     * @param PasswordRestoreTokenSenderPluginInterface $sender
+     * @param \Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface $sender
      *
      * @return void
      */
@@ -110,7 +108,7 @@ class Customer
     }
 
     /**
-     * @param RegistrationTokenSenderPluginInterface $sender
+     * @param \Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface $sender
      *
      * @return void
      */
@@ -120,9 +118,9 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function get(CustomerTransfer $customerTransfer)
     {
@@ -137,11 +135,11 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function register(CustomerTransfer $customerTransfer)
     {
@@ -185,7 +183,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
@@ -200,7 +198,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
@@ -219,7 +217,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
@@ -231,12 +229,12 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws CustomerNotFoundException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
@@ -256,12 +254,12 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws CustomerNotFoundException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer)
     {
@@ -294,12 +292,12 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws PropelException
-     * @throws CustomerNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
@@ -335,10 +333,10 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws PropelException
-     * @throws CustomerNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      *
      * @return bool
      */
@@ -351,13 +349,13 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws PropelException
-     * @throws CustomerNotFoundException
-     * @throws CustomerNotUpdatedException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotUpdatedException
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function update(CustomerTransfer $customerTransfer)
     {
@@ -388,7 +386,7 @@ class Customer
     /**
      * @param bool $isSuccess
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     protected function createCustomerResponseTransfer($isSuccess = true)
     {
@@ -399,7 +397,7 @@ class Customer
     }
 
     /**
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     protected function createCustomerEmailAlreadyUsedResponse()
     {
@@ -413,7 +411,7 @@ class Customer
     }
 
     /**
-     * @param SpyCustomer $customerEntity
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
      *
      * @return bool
      */
@@ -427,13 +425,13 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws PropelException
-     * @throws CustomerNotFoundException
-     * @throws CustomerNotUpdatedException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotUpdatedException
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function updatePassword(CustomerTransfer $customerTransfer)
     {
@@ -460,10 +458,10 @@ class Customer
     }
 
     /**
-     * @param SpyCustomer $customerEntity
-     * @param CustomerTransfer $customerTransfer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     protected function getCustomerPasswordInvalidResponse(SpyCustomer $customerEntity, CustomerTransfer $customerTransfer)
     {
@@ -483,9 +481,9 @@ class Customer
     }
 
     /**
-     * @param SpyCustomerAddress $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $customer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function entityToTransfer(SpyCustomerAddress $customer)
     {
@@ -495,10 +493,10 @@ class Customer
     }
 
     /**
-     * @param ObjectCollection $entities
-     * @param SpyCustomer $customer
+     * @param \Propel\Runtime\Collection\ObjectCollection $entities
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
-     * @return AddressesTransfer
+     * @return \Generated\Shared\Transfer\AddressesTransfer
      */
     protected function entityCollectionToTransferCollection(ObjectCollection $entities, SpyCustomer $customer)
     {
@@ -520,11 +518,11 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @throws CustomerNotFoundException
+     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      *
-     * @return SpyCustomer
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
     protected function getCustomer(CustomerTransfer $customerTransfer)
     {
@@ -549,7 +547,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
@@ -576,7 +574,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
@@ -595,9 +593,9 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function encryptPassword(CustomerTransfer $customerTransfer)
     {
@@ -608,9 +606,9 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function encryptNewPassword(CustomerTransfer $customerTransfer)
     {

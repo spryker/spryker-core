@@ -9,8 +9,6 @@ namespace Spryker\Shared\Library\Storage;
 use Elastica\Client;
 use Spryker\Shared\Config;
 use Spryker\Shared\Library\LibraryConstants;
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface as KeyValueReadInterface;
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface as KeyValueReadWriteInterface;
 
 /**
  * Class StorageInstanceBuilder
@@ -38,7 +36,7 @@ class StorageInstanceBuilder
     /**
      * @throws \ErrorException
      *
-     * @return Client
+     * @return \Elastica\Client
      */
     public static function getElasticsearchInstance()
     {
@@ -60,7 +58,7 @@ class StorageInstanceBuilder
      *
      * @throws \Exception
      *
-     * @return KeyValueReadWriteInterface
+     * @return \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface
      */
     public static function getStorageReadWriteInstance($debug = false)
     {
@@ -72,7 +70,7 @@ class StorageInstanceBuilder
      *
      * @throws \Exception
      *
-     * @return KeyValueReadInterface
+     * @return \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface
      */
     public static function getStorageReadInstance($debug = false)
     {

@@ -22,7 +22,7 @@ class CountryManager implements CountryManagerInterface
     protected $countryQueryContainer;
 
     /**
-     * @param CountryQueryContainerInterface $countryQueryContainer
+     * @param \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface $countryQueryContainer
      */
     public function __construct(
         CountryQueryContainerInterface $countryQueryContainer
@@ -43,7 +43,7 @@ class CountryManager implements CountryManagerInterface
     }
 
     /**
-     * @return CountryCollectionTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getCountryCollection()
     {
@@ -63,7 +63,7 @@ class CountryManager implements CountryManagerInterface
      *
      * @deprecated Use getPreferredCountryByName()
      *
-     * @return CountryTransfer
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferedCountryByName($countryName)
     {
@@ -73,7 +73,7 @@ class CountryManager implements CountryManagerInterface
     /**
      * @param string $countryName
      *
-     * @return CountryTransfer
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferredCountryByName($countryName)
     {
@@ -94,7 +94,7 @@ class CountryManager implements CountryManagerInterface
      *
      * @deprecated Use saveCountry() instead.
      *
-     * @throws CountryExistsException
+     * @throws \Spryker\Zed\Country\Business\Exception\CountryExistsException
      *
      * @return int
      */
@@ -116,7 +116,7 @@ class CountryManager implements CountryManagerInterface
     }
 
     /**
-     * @param CountryTransfer $countryTransfer
+     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
      *
      * @return int
      */
@@ -128,7 +128,7 @@ class CountryManager implements CountryManagerInterface
     /**
      * @param string $iso2code
      *
-     * @throws MissingCountryException
+     * @throws \Spryker\Zed\Country\Business\Exception\MissingCountryException
      *
      * @return int
      */
@@ -147,7 +147,7 @@ class CountryManager implements CountryManagerInterface
     /**
      * @param string $iso2code
      *
-     * @throws CountryExistsException
+     * @throws \Spryker\Zed\Country\Business\Exception\CountryExistsException
      *
      * @return void
      */

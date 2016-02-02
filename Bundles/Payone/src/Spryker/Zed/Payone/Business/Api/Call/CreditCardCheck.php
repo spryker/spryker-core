@@ -38,7 +38,7 @@ class CreditCardCheck extends AbstractCall
     }
 
     /**
-     * @return CreditCardCheckContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer
      */
     public function mapCreditCardCheckData()
     {

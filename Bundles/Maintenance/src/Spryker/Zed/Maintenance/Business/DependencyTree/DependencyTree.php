@@ -44,7 +44,7 @@ class DependencyTree extends AbstractDependencyTree
     }
 
     /**
-     * @param SplFileInfo $fileInfo
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      * @param string $to
      * @param array $dependency
      *

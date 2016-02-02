@@ -24,7 +24,7 @@ class BundleControllerAction implements BundleControllerActionInterface
     private $filter;
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(Request $request)
     {
@@ -42,7 +42,7 @@ class BundleControllerAction implements BundleControllerActionInterface
     }
 
     /**
-     * @return DashToCamelCase
+     * @return \Zend\Filter\Word\DashToCamelCase
      */
     private function getFilter()
     {

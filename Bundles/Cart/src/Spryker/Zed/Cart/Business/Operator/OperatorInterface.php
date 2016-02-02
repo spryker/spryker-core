@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Cart\Business\Operator;
 
-use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
@@ -14,14 +13,14 @@ interface OperatorInterface
 {
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function executeOperation(ChangeTransfer $cartChange);
 
     /**
-     * @param ItemExpanderPluginInterface $itemExpander
+     * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface $itemExpander
      */
     public function addItemExpanderPlugin(ItemExpanderPluginInterface $itemExpander);
 

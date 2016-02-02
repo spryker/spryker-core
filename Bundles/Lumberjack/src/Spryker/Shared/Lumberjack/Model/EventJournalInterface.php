@@ -11,7 +11,7 @@ interface EventJournalInterface
 {
 
     /**
-     * @param DataCollectorInterface $dataCollector
+     * @param \Spryker\Shared\Lumberjack\Model\Collector\DataCollectorInterface $dataCollector
      */
     public function addOrReplaceDataCollector(DataCollectorInterface $dataCollector);
 
@@ -26,7 +26,7 @@ interface EventJournalInterface
     public function saveEvent(EventInterface $event);
 
     /**
-     * @param WriterInterface $writer
+     * @param \Spryker\Shared\Lumberjack\Model\Writer\WriterInterface $writer
      */
     public function addOrReplaceEventWriter(WriterInterface $writer);
 

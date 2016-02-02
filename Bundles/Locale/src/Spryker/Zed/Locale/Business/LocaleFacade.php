@@ -6,12 +6,9 @@
 
 namespace Spryker\Zed\Locale\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 /**
  * @method LocaleBusinessFactory getFactory()
@@ -34,9 +31,9 @@ class LocaleFacade extends AbstractFacade
     /**
      * @param string $localeName
      *
-     * @throws MissingLocaleException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)
     {
@@ -50,7 +47,7 @@ class LocaleFacade extends AbstractFacade
      */
     public function getCurrentLocaleName()
     {
-        return \Spryker\Shared\Kernel\Store::getInstance()->getCurrentLocale();
+        return Store::getInstance()->getCurrentLocale();
     }
 
     /**
@@ -69,7 +66,7 @@ class LocaleFacade extends AbstractFacade
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {
@@ -81,9 +78,9 @@ class LocaleFacade extends AbstractFacade
     /**
      * @param string $localeName
      *
-     * @throws LocaleExistsException
+     * @throws \Spryker\Zed\Locale\Business\Exception\LocaleExistsException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function createLocale($localeName)
     {
@@ -104,7 +101,7 @@ class LocaleFacade extends AbstractFacade
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
      */

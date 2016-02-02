@@ -23,7 +23,7 @@ class DeleteController extends EditController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|RedirectResponse
      */
@@ -79,7 +79,7 @@ class DeleteController extends EditController
 
     /**
      * @param int $idCategory
-     * @param Form $form
+     * @param \Symfony\Component\Form\Form $form
      *
      * @return array
      */

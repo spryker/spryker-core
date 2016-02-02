@@ -11,7 +11,6 @@ use Spryker\Zed\Auth\Business\AuthFacade;
 use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
 use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
 
@@ -26,9 +25,9 @@ class PasswordController extends AbstractController
     const RESET_REDIRECT_URL = '/auth/login';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function resetRequestAction(Request $request)
     {
@@ -47,7 +46,7 @@ class PasswordController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */

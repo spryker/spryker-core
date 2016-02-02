@@ -13,8 +13,8 @@ interface PreConditionCheckerInterface
 {
 
     /**
-     * @param CheckoutRequestTransfer $request
-     * @param CheckoutResponseTransfer $response
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $response
      *
      * @return void
      */

@@ -17,7 +17,7 @@ class ProductOptionPriceToPayCalculator implements CalculatorPluginInterface
     /**
      * @ param OrderInterface $calculableContainer
      *
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class ProductOptionPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param ProductOptionTransfer $option
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $option
      *
      * @return int
      */
@@ -50,7 +50,7 @@ class ProductOptionPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return ItemTransfer[]
      */

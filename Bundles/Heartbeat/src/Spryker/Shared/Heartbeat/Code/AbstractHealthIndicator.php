@@ -19,7 +19,7 @@ abstract class AbstractHealthIndicator implements HealthIndicatorInterface
     private $healthIndicatorReport;
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doHealthCheck()
     {
@@ -50,7 +50,7 @@ abstract class AbstractHealthIndicator implements HealthIndicatorInterface
     }
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     private function getHealthIndicatorReport()
     {

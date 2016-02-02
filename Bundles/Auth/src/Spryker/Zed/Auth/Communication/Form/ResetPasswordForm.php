@@ -14,7 +14,7 @@ class ResetPasswordForm extends AbstractForm
     const FIELD_PASSWORD = 'password';
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

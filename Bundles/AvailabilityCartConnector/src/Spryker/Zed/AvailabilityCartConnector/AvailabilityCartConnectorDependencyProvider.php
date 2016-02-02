@@ -16,9 +16,9 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
     const FACADE_AVAILABILITY = 'availability facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {

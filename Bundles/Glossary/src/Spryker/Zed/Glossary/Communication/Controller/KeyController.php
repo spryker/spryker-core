@@ -26,9 +26,9 @@ class KeyController extends AbstractController
     const TERM = 'term';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function ajaxAction(Request $request)
     {
@@ -63,9 +63,9 @@ class KeyController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function suggestAction(Request $request)
     {

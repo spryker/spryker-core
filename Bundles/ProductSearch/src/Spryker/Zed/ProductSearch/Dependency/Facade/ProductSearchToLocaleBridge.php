@@ -6,7 +6,6 @@
 namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Generated\Shared\Transfer\LocaleTransfer;
 
 class ProductSearchToLocaleBridge implements ProductSearchToLocaleInterface
 {
@@ -19,7 +18,7 @@ class ProductSearchToLocaleBridge implements ProductSearchToLocaleInterface
     /**
      * CategoryToLocaleBridge constructor.
      *
-     * @param LocaleFacade $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {
@@ -27,7 +26,7 @@ class ProductSearchToLocaleBridge implements ProductSearchToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {

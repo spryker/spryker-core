@@ -7,7 +7,6 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 
 class CmsToGlossaryBridge implements CmsToGlossaryInterface
@@ -19,7 +18,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
     protected $glossaryFacade;
 
     /**
-     * @param GlossaryFacade $glossaryFacade
+     * @param \Spryker\Zed\Glossary\Business\GlossaryFacade $glossaryFacade
      */
     public function __construct($glossaryFacade)
     {
@@ -48,7 +47,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createTranslationForCurrentLocale($keyName, $value, $isActive = true)
     {
@@ -57,7 +56,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -65,7 +64,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
@@ -74,7 +73,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -82,7 +81,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
@@ -142,7 +141,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
     }
 
     /**
-     * @param KeyTranslationTransfer $keyTranslationTransfer
+     * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
      *
      * @return bool
      */

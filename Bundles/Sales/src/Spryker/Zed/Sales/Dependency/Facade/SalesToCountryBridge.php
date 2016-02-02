@@ -18,7 +18,7 @@ class SalesToCountryBridge implements SalesToCountryInterface
     /**
      * SalesToCountryBridge constructor.
      *
-     * @param CountryFacade $countryFacade
+     * @param \Spryker\Zed\Country\Business\CountryFacade $countryFacade
      */
     public function __construct($countryFacade)
     {

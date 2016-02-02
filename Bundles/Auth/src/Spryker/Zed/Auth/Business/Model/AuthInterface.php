@@ -7,8 +7,6 @@
 namespace Spryker\Zed\Auth\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\Auth\Business\Exception\UserNotLoggedException;
-use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 interface AuthInterface
 {
@@ -22,7 +20,7 @@ interface AuthInterface
     public function authenticate($username, $password);
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return string
      */
@@ -53,16 +51,16 @@ interface AuthInterface
     /**
      * @param string $hash
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getSystemUserByHash($hash);
 
     /**
      * @param string $token
      *
-     * @throws UserNotLoggedException
+     * @throws \Spryker\Zed\Auth\Business\Exception\UserNotLoggedException
      *
      * @return mixed
      */

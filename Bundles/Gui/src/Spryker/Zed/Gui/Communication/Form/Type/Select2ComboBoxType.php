@@ -15,8 +15,8 @@ class Select2ComboBoxType extends AbstractType
 {
 
     /**
-     * @param FormView $view
-     * @param FormInterface $form
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      *
      * @return void

@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Url\Dependency;
 
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Generated\Shared\Transfer\LocaleTransfer;
 
 class UrlToLocaleBridge implements UrlToLocaleInterface
 {
@@ -17,7 +16,7 @@ class UrlToLocaleBridge implements UrlToLocaleInterface
     protected $localeFacade;
 
     /**
-     * @param LocaleFacade $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {
@@ -29,7 +28,7 @@ class UrlToLocaleBridge implements UrlToLocaleInterface
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)
     {
@@ -37,7 +36,7 @@ class UrlToLocaleBridge implements UrlToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {

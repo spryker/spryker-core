@@ -36,7 +36,7 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
     }
 
     /**
-     * @return ClassInfo
+     * @return \Spryker\Shared\Kernel\ClassResolver\ClassInfo
      */
     public function getClassInfo()
     {

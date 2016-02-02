@@ -44,7 +44,7 @@ class Doctor
     }
 
     /**
-     * @param HealthIndicatorInterface $healthIndicator
+     * @param \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface $healthIndicator
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class Doctor
     }
 
     /**
-     * @return HealthReportTransfer
+     * @return \Generated\Shared\Transfer\HealthReportTransfer
      */
     public function getReport()
     {

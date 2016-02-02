@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Collector\Communication;
 
-use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
 use Spryker\Zed\Collector\CollectorDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Collector\CollectorConfig;
@@ -20,7 +19,7 @@ class CollectorCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getLocaleFacade() instead.
      *
-     * @return CollectorToLocaleInterface
+     * @return \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface
      */
     public function createLocaleFacade()
     {
@@ -30,7 +29,7 @@ class CollectorCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CollectorToLocaleInterface
+     * @return \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface
      */
     public function getLocaleFacade()
     {

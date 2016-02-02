@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Propel\Runtime\Exception\PropelException;
 use Exception;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -36,7 +35,7 @@ class Dummy implements DummyInterface
      * @param string $processName
      *
      * @throws Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return array
      */

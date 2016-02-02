@@ -146,7 +146,7 @@ class DiscountSaverTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function getDiscountVoucherEntityByCode()
     {

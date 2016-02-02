@@ -6,15 +6,13 @@
 
 namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 interface ProductCartConnectorToProductInterface
 {
 
     /**
      * @param string $concreteSku
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku);
 

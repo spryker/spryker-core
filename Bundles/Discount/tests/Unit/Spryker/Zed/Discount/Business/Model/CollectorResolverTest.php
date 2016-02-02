@@ -117,7 +117,7 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function createDiscountTransfer()
     {
@@ -138,7 +138,7 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @return CalculableContainer
+     * @return \Spryker\Zed\Cart\Business\Model\CalculableContainer
      */
     protected function createCalculableContainer()
     {
@@ -197,7 +197,7 @@ class CollectorResolverTest extends Test
     /**
      * @param string $sku
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createItemTransfer($sku)
     {
@@ -208,7 +208,7 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     protected function createCartTransfer()
     {
@@ -216,7 +216,7 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @return DiscountCollectorTransfer
+     * @return \Generated\Shared\Transfer\DiscountCollectorTransfer
      */
     protected function createDiscountCollectorTransfer()
     {
@@ -226,7 +226,7 @@ class CollectorResolverTest extends Test
     /**
      * @param $collectorConfig
      *
-     * @return CollectorResolver
+     * @return \Spryker\Zed\Discount\Business\Model\CollectorResolver
      */
     protected function createCollectorResolver($collectorConfig)
     {

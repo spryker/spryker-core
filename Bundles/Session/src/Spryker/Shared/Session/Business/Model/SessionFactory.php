@@ -24,7 +24,7 @@ abstract class SessionFactory
     /**
      * @param string $savePath e.g. '10.10.10.1:8091;10.10.10.2:8091'
      *
-     * @return SessionHandlerCouchbase
+     * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerCouchbase
      */
     public function registerCouchbaseSessionHandler($savePath)
     {
@@ -44,7 +44,7 @@ abstract class SessionFactory
     /**
      * @param string $savePath e.g. '10.10.10.1:3306;10.10.10.2:3306'
      *
-     * @return SessionHandlerMysql
+     * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerMysql
      */
     public function registerMysqlSessionHandler($savePath)
     {
@@ -63,7 +63,7 @@ abstract class SessionFactory
     /**
      * @param string $savePath
      *
-     * @return SessionHandlerRedis
+     * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis
      */
     public function registerRedisSessionHandler($savePath)
     {
@@ -77,7 +77,7 @@ abstract class SessionFactory
     /**
      * @param string $savePath
      *
-     * @return SessionHandlerFile
+     * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerFile
      */
     public function registerFileSessionHandler($savePath)
     {
@@ -168,7 +168,7 @@ abstract class SessionFactory
     }
 
     /**
-     * @return Api
+     * @return \Spryker\Shared\NewRelic\Api
      */
     protected function getNewRelicApi()
     {

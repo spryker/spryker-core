@@ -13,7 +13,7 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
 {
 
     /**
-     * @return SpyRefundQuery
+     * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
     public function queryRefund()
     {
@@ -23,7 +23,7 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
     /**
      * @param int $idOrder
      *
-     * @return SpyRefundQuery
+     * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
     public function queryRefundsByIdSalesOrder($idOrder)
     {
@@ -36,7 +36,7 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
     /**
      * @param int $idMethod
      *
-     * @return SpyRefundQuery
+     * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
     public function queryRefundByIdRefund($idMethod)
     {

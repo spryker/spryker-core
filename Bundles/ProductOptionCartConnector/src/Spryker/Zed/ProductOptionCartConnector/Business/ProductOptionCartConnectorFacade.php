@@ -15,9 +15,9 @@ class ProductOptionCartConnectorFacade extends AbstractFacade
 {
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function expandProductOptions(ChangeTransfer $change)
     {
@@ -25,9 +25,9 @@ class ProductOptionCartConnectorFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function expandGroupKey(ChangeTransfer $change)
     {

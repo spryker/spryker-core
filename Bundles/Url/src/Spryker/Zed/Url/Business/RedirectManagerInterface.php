@@ -8,11 +8,6 @@ namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Url\Business\Exception\MissingUrlException;
-use Spryker\Zed\Url\Business\Exception\RedirectExistsException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 
 interface RedirectManagerInterface
@@ -22,11 +17,11 @@ interface RedirectManagerInterface
      * @param string $toUrl
      * @param int $status
      *
-     * @throws MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyUrlRedirect
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect
      */
     public function createRedirect($toUrl, $status = 301);
 
@@ -39,52 +34,52 @@ interface RedirectManagerInterface
     public function createRedirectAndTouch($toUrl, $status = 301);
 
     /**
-     * @param SpyUrlRedirect $redirectEntity
+     * @param \Orm\Zed\Url\Persistence\SpyUrlRedirect $redirectEntity
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function convertRedirectEntityToTransfer(SpyUrlRedirect $redirectEntity);
 
     /**
-     * @param RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
-     * @throws MissingUrlException
-     * @throws RedirectExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\RedirectExistsException
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function saveRedirect(RedirectTransfer $redirect);
 
     /**
-     * @param RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
-     * @return RedirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function saveRedirectAndTouch(RedirectTransfer $redirect);
 
     /**
-     * @param RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      */
     public function touchRedirectActive(RedirectTransfer $redirect);
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect);
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idUrlRedirect
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect);
 

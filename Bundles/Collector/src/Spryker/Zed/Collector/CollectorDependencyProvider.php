@@ -21,7 +21,7 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var Container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -37,7 +37,7 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var Container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
@@ -47,9 +47,9 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     private function provideLocaleFacade(Container $container)
     {

@@ -42,7 +42,7 @@ interface AuthorizationContainerInterface
     public function getPortalid();
 
     /**
-     * @param PersonalContainer $personalData
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer $personalData
      */
     public function setPersonalData(PersonalContainer $personalData);
 
@@ -101,7 +101,7 @@ interface AuthorizationContainerInterface
     public function getSolutionVersion();
 
     /**
-     * @return ThreeDSecureContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer
      */
     public function get3dsecure();
 
@@ -111,7 +111,7 @@ interface AuthorizationContainerInterface
     public function setPortalid($portalid);
 
     /**
-     * @param ShippingContainer $delivery
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer $delivery
      */
     public function setShippingData(ShippingContainer $delivery);
 
@@ -156,7 +156,7 @@ interface AuthorizationContainerInterface
     public function setReference($reference);
 
     /**
-     * @return PersonalContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer
      */
     public function getPersonalData();
 
@@ -196,7 +196,7 @@ interface AuthorizationContainerInterface
     public function getMode();
 
     /**
-     * @param ThreeDSecureContainer $secure
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer $secure
      */
     public function set3dsecure(ThreeDSecureContainer $secure);
 
@@ -228,7 +228,7 @@ interface AuthorizationContainerInterface
     public function __toString();
 
     /**
-     * @param TransactionContainer $invoicing
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer $invoicing
      */
     public function setInvoicing(TransactionContainer $invoicing);
 
@@ -238,7 +238,7 @@ interface AuthorizationContainerInterface
     public function getApiVersion();
 
     /**
-     * @return ShippingContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer
      */
     public function getShippingData();
 

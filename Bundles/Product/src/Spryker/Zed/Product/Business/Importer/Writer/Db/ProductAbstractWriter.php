@@ -32,7 +32,7 @@ class ProductAbstractWriter implements ProductAbstractWriterInterface
     protected $localeTransfer;
 
     /**
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      */
     public function __construct(LocaleTransfer $localeTransfer)
     {
@@ -42,7 +42,7 @@ class ProductAbstractWriter implements ProductAbstractWriterInterface
     }
 
     /**
-     * @param ProductAbstractTransfer $product
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $product
      *
      * @return bool
      */

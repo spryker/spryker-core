@@ -23,9 +23,9 @@ abstract class AbstractRestController
     protected $request;
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function indexAction(Request $request)
     {

@@ -6,15 +6,11 @@
 
 namespace Spryker\Zed\Customer\Business;
 
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 
@@ -28,7 +24,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getQueryContainer() instead.
      *
-     * @return CustomerQueryContainerInterface
+     * @return \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
     public function createQueryContainer()
     {
@@ -38,7 +34,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Customer
+     * @return \Spryker\Zed\Customer\Business\Customer\Customer
      */
     public function createCustomer()
     {
@@ -67,7 +63,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Address
+     * @return \Spryker\Zed\Customer\Business\Customer\Address
      */
     public function createAddress()
     {
@@ -77,7 +73,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getCountryFacade() instead.
      *
-     * @return CustomerToCountryInterface
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface
      */
     protected function createCountryFacade()
     {
@@ -87,7 +83,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CustomerToCountryInterface
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface
      */
     protected function getCountryFacade()
     {
@@ -97,7 +93,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getLocaleFacade() instead.
      *
-     * @return CustomerToLocaleInterface
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
      */
     protected function createLocaleFacade()
     {
@@ -107,7 +103,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CustomerToLocaleInterface
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
      */
     protected function getLocaleFacade()
     {
@@ -115,7 +111,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CustomerReferenceGenerator
+     * @return \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator
      */
     protected function createCustomerReferenceGenerator()
     {
@@ -128,7 +124,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getSequenceNumberFacade() instead.
      *
-     * @return CustomerToSequenceNumberInterface
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface
      */
     protected function createSequenceNumberFacade()
     {
@@ -138,7 +134,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CustomerToSequenceNumberInterface
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface
      */
     protected function getSequenceNumberFacade()
     {

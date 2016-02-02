@@ -20,7 +20,7 @@ class RefundIsPossiblePlugin extends AbstractPlugin
     const NAME = 'RefundIsPossiblePlugin';
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

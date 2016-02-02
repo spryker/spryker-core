@@ -18,7 +18,7 @@ class TaxProductConnectorToProductBridge implements TaxProductConnectorToProduct
     /**
      * ProductCategoryToProductBridge constructor.
      *
-     * @param ProductFacade $productFacade
+     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
      */
     public function __construct($productFacade)
     {

@@ -51,11 +51,11 @@ class Rule implements RuleInterface
 
     /**
      * @param GroupInterface $group
-     * @param AclQueryContainer $queryContainer
-     * @param AclToUserInterface $facadeUser
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
      * @param RuleValidator $rulesValidator
      * @param RuleValidator $rulesValidator
-     * @param AclConfig $settings
+     * @param \Spryker\Zed\Acl\AclConfig $settings
      */
     public function __construct(
         GroupInterface $group,
@@ -72,11 +72,11 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param RuleTransfer $ruleTransfer
+     * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function addRule(RuleTransfer $ruleTransfer)
     {
@@ -84,11 +84,11 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param RuleTransfer $ruleTransfer
+     * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function save(RuleTransfer $ruleTransfer)
     {
@@ -122,7 +122,7 @@ class Rule implements RuleInterface
     /**
      * @param int $idRole
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function getRoleRules($idRole)
     {
@@ -155,12 +155,12 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param RolesTransfer $roles
+     * @param \Generated\Shared\Transfer\RolesTransfer $roles
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function findByRoles(
         RolesTransfer $roles,
@@ -184,7 +184,7 @@ class Rule implements RuleInterface
     /**
      * @param int $idGroup
      *
-     * @return RulesTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function getRulesForGroupId($idGroup)
     {
@@ -205,9 +205,9 @@ class Rule implements RuleInterface
     /**
      * @param int $id
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function getRuleById($id)
     {
@@ -226,7 +226,7 @@ class Rule implements RuleInterface
     /**
      * @param int $id
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
      * @return bool
      */
@@ -266,9 +266,9 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
      * @return void
      */
@@ -290,7 +290,7 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param string $bundle
      * @param string $controller
      * @param string $action

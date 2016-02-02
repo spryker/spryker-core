@@ -26,7 +26,7 @@ class Aggregate implements CollectorInterface
     }
 
     /**
-     * @param CalculableInterface $container
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
      * @return OrderTransfer[]
      */

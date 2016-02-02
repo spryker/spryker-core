@@ -22,7 +22,7 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
     protected $defaultEmptySequenceNumber;
 
     /**
-     * @param PayoneQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface $queryContainer
      * @param int $defaultEmptySequenceNumber
      */
     public function __construct(PayoneQueryContainerInterface $queryContainer, $defaultEmptySequenceNumber)

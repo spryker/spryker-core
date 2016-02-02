@@ -22,7 +22,7 @@ class InstalledPackageCollector implements InstalledPackageCollectorInterface
     private $installedPackageCollection;
 
     /**
-     * @param InstalledPackagesTransfer $installedPackageCollection
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $installedPackageCollection
      * @param array $installedPackageFinder
      */
     public function __construct(InstalledPackagesTransfer $installedPackageCollection, array $installedPackageFinder)
@@ -32,7 +32,7 @@ class InstalledPackageCollector implements InstalledPackageCollectorInterface
     }
 
     /**
-     * @return InstalledPackagesTransfer
+     * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     public function getInstalledPackages()
     {

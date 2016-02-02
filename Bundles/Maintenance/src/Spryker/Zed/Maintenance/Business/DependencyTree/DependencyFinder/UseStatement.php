@@ -16,7 +16,7 @@ class UseStatement extends AbstractDependencyFinder
     const BUNDLE = 'bundle';
 
     /**
-     * @param SplFileInfo $fileInfo
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
      * @throws \Exception
      *

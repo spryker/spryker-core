@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel;
 
-use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
@@ -33,7 +32,7 @@ trait BundleDependencyProviderResolverAwareTrait
     /**
      * @param string $key
      *
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return mixed
      */
@@ -54,7 +53,7 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @throws DependencyProviderNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
      *
      * @return AbstractBundleDependencyProvider
      */
@@ -64,7 +63,7 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @return DependencyProviderResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
     protected function getDependencyProviderResolver()
     {

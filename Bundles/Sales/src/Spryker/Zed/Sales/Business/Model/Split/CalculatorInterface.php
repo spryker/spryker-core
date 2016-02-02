@@ -11,7 +11,7 @@ interface CalculatorInterface
 {
 
     /**
-     * @param SpySalesOrderItem $salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      * @param int $quantity
      *
      * @return int

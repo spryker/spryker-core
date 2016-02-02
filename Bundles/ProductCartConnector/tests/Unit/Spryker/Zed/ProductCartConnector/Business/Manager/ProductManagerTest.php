@@ -119,7 +119,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     private function getChangeTransfer()
     {
@@ -132,9 +132,9 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param ProductConcreteTransfer $returnValue
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $returnValue
      *
-     * @return ProductManager
+     * @return \Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager
      */
     public function getProductManager(ProductConcreteTransfer $returnValue)
     {

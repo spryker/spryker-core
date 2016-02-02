@@ -20,7 +20,7 @@ class TwigExtension implements TwigExtensionInterface
 {
 
     /**
-     * @param Application $app
+     * @param \Spryker\Shared\Application\Communication\Application $app
      *
      * @return \Twig_Extension[]
      */

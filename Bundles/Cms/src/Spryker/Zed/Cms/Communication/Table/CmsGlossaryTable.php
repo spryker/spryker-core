@@ -45,10 +45,10 @@ class CmsGlossaryTable extends AbstractTable
     protected $searchArray;
 
     /**
-     * @param SpyCmsGlossaryKeyMappingQuery $glossaryQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      * @param int $idPage
      * @param array $placeholders
-     * @param SpyCmsGlossaryKeyMappingQuery $glossaryQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      * @param array $searchArray
      */
     public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, $idPage, array $placeholders = [], array $searchArray = [])
@@ -60,9 +60,9 @@ class CmsGlossaryTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -90,7 +90,7 @@ class CmsGlossaryTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

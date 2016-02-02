@@ -18,9 +18,9 @@ class CartFacade extends AbstractFacade
 {
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addToCart(ChangeTransfer $cartChange)
     {
@@ -30,9 +30,9 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function increaseQuantity(ChangeTransfer $cartChange)
     {
@@ -42,9 +42,9 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeFromCart(ChangeTransfer $cartChange)
     {
@@ -54,9 +54,9 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function decreaseQuantity(ChangeTransfer $cartChange)
     {
@@ -68,9 +68,9 @@ class CartFacade extends AbstractFacade
     /**
      * @todo call calculator client from cart client.
      *
-     * @param CartTransfer $cart
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function recalculate(CartTransfer $cart)
     {
@@ -81,9 +81,9 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addCouponCode(ChangeTransfer $cartChange)
     {
@@ -93,9 +93,9 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeCouponCode(ChangeTransfer $cartChange)
     {
@@ -105,9 +105,9 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCouponCodes(ChangeTransfer $cartChange)
     {

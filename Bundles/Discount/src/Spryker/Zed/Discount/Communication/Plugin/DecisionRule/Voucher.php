@@ -19,10 +19,10 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
 {
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function check(DiscountTransfer $discountTransfer, CalculableInterface $container)
     {
@@ -52,7 +52,7 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
     }
 
     /**
-     * @param CalculableInterface $container
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
      * @return bool
      */

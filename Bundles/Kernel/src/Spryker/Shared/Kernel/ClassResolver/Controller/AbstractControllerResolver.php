@@ -20,7 +20,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     protected $bundleControllerAction;
 
     /**
-     * @param BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
      * @throws ControllerNotFoundException
      *
@@ -37,7 +37,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     }
 
     /**
-     * @param BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
      * @return bool
      */

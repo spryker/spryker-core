@@ -19,7 +19,7 @@ class ProductManager implements ProductManagerInterface
     private $productFacade;
 
     /**
-     * @param ProductCartConnectorToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface $productFacade
      */
     public function __construct(ProductCartConnectorToProductInterface $productFacade)
     {
@@ -27,9 +27,9 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function expandItems(ChangeTransfer $change)
     {

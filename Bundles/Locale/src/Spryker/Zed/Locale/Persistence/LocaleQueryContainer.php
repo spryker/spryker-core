@@ -15,7 +15,7 @@ class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQuery
     /**
      * @param string $localeName
      *
-     * @return SpyLocaleQuery
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocaleByName($localeName)
     {
@@ -27,7 +27,7 @@ class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQuery
     }
 
     /**
-     * @return SpyLocaleQuery
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocales()
     {

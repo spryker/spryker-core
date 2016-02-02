@@ -6,8 +6,6 @@
 
 namespace Spryker\Client\Catalog\Model\Builder;
 
-use Elastica\Filter\Nested;
-
 /**
  * Class FilterBuilder
  */
@@ -19,7 +17,7 @@ interface NestedFilterBuilderInterface
      * @param string $nestedFieldName
      * @param string $nestedFieldValue
      *
-     * @return Nested
+     * @return \Elastica\Filter\Nested
      */
     public function createNestedTermFilter($fieldName, $nestedFieldName, $nestedFieldValue);
 
@@ -28,7 +26,7 @@ interface NestedFilterBuilderInterface
      * @param string $nestedFieldName
      * @param array $nestedFieldValues
      *
-     * @return Nested
+     * @return \Elastica\Filter\Nested
      */
     public function createNestedTermsFilter($fieldName, $nestedFieldName, array $nestedFieldValues);
 
@@ -40,7 +38,7 @@ interface NestedFilterBuilderInterface
      * @param string $greaterParam
      * @param string $lessParam
      *
-     * @return Nested
+     * @return \Elastica\Filter\Nested
      */
     public function createNestedRangeFilter($fieldName, $nestedFieldName, $minValue, $maxValue, $greaterParam = 'gte', $lessParam = 'lte');
 

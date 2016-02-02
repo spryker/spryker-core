@@ -127,7 +127,7 @@ class SequenceNumberTest extends Test
     }
 
     /**
-     * @return SequenceNumberConfig
+     * @return \Spryker\Zed\SequenceNumber\SequenceNumberConfig
      */
     protected function generateConfig()
     {
@@ -140,7 +140,7 @@ class SequenceNumberTest extends Test
      * @param int $min
      * @param int $max
      *
-     * @return RandomNumberGenerator
+     * @return \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator
      */
     protected function generateGenerator($min = 1, $max = 1)
     {

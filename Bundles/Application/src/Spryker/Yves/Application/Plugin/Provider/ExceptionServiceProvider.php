@@ -24,7 +24,7 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
 {
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -46,7 +46,7 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @param GetResponseForExceptionEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
      *
      * @throws \Exception
      *

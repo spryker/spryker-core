@@ -14,7 +14,7 @@ class ControllerNotFoundException extends \Exception implements ExceptionInterfa
 {
 
     /**
-     * @param BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      */
     public function __construct(BundleControllerActionInterface $bundleControllerAction)
     {
@@ -22,7 +22,7 @@ class ControllerNotFoundException extends \Exception implements ExceptionInterfa
     }
 
     /**
-     * @param BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
      * @throws \Exception
      *

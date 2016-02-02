@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-use Spryker\Zed\Kernel\Business\ModelResult;
 
 /**
  * @method DiscountFacade getFacade()
@@ -19,10 +18,10 @@ class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisi
 {
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function check(
         DiscountTransfer $discountTransfer,

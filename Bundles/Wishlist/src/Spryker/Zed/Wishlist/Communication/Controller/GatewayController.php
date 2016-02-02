@@ -8,7 +8,6 @@ namespace Spryker\Zed\Wishlist\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Wishlist\Business\WishlistFacade;
 
@@ -19,9 +18,9 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param WishlistChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function addItemAction(WishlistChangeTransfer $changeTransfer)
     {
@@ -29,9 +28,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param WishlistChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItemAction(WishlistChangeTransfer $changeTransfer)
     {
@@ -39,9 +38,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param WishlistChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function decreaseQuantityAction(WishlistChangeTransfer $changeTransfer)
     {
@@ -49,9 +48,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param WishlistChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseQuantityAction(WishlistChangeTransfer $changeTransfer)
     {
@@ -59,9 +58,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getCustomerWishlistAction(CustomerTransfer $customer)
     {

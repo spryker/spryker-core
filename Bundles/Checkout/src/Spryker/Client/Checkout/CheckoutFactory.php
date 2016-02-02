@@ -8,13 +8,12 @@ namespace Spryker\Client\Checkout;
 
 use Spryker\Client\Checkout\Zed\CheckoutStub;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Checkout\Zed\CheckoutStubInterface;
 
 class CheckoutFactory extends AbstractFactory
 {
 
     /**
-     * @return CheckoutStubInterface
+     * @return \Spryker\Client\Checkout\Zed\CheckoutStubInterface
      */
     public function createZedStub()
     {

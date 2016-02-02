@@ -25,7 +25,7 @@ class CodeExists extends Constraint
     protected $voucherId;
 
     /**
-     * @param DiscountQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param string $voucherName
      * @param mixed $options
      */
@@ -40,7 +40,7 @@ class CodeExists extends Constraint
     }
 
     /**
-     * @return DiscountQueryContainerInterface
+     * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     public function getQueryContainer()
     {

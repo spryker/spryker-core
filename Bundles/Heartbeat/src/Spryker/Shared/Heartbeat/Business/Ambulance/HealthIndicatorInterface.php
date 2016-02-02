@@ -12,7 +12,7 @@ interface HealthIndicatorInterface
 {
 
     /**
-     * @param HealthReportTransfer $healthReportTransfer
+     * @param \Generated\Shared\Transfer\HealthReportTransfer $healthReportTransfer
      */
     public function doHealthCheck(HealthReportTransfer $healthReportTransfer);
 

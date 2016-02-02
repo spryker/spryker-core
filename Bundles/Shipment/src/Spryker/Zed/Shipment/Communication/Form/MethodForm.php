@@ -64,10 +64,10 @@ class MethodForm extends AbstractForm
     protected $shipmentConfig;
 
     /**
-     * @param SpyShipmentMethodQuery $methodQuery
-     * @param SpyShipmentCarrierQuery $carrierQuery
-     * @param SpyTaxSetQuery $taxSetQuery
-     * @param ShipmentConfig $shipmentConfig
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery $methodQuery
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery $carrierQuery
+     * @param \Orm\Zed\Tax\Persistence\SpyTaxSetQuery $taxSetQuery
+     * @param \Spryker\Zed\Shipment\ShipmentConfig $shipmentConfig
      * @param array $plugins
      * @param int|null $idMethod
      */
@@ -104,7 +104,7 @@ class MethodForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

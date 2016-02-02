@@ -82,7 +82,7 @@ class MinimumCartSubtotalTest extends Test
     /**
      * @param int $value
      *
-     * @return SpyDiscountDecisionRule
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
     protected function getDecisionRuleEntity($value)
     {
@@ -93,7 +93,7 @@ class MinimumCartSubtotalTest extends Test
     }
 
     /**
-     * @return MinimumCartSubtotal
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal
      */
     protected function createMinimumCartSubtotal()
     {

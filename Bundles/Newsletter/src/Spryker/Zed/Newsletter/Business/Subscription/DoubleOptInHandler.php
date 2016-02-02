@@ -32,9 +32,9 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $subscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriberTransfer
      *
-     * @throws MissingNewsletterSubscriberException
+     * @throws \Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException
      *
      * @return void
      */
@@ -57,7 +57,7 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $subscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriberTransfer
      *
      * @return void
      */
@@ -69,9 +69,9 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
     public function approveSubscriberByKey(NewsletterSubscriberTransfer $newsletterSubscriber)
     {

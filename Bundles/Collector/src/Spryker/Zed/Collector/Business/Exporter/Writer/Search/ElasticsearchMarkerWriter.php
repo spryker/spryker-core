@@ -39,7 +39,7 @@ class ElasticsearchMarkerWriter implements WriterInterface
     protected $metaData = [];
 
     /**
-     * @param Client $searchClient
+     * @param \Elastica\Client $searchClient
      * @param string $indexName
      * @param string $type
      */

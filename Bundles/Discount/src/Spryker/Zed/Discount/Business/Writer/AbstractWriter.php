@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Discount\Business\Writer;
 
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 abstract class AbstractWriter
@@ -18,7 +17,7 @@ abstract class AbstractWriter
     private $queryContainer;
 
     /**
-     * @param DiscountQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      */
     public function __construct(DiscountQueryContainerInterface $queryContainer)
     {
@@ -26,7 +25,7 @@ abstract class AbstractWriter
     }
 
     /**
-     * @return DiscountQueryContainer
+     * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
     protected function getQueryContainer()
     {

@@ -13,8 +13,8 @@ interface OmsOrderHydratorInterface
 {
 
     /**
-     * @param OrderTransfer $order
-     * @param CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\OrderTransfer $order
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request);
 

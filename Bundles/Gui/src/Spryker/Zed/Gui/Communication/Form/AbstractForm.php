@@ -25,7 +25,7 @@ abstract class AbstractForm extends SharedAbstractForm
     protected $constraintsPlugin;
 
     /**
-     * @return ConstraintsPlugin
+     * @return \Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin
      */
     public function getConstraints()
     {
@@ -37,7 +37,7 @@ abstract class AbstractForm extends SharedAbstractForm
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      */
@@ -47,7 +47,7 @@ abstract class AbstractForm extends SharedAbstractForm
     }
 
     /**
-     * @return Request
+     * @return \Symfony\Component\HttpFoundation\Request
      */
     protected function getRequest()
     {

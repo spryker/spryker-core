@@ -34,9 +34,9 @@ class NodeUrlManager implements NodeUrlManagerInterface
     protected $urlFacade;
 
     /**
-     * @param CategoryTreeReaderInterface $categoryTreeReader
-     * @param UrlPathGeneratorInterface $urlPathGenerator
-     * @param CategoryToUrlInterface $urlFacade
+     * @param \Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface $categoryTreeReader
+     * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
+     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
      */
     public function __construct(
         CategoryTreeReaderInterface $categoryTreeReader,
@@ -49,8 +49,8 @@ class NodeUrlManager implements NodeUrlManagerInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNodeTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -66,8 +66,8 @@ class NodeUrlManager implements NodeUrlManagerInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNodeTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -92,8 +92,8 @@ class NodeUrlManager implements NodeUrlManagerInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNodeTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -114,7 +114,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      * @param string $url
      * @param int|null $idResource
      * @param int|null $idLocale
@@ -137,8 +137,8 @@ class NodeUrlManager implements NodeUrlManagerInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNodeTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -154,7 +154,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
 
     /**
      * @param int $idChild
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string
      */

@@ -14,7 +14,7 @@ class FileInfoExtractor
     const LAYER = 'Default';
 
     /**
-     * @param SplFileInfo $fileInfo
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
      * @throws \Exception
      *
@@ -28,7 +28,7 @@ class FileInfoExtractor
     }
 
     /**
-     * @param SplFileInfo $fileInfo
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
      * @throws \Exception
      *
@@ -42,7 +42,7 @@ class FileInfoExtractor
     }
 
     /**
-     * @param SplFileInfo $fileInfo
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
      * @throws \Exception
      *
@@ -61,7 +61,7 @@ class FileInfoExtractor
     }
 
     /**
-     * @param SplFileInfo $fileInfo
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
      * @throws \Exception
      *
@@ -73,7 +73,7 @@ class FileInfoExtractor
     }
 
     /**
-     * @param SplFileInfo $fileInfo
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
      * @throws \Exception
      *

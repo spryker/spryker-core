@@ -16,56 +16,56 @@ interface CartStubInterface
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addItem(ChangeTransfer $changeTransfer);
 
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeItem(ChangeTransfer $changeTransfer);
 
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function increaseItemQuantity(ChangeTransfer $changeTransfer);
 
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function decreaseItemQuantity(ChangeTransfer $changeTransfer);
 
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addCoupon(ChangeTransfer $changeTransfer);
 
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeCoupon(ChangeTransfer $changeTransfer);
 
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCoupons(ChangeTransfer $changeTransfer);
 
     /**
      * @param CartTransfer|TransferInterface $cartTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function recalculate(CartTransfer $cartTransfer);
 

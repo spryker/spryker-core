@@ -8,7 +8,6 @@ namespace Functional\Spryker\Zed\ProductOption\Business\Model;
 
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -297,9 +296,9 @@ class DataImportWriterTest extends Test
      * @param string $typeKey
      * @param string $valueKey
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyProductOptionType
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionType
      */
     private function createOptionTypeWithValue($typeKey, $valueKey)
     {
@@ -311,12 +310,12 @@ class DataImportWriterTest extends Test
     }
 
     /**
-     * @param SpyProduct $product
-     * @param SpyProductOptionType $optionType
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $product
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionType $optionType
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyProductOptionTypeUsage
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsage
      */
     private function createProductOptionTypeUsage($product, $optionType)
     {

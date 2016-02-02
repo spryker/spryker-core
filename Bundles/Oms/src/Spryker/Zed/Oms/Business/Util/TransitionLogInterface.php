@@ -17,7 +17,7 @@ interface TransitionLogInterface
 {
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      *
      * @return void
      */
@@ -31,23 +31,23 @@ interface TransitionLogInterface
     public function init(array $salesOrderItems);
 
     /**
-     * @param SpySalesOrderItem $item
-     * @param CommandInterface $command
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface $command
      *
      * @return void
      */
     public function addCommand(SpySalesOrderItem $item, CommandInterface $command);
 
     /**
-     * @param SpySalesOrderItem $item
-     * @param ConditionInterface $condition
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface $condition
      *
      * @return void
      */
     public function addCondition(SpySalesOrderItem $item, ConditionInterface $condition);
 
     /**
-     * @param SpySalesOrderItem $item
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item
      * @param string $stateName
      *
      * @return void
@@ -55,7 +55,7 @@ interface TransitionLogInterface
     public function addSourceState(SpySalesOrderItem $item, $stateName);
 
     /**
-     * @param SpySalesOrderItem $item
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item
      * @param string $stateName
      *
      * @return void
@@ -70,7 +70,7 @@ interface TransitionLogInterface
     public function setIsError($error);
 
     /**
-     * @param SpySalesOrderItem $salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      *
      * @return void
      */
@@ -89,7 +89,7 @@ interface TransitionLogInterface
     public function saveAll();
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return SpyOmsTransitionLog[]
      */

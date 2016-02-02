@@ -41,7 +41,7 @@ class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

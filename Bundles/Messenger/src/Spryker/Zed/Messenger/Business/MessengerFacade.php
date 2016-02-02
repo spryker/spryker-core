@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Messenger\Business;
 
-use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -16,7 +15,7 @@ class MessengerFacade extends AbstractFacade
 {
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -26,7 +25,7 @@ class MessengerFacade extends AbstractFacade
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -36,7 +35,7 @@ class MessengerFacade extends AbstractFacade
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -46,7 +45,7 @@ class MessengerFacade extends AbstractFacade
     }
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages()
     {

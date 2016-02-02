@@ -31,7 +31,7 @@ class PreSaveSkuGroupKeyPlugin extends AbstractPlugin implements PreSavePluginIn
     }
 
     /**
-     * @param ItemTransfer $cartItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
      *
      * @return string
      */

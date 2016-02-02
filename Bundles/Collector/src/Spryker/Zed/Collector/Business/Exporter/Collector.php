@@ -26,7 +26,7 @@ class Collector
     protected $exporter;
 
     /**
-     * @param TouchQueryContainer $queryContainer
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $queryContainer
      * @param ExporterInterface $exporter
      */
     public function __construct(
@@ -38,7 +38,7 @@ class Collector
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return BatchResultInterface[]
      */
@@ -72,7 +72,7 @@ class Collector
     }
 
     /**
-     * @param BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      *
      * @return void
      */

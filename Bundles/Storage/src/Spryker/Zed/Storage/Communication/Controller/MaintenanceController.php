@@ -48,7 +48,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function listAjaxAction()
     {
@@ -60,7 +60,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function dropTimestampsAction()
     {
@@ -71,7 +71,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAllAction()
     {
@@ -84,7 +84,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */

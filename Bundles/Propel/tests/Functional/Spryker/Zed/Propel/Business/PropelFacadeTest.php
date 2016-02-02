@@ -19,7 +19,7 @@ class PropelFacadeTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return PropelFacade
+     * @return \Spryker\Zed\Propel\Business\PropelFacade
      */
     private function getFacade()
     {
@@ -27,7 +27,7 @@ class PropelFacadeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PropelConfig
+     * @return \Spryker\Zed\Propel\PropelConfig
      */
     private function getConfig()
     {

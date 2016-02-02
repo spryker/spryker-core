@@ -38,7 +38,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @param PayoneStandardParameterTransfer $standardParameterTransfer
+     * @param \Generated\Shared\Transfer\PayoneStandardParameterTransfer $standardParameterTransfer
      *
      * @return void
      */
@@ -48,7 +48,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @return PayoneStandardParameterTransfer
+     * @return \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected function getStandardParameter()
     {
@@ -56,7 +56,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @param SequenceNumberProviderInterface $sequenceNumberProvider
+     * @param \Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface $sequenceNumberProvider
      *
      * @return void
      */
@@ -66,7 +66,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @return SequenceNumberProviderInterface
+     * @return \Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface
      */
     protected function getSequenceNumberProvider()
     {
@@ -88,7 +88,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     /**
      * @param string $orderReference
      *
-     * @return RedirectContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     protected function createRedirectContainer($orderReference)
     {
@@ -104,8 +104,8 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @param PersonalContainer $personalContainer
-     * @param SpySalesOrderAddress $billingAddressEntity
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer $personalContainer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $billingAddressEntity
      *
      * @return void
      */

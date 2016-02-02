@@ -11,7 +11,7 @@ interface SubscriberOptInHandlerInterface
 {
 
     /**
-     * @param NewsletterSubscriberTransfer $subscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriberTransfer
      */
     public function optIn(NewsletterSubscriberTransfer $subscriberTransfer);
 

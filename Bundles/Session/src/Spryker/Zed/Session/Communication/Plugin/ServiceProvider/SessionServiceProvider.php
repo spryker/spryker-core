@@ -28,7 +28,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     private $client;
 
     /**
-     * @param SessionClientInterface $client
+     * @param \Spryker\Client\Session\SessionClientInterface $client
      *
      * @return void
      */
@@ -38,7 +38,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

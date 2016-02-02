@@ -42,8 +42,8 @@ class ProductOptionReader implements ProductOptionReaderInterface
     protected $localeFacade;
 
     /**
-     * @param ProductOptionQueryContainerInterface $queryContainer
-     * @param ProductOptionToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface $localeFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $queryContainer,
@@ -58,7 +58,7 @@ class ProductOptionReader implements ProductOptionReaderInterface
      * @param int $idProductOptionValueUsage
      * @param string $localeCode
      *
-     * @return ProductOptionTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     public function getProductOption($idProductOptionValueUsage, $localeCode)
     {
@@ -104,7 +104,7 @@ class ProductOptionReader implements ProductOptionReaderInterface
      * @param int $idProduct
      * @param int $idLocale
      *
-     * @return ArrayCollection
+     * @return \Propel\Runtime\Collection\ArrayCollection
      */
     public function getProductOptionsByIdProductAndIdLocale($idProduct, $idLocale)
     {
@@ -148,8 +148,8 @@ class ProductOptionReader implements ProductOptionReaderInterface
     }
 
     /**
-     * @param ProductOptionTransfer $productOptionTransfer
-     * @param SpyTaxSet $taxSetEntity
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     * @param \Orm\Zed\Tax\Persistence\SpyTaxSet $taxSetEntity
      *
      * @return void
      */

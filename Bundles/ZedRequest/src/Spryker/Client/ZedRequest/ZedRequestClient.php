@@ -23,7 +23,7 @@ class ZedRequestClient extends AbstractClient
     private $zedClient;
 
     /**
-     * @return ZedClient
+     * @return \Spryker\Client\ZedRequest\Client\ZedClient
      */
     private function getClient()
     {
@@ -36,11 +36,11 @@ class ZedRequestClient extends AbstractClient
 
     /**
      * @param $url
-     * @param TransferInterface $object
+     * @param \Spryker\Shared\Transfer\TransferInterface $object
      * @param null $timeoutInSeconds
      * @param bool|false $isBackgroundRequest
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function call($url, TransferInterface $object, $timeoutInSeconds = null, $isBackgroundRequest = false)
     {

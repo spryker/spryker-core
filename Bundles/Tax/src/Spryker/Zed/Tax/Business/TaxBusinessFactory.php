@@ -11,8 +11,6 @@ use Spryker\Zed\Tax\Business\Model\TaxReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 use Spryker\Zed\Tax\TaxConfig;
-use Spryker\Zed\Tax\Business\Model\TaxReaderInterface;
-use Spryker\Zed\Tax\Business\Model\TaxWriterInterface;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
 
 /**
@@ -23,7 +21,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return TaxReaderInterface
+     * @return \Spryker\Zed\Tax\Business\Model\TaxReaderInterface
      */
     public function createReaderModel()
     {
@@ -33,7 +31,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TaxWriterInterface
+     * @return \Spryker\Zed\Tax\Business\Model\TaxWriterInterface
      */
     public function createWriterModel()
     {

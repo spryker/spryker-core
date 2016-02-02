@@ -8,7 +8,6 @@ namespace Spryker\Yves\Application\Plugin\Provider\ExceptionService;
 
 use Spryker\Yves\Application\Plugin\Exception\UndefinedExceptionHandlerException;
 use Symfony\Component\Debug\Exception\FlattenException;
-use Symfony\Component\HttpFoundation\Response;
 
 class ExceptionHandlerDispatcher
 {
@@ -27,11 +26,11 @@ class ExceptionHandlerDispatcher
     }
 
     /**
-     * @param FlattenException $exception
+     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
      *
-     * @throws UndefinedExceptionHandlerException
+     * @throws \Spryker\Yves\Application\Plugin\Exception\UndefinedExceptionHandlerException
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function dispatch(FlattenException $exception)
     {

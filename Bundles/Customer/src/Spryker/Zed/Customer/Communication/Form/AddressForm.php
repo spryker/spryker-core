@@ -31,8 +31,8 @@ class AddressForm extends AbstractForm
     protected $customerQueryContainer;
 
     /**
-     * @param CustomerToCountryInterface $countryFacade
-     * @param CustomerQueryContainer $queryContainer
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $queryContainer
      */
     public function __construct(CustomerToCountryInterface $countryFacade, CustomerQueryContainer $queryContainer)
     {
@@ -60,7 +60,7 @@ class AddressForm extends AbstractForm
     }
 
     /**
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function getDataClass()
     {
@@ -68,7 +68,7 @@ class AddressForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

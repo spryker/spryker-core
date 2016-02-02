@@ -7,9 +7,7 @@
 namespace Spryker\Yves\Kernel;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractPlugin
@@ -38,7 +36,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
      * @return AbstractFactory
      */
@@ -48,7 +46,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return FactoryResolver
+     * @return \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {
@@ -56,7 +54,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return AbstractClient
+     * @return \Spryker\Client\Kernel\AbstractClient
      */
     protected function getClient()
     {
@@ -68,9 +66,9 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @throws ClientNotFoundException
+     * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
      *
-     * @return AbstractClient
+     * @return \Spryker\Client\Kernel\AbstractClient
      */
     private function resolveClient()
     {
@@ -78,7 +76,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return ClientResolver
+     * @return \Spryker\Client\Kernel\ClassResolver\Client\ClientResolver
      */
     private function getClientResolver()
     {

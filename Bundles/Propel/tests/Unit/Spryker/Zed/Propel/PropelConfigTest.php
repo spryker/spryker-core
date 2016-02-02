@@ -11,7 +11,7 @@ class PropelConfigTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return PropelConfig
+     * @return \Spryker\Zed\Propel\PropelConfig
      */
     private function getConfig()
     {

@@ -33,7 +33,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
     }
 
     /**
-     * @return PhpDocumentorGraph
+     * @return \Spryker\Tool\GraphPhpDocumentor\PhpDocumentorGraph
      */
     private function createPhpDocumentorGraph()
     {
@@ -135,7 +135,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
     /**
      * @param string $name
      *
-     * @return Graph
+     * @return \phpDocumentor\GraphViz\Graph
      */
     private function getGraphByName($name)
     {

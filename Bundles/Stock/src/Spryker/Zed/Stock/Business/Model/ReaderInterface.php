@@ -6,10 +6,6 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
-use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
-use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
-use Orm\Zed\Stock\Persistence\SpyStockProduct;
-
 interface ReaderInterface
 {
 
@@ -77,16 +73,16 @@ interface ReaderInterface
      * @param int $idStockType
      * @param int $idProduct
      *
-     * @throws StockProductAlreadyExistsException
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
      */
     public function checkStockDoesNotExist($idStockType, $idProduct);
 
     /**
      * @param int $idStockProduct
      *
-     * @throws StockProductNotFoundException
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
      *
-     * @return SpyStockProduct
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct
      */
     public function getStockProductById($idStockProduct);
 

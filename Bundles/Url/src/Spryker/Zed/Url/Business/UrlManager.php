@@ -9,12 +9,10 @@ namespace Spryker\Zed\Url\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Url\Business\Exception\MissingUrlException;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Spryker\Zed\Url\Dependency\UrlToLocaleInterface;
 use Spryker\Zed\Url\Dependency\UrlToTouchInterface;
-use Spryker\Zed\Url\Persistence\Exception\MissingResourceException;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
@@ -45,10 +43,10 @@ class UrlManager implements UrlManagerInterface
     protected $connection;
 
     /**
-     * @param UrlQueryContainerInterface $urlQueryContainer
-     * @param UrlToLocaleInterface $localeFacade
-     * @param UrlToTouchInterface $touchFacade
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
+     * @param \Spryker\Zed\Url\Dependency\UrlToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Url\Dependency\UrlToTouchInterface $touchFacade
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
         UrlQueryContainerInterface $urlQueryContainer,
@@ -64,15 +62,15 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $resourceType
      * @param int $idResource
      *
-     * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return SpyUrl
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
     {
@@ -109,7 +107,7 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param string $url
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return void
      */
@@ -126,11 +124,11 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param SpyUrl $urlEntity
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
      *
-     * @throws MissingResourceException
+     * @throws \Spryker\Zed\Url\Persistence\Exception\MissingResourceException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function convertUrlEntityToTransfer(SpyUrl $urlEntity)
     {
@@ -153,9 +151,9 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param string $url
      *
-     * @throws MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      *
-     * @return SpyUrl
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
     public function getUrlByPath($url)
     {
@@ -177,9 +175,9 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param int $idUrl
      *
-     * @throws MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      *
-     * @return SpyUrl
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
     public function getUrlById($idUrl)
     {
@@ -202,7 +200,7 @@ class UrlManager implements UrlManagerInterface
      * @param int $idCategoryNode
      * @param int $idLocale
      *
-     * @return SpyUrl
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
     public function getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
     {
@@ -245,9 +243,9 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveUrl(UrlTransfer $urlTransfer)
     {
@@ -259,10 +257,10 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @throws MissingUrlException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -278,9 +276,9 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveUrlAndTouch(UrlTransfer $urlTransfer)
     {
@@ -295,13 +293,13 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     protected function createUrlFromTransfer(UrlTransfer $urlTransfer)
     {
@@ -318,14 +316,14 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @throws MissingUrlException
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     protected function updateUrlFromTransfer(UrlTransfer $urlTransfer)
     {
@@ -347,8 +345,8 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $urlTransfer
-     * @param SpyUrl $urlEntity
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
      *
      * @return void
      */
@@ -366,10 +364,10 @@ class UrlManager implements UrlManagerInterface
      * @param string $resourceType
      * @param int $idResource
      *
-     * @throws PropelException
-     * @throws UrlExistsException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return SpyUrl
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
     public function createUrlForCurrentLocale($url, $resourceType, $idResource)
     {
@@ -391,7 +389,7 @@ class UrlManager implements UrlManagerInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
     {

@@ -20,7 +20,7 @@ class TransferBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return TransferBusinessFactory
+     * @return \Spryker\Zed\Transfer\Business\TransferBusinessFactory
      */
     private function getFactory()
     {

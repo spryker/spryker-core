@@ -49,8 +49,8 @@ class OrderItemMatrix
     protected $orderItemStateBlacklist = [];
 
     /**
-     * @param OmsQueryContainerInterface $queryContainer
-     * @param OmsConfig $config
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Oms\OmsConfig $config
      */
     public function __construct(OmsQueryContainerInterface $queryContainer, OmsConfig $config)
     {

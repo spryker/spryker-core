@@ -21,7 +21,7 @@ class CartSession implements CartSessionInterface
     private $session;
 
     /**
-     * @param SessionInterface $session
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      */
     public function __construct(SessionInterface $session)
     {
@@ -29,7 +29,7 @@ class CartSession implements CartSessionInterface
     }
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function getCart()
     {
@@ -43,7 +43,7 @@ class CartSession implements CartSessionInterface
     }
 
     /**
-     * @param CartTransfer $cartTransfer
+     * @param \Generated\Shared\Transfer\CartTransfer $cartTransfer
      *
      * @return self
      */

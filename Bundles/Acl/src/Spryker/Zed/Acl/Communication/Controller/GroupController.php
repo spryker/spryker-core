@@ -43,7 +43,7 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -55,7 +55,7 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -86,9 +86,9 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction(Request $request)
     {
@@ -125,9 +125,9 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Form $form
+     * @param \Symfony\Component\Form\Form $form
      *
-     * @return RolesTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     protected function getRoleTransfersFromForm(Form $form)
     {
@@ -144,9 +144,9 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function usersAction(Request $request)
     {
@@ -182,9 +182,9 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function rolesAction(Request $request)
     {
@@ -196,9 +196,9 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function listAction(Request $request)
     {
@@ -209,9 +209,9 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function rulesAction(Request $request)
     {

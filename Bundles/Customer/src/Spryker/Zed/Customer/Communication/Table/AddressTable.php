@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Customer\Communication\Table;
 
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
@@ -33,7 +32,7 @@ class AddressTable extends AbstractTable
     protected $idCustomer;
 
     /**
-     * @param CustomerQueryContainer $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $customerQueryContainer
      * @param int $idCustomer
      */
     public function __construct(CustomerQueryContainer $customerQueryContainer, $idCustomer)
@@ -43,9 +42,9 @@ class AddressTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -87,9 +86,9 @@ class AddressTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
     protected function prepareData(TableConfiguration $config)
     {

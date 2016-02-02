@@ -9,8 +9,6 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Business;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderHydrator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderHydratorInterface;
-use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderSaverInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig;
 use Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainer;
 
@@ -22,7 +20,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return ShipmentOrderHydratorInterface
+     * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderHydratorInterface
      */
     public function createShipmentOrderHydrator()
     {
@@ -32,7 +30,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ShipmentOrderSaverInterface
+     * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderSaverInterface
      */
     public function createShipmentOrderSaver()
     {

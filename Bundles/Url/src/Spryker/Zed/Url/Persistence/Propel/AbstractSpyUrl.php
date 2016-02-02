@@ -23,7 +23,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
 {
 
     /**
-     * @throws MissingResourceException
+     * @throws \Spryker\Zed\Url\Persistence\Exception\MissingResourceException
      *
      * @return string
      */
@@ -37,7 +37,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
     }
 
     /**
-     * @throws MissingResourceException
+     * @throws \Spryker\Zed\Url\Persistence\Exception\MissingResourceException
      *
      * @return int
      */
@@ -49,7 +49,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
     }
 
     /**
-     * @throws MissingResourceException
+     * @throws \Spryker\Zed\Url\Persistence\Exception\MissingResourceException
      *
      * @return array
      */
@@ -79,7 +79,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @throws UnknownResourceTypeException
+     * @throws \Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException
      *
      * @return self
      */
@@ -94,7 +94,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
     /**
      * @param string $resourceType
      *
-     * @throws UnknownResourceTypeException
+     * @throws \Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException
      *
      * @return string
      */

@@ -19,7 +19,7 @@ class PaymentIsAppointed extends AbstractCondition
 {
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool
      */

@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductSearch\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductSearch\ProductSearchConfig;
 
 /**
@@ -31,7 +30,7 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @deprecated Use getQueryContainer() directly
      *
-     * @return ProductQueryContainerInterface
+     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected function getProductQueryContainer()
     {

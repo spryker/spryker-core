@@ -18,7 +18,7 @@ class RulesetForm extends AbstractForm
     const FIELD_TYPE = 'type';
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

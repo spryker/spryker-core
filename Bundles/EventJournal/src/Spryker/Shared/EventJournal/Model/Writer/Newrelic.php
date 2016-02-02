@@ -15,7 +15,7 @@ class Newrelic extends AbstractWriter
     const TYPE = 'newrelic';
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return bool
      */

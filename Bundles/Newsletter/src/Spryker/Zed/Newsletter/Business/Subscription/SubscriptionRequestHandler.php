@@ -41,7 +41,7 @@ class SubscriptionRequestHandler
     /**
      * @param SubscriptionManagerInterface $subscriptionManager
      * @param SubscriberManagerInterface $subscriberManager
-     * @param NewsletterQueryContainer $queryContainer
+     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
      */
     public function __construct(
         SubscriptionManagerInterface $subscriptionManager,
@@ -54,13 +54,13 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      * @param SubscriberOptInHandlerInterface $optInHandler
      *
-     * @throws MissingNewsletterSubscriberEmailException
+     * @throws \Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailException
      * @throws \Exception
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function processNewsletterSubscriptions(
         NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest,
@@ -93,12 +93,12 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @throws MissingNewsletterSubscriberEmailException
+     * @throws \Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailException
      * @throws \Exception
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function processNewsletterUnsubscriptions(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -127,9 +127,9 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function checkNewsletterSubscriptions(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -153,11 +153,11 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriberTransfer
      *
-     * @throws MissingNewsletterSubscriberEmailException
+     * @throws \Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailException
      *
-     * @return NewsletterSubscriberTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
     protected function getNewsletterSubscriber(NewsletterSubscriberTransfer $newsletterSubscriberTransfer)
     {
@@ -178,10 +178,10 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriberTransfer
-     * @param NewsletterTypeTransfer $newsletterTypeTransfer
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterTypeTransfer
      *
-     * @return NewsletterSubscriptionResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer
      */
     protected function processSubscription(NewsletterSubscriberTransfer $newsletterSubscriberTransfer, NewsletterTypeTransfer $newsletterTypeTransfer)
     {
@@ -198,7 +198,7 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     protected function createSubscriptionResponse()
     {
@@ -208,9 +208,9 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterTypeTransfer $newsletterTypeTransfer
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterTypeTransfer
      *
-     * @return NewsletterSubscriptionResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer
      */
     protected function createAlreadySubscribedResult(NewsletterTypeTransfer $newsletterTypeTransfer)
     {
@@ -221,10 +221,10 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterTypeTransfer $newsletterType
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
      * @param bool $isSuccess
      *
-     * @return NewsletterSubscriptionResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer
      */
     protected function createSubscriptionResultTransfer(NewsletterTypeTransfer $newsletterType, $isSuccess)
     {
@@ -236,7 +236,7 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $subscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriber
      *
      * @return void
      */

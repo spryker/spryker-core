@@ -14,9 +14,9 @@ interface TransferGeneratorInterface
 {
 
     /**
-     * @param SpyProductCategory $productCategoryEntity
+     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory $productCategoryEntity
      *
-     * @return ProductCategoryTransfer
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer
      */
     public function convertProductCategory(SpyProductCategory $productCategoryEntity);
 

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Product\Business\Internal;
 
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
-use Propel\Runtime\Exception\PropelException;
 
 class Install extends AbstractInstaller
 {
@@ -19,7 +18,7 @@ class Install extends AbstractInstaller
     protected $attributeManager;
 
     /**
-     * @param AttributeManagerInterface $attributeManager
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface $attributeManager
      */
     public function __construct(AttributeManagerInterface $attributeManager)
     {
@@ -53,7 +52,7 @@ class Install extends AbstractInstaller
     }
 
     /**
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

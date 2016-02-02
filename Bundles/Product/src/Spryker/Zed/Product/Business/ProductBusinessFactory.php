@@ -13,23 +13,11 @@ use Spryker\Zed\Product\Business\Importer\Writer\Db\ProductAbstractWriter;
 use Spryker\Zed\Product\Business\Importer\Writer\ProductWriter;
 use Spryker\Zed\Product\Business\Importer\Builder\ProductBuilder;
 use Spryker\Zed\Product\Business\Importer\Reader\File\CsvReader;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface;
-use Spryker\Zed\Product\Business\Builder\ProductBuilderInterface;
 use Spryker\Zed\Product\Business\Importer\FileImporter;
-use Spryker\Zed\Product\Business\Importer\Reader\File\IteratorReaderInterface;
 use Spryker\Zed\Product\Business\Importer\Upload\UploadedFileImporter;
 use Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator;
-use Spryker\Zed\Product\Business\Importer\Writer\ProductAbstractWriterInterface;
-use Spryker\Zed\Product\Business\Importer\Writer\ProductConcreteWriterInterface;
-use Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface;
 use Spryker\Zed\Product\Business\Internal\Install;
-use Spryker\Zed\Product\Business\Model\ProductBatchResultInterface;
-use Spryker\Zed\Product\Business\Product\ProductManagerInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
-use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Product\ProductConfig;
@@ -49,7 +37,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected $productManager;
 
     /**
-     * @return UploadedFileImporter
+     * @return \Spryker\Zed\Product\Business\Importer\Upload\UploadedFileImporter
      */
     public function createHttpFileImporter()
     {
@@ -79,7 +67,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return FileImporter
+     * @return \Spryker\Zed\Product\Business\Importer\FileImporter
      */
     public function createProductImporter()
     {
@@ -95,7 +83,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ImportProductValidator
+     * @return \Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator
      */
     protected function createImportProductValidator()
     {
@@ -103,7 +91,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return IteratorReaderInterface
+     * @return \Spryker\Zed\Product\Business\Importer\Reader\File\IteratorReaderInterface
      */
     protected function createCSVReader()
     {
@@ -111,7 +99,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductBuilderInterface
+     * @return \Spryker\Zed\Product\Business\Builder\ProductBuilderInterface
      */
     protected function createImportProductBuilder()
     {
@@ -119,7 +107,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductWriterInterface
+     * @return \Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface
      */
     protected function createProductWriter()
     {
@@ -130,7 +118,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductAbstractWriterInterface
+     * @return \Spryker\Zed\Product\Business\Importer\Writer\ProductAbstractWriterInterface
      */
     protected function createProductAbstractWriter()
     {
@@ -140,7 +128,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductConcreteWriterInterface
+     * @return \Spryker\Zed\Product\Business\Importer\Writer\ProductConcreteWriterInterface
      */
     protected function createProductConcreteWriter()
     {
@@ -150,7 +138,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductBatchResultInterface
+     * @return \Spryker\Zed\Product\Business\Model\ProductBatchResultInterface
      */
     protected function createProductBatchResult()
     {
@@ -158,9 +146,9 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
-     * @return Install
+     * @return \Spryker\Zed\Product\Business\Internal\Install
      */
     public function createInstaller(MessengerInterface $messenger)
     {
@@ -173,7 +161,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AttributeManagerInterface
+     * @return \Spryker\Zed\Product\Business\Attribute\AttributeManagerInterface
      */
     public function createAttributeManager()
     {
@@ -183,7 +171,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductManagerInterface
+     * @return \Spryker\Zed\Product\Business\Product\ProductManagerInterface
      */
     public function createProductManager()
     {
@@ -200,7 +188,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductToLocaleInterface
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
     protected function getLocaleFacade()
     {
@@ -208,7 +196,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductToTouchInterface
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface
      */
     protected function getTouchFacade()
     {
@@ -216,7 +204,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductToUrlInterface
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
     protected function getUrlFacade()
     {
@@ -224,7 +212,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getCurrentLocale()
     {

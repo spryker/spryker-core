@@ -30,7 +30,7 @@ abstract class AbstractDependencyFinder
     private $fileInfoExtractor;
 
     /**
-     * @param AbstractDependencyTree $dependencyTree
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\AbstractDependencyTree $dependencyTree
      *
      * @return self
      */
@@ -42,7 +42,7 @@ abstract class AbstractDependencyFinder
     }
 
     /**
-     * @return AbstractDependencyTree
+     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\AbstractDependencyTree
      */
     public function getDependencyTree()
     {
@@ -50,7 +50,7 @@ abstract class AbstractDependencyFinder
     }
 
     /**
-     * @param FileInfoExtractor $fileInfoExtractor
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor $fileInfoExtractor
      *
      * @return self
      */
@@ -62,14 +62,14 @@ abstract class AbstractDependencyFinder
     }
 
     /**
-     * @param SplFileInfo $fileInfo
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
      * @return void
      */
     abstract public function addDependencies(SplFileInfo $fileInfo);
 
     /**
-     * @param SplFileInfo $fileInfo
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      * @param string $to
      * @param array $dependencyInformation
      *

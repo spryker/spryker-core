@@ -27,9 +27,9 @@ class NavigationBuilder
     private $menuFormatter;
 
     /**
-     * @param NavigationCollectorInterface $navigationCollector
-     * @param MenuFormatterInterface $menuFormatter
-     * @param PathExtractorInterface $pathExtractor
+     * @param \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface $navigationCollector
+     * @param \Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface $menuFormatter
+     * @param \Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface $pathExtractor
      */
     public function __construct(
         NavigationCollectorInterface $navigationCollector,

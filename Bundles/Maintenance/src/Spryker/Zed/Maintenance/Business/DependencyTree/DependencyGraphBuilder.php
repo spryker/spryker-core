@@ -29,9 +29,9 @@ class DependencyGraphBuilder
     private $filter;
 
     /**
-     * @param GraphBuilderInterface $graphBuilder
-     * @param DependencyTreeReaderInterface $dependencyTreeReader
-     * @param TreeFilter $filter
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\GraphBuilderInterface $graphBuilder
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface $dependencyTreeReader
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter $filter
      */
     public function __construct(
         GraphBuilderInterface $graphBuilder,

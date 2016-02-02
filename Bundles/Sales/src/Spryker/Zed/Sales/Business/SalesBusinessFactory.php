@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Sales\Business;
 
-use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Sales\Business\Model\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Split\Validation\Validator;
 use Spryker\Zed\Sales\Business\Model\Split\Calculator;
@@ -15,12 +14,6 @@ use Spryker\Zed\Sales\Business\Model\OrderManager;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Model\CommentManager;
 use Spryker\Zed\Sales\Business\Model\OrderDetailsManager;
-use Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface;
-use Spryker\Zed\Sales\Business\Model\Split\ItemInterface;
-use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
@@ -43,7 +36,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CommentManager
+     * @return \Spryker\Zed\Sales\Business\Model\CommentManager
      */
     public function createCommentsManager()
     {
@@ -53,7 +46,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OrderDetailsManager
+     * @return \Spryker\Zed\Sales\Business\Model\OrderDetailsManager
      */
     public function createOrderDetailsManager()
     {
@@ -67,7 +60,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getQueryContainer() directly instead.
      *
-     * @return SalesQueryContainer
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainer
      */
     public function createSalesQueryContainer()
     {
@@ -77,7 +70,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Split\ItemInterface
      */
     public function createOrderItemSplitter()
     {
@@ -89,7 +82,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ValidatorInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface
      */
     protected function createSplitValidator()
     {
@@ -99,7 +92,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OrderReferenceGeneratorInterface
+     * @return \Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface
      */
     public function createReferenceGenerator()
     {
@@ -112,7 +105,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SalesToSequenceNumberInterface
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface
      */
     protected function getSequenceNumberFacade()
     {
@@ -122,7 +115,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getSequenceNumberFacade() instead.
      *
-     * @return SalesToSequenceNumberInterface
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface
      */
     protected function createSequenceNumberFacade()
     {
@@ -132,7 +125,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Calculator
+     * @return \Spryker\Zed\Sales\Business\Model\Split\Calculator
      */
     protected function createCalculator()
     {
@@ -142,9 +135,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return SalesToOmsInterface
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     public function getFacadeOms()
     {
@@ -152,9 +145,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return SalesToRefundInterface
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToRefundInterface
      */
     public function getFacadeRefund()
     {

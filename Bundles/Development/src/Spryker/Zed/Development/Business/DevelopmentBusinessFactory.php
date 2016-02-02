@@ -21,7 +21,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CodeStyleFixer
+     * @return \Spryker\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer
      */
     public function createCodeStyleFixer()
     {
@@ -32,7 +32,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CodeStyleSniffer
+     * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
     public function createCodeStyleSniffer()
     {
@@ -43,7 +43,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CodeTester
+     * @return \Spryker\Zed\Development\Business\CodeTest\CodeTester
      */
     public function createCodeTester()
     {
@@ -54,7 +54,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PhpMdRunner
+     * @return \Spryker\Zed\Development\Business\PhpMd\PhpMdRunner
      */
     public function createPhpMdRunner()
     {
@@ -65,7 +65,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return BridgeBuilder
+     * @return \Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder
      */
     public function createBridgeBuilder()
     {

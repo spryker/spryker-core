@@ -8,13 +8,12 @@ namespace Spryker\Client\Shipment;
 
 use Spryker\Client\Shipment\Zed\ShipmentStub;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Shipment\Zed\ShipmentStubInterface;
 
 class ShipmentFactory extends AbstractFactory
 {
 
     /**
-     * @return ShipmentStubInterface
+     * @return \Spryker\Client\Shipment\Zed\ShipmentStubInterface
      */
     public function createZedStub()
     {

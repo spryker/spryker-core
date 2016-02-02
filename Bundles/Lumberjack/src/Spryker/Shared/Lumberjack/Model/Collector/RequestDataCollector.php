@@ -102,7 +102,7 @@ class RequestDataCollector extends AbstractDataCollector
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */

@@ -70,8 +70,8 @@ class CmsBlockForm extends AbstractForm
     protected $selectValue;
 
     /**
-     * @param SpyCmsTemplateQuery $templateQuery
-     * @param SpyCmsBlockQuery $blockPageByIdQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery $templateQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery $blockPageByIdQuery
      * @param string $formType
      * @param int $idCmsBlock
      */
@@ -104,7 +104,7 @@ class CmsBlockForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

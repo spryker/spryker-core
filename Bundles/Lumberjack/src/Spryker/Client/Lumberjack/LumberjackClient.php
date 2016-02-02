@@ -18,7 +18,7 @@ class LumberjackClient extends AbstractClient
 {
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\Lumberjack\Model\EventInterface $event
      *
      * @return void
      */

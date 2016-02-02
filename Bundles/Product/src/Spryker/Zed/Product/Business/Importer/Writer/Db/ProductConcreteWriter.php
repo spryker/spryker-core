@@ -33,7 +33,7 @@ class ProductConcreteWriter implements ProductConcreteWriterInterface
     protected $localeTransfer;
 
     /**
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      */
     public function __construct(LocaleTransfer $localeTransfer)
     {
@@ -43,7 +43,7 @@ class ProductConcreteWriter implements ProductConcreteWriterInterface
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool
      */

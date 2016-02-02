@@ -7,7 +7,6 @@
 namespace Spryker\Zed\ShipmentCheckoutConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
 use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig;
 use Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainer;
@@ -20,7 +19,7 @@ class ShipmentCheckoutConnectorCommunicationFactory extends AbstractCommunicatio
 {
 
     /**
-     * @return ShipmentFacade
+     * @return \Spryker\Zed\Shipment\Business\ShipmentFacade
      */
     public function getShipmentFacade()
     {
@@ -32,7 +31,7 @@ class ShipmentCheckoutConnectorCommunicationFactory extends AbstractCommunicatio
     /**
      * @deprecated Use getShipmentFacade() instead.
      *
-     * @return ShipmentFacade
+     * @return \Spryker\Zed\Shipment\Business\ShipmentFacade
      */
     public function createShipmentFacade()
     {

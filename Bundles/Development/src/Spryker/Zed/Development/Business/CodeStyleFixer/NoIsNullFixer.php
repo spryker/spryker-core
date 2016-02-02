@@ -161,7 +161,7 @@ class NoIsNullFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens $tokens
      * @param int $prevIndex
      * @param int $nextEndBraceIndex
      *

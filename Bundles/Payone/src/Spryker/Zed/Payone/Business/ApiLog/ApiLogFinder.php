@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 
 class ApiLogFinder
 {
@@ -23,7 +22,7 @@ class ApiLogFinder
     private $queryContainer;
 
     /**
-     * @param PayoneQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface $queryContainer
      */
     public function __construct(PayoneQueryContainerInterface $queryContainer)
     {
@@ -31,7 +30,7 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -45,7 +44,7 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -59,7 +58,7 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -73,7 +72,7 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -87,7 +86,7 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -101,7 +100,7 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -115,7 +114,7 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -129,7 +128,7 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -143,7 +142,7 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -157,7 +156,7 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -171,7 +170,7 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param string $request Relevant request
      * @param string $status Expected status
      *
@@ -190,9 +189,9 @@ class ApiLogFinder
     }
 
     /**
-     * @param PayonePaymentTransfer $payonePaymentTransfer
+     * @param \Generated\Shared\Transfer\PayonePaymentTransfer $payonePaymentTransfer
      *
-     * @return PayoneAuthorizationCheckResponseTransfer
+     * @return \Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer
      */
     public function getAuthorizationResponse(PayonePaymentTransfer $payonePaymentTransfer)
     {
@@ -262,7 +261,7 @@ class ApiLogFinder
     /**
      * @param int $transactionId
      *
-     * @return SpyPaymentPayone
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
     protected function findPaymentByTransactionId($transactionId)
     {
@@ -270,9 +269,9 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return SpyPaymentPayone
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
     protected function findPaymentByOrder(OrderTransfer $orderTransfer)
     {
@@ -280,10 +279,10 @@ class ApiLogFinder
     }
 
     /**
-     * @param SpyPaymentPayone $payment
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $payment
      * @param $authorizationType
      *
-     * @return SpyPaymentPayoneApiLog
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog
      */
     protected function findApiLog(SpyPaymentPayone $payment, $authorizationType)
     {

@@ -6,11 +6,8 @@
 
 namespace Spryker\Client\Customer\Zed;
 
-use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Client\ZedRequest\Client\Response;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CustomerStub implements CustomerStubInterface
@@ -22,7 +19,7 @@ class CustomerStub implements CustomerStubInterface
     protected $zedStub;
 
     /**
-     * @param ZedRequestClient $zedStub
+     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
      */
     public function __construct(ZedRequestClient $zedStub)
     {
@@ -30,9 +27,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function hasCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer)
     {
@@ -40,9 +37,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer)
     {
@@ -50,9 +47,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
@@ -60,9 +57,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
@@ -70,9 +67,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function register(CustomerTransfer $customerTransfer)
     {
@@ -80,9 +77,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function get(CustomerTransfer $customerTransfer)
     {
@@ -90,9 +87,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function update(CustomerTransfer $customerTransfer)
     {
@@ -100,9 +97,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function updatePassword(CustomerTransfer $customerTransfer)
     {
@@ -110,9 +107,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return Response
+     * @return \Spryker\Client\ZedRequest\Client\Response
      */
     public function delete(CustomerTransfer $customerTransfer)
     {
@@ -120,9 +117,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function createAddress(AddressTransfer $addressTransfer)
     {
@@ -130,9 +127,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function updateAddress(AddressTransfer $addressTransfer)
     {
@@ -140,9 +137,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
@@ -150,9 +147,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
@@ -160,9 +157,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function getAddress(AddressTransfer $addressTransfer)
     {
@@ -170,9 +167,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return AddressesTransfer
+     * @return \Generated\Shared\Transfer\AddressesTransfer
      */
     public function getAddresses(CustomerTransfer $customerTransfer)
     {
@@ -180,9 +177,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function deleteAddress(AddressTransfer $AddressTransfer)
     {
@@ -190,9 +187,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function setDefaultBillingAddress(AddressTransfer $AddressTransfer)
     {
@@ -200,9 +197,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param AddressTransfer $AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function setDefaultShippingAddress(AddressTransfer $AddressTransfer)
     {
