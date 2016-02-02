@@ -46,7 +46,7 @@ class Graph implements GraphInterface
      * @param string $toNode
      * @param array $attributes
      *
-     * @return $this
+     * @return self
      */
     public function addEdge($fromNode, $toNode, $attributes = [])
     {
