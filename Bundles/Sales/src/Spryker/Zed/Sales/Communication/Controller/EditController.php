@@ -21,7 +21,7 @@ class EditController extends AbstractController
      */
     public function customerAction(Request $request)
     {
-        $idOrder = $request->get('id-sales-order');
+        $idOrder = $request->query->getInt('id-sales-order');
 
         $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
         $form = $this->getFactory()
@@ -51,8 +51,8 @@ class EditController extends AbstractController
      */
     public function addressAction(Request $request)
     {
-        $idOrder = $request->get('id-sales-order');
-        $idOrderAddress = $request->get('id-address');
+        $idOrder = $request->query->getInt('id-sales-order');
+        $idOrderAddress = $request->query->getInt('id-address');
 
         $dataProvider = $this->getFactory()->createAddressFormDataProvider();
         $form = $this->getFactory()

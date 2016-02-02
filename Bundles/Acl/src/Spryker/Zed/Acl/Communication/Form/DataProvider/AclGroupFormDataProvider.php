@@ -26,12 +26,16 @@ class AclGroupFormDataProvider
     }
 
     /**
-     * @param int $idGroup
+     * @param int|null $idGroup
      *
      * @return array
      */
-    public function getData($idGroup)
+    public function getData($idGroup = null)
     {
+        if (!$idGroup) {
+            return [];
+        }
+
         $group = $this->queryContainer
             ->queryGroupById($idGroup)
             ->findOne();

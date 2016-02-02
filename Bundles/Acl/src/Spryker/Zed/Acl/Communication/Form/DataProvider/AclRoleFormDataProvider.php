@@ -25,6 +25,8 @@ class AclRoleFormDataProvider
     }
 
     /**
+     * @param int $idAclRole
+     *
      * @return array
      */
     public function getData($idAclRole)
@@ -32,14 +34,6 @@ class AclRoleFormDataProvider
         $roleTransfer = $this->aclFacade->getRoleById($idAclRole);
 
         return $roleTransfer->toArray();
-    }
-
-    /**
-     * @return array
-     */
-    public function getOptions()
-    {
-        return [];
     }
 
 }

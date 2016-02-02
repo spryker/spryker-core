@@ -97,7 +97,7 @@ class RoleController extends AbstractController
      */
     public function updateAction(Request $request)
     {
-        $idAclRole = $request->get(self::PARAM_ID_ROLE);
+        $idAclRole = $request->query->getInt(self::PARAM_ID_ROLE);
 
         if (empty($idAclRole)) {
             $this->addErrorMessage('Missing role id!');
@@ -108,10 +108,7 @@ class RoleController extends AbstractController
         $dataProvider = $this->getFactory()->createAclRoleFormDataProvider();
 
         $roleForm = $this->getFactory()
-            ->createRoleForm(
-                $dataProvider->getData($idAclRole),
-                $dataProvider->getOptions()
-            )
+            ->createRoleForm($dataProvider->getData($idAclRole))
             ->handleRequest($request);
 
         $this->handleRoleForm($request, $roleForm);

@@ -94,7 +94,7 @@ class BlockController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idBlock = $request->get(CmsBlockTable::REQUEST_ID_BLOCK);
+        $idBlock = $request->query->getInt(CmsBlockTable::REQUEST_ID_BLOCK);
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $dataProvider = $this->getFactory()->createCmsBlockFormDataProvider();

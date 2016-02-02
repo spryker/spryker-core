@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RoleTransfer;
 use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -61,41 +61,10 @@ class GroupController extends AbstractController
 
         $form = $this->getFactory()
             ->createGroupForm(
-                [],
+                $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
-
-        if ($form->isValid()) {
-            $formData = $form->getData();
-
-            $roles = $this->getRoleTransfersFromForm($formData);
-
-            $groupTransfer = $this->getFacade()->addGroup(
-                $formData[GroupForm::FIELD_TITLE],
-                $roles
-            );
-
-            return $this->redirectResponse('/acl/group/edit?' . self::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
-        }
-
-        return $this->viewResponse([
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function addActionOLD(Request $request)
-    {
-        $form = $this->getFactory()->createGroupForm($request, [
-            'validation_groups' => [GroupForm::VALIDATE_ADD],
-        ]);
-
-        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
@@ -155,45 +124,6 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
-    public function editActionOLD(Request $request)
-    {
-        $idAclGroup = $request->query->get(self::PARAMETER_ID_GROUP);
-
-        $form = $this->getFactory()->createGroupForm($request, [
-            'validation_groups' => [GroupForm::VALIDATE_EDIT],
-        ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $formData = $form->getData();
-
-            $roles = $this->getRoleTransfersFromForm($formData);
-
-            $groupTransfer = $this->getFacade()->getGroup($idAclGroup);
-            $groupTransfer->setName($formData[GroupForm::FIELD_TITLE]);
-            $groupTransfer = $this->getFacade()
-                ->updateGroup(
-                    $groupTransfer,
-                    $roles
-                );
-
-            return $this->redirectResponse('/acl/group/edit?' . self::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
-        }
-
-        $usersTable = $this->getFactory()->createGroupUsersTable($idAclGroup);
-
-        return $this->viewResponse([
-            'form' => $form->createView(),
-            'users' => $usersTable->render(),
-        ]);
-    }
-
-    /**
      * @param array $formData
      *
      * @return \Generated\Shared\Transfer\RolesTransfer
@@ -228,6 +158,11 @@ class GroupController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function removeUserFromGroupAction(Request $request)
     {
         $idGroup = (int) $request->request->get(self::PARAMETER_ID_GROUP);

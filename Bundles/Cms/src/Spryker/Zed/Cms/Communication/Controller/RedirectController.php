@@ -87,7 +87,7 @@ class RedirectController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idUrl = $request->get(CmsRedirectTable::REQUEST_ID_URL);
+        $idUrl = $request->query->getInt(CmsRedirectTable::REQUEST_ID_URL);
 
         $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()

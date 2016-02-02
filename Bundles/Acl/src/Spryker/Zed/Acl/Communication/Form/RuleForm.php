@@ -34,10 +34,7 @@ class RuleForm extends AbstractType
      *
      * @return void
      */
-    public /**
-     * @return void
-     */
-    function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
 
@@ -50,10 +47,7 @@ class RuleForm extends AbstractType
      *
      * @return void
      */
-    public /**
-     * @return void
-     */
-    function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
             ->addBundleField($builder)

@@ -29,10 +29,7 @@ class RoleForm extends AbstractType
      *
      * @return void
      */
-    public /**
-     * @return void
-     */
-    function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
             ->addNameField($builder)
