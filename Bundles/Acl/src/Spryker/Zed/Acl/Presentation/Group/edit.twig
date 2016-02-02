@@ -26,7 +26,7 @@
 
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Users in Group' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Users' } %}
 
         {% block widget_content %}
 
@@ -36,4 +36,11 @@
 
     {% endembed %}
 
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script>
+        $('.spryker-form-select2combobox').select2();
+    </script>
 {% endblock %}

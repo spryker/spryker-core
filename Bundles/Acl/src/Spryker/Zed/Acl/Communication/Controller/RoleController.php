@@ -181,10 +181,10 @@ class RoleController extends AbstractController
      */
     protected function createAndHandleRuleSetForm(Request $request, $idAclRole)
     {
-        $dataProvider = $this->getFactory()->createAclRuleSetFormDataProvider();
+        $dataProvider = $this->getFactory()->createAclRuleFormDataProvider();
 
         $ruleSetForm = $this->getFactory()
-            ->createRuleSetForm(
+            ->createRuleForm(
                 $dataProvider->getData($idAclRole),
                 $dataProvider->getOptions()
             )

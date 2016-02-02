@@ -16,6 +16,7 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_USER = 'user facade';
     const FACADE_ACL = 'acl facade';
     const QUERY_CONTAINER_USER = 'user query container';
+    const QUERY_CONTAINER_ACL = 'acl query container';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,6 +27,7 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addFacadeUser($container);
         $container = $this->addFacadeAcl($container);
+        $container = $this->addAclQueryContainer($container);
 
         return $container;
     }
@@ -79,6 +81,20 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_ACL] = function (Container $container) {
             return $container->getLocator()->acl()->facade();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addAclQueryContainer(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_ACL] = function (Container $container) {
+            return $container->getLocator()->acl()->queryContainer();
         };
 
         return $container;

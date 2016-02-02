@@ -6,14 +6,18 @@
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
-use Spryker\Zed\Acl\Communication\Controller\GroupController;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\HttpFoundation\Request;
 
-class GroupForm extends AbstractForm
+class GroupForm extends AbstractType
 {
 
     const FIELD_TITLE = 'title';
@@ -23,23 +27,16 @@ class GroupForm extends AbstractForm
     const VALIDATE_EDIT = 'edit';
 
     /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
+     * @var AclQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
-    protected $request;
-
-    /**
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function __construct(AclQueryContainer $queryContainer, Request $request)
+    public function __construct(AclQueryContainer $queryContainer)
     {
         $this->queryContainer = $queryContainer;
-        $this->request = $request;
     }
 
     /**
@@ -48,7 +45,7 @@ class GroupForm extends AbstractForm
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm222(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_TITLE, 'text', [
             'constraints' => [
@@ -76,11 +73,68 @@ class GroupForm extends AbstractForm
     }
 
     /**
-     * @return null
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
      */
-    protected function getDataClass()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return null;
+        $this
+            ->addTitleField($builder)
+            ->addRolesField($builder);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addTitleField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_TITLE, 'text', [
+                'label' => 'Title',
+                'constraints' => [
+                    new NotBlank([
+                        'groups' => [self::VALIDATE_ADD, self::VALIDATE_EDIT],
+                    ]),
+                    new Callback([
+                        'groups' => [self::VALIDATE_ADD],
+                        'methods' => [
+                            function ($name, ExecutionContextInterface $contextInterface) {
+                                if ($this->queryContainer->queryGroupByName($name)->count() > 0) {
+                                    $contextInterface->addViolation('Group name already in use');
+                                }
+                            },
+                        ],
+                    ]),
+                ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addRolesField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_ROLES, new Select2ComboBoxType(), [
+                'constraints' => [
+                    new NotBlank(),
+                    new NotNull(),
+                ],
+                'label' => 'Assigned Roles',
+                'empty_value' => false,
+                'multiple' => true,
+                'choices' => $this->getAvailableRoleList(),
+            ]);
+
+        return $this;
     }
 
     /**
@@ -92,43 +146,27 @@ class GroupForm extends AbstractForm
     }
 
     /**
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        $defaultData = [
-            self::FIELD_TITLE => '',
-            self::FIELD_ROLES => [],
-        ];
-
-        $idGroup = $this->request->query->get(GroupController::PARAMETER_ID_GROUP);
-
-        if ($idGroup > 0) {
-            $group = $this->queryContainer->queryGroupById($idGroup)->findOne();
-            $defaultData[self::FIELD_TITLE] = $group->getName();
-
-            $defaultData[self::FIELD_ROLES] = $this->getAvailableRoleListByIdGroup($idGroup);
-        }
-
-        return $defaultData;
-    }
-
-    /**
-     * @param int $idAclGroup
+     * @param OptionsResolverInterface $resolver
      *
-     * @return array
+     * @return void
      */
-    public function getAvailableRoleListByIdGroup($idAclGroup)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $roleCollection = $this->queryContainer->queryGroupHasRole($idAclGroup)->find()->toArray();
+        parent::setDefaultOptions($resolver);
 
-        return array_column($roleCollection, 'FkAclRole');
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+
+                return [GroupForm::VALIDATE_EDIT];
+            },
+
+        ]);
     }
 
     /**
      * @return array
      */
-    public function getAvailableRoleList()
+    protected function getAvailableRoleList()
     {
         $roleCollection = $this->queryContainer->queryRole()->find()->toArray();
 

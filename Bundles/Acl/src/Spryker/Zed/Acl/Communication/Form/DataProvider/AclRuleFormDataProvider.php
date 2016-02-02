@@ -11,7 +11,7 @@ use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Communication\Form\RuleForm;
 
-class AclRuleSetFormDataProvider
+class AclRuleFormDataProvider
 {
 
     /**
