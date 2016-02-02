@@ -32,4 +32,6 @@ $(document).ready(function() {
     });
 
     $('.dropdown-toggle').dropdown();
+
+    $('.spryker-form-select2combobox').select2();
 });
