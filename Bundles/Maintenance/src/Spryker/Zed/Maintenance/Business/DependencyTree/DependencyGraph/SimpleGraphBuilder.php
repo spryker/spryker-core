@@ -6,20 +6,23 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
-use Spryker\Zed\Library\Service\GraphViz;
+use Spryker\Tool\Graph\GraphInterface;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 
 class SimpleGraphBuilder implements GraphBuilderInterface
 {
 
     /**
-     * @var GraphViz
+     * @var GraphInterface
      */
     private $graph;
 
-    public function __construct()
+    /**
+     * @param GraphInterface $graph
+     */
+    public function __construct(GraphInterface $graph)
     {
-        $this->graph = new GraphViz(true, [], 'Bundle Dependencies', true, true);
+        $this->graph = $graph;
     }
 
     /**
@@ -31,13 +34,14 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     {
         foreach ($dependencyTree as $dependency) {
             $this->graph->addNode($dependency[DependencyTree::META_BUNDLE], $this->getNodeAttributes($dependency));
+            $this->graph->addNode($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->getNodeAttributes($dependency));
         }
 
         foreach ($dependencyTree as $dependency) {
-            $this->graph->addEdge([$dependency[DependencyTree::META_BUNDLE] => $dependency[DependencyTree::META_FOREIGN_BUNDLE]], $this->getEdgeAttributes($dependency));
+            $this->graph->addEdge($dependency[DependencyTree::META_BUNDLE], $dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->getEdgeAttributes($dependency));
         }
 
-        return $this->graph->image('svg', 'dot');
+        return $this->graph->render('svg');
     }
 
     /**

@@ -6,12 +6,12 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
+use Spryker\Tool\Graph\GraphInterface;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\UseStatement;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
-use Spryker\Zed\Library\Service\GraphViz;
 
 class DetailedGraphBuilder implements GraphBuilderInterface
 {
@@ -52,9 +52,12 @@ class DetailedGraphBuilder implements GraphBuilderInterface
         'fontsize' => 8,
     ];
 
-    public function __construct()
+    /**
+     * @param GraphInterface $graph
+     */
+    public function __construct(GraphInterface $graph)
     {
-        $this->graph = new GraphViz(true, [], 'Bundle Dependencies', true, true);
+        $this->graph = $graph;
     }
 
     /**
@@ -66,7 +69,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
     {
         $this->buildGraph($dependencyTree);
 
-        return $this->graph->image('svg', 'dot');
+        return $this->graph->render('svg');
     }
 
     /**
@@ -120,15 +123,10 @@ class DetailedGraphBuilder implements GraphBuilderInterface
     private function addRootBundleLayer(array $dependency, $group)
     {
         $rootBundleLayerNodeId = $this->getRootBundleLayerNodeId($dependency);
-        if ($this->graph->hasNode($rootBundleLayerNodeId, $group)) {
-            return;
-        }
         $label = $dependency[DependencyTree::META_LAYER];
         $this->layerAttributes['label'] = $label;
         $this->graph->addNode($rootBundleLayerNodeId, $this->layerAttributes, $group);
-        $this->graph->addEdge([
-            $this->getRootNodeId($dependency[DependencyTree::META_BUNDLE]) => $rootBundleLayerNodeId]
-        );
+        $this->graph->addEdge($this->getRootNodeId($dependency[DependencyTree::META_BUNDLE]), $rootBundleLayerNodeId);
     }
 
     /**
@@ -150,13 +148,8 @@ class DetailedGraphBuilder implements GraphBuilderInterface
     private function addRootFile(array $dependencyInformation, $group)
     {
         $rootFileNodeId = $this->getRootFileNodeId($dependencyInformation);
-        if ($this->graph->hasNode($rootFileNodeId, $group)) {
-            return;
-        }
         $this->graph->addNode($rootFileNodeId, $this->rootFileAttributes, $group);
-        $this->graph->addEdge([
-            $this->getRootBundleLayerNodeId($dependencyInformation) => $rootFileNodeId]
-        );
+        $this->graph->addEdge($this->getRootBundleLayerNodeId($dependencyInformation), $rootFileNodeId);
     }
 
     /**
@@ -184,12 +177,12 @@ class DetailedGraphBuilder implements GraphBuilderInterface
         $this->graph->addNode($foreignBundleLayerNodeId, $attributes, $group);
 
         $this->graph->addEdge(
-            [$this->getRootFileNodeId($dependencyInformation) => $foreignBundleLayerNodeId],
+            $this->getRootFileNodeId($dependencyInformation),
+            $foreignBundleLayerNodeId,
             [
                 'label' => $this->getForeignUsage($dependencyInformation[DependencyTree::META_FINDER]) . ' : ' . $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME],
                 'fontsize' => 8,
-            ],
-            $group
+            ]
         );
     }
 

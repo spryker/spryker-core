@@ -1,0 +1,10 @@
+{
+  "name": "spryker/tool-graph-phpdocumentor",
+  "require": {
+    "spryker/tool-graph": "^1.0.0",
+    "phpdocumentor/graphviz": "~1.0.0"
+  },
+  "require-dev": {
+    "codeception/codeception": "~2.1.0"
+  }
+}

@@ -89,9 +89,14 @@ class DependencyController extends AbstractController
      */
     public function dependencyTreeGraphAction(Request $request)
     {
+        if (!$request->query->get('bundle', false)) {
+            $this->addErrorMessage('You must specify a bundle for which the graph should be build');
+            return $this->redirectResponse('/maintenance/dependency');
+        }
+
         $callback = function () use ($request) {
             $bundleToView = $request->query->get('bundle', false);
-            $this->getFacade()->drawDetailedDependencyTreeGraph($bundleToView);
+            echo $this->getFacade()->drawDetailedDependencyTreeGraph($bundleToView);
         };
 
         return $this->streamedResponse($callback);
@@ -106,7 +111,7 @@ class DependencyController extends AbstractController
     {
         $callback = function () use ($request) {
             $bundleToView = $request->query->get('bundle', false);
-            $this->getFacade()->drawSimpleDependencyTreeGraph($bundleToView);
+            echo $this->getFacade()->drawSimpleDependencyTreeGraph($bundleToView);
         };
 
         return $this->streamedResponse($callback);

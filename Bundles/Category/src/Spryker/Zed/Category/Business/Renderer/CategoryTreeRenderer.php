@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Zed\Library\Service\GraphViz;
+use Spryker\Tool\Graph\GraphInterface;
 
 class CategoryTreeRenderer
 {
@@ -18,21 +18,9 @@ class CategoryTreeRenderer
     const UNKNOWN_CATEGORY = 'Unknown Category';
 
     /**
-     * @var GraphViz
-     */
-    protected $graph;
-
-    /**
      * @var int
      */
     protected $fontSize = 11;
-
-    /**
-     * @var array
-     */
-    protected $graphDefault = [
-        'fontname' => 'Arial',
-    ];
 
     /**
      * @var CategoryQueryContainer
@@ -45,13 +33,20 @@ class CategoryTreeRenderer
     protected $locale;
 
     /**
+     * @var GraphInterface
+     */
+    protected $graph;
+
+    /**
      * @param CategoryQueryContainer $queryContainer
      * @param LocaleTransfer $locale
+     * @param GraphInterface $graph
      */
-    public function __construct(CategoryQueryContainer $queryContainer, LocaleTransfer $locale)
+    public function __construct(CategoryQueryContainer $queryContainer, LocaleTransfer $locale, GraphInterface $graph)
     {
         $this->queryContainer = $queryContainer;
         $this->locale = $locale;
+        $this->graph = $graph;
     }
 
     /**
@@ -59,12 +54,11 @@ class CategoryTreeRenderer
      */
     public function render()
     {
-        $this->graph = new GraphViz(true, $this->graphDefault, 'G', false, true);
         $rootNode = $this->queryContainer->queryRootNode()->findOne();
         if ($rootNode) {
             $this->renderChildren($rootNode);
 
-            return $this->graph->image('svg', 'dot');
+            return $this->graph->render('svg');
         }
 
         return false;
@@ -101,7 +95,7 @@ class CategoryTreeRenderer
                     'fontsize' => $this->fontSize,
                 ]
             );
-            $this->graph->addEdge([$this->getNodeHash($node) => $this->getNodeHash($child)]);
+            $this->graph->addEdge($this->getNodeHash($node), $this->getNodeHash($child));
             /*
              * Recursive call
              */
@@ -140,10 +134,7 @@ class CategoryTreeRenderer
 
         foreach ($descendantPaths as $path) {
             $attributes = ['color' => '#ff0000'];
-            $edge = [
-                $this->getNodeHash($node) => $this->getNodeHash($path->getDescendantNode()),
-            ];
-            $this->graph->addEdge($edge, $attributes);
+            $this->graph->addEdge($this->getNodeHash($node), $this->getNodeHash($path->getDescendantNode()), $attributes);
         }
     }
 
