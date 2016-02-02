@@ -52,9 +52,11 @@ use Spryker\Zed\Maintenance\Business\Dependency\BundleParser;
 use Spryker\Zed\Maintenance\Business\Dependency\Graph as DependencyGraph;
 use Spryker\Zed\Maintenance\Business\Dependency\Manager;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder as ComposerInstalledPackageFinder;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
 use Spryker\Zed\Maintenance\Business\Model\PropelBaseFolderFinder;
+use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleanerInterface;
 use Spryker\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Finder\Finder as SfFinder;
@@ -135,7 +137,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Dependency\Graph
+     * @return \Spryker\Tool\Graph\Graph
      */
     public function createDependencyGraph()
     {
@@ -719,7 +721,9 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         $treeFilter = new TreeFilter();
         $treeFilter
-            ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'));
+            ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'))
+            ->addFilter($this->createDependencyTreeInvalidForeignBundleFilter())
+        ;
 
         return $treeFilter;
     }
