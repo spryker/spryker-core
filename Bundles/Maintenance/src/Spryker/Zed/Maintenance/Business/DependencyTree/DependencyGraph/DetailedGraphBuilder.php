@@ -53,7 +53,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
     ];
 
     /**
-     * @param GraphInterface $graph
+     * @param \Spryker\Tool\Graph\GraphInterface $graph
      */
     public function __construct(GraphInterface $graph)
     {

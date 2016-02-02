@@ -64,7 +64,7 @@ class Drawer implements DrawerInterface
     /**
      * @param array $commands
      * @param array $conditions
-     * @param GraphInterface $graph
+     * @param \Spryker\Tool\Graph\GraphInterface $graph
      */
     public function __construct(array $commands, array $conditions, GraphInterface $graph)
     {

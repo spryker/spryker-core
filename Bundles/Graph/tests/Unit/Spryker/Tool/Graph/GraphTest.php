@@ -139,7 +139,7 @@ class GraphTest extends \PHPUnit_Framework_TestCase
      * @param bool $directed
      * @param bool $strict
      *
-     * @return Graph
+     * @return \Spryker\Tool\Graph\Graph
      */
     private function getGraph($name = self::GRAPH_NAME, array $attributes = [], $directed = true, $strict = true)
     {
@@ -160,7 +160,7 @@ class GraphTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Graph
+     * @return \Spryker\Tool\Graph\Graph
      */
     private function getGraphWithNodes()
     {

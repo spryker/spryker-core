@@ -151,7 +151,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      * @param bool $directed
      * @param bool $strict
      *
-     * @return Graph
+     * @return \Spryker\Tool\Graph\Graph
      */
     protected function createGraphViz($name, array $attributes = [], $directed = true, $strict = true)
     {
@@ -384,7 +384,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PhpDocumentorGraphAdapter
+     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
      */
     protected function createGraphVizAdapter()
     {

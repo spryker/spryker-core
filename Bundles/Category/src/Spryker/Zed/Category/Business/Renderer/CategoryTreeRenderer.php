@@ -40,7 +40,7 @@ class CategoryTreeRenderer
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param GraphInterface $graph
+     * @param \Spryker\Tool\Graph\GraphInterface $graph
      */
     public function __construct(CategoryQueryContainer $queryContainer, LocaleTransfer $locale, GraphInterface $graph)
     {

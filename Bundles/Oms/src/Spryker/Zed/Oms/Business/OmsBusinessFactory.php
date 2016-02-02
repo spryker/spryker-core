@@ -181,7 +181,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Graph
+     * @return \Spryker\Tool\Graph\Graph
      */
     protected function createGraph()
     {
@@ -192,7 +192,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PhpDocumentorGraphAdapter
+     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
      */
     protected function createGraphAdapter()
     {

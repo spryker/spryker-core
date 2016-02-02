@@ -144,7 +144,7 @@ class PhpDocumentorGraphAdapterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PhpDocumentorGraphAdapter
+     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
      */
     private function getAdapter()
     {
@@ -154,7 +154,7 @@ class PhpDocumentorGraphAdapterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PhpDocumentorGraphAdapter
+     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
      */
     private function getGraph()
     {

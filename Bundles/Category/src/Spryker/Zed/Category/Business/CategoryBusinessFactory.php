@@ -216,7 +216,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PhpDocumentorGraphAdapter
+     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
      */
     protected function createGraphAdapter()
     {

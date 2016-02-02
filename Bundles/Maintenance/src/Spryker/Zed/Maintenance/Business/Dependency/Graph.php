@@ -39,7 +39,7 @@ class Graph
     /**
      * @param BundleParser $bundleParser
      * @param Manager $manager
-     * @param GraphInterface $graph
+     * @param \Spryker\Tool\Graph\GraphInterface $graph
      */
     public function __construct(BundleParser $bundleParser, Manager $manager, GraphInterface $graph)
     {
