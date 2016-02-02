@@ -52,9 +52,11 @@ use Spryker\Zed\Maintenance\Business\Dependency\BundleParser;
 use Spryker\Zed\Maintenance\Business\Dependency\Graph as DependencyGraph;
 use Spryker\Zed\Maintenance\Business\Dependency\Manager;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder as ComposerInstalledPackageFinder;
+use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
 use Spryker\Zed\Maintenance\Business\Model\PropelBaseFolderFinder;
+use Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleanerInterface;
 use Spryker\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Finder\Finder as SfFinder;
@@ -66,7 +68,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface
+     * @return InstalledPackageCollectorInterface
      */
     public function createPackageCollector()
     {
@@ -86,9 +88,9 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $collection
+     * @param InstalledPackagesTransfer $collection
      *
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder
+     * @return ComposerInstalledPackageFinder
      */
     protected function createComposerInstalledPackageFinder(InstalledPackagesTransfer $collection)
     {
@@ -99,10 +101,10 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $collection
+     * @param InstalledPackagesTransfer $collection
      * @param string $path
      *
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder
+     * @return InstalledPackageFinder
      */
     protected function createNodePackageManagerInstalledPackageFinder(InstalledPackagesTransfer $collection, $path)
     {
@@ -114,7 +116,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\Process\Process
+     * @return Process
      */
     protected function createNpmListProcess()
     {
@@ -122,9 +124,9 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $installedPackages
+     * @param InstalledPackagesTransfer $installedPackages
      *
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter
+     * @return MarkDownWriter
      */
     public function createMarkDownWriter(InstalledPackagesTransfer $installedPackages)
     {
@@ -135,7 +137,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Dependency\Graph
+     * @return Graph
      */
     public function createDependencyGraph()
     {
@@ -151,7 +153,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      * @param bool $directed
      * @param bool $strict
      *
-     * @return \Spryker\Tool\Graph\Graph
+     * @return Graph
      */
     protected function createGraphViz($name, array $attributes = [], $directed = true, $strict = true)
     {
@@ -162,7 +164,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Dependency\BundleParser
+     * @return BundleParser
      */
     public function createDependencyBundleParser()
     {
@@ -172,7 +174,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Dependency\Manager
+     * @return Manager
      */
     public function createDependencyManager()
     {
@@ -182,7 +184,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Model\PropelMigrationCleanerInterface
+     * @return PropelMigrationCleanerInterface
      */
     public function createPropelMigrationCleaner()
     {
@@ -194,7 +196,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated will be removed. Core does not contain any base or map directories of Propel anymore
      *
-     * @return \Spryker\Zed\Maintenance\Business\Model\PropelBaseFolderFinder
+     * @return PropelBaseFolderFinder
      */
     public function createPropelBaseFolderFinder()
     {
@@ -204,7 +206,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
+     * @return InstalledPackagesTransfer
      */
     protected function createInstalledPackageTransfer()
     {
@@ -217,7 +219,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      * @param $collection
      * @param $finder
      *
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector
+     * @return InstalledPackageCollector
      */
     protected function createInstalledPackageCollector($collection, $finder)
     {
@@ -232,7 +234,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     /**
      * @param $collector
      *
-     * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter
+     * @return InstalledPackageCollectorFilter
      */
     protected function createFilteredInstalledPackageCollector($collector)
     {
@@ -246,7 +248,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      * @param string $bundle
      * @param string $layer
      *
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeBuilder
+     * @return DependencyTreeBuilder
      */
     public function createDependencyTreeBuilder($application, $bundle, $layer)
     {
@@ -265,7 +267,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      * @param string $bundle
      * @param string $layer
      *
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\Finder
+     * @return Finder
      */
     protected function createDependencyTreeFinder($application, $bundle, $layer)
     {
@@ -280,7 +282,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree
+     * @return DependencyTree
      */
     protected function createDependencyTree()
     {
@@ -291,7 +293,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor
+     * @return FileInfoExtractor
      */
     protected function createDependencyTreeFileInfoExtractor()
     {
@@ -299,7 +301,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeWriter\JsonDependencyTreeWriter
+     * @return JsonDependencyTreeWriter
      */
     protected function createDependencyTreeWriter()
     {
@@ -307,7 +309,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\JsonDependencyTreeReader
+     * @return JsonDependencyTreeReader
      */
     public function createDependencyTreeReader()
     {
@@ -328,7 +330,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\UseStatement
+     * @return UseStatement
      */
     protected function createUseStatementChecker()
     {
@@ -336,7 +338,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade
+     * @return LocatorFacade
      */
     protected function createLocatorFacadeChecker()
     {
@@ -344,7 +346,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorQueryContainer
+     * @return LocatorQueryContainer
      */
     protected function createLocatorQueryContainerChecker()
     {
@@ -352,7 +354,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient
+     * @return LocatorClient
      */
     protected function createLocatorClientChecker()
     {
@@ -362,7 +364,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string|bool $bundleToView
      *
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraphBuilder
+     * @return DependencyGraphBuilder
      */
     public function createDetailedDependencyGraphBuilder($bundleToView)
     {
@@ -376,7 +378,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     * @return DetailedGraphBuilder
      */
     protected function createDetailedGraphBuilder()
     {
@@ -384,7 +386,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
+     * @return PhpDocumentorGraphAdapter
      */
     protected function createGraphVizAdapter()
     {
@@ -394,7 +396,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string|bool $bundleToView
      *
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter
+     * @return TreeFilter
      */
     protected function createDetailedDependencyTreeFilter($bundleToView)
     {
@@ -413,7 +415,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string|bool $bundleToView
      *
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraphBuilder
+     * @return DependencyGraphBuilder
      */
     public function createSimpleDependencyGraphBuilder($bundleToView)
     {
@@ -427,7 +429,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     * @return DetailedGraphBuilder
      */
     protected function createSimpleGraphBuilder()
     {
@@ -437,7 +439,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string|bool $bundleToView
      *
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter
+     * @return TreeFilter
      */
     protected function createSimpleGraphDependencyTreeFilter($bundleToView)
     {
@@ -456,7 +458,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\AdjacencyMatrixBuilder
+     * @return AdjacencyMatrixBuilder
      */
     public function createAdjacencyMatrixBuilder()
     {
@@ -471,7 +473,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter
+     * @return TreeFilter
      */
     protected function createAdjacencyMatrixDependencyTreeFilter()
     {
@@ -483,7 +485,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\ViolationChecker\DependencyViolationChecker
+     * @return DependencyViolationChecker
      */
     public function createDependencyViolationChecker()
     {
@@ -495,7 +497,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinder
+     * @return ViolationFinder
      */
     protected function createViolationFinder()
     {
@@ -509,7 +511,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\DependencyFilter
+     * @return DependencyFilter
      */
     protected function createDependencyViolationFilter()
     {
@@ -524,7 +526,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string $pattern
      *
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ClassNameFilter
+     * @return ClassNameFilter
      */
     protected function createDependencyTreeClassNameFilter($pattern)
     {
@@ -534,7 +536,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string $bundleToView
      *
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\BundleToViewFilter
+     * @return BundleToViewFilter
      */
     protected function createDependencyTreeBundleToViewFilter($bundleToView)
     {
@@ -542,7 +544,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignConstants
+     * @return UseForeignConstants
      */
     protected function createViolationFinderUseForeignConstants()
     {
@@ -550,7 +552,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\UseForeignException
+     * @return UseForeignException
      */
     protected function createViolationFinderUseForeignException()
     {
@@ -558,7 +560,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\BundleUsesConnector
+     * @return BundleUsesConnector
      */
     protected function createViolationFinderBundleUsesConnector()
     {
@@ -566,7 +568,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ConstantsToForeignConstantsFilter
+     * @return ConstantsToForeignConstantsFilter
      */
     protected function createDependencyTreeConstantsToForeignConstantsFilter()
     {
@@ -574,7 +576,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ForeignEngineBundleFilter
+     * @return ForeignEngineBundleFilter
      */
     protected function createDependencyTreeForeignEngineBundleFilter()
     {
@@ -584,7 +586,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\EngineBundleFilter
+     * @return EngineBundleFilter
      */
     protected function createDependencyTreeEngineBundleFilter()
     {
@@ -594,7 +596,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\InvalidForeignBundleFilter
+     * @return InvalidForeignBundleFilter
      */
     protected function createDependencyTreeInvalidForeignBundleFilter()
     {
@@ -604,7 +606,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter
+     * @return TreeFilter
      */
     protected function createDependencyTreeFilter()
     {
@@ -622,7 +624,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater
+     * @return ComposerJsonUpdater
      */
     public function createComposerJsonUpdater()
     {
@@ -633,7 +635,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinder
+     * @return ComposerJsonFinder
      */
     protected function createComposerJsonFinder()
     {
@@ -646,7 +648,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Composer\Updater\ComposerUpdaterComposite
+     * @return ComposerUpdaterComposite
      */
     protected function createComposerJsonUpdaterComposite()
     {
@@ -662,7 +664,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder
+     * @return SfFinder
      */
     protected function createFinder()
     {
@@ -670,7 +672,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Composer\Updater\DescriptionUpdater
+     * @return DescriptionUpdater
      */
     protected function createComposerJsonDescriptionUpdater()
     {
@@ -678,7 +680,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Composer\Updater\LicenseUpdater
+     * @return LicenseUpdater
      */
     protected function createComposerJsonLicenseUpdater()
     {
@@ -686,7 +688,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Composer\Updater\RequireUpdater
+     * @return RequireUpdater
      */
     protected function createComposerJsonRequireUpdater()
     {
@@ -697,7 +699,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Composer\Updater\MinimumStabilityUpdater
+     * @return MinimumStabilityUpdater
      */
     protected function createComposerJsonMinimumStabilityUpdater()
     {
@@ -705,7 +707,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Composer\Updater\BranchAliasUpdater
+     * @return BranchAliasUpdater
      */
     protected function createComposerJsonBranchAliasUpdater()
     {
@@ -713,13 +715,15 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter
+     * @return TreeFilter
      */
     protected function createComposerJsonRequireUpdaterTreeFilter()
     {
         $treeFilter = new TreeFilter();
         $treeFilter
-            ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'));
+            ->addFilter($this->createDependencyTreeClassNameFilter('/\\Dependency\\\(.*?)Interface/'))
+            ->addFilter($this->createDependencyTreeInvalidForeignBundleFilter())
+        ;
 
         return $treeFilter;
     }
