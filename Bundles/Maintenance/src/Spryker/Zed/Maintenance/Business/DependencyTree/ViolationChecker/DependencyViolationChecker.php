@@ -70,4 +70,5 @@ class DependencyViolationChecker implements DependencyViolationCheckerInterface
     {
         $this->dependencyViolations[] = $dependency[DependencyTree::META_CLASS_NAME] . ' => ' . $dependency[DependencyTree::META_FOREIGN_CLASS_NAME];
     }
+
 }

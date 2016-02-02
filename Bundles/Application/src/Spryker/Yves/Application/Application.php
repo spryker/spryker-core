@@ -6,9 +6,7 @@
 
 namespace Spryker\Yves\Application;
 
-use Elastica\Client;
 use Spryker\Shared\Application\Communication\Application as SharedApplication;
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
 use Spryker\Yves\Library\Session\TransferSession;
 use Symfony\Component\HttpFoundation\Session\Session;
 

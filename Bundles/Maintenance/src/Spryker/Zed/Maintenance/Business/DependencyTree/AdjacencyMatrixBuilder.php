@@ -56,7 +56,6 @@ class AdjacencyMatrixBuilder
         $this->buildMatrixStructure();
 
         foreach ($dependencyTree as $dependency) {
-
             $bundle = $dependency[DependencyTree::META_BUNDLE];
             $foreignBundle = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
             $info = $this->matrix[$bundle][$foreignBundle];

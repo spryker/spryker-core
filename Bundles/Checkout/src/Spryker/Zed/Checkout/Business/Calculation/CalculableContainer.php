@@ -8,7 +8,6 @@ namespace Spryker\Zed\Checkout\Business\Calculation;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Generated\Shared\Transfer\CalculableContainerTransfer;
 
 class CalculableContainer implements CalculableInterface
 {

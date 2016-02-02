@@ -22,9 +22,6 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Discount\Business\Collector\CollectorInterface;
 use Spryker\Zed\Discount\Business\Model\CalculatorInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
 class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInterface
 {

@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfigInterface;
 

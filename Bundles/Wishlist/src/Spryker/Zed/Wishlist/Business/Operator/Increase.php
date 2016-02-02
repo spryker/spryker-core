@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Wishlist\Business\Operator;
 
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 
 class Increase extends AbstractOperator
 {

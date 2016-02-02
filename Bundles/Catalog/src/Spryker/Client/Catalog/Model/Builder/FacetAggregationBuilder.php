@@ -7,7 +7,6 @@
 namespace Spryker\Client\Catalog\Model\Builder;
 
 use Elastica\Aggregation\AbstractAggregation;
-use Elastica\Aggregation\AbstractSimpleAggregation;
 use Elastica\Aggregation\Max;
 use Elastica\Aggregation\Min;
 use Elastica\Aggregation\Nested;

@@ -109,6 +109,7 @@ class Finder
         if ($this->layer === '*') {
             $this->layer = null;
         }
+
         return [
             $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
             $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Zed/' . $this->bundle . '/' . $this->layer,

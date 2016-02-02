@@ -11,8 +11,6 @@ use Spryker\Zed\Tax\Business\Model\TaxReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 use Spryker\Zed\Tax\TaxConfig;
-use Spryker\Zed\Tax\Business\Model\TaxReaderInterface;
-use Spryker\Zed\Tax\Business\Model\TaxWriterInterface;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
 
 /**

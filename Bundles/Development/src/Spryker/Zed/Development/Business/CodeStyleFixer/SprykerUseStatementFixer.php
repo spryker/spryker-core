@@ -103,6 +103,9 @@ class SprykerUseStatementFixer extends AbstractFixer
 
             while (true) {
                 $nextIndex = $tokens->getNextMeaningfulToken($nextIndex);
+                if (!$nextIndex) {
+                    break;
+                }
                 if ($tokens[$nextIndex - 1]->equals(')')) {
                     break;
                 }

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Discount\Business\Writer;
 
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 abstract class AbstractWriter

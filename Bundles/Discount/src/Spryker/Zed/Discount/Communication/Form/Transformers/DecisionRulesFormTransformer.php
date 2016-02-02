@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\Transformers;
 
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
 use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\DataTransformerInterface;

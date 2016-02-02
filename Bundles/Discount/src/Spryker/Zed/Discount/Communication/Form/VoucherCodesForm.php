@@ -4,7 +4,6 @@ namespace Spryker\Zed\Discount\Communication\Form;
 
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;

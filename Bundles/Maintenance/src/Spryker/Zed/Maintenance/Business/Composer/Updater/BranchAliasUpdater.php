@@ -35,8 +35,8 @@ class BranchAliasUpdater implements UpdaterInterface
     {
         $composerJson[self::KEY_EXTRA] = [
           self::KEY_BRANCH_ALIAS => [
-              self::KEY_MASTER_BRANCH => $this->version
-          ]
+              self::KEY_MASTER_BRANCH => $this->version,
+          ],
         ];
 
         return $composerJson;
