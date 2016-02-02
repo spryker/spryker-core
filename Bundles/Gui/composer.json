@@ -1,5 +1,5 @@
 {
-  "name": "spryker/product-option",
+  "name": "spryker/gui",
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
@@ -11,13 +11,13 @@
     }
   },
   "require": {
+    "spryker/application": "^1.0.0",
     "spryker/kernel": "^1.0.0",
-    "spryker/locale": "^1.0.0",
-    "spryker/product": "^1.0.0",
-    "spryker/propel": "^1.0.0"
+    "spryker/library": "^1.0.0",
+    "spryker/transfer": "^1.0.0"
   },
   "require-dev": {},
-  "description": "product option bundle",
+  "description": "gui bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "extra": {

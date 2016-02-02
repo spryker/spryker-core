@@ -1,5 +1,5 @@
 {
-  "name": "spryker/taxproductconnector",
+  "name": "spryker/tax-product-connector",
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
@@ -8,8 +8,14 @@
       "Unit": "tests/"
     }
   },
-  "require": {
-  },
-  "require-dev": {
+  "require": {},
+  "require-dev": {},
+  "description": "taxproductconnector bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
   }
 }

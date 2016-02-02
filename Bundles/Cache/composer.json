@@ -1,5 +1,5 @@
 {
-  "name": "spryker/product-option",
+  "name": "spryker/cache",
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
@@ -11,13 +11,11 @@
     }
   },
   "require": {
-    "spryker/kernel": "^1.0.0",
-    "spryker/locale": "^1.0.0",
-    "spryker/product": "^1.0.0",
-    "spryker/propel": "^1.0.0"
+    "spryker/console": "^1.0.0",
+    "spryker/kernel": "^1.0.0"
   },
   "require-dev": {},
-  "description": "product option bundle",
+  "description": "cache bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "extra": {

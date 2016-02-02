@@ -1,5 +1,5 @@
 {
-  "name": "spryker/eventjournal",
+  "name": "spryker/event-journal",
   "autoload": {
     "psr-0": {
       "Spryker": "src/",
@@ -10,8 +10,14 @@
       "YvesUnit": "tests/"
     }
   },
-  "require": {
-  },
-  "require-dev": {
+  "require": {},
+  "require-dev": {},
+  "description": "eventjournal bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
   }
 }

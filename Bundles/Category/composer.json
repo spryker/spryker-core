@@ -11,9 +11,24 @@
     }
   },
   "require": {
+    "spryker/application": "^1.0.0",
+    "spryker/gui": "^1.0.0",
+    "spryker/kernel": "^1.0.0",
+    "spryker/library": "^1.0.0",
+    "spryker/locale": "^1.0.0",
+    "spryker/propel": "^1.0.0",
+    "spryker/touch": "^1.0.0",
+    "spryker/url": "^1.0.0",
     "spryker/tool-graph": "^1.0.0",
-    "spryker/tool-graph-phpdocumentor": "^1.0.0"
+    "spryker/tool-graph-php-documentor": "^1.0.0"
   },
-  "require-dev": {
+  "require-dev": {},
+  "description": "category bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
   }
 }

@@ -6,7 +6,17 @@
     }
   },
   "require": {
+    "spryker/discount": "^1.0.0",
+    "spryker/kernel": "^1.0.0",
+    "spryker/oms": "^1.0.0"
   },
-  "require-dev": {
+  "require-dev": {},
+  "description": "oms discount connector bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
   }
 }

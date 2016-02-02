@@ -10,8 +10,18 @@
     }
   },
   "require": {
-    "twig/twig": "~1.0"
+    "twig/twig": "~1.0",
+    "spryker/console": "^1.0.0",
+    "spryker/kernel": "^1.0.0",
+    "spryker/messenger": "^1.0.0"
   },
-  "require-dev": {
+  "require-dev": {},
+  "description": "transfer bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
   }
 }

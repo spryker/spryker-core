@@ -10,7 +10,23 @@
     }
   },
   "require": {
+    "spryker/abstract-sniffs": "^1.0.0",
+    "spryker/console": "^1.0.0",
+    "spryker/kernel": "^1.0.0",
+    "spryker/two": "^1.0.0",
+    "spryker/two-five": "^1.0.0",
+    "spryker/two-four": "^1.0.0",
+    "spryker/two-three": "^1.0.0",
+    "spryker/two-two": "^1.0.0",
+    "spryker/x": "^1.0.0"
   },
-  "require-dev": {
+  "require-dev": {},
+  "description": "development bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
   }
 }
