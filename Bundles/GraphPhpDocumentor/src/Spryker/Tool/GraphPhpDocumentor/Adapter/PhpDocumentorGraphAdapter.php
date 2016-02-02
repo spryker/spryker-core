@@ -170,6 +170,8 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
     /**
      * @param array $attributes
      * @param Edge|Node|Graph $element
+     *
+     * @return void
      */
     private function addAttributesTo($attributes, $element)
     {

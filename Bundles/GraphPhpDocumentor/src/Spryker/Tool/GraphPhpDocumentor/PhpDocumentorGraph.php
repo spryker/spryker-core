@@ -35,7 +35,7 @@ class PhpDocumentorGraph extends Graph
     /**
      * @param string $type
      *
-     * @return $this
+     * @return self
      */
     public function setType($type)
     {
