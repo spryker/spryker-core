@@ -8,6 +8,10 @@ namespace Spryker\Zed\Customer\Communication;
 
 use Spryker\Zed\Customer\Communication\Form\AddressForm;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
+use Spryker\Zed\Customer\Communication\Form\CustomerUpdateForm;
+use Spryker\Zed\Customer\Communication\Form\DataProvider\AddressFormDataProvider;
+use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerFormDataProvider;
+use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerUpdateFormDataProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
@@ -51,30 +55,69 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param string $formActionType
-     *
-     * @throws \ErrorException
+     * @param array $data
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCustomerForm($formActionType)
+    public function createCustomerForm(array $data = [], array $options = [])
     {
-        $customerForm = new CustomerForm($this->getQueryContainer(), $formActionType);
+        $customerFormType = new CustomerForm($this->getQueryContainer());
 
-        return $this->createForm($customerForm);
+        return $this->getFormFactory()->create($customerFormType, $data, $options);
     }
 
     /**
+     * @return \Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerFormDataProvider
+     */
+    public function createCustomerFormDataProvider()
+    {
+        return new CustomerFormDataProvider($this->getQueryContainer());
+    }
+
+    /**
+     * @param array $data
+     * @param array $options
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createAddressForm()
+    public function createCustomerUpdateForm(array $data = [], array $options = [])
     {
-        $customerAddressForm = new AddressForm(
+        $customerFormType = new CustomerUpdateForm($this->getQueryContainer());
+
+        return $this->getFormFactory()->create($customerFormType, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerUpdateFormDataProvider
+     */
+    public function createCustomerUpdateFormDataProvider()
+    {
+        return new CustomerUpdateFormDataProvider($this->getQueryContainer());
+    }
+
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createAddressForm(array $formData = [], array $formOptions = [])
+    {
+        $customerAddressFormType = new AddressForm();
+
+        return $this->getFormFactory()->create($customerAddressFormType, $formData, $formOptions);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Communication\Form\DataProvider\AddressFormDataProvider
+     */
+    public function createAddressFormDataProvider()
+    {
+        return new AddressFormDataProvider(
             $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY),
             $this->getQueryContainer()
         );
-
-        return $this->createForm($customerAddressForm);
     }
 
 }

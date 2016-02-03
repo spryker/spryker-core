@@ -13,7 +13,6 @@ use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
@@ -26,10 +25,21 @@ class PoolController extends AbstractController
     const TERM = 'term';
     const BLANK = '';
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function createAction(Request $request)
     {
-        $form = $this->getFactory()->createVoucherCodesForm();
-        $form->handleRequest($request);
+        $dataProvider = $this->getFactory()->createVoucherCodesFormDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createVoucherCodesForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
@@ -57,8 +67,16 @@ class PoolController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $form = $this->getFactory()->createVoucherCodesForm();
-        $form->handleRequest($request);
+        $idPool = $request->query->getInt(DiscountConstants::PARAM_ID_POOL);
+
+        $dataProvider = $this->getFactory()->createVoucherCodesFormDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createVoucherCodesForm(
+                $dataProvider->getData($idPool),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();

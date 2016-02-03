@@ -6,65 +6,47 @@
 
 namespace Spryker\Zed\Customer\Communication\Form;
 
-use Generated\Shared\Transfer\AddressTransfer;
-use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
-use Spryker\Zed\Country\Business\CountryFacade;
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 
-class AddressForm extends AbstractForm
+class AddressForm extends AbstractType
 {
 
-    const PREFERED_COUNTRY_NAME = 'Germany';
+    const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+    const OPTION_COUNTRY_CHOICES = 'country_choices';
+    const OPTION_PREFERRED_COUNTRY_CHOICES = 'preferred_country_choices';
+
+    const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
+    const FIELD_FK_CUSTOMER = 'fk_customer';
+    const FIELD_SALUTATION = 'salutation';
+    const FIELD_FIRST_NAME = 'first_name';
+    const FIELD_LAST_NAME = 'last_name';
+    const FIELD_ADDRESS_1 = 'address1';
+    const FIELD_ADDRESS_2 = 'address2';
+    const FIELD_ADDRESS_3 = 'address3';
+    const FIELD_CITY = 'city';
+    const FIELD_ZIP_CODE = 'zip_code';
+    const FIELD_FK_COUNTRY = 'fk_country';
+    const FIELD_PHONE = 'phone';
+    const FIELD_COMPANY = 'company';
+    const FIELD_COMMENT = 'comment';
 
     /**
-     * @var \Spryker\Zed\Country\Business\CountryFacade
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
      */
-    protected $countryFacade;
-
-    /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
-     */
-    protected $customerQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $queryContainer
-     */
-    public function __construct(CustomerToCountryInterface $countryFacade, CustomerQueryContainer $queryContainer)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $this->countryFacade = $countryFacade;
-        $this->customerQueryContainer = $queryContainer;
-    }
+        parent::setDefaultOptions($resolver);
 
-    /**
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        $idCustomerAddress = $this->getRequest()->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS);
-
-        if ($idCustomerAddress === 0) {
-            return $this->getDataClass();
-        }
-
-        $address = $this->customerQueryContainer->queryAddress($idCustomerAddress)->findOne();
-
-        $addressTransfer = $this->getDataClass();
-        $addressTransfer->fromArray($address->toArray(), true);
-
-        return $addressTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function getDataClass()
-    {
-        return new AddressTransfer();
+        $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
+        $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
+        $resolver->setRequired(self::OPTION_PREFERRED_COUNTRY_CHOICES);
     }
 
     /**
@@ -75,90 +57,229 @@ class AddressForm extends AbstractForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $preferedCountry = $this->countryFacade
-            ->getPreferredCountryByName(self::PREFERED_COUNTRY_NAME);
-
-        $builder
-            ->add(AddressTransfer::ID_CUSTOMER_ADDRESS, 'hidden')
-            ->add(AddressTransfer::FK_CUSTOMER, 'hidden')
-            ->add(AddressTransfer::SALUTATION, 'choice', [
-                'label' => 'Salutation',
-                'placeholder' => 'Select one',
-                'choices' => $this->getSalutationOptions(),
-            ])
-            ->add(AddressTransfer::FIRST_NAME, 'text', [
-                'label' => 'First Name',
-                'constraints' => $this->getTextFieldConstraints(),
-            ])
-            ->add(AddressTransfer::LAST_NAME, 'text', [
-                'label' => 'Last Name',
-                'constraints' => $this->getTextFieldConstraints(),
-            ])
-            ->add(AddressTransfer::ADDRESS1, 'text', [
-                'label' => 'Address line 1',
-            ])
-            ->add(AddressTransfer::ADDRESS2, 'text', [
-                'label' => 'Address line 2',
-            ])
-            ->add(AddressTransfer::ADDRESS3, 'text', [
-                'label' => 'Address line 3',
-            ])
-            ->add(AddressTransfer::CITY, 'text', [
-                'label' => 'City',
-            ])
-            ->add(AddressTransfer::ZIP_CODE, 'text', [
-                'label' => 'Zip Code',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintLength(['max' => 15]),
-                ],
-            ])
-            ->add(AddressTransfer::FK_COUNTRY, 'choice', [
-                'label' => 'Country',
-                'placeholder' => 'Select one',
-                'choices' => $this->getCountryOptions(),
-                'preferred_choices' => [
-                    $preferedCountry->getIdCountry(),
-                ],
-            ])
-            ->add(AddressTransfer::PHONE, 'text', [
-                'label' => 'Phone',
-            ])
-            ->add(AddressTransfer::COMPANY, 'text', [
-                'label' => 'Company',
-            ])
-            ->add(AddressTransfer::COMMENT, 'textarea', [
-                'label' => 'Comment',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintLength(['max' => 255]),
-                ],
-            ]);
+        $this
+            ->addIdCustomerAddressField($builder)
+            ->addFkCustomerField($builder)
+            ->addSalutationField($builder, $options[self::OPTION_SALUTATION_CHOICES])
+            ->addFirstNameField($builder)
+            ->addLastNameField($builder)
+            ->addAddress1Field($builder)
+            ->addAddress2Field($builder)
+            ->addAddress3Field($builder)
+            ->addCityField($builder)
+            ->addZipCodeField($builder)
+            ->addFkCountryField($builder, $options[self::OPTION_COUNTRY_CHOICES], $options[self::OPTION_PREFERRED_COUNTRY_CHOICES])
+            ->addPhoneField($builder)
+            ->addCompanyField($builder)
+            ->addCommentField($builder);
     }
 
     /**
-     * @return array
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
      */
-    public function getCountryOptions()
+    protected function addIdCustomerAddressField(FormBuilderInterface $builder)
     {
-        $countryCollection = $this->countryFacade->getAvailableCountries();
+        $builder->add(self::FIELD_ID_CUSTOMER_ADDRESS, 'hidden');
 
-        $result = [];
-        if ($countryCollection->getCountries()->count() > 0) {
-            foreach ($countryCollection->getCountries() as $country) {
-                $result[$country->getIdCountry()] = $country->getName();
-            }
-        }
-
-        return $result;
+        return $this;
     }
 
     /**
-     * @return array
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
      */
-    protected function getSalutationOptions()
+    protected function addFkCustomerField(FormBuilderInterface $builder)
     {
-        $salutation = SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_SALUTATION);
+        $builder->add(self::FIELD_FK_CUSTOMER, 'hidden');
 
-        return $this->getEnumSet($salutation);
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return \Spryker\Zed\Customer\Communication\Form\AddressForm
+     */
+    protected function addSalutationField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder->add(self::FIELD_SALUTATION, 'choice', [
+            'label' => 'Salutation',
+            'placeholder' => 'Select one',
+            'choices' => $choices,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addFirstNameField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_FIRST_NAME, 'text', [
+            'label' => 'First Name',
+            'constraints' => $this->getTextFieldConstraints(),
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addLastNameField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_LAST_NAME, 'text', [
+            'label' => 'Last Name',
+            'constraints' => $this->getTextFieldConstraints(),
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addAddress1Field(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ADDRESS_1, 'text', [
+            'label' => 'Address line 1',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addAddress2Field(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ADDRESS_2, 'text', [
+            'label' => 'Address line 2',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addAddress3Field(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ADDRESS_3, 'text', [
+            'label' => 'Address line 3',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCityField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_CITY, 'text', [
+            'label' => 'City',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addZipCodeField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ZIP_CODE, 'text', [
+            'label' => 'Zip Code',
+            'constraints' => [
+                new Length(['max' => 15]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     * @param array $preferredChoices
+     *
+     * @return \Spryker\Zed\Customer\Communication\Form\AddressForm
+     */
+    protected function addFkCountryField(FormBuilderInterface $builder, array $choices, array $preferredChoices = [])
+    {
+        $builder->add(self::FIELD_FK_COUNTRY, 'choice', [
+            'label' => 'Country',
+            'placeholder' => 'Select one',
+            'choices' => $choices,
+            'preferred_choices' => $preferredChoices,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addPhoneField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_PHONE, 'text', [
+            'label' => 'Phone',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCompanyField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_COMPANY, 'text', [
+            'label' => 'Company',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCommentField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_COMMENT, 'textarea', [
+            'label' => 'Comment',
+            'constraints' => [
+                new Length(['max' => 255]),
+            ],
+        ]);
+
+        return $this;
     }
 
     /**
@@ -167,11 +288,9 @@ class AddressForm extends AbstractForm
     protected function getTextFieldConstraints()
     {
         return [
-            $this->getConstraints()->createConstraintRequired(),
-            $this->getConstraints()->createConstraintNotBlank(),
-            $this->getConstraints()->createConstraintLength([
-                'max' => 100,
-            ]),
+            new Required(),
+            new NotBlank(),
+            new Length(['max' => 100])
         ];
     }
 

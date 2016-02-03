@@ -22,6 +22,7 @@ use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 class EditController extends AbstractController
 {
 
+    const PARAM_ID_USER = 'id-user';
     const USER_LISTING_URL = '/user';
 
     /**
@@ -31,8 +32,14 @@ class EditController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $userForm = $this->getFactory()->createUserForm();
-        $userForm->handleRequest($request);
+        $dataProvider = $this->getFactory()->createUserFormDataProvider();
+
+        $userForm = $this->getFactory()
+            ->createUserForm(
+                [],
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
@@ -68,15 +75,22 @@ class EditController extends AbstractController
      */
     public function updateAction(Request $request)
     {
-        $idUser = $request->get('id-user');
+        $idUser = $request->get(self::PARAM_ID_USER);
+
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
 
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
-        $userForm = $this->getFactory()->createUpdateUserForm($idUser, $this->getFacade());
-        $userForm->handleRequest($request);
+        $dataProvider = $this->getFactory()->createUserUpdateFormDataProvider();
+
+        $userForm = $this->getFactory()
+            ->createUpdateUserForm(
+                $dataProvider->getData($idUser),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($userForm->isValid()) {
             $formData = $userForm->getData();
@@ -106,7 +120,7 @@ class EditController extends AbstractController
      */
     public function activateUserAction(Request $request)
     {
-        $idUser = $request->get('id-user');
+        $idUser = $request->get(self::PARAM_ID_USER);
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -132,7 +146,7 @@ class EditController extends AbstractController
      */
     public function deactivateUserAction(Request $request)
     {
-        $idUser = $request->get('id-user');
+        $idUser = $request->get(self::PARAM_ID_USER);
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -158,7 +172,7 @@ class EditController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idUser = $request->get('id-user');
+        $idUser = $request->get(self::PARAM_ID_USER);
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
@@ -185,18 +199,22 @@ class EditController extends AbstractController
     public function passwordResetAction(Request $request)
     {
         $currentUserTransfer = $this->getFacade()->getCurrentUser();
-        $resetPasswordForm = $this->getFactory()->createResetPasswordForm($this->getFacade());
-        $resetPasswordForm->handleRequest($request);
+        $resetPasswordForm = $this
+            ->getFactory()
+            ->createResetPasswordForm($this->getFacade())
+            ->handleRequest($request);
 
         if ($resetPasswordForm->isValid()) {
             $formData = $resetPasswordForm->getData();
-            $currentUserTransfer->setPassword($formData[ResetPasswordForm::FIELD_PASSWORD]);
+            $currentUserTransfer->setPassword(
+                $formData[ResetPasswordForm::FIELD_PASSWORD]
+            );
 
             try {
                 $this->getFacade()->updateUser($currentUserTransfer);
                 $this->addSuccessMessage('Password successfully updated.');
-            } catch (UserNotFoundException $e) {
-                $this->addErrorMessage($e->getMessage());
+            } catch (UserNotFoundException $exception) {
+                $this->addErrorMessage($exception->getMessage());
             }
         }
 
@@ -235,6 +253,7 @@ class EditController extends AbstractController
     {
         $aclFacade = $this->getFactory()->getAclFacade();
         $userAclGroups = $aclFacade->getUserGroups($idUser);
+
         foreach ($userAclGroups->getGroups() as $aclGroupTransfer) {
             $aclFacade->removeUserFromGroup($idUser, $aclGroupTransfer->getIdAclGroup());
         }

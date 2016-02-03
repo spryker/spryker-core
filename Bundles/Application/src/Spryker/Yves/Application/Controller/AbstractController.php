@@ -199,13 +199,14 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Create forms inside your bundle's factory with getting the form factory,
+     * e.g. FooBundleFactory.php: $this->getFormFactory()->create(new FooFormType());
+     *
      * @param string $type
      * @param null $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
-     *
-     * @deprecated Use buildForm() instead.
      */
     protected function createForm($type = 'form', $data = null, array $options = [])
     {
@@ -215,6 +216,9 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Create forms inside your bundle's factory with getting the form factory,
+     * e.g. FooBundleFactory.php: $this->getFormFactory()->create(new FooFormType());
+     *
      * @param \Spryker\Shared\Gui\Form\AbstractForm $form
      * @param array $options
      *

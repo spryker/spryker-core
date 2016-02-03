@@ -43,7 +43,7 @@ class UsersTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyUserTableMap::COL_USERNAME => 'User ID',
+            SpyUserTableMap::COL_USERNAME => 'E-mail',
             SpyUserTableMap::COL_FIRST_NAME => 'First Name',
             SpyUserTableMap::COL_LAST_NAME => 'Last Name',
             SpyUserTableMap::COL_LAST_LOGIN => 'Last Login',

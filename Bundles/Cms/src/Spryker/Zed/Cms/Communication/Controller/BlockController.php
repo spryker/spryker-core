@@ -59,10 +59,16 @@ class BlockController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $form = $this->getFactory()->createCmsBlockForm('add');
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
-        $form->handleRequest($request);
+        $dataProvider = $this->getFactory()->createCmsBlockFormDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createCmsBlockForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -88,14 +94,17 @@ class BlockController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idBlock = $request->get(CmsBlockTable::REQUEST_ID_BLOCK);
-
-        $form = $this->getFactory()
-            ->createCmsBlockForm('update', $idBlock);
-
+        $idBlock = $request->query->getInt(CmsBlockTable::REQUEST_ID_BLOCK);
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
-        $form->handleRequest($request);
+        $dataProvider = $this->getFactory()->createCmsBlockFormDataProvider();
+        $form = $this->getFactory()
+            ->createCmsBlockForm(
+                $dataProvider->getData($idBlock),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
+
         if ($form->isValid()) {
             $data = $form->getData();
 

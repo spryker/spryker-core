@@ -7,6 +7,10 @@
 namespace Spryker\Zed\Discount\Communication;
 
 use Spryker\Zed\Discount\Communication\Form\CartRuleForm;
+use Spryker\Zed\Discount\Communication\Form\DataProvider\CartRuleFormDataProvider;
+use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherCodesFormDataProvider;
+use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider;
+use Spryker\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Spryker\Zed\Discount\Communication\Form\CollectorPluginForm;
@@ -15,7 +19,6 @@ use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
 use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
-use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -26,24 +29,30 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 /**
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @param bool $allowMultiple
+     * @param array $formData
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createVoucherForm($allowMultiple = false)
+    public function createVoucherForm(array $formData = [], array $formOptions = [])
     {
-        $voucherForm = new VoucherForm(
-            $this->getQueryContainer(),
-            $this->getConfig(),
-            $allowMultiple
-        );
+        $voucherForm = new VoucherForm($this->getConfig());
 
-        return $this->createForm($voucherForm);
+        return $this->getFormFactory()->create($voucherForm, $formData, $formOptions);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider
+     */
+    public function createVoucherFormDataProvider()
+    {
+        return new VoucherFormDataProvider($this->getQueryContainer(), $this->getConfig());
     }
 
     /**
@@ -94,18 +103,24 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
+     * @param array $formData
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCartRuleForm(DiscountFacade $discountFacade)
+    public function createCartRuleForm(array $formData = [], array $formOptions = [])
     {
-        $cartRuleForm = new CartRuleForm(
-            $this->getConfig(),
-            $discountFacade
-        );
+        $cartRuleForm = new CartRuleForm($this->getConfig());
 
-        return $this->createForm($cartRuleForm);
+        return $this->getFormFactory()->create($cartRuleForm, $formData, $formOptions);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\CartRuleFormDataProvider
+     */
+    public function createCartRuleFormDataProvider()
+    {
+        return new CartRuleFormDataProvider($this->getFacade());
     }
 
     /**
@@ -113,25 +128,30 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCollectorPluginForm()
     {
-        $collectorPluginForm = new CollectorPluginForm(
-            $this->getConfig()
-        );
+        $collectorPluginForm = new CollectorPluginForm($this->getConfig());
 
-        return $this->createForm($collectorPluginForm);
+        return $this->getFormFactory()->create($collectorPluginForm);
     }
 
     /**
+     * @param array $formData
+     * @param array $formOptions
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createVoucherCodesForm()
+    public function createVoucherCodesForm(array $formData = [], array $formOptions = [])
     {
-        $voucherCodesForm = new VoucherCodesForm(
-            $this->getConfig(),
-            $this->createCamelCaseToUnderscoreFilter(),
-            $this->getQueryContainer()
-        );
+        $voucherCodesForm = new VoucherCodesForm($this->getConfig(), $this->createDecisionRulesFormTransformer());
 
-        return $this->createForm($voucherCodesForm);
+        return $this->getFormFactory()->create($voucherCodesForm, $formData, $formOptions);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer
+     */
+    public function createDecisionRulesFormTransformer()
+    {
+        return new DecisionRulesFormTransformer($this->getConfig(), $this->createCamelCaseToUnderscoreFilter());
     }
 
     /**
@@ -143,15 +163,21 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm
+     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherCodesFormDataProvider
+     */
+    public function createVoucherCodesFormDataProvider()
+    {
+        return new VoucherCodesFormDataProvider($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createDecisionRuleForm()
     {
-        $decisionRulesForm = new DecisionRuleForm(
-            $this->getConfig()
-        );
+        $decisionRulesForm = new DecisionRuleForm($this->getConfig());
 
-        return $this->createForm($decisionRulesForm);
+        return $this->getFormFactory()->create($decisionRulesForm);
     }
 
     /**

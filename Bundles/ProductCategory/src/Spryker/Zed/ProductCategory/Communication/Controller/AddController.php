@@ -31,9 +31,14 @@ class AddController extends AbstractController
     {
         $idParentNode = $request->get(ProductCategoryConstants::PARAM_ID_PARENT_NODE);
 
-        $form = $this->getFactory()
-            ->createCategoryFormAdd($idParentNode);
-        $form->handleRequest($request);
+        $dataProvider = $this->getFactory()->createCategoryFormAddDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createCategoryFormAdd(
+                $dataProvider->getData($idParentNode),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $localeTransfer = $this->getFactory()

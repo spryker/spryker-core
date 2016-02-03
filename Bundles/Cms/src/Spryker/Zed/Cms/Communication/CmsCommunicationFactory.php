@@ -6,7 +6,12 @@
 
 namespace Spryker\Zed\Cms\Communication;
 
+use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
+use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsBlockFormDataProvider;
+use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
+use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider;
+use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
@@ -76,79 +81,90 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param string $formType
-     * @param int $idPage
+     * @param array $formData
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsPageForm($formType, $idPage = null)
+    public function createCmsPageForm(array $formData = [], array $formOptions = [])
     {
-        $pageUrlByIdQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndUrlByIdPage($idPage);
-
-        $templateQuery = $this->getQueryContainer()
-            ->queryTemplates();
-
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+        $cmsPageForm = new CmsPageForm($urlFacade);
 
-        $form = new CmsPageForm($templateQuery, $pageUrlByIdQuery, $urlFacade, $formType, $idPage);
-
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($cmsPageForm, $formData, $formOptions);
     }
 
     /**
-     * @param string $formType
-     * @param int $idCmsBlock
-     *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider
      */
-    public function createCmsBlockForm($formType, $idCmsBlock = null)
+    public function createCmsPageFormDataProvider()
     {
-        $blockPageByIdQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndBlocksById($idCmsBlock);
-
-        $templateQuery = $this->getQueryContainer()
-            ->queryTemplates();
-
-        $form = new CmsBlockForm($templateQuery, $blockPageByIdQuery, $formType, $idCmsBlock);
-
-        return $this->createForm($form);
+        return new CmsPageFormDataProvider($this->getQueryContainer());
     }
 
     /**
-     * @param string $formType
-     * @param int $idUrl
+     * @param array $formData
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsRedirectForm($formType, $idUrl = null)
+    public function createCmsBlockForm(array $formData = [], array $formOptions = [])
     {
-        $queryUrlById = $this->getQueryContainer()
-            ->queryUrlByIdWithRedirect($idUrl);
+        $formType = new CmsBlockForm($this->getQueryContainer());
 
+        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsBlockFormDataProvider
+     */
+    public function createCmsBlockFormDataProvider()
+    {
+        return new CmsBlockFormDataProvider($this->getQueryContainer());
+    }
+
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCmsRedirectForm(array $formData = [], array $formOptions = [])
+    {
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
+        $cmsRedirectFormType = new CmsRedirectForm($urlFacade);
 
-        $form = new CmsRedirectForm($queryUrlById, $urlFacade, $formType);
-
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($cmsRedirectFormType, $formData, $formOptions);
     }
 
     /**
-     * @param int $idPage
-     * @param int $idMapping
-     * @param array $placeholder
+     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider
+     */
+    public function createCmsRedirectFormDataProvider()
+    {
+        return new CmsRedirectFormDataProvider($this->getQueryContainer());
+    }
+
+    /**
      * @param \Spryker\Zed\Cms\Business\CmsFacade $cmsFacade
+     * @param array $formData
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsGlossaryForm($idPage, $idMapping, $placeholder, $cmsFacade)
+    public function createCmsGlossaryForm(CmsFacade $cmsFacade, array $formData = [], array $formOptions = [])
     {
-        $glossaryMappingByIdQuery = $this->getQueryContainer()
-            ->queryGlossaryKeyMappingWithKeyById($idMapping);
+        $cmsGlossaryFormType = new CmsGlossaryForm($cmsFacade);
 
-        $form = new CmsGlossaryForm($glossaryMappingByIdQuery, $cmsFacade, $idPage, $idMapping, $placeholder);
+        return $this->getFormFactory()->create($cmsGlossaryFormType, $formData, $formOptions);
+    }
 
-        return $this->createForm($form);
+    /**
+     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider
+     */
+    public function createCmsGlossaryFormDataProvider()
+    {
+        return new CmsGlossaryFormDataProvider($this->getQueryContainer());
     }
 
     /**

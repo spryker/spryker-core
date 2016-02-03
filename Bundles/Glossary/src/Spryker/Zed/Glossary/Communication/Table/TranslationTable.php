@@ -8,7 +8,7 @@ namespace Spryker\Zed\Glossary\Communication\Table;
 use Propel\Runtime\Map\TableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Spryker\Zed\Application\Business\Url\Url;
-use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
+use Spryker\Zed\Glossary\Communication\Controller\EditController;
 use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
@@ -157,7 +157,7 @@ class TranslationTable extends AbstractTable
             if ($idGlossaryKey !== false) {
                 $urls[] = $this->generateEditButton(
                     Url::generate(self::URL_GLOSSARY_EDIT, [
-                        TranslationForm::URL_PARAMETER_GLOSSARY_KEY => $idGlossaryKey,
+                        EditController::URL_PARAMETER_GLOSSARY_KEY => $idGlossaryKey,
                     ]),
                     'Edit'
                 );

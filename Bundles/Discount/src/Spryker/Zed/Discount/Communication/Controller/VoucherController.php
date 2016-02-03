@@ -9,7 +9,9 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
+use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,12 +33,20 @@ class VoucherController extends AbstractController
     const MESSAGE_TYPE_SUCCESS = 'success';
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createSingleAction(Request $request)
     {
-        $form = $this->getFactory()->createVoucherForm();
-        $form->handleRequest($request);
+        $dataProvider = $this->getFactory()->createVoucherFormDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createVoucherForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
@@ -69,12 +79,20 @@ class VoucherController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createMultipleAction(Request $request)
     {
-        $form = $this->getFactory()->createVoucherForm(true);
-        $form->handleRequest($request);
+        $dataProvider = $this->getFactory()->createVoucherFormDataProvider();
+        $form = $this
+            ->getFactory()
+            ->createVoucherForm(
+                $dataProvider->getData(true),
+                $dataProvider->getOptions(true)
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
@@ -149,6 +167,11 @@ class VoucherController extends AbstractController
         ]);
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function tableAction(Request $request)
     {
         $table = $this->getGeneratedCodesTable($request);

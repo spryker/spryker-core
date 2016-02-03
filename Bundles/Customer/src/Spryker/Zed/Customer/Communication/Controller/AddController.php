@@ -25,16 +25,20 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getFactory()
-            ->createCustomerForm(CustomerForm::ADD);
+        $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
 
-        $form->handleRequest($request);
+        $form = $this->getFactory()
+            ->createCustomerForm(
+                $dataProvider->getData(),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
-            $customerTransfer = $form->getData();
+            $customerTransfer = new CustomerTransfer();
+            $customerTransfer->fromArray($form->getData(), true);
 
-            $this->getFacade()
-                ->registerCustomer($customerTransfer);
+            $this->getFacade()->registerCustomer($customerTransfer);
 
             return $this->redirectResponse('/customer/');
         }

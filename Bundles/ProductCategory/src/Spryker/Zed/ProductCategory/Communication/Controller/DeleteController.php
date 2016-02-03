@@ -7,9 +7,9 @@
 namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Form;
 
 /**
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
@@ -34,9 +34,15 @@ class DeleteController extends EditController
             return new RedirectResponse('/category');
         }
 
-        $form = $this->getFactory()
-            ->createCategoryFormDelete($idCategory)
-            ->handleRequest();
+        $dataProvider = $this->getFactory()->createCategoryFormDeleteDataProvider();
+
+        $form = $this
+            ->getFactory()
+            ->createCategoryFormDelete(
+                $dataProvider->getData($idCategory),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -76,11 +82,11 @@ class DeleteController extends EditController
 
     /**
      * @param int $idCategory
-     * @param \Symfony\Component\Form\Form $form
+     * @param \Symfony\Component\Form\FormInterface $form
      *
      * @return array
      */
-    protected function getViewData($idCategory, Form $form)
+    protected function getViewData($idCategory, FormInterface $form)
     {
         $locale = $this->getFactory()
             ->getCurrentLocale();

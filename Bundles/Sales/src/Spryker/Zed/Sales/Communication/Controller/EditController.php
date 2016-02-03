@@ -21,15 +21,19 @@ class EditController extends AbstractController
      */
     public function customerAction(Request $request)
     {
-        $idOrder = $request->get('id-sales-order');
+        $idOrder = $request->query->getInt('id-sales-order');
+
+        $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
         $form = $this->getFactory()
-            ->createCustomerForm($idOrder);
-        $form->handleRequest($request);
+            ->createCustomerForm(
+                $dataProvider->getData($idOrder),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $orderTransfer = (new OrderTransfer())->fromArray($form->getData(), true);
-            $this->getFacade()
-                ->updateOrderCustomer($orderTransfer, $idOrder);
+            $this->getFacade()->updateOrderCustomer($orderTransfer, $idOrder);
 
             return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
         }
@@ -47,12 +51,16 @@ class EditController extends AbstractController
      */
     public function addressAction(Request $request)
     {
-        $idOrder = $request->get('id-sales-order');
-        $idOrderAddress = $request->get('id-address');
+        $idOrder = $request->query->getInt('id-sales-order');
+        $idOrderAddress = $request->query->getInt('id-address');
 
+        $dataProvider = $this->getFactory()->createAddressFormDataProvider();
         $form = $this->getFactory()
-            ->createAddressForm($idOrderAddress);
-        $form->handleRequest($request);
+            ->createAddressForm(
+                $dataProvider->getData($idOrderAddress),
+                $dataProvider->getOptions()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $addressTransfer = (new AddressTransfer())->fromArray($form->getData(), true);

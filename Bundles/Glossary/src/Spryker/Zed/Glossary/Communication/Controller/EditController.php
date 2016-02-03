@@ -17,17 +17,26 @@ class EditController extends AbstractController
 {
 
     const FORM_UPDATE_TYPE = 'update';
+    const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
 
     /**
-     * @return array
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
-        $availableLocales = $this->getFactory()
-            ->getEnabledLocales();
+        $formData = $this
+            ->getFactory()
+            ->createTranslationDataProvider()
+            ->getData(
+                $request->query->getInt(self::URL_PARAMETER_GLOSSARY_KEY),
+                $this->getFactory()->getEnabledLocales()
+            );
 
-        $glossaryForm = $this->getFactory()
-            ->createTranslationForm($availableLocales, self::FORM_UPDATE_TYPE);
+        $glossaryForm = $this
+            ->getFactory()
+            ->createTranslationUpdateForm($formData);
 
         $glossaryForm->handleRequest($request);
 

@@ -6,21 +6,26 @@
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
-use Spryker\Zed\Acl\Communication\Controller\GroupController;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\HttpFoundation\Request;
 
-class GroupForm extends AbstractForm
+class GroupForm extends AbstractType
 {
 
     const FIELD_TITLE = 'title';
     const FIELD_ROLES = 'roles';
 
-    const VALIDATE_ADD = 'add';
-    const VALIDATE_EDIT = 'edit';
+    const OPTION_ROLE_CHOICES = 'role_choices';
+
+    const GROUP_UNIQUE_GROUP_CHECK = 'unique_group_check';
 
     /**
      * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
@@ -28,59 +33,11 @@ class GroupForm extends AbstractForm
     protected $queryContainer;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
-    protected $request;
-
-    /**
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function __construct(AclQueryContainer $queryContainer, Request $request)
+    public function __construct(AclQueryContainer $queryContainer)
     {
         $this->queryContainer = $queryContainer;
-        $this->request = $request;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return void
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(self::FIELD_TITLE, 'text', [
-            'constraints' => [
-                $this->getConstraints()->createConstraintNotBlank([
-                    'groups' => [self::VALIDATE_ADD, self::VALIDATE_EDIT],
-                ]),
-                $this->getConstraints()->createConstraintCallback([
-                    'groups' => [self::VALIDATE_ADD],
-                    'methods' => [
-                        function ($name, ExecutionContextInterface $contextInterface) {
-                            if ($this->queryContainer->queryGroupByName($name)->count() > 0) {
-                                $contextInterface->addViolation('Group name already in use');
-                            }
-                        },
-                    ],
-                ]),
-            ],
-        ])
-        ->add(self::FIELD_ROLES, 'choice', [
-            'label' => 'Customer Group',
-            'empty_value' => false,
-            'multiple' => true,
-            'choices' => $this->getAvailableRoleList(),
-        ]);
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
     }
 
     /**
@@ -92,47 +49,91 @@ class GroupForm extends AbstractForm
     }
 
     /**
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        $defaultData = [
-            self::FIELD_TITLE => '',
-            self::FIELD_ROLES => [],
-        ];
-
-        $idGroup = $this->request->query->get(GroupController::PARAMETER_ID_GROUP);
-
-        if ($idGroup > 0) {
-            $group = $this->queryContainer->queryGroupById($idGroup)->findOne();
-            $defaultData[self::FIELD_TITLE] = $group->getName();
-
-            $defaultData[self::FIELD_ROLES] = $this->getAvailableRoleListByIdGroup($idGroup);
-        }
-
-        return $defaultData;
-    }
-
-    /**
-     * @param int $idAclGroup
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
-     * @return array
+     * @return void
      */
-    public function getAvailableRoleListByIdGroup($idAclGroup)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $roleCollection = $this->queryContainer->queryGroupHasRole($idAclGroup)->find()->toArray();
+        parent::setDefaultOptions($resolver);
 
-        return array_column($roleCollection, 'FkAclRole');
+        $resolver->setRequired(self::OPTION_ROLE_CHOICES);
+
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                $defaultData = $form->getConfig()->getData();
+                $submittedData = $form->getData();
+
+                if (
+                    array_key_exists(self::FIELD_TITLE, $defaultData) === false ||
+                    $defaultData[self::FIELD_TITLE] !== $submittedData[self::FIELD_TITLE]
+                ) {
+                    return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_GROUP_CHECK];
+                }
+                return [Constraint::DEFAULT_GROUP];
+            },
+        ]);
     }
 
     /**
-     * @return array
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
      */
-    public function getAvailableRoleList()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $roleCollection = $this->queryContainer->queryRole()->find()->toArray();
+        $this
+            ->addTitleField($builder)
+            ->addRolesField($builder, $options[self::OPTION_ROLE_CHOICES]);
+    }
 
-        return array_column($roleCollection, 'Name', 'IdAclRole');
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addTitleField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_TITLE, 'text', [
+            'label' => 'Title',
+            'constraints' => [
+                new NotBlank(),
+                new Callback([
+                    'methods' => [
+                        function ($name, ExecutionContextInterface $contextInterface) {
+                            if ($this->queryContainer->queryGroupByName($name)->count() > 0) {
+                                $contextInterface->addViolation('Group name already in use');
+                            }
+                        },
+                    ],
+                    'groups' => [self::GROUP_UNIQUE_GROUP_CHECK],
+                ]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return \Spryker\Zed\Acl\Communication\Form\GroupForm
+     */
+    protected function addRolesField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder->add(self::FIELD_ROLES, new Select2ComboBoxType(), [
+            'label' => 'Assigned Roles',
+            'empty_value' => false,
+            'multiple' => true,
+            'choices' => $choices,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
     }
 
 }

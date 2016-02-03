@@ -5,6 +5,7 @@
 
 namespace Spryker\Zed\Cms\Dependency\Facade;
 
+use Generated\Shared\Transfer\RedirectTransfer;
 use Spryker\Zed\Url\Business\UrlFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -107,6 +108,16 @@ class CmsToUrlBridge implements CmsToUrlInterface
     public function saveUrlAndTouch(UrlTransfer $urlTransfer)
     {
         return $this->urlFacade->saveUrlAndTouch($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
+     *
+     * @return \Generated\Shared\Transfer\RedirectTransfer
+     */
+    public function saveRedirectAndTouch(RedirectTransfer $redirect)
+    {
+        return $this->urlFacade->saveRedirectAndTouch($redirect);
     }
 
 }

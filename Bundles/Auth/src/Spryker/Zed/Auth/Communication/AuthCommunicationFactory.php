@@ -20,13 +20,13 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\Auth\Communication\Form\LoginForm
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createLoginForm()
     {
-        $form = new LoginForm();
+        $formType = new LoginForm();
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($formType);
     }
 
     /**
@@ -34,9 +34,9 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createResetPasswordRequestForm()
     {
-        $form = new ResetPasswordRequestForm();
+        $formType = new ResetPasswordRequestForm();
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($formType);
     }
 
     /**
@@ -44,9 +44,9 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createResetPasswordForm()
     {
-        $form = new ResetPasswordForm();
+        $formType = new ResetPasswordForm();
 
-        return $this->createForm($form);
+        return $this->getFormFactory()->create($formType);
     }
 
     /**

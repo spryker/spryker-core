@@ -12,7 +12,6 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -49,14 +48,18 @@ class RedirectController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
     public function addAction(Request $request)
     {
+        $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
-            ->createCmsRedirectForm('add');
-
-        $form->handleRequest($request);
+            ->createCmsRedirectForm(
+                $dataProvider->getData()
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -83,12 +86,14 @@ class RedirectController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idUrl = $request->get(CmsRedirectTable::REQUEST_ID_URL);
+        $idUrl = $request->query->getInt(CmsRedirectTable::REQUEST_ID_URL);
 
+        $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
-            ->createCmsRedirectForm('update', $idUrl);
-
-        $form->handleRequest($request);
+            ->createCmsRedirectForm(
+                $dataProvider->getData($idUrl)
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -153,7 +158,7 @@ class RedirectController extends AbstractController
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      * @param array $data
      *
-     * @return self
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     private function createRedirectTransfer($redirect, $data)
     {

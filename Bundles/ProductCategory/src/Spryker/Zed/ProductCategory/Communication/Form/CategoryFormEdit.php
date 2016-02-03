@@ -6,19 +6,19 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Form;
 
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class CategoryFormEdit extends CategoryFormAdd
 {
 
-    const ATTRIBUTE_META_TITLE = 'meta_title';
-    const ATTRIBUTE_META_DESCRIPTION = 'meta_description';
-    const ATTRIBUTE_META_KEYWORDS = 'meta_keywords';
-    const ATTRIBUTE_CATEGORY_IMAGE_NAME = 'category_image_nam';
-    const ATTRIBUTE_CATEGORY_ROBOTS = 'robots';
-    const ATTRIBUTE_CATEGORY_CANONICAL = 'canonical';
-    const ATTRIBUTE_CATEGORY_ALTERNATE_TAG = 'alternate_tag';
+    const FIELD_META_TITLE = 'meta_title';
+    const FIELD_META_DESCRIPTION = 'meta_description';
+    const FIELD_META_KEYWORDS = 'meta_keywords';
+    const FIELD_CATEGORY_IMAGE_NAME = 'category_image_nam';
+    const FIELD_CATEGORY_ROBOTS = 'robots';
+    const FIELD_CATEGORY_CANONICAL = 'canonical';
+    const FIELD_CATEGORY_ALTERNATE_TAG = 'alternate_tag';
 
     const CATEGORY_IS_ACTIVE = 'is_active';
     const CATEGORY_IS_IN_MENU = 'is_in_menu';
@@ -28,170 +28,218 @@ class CategoryFormEdit extends CategoryFormAdd
     const EXTRA_PARENTS = 'extra_parents';
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $this
+            ->addNameField($builder)
+            ->addCategoryKeyField($builder)
+            ->addMetaTitleField($builder)
+            ->addMetaDescriptionField($builder)
+            ->addMetaKeywordsField($builder)
+            ->addCategoryIsActiveField($builder)
+            ->addCategoryIsInMenuField($builder)
+            ->addCategoryIsClickableField($builder)
+            ->addCategoryNodeField($builder, $options[self::OPTION_PARENT_CATEGORY_NODE_CHOICES])
+            ->addExtraParentsField($builder, $options[self::OPTION_PARENT_CATEGORY_NODE_CHOICES])
+            ->addPkCategoryNodeField($builder)
+            ->addFkNodeCategoryField($builder)
+            ->addProductsToBeAssignedField($builder)
+            ->addProductsToBeDeassignedField($builder)
+            ->addProductsOrderField($builder)
+            ->addProductCategoryPreconfigField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
      * @return self
      */
-    protected function buildFormFields()
+    protected function addMetaTitleField(FormBuilderInterface $builder)
     {
-        $categoriesWithPath = $this->getCategoriesWithPaths($this->locale->getIdLocale());
-
-        return $this->addText(self::NAME, [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->addText(self::CATEGORY_KEY, [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->addText(self::ATTRIBUTE_META_TITLE, [
+        $builder
+            ->add(self::FIELD_META_TITLE, 'text', [
                 'label' => 'Meta Title',
-            ])
-            ->addTextarea(self::ATTRIBUTE_META_DESCRIPTION, [
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addMetaDescriptionField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_META_DESCRIPTION, 'textarea', [
                 'label' => 'Meta Description',
-            ])
-            ->addTextarea(self::ATTRIBUTE_META_KEYWORDS, [
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addMetaKeywordsField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_META_KEYWORDS, 'textarea', [
                 'label' => 'Meta Keywords',
-            ])
-            ->addCheckbox(self::CATEGORY_IS_ACTIVE, [
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCategoryIsActiveField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::CATEGORY_IS_ACTIVE, 'checkbox', [
                 'label' => 'Active',
-            ])
-            ->addCheckbox(self::CATEGORY_IS_IN_MENU, [
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCategoryIsInMenuField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::CATEGORY_IS_IN_MENU, 'checkbox', [
                 'label' => 'Show in Menu',
-            ])
-            ->addCheckbox(self::CATEGORY_IS_CLICKABLE, [
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addCategoryIsClickableField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::CATEGORY_IS_CLICKABLE, 'checkbox', [
                 'label' => 'Clickable',
-            ])
-            ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
-                'label' => 'Parent',
-                'choices' => $categoriesWithPath,
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-                'multiple' => false,
-            ])
-            ->addSelect2ComboBox(self::EXTRA_PARENTS, [
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return self
+     */
+    protected function addExtraParentsField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder
+            ->add(self::EXTRA_PARENTS, new Select2ComboBoxType(), [
                 'label' => 'Additional Parents',
-                'choices' => $categoriesWithPath,
+                'choices' => $choices,
                 'multiple' => true,
-            ])
-            ->addHidden(self::PK_CATEGORY_NODE)
-            ->addHidden(self::FK_NODE_CATEGORY)
-            ->addHidden('products_to_be_assigned', [
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addFkNodeCategoryField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_FK_NODE_CATEGORY, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addProductsToBeAssignedField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add('products_to_be_assigned', 'hidden', [
                 'attr' => [
                     'id' => 'products_to_be_assigned',
                 ],
-            ])
-            ->addHidden('products_to_be_de_assigned', [
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addProductsToBeDeassignedField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add('products_to_be_de_assigned', 'hidden', [
                 'attr' => [
                     'id' => 'products_to_be_de_assigned',
                 ],
-            ])
-            ->addHidden('product_order', [
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addProductsOrderField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add('product_order', 'hidden', [
                 'attr' => [
                     'id' => 'product_order',
                 ],
-            ])
-            ->addHidden('product_category_preconfig', [
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addProductCategoryPreconfigField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add('product_category_preconfig', 'hidden', [
                 'attr' => [
                     'id' => 'product_category_preconfig',
                 ],
             ]);
-    }
 
-    /**
-     * @return array
-     */
-    public function populateFormFields()
-    {
-        $fields = $this->getDefaultFormFields();
-
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
-        $categoryEntity = $this->categoryQueryContainer
-            ->queryCategoryById($this->idCategory)
-            ->innerJoinAttribute()
-            ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $this->locale->getIdLocale())
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_META_TITLE, self::ATTRIBUTE_META_TITLE)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_META_DESCRIPTION, self::ATTRIBUTE_META_DESCRIPTION)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_META_KEYWORDS, self::ATTRIBUTE_META_KEYWORDS)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_CATEGORY_IMAGE_NAME, self::ATTRIBUTE_CATEGORY_IMAGE_NAME)
-            ->innerJoinNode()
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, self::FK_PARENT_CATEGORY_NODE)
-            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, self::PK_CATEGORY_NODE)
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, self::FK_NODE_CATEGORY)
-            ->withColumn(SpyCategoryNodeTableMap::COL_IS_MAIN, self::CATEGORY_NODE_IS_MAIN)
-            ->findOne();
-
-        if ($categoryEntity) {
-            $categoryEntity = $categoryEntity->toArray();
-
-            $nodeEntityList = $this->categoryQueryContainer
-                ->queryNotMainNodesByCategoryId($this->idCategory)
-                ->where(
-                    SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE . ' <> ?',
-                    $categoryEntity[self::PK_CATEGORY_NODE]
-                )
-                ->find();
-
-            $nodeIds = [];
-            foreach ($nodeEntityList as $nodeEntity) {
-                $nodeIds[] = $nodeEntity->getFkParentCategoryNode();
-            }
-
-            $fields = [
-                self::PK_CATEGORY => $categoryEntity[self::PK_CATEGORY],
-                self::PK_CATEGORY_NODE => $categoryEntity[self::PK_CATEGORY_NODE],
-                self::FK_PARENT_CATEGORY_NODE => $categoryEntity[self::FK_PARENT_CATEGORY_NODE],
-                self::FK_NODE_CATEGORY => $categoryEntity[self::FK_NODE_CATEGORY],
-                self::NAME => $categoryEntity[self::NAME],
-                self::CATEGORY_KEY => $categoryEntity[self::CATEGORY_KEY],
-                //meta
-                self::ATTRIBUTE_META_TITLE => $categoryEntity[self::ATTRIBUTE_META_TITLE],
-                self::ATTRIBUTE_META_DESCRIPTION => $categoryEntity[self::ATTRIBUTE_META_DESCRIPTION],
-                self::ATTRIBUTE_META_KEYWORDS => $categoryEntity[self::ATTRIBUTE_META_KEYWORDS],
-                //image
-                self::ATTRIBUTE_CATEGORY_IMAGE_NAME => $categoryEntity[self::ATTRIBUTE_CATEGORY_IMAGE_NAME],
-                //category
-                self::CATEGORY_IS_ACTIVE => $categoryEntity[self::CATEGORY_IS_ACTIVE],
-                self::CATEGORY_IS_IN_MENU => $categoryEntity[self::CATEGORY_IS_IN_MENU],
-                self::CATEGORY_IS_CLICKABLE => $categoryEntity[self::CATEGORY_IS_CLICKABLE],
-                self::CATEGORY_NODE_IS_MAIN => $categoryEntity[self::CATEGORY_NODE_IS_MAIN],
-
-                self::EXTRA_PARENTS => $nodeIds,
-            ];
-        }
-
-        return $fields;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDefaultFormFields()
-    {
-        $fields = parent::getDefaultFormFields();
-
-        return array_merge($fields, [
-            self::PK_CATEGORY => null,
-            self::PK_CATEGORY_NODE => null,
-            self::FK_PARENT_CATEGORY_NODE => null,
-            self::FK_NODE_CATEGORY => null,
-            self::NAME => null,
-            //meta
-            self::ATTRIBUTE_META_TITLE => null,
-            self::ATTRIBUTE_META_DESCRIPTION => null,
-            self::ATTRIBUTE_META_KEYWORDS => null,
-            //image
-            self::ATTRIBUTE_CATEGORY_IMAGE_NAME => null,
-            //category
-            self::CATEGORY_IS_ACTIVE => null,
-            self::CATEGORY_IS_IN_MENU => null,
-            self::CATEGORY_IS_CLICKABLE => null,
-            self::CATEGORY_NODE_IS_MAIN => null,
-
-            self::EXTRA_PARENTS => null,
-        ]);
+        return $this;
     }
 
 }

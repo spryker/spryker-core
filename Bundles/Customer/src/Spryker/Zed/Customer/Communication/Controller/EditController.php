@@ -10,8 +10,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Customer\Communication\Form\CustomerForm;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -30,24 +29,26 @@ class EditController extends AbstractController
     {
         $idCustomer = $request->query->getInt(CustomerConstants::PARAM_ID_CUSTOMER);
 
+        $dataProvider = $this->getFactory()->createCustomerUpdateFormDataProvider();
         $form = $this->getFactory()
-            ->createCustomerForm(CustomerForm::UPDATE);
-
-        $form->handleRequest($request);
+            ->createCustomerUpdateForm(
+                $dataProvider->getData($idCustomer),
+                $dataProvider->getOptions($idCustomer)
+            )
+            ->handleRequest($request);
 
         if ($form->isValid()) {
-            /** @var \Generated\Shared\Transfer\CustomerTransfer $data */
-            $data = $form->getData();
+            $customerTransfer = new CustomerTransfer();
+            $customerTransfer->fromArray($form->getData(), true);
 
-            $this->getFacade()
-                ->updateCustomer($data);
+            $this->getFacade()->updateCustomer($customerTransfer);
 
-            $defaultBilling = !empty($data->getBillingAddress()) ? $data->getBillingAddress() : false;
+            $defaultBilling = !empty($customerTransfer->getBillingAddress()) ? $customerTransfer->getBillingAddress() : false;
             if (empty($defaultBilling)) {
                 $this->updateBillingAddress($idCustomer, $defaultBilling);
             }
 
-            $defaultShipping = !empty($data->getShippingAddress()) ? $data->getShippingAddress() : false;
+            $defaultShipping = !empty($customerTransfer->getShippingAddress()) ? $customerTransfer->getShippingAddress() : false;
             if (empty($defaultShipping)) {
                 $this->updateShippingAddress($idCustomer, $defaultShipping);
             }

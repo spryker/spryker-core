@@ -6,13 +6,13 @@
 
 namespace Spryker\Zed\Acl\Business;
 
-use Spryker\Zed\Acl\Business\Model\Role;
-use Spryker\Zed\Acl\Business\Model\Group;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Acl\AclDependencyProvider;
-use Spryker\Zed\Acl\Business\Model\RuleValidator;
+use Spryker\Zed\Acl\Business\Model\Group;
 use Spryker\Zed\Acl\Business\Model\Installer;
+use Spryker\Zed\Acl\Business\Model\Role;
+use Spryker\Zed\Acl\Business\Model\RuleValidator;
 use Spryker\Zed\Acl\Business\Model\Rule;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Acl\AclConfig getConfig()

@@ -6,109 +6,22 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Form;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Gui\Communication\Form\AbstractForm;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CategoryFormAdd extends AbstractForm
+class CategoryFormAdd extends AbstractType
 {
 
-    const NAME = 'name';
-    const PK_CATEGORY = 'id_category';
-    const CATEGORY_KEY = 'category_key';
-    const PK_CATEGORY_NODE = 'id_category_node';
-    const FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
-    const FK_NODE_CATEGORY = 'fk_category';
+    const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
 
-    /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
-     */
-    protected $categoryQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
-     */
-    protected $productCategoryQueryContainer;
-
-    /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected $locale;
-
-    /**
-     * @var int
-     */
-    protected $idCategory;
-
-    /**
-     * @var int
-     */
-    protected $idParentNode;
-
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
-     * @param \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface $productCategoryQueryContainer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param int $idCategory
-     * @param int $idParentNode
-     */
-    public function __construct(
-        CategoryQueryContainerInterface $categoryQueryContainer,
-        ProductCategoryQueryContainerInterface $productCategoryQueryContainer,
-        LocaleTransfer $locale,
-        $idCategory,
-        $idParentNode
-    ) {
-        $this->categoryQueryContainer = $categoryQueryContainer;
-        $this->productCategoryQueryContainer = $productCategoryQueryContainer;
-        $this->locale = $locale;
-        $this->idCategory = $idCategory;
-        $this->idParentNode = $idParentNode;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return void
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add(self::NAME, 'text', [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->add(self::CATEGORY_KEY, 'text', [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->add(self::FK_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
-                'label' => 'Parent',
-                'choices' => $this->getCategoriesWithPaths($this->locale->getIdLocale()),
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->add(self::PK_CATEGORY_NODE, 'hidden');
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
-    }
+    const FIELD_NAME = 'name';
+    const FIELD_CATEGORY_KEY = 'category_key';
+    const FIELD_PK_CATEGORY_NODE = 'id_category_node';
+    const FIELD_FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
+    const FIELD_FK_NODE_CATEGORY = 'fk_category';
 
     /**
      * @return string
@@ -119,153 +32,96 @@ class CategoryFormAdd extends AbstractForm
     }
 
     /**
-     * @param int $idLocale
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
-     * @return array
+     * @return void
      */
-    protected function getCategoriesWithPaths($idLocale)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $categoryEntityList = $this->categoryQueryContainer
-            ->queryCategory($this->locale->getIdLocale())
-            ->find();
+        parent::setDefaultOptions($resolver);
 
-        $categories = [];
-        $pathCache = [];
-        foreach ($categoryEntityList as $categoryEntity) {
-            foreach ($categoryEntity->getNodes() as $nodeEntity) {
-                if (!array_key_exists($nodeEntity->getFkParentCategoryNode(), $pathCache)) {
-                    $path = $this->buildPath($nodeEntity);
-                } else {
-                    $path = $pathCache[$nodeEntity->getFkParentCategoryNode()];
-                }
-
-                $categories[$path][$nodeEntity->getIdCategoryNode()] = $categoryEntity
-                    ->getLocalisedAttributes($idLocale)
-                    ->getFirst()
-                    ->getName();
-            }
-        }
-
-        $categories = $this->sortCategoriesWithPaths($categories);
-
-        return $categories;
+        $resolver->setRequired(self::OPTION_PARENT_CATEGORY_NODE_CHOICES);
     }
 
     /**
-     * @param array $categories
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return array
+     * @return void
      */
-    protected function sortCategoriesWithPaths(array $categories)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        ksort($categories);
-
-        foreach ($categories as $path => $categoryNames) {
-            asort($categories[$path], SORT_FLAG_CASE & SORT_STRING);
-        }
-
-        return $categories;
+        $this
+            ->addNameField($builder)
+            ->addCategoryKeyField($builder)
+            ->addCategoryNodeField($builder, $options[self::OPTION_PARENT_CATEGORY_NODE_CHOICES])
+            ->addPkCategoryNodeField($builder);
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return string
+     * @return self
      */
-    protected function buildPath(SpyCategoryNode $node)
+    protected function addNameField(FormBuilderInterface $builder)
     {
-        $pathTokens = $this->categoryQueryContainer
-            ->queryPath($node->getIdCategoryNode(), $this->locale->getIdLocale(), false, true)
-            ->find();
+        $builder
+            ->add(self::FIELD_NAME, 'text', [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
 
-        $formattedPath = [];
-        foreach ($pathTokens as $path) {
-            $formattedPath[] = $path['name'];
-        }
-
-        return '/' . implode('/', $formattedPath);
+        return $this;
     }
 
     /**
-     * @return array
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
      */
-    protected function getAssignedProducts()
+    protected function addCategoryKeyField(FormBuilderInterface $builder)
     {
-        $productEntityList = $this->productCategoryQueryContainer
-            ->queryProductsByCategoryId($this->idCategory, $this->locale)
-            ->find();
+        $builder
+            ->add(self::FIELD_CATEGORY_KEY, 'text', [
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
 
-        $assignedProducts = [];
-        foreach ($productEntityList as $productEntity) {
-            /* @var SpyProductCategory $productEntity */
-            $assignedProducts[] = $productEntity->getIdProductCategory();
-        }
-
-        return $assignedProducts;
+        return $this;
     }
 
     /**
-     * @return array
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return self
      */
-    protected function getProducts()
+    protected function addCategoryNodeField(FormBuilderInterface $builder, array $choices)
     {
-        $productCategoryEntityList = $this->productCategoryQueryContainer
-            ->queryProductsByCategoryId($this->idCategory, $this->locale)
-            ->find();
+        $builder
+            ->add(self::FIELD_FK_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
+                'label' => 'Parent',
+                'choices' => $choices,
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
 
-        $products = [];
-        foreach ($productCategoryEntityList as $productCategoryEntity) {
-            /* @var SpyProductCategory $productCategoryEntity */
-            $products[$productCategoryEntity->getIdProductCategory()] = $productCategoryEntity->getName();
-        }
-
-        return $products;
+        return $this;
     }
 
     /**
-     * @return array
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return self
      */
-    public function populateFormFields()
+    protected function addPkCategoryNodeField(FormBuilderInterface $builder)
     {
-        $fields = $this->getDefaultFormFields();
+        $builder->add(self::FIELD_PK_CATEGORY_NODE, 'hidden');
 
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
-        $categoryEntity = $this->categoryQueryContainer
-            ->queryCategoryById($this->idCategory)
-            ->innerJoinAttribute()
-            ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $this->locale->getIdLocale())
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
-            ->innerJoinNode()
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, self::FK_PARENT_CATEGORY_NODE)
-            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, self::PK_CATEGORY_NODE)
-            ->findOne();
-
-        if ($categoryEntity) {
-            $categoryEntity = $categoryEntity->toArray();
-
-            $fields = [
-                self::PK_CATEGORY => $categoryEntity[self::PK_CATEGORY],
-                self::PK_CATEGORY_NODE => $categoryEntity[self::PK_CATEGORY_NODE],
-                self::FK_PARENT_CATEGORY_NODE => $categoryEntity[self::FK_PARENT_CATEGORY_NODE],
-                self::FK_PARENT_CATEGORY_NODE => $categoryEntity[self::FK_PARENT_CATEGORY_NODE],
-                self::NAME => $categoryEntity[self::NAME],
-            ];
-        }
-
-        return $fields;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDefaultFormFields()
-    {
-        return [
-            self::PK_CATEGORY => null,
-            self::PK_CATEGORY_NODE => null,
-            self::FK_PARENT_CATEGORY_NODE => $this->idParentNode,
-            self::NAME => '',
-        ];
+        return $this;
     }
 
 }
