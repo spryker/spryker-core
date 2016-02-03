@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
-use Spryker\Zed\Messenger\Business\MessengerFacade;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\JsonResponse;
