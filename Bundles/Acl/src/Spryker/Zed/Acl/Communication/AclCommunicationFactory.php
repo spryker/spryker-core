@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
+ * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
  */
 class AclCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -154,9 +155,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAclRoleFormDataProvider()
     {
-        return new AclRoleFormDataProvider(
-            $this->getProvidedDependency(AclDependencyProvider::FACADE_ACL)
-        );
+        return new AclRoleFormDataProvider($this->getFacade());
     }
 
     /**
@@ -177,9 +176,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAclRuleFormDataProvider()
     {
-        return new AclRuleFormDataProvider(
-            $this->getProvidedDependency(AclDependencyProvider::FACADE_ACL)
-        );
+        return new AclRuleFormDataProvider($this->getFacade());
     }
 
     /**

@@ -5,7 +5,6 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -90,7 +89,7 @@ class CartRuleController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $dataProvider = $this->getFactory()->createCartRuleFormDataProvider($this->getFacade());
+        $dataProvider = $this->getFactory()->createCartRuleFormDataProvider();
         $form = $this
             ->getFactory()
             ->createCartRuleForm(
@@ -122,7 +121,7 @@ class CartRuleController extends AbstractController
     {
         $idDiscount = $request->query->getInt(DiscountConstants::PARAM_ID_DISCOUNT);
 
-        $dataProvider = $this->getFactory()->createCartRuleFormDataProvider($this->getFacade());
+        $dataProvider = $this->getFactory()->createCartRuleFormDataProvider();
         $form = $this
             ->getFactory()
             ->createCartRuleForm(

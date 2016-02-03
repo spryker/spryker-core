@@ -100,7 +100,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      * @param array $formData
      * @param array $formOptions
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createAddressForm(array $formData = [], array $formOptions = [])
     {

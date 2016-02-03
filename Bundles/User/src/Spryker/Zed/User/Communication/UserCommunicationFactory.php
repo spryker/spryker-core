@@ -19,6 +19,7 @@ use Spryker\Zed\User\UserDependencyProvider;
 /**
  * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
  * @method \Spryker\Zed\User\UserConfig getConfig()
+ * @method \Spryker\Zed\User\Business\UserFacade getFacade()
  */
 class UserCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -76,10 +77,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserFormDataProvider()
     {
-        return new UserFormDataProvider(
-            $this->getAclFacade(),
-            $this->getProvidedDependency(UserDependencyProvider::FACADE_USER)
-        );
+        return new UserFormDataProvider($this->getAclFacade(), $this->getFacade());
     }
 
     /**
@@ -87,10 +85,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserUpdateFormDataProvider()
     {
-        return new UserUpdateFormDataProvider(
-            $this->getAclFacade(),
-            $this->getProvidedDependency(UserDependencyProvider::FACADE_USER)
-        );
+        return new UserUpdateFormDataProvider($this->getAclFacade(), $this->getFacade());
     }
 
     /**

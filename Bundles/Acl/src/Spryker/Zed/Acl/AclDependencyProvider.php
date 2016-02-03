@@ -26,7 +26,6 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addFacadeUser($container);
-        $container = $this->addFacadeAcl($container);
         $container = $this->addAclQueryContainer($container);
 
         return $container;
@@ -67,20 +66,6 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_USER] = function (Container $container) {
             return new AclToUserBridge($container->getLocator()->user()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addFacadeAcl(Container $container)
-    {
-        $container[self::FACADE_ACL] = function (Container $container) {
-            return $container->getLocator()->acl()->facade();
         };
 
         return $container;

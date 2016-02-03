@@ -14,7 +14,6 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_ACL = 'facade acl';
-    const FACADE_USER = 'facade user';
     const CLIENT_SESSION = 'client session';
 
     /**
@@ -40,10 +39,6 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_ACL] = function (Container $container) {
             return new UserToAclBridge($container->getLocator()->acl()->facade());
-        };
-
-        $container[self::FACADE_USER] = function (Container $container) {
-            return $container->getLocator()->user()->facade();
         };
 
         return $container;
