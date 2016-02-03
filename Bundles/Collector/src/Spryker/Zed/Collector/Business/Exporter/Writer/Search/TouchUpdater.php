@@ -36,7 +36,7 @@ class TouchUpdater implements TouchUpdaterInterface
      * @param int $idTouch
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch;
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch
      */
     public function getKeyById($idTouch, LocaleTransfer $locale)
     {

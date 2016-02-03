@@ -186,31 +186,31 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
     {
         $tokens = $phpCsFile->getTokens();
 
-        $nsStart = null;
+        $namespaceStart = null;
         foreach ($tokens as $id => $token) {
             if ($token['code'] !== T_NAMESPACE) {
                 continue;
             }
 
-            $nsStart = $id + 1;
+            $namespaceStart = $id + 1;
             break;
         }
-        if (!$nsStart) {
+        if (!$namespaceStart) {
             return '';
         }
 
-        $nsEnd = $phpCsFile->findNext(
+        $namespaceEnd = $phpCsFile->findNext(
             [
                 T_NS_SEPARATOR,
                 T_STRING,
                 T_WHITESPACE,
             ],
-            $nsStart,
+            $namespaceStart,
             null,
             true
         );
 
-        $namespace = trim($phpCsFile->getTokensAsString(($nsStart), ($nsEnd - $nsStart)));
+        $namespace = trim($phpCsFile->getTokensAsString(($namespaceStart), ($namespaceEnd - $namespaceStart)));
 
         return $namespace;
     }
