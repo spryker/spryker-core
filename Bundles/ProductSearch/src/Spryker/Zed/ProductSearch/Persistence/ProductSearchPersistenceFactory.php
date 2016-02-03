@@ -7,12 +7,11 @@
 namespace Spryker\Zed\ProductSearch\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Product\Persistence\ProductQueryContainer;
-use Spryker\Zed\ProductSearch\ProductSearchConfig;
+use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
- * @method ProductQueryContainer getQueryContainer()
- * @method ProductSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
  */
 class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -23,18 +22,16 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
     public function createProductSearchQueryExpander()
     {
         return new ProductSearchQueryExpander(
-            $this->getQueryContainer()
+            $this->getProductQueryContainer()
         );
     }
 
     /**
-     * @deprecated Use getQueryContainer() directly
-     *
      * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected function getProductQueryContainer()
     {
-        return $this->getQueryContainer();
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
 
 }
