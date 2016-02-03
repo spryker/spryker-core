@@ -37,7 +37,7 @@ class CmsGlossaryForm extends AbstractType
     const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
 
     /**
-     * @var CmsFacade
+     * @var \Spryker\Zed\Cms\Business\CmsFacade
      */
     protected $cmsFacade;
 

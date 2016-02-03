@@ -57,7 +57,7 @@ use Spryker\Zed\Gui\Communication\GuiCommunicationFactory;
 /**
  * @deprecated This class will be removed.
  *
- * @method GuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  */
 class ConstraintsPlugin extends AbstractPlugin
 {

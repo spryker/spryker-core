@@ -19,8 +19,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method DiscountCommunicationFactory getFactory()
- * @method DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class VoucherController extends AbstractController
 {
@@ -35,7 +35,7 @@ class VoucherController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createSingleAction(Request $request)
     {
@@ -81,7 +81,7 @@ class VoucherController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createMultipleAction(Request $request)
     {

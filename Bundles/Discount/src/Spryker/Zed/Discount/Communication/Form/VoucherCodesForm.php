@@ -31,12 +31,12 @@ class VoucherCodesForm extends AbstractRuleForm
     protected $availablePoolCategories;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
 
     /**
-     * @var DataTransformerInterface
+     * @var \Symfony\Component\Form\DataTransformerInterface
      */
     protected $decisionRulesFormTransformer;
 

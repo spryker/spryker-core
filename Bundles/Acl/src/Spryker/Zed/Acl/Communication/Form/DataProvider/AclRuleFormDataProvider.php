@@ -15,7 +15,7 @@ class AclRuleFormDataProvider
 {
 
     /**
-     * @var AclFacade
+     * @var \Spryker\Zed\Acl\Business\AclFacade
      */
     protected $aclFacade;
 

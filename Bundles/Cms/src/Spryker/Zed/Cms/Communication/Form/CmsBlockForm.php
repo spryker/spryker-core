@@ -40,7 +40,7 @@ class CmsBlockForm extends AbstractType
     const TYPE_PRODUCT = 'product';
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 

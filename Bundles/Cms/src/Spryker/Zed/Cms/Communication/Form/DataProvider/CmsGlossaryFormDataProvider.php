@@ -13,7 +13,7 @@ class CmsGlossaryFormDataProvider
 {
 
     /**
-     * @var CmsQueryContainer
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainer
      */
     protected $cmsQueryContainer;
 

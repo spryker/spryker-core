@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Glossary\Communication\Form\DataProvider;
 
 use Propel\Runtime\Map\TableMap;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
@@ -16,7 +15,7 @@ class TranslationFormDataProvider
 {
 
     /**
-     * @var SpyGlossaryTranslationQuery
+     * @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     protected $glossaryQueryContainer;
 

@@ -16,12 +16,12 @@ class AddressFormDataProvider extends AbstractCustomerDataProvider
     const PREFERRED_COUNTRY_NAME = 'Germany';
 
     /**
-     * @var CustomerToCountryInterface
+     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface
      */
     protected $countryFacade;
 
     /**
-     * @var CustomerQueryContainerInterface
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
     protected $customerQueryContainer;
 

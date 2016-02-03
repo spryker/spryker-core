@@ -13,7 +13,7 @@ class CmsRedirectFormDataProvider
 {
 
     /**
-     * @var CmsQueryContainer
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainer
      */
     protected $cmsQueryContainer;
 

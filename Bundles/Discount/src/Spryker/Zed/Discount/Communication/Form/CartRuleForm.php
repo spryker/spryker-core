@@ -25,7 +25,7 @@ class CartRuleForm extends AbstractRuleForm
     const VALID_TO = 'valid_to';
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
 

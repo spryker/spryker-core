@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductCategory\Communication\Form\DataProvider;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategory;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 
 class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
@@ -25,7 +24,7 @@ class CategoryFormAddDataProvider extends AbstractCategoryFormDataProvider
         $formData = $this->getDefaultFormFields($idParentNode);
 
         if ($idCategory !== null) {
-            /** @var SpyCategory $categoryEntity */
+            /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
             $categoryEntity = $this->categoryQueryContainer
                 ->queryCategoryById($idCategory)
                 ->innerJoinAttribute()

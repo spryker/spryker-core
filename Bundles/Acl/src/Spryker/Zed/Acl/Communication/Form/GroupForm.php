@@ -28,7 +28,7 @@ class GroupForm extends AbstractType
     const GROUP_UNIQUE_GROUP_CHECK = 'unique_group_check';
 
     /**
-     * @var AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
      */
     protected $queryContainer;
 
@@ -119,7 +119,7 @@ class GroupForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return GroupForm
+     * @return \Spryker\Zed\Acl\Communication\Form\GroupForm
      */
     protected function addRolesField(FormBuilderInterface $builder, array $choices)
     {

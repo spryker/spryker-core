@@ -24,7 +24,7 @@ class CmsPageFormDataProvider
     const FIELD_IS_ACTIVE = 'is_active';
 
     /**
-     * @var CmsQueryContainer
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainer
      */
     protected $cmsQueryContainer;
 

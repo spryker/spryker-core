@@ -10,18 +10,14 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Spryker\Zed\Acl\Communication\Form\RoleForm;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Acl\Business\AclFacade;
-use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * @method AclCommunicationFactory getFactory()
- * @method AclFacade getFacade()
- * @method AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
  */
 class RoleController extends AbstractController
 {
@@ -57,7 +53,7 @@ class RoleController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -93,7 +89,7 @@ class RoleController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
     {
@@ -172,7 +168,7 @@ class RoleController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param $idAclRole
+     * @param int $idAclRole
      *
      * @return \Symfony\Component\Form\FormInterface
      */

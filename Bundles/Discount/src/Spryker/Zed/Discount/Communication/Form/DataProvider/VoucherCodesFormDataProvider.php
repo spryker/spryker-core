@@ -15,7 +15,7 @@ class VoucherCodesFormDataProvider
 {
 
     /**
-     * @var DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
     protected $discountQueryContainer;
 

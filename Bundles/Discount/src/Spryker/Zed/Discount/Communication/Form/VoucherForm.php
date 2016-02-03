@@ -29,7 +29,7 @@ class VoucherForm extends AbstractType
     const MINIMUM_VOUCHERS_TO_GENERATE = 2;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
 

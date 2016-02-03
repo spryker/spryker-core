@@ -8,13 +8,12 @@ namespace Spryker\Zed\Customer\Communication\Form\DataProvider;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class CustomerFormDataProvider extends AbstractCustomerDataProvider
 {
 
     /**
-     * @var CustomerQueryContainerInterface
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
     protected $customerQueryContainer;
 

@@ -33,7 +33,7 @@ class UpdateTranslationForm extends TranslationForm
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $locales
      *
-     * @return UpdateTranslationForm
+     * @return \Spryker\Zed\Glossary\Communication\Form\UpdateTranslationForm
      */
     protected function addLocaleCollection(FormBuilderInterface $builder, array $locales)
     {

@@ -29,7 +29,7 @@ class CmsRedirectForm extends AbstractType
     const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
 
     /**
-     * @var CmsToUrlInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
      */
     protected $urlFacade;
 

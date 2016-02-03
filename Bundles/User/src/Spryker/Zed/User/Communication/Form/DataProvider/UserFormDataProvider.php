@@ -19,12 +19,12 @@ class UserFormDataProvider
     protected $groupCollectionCache;
 
     /**
-     * @var UserToAclInterface
+     * @var \Spryker\Zed\User\Dependency\Facade\UserToAclInterface
      */
     protected $aclFacade;
 
     /**
-     * @var UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacade
      */
     protected $userFacade;
 

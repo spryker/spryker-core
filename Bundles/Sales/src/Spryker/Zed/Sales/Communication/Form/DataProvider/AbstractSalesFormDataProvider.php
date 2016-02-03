@@ -13,7 +13,7 @@ abstract class AbstractSalesFormDataProvider
 {
 
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $salesQueryContainer;
 
