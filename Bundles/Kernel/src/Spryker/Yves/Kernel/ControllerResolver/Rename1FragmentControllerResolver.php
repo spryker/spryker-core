@@ -8,10 +8,8 @@ namespace Spryker\Yves\Kernel\ControllerResolver;
 
 use Silex\ControllerResolver as SilexControllerResolver;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
-use Spryker\Yves\Application\Controller\AbstractController;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
-use Symfony\Component\HttpFoundation\Request;
 
 class YvesFragmentControllerResolver extends SilexControllerResolver
 {
@@ -37,11 +35,11 @@ class YvesFragmentControllerResolver extends SilexControllerResolver
     }
 
     /**
-     * @param BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
      * @throws \Spryker\Shared\Kernel\ClassResolver\Controller\ControllerNotFoundException
      *
-     * @return AbstractController
+     * @return \Spryker\Yves\Application\Controller\AbstractController
      */
     protected function resolveController(BundleControllerActionInterface $bundleControllerAction)
     {
@@ -55,7 +53,7 @@ class YvesFragmentControllerResolver extends SilexControllerResolver
     }
 
     /**
-     * @return Request
+     * @return \Symfony\Component\HttpFoundation\Request
      */
     protected function getCurrentRequest()
     {

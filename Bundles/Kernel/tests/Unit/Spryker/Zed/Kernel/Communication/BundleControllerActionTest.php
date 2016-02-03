@@ -51,7 +51,7 @@ class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return BundleControllerAction
+     * @return \Spryker\Zed\Kernel\Communication\BundleControllerAction
      */
     private function getBundleControllerAction()
     {

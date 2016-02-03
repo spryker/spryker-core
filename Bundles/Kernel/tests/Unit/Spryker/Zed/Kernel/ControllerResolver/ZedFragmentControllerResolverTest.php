@@ -62,9 +62,9 @@ class ZedFragmentControllerResolverTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|ZedFragmentControllerResolver
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver
      */
     protected function getFragmentControllerProvider(Request $request)
     {
@@ -78,7 +78,7 @@ class ZedFragmentControllerResolverTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $controller
      *
-     * @return Request
+     * @return \Symfony\Component\HttpFoundation\Request
      */
     private function getRequest($controller)
     {

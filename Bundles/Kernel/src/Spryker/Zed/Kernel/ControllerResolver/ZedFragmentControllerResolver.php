@@ -8,10 +8,8 @@ namespace Spryker\Zed\Kernel\ControllerResolver;
 
 use Silex\ControllerResolver as SilexControllerResolver;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
-use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Zed\Kernel\Communication\BundleControllerAction;
-use Symfony\Component\HttpFoundation\Request;
 
 class ZedFragmentControllerResolver extends SilexControllerResolver
 {
@@ -38,11 +36,11 @@ class ZedFragmentControllerResolver extends SilexControllerResolver
     }
 
     /**
-     * @param BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
      * @throws \Spryker\Shared\Kernel\ClassResolver\Controller\ControllerNotFoundException
      *
-     * @return AbstractController
+     * @return \Spryker\Zed\Application\Communication\Controller\AbstractController
      */
     protected function resolveController(BundleControllerActionInterface $bundleControllerAction)
     {
@@ -56,7 +54,7 @@ class ZedFragmentControllerResolver extends SilexControllerResolver
     }
 
     /**
-     * @return Request
+     * @return \Symfony\Component\HttpFoundation\Request
      */
     protected function getCurrentRequest()
     {
