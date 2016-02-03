@@ -46,6 +46,13 @@ abstract class AbstractController
     private $client;
 
     /**
+     * @return void
+     */
+    public function initialize()
+    {
+    }
+
+    /**
      * @param Application $application
      *
      * @return $this
