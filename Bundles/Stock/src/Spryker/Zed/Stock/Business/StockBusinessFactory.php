@@ -10,13 +10,11 @@ use Spryker\Zed\Stock\Business\Model\Writer;
 use Spryker\Zed\Stock\Business\Model\Reader;
 use Spryker\Zed\Stock\Business\Model\Calculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Stock\StockConfig;
 use Spryker\Zed\Stock\StockDependencyProvider;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
- * @method StockConfig getConfig()
- * @method StockQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Stock\StockConfig getConfig()
+ * @method \Spryker\Zed\Stock\Persistence\StockQueryContainer getQueryContainer()
  */
 class StockBusinessFactory extends AbstractBusinessFactory
 {

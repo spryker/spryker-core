@@ -8,13 +8,11 @@ namespace Spryker\Zed\CalculationCheckoutConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Zed\CalculationCheckoutConnector\Business\CalculationCheckoutConnectorFacade;
-use Spryker\Zed\CalculationCheckoutConnector\CalculationCheckoutConnectorConfig;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
 /**
- * @method CalculationCheckoutConnectorConfig getConfig()
- * @method CalculationCheckoutConnectorFacade getFacade()
+ * @method \Spryker\Zed\CalculationCheckoutConnector\CalculationCheckoutConnectorConfig getConfig()
+ * @method \Spryker\Zed\CalculationCheckoutConnector\Business\CalculationCheckoutConnectorFacade getFacade()
  */
 class CartAmountCorrectPrecondition implements CheckoutPreConditionInterface
 {

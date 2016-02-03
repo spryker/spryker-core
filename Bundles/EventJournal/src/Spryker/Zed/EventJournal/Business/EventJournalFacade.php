@@ -10,7 +10,7 @@ use Spryker\Shared\EventJournal\Model\EventInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method EventJournalFactory getFactory()
+ * @method \Spryker\Zed\EventJournal\Business\EventJournalFactory getFactory()
  */
 class EventJournalFacade extends AbstractFacade
 {

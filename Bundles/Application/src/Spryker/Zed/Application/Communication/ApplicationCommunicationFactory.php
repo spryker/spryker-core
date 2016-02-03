@@ -8,10 +8,9 @@ namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\NewRelic\Api;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Application\ApplicationConfig;
 
 /**
- * @method ApplicationConfig getConfig()
+ * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  */
 class ApplicationCommunicationFactory extends AbstractCommunicationFactory
 {

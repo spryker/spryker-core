@@ -9,7 +9,7 @@ namespace Spryker\Zed\Heartbeat\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method HeartbeatBusinessFactory getFactory()
+ * @method \Spryker\Zed\Heartbeat\Business\HeartbeatBusinessFactory getFactory()
  */
 class HeartbeatFacade extends AbstractFacade
 {

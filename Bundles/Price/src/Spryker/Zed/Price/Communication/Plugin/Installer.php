@@ -7,12 +7,10 @@
 namespace Spryker\Zed\Price\Communication\Plugin;
 
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
-use Spryker\Zed\Price\Business\PriceFacade;
-use Spryker\Zed\Price\Communication\PriceCommunicationFactory;
 
 /**
- * @method PriceCommunicationFactory getFactory()
- * @method PriceFacade getFacade()
+ * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin
 {

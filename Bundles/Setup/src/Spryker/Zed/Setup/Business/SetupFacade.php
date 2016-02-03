@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method SetupBusinessFactory getFactory()
+ * @method \Spryker\Zed\Setup\Business\SetupBusinessFactory getFactory()
  */
 class SetupFacade extends AbstractFacade
 {

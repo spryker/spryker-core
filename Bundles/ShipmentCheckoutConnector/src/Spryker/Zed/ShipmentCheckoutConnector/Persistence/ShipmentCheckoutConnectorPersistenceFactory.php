@@ -7,11 +7,10 @@
 namespace Spryker\Zed\ShipmentCheckoutConnector\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig;
 
 /**
- * @method ShipmentCheckoutConnectorConfig getConfig()
- * @method ShipmentCheckoutConnectorQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig getConfig()
+ * @method \Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainer getQueryContainer()
  */
 class ShipmentCheckoutConnectorPersistenceFactory extends AbstractPersistenceFactory
 {

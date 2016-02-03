@@ -10,10 +10,9 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
-use Spryker\Zed\Payolution\Business\PayolutionFacade;
 
 /**
- * @method PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
  */
 class SaveOrderPlugin extends BaseAbstractPlugin implements CheckoutSaveOrderInterface
 {

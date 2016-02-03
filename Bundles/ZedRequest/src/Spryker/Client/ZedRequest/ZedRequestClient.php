@@ -11,7 +11,7 @@ use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Client\ZedRequest\Client\ZedClient;
 
 /**
- * @method ZedRequestFactory getFactory()
+ * @method \Spryker\Client\ZedRequest\ZedRequestFactory getFactory()
  */
 class ZedRequestClient extends AbstractClient
 {

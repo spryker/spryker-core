@@ -9,12 +9,10 @@ namespace Spryker\Zed\Availability\Business;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
-use Spryker\Zed\Availability\AvailabilityConfig;
-use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 
 /**
- * @method AvailabilityConfig getConfig()
- * @method AvailabilityQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer getQueryContainer()
  */
 class AvailabilityBusinessFactory extends AbstractBusinessFactory
 {

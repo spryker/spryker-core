@@ -8,11 +8,10 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method SalesFacade getFacade()
+ * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

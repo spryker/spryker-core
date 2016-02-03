@@ -10,13 +10,11 @@ use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumber;
 use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainerInterface;
-use Spryker\Zed\SequenceNumber\SequenceNumberConfig;
 use Propel\Runtime\Propel;
 
 /**
- * @method SequenceNumberConfig getConfig()
- * @method SequenceNumberQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\SequenceNumber\SequenceNumberConfig getConfig()
+ * @method \Spryker\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainerInterface getQueryContainer()
  */
 class SequenceNumberBusinessFactory extends AbstractBusinessFactory
 {

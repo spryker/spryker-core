@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Url\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Url\UrlConfig;
 
 /**
- * @method UrlConfig getConfig()
- * @method UrlQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Url\UrlConfig getConfig()
+ * @method \Spryker\Zed\Url\Persistence\UrlQueryContainer getQueryContainer()
  */
 class UrlPersistenceFactory extends AbstractPersistenceFactory
 {

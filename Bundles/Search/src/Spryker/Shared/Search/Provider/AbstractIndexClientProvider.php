@@ -6,7 +6,6 @@
 
 namespace Spryker\Shared\Search\Provider;
 
-use Elastica\Index;
 use Elastica\Client;
 use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
@@ -15,7 +14,7 @@ use Spryker\Shared\Kernel\AbstractClientProvider;
 /**
  * Class ClientStorageProvider
  *
- * @method Index getInstance()
+ * @method \Elastica\Index getInstance()
  */
 abstract class AbstractIndexClientProvider extends AbstractClientProvider
 {

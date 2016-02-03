@@ -9,7 +9,7 @@ namespace Spryker\Zed\Console\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ConsoleBusinessFactory getFactory()
+ * @method \Spryker\Zed\Console\Business\ConsoleBusinessFactory getFactory()
  */
 class ConsoleFacade extends AbstractFacade
 {

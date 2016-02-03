@@ -12,13 +12,11 @@ use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 use Spryker\Zed\User\Communication\Table\UsersTable;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Spryker\Zed\User\UserDependencyProvider;
-use Spryker\Zed\User\UserConfig;
 
 /**
- * @method UserQueryContainer getQueryContainer()
- * @method UserConfig getConfig()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\User\UserConfig getConfig()
  */
 class UserCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 
 /**
- * @method CountryBusinessFactory getFactory()
+ * @method \Spryker\Zed\Country\Business\CountryBusinessFactory getFactory()
  */
 class CountryFacade extends AbstractFacade
 {

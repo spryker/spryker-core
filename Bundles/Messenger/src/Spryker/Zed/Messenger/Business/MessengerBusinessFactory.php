@@ -10,10 +10,9 @@ use Spryker\Zed\Messenger\Business\Model\InMemoryMessageTray;
 use Spryker\Zed\Messenger\Business\Model\SessionMessageTray;
 use Spryker\Zed\Messenger\MessengerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\MessengerConfig;
 
 /**
- * @method MessengerConfig getConfig()
+ * @method \Spryker\Zed\Messenger\MessengerConfig getConfig()
  */
 class MessengerBusinessFactory extends AbstractBusinessFactory
 {

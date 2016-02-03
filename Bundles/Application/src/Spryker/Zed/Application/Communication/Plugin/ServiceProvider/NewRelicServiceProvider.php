@@ -9,15 +9,13 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Library\System;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Application\Business\ApplicationFacade;
 
 /**
- * @method ApplicationCommunicationFactory getFactory()
- * @method ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
  */
 class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

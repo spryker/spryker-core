@@ -10,10 +10,7 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Spryker\Zed\Acl\Communication\Form\RulesetForm;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Acl\Business\AclFacade;
-use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,9 +18,9 @@ use Spryker\Zed\Acl\Communication\Form\RoleForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * @method AclCommunicationFactory getFactory()
- * @method AclFacade getFacade()
- * @method AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
  */
 class RoleController extends AbstractController
 {

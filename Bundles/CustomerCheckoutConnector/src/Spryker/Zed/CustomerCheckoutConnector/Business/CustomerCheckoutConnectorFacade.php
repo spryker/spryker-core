@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CustomerCheckoutConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorBusinessFactory getFactory()
  */
 class CustomerCheckoutConnectorFacade extends AbstractFacade
 {

@@ -7,15 +7,13 @@
 namespace Spryker\Zed\Storage\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Storage\Business\StorageFacade;
-use Spryker\Zed\Storage\Communication\StorageCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method StorageFacade getFacade()
- * @method StorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Storage\Business\StorageFacade getFacade()
+ * @method \Spryker\Zed\Storage\Communication\StorageCommunicationFactory getFactory()
  */
 class MaintenanceController extends AbstractController
 {

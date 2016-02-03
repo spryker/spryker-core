@@ -13,13 +13,12 @@ use Spryker\Shared\ZedRequest\Client\Message;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
-use Spryker\Zed\Kernel\Communication\KernelCommunicationFactory;
 use Spryker\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Spryker\Zed\Messenger\MessengerConfig;
 
 /**
- * @method KernelCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
  */
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {

@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
  * @group ProdutOptionExporter
  * @group DataProcessorTest
  *
- * @method ProductOptionExporterFacade getFacade()
+ * @method \Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade getFacade()
  */
 class DataProcessorTest extends Test
 {

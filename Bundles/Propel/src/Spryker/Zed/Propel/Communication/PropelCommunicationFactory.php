@@ -9,10 +9,9 @@ namespace Spryker\Zed\Propel\Communication;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Propel\PropelConfig;
 
 /**
- * @method PropelConfig getConfig()
+ * @method \Spryker\Zed\Propel\PropelConfig getConfig()
  */
 class PropelCommunicationFactory extends AbstractCommunicationFactory
 {

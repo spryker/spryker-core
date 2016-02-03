@@ -25,7 +25,7 @@ use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
  * @group ProductOption
  * @group ProductOptionReaderTest
  *
- * @method ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
  */
 class ProductOptionReaderTest extends Test
 {

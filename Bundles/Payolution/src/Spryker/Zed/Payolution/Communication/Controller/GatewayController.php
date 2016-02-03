@@ -8,10 +8,9 @@ namespace Spryker\Zed\Payolution\Communication\Controller;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use Spryker\Zed\Payolution\Business\PayolutionFacade;
 
 /**
- * @method PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

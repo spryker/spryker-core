@@ -20,7 +20,6 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Calculation\CalculationConfig;
 use Spryker\Zed\Calculation\Communication\Plugin\ItemTotalPriceCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\TaxTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\ProductOptionPriceToPayCalculatorPlugin;
@@ -34,7 +33,7 @@ use Spryker\Zed\Calculation\Communication\Plugin\RemoveAllExpensesCalculatorPlug
 use Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin;
 
 /**
- * @method CalculationConfig getConfig()
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
 class CalculationBusinessFactory extends AbstractBusinessFactory
 {

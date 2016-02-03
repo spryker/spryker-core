@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Country\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Country\CountryConfig;
 
 /**
- * @method CountryConfig getConfig()
- * @method CountryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Country\CountryConfig getConfig()
+ * @method \Spryker\Zed\Country\Persistence\CountryQueryContainer getQueryContainer()
  */
 class CountryPersistenceFactory extends AbstractPersistenceFactory
 {

@@ -18,7 +18,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method DiscountBusinessFactory getFactory()
+ * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
  */
 class DiscountFacade extends AbstractFacade
 {

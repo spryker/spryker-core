@@ -7,17 +7,14 @@
 namespace Spryker\Zed\Auth\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Auth\Business\AuthFacade;
-use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
-use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Auth\Communication\Form\ResetPasswordForm;
 
 /**
- * @method AuthCommunicationFactory getFactory()
- * @method AuthFacade getFacade()
- * @method AuthQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Auth\Business\AuthFacade getFacade()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainer getQueryContainer()
  */
 class PasswordController extends AbstractController
 {

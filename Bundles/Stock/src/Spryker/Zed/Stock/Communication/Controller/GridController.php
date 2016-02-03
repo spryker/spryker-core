@@ -7,12 +7,11 @@
 namespace Spryker\Zed\Stock\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Stock\Communication\StockCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method StockCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Stock\Communication\StockCommunicationFactory getFactory()
  */
 class GridController extends AbstractController
 {

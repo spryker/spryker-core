@@ -10,10 +10,9 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\AbstractCommand;
-use Spryker\Zed\OmsDiscountConnector\Communication\OmsDiscountConnectorCommunicationFactory;
 
 /**
- * @method OmsDiscountConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OmsDiscountConnector\Communication\OmsDiscountConnectorCommunicationFactory getFactory()
  */
 class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderInterface
 {

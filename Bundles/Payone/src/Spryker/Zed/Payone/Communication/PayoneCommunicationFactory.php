@@ -7,13 +7,11 @@
 namespace Spryker\Zed\Payone\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Payone\PayoneConfig;
 use Spryker\Zed\Payone\PayoneDependencyProvider;
-use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 
 /**
- * @method PayoneConfig getConfig()
- * @method PayoneQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Payone\PayoneConfig getConfig()
+ * @method \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface getQueryContainer()
  */
 class PayoneCommunicationFactory extends AbstractCommunicationFactory
 {

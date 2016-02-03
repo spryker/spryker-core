@@ -9,11 +9,10 @@ namespace Spryker\Zed\Refund\Business;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Refund\Business\RefundBusinessFactory as SprykerRefundBusinessFactory;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 
 /**
- * @method SprykerRefundBusinessFactory getFactory()
+ * @method \Spryker\Zed\Refund\Business\RefundBusinessFactory getFactory()
  */
 class RefundFacade extends AbstractFacade
 {

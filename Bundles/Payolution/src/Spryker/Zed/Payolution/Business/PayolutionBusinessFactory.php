@@ -16,12 +16,10 @@ use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
 use Spryker\Zed\Payolution\Business\Payment\Handler\Transaction\Transaction;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
-use Spryker\Zed\Payolution\PayolutionConfig;
 
 /**
- * @method PayolutionQueryContainerInterface getQueryContainer()
- * @method PayolutionConfig getConfig()
+ * @method \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Payolution\PayolutionConfig getConfig()
  */
 class PayolutionBusinessFactory extends AbstractBusinessFactory
 {

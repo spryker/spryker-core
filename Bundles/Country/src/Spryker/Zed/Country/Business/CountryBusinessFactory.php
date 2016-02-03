@@ -10,12 +10,10 @@ use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Country\Business\Internal\Install;
-use Spryker\Zed\Country\CountryConfig;
-use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 
 /**
- * @method CountryConfig getConfig()
- * @method CountryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Country\CountryConfig getConfig()
+ * @method \Spryker\Zed\Country\Persistence\CountryQueryContainer getQueryContainer()
  */
 class CountryBusinessFactory extends AbstractBusinessFactory
 {

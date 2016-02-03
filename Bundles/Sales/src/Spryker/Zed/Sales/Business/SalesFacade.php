@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method SalesBusinessFactory getFactory()
+ * @method \Spryker\Zed\Sales\Business\SalesBusinessFactory getFactory()
  */
 class SalesFacade extends AbstractFacade
 {

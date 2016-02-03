@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method DiscountCheckoutConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\DiscountCheckoutConnector\Business\DiscountCheckoutConnectorBusinessFactory getFactory()
  */
 class DiscountCheckoutConnectorFacade extends AbstractFacade
 {

@@ -11,13 +11,11 @@ use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface;
-use Spryker\Zed\Newsletter\Communication\NewsletterCommunicationFactory;
 use Spryker\Zed\Newsletter\NewsletterConfig;
-use Spryker\Zed\Newsletter\Business\NewsletterFacade;
 
 /**
- * @method NewsletterCommunicationFactory getFactory()
- * @method NewsletterFacade getFacade()
+ * @method \Spryker\Zed\Newsletter\Communication\NewsletterCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Newsletter\Business\NewsletterFacade getFacade()
  */
 class DoubleOptInSubscriptionSender extends AbstractPlugin implements SubscriberOptInSenderInterface
 {

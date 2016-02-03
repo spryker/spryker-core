@@ -13,7 +13,7 @@ use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ProductBusinessFactory getFactory()
+ * @method \Spryker\Zed\Product\Business\ProductBusinessFactory getFactory()
  */
 class ProductFacade extends AbstractFacade
 {

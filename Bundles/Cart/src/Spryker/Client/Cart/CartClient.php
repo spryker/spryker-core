@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method CartFactory getFactory()
+ * @method \Spryker\Client\Cart\CartFactory getFactory()
  */
 class CartClient extends AbstractClient implements CartClientInterface
 {

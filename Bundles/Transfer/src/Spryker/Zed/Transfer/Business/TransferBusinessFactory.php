@@ -16,10 +16,9 @@ use Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBui
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
-use Spryker\Zed\Transfer\TransferConfig;
 
 /**
- * @method TransferConfig getConfig()
+ * @method \Spryker\Zed\Transfer\TransferConfig getConfig()
  */
 class TransferBusinessFactory extends AbstractBusinessFactory
 {

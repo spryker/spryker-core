@@ -7,7 +7,7 @@ namespace Spryker\Client\Wishlist;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
- * @method WishlistFactory getFactory()
+ * @method \Spryker\Client\Wishlist\WishlistFactory getFactory()
  */
 interface WishlistClientInterface
 {

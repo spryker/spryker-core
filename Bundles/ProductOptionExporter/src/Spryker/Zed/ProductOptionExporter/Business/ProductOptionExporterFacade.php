@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
- * @method ProductOptionExporterBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterBusinessFactory getFactory()
  */
 class ProductOptionExporterFacade extends AbstractFacade
 {

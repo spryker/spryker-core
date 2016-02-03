@@ -7,12 +7,10 @@
 namespace Spryker\Zed\Locale\Communication\Plugin;
 
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
-use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Locale\Communication\LocaleCommunicationFactory;
 
 /**
- * @method LocaleCommunicationFactory getFactory()
- * @method LocaleFacade getFacade()
+ * @method \Spryker\Zed\Locale\Communication\LocaleCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Locale\Business\LocaleFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin
 {

@@ -18,15 +18,13 @@ use Spryker\Zed\Product\Business\Importer\FileImporter;
 use Spryker\Zed\Product\Business\Importer\Upload\UploadedFileImporter;
 use Spryker\Zed\Product\Business\Importer\Validator\ImportProductValidator;
 use Spryker\Zed\Product\Business\Internal\Install;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Product\ProductConfig;
 use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 
 /**
- * @method ProductConfig getConfig()
- * @method ProductQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Product\ProductConfig getConfig()
+ * @method \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface getQueryContainer()
  */
 class ProductBusinessFactory extends AbstractBusinessFactory
 {

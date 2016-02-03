@@ -13,7 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
- * @method OmsBusinessFactory getFactory()
+ * @method \Spryker\Zed\Oms\Business\OmsBusinessFactory getFactory()
  */
 class OmsFacade extends AbstractFacade
 {

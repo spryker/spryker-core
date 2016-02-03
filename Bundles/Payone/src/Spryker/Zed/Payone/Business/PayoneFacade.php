@@ -17,7 +17,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method PayoneBusinessFactory getFactory()
+ * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
  */
 class PayoneFacade extends AbstractFacade
 {

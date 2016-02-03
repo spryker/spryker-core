@@ -6,12 +6,10 @@
 
 namespace Spryker\Shared\Storage\Provider;
 
-use Spryker\Shared\Storage\Client\ReadWriteInterface;
-
 /**
  * Class ReadWriteStorageProvider
  *
- * @method ReadWriteInterface getInstance()
+ * @method \Spryker\Shared\Storage\Client\ReadWriteInterface getInstance()
  */
 abstract class AbstractReadWriteClientProvider extends AbstractKvProvider
 {

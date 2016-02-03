@@ -6,13 +6,12 @@
 
 namespace Spryker\Zed\Transfer\Communication\Console;
 
-use Spryker\Zed\Transfer\Business\TransferFacade;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method TransferFacade getFacade()
+ * @method \Spryker\Zed\Transfer\Business\TransferFacade getFacade()
  */
 class GeneratorConsole extends Console
 {

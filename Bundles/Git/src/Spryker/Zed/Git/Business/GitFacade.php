@@ -9,7 +9,7 @@ namespace Spryker\Zed\Git\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method GitBusinessFactory getFactory()
+ * @method \Spryker\Zed\Git\Business\GitBusinessFactory getFactory()
  */
 class GitFacade extends AbstractFacade
 {

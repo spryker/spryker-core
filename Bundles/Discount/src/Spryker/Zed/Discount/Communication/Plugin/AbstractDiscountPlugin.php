@@ -4,12 +4,10 @@ namespace Spryker\Zed\Discount\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Library\Currency\CurrencyManager;
-use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 
 /**
- * @method DiscountFacade getFacade()
- * @method DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
 class AbstractDiscountPlugin extends AbstractPlugin
 {

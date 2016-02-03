@@ -25,12 +25,11 @@ use Spryker\Zed\Payone\Business\Key\HashGenerator;
 use Spryker\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
 use Spryker\Zed\Payone\PayoneConfig;
 use Spryker\Zed\Payone\PayoneDependencyProvider;
-use Spryker\Zed\Payone\Persistence\PayoneQueryContainer;
 use Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder;
 
 /**
- * @method PayoneConfig getConfig()
- * @method PayoneQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Payone\PayoneConfig getConfig()
+ * @method \Spryker\Zed\Payone\Persistence\PayoneQueryContainer getQueryContainer()
  */
 class PayoneBusinessFactory extends AbstractBusinessFactory
 {

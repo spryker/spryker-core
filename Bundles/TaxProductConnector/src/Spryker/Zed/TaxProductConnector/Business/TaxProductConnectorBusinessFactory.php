@@ -7,14 +7,12 @@
 namespace Spryker\Zed\TaxProductConnector\Business;
 
 use Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
-use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
-use Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**
- * @method TaxProductConnectorConfig getConfig()
- * @method TaxProductConnectorQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
+ * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer getQueryContainer()
  */
 class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
 {

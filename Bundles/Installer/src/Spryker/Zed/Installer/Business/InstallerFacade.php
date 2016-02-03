@@ -9,7 +9,7 @@ namespace Spryker\Zed\Installer\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method InstallerBusinessFactory getFactory()
+ * @method \Spryker\Zed\Installer\Business\InstallerBusinessFactory getFactory()
  */
 class InstallerFacade extends AbstractFacade
 {

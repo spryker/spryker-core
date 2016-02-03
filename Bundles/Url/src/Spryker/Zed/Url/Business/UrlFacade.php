@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method UrlBusinessFactory getFactory()
+ * @method \Spryker\Zed\Url\Business\UrlBusinessFactory getFactory()
  */
 class UrlFacade extends AbstractFacade
 {

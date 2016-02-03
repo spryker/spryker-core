@@ -12,10 +12,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
-use Spryker\Zed\Development\DevelopmentConfig;
 
 /**
- * @method DevelopmentConfig getConfig()
+ * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
  */
 class DevelopmentBusinessFactory extends AbstractBusinessFactory
 {

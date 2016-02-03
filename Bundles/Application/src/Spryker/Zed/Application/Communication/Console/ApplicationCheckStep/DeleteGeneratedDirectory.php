@@ -6,10 +6,8 @@
 
 namespace Spryker\Zed\Application\Communication\Console\ApplicationCheckStep;
 
-use Spryker\Zed\Application\Business\ApplicationFacade;
-
 /**
- * @method ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
  */
 class DeleteGeneratedDirectory extends AbstractApplicationCheckStep
 {

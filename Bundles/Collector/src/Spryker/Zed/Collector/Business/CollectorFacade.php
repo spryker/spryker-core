@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method CollectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\Collector\Business\CollectorBusinessFactory getFactory()
  */
 class CollectorFacade extends AbstractFacade
 {

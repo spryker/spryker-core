@@ -8,10 +8,9 @@ namespace Spryker\Zed\Lumberjack\Business;
 
 use Spryker\Zed\Lumberjack\Business\Model\EventJournal;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Lumberjack\LumberjackConfig;
 
 /**
- * @method LumberjackConfig getConfig()
+ * @method \Spryker\Zed\Lumberjack\LumberjackConfig getConfig()
  */
 class LumberjackBusinessFactory extends AbstractBusinessFactory
 {

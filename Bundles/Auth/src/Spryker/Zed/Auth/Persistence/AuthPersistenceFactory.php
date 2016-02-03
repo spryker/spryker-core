@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Auth\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Auth\AuthConfig;
 
 /**
- * @method AuthConfig getConfig()
- * @method AuthQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Auth\AuthConfig getConfig()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainer getQueryContainer()
  */
 class AuthPersistenceFactory extends AbstractPersistenceFactory
 {

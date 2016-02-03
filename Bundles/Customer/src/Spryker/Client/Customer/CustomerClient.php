@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method CustomerFactory getFactory()
+ * @method \Spryker\Client\Customer\CustomerFactory getFactory()
  */
 class CustomerClient extends AbstractClient implements CustomerClientInterface
 {

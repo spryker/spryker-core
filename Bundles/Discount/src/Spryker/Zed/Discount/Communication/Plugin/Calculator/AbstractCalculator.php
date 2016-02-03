@@ -6,12 +6,11 @@
 
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Spryker\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 
 /**
- * @method DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
 abstract class AbstractCalculator extends AbstractDiscountPlugin implements DiscountCalculatorPluginInterface
 {

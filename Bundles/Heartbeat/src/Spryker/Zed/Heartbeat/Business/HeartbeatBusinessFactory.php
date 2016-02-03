@@ -15,11 +15,10 @@ use Spryker\Zed\Heartbeat\Business\Assistant\PropelHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\SearchHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\SessionHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\StorageHealthIndicator;
-use Spryker\Zed\Heartbeat\HeartbeatConfig;
 use Spryker\Shared\Application\ApplicationConstants;
 
 /**
- * @method HeartbeatConfig getConfig()
+ * @method \Spryker\Zed\Heartbeat\HeartbeatConfig getConfig()
  */
 class HeartbeatBusinessFactory extends AbstractBusinessFactory
 {

@@ -8,7 +8,7 @@ namespace Spryker\Zed\Propel\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method PropelBusinessFactory getFactory()
+ * @method \Spryker\Zed\Propel\Business\PropelBusinessFactory getFactory()
  */
 class PropelFacade extends AbstractFacade
 {

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
-use Spryker\Zed\Setup\Business\SetupFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Spryker\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -14,7 +13,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method SetupFacade getFacade()
+ * @method \Spryker\Zed\Setup\Business\SetupFacade getFacade()
  */
 class TransferController extends AbstractController
 {

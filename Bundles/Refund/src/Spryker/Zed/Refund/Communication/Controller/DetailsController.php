@@ -7,16 +7,13 @@
 namespace Spryker\Zed\Refund\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Refund\Business\RefundFacade;
-use Spryker\Zed\Refund\Communication\RefundCommunicationFactory;
-use Spryker\Zed\Refund\Persistence\RefundQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @method RefundCommunicationFactory getFactory()
- * @method RefundFacade getFacade()
- * @method RefundQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Refund\Communication\RefundCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Refund\Business\RefundFacade getFacade()
+ * @method \Spryker\Zed\Refund\Persistence\RefundQueryContainer getQueryContainer()
  */
 class DetailsController extends AbstractController
 {

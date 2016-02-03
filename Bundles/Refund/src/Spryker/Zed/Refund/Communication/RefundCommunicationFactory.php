@@ -13,13 +13,11 @@ use Spryker\Shared\Library\DateFormatter;
 use Spryker\Zed\Refund\Business\RefundFacade;
 use Spryker\Zed\Refund\Communication\Form\RefundForm;
 use Spryker\Zed\Refund\Communication\Table\RefundTable;
-use Spryker\Zed\Refund\Persistence\RefundQueryContainer;
-use Spryker\Zed\Refund\RefundConfig;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 
 /**
- * @method RefundQueryContainer getQueryContainer()
- * @method RefundConfig getConfig()
+ * @method \Spryker\Zed\Refund\Persistence\RefundQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Refund\RefundConfig getConfig()
  */
 class RefundCommunicationFactory extends AbstractCommunicationFactory
 {

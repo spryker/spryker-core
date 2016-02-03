@@ -10,13 +10,12 @@ use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
 use Spryker\Shared\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
-use Spryker\Shared\ZedRequest\Client\AbstractZedClient;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 /**
  * Class ZedRequestClientProvider
  *
- * @method AbstractZedClient getInstance()
+ * @method \Spryker\Shared\ZedRequest\Client\AbstractZedClient getInstance()
  */
 abstract class AbstractZedClientProvider extends AbstractClientProvider
 {

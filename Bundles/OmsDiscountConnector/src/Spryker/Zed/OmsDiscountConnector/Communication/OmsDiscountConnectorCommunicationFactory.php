@@ -8,10 +8,9 @@ namespace Spryker\Zed\OmsDiscountConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorDependencyProvider;
-use Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorConfig;
 
 /**
- * @method OmsDiscountConnectorConfig getConfig()
+ * @method \Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorConfig getConfig()
  */
 class OmsDiscountConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

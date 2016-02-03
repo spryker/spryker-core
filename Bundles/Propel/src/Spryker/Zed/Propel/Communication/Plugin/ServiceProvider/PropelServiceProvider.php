@@ -14,12 +14,10 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Propel\Communication\PropelCommunicationFactory;
-use Spryker\Zed\Propel\Business\PropelFacade;
 
 /**
- * @method PropelCommunicationFactory getFactory()
- * @method PropelFacade getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Propel\Business\PropelFacade getFacade()
  */
 class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

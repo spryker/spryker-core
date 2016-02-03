@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method WishlistBusinessFactory getFactory()
+ * @method \Spryker\Zed\Wishlist\Business\WishlistBusinessFactory getFactory()
  */
 class WishlistFacade extends AbstractFacade
 {

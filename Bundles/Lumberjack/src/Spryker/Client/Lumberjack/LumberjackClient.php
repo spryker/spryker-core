@@ -12,7 +12,7 @@ use Spryker\Shared\Lumberjack\Model\EventInterface;
 /**
  * @deprecated Lumberjack is deprecated use EventJournal instead.
  *
- * @method LumberjackFactory getFactory()
+ * @method \Spryker\Client\Lumberjack\LumberjackFactory getFactory()
  */
 class LumberjackClient extends AbstractClient
 {

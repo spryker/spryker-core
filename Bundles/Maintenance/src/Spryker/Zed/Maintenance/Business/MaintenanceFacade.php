@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method MaintenanceBusinessFactory getFactory()
+ * @method \Spryker\Zed\Maintenance\Business\MaintenanceBusinessFactory getFactory()
  */
 class MaintenanceFacade extends AbstractFacade
 {

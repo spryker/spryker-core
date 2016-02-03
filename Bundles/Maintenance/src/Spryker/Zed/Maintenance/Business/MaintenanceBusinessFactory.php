@@ -55,12 +55,11 @@ use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackage
 use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
 use Spryker\Zed\Maintenance\Business\Model\PropelBaseFolderFinder;
-use Spryker\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Finder\Finder as SfFinder;
 
 /**
- * @method MaintenanceConfig getConfig()
+ * @method \Spryker\Zed\Maintenance\MaintenanceConfig getConfig()
  */
 class MaintenanceBusinessFactory extends AbstractBusinessFactory
 {

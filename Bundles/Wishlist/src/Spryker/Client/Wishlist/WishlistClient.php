@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method WishlistFactory getFactory()
+ * @method \Spryker\Client\Wishlist\WishlistFactory getFactory()
  */
 class WishlistClient extends AbstractClient implements WishlistClientInterface
 {

@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Sales\SalesConfig;
 
 /**
- * @method SalesConfig getConfig()
- * @method SalesQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Sales\SalesConfig getConfig()
+ * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainer getQueryContainer()
  */
 class SalesPersistenceFactory extends AbstractPersistenceFactory
 {

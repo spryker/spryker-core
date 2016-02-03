@@ -5,13 +5,12 @@
  */
 namespace Spryker\Zed\Cache\Communication\Console;
 
-use Spryker\Zed\Cache\Business\CacheFacade;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method CacheFacade getFacade()
+ * @method \Spryker\Zed\Cache\Business\CacheFacade getFacade()
  */
 class DeleteAllCachesConsole extends Console
 {

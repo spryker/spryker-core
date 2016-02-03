@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method ShipmentFactory getFactory()
+ * @method \Spryker\Client\Shipment\ShipmentFactory getFactory()
  */
 class ShipmentClient extends AbstractClient implements ShipmentClientInterface
 {

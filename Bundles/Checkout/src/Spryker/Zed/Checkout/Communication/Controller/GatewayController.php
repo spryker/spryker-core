@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Checkout\Communication\Controller;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method CheckoutFacade getFacade()
+ * @method \Spryker\Zed\Checkout\Business\CheckoutFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

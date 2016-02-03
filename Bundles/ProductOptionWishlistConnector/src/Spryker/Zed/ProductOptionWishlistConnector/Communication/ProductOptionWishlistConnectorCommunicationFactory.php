@@ -7,10 +7,9 @@
 namespace Spryker\Zed\ProductOptionWishlistConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductOptionWishlistConnector\ProductOptionWishlistConnectorConfig;
 
 /**
- * @method ProductOptionWishlistConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductOptionWishlistConnector\ProductOptionWishlistConnectorConfig getConfig()
  */
 class ProductOptionWishlistConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

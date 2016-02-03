@@ -28,7 +28,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
  * @group ProductOption
  * @group DataImportWriterTest
  *
- * @method ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
  */
 class DataImportWriterTest extends Test
 {

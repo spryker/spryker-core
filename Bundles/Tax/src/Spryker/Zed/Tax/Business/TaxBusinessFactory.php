@@ -9,12 +9,10 @@ namespace Spryker\Zed\Tax\Business;
 use Spryker\Zed\Tax\Business\Model\TaxWriter;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Tax\TaxConfig;
-use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
 
 /**
- * @method TaxConfig getConfig()
- * @method TaxQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Tax\TaxConfig getConfig()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
  */
 class TaxBusinessFactory extends AbstractBusinessFactory
 {

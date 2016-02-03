@@ -13,17 +13,15 @@ use Spryker\Zed\Wishlist\Business\Model\Customer;
 use Spryker\Zed\Wishlist\Business\Operator\AbstractOperator;
 use Spryker\Zed\Wishlist\Business\Storage\Propel;
 use Spryker\Zed\Wishlist\Business\Storage\InMemory;
-use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
 use Spryker\Zed\Wishlist\Business\Operator\Add;
 use Spryker\Zed\Wishlist\Business\Operator\Increase;
 use Spryker\Zed\Wishlist\Business\Operator\Remove;
 use Spryker\Zed\Wishlist\Business\Operator\Decrease;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
-use Spryker\Zed\Wishlist\WishlistConfig;
 
 /**
- * @method WishlistQueryContainer getQueryContainer()
- * @method WishlistConfig getConfig()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Wishlist\WishlistConfig getConfig()
  */
 class WishlistBusinessFactory extends AbstractBusinessFactory
 {

@@ -16,14 +16,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\NewRelic\Api;
-use Spryker\Zed\Console\Communication\ConsoleBootstrap;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method ConsoleBootstrap getApplication()
+ * @method \Spryker\Zed\Console\Communication\ConsoleBootstrap getApplication()
  */
 class Console extends SymfonyCommand
 {

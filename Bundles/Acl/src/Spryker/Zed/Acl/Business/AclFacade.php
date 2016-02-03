@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 /**
- * @method AclBusinessFactory getFactory()
+ * @method \Spryker\Zed\Acl\Business\AclBusinessFactory getFactory()
  */
 class AclFacade extends AbstractFacade
 {

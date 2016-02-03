@@ -18,14 +18,11 @@ use Generated\Shared\Transfer\CreditCardTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Shared\Payone\PayoneApiConstants;
-use Spryker\Zed\Payone\Business\PayoneFacade;
-use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 
 /**
- * @method PayoneFacade getFacade()
- * @method PayoneQueryContainerInterface getQueryContainer()
- * @method PayoneCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
+ * @method \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  */
 class TestController extends AbstractController
 {

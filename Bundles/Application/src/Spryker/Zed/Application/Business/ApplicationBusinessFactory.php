@@ -17,7 +17,6 @@ use Spryker\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSch
 use Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Application\ApplicationConfig;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\CodeCeption;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteDatabase;
 use Spryker\Zed\Application\Business\Model\ApplicationCheckStep\DeleteGeneratedDirectory;
@@ -29,7 +28,7 @@ use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuild
 use Spryker\Zed\Application\Business\Model\Navigation\NavigationBuilder;
 
 /**
- * @method ApplicationConfig getConfig()
+ * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  */
 class ApplicationBusinessFactory extends AbstractBusinessFactory
 {

@@ -9,11 +9,10 @@ namespace Spryker\Zed\ProductCartConnector\Business;
 use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
 use Spryker\Zed\ProductCartConnector\ProductCartConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductCartConnector\ProductCartConnectorConfig;
 
 /**
- * @method ProductCartConnectorBusinessFactory getFactory()
- * @method ProductCartConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductCartConnector\ProductCartConnectorConfig getConfig()
  */
 class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
 {

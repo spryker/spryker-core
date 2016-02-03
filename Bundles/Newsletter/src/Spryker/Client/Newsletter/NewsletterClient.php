@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method NewsletterFactory getFactory()
+ * @method \Spryker\Client\Newsletter\NewsletterFactory getFactory()
  */
 class NewsletterClient extends AbstractClient implements NewsletterClientInterface
 {

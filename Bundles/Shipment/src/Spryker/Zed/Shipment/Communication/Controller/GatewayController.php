@@ -8,10 +8,9 @@ namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
 /**
- * @method ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

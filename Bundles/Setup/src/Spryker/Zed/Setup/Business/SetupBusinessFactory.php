@@ -19,11 +19,10 @@ use Spryker\Zed\Setup\Communication\Console\JenkinsEnableConsole;
 use Spryker\Zed\Setup\Communication\Console\JenkinsGenerateConsole;
 use Spryker\Zed\Setup\Communication\Console\Npm\RunnerConsole;
 use Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
-use Spryker\Zed\Setup\SetupConfig;
 use Spryker\Zed\Setup\SetupDependencyProvider;
 
 /**
- * @method SetupConfig getConfig()
+ * @method \Spryker\Zed\Setup\SetupConfig getConfig()
  */
 class SetupBusinessFactory extends AbstractBusinessFactory
 {

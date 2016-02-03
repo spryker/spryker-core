@@ -9,7 +9,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method MessengerBusinessFactory getFactory()
+ * @method \Spryker\Zed\Messenger\Business\MessengerBusinessFactory getFactory()
  */
 class MessengerFacade extends AbstractFacade
 {

@@ -10,7 +10,7 @@ use Spryker\Shared\Checkout\CheckoutConstants;
 use Spryker\Zed\Checkout\Business\Calculation\CalculableContainer;
 
 /**
- * @method CalculationCheckoutConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\CalculationCheckoutConnector\Business\CalculationCheckoutConnectorBusinessFactory getFactory()
  */
 class CalculationCheckoutConnectorFacade extends AbstractFacade
 {

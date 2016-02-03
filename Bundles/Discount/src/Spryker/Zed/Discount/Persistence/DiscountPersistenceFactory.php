@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Discount\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Discount\DiscountConfig;
 
 /**
- * @method DiscountConfig getConfig()
- * @method DiscountQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
  */
 class DiscountPersistenceFactory extends AbstractPersistenceFactory
 {

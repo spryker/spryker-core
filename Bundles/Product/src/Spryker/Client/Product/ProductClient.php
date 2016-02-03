@@ -9,7 +9,7 @@ namespace Spryker\Client\Product;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method ProductFactory getFactory()
+ * @method \Spryker\Client\Product\ProductFactory getFactory()
  */
 class ProductClient extends AbstractClient implements ProductClientInterface
 {

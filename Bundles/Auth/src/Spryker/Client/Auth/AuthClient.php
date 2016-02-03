@@ -9,7 +9,7 @@ namespace Spryker\Client\Auth;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method AuthFactory getFactory()
+ * @method \Spryker\Client\Auth\AuthFactory getFactory()
  */
 class AuthClient extends AbstractClient implements AuthClientInterface
 {

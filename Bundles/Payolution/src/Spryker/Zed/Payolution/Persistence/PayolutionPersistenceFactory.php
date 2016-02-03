@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Payolution\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Payolution\PayolutionConfig;
 
 /**
- * @method PayolutionConfig getConfig()
- * @method PayolutionQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Payolution\PayolutionConfig getConfig()
+ * @method \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer getQueryContainer()
  */
 class PayolutionPersistenceFactory extends AbstractPersistenceFactory
 {

@@ -9,10 +9,9 @@ namespace Spryker\Zed\Git\Business;
 use Spryker\Zed\Git\Communication\Console\GitFlowFinishConsole;
 use Spryker\Zed\Git\Communication\Console\GitFlowUpdateConsole;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Git\GitConfig;
 
 /**
- * @method GitConfig getConfig()
+ * @method \Spryker\Zed\Git\GitConfig getConfig()
  */
 class GitBusinessFactory extends AbstractBusinessFactory
 {

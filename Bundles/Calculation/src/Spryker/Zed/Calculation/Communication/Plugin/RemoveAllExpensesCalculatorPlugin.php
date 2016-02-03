@@ -6,15 +6,13 @@
 
 namespace Spryker\Zed\Calculation\Communication\Plugin;
 
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory;
 
 /**
- * @method CalculationFacade getFacade()
- * @method CalculationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
+ * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
  */
 class RemoveAllExpensesCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {

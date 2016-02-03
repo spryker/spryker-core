@@ -7,10 +7,9 @@
 namespace Spryker\Zed\Payolution\Communication\Plugin\Oms\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Payolution\Business\PayolutionFacade;
 
 /**
- * @method PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
  */
 class IsCaptureApprovedPlugin extends AbstractCheckPlugin
 {

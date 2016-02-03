@@ -7,10 +7,9 @@
 namespace Spryker\Zed\CartCheckoutConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\CartCheckoutConnector\ProductOptionCheckoutConnectorConfig;
 
 /**
- * @method ProductOptionCheckoutConnectorConfig getConfig()
+ * @method \Spryker\Zed\CartCheckoutConnector\ProductOptionCheckoutConnectorConfig getConfig()
  */
 class CartCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {

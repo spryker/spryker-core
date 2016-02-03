@@ -7,10 +7,9 @@
 namespace Spryker\Zed\ItemGrouperWishlistConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorConfig;
 
 /**
- * @method ItemGrouperWishlistConnectorConfig getConfig()
+ * @method \Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorConfig getConfig()
  */
 class ItemGrouperWishlistConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ShipmentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentBusinessFactory getFactory()
  */
 class ShipmentFacade extends AbstractFacade
 {

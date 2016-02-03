@@ -10,15 +10,13 @@ use Spryker\Zed\Price\Business\Model\BulkWriter;
 use Spryker\Zed\Price\Business\Model\Writer;
 use Spryker\Zed\Price\Business\Model\Reader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\Price\Business\Internal\Install;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Price\PriceConfig;
 use Spryker\Zed\Price\PriceDependencyProvider;
 
 /**
- * @method PriceConfig getConfig()
- * @method PriceQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Price\PriceConfig getConfig()
+ * @method \Spryker\Zed\Price\Persistence\PriceQueryContainer getQueryContainer()
  */
 class PriceBusinessFactory extends AbstractBusinessFactory
 {

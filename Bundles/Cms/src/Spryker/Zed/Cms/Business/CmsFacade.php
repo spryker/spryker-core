@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CmsBusinessFactory getFactory()
+ * @method \Spryker\Zed\Cms\Business\CmsBusinessFactory getFactory()
  */
 class CmsFacade extends AbstractFacade
 {

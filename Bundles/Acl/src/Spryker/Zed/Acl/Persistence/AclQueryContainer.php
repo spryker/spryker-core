@@ -20,7 +20,7 @@ use Orm\Zed\Acl\Persistence\Map\SpyAclUserHasGroupTableMap;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 
 /**
- * @method AclPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Acl\Persistence\AclPersistenceFactory getFactory()
  */
 class AclQueryContainer extends AbstractQueryContainer
 {

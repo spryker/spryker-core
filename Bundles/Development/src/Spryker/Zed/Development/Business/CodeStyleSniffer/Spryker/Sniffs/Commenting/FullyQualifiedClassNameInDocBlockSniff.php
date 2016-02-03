@@ -14,7 +14,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
      */
     public static $whitelistedTypes = [
         'string', 'int', 'integer', 'float', 'bool', 'boolean', 'resource', 'null', 'void', 'callable',
-        'array', 'mixed', 'object', 'false', 'true', 'self', 'static', '$this'
+        'array', 'mixed', 'object', 'false', 'true', 'self', 'static', '$this',
     ];
 
     /**
@@ -23,6 +23,9 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
     public function register()
     {
         return [
+            T_CLASS,
+            T_INTERFACE,
+            T_TRAIT,
             T_FUNCTION,
             T_VARIABLE,
         ];
@@ -50,7 +53,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
             if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
                 continue;
             }
-            if (!in_array($tokens[$i]['content'], ['@return', '@param', '@throws', '@var'])) {
+            if (!in_array($tokens[$i]['content'], ['@return', '@param', '@throws', '@var', '@method'])) {
                 continue;
             }
 
@@ -62,7 +65,6 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
 
             $content = $tokens[$classNameIndex]['content'];
 
-            // Fix a Sniffer bug with param having the variable also part of the content
             $appendix = '';
             $spaceIndex = strpos($content, ' ');
             if ($spaceIndex) {
@@ -84,6 +86,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
      * @param int $classNameIndex
      * @param array $classNames
      * @param string $appendix
+     *
      * @return void
      */
     protected function fixClassNames(\PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array $classNames, $appendix)
@@ -155,6 +158,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
     /**
      * @param \PHP_CodeSniffer_File $phpCsFile
      * @param string $className
+     *
      * @return string|null
      */
     protected function findInSameNameSpace(\PHP_CodeSniffer_File $phpCsFile, $className)
@@ -207,6 +211,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
         );
 
         $namespace = trim($phpCsFile->getTokensAsString(($nsStart), ($nsEnd - $nsStart)));
+
         return $namespace;
     }
 

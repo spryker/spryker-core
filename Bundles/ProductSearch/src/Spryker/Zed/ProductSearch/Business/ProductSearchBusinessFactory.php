@@ -17,8 +17,6 @@ use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer;
-use Spryker\Zed\ProductSearch\ProductSearchConfig;
 use Spryker\Zed\ProductSearch\Business\Operation\AddToResult;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToField;
@@ -26,8 +24,8 @@ use Spryker\Zed\ProductSearch\Business\Operation\CopyToMultiField;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
- * @method ProductSearchConfig getConfig()
- * @method ProductSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer getQueryContainer()
  */
 class ProductSearchBusinessFactory extends AbstractBusinessFactory
 {

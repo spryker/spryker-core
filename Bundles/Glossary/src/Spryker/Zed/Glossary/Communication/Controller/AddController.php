@@ -6,14 +6,12 @@
 namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method GlossaryCommunicationFactory getFactory()
- * @method GlossaryFacade getFacade()
+ * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
  */
 class AddController extends AbstractController
 {

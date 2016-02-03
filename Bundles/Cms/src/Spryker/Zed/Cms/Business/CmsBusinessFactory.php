@@ -10,15 +10,13 @@ use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\Cms\Business\Block\BlockManager;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\Business\Page\PageManager;
-use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Symfony\Component\Finder\Finder;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 
 /**
- * @method CmsConfig getConfig()
- * @method CmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Cms\CmsConfig getConfig()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
  */
 class CmsBusinessFactory extends AbstractBusinessFactory
 {

@@ -7,10 +7,9 @@
 namespace Spryker\Zed\Acl\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 
 /**
- * @method AclCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {

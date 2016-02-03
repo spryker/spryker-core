@@ -15,12 +15,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Model\CommentManager;
 use Spryker\Zed\Sales\Business\Model\OrderDetailsManager;
 use Spryker\Zed\Sales\SalesDependencyProvider;
-use Spryker\Zed\Sales\SalesConfig;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 
 /**
- * @method SalesConfig getConfig()
- * @method SalesQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Sales\SalesConfig getConfig()
+ * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainer getQueryContainer()
  */
 class SalesBusinessFactory extends AbstractBusinessFactory
 {

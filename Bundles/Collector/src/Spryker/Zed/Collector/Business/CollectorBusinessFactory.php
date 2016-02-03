@@ -31,7 +31,7 @@ use Spryker\Zed\Collector\CollectorDependencyProvider;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
- * @method CollectorConfig getConfig()
+ * @method \Spryker\Zed\Collector\CollectorConfig getConfig()
  */
 class CollectorBusinessFactory extends AbstractBusinessFactory
 {

@@ -9,12 +9,10 @@ namespace Spryker\Zed\Country\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Country\CountryDependencyProvider;
 use Spryker\Zed\Country\Communication\Table\CountryTable;
-use Spryker\Zed\Country\CountryConfig;
-use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 
 /**
- * @method CountryConfig getConfig()
- * @method CountryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Country\CountryConfig getConfig()
+ * @method \Spryker\Zed\Country\Persistence\CountryQueryContainer getQueryContainer()
  */
 class CountryCommunicationFactory extends AbstractCommunicationFactory
 {

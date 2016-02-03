@@ -14,10 +14,9 @@ use Spryker\Shared\Config;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
-use Spryker\Zed\Session\Communication\SessionCommunicationFactory;
 
 /**
- * @method SessionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
  */
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

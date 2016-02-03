@@ -9,10 +9,9 @@ namespace Spryker\Zed\Storage\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Storage\Communication\Table\StorageTable;
 use Spryker\Zed\Storage\StorageDependencyProvider;
-use Spryker\Zed\Storage\StorageConfig;
 
 /**
- * @method StorageConfig getConfig()
+ * @method \Spryker\Zed\Storage\StorageConfig getConfig()
  */
 class StorageCommunicationFactory extends AbstractCommunicationFactory
 {

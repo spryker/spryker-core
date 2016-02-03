@@ -6,7 +6,7 @@ use Spryker\Client\Kernel\AbstractClient;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CatalogFactory getFactory()
+ * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
  */
 class CatalogClient extends AbstractClient
 {

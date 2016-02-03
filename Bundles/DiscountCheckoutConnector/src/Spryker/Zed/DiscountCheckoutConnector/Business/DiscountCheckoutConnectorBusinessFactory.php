@@ -10,10 +10,9 @@ use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydrator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorDependencyProvider;
-use Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorConfig;
 
 /**
- * @method DiscountCheckoutConnectorConfig getConfig()
+ * @method \Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorConfig getConfig()
  */
 class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {

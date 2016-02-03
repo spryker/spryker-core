@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method PayolutionFactory getFactory()
+ * @method \Spryker\Client\Payolution\PayolutionFactory getFactory()
  */
 class PayolutionClient extends AbstractClient implements PayolutionClientInterface
 {

@@ -9,12 +9,10 @@ use Spryker\Zed\Glossary\Business\Key\KeyManager;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManager;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
-use Spryker\Zed\Glossary\GlossaryConfig;
-use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
- * @method GlossaryConfig getConfig()
- * @method GlossaryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
  */
 class GlossaryBusinessFactory extends AbstractBusinessFactory
 {

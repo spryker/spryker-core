@@ -9,13 +9,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Payolution\Communication\Table\Payments;
 use Spryker\Zed\Payolution\Communication\Table\RequestLog;
 use Spryker\Zed\Payolution\Communication\Table\StatusLog;
-use Spryker\Zed\Payolution\PayolutionConfig;
-use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use Spryker\Zed\Payolution\PayolutionDependencyProvider;
 
 /**
- * @method PayolutionQueryContainerInterface getQueryContainer()
- * @method PayolutionConfig getConfig()
+ * @method \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Payolution\PayolutionConfig getConfig()
  */
 class PayolutionCommunicationFactory extends AbstractCommunicationFactory
 {

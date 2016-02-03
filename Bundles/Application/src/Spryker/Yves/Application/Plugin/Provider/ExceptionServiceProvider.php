@@ -6,7 +6,6 @@
 
 namespace Spryker\Yves\Application\Plugin\Provider;
 
-use Spryker\Yves\Application\ApplicationFactory;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -18,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @method ApplicationFactory getFactory()
+ * @method \Spryker\Yves\Application\ApplicationFactory getFactory()
  */
 class ExceptionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

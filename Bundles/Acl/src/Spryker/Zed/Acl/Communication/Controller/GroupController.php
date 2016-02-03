@@ -8,9 +8,7 @@ namespace Spryker\Zed\Acl\Communication\Controller;
 
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
-use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
-use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\Form\Form;
@@ -20,8 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method AclCommunicationFactory getFactory()
- * @method AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
  */
 class GroupController extends AbstractController
 {
