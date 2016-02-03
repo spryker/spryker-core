@@ -25,10 +25,44 @@ class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetBundleShouldReturnBundleNameFromRequest()
     {
-        $request = $this->getRequestTestObject();
-        $bundleControllerAction = new BundleControllerAction($request);
+        $bundleControllerAction = $this->getBundleControllerAction();
 
-        $this->assertSame(ucfirst(self::BUNDLE), $bundleControllerAction->getBundle());
+        $this->assertSame(self::BUNDLE, $bundleControllerAction->getBundle());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetControllerShouldReturnControllerNameFromRequest()
+    {
+        $bundleControllerAction = $this->getBundleControllerAction();
+
+        $this->assertSame(self::CONTROLLER, $bundleControllerAction->getController());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetActionShouldReturnActionNameFromRequest()
+    {
+        $bundleControllerAction = $this->getBundleControllerAction();
+
+        $this->assertSame(self::ACTION, $bundleControllerAction->getAction());
+    }
+
+    /**
+     * @return BundleControllerAction
+     */
+    private function getBundleControllerAction()
+    {
+        $request = $this->getRequestTestObject();
+        $bundleControllerAction = new BundleControllerAction(
+            $request->attributes->get('module'),
+            $request->attributes->get('controller'),
+            $request->attributes->get('action')
+        );
+
+        return $bundleControllerAction;
     }
 
     /**
@@ -43,28 +77,6 @@ class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
         );
 
         return $request;
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetControllerShouldReturnControllerNameFromRequest()
-    {
-        $request = $this->getRequestTestObject();
-        $bundleControllerAction = new BundleControllerAction($request);
-
-        $this->assertSame(ucfirst(self::CONTROLLER), $bundleControllerAction->getController());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetActionShouldReturnActionNameFromRequest()
-    {
-        $request = $this->getRequestTestObject();
-        $bundleControllerAction = new BundleControllerAction($request);
-
-        $this->assertSame(ucfirst(self::ACTION), $bundleControllerAction->getAction());
     }
 
 }

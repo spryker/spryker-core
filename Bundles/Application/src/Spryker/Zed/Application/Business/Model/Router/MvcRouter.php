@@ -82,7 +82,11 @@ class MvcRouter implements RouterInterface
     public function match($pathinfo)
     {
         $request = $this->app['request_stack']->getCurrentRequest();
-        $bundleControllerAction = new BundleControllerAction($request);
+        $bundleControllerAction = new BundleControllerAction(
+            $request->attributes->get('module'),
+            $request->attributes->get('controller'),
+            $request->attributes->get('action')
+        );
         $controllerResolver = new ControllerResolver();
 
         if (!$controllerResolver->isResolveAble($bundleControllerAction)) {

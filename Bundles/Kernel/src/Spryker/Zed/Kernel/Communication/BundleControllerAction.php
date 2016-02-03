@@ -7,16 +7,25 @@
 namespace Spryker\Zed\Kernel\Communication;
 
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Zend\Filter\Word\DashToCamelCase;
 
 class BundleControllerAction implements BundleControllerActionInterface
 {
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var string
      */
-    private $request;
+    private $bundle;
+
+    /**
+     * @var string
+     */
+    private $controller;
+
+    /**
+     * @var string
+     */
+    private $action;
 
     /**
      * @var \Zend\Filter\Word\DashToCamelCase
@@ -24,11 +33,15 @@ class BundleControllerAction implements BundleControllerActionInterface
     private $filter;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
      */
-    public function __construct(Request $request)
+    public function __construct($bundle, $controller, $action)
     {
-        $this->request = $request;
+        $this->bundle = $bundle;
+        $this->controller = $controller;
+        $this->action = $action;
     }
 
     /**
@@ -38,7 +51,7 @@ class BundleControllerAction implements BundleControllerActionInterface
      */
     private function filter($value)
     {
-        return $this->getFilter()->filter($value);
+        return lcfirst($this->getFilter()->filter($value));
     }
 
     /**
@@ -58,7 +71,7 @@ class BundleControllerAction implements BundleControllerActionInterface
      */
     public function getBundle()
     {
-        return $this->filter($this->request->attributes->get('module'));
+        return $this->filter($this->bundle);
     }
 
     /**
@@ -66,7 +79,7 @@ class BundleControllerAction implements BundleControllerActionInterface
      */
     public function getController()
     {
-        return $this->filter($this->request->attributes->get('controller'));
+        return $this->filter($this->controller);
     }
 
     /**
@@ -74,7 +87,7 @@ class BundleControllerAction implements BundleControllerActionInterface
      */
     public function getAction()
     {
-        return $this->filter($this->request->attributes->get('action'));
+        return $this->filter($this->action);
     }
 
 }

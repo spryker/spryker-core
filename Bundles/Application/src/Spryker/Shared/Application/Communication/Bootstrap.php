@@ -14,9 +14,9 @@ use Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProvider
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Bootstrap
 {
@@ -201,16 +201,14 @@ class Bootstrap
     }
 
     /**
-     * @param \Pimple $application
+     * @param Application $application
      *
      * @return void
      */
-    protected function optimizeApp(\Pimple $application)
+    protected function optimizeApp(Application $application)
     {
-        // We use the controller resolver from symfony as
-        // we do not need the feature from the silex one
         $application['resolver'] = $application->share(function () use ($application) {
-            return new ControllerResolver($application['logger']);
+            return new ZedFragmentControllerResolver($application, $application['logger']);
         });
     }
 
