@@ -16,11 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class IndexController extends AbstractController
 {
 
-    public function testAction()
-    {
-        return $this->viewResponse();
-    }
-
     /**
      * @return array
      */
