@@ -21,10 +21,10 @@ class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPre
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function checkCondition(
         QuoteTransfer $quoteTransfer,
@@ -39,8 +39,8 @@ class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPre
     }
 
     /**
-     * @param PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */

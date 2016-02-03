@@ -46,7 +46,7 @@ class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {
@@ -84,7 +84,7 @@ class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @return OrderTaxAmountWithDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts
      */
     protected function createOrderTaxAmountWithDiscountAggregator()
     {
@@ -99,7 +99,7 @@ class OrderTaxAmountWithDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ProductOptionToTaxBridgeInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface
      */
     protected function createTaxFacadeBridgeMock()
     {

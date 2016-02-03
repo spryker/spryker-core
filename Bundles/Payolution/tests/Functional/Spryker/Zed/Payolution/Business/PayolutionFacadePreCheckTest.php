@@ -57,7 +57,7 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     private function getCheckoutRequestTransfer()
     {

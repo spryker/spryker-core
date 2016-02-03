@@ -24,7 +24,7 @@ class GrandTotalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {
@@ -40,7 +40,7 @@ class GrandTotalTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @return GrandTotal
+     * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\GrandTotal
      */
     protected function createGrandTotalAggregator()
     {

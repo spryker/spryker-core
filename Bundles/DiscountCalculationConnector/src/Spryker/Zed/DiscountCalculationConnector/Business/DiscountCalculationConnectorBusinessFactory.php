@@ -16,7 +16,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
 {
 
     /**
-     * @return DiscountTotalsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator
      */
     public function createDiscountTotalsCalculator()
     {
@@ -24,7 +24,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return GrandTotalWithDiscountsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsCalculator
      */
     public function createGrandTotalWithDiscountsCalculator()
     {
@@ -32,7 +32,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return RemoveAllCalculatedDiscountsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator
      */
     public function createRemoveAllCalculatedDiscountsCalculator()
     {
@@ -40,7 +40,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return SumGrossCalculatedDiscountAmountCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\SumGrossCalculatedDiscountAmountCalculator
      */
     public function createSumGrossCalculatedDiscountAmountCalculator()
     {

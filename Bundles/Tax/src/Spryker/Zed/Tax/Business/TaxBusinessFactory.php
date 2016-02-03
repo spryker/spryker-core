@@ -21,14 +21,14 @@ use Spryker\Zed\Tax\Business\Model\TaxReader;
 use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 
 /**
- * @method TaxConfig getConfig()
- * @method TaxQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Tax\TaxConfig getConfig()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
  */
 class TaxBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return TaxReaderInterface
+     * @return \Spryker\Zed\Tax\Business\Model\TaxReaderInterface
      */
     public function createReaderModel()
     {
@@ -38,7 +38,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TaxWriterInterface
+     * @return \Spryker\Zed\Tax\Business\Model\TaxWriterInterface
      */
     public function createWriterModel()
     {
@@ -49,7 +49,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TaxChangePluginInterface[]
+     * @return \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[]
      */
     public function getTaxChangePlugins()
     {
@@ -57,7 +57,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TaxCalculation
+     * @return \Spryker\Zed\Tax\Business\Model\TaxCalculation
      */
     public function createTaxCalculator()
     {
@@ -65,7 +65,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PriceCalculationHelperInterface
+     * @return \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
     public function createPriceCalculationHelper()
     {
@@ -73,7 +73,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemTax
+     * @return \Spryker\Zed\Tax\Business\Model\OrderAmountAggregator\ItemTax
      */
     public function createOrderItemTaxAmountAggregator()
     {
@@ -81,7 +81,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OrderTaxAmount
+     * @return \Spryker\Zed\Tax\Business\Model\OrderAmountAggregator\OrderTaxAmount
      */
     public function createOrderTaxAmountAggregator()
     {

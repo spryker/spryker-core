@@ -109,7 +109,7 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
      * @param int $taxRate
      * @param int $grandTotal
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithFixtureData($taxRate, $grandTotal)
     {
@@ -138,7 +138,7 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer()
     {
@@ -146,9 +146,9 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param PriceCalculationHelperInterface $priceCalculationMock
+     * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationMock
      *
-     * @return TaxCalculation
+     * @return \Spryker\Zed\Tax\Business\Model\TaxCalculation
      */
     protected function createTaxCalculation(PriceCalculationHelperInterface $priceCalculationMock)
     {
@@ -156,7 +156,7 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PriceCalculationHelperInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
     protected function createPriceCalculationMock()
     {
@@ -168,7 +168,7 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createItemTransfer()
     {
@@ -176,7 +176,7 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProductOptionTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     protected function createProductOptionTransfer()
     {
@@ -184,7 +184,7 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function createExpenseTransfer()
     {
@@ -192,7 +192,7 @@ class TaxCalculationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     protected function createTotalsTransfer()
     {

@@ -39,22 +39,22 @@ class ProductManager implements ProductManagerInterface
     const COL_NAME = 'SpyProductLocalizedAttributes.Name';
 
     /**
-     * @var ProductQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
 
     /**
-     * @var ProductToTouchInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var ProductToUrlInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
     protected $urlFacade;
 
     /**
-     * @var ProductToLocaleInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
     protected $localeFacade;
 
@@ -74,10 +74,10 @@ class ProductManager implements ProductManagerInterface
     protected $productAbstractsBySkuCache;
 
     /**
-     * @param ProductQueryContainerInterface $productQueryContainer
-     * @param ProductToTouchInterface $touchFacade
-     * @param ProductToUrlInterface $urlFacade
-     * @param ProductToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -104,10 +104,10 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @throws ProductAbstractExistsException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -134,7 +134,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -161,7 +161,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws ProductAbstractExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
      *
      * @return void
      */
@@ -178,10 +178,10 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @throws ProductAbstractAttributesExistException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -209,11 +209,11 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idProductAbstract
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @deprecated Use hasProductAbstractAttributes() instead.
      *
-     * @throws ProductAbstractAttributesExistException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractAttributesExistException
      *
      * @return void
      */
@@ -232,7 +232,7 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idProductAbstract
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -247,11 +247,11 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param int $idProductAbstract
      *
-     * @throws ProductConcreteExistsException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -281,7 +281,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws ProductConcreteExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
      *
      * @return void
      */
@@ -310,7 +310,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -335,10 +335,10 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @throws ProductConcreteAttributesExistException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -364,9 +364,9 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idProductConcrete
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws ProductConcreteAttributesExistException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteAttributesExistException
      *
      * @return void
      */
@@ -385,7 +385,7 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idProductConcrete
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -412,13 +412,13 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws PropelException
-     * @throws UrlExistsException
-     * @throws MissingProductException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createProductUrl($sku, $url, LocaleTransfer $locale)
     {
@@ -430,13 +430,13 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param int $idProductAbstract
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws PropelException
-     * @throws UrlExistsException
-     * @throws MissingProductException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale)
     {
@@ -446,13 +446,13 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws PropelException
-     * @throws UrlExistsException
-     * @throws MissingProductException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale)
     {
@@ -465,13 +465,13 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param int $idProductAbstract
      * @param string $url
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws PropelException
-     * @throws UrlExistsException
-     * @throws MissingProductException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createAndTouchProductUrlByIdProduct($idProductAbstract, $url, LocaleTransfer $locale)
     {
@@ -484,7 +484,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return float
      */
@@ -516,9 +516,9 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $concreteSku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku)
     {
@@ -560,7 +560,7 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return void
      */
@@ -581,7 +581,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -604,7 +604,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return string
      */
@@ -635,7 +635,7 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param SpyTaxRate[] $taxRates
+     * @param \Orm\Zed\Tax\Persistence\SpyTaxRate[] $taxRates
      *
      * @return int
      */

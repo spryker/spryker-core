@@ -26,7 +26,7 @@ interface DiscountFacadeInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
@@ -35,20 +35,20 @@ interface DiscountFacadeInterface
     /**
      * @param string $code
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function isVoucherUsable($code);
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param DecisionRule $decisionRule
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule $decisionRule
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function isMinimumCartSubtotalReached(QuoteTransfer $quoteTransfer, DecisionRule $decisionRule);
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
      * @param float $percentage
      *
      * @return float
@@ -56,7 +56,7 @@ interface DiscountFacadeInterface
     public function calculatePercentage(array $discountableObjects, $percentage);
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
      * @param float $amount
      *
      * @return float
@@ -64,18 +64,18 @@ interface DiscountFacadeInterface
     public function calculateFixed(array $discountableObjects, $amount);
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
-     * @param DiscountTransfer $discountTransfer
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      */
     public function distributeAmount(array $discountableObjects, DiscountTransfer $discountTransfer);
 
     /**
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      */
     public function createVoucherCodes(VoucherTransfer $voucherTransfer);
 
     /**
-     * @param VoucherTransfer $voucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $voucherTransfer
      */
     public function createVoucherCode(VoucherTransfer $voucherTransfer);
 
@@ -85,87 +85,87 @@ interface DiscountFacadeInterface
     public function getDecisionRulePluginNames();
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     public function createDiscount(DiscountTransfer $discountTransfer);
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     public function updateDiscount(DiscountTransfer $discountTransfer);
 
     /**
-     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $discountDecisionRuleTransfer
      *
-     * @return SpyDiscountDecisionRule
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
     public function createDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer);
 
     /**
-     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $discountDecisionRuleTransfer
      *
-     * @return SpyDiscountDecisionRule
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
     public function updateDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer);
 
     /**
-     * @param VoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $discountVoucherTransfer
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function createDiscountVoucher(VoucherTransfer $discountVoucherTransfer);
 
     /**
-     * @param VoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $discountVoucherTransfer
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function updateDiscountVoucher(VoucherTransfer $discountVoucherTransfer);
 
     /**
-     * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $discountVoucherPoolTransfer
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function createDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer);
 
     /**
-     * @param VoucherPoolTransfer $discountVoucherPoolTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolTransfer $discountVoucherPoolTransfer
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function updateDiscountVoucherPool(VoucherPoolTransfer $discountVoucherPoolTransfer);
 
     /**
-     * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      *
-     * @return SpyDiscountVoucherPoolCategory
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
      */
     public function createDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer);
 
     /**
-     * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      *
-     * @return SpyDiscountVoucherPoolCategory
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
      */
     public function updateDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer);
 
     /**
      * @param string $pluginName
      *
-     * @return DiscountCalculatorPluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
     public function getCalculatorPluginByName($pluginName);
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return DiscountableInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\DiscountableInterface[]
      */
     public function getDiscountableItems(
         QuoteTransfer $quoteTransfer,
@@ -173,10 +173,10 @@ interface DiscountFacadeInterface
     );
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return DiscountableInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\DiscountableInterface[]
      */
     public function getDiscountableOrderExpenses(
         QuoteTransfer $quoteTransfer,

@@ -71,7 +71,7 @@ class MinimumCartSubtotalTest extends Test
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithSubtotal($subtotal)
     {
@@ -86,7 +86,7 @@ class MinimumCartSubtotalTest extends Test
     /**
      * @param int $value
      *
-     * @return SpyDiscountDecisionRule
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
     protected function getDecisionRuleEntity($value)
     {
@@ -97,7 +97,7 @@ class MinimumCartSubtotalTest extends Test
     }
 
     /**
-     * @return AbstractLocatorLocator|AutoCompletion
+     * @return \Spryker\Shared\Kernel\AbstractLocatorLocator|\Generated\Zed\Ide\AutoCompletion
      */
     protected function getLocator()
     {
@@ -105,7 +105,7 @@ class MinimumCartSubtotalTest extends Test
     }
 
     /**
-     * @return MinimumCartSubtotal
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal
      */
     protected function createMinimumCartSubtotal()
     {

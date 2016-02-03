@@ -11,13 +11,13 @@ use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 
 /**
- * @method DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class ItemDiscountsOrderAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */

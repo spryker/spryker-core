@@ -15,7 +15,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
 {
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $salesQueryContainer;
 
@@ -28,7 +28,7 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -50,9 +50,9 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return ProductOptionTransfer[]
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
      */
     protected function getHydratedSalesProductOptions(OrderTransfer $orderTransfer)
     {
@@ -74,8 +74,8 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \ArrayObject|ProductOptionTransfer[] $itemProductOptions
-     * @param ItemTransfer $itemTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $itemProductOptions
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
@@ -101,8 +101,8 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param ProductOptionTransfer $productOptionTransfer
-     * @param SpySalesOrderItemOption $productOptionEntity
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $productOptionEntity
      *
      * @return int
      */
@@ -114,10 +114,10 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param SpySalesOrderItemOption $productOptionEntity
-     * @param SpySalesOrderItem $salesOrderItemEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $productOptionEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
      *
-     * @return ProductOptionTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     protected function hydrateProductOptionTransfer(
         SpySalesOrderItemOption $productOptionEntity,
@@ -135,7 +135,7 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */

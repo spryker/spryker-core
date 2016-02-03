@@ -29,63 +29,63 @@ class Discount
     const KEY_ERRORS = 'errors';
 
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var DecisionRuleEngine
+     * @var \Spryker\Zed\Discount\Business\Model\DecisionRuleEngine
      */
     protected $decisionRule;
 
     /**
-     * @var QuoteTransfer
+     * @var \Generated\Shared\Transfer\QuoteTransfer
      */
     protected $quoteTransfer;
 
     /**
-     * @var DiscountCollectorPluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
      */
     protected $collectorPlugins;
 
     /**
-     * @var DiscountCalculatorPluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     protected $calculatorPlugins;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountSettings;
 
     /**
-     * @var CalculatorInterface
+     * @var \Spryker\Zed\Discount\Business\Model\CalculatorInterface
      */
     protected $calculator;
 
     /**
-     * @var DistributorInterface
+     * @var \Spryker\Zed\Discount\Business\Distributor\DistributorInterface
      */
     protected $distributor;
 
     /**
-     * @var DiscountToMessengerInterface
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected $messengerFacade;
 
     /**
-     * @var DiscountDecisionRulePluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
     protected $decisionRulePlugins;
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param DiscountQueryContainer $queryContainer
-     * @param DecisionRuleInterface $decisionRule
-     * @param CalculatorInterface $calculator
-     * @param DistributorInterface $distributor
-     * @param DiscountToMessengerInterface $messengerFacade
-     * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
+     * @param \Spryker\Zed\Discount\Business\Model\DecisionRuleInterface $decisionRule
+     * @param \Spryker\Zed\Discount\Business\Model\CalculatorInterface $calculator
+     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      */
     public function __construct(
         QuoteTransfer $quoteTransfer,
@@ -126,8 +126,8 @@ class Discount
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param DiscountTransfer[] $discounts
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
      */
     protected function addDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts)
     {
@@ -147,7 +147,7 @@ class Discount
     /**
      * @param array|string[] $couponCodes
      *
-     * @return SpyDiscount[]
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
     public function retrieveActiveCartAndVoucherDiscounts(array $couponCodes = [])
     {
@@ -186,7 +186,7 @@ class Discount
     /**
      * @param int $idDiscount
      *
-     * @return DiscountDecisionRulePluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
     protected function getDecisionRulePlugins($idDiscount)
     {
@@ -210,7 +210,7 @@ class Discount
     /**
      * @param int $idDiscount
      *
-     * @return SpyDiscountDecisionRule[]
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule[]
      */
     protected function retrieveDecisionRules($idDiscount)
     {
@@ -239,9 +239,9 @@ class Discount
     }
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function hydrateDiscountTransfer(SpyDiscount $discountEntity)
     {

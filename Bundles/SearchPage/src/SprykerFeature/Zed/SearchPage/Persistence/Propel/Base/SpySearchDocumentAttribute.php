@@ -82,7 +82,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
     protected $attribute_type;
 
     /**
-     * @var        ObjectCollection|ChildSpySearchPageElement[] Collection to store aggregation of ChildSpySearchPageElement objects.
+     * @var        \Propel\Runtime\Collection\ObjectCollection|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement[] Collection to store aggregation of ChildSpySearchPageElement objects.
      */
     protected $collSpySearchPageElements;
     protected $collSpySearchPageElementsPartial;
@@ -97,7 +97,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildSpySearchPageElement[]
+     * @var \Propel\Runtime\Collection\ObjectCollection|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement[]
      */
     protected $spySearchPageElementsScheduledForDeletion = null;
 
@@ -248,7 +248,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * @param  string $name The virtual column name
      * @return mixed
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function getVirtualColumn($name)
     {
@@ -265,7 +265,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|SpySearchDocumentAttribute The current object, for fluid interface
+     * @return $this|\SprykerFeature\Zed\SearchPage\Persistence\Propel\Base\SpySearchDocumentAttribute The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -438,7 +438,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      *                            TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *
      * @return int             next starting column
-     * @throws PropelException - Any caught Exception will be rewrapped as a PropelException.
+     * @throws \Propel\Runtime\Exception\PropelException - Any caught Exception will be rewrapped as a PropelException.
      */
     public function hydrate($row, $startcol = 0, $rehydrate = false, $indexType = TableMap::TYPE_NUM)
     {
@@ -478,7 +478,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * the base method from the overridden method (i.e. parent::ensureConsistency()),
      * in case your model changes.
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function ensureConsistency()
     {
@@ -490,9 +490,9 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * This will only work if the object has been saved and has a valid primary key set.
      *
      * @param      boolean $deep (optional) Whether to also de-associated any related objects.
-     * @param      ConnectionInterface $con (optional) The ConnectionInterface connection to use.
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con (optional) The ConnectionInterface connection to use.
      * @return void
-     * @throws PropelException - if this object is deleted, unsaved or doesn't have pk match in db
+     * @throws \Propel\Runtime\Exception\PropelException - if this object is deleted, unsaved or doesn't have pk match in db
      */
     public function reload($deep = false, ConnectionInterface $con = null)
     {
@@ -529,9 +529,9 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
     /**
      * Removes this object from datastore and sets delete attribute.
      *
-     * @param      ConnectionInterface $con
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
      * @return void
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @see SpySearchDocumentAttribute::setDeleted()
      * @see SpySearchDocumentAttribute::isDeleted()
      */
@@ -565,9 +565,9 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * method.  This method wraps all precipitate database operations in a
      * single transaction.
      *
-     * @param      ConnectionInterface $con
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
      * @return int             The number of rows affected by this insert/update and any referring fk objects' save() operations.
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @see doSave()
      */
     public function save(ConnectionInterface $con = null)
@@ -611,9 +611,9 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * If the object is new, it inserts it; otherwise an update is performed.
      * All related objects are also updated in this method.
      *
-     * @param      ConnectionInterface $con
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
      * @return int             The number of rows affected by this insert/update and any referring fk objects' save() operations.
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @see save()
      */
     protected function doSave(ConnectionInterface $con)
@@ -660,9 +660,9 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
     /**
      * Insert the row in the database.
      *
-     * @param      ConnectionInterface $con
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @see doSave()
      */
     protected function doInsert(ConnectionInterface $con)
@@ -726,7 +726,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
     /**
      * Update the row in the database.
      *
-     * @param      ConnectionInterface $con
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
      *
      * @return Integer Number of updated rows
      * @see doSave()
@@ -944,7 +944,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
     /**
      * Build a Criteria object containing the values of all modified columns in this object.
      *
-     * @return Criteria The Criteria object containing all modified values.
+     * @return \Propel\Runtime\ActiveQuery\Criteria The Criteria object containing all modified values.
      */
     public function buildCriteria()
     {
@@ -969,9 +969,9 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * Unlike buildCriteria() this method includes the primary key values regardless
      * of whether or not they have been modified.
      *
-     * @throws LogicException if no primary key is defined
+     * @throws \Propel\Runtime\Exception\LogicException if no primary key is defined
      *
-     * @return Criteria The Criteria object containing value(s) for primary key(s).
+     * @return \Propel\Runtime\ActiveQuery\Criteria The Criteria object containing value(s) for primary key(s).
      */
     public function buildPkeyCriteria()
     {
@@ -1041,7 +1041,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * @param      object $copyObj An object of \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
@@ -1077,7 +1077,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @return \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute Clone of current object.
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function copy($deepCopy = false)
     {
@@ -1157,10 +1157,10 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * If this ChildSpySearchDocumentAttribute is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildSpySearchPageElement[] List of ChildSpySearchPageElement objects
-     * @throws PropelException
+     * @param      \Propel\Runtime\ActiveQuery\Criteria $criteria optional Criteria object to narrow the query
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con optional connection object
+     * @return \Propel\Runtime\Collection\ObjectCollection|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement[] List of ChildSpySearchPageElement objects
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function getSpySearchPageElements(Criteria $criteria = null, ConnectionInterface $con = null)
     {
@@ -1212,13 +1212,13 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $spySearchPageElements A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildSpySearchDocumentAttribute The current object (for fluent API support)
+     * @param      \Propel\Runtime\Collection\Collection $spySearchPageElements A Propel collection.
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con Optional connection object
+     * @return $this|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute The current object (for fluent API support)
      */
     public function setSpySearchPageElements(Collection $spySearchPageElements, ConnectionInterface $con = null)
     {
-        /** @var ChildSpySearchPageElement[] $spySearchPageElementsToDelete */
+        /** @var \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement[] $spySearchPageElementsToDelete */
         $spySearchPageElementsToDelete = $this->getSpySearchPageElements(new Criteria(), $con)->diff($spySearchPageElements);
 
 
@@ -1242,11 +1242,11 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
     /**
      * Returns the number of related SpySearchPageElement objects.
      *
-     * @param      Criteria $criteria
+     * @param      \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param      boolean $distinct
-     * @param      ConnectionInterface $con
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
      * @return int             Count of related SpySearchPageElement objects.
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function countSpySearchPageElements(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
@@ -1277,7 +1277,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * Method called to associate a ChildSpySearchPageElement object to this object
      * through the ChildSpySearchPageElement foreign key attribute.
      *
-     * @param  ChildSpySearchPageElement $l ChildSpySearchPageElement
+     * @param  \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement $l ChildSpySearchPageElement
      * @return $this|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute The current object (for fluent API support)
      */
     public function addSpySearchPageElement(ChildSpySearchPageElement $l)
@@ -1295,7 +1295,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
     }
 
     /**
-     * @param ChildSpySearchPageElement $spySearchPageElement The ChildSpySearchPageElement object to add.
+     * @param \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement $spySearchPageElement The ChildSpySearchPageElement object to add.
      */
     protected function doAddSpySearchPageElement(ChildSpySearchPageElement $spySearchPageElement)
     {
@@ -1304,8 +1304,8 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
     }
 
     /**
-     * @param  ChildSpySearchPageElement $spySearchPageElement The ChildSpySearchPageElement object to remove.
-     * @return $this|ChildSpySearchDocumentAttribute The current object (for fluent API support)
+     * @param  \SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement $spySearchPageElement The ChildSpySearchPageElement object to remove.
+     * @return $this|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute The current object (for fluent API support)
      */
     public function removeSpySearchPageElement(ChildSpySearchPageElement $spySearchPageElement)
     {
@@ -1335,10 +1335,10 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
      * api reasonable.  You can provide public methods for those you
      * actually need in SpySearchDocumentAttribute.
      *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
+     * @param      \Propel\Runtime\ActiveQuery\Criteria $criteria optional Criteria object to narrow the query
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildSpySearchPageElement[] List of ChildSpySearchPageElement objects
+     * @return \Propel\Runtime\Collection\ObjectCollection|\SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement[] List of ChildSpySearchPageElement objects
      */
     public function getSpySearchPageElementsJoinElementTemplate(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
@@ -1398,7 +1398,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
 
     /**
      * Code to be run before persisting the object
-     * @param  ConnectionInterface $con
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preSave(ConnectionInterface $con = null)
@@ -1408,7 +1408,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
 
     /**
      * Code to be run after persisting the object
-     * @param ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      */
     public function postSave(ConnectionInterface $con = null)
     {
@@ -1417,7 +1417,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
 
     /**
      * Code to be run before inserting to database
-     * @param  ConnectionInterface $con
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preInsert(ConnectionInterface $con = null)
@@ -1427,7 +1427,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
 
     /**
      * Code to be run after inserting to database
-     * @param ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      */
     public function postInsert(ConnectionInterface $con = null)
     {
@@ -1436,7 +1436,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
 
     /**
      * Code to be run before updating the object in database
-     * @param  ConnectionInterface $con
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preUpdate(ConnectionInterface $con = null)
@@ -1446,7 +1446,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
 
     /**
      * Code to be run after updating the object in database
-     * @param ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      */
     public function postUpdate(ConnectionInterface $con = null)
     {
@@ -1455,7 +1455,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
 
     /**
      * Code to be run before deleting the object in database
-     * @param  ConnectionInterface $con
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preDelete(ConnectionInterface $con = null)
@@ -1465,7 +1465,7 @@ abstract class SpySearchDocumentAttribute implements ActiveRecordInterface
 
     /**
      * Code to be run after deleting the object in database
-     * @param ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      */
     public function postDelete(ConnectionInterface $con = null)
     {

@@ -15,7 +15,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -25,7 +25,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -45,7 +45,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */

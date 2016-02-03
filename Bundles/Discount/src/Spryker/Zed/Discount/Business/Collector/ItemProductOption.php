@@ -13,10 +13,10 @@ class ItemProductOption implements CollectorInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return OrderTransfer[]
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer)
     {

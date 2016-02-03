@@ -13,9 +13,9 @@ class GroupKeyExpander
 {
 
     /**
-     * @param CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
      *
-     * @return CartChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expand(CartChangeTransfer $change)
     {
@@ -27,7 +27,7 @@ class GroupKeyExpander
     }
 
     /**
-     * @param ItemTransfer $cartItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
      *
      * @return string
      */

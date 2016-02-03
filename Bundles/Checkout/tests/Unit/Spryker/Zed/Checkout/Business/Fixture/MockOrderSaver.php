@@ -14,12 +14,12 @@ class MockOrderSaver implements CheckoutSaveOrderInterface
 {
 
     /**
-     * @var CheckoutResponseTransfer
+     * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     private $checkoutResponse;
 
     /**
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      */
     public function __construct(CheckoutResponseTransfer $checkoutResponse)
     {
@@ -27,8 +27,8 @@ class MockOrderSaver implements CheckoutSaveOrderInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */

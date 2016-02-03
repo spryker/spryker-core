@@ -14,23 +14,23 @@ interface InvoiceInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
     public function buildPreCheckRequest(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      *
      * @return array
      */
     public function buildPreAuthorizationRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity);
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -38,8 +38,8 @@ interface InvoiceInterface
     public function buildReAuthorizationRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity, $uniqueId);
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -47,8 +47,8 @@ interface InvoiceInterface
     public function buildRevertRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity, $uniqueId);
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -56,8 +56,8 @@ interface InvoiceInterface
     public function buildCaptureRequest(OrderTransfer $orderTransfer, SpyPaymentPayolution $paymentEntity, $uniqueId);
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array

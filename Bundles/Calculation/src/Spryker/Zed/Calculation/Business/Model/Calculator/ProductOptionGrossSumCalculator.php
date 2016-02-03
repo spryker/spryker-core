@@ -34,7 +34,7 @@ class ProductOptionGrossSumCalculator implements CalculatorInterface
     }
 
     /**
-     * @param ProductOptionTransfer $productOptionTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
      *
      * @return void
      */
@@ -44,7 +44,7 @@ class ProductOptionGrossSumCalculator implements CalculatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class ProductOptionGrossSumCalculator implements CalculatorInterface
 
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return int
      */
@@ -71,7 +71,7 @@ class ProductOptionGrossSumCalculator implements CalculatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return int
      */
@@ -87,7 +87,7 @@ class ProductOptionGrossSumCalculator implements CalculatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */

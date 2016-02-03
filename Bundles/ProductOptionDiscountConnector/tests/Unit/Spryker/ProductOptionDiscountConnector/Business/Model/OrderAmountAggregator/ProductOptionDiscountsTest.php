@@ -31,7 +31,7 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProductOptionDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts
      */
     protected function createProductOptionsAggregator()
     {
@@ -66,7 +66,7 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpySalesDiscountQuery
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
      */
     protected function createDiscountQueryMock()
     {
@@ -77,7 +77,7 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected function createDiscountQueryContainer()
     {
@@ -87,7 +87,7 @@ class ProductOptionDiscountsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {

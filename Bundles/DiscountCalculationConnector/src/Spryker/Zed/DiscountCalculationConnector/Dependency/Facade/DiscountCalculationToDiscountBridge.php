@@ -13,12 +13,12 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
 {
 
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 
     /**
-     * @param DiscountFacade $discountFacade
+     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      */
     public function __construct($discountFacade)
     {
@@ -26,9 +26,9 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return SpyDiscount[]
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
     public function calculateDiscounts(QuoteTransfer $quoteTransfer)
     {

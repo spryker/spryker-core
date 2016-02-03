@@ -46,7 +46,7 @@ class TaxCalculatorHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \SprykerFeature\Zed\Tax\Business\Model\PriceCalculationHelper
+     * @return \Spryker\Zed\Tax\Business\Model\PriceCalculationHelper
      */
     protected function createPriceCalculationHelper()
     {

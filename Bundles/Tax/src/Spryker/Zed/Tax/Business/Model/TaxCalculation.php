@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\TaxTotalTransfer;
 class TaxCalculation implements CalculatorInterface
 {
     /**
-     * @var PriceCalculationHelperInterface
+     * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
     protected $priceCalculationHelper;
 
     /**
-     * @param PriceCalculationHelperInterface $priceCalculationHelper
+     * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
      */
     public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
     {
@@ -25,7 +25,7 @@ class TaxCalculation implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -48,7 +48,7 @@ class TaxCalculation implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array|int[]
      */
@@ -66,7 +66,7 @@ class TaxCalculation implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array|int[]
      */
@@ -83,7 +83,7 @@ class TaxCalculation implements CalculatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return array|int[]
      */
@@ -120,7 +120,7 @@ class TaxCalculation implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
      */
@@ -130,7 +130,7 @@ class TaxCalculation implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $effectiveTaxRate
      * @param int $taxAmount
      *
@@ -146,7 +146,7 @@ class TaxCalculation implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -160,7 +160,7 @@ class TaxCalculation implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array|int[]
      */
@@ -173,7 +173,7 @@ class TaxCalculation implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
     protected function assertTaxCalculationRequirements(QuoteTransfer $quoteTransfer)
     {

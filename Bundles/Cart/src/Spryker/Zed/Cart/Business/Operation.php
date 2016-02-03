@@ -26,36 +26,36 @@ class Operation
     const DECREASE_ITEMS_SUCCESS = 'cart.decrease.items.success';
 
     /**
-     * @var StorageProviderInterface
+     * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
     protected $cartStorageProvider;
 
     /**
-     * @var CalculationFacade
+     * @var \Spryker\Zed\Calculation\Business\CalculationFacade
      */
     protected $calculationFacade;
 
     /**
-     * @var ItemGrouperFacade
+     * @var \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade
      */
     protected $itemGrouperFacade;
 
     /**
-     * @var MessengerFacade
+     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
      */
     protected $messengerFacade;
 
     /**
-     * @var ItemExpanderPluginInterface[]
+     * @var \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
      */
     protected $itemExpanderPlugins;
 
     /**
-     * @param StorageProviderInterface $cartStorageProvider
-     * @param CartToCalculationInterface $calculationFacade
-     * @param CartToItemGrouperInterface $itemGrouperFacade
-     * @param MessengerFacade $messengerFacade
-     * @param ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface $itemGrouperFacade
+     * @param \Spryker\Zed\Messenger\Business\MessengerFacade $messengerFacade
+     * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
@@ -72,9 +72,9 @@ class Operation
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function add(CartChangeTransfer $cartChangeTransfer)
     {
@@ -87,9 +87,9 @@ class Operation
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function increase(CartChangeTransfer $cartChangeTransfer)
     {
@@ -102,9 +102,9 @@ class Operation
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function decrease(CartChangeTransfer $cartChangeTransfer)
     {
@@ -116,9 +116,9 @@ class Operation
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function remove(CartChangeTransfer $cartChangeTransfer)
     {
@@ -130,9 +130,9 @@ class Operation
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return CartChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     protected function expandChangedItems(CartChangeTransfer $cartChangeTransfer)
     {
@@ -146,7 +146,7 @@ class Operation
     /**
      * @param string $message
      *
-     * @return MessageTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer
      */
     protected function createMessengerMessageTransfer($message)
     {
@@ -158,9 +158,9 @@ class Operation
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function recalculate(QuoteTransfer $quoteTransfer)
     {
@@ -168,9 +168,9 @@ class Operation
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getGroupedCartItems(QuoteTransfer $quoteTransfer)
     {

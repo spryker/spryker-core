@@ -13,12 +13,12 @@ class CartToCalculationBridge implements CartToCalculationInterface
 {
 
     /**
-     * @var CalculationFacade
+     * @var \Spryker\Zed\Calculation\Business\CalculationFacade
      */
     protected $calculationFacade;
 
     /**
-     * @param CalculationFacade $calculationFacade
+     * @param \Spryker\Zed\Calculation\Business\CalculationFacade $calculationFacade
      */
     public function __construct($calculationFacade)
     {
@@ -26,9 +26,9 @@ class CartToCalculationBridge implements CartToCalculationInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {

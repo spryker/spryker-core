@@ -14,30 +14,30 @@ interface CartStubInterface
 {
 
     /**
-     * @param CartChangeTransfer|TransferInterface $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addItem(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * @param CartChangeTransfer|TransferInterface $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItem(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * @param CartChangeTransfer|TransferInterface $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function increaseItemQuantity(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * @param CartChangeTransfer|TransferInterface $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function decreaseItemQuantity(CartChangeTransfer $cartChangeTransfer);
 

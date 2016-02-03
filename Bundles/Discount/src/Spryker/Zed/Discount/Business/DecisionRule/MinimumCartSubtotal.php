@@ -14,10 +14,10 @@ class MinimumCartSubtotal
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param SpyDiscountDecisionRule $decisionRule
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule $decisionRule
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function isMinimumCartSubtotalReached(QuoteTransfer $quoteTransfer, SpyDiscountDecisionRule $decisionRule)
     {

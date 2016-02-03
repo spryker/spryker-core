@@ -12,7 +12,7 @@ interface DiscountCalculationToDiscountInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return mixed
      */

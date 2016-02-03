@@ -14,7 +14,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -25,7 +25,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return int
      */
@@ -49,7 +49,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|CalculatedDiscountTransfer[] $calculatedDiscounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculatedDiscounts
      *
      * @return int
      */
@@ -63,7 +63,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|CalculatedDiscountTransfer[] $calculatedDiscounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculatedDiscounts
      *
      * @return int
      */
@@ -77,7 +77,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|CalculatedDiscountTransfer[] $calculatedDiscounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculatedDiscounts
      *
      * @return void
      */
@@ -92,7 +92,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|ProductOptionTransfer[] $productOptionTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
      *
      * @return int
      */
@@ -110,7 +110,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|ProductOptionTransfer[] $productOptionTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
      *
      * @return int
      */
@@ -126,7 +126,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|ProductOptionTransfer[] $productOptionTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfer
      *
      * @return int
      */
@@ -142,7 +142,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -164,7 +164,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -176,7 +176,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param CalculatedDiscountTransfer $calculatedDiscountTransfer
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
      *
      * @return void
      */
@@ -186,7 +186,7 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
     protected function assertDiscountTotalRequirements(QuoteTransfer $quoteTransfer)
     {

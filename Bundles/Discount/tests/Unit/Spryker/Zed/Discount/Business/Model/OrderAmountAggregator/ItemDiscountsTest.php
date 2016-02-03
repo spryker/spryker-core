@@ -47,7 +47,7 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {
@@ -69,7 +69,7 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ItemDiscounts
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts
      */
     protected function createItemDiscountsAggregator()
     {
@@ -103,7 +103,7 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpySalesDiscountQuery
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
      */
     protected function createDiscountQueryMock()
     {
@@ -114,7 +114,7 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected function createDiscountQueryContainer()
     {

@@ -17,18 +17,18 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
 
     /**
-     * @var Customer
+     * @var \Spryker\Zed\Customer\Business\Customer\Customer
      */
     protected $customer;
 
     /**
-     * @var Address
+     * @var \Spryker\Zed\Customer\Business\Customer\Address
      */
     protected $address;
 
     /**
-     * @param Customer $customer
-     * @param Address $address
+     * @param \Spryker\Zed\Customer\Business\Customer\Customer $customer
+     * @param \Spryker\Zed\Customer\Business\Customer\Address $address
      */
     public function __construct(Customer $customer, Address $address)
     {
@@ -37,8 +37,8 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
@@ -62,7 +62,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param CustomerTransfer $customer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
      *
      * @return void
      */
@@ -73,7 +73,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param \ArrayObject|AddressTransfer[] $addresses
+     * @param \ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $addresses
      *
      * @return void
      */
@@ -91,8 +91,8 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
@@ -106,7 +106,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -116,8 +116,8 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
@@ -129,7 +129,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */

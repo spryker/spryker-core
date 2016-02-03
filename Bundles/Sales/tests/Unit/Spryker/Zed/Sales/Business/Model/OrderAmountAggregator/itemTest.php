@@ -49,7 +49,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Item
+     * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\Item
      */
     protected function createItemAggregator()
     {
@@ -57,7 +57,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {

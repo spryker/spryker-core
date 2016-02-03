@@ -14,7 +14,7 @@ interface PayolutionToSalesInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderTotalsByIdSalesOrder($idSalesOrder);
 

@@ -67,7 +67,7 @@ class SaverTest extends Test
 
         $paymentTransfer = $quoteTransfer->getPayment()->getPayolution();
         $addressTransfer = $paymentTransfer->getAddress();
-        /** @var SpyPaymentPayolution $paymentEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity */
         $paymentEntity = SpyPaymentPayolutionQuery::create()->findOneByFkSalesOrder($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
         $this->assertEquals($addressTransfer->getCity(), $paymentEntity->getCity());
         $this->assertEquals($addressTransfer->getIso2Code(), $paymentEntity->getCountryIso2Code());
@@ -90,7 +90,7 @@ class SaverTest extends Test
     }
 
     /**
-     * @return PayolutionBusinessFactory
+     * @return \Spryker\Zed\Payolution\Business\PayolutionBusinessFactory
      */
     private function getPayolutionBusinessBusinessFactory()
     {
@@ -100,9 +100,9 @@ class SaverTest extends Test
     }
 
     /**
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     private function getQuoteTransfer(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
@@ -165,7 +165,7 @@ class SaverTest extends Test
     /**
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     private function createOrderEntity()
     {
@@ -206,7 +206,7 @@ class SaverTest extends Test
     /**
      * @param int $idSalesOrder
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     private function createOrderItemEntity($idSalesOrder)
     {
@@ -230,7 +230,7 @@ class SaverTest extends Test
     }
 
     /**
-     * @return SpyOmsOrderItemState
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     private function createOrderItemStateEntity()
     {
@@ -242,7 +242,7 @@ class SaverTest extends Test
     }
 
     /**
-     * @return SpyOmsOrderProcess
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     private function createOrderProcessEntity()
     {
@@ -254,7 +254,7 @@ class SaverTest extends Test
     }
 
     /**
-     * @return SpySalesOrderItemBundle
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle
      */
     private function createOrderItemBundleEntity()
     {
@@ -279,7 +279,7 @@ class SaverTest extends Test
     }
 
     /**
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     protected function createCheckoutResponse()
     {

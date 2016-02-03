@@ -11,7 +11,7 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridgeInterface;
 class ItemTaxWithDiscounts implements OrderAmountAggregatorInterface
 {
     /**
-     * @var DiscountToTaxBridgeInterface
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridgeInterface
      */
     protected $taxFacade;
 
@@ -24,7 +24,7 @@ class ItemTaxWithDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
@@ -32,7 +32,7 @@ class ItemTaxWithDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     protected function addExpenseTaxes(OrderTransfer $orderTransfer)
     {

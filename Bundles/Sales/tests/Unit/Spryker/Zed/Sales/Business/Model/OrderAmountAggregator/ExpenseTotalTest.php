@@ -39,7 +39,7 @@ class ExpenseTotalTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @return ExpenseTotal
+     * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ExpenseTotal
      */
     public function createExpenseTotalAggregator()
     {
@@ -65,7 +65,7 @@ class ExpenseTotalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SalesQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected function createSalesQueryContainerMock()
     {
@@ -75,7 +75,7 @@ class ExpenseTotalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|SpySalesExpenseQuery
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
      */
     protected function createSalesExpenseQuery()
     {
@@ -86,7 +86,7 @@ class ExpenseTotalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {

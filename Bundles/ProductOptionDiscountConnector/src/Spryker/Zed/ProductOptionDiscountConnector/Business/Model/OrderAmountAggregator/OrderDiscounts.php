@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 class OrderDiscounts implements OrderAmountAggregatorInterface
 {
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -27,10 +27,10 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param \ArrayObject|CalculatedDiscountTransfer[] $orderCalculatedDiscounts
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $orderCalculatedDiscounts
      *
-     * @return \ArrayObject|CalculatedDiscountTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[]
      */
     protected function getProductOptionCalculatedDiscounts(
         OrderTransfer $orderTransfer,
@@ -50,10 +50,10 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
 
 
     /**
-     * @param \ArrayObject|CalculatedDiscountTransfer[] $orderCalculatedDiscounts
-     * @param \ArrayObject|CalculatedDiscountTransfer[] $calculatedDiscounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $orderCalculatedDiscounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculatedDiscounts
      *
-     * @return \ArrayObject|CalculatedDiscountTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[]
      */
     public function sumCalculatedDiscounts(\ArrayObject $orderCalculatedDiscounts, \ArrayObject $calculatedDiscounts)
     {

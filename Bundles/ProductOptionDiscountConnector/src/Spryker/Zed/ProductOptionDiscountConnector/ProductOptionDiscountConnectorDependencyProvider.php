@@ -16,9 +16,9 @@ class ProductOptionDiscountConnectorDependencyProvider extends AbstractBundleDep
     const FACADE_TAX = 'TAX_FACADE';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {

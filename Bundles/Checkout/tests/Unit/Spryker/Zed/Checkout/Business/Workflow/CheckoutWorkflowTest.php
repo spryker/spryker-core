@@ -181,7 +181,7 @@ class CheckoutWorkflowTest extends Test
     }
 
     /**
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     protected function createBaseCheckoutResponse()
     {

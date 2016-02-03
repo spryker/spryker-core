@@ -20,7 +20,7 @@ class ShipmentFacade extends AbstractFacade
 {
 
     /**
-     * @param ShipmentCarrierTransfer $carrierTransfer
+     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
      * @return int
      */
@@ -32,7 +32,7 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return int
      */
@@ -44,9 +44,9 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return ShipmentMethodsTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
@@ -58,7 +58,7 @@ class ShipmentFacade extends AbstractFacade
     /**
      * @param int $idMethod
      *
-     * @return ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function getShipmentMethodTransferById($idMethod)
     {
@@ -92,7 +92,7 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return int
      */
@@ -104,8 +104,8 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */

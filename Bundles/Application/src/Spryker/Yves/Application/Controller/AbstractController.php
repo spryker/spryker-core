@@ -31,17 +31,17 @@ abstract class AbstractController
     const FLASH_MESSAGES_INFO = 'flash.messages.info';
 
     /**
-     * @var Application
+     * @var \Spryker\Yves\Application\Application
      */
     private $application;
 
     /**
-     * @var AbstractFactory
+     * @var \Spryker\Yves\Kernel\AbstractFactory
      */
     private $factory;
 
     /**
-     * @var AbstractClient
+     * @var \Spryker\Client\Kernel\AbstractClient
      */
     private $client;
 
@@ -53,7 +53,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param Application $application
+     * @param \Spryker\Yves\Application\Application $application
      *
      * @return $this
      */
@@ -67,7 +67,7 @@ abstract class AbstractController
      * @param array $parameters
      * @param int $code
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function redirectResponseInternal($path, $parameters = [], $code = 302)
     {
@@ -75,7 +75,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return Application
+     * @return \Spryker\Yves\Application\Application
      */
     protected function getApplication()
     {
@@ -94,7 +94,7 @@ abstract class AbstractController
      * @param string $absoluteUrl
      * @param int $code
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function redirectResponseExternal($absoluteUrl, $code = 302)
     {
@@ -106,7 +106,7 @@ abstract class AbstractController
      * @param int $status
      * @param array $headers
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     protected function jsonResponse($data = null, $status = 200, $headers = [])
     {
@@ -166,10 +166,10 @@ abstract class AbstractController
     }
 
     /**
-     * @param AbstractForm $form
+     * @param \Spryker\Shared\Gui\Form\AbstractForm $form
      * @param array $options
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function buildForm(AbstractForm $form, array $options = [])
     {
@@ -194,7 +194,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */
@@ -262,7 +262,7 @@ abstract class AbstractController
      * @param string $viewPath
      * @param array $parameters
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function renderView($viewPath, array $parameters = [])
     {
@@ -270,7 +270,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return AutoCompletion
+     * @return \Generated\Yves\Ide\AutoCompletion
      */
     protected function getLocator()
     {
@@ -278,7 +278,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return AbstractClient
+     * @return \Spryker\Client\Kernel\AbstractClient
      */
     protected function getClient()
     {
@@ -290,9 +290,9 @@ abstract class AbstractController
     }
 
     /**
-     * @throws ClientNotFoundException
+     * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
      *
-     * @return AbstractClient
+     * @return \Spryker\Client\Kernel\AbstractClient
      */
     private function resolveClient()
     {
@@ -300,7 +300,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return ClientResolver
+     * @return \Spryker\Client\Kernel\ClassResolver\Client\ClientResolver
      */
     private function getClientResolver()
     {
@@ -308,7 +308,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return AbstractFactory
+     * @return \Spryker\Yves\Kernel\AbstractFactory
      */
     protected function getFactory()
     {
@@ -320,9 +320,9 @@ abstract class AbstractController
     }
 
     /**
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractFactory
+     * @return \Spryker\Yves\Kernel\AbstractFactory
      */
     private function resolveFactory()
     {
@@ -330,7 +330,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return FactoryResolver
+     * @return \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {
@@ -338,7 +338,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return FlashMessengerInterface
+     * @return \Pyz\Yves\Application\Business\Model\FlashMessengerInterface
      */
     private function getFlashMessenger()
     {

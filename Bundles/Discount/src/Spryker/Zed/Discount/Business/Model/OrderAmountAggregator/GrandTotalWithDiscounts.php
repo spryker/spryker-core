@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 class GrandTotalWithDiscounts implements OrderAmountAggregatorInterface
 {
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -25,7 +25,7 @@ class GrandTotalWithDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */

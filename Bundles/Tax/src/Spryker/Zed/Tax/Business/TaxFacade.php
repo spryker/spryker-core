@@ -212,7 +212,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -222,7 +222,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */

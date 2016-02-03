@@ -45,7 +45,7 @@ class SalesFacadeTest extends Test
 {
 
     /**
-     * @var SalesFacade
+     * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected $salesFacade;
 
@@ -117,7 +117,7 @@ class SalesFacadeTest extends Test
     }
 
     /**
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     private function getValidBaseResponseTransfer()
     {
@@ -125,7 +125,7 @@ class SalesFacadeTest extends Test
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     private function getValidBaseQuoteTransfer()
     {
@@ -316,7 +316,7 @@ class SalesFacadeTest extends Test
     /**
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyOmsOrderProcess
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     protected function getProcessEntity()
     {

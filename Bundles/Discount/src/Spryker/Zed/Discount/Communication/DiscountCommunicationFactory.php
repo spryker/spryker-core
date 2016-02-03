@@ -32,8 +32,8 @@ use Spryker\Zed\Discount\Communication\Table\VoucherPoolTable;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**
- * @method DiscountQueryContainer getQueryContainer()
- * @method DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
  */
 class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -41,7 +41,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param bool $allowMultiple
      *
-     * @return FormTypeInterface
+     * @return \Symfony\Component\Form\FormTypeInterface
      */
     public function createVoucherForm($allowMultiple=false)
     {
@@ -55,7 +55,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return VoucherPoolCategoryTable
+     * @return \Spryker\Zed\Discount\Communication\Table\VoucherPoolCategoryTable
      */
     public function createPoolCategoriesTable()
     {
@@ -65,7 +65,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return DiscountsTable
+     * @return \Spryker\Zed\Discount\Communication\Table\DiscountsTable
      */
     public function createDiscountsTable()
     {
@@ -78,7 +78,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      * @param int $idPool
      * @param int $batchValue
      *
-     * @return DiscountVoucherCodesTable
+     * @return \Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable
      */
     public function createDiscountVoucherCodesTable(DataTablesTransfer $dataTablesTransfer, $idPool, $batchValue)
     {
@@ -91,7 +91,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return VoucherPoolTable
+     * @return \Spryker\Zed\Discount\Communication\Table\VoucherPoolTable
      */
     public function createVoucherPoolTable()
     {
@@ -101,9 +101,9 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param DiscountFacade $discountFacade
+     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      *
-     * @return FormTypeInterface
+     * @return \Symfony\Component\Form\FormTypeInterface
      */
     public function createCartRuleForm(DiscountFacade $discountFacade)
     {
@@ -118,7 +118,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CollectorPluginForm
+     * @return \Spryker\Zed\Discount\Communication\Form\CollectorPluginForm
      */
     public function createCollectorPluginForm()
     {
@@ -132,7 +132,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return VoucherCodesForm
+     * @return \Spryker\Zed\Discount\Communication\Form\VoucherCodesForm
      */
     public function createVoucherCodesForm()
     {
@@ -148,7 +148,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CamelCaseToUnderscore
+     * @return \Zend\Filter\Word\CamelCaseToUnderscore
      */
     public function createCamelCaseToUnderscoreFilter()
     {
@@ -156,7 +156,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return DecisionRuleForm
+     * @return \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm
      */
     public function createDecisionRuleFormType()
     {
@@ -168,7 +168,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return DecisionRuleForm
+     * @return \Spryker\Zed\Discount\Communication\Form\DecisionRuleForm
      */
     public function createDecisionRuleForm()
     {
@@ -184,7 +184,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idPool
      *
-     * @return VoucherPoolTransfer
+     * @return \Generated\Shared\Transfer\VoucherPoolTransfer
      */
     public function getVoucherPoolById($idPool)
     {
@@ -198,7 +198,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param $idDiscount
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     public function getDiscountById($idDiscount)
     {
@@ -213,7 +213,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param $idDiscountVoucherPool
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     public function getDiscountByIdDiscountVoucherPool($idDiscountVoucherPool)
     {
@@ -239,7 +239,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idPool
      *
-     * @return SpyDiscountVoucherQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
     public function getQueryForGeneratedVouchersByIdPool($idPool)
     {
@@ -249,7 +249,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     public function getStore()
     {
@@ -257,7 +257,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return DiscountDecisionRulePluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
     public function getDecisionRulePlugins()
     {
@@ -265,7 +265,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return DiscountCalculatorPluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     public function getCalculatorPlugins()
     {
@@ -273,7 +273,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return DiscountCollectorPluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
      */
     public function getCollectorPlugins()
     {

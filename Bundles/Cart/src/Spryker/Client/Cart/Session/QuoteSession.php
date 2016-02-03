@@ -16,12 +16,12 @@ class QuoteSession implements QuoteSessionInterface
     const QUOTE_SESSION_ITEM_COUNT_IDENTIFIER = 'quote item count session identifier';
 
     /**
-     * @var SessionInterface
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     private $session;
 
     /**
-     * @param SessionInterface $session
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      */
     public function __construct(SessionInterface $session)
     {
@@ -29,7 +29,7 @@ class QuoteSession implements QuoteSessionInterface
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote()
     {
@@ -43,9 +43,9 @@ class QuoteSession implements QuoteSessionInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return QuoteSession
+     * @return \Spryker\Client\Cart\Session\QuoteSession
      */
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
@@ -69,7 +69,7 @@ class QuoteSession implements QuoteSessionInterface
     /**
      * @param $itemCount
      *
-     * @return QuoteSession
+     * @return \Spryker\Client\Cart\Session\QuoteSession
      */
     public function setItemCount($itemCount)
     {

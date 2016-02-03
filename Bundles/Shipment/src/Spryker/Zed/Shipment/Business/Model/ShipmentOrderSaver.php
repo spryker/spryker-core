@@ -20,12 +20,12 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 {
 
     /**
-     * @var ShipmentQueryContainerInterface
+     * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param SalesQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      */
     public function __construct(SalesQueryContainerInterface $queryContainer)
     {
@@ -33,8 +33,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
@@ -54,8 +54,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     }
 
     /**
-     * @param SpySalesExpense $salesOrderExpenseEntity
-     * @param ExpenseTransfer $expenseTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesExpense $salesOrderExpenseEntity
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      *
      * @return void
      */
@@ -68,7 +68,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      *
@@ -80,8 +80,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param SpySalesOrder $salesOrderEntity
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
      * @return void
      */
@@ -101,8 +101,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param SpySalesOrder $salesOrderEntity
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
      * @return void
      */
@@ -116,7 +116,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function getSalesOrderByIdSalesOrder($idSalesOrder)
     {

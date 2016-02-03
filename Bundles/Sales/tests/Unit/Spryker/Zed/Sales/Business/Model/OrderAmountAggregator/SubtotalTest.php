@@ -25,7 +25,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Subtotal
+     * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\Subtotal
      */
     protected function getSubtotalAggregator()
     {
@@ -33,7 +33,7 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {

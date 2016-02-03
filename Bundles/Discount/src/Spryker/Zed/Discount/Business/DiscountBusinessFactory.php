@@ -359,7 +359,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountTotalAmount
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount
      */
     public function createOrderDiscountTotalAmount()
     {
@@ -367,7 +367,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemDiscounts
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts
      */
     public function createItemTotalOrderAggregator()
     {
@@ -375,7 +375,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OrderDiscounts
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderDiscounts
      */
     public function createSalesOrderTotalsAggregator()
     {
@@ -383,7 +383,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GrandTotalWithDiscounts
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts
      */
     public function createSalesOrderGrandTotalAggregator()
     {
@@ -391,7 +391,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemTaxWithDiscounts
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemTaxWithDiscounts
      */
     public function createItemTaxWithDiscountsAggregator()
     {

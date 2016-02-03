@@ -40,23 +40,23 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
     protected $camelCaseToUnderscoreFilter;
 
     /**
-     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     private $calculatorPlugins;
     /**
-     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
      */
     private $collectorPlugins;
     /**
-     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
     private $decisionRulePlugins;
 
     /**
      * @param \Zend\Filter\Word\CamelCaseToUnderscore $camelCaseToUnderscoreFilter
-     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
-     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $collectorPlugins
-     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $collectorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      */
     public function __construct(
         CamelCaseToUnderscore $camelCaseToUnderscoreFilter,

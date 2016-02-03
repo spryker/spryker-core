@@ -13,12 +13,12 @@ use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 class ItemTax implements OrderAmountAggregatorInterface
 {
     /**
-     * @var PriceCalculationHelperInterface
+     * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
     protected $priceCalculationHelper;
 
     /**
-     * @param PriceCalculationHelperInterface $priceCalculationHelper
+     * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
      */
     public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
     {
@@ -26,7 +26,7 @@ class ItemTax implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -39,7 +39,7 @@ class ItemTax implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \ArrayObject|ExpenseTransfer[]|ItemTransfer[] $taxableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]|\Generated\Shared\Transfer\ItemTransfer[] $taxableItems
      *
      * @return void
      */
@@ -67,7 +67,7 @@ class ItemTax implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */

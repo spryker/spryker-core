@@ -37,7 +37,7 @@ class InvoiceTest extends Test
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     private function getQuoteTransfer()
     {
@@ -158,7 +158,7 @@ class InvoiceTest extends Test
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {
@@ -171,7 +171,7 @@ class InvoiceTest extends Test
     }
 
     /**
-     * @return PayolutionConfig
+     * @return \Spryker\Zed\Payolution\PayolutionConfig
      */
     private function getBundleConfigMock()
     {

@@ -11,7 +11,7 @@ class GrandTotalWithDiscountsCalculator implements CalculatorInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {

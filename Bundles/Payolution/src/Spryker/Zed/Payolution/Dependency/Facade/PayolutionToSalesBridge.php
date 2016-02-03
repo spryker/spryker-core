@@ -13,12 +13,12 @@ class PayolutionToSalesBridge implements PayolutionToSalesInterface
 {
 
     /**
-     * @var SalesFacade
+     * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected $salesFacade;
 
     /**
-     * @param SalesFacade $salesFacade
+     * @param \Spryker\Zed\Sales\Business\SalesFacade $salesFacade
      */
     public function __construct($salesFacade)
     {
@@ -28,7 +28,7 @@ class PayolutionToSalesBridge implements PayolutionToSalesInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderTotalsByIdSalesOrder($idSalesOrder)
     {

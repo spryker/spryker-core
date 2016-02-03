@@ -226,7 +226,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
      * @param  string $name The virtual column name
      * @return mixed
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function getVirtualColumn($name)
     {
@@ -243,7 +243,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|SpyDistributorReceiver The current object, for fluid interface
+     * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\Base\SpyDistributorReceiver The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -386,7 +386,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
      *                            TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *
      * @return int             next starting column
-     * @throws PropelException - Any caught Exception will be rewrapped as a PropelException.
+     * @throws \Propel\Runtime\Exception\PropelException - Any caught Exception will be rewrapped as a PropelException.
      */
     public function hydrate($row, $startcol = 0, $rehydrate = false, $indexType = TableMap::TYPE_NUM)
     {
@@ -423,7 +423,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
      * the base method from the overridden method (i.e. parent::ensureConsistency()),
      * in case your model changes.
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function ensureConsistency()
     {
@@ -435,9 +435,9 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
      * This will only work if the object has been saved and has a valid primary key set.
      *
      * @param      boolean $deep (optional) Whether to also de-associated any related objects.
-     * @param      ConnectionInterface $con (optional) The ConnectionInterface connection to use.
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con (optional) The ConnectionInterface connection to use.
      * @return void
-     * @throws PropelException - if this object is deleted, unsaved or doesn't have pk match in db
+     * @throws \Propel\Runtime\Exception\PropelException - if this object is deleted, unsaved or doesn't have pk match in db
      */
     public function reload($deep = false, ConnectionInterface $con = null)
     {
@@ -472,9 +472,9 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
     /**
      * Removes this object from datastore and sets delete attribute.
      *
-     * @param      ConnectionInterface $con
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
      * @return void
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @see SpyDistributorReceiver::setDeleted()
      * @see SpyDistributorReceiver::isDeleted()
      */
@@ -508,9 +508,9 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
      * method.  This method wraps all precipitate database operations in a
      * single transaction.
      *
-     * @param      ConnectionInterface $con
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
      * @return int             The number of rows affected by this insert/update and any referring fk objects' save() operations.
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @see doSave()
      */
     public function save(ConnectionInterface $con = null)
@@ -554,9 +554,9 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
      * If the object is new, it inserts it; otherwise an update is performed.
      * All related objects are also updated in this method.
      *
-     * @param      ConnectionInterface $con
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
      * @return int             The number of rows affected by this insert/update and any referring fk objects' save() operations.
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @see save()
      */
     protected function doSave(ConnectionInterface $con)
@@ -586,9 +586,9 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
     /**
      * Insert the row in the database.
      *
-     * @param      ConnectionInterface $con
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @see doSave()
      */
     protected function doInsert(ConnectionInterface $con)
@@ -646,7 +646,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
     /**
      * Update the row in the database.
      *
-     * @param      ConnectionInterface $con
+     * @param      \Propel\Runtime\Connection\ConnectionInterface $con
      *
      * @return Integer Number of updated rows
      * @see doSave()
@@ -836,7 +836,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
     /**
      * Build a Criteria object containing the values of all modified columns in this object.
      *
-     * @return Criteria The Criteria object containing all modified values.
+     * @return \Propel\Runtime\ActiveQuery\Criteria The Criteria object containing all modified values.
      */
     public function buildCriteria()
     {
@@ -858,9 +858,9 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
      * Unlike buildCriteria() this method includes the primary key values regardless
      * of whether or not they have been modified.
      *
-     * @throws LogicException if no primary key is defined
+     * @throws \Propel\Runtime\Exception\LogicException if no primary key is defined
      *
-     * @return Criteria The Criteria object containing value(s) for primary key(s).
+     * @return \Propel\Runtime\ActiveQuery\Criteria The Criteria object containing value(s) for primary key(s).
      */
     public function buildPkeyCriteria()
     {
@@ -930,7 +930,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
      * @param      object $copyObj An object of \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorReceiver (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
@@ -951,7 +951,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @return \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorReceiver Clone of current object.
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function copy($deepCopy = false)
     {
@@ -1006,7 +1006,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
 
     /**
      * Code to be run before persisting the object
-     * @param  ConnectionInterface $con
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preSave(ConnectionInterface $con = null)
@@ -1016,7 +1016,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
 
     /**
      * Code to be run after persisting the object
-     * @param ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      */
     public function postSave(ConnectionInterface $con = null)
     {
@@ -1025,7 +1025,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
 
     /**
      * Code to be run before inserting to database
-     * @param  ConnectionInterface $con
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preInsert(ConnectionInterface $con = null)
@@ -1035,7 +1035,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
 
     /**
      * Code to be run after inserting to database
-     * @param ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      */
     public function postInsert(ConnectionInterface $con = null)
     {
@@ -1044,7 +1044,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
 
     /**
      * Code to be run before updating the object in database
-     * @param  ConnectionInterface $con
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preUpdate(ConnectionInterface $con = null)
@@ -1054,7 +1054,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
 
     /**
      * Code to be run after updating the object in database
-     * @param ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      */
     public function postUpdate(ConnectionInterface $con = null)
     {
@@ -1063,7 +1063,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
 
     /**
      * Code to be run before deleting the object in database
-     * @param  ConnectionInterface $con
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
      * @return boolean
      */
     public function preDelete(ConnectionInterface $con = null)
@@ -1073,7 +1073,7 @@ abstract class SpyDistributorReceiver implements ActiveRecordInterface
 
     /**
      * Code to be run after deleting the object in database
-     * @param ConnectionInterface $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
      */
     public function postDelete(ConnectionInterface $con = null)
     {

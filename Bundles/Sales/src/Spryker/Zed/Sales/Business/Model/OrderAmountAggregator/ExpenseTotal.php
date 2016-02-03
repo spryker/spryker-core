@@ -15,7 +15,7 @@ use Orm\Zed\Sales\Persistence\SpySalesExpense;
 class ExpenseTotal implements OrderAmountAggregatorInterface
 {
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $salesQueryContainer;
 
@@ -28,7 +28,7 @@ class ExpenseTotal implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -53,10 +53,10 @@ class ExpenseTotal implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param SpySalesExpense[]|ObjectCollection $salesOrderExpenses
-     * @param OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesExpense[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderExpenses
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function hydrateOrderExpenseTransfer(ObjectCollection $salesOrderExpenses, OrderTransfer $orderTransfer)
     {
@@ -76,7 +76,7 @@ class ExpenseTotal implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param SpySalesExpense[]|ObjectCollection $salesOrderExpenses
+     * @param \Orm\Zed\Sales\Persistence\SpySalesExpense[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderExpenses
      *
      * @return int
      */
@@ -90,9 +90,9 @@ class ExpenseTotal implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return SpySalesExpense[]|ObjectCollection
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getOrderExpenses(OrderTransfer $orderTransfer)
     {

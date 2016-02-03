@@ -16,8 +16,8 @@ class Saver implements SaverInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
@@ -35,10 +35,10 @@ class Saver implements SaverInterface
     }
 
     /**
-     * @param PayolutionPaymentTransfer $paymentTransfer
+     * @param \Generated\Shared\Transfer\PayolutionPaymentTransfer $paymentTransfer
      * @param int $idSalesOrder
      *
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     protected function savePaymentForOrder(PayolutionPaymentTransfer $paymentTransfer, $idSalesOrder)
     {
@@ -66,7 +66,7 @@ class Saver implements SaverInterface
     }
 
     /**
-     * @param ItemTransfer[] $orderItemTransfers
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      * @param int $idPayment
      *
      * @return void

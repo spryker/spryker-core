@@ -13,7 +13,7 @@ use Spryker\Shared\Checkout\CheckoutConstants;
 class CheckoutGrandTotalPrecondition
 {
     /**
-     * @var StackExecutor
+     * @var \Spryker\Zed\Calculation\Business\Model\StackExecutor
      */
     protected $stackExecutor;
 
@@ -26,8 +26,8 @@ class CheckoutGrandTotalPrecondition
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
@@ -50,7 +50,7 @@ class CheckoutGrandTotalPrecondition
     }
 
     /**
-     * @return CheckoutErrorTransfer
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
     protected function createCheckoutErrorTransfer()
     {

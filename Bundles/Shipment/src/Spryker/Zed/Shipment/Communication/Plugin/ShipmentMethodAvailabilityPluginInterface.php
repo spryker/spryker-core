@@ -12,7 +12,7 @@ interface ShipmentMethodAvailabilityPluginInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */

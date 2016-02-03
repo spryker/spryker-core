@@ -14,8 +14,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ShipmentCommunicationFactory getFactory()
- * @method ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
  */
 class MethodController extends AbstractController
 {

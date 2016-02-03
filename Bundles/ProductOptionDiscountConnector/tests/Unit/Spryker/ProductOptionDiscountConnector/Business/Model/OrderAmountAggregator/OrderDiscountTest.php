@@ -27,7 +27,7 @@ class OrderDiscountTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {
@@ -65,7 +65,7 @@ class OrderDiscountTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderDiscounts
      */
     protected function createOrderDiscountAggregator()
     {

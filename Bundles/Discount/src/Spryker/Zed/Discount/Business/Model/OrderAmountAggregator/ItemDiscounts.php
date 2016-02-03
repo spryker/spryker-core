@@ -16,7 +16,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 class ItemDiscounts implements OrderAmountAggregatorInterface
 {
     /**
-     * @var DiscountQueryContainerInterface
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
@@ -29,7 +29,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -48,8 +48,8 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param ObjectCollection|SpySalesDiscount[] $salesOrderDiscounts
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesDiscount[] $salesOrderDiscounts
      *
      * @return void
      */
@@ -67,8 +67,8 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
-     * @param SpySalesDiscount $salesOrderDiscountEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
      *
      * @return void
      */
@@ -92,8 +92,8 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
 
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param SpySalesDiscount $salesOrderDiscountEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
      *
      * @return void
      */
@@ -123,10 +123,10 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param SpySalesDiscount $salesOrderDiscountEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
      * @param int $quantity
      *
-     * @return CalculatedDiscountTransfer
+     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer
      */
     protected function hydrateCalculatedDiscountTransferFromEntity(SpySalesDiscount $salesOrderDiscountEntity, $quantity)
     {
@@ -147,8 +147,8 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
 
 
     /**
-     * @param ExpenseTransfer $expenseTransfer
-     * @param CalculatedDiscountTransfer $calculatedDiscountTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
      *
      * @return void
      */
@@ -166,9 +166,9 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return SpySalesDiscount[]|ObjectCollection
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getSalesOrderDiscounts(OrderTransfer $orderTransfer)
     {
@@ -178,7 +178,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -188,7 +188,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
@@ -198,7 +198,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      *
      * @return void
      */
@@ -209,7 +209,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -222,8 +222,8 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param ExpenseTransfer $expenseTransfer
-     * @param CalculatedDiscountTransfer $calculatedDiscountTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
      *
      * @return void
      */

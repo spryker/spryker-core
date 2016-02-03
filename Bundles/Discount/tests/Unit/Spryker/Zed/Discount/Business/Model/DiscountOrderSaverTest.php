@@ -155,7 +155,7 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function getDiscountVoucherEntityByCode()
     {
@@ -169,7 +169,7 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountQueryContainerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     private function getDiscountQueryContainerMock(array $methods = [])
     {
@@ -179,7 +179,7 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|VoucherCode
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Model\VoucherCode
      */
     private function getVoucherCodeMock()
     {
@@ -194,7 +194,7 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
      * @param array $discountSaverMethods
      * @param array $queryContainerMethods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|DiscountOrderSaver
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Model\DiscountOrderSaver
      */
     private function getDiscountOrderSaverMock(array $discountSaverMethods = [], array $queryContainerMethods = [])
     {

@@ -39,41 +39,41 @@ class VoucherCodesForm extends AbstractRuleForm
     protected $availablePoolCategories;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $config;
 
     /**
-     * @var CamelCaseToUnderscore
+     * @var \Zend\Filter\Word\CamelCaseToUnderscore
      */
     protected $camelCaseToUnderscore;
 
     /**
-     * @var DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
     protected $discountQueryContainer;
 
     /**
-     * @var DiscountCalculatorPluginInterface[]
+     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     protected $calculatorPlugins;
 
     /**
-     * @var DiscountCollectorPluginInterface[]
+     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
      */
     protected $collectorPlugins;
 
     /**
-     * @var DiscountDecisionRulePluginInterface[]
+     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
     protected $decisionRulePlugins;
 
     /**
-     * @param CamelCaseToUnderscore $camelCaseToUnderscore
-     * @param DiscountQueryContainer $discountQueryContainer
-     * @param DiscountCalculatorPluginInterface[] $calculatorPlugins
-     * @param DiscountCollectorPluginInterface[] $collectorPlugins
-     * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
+     * @param \Zend\Filter\Word\CamelCaseToUnderscore $camelCaseToUnderscore
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
+     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $collectorPlugins
+     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      */
     public function __construct(
         CamelCaseToUnderscore $camelCaseToUnderscore,
@@ -138,7 +138,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param int $idPool
      *
-     * @return AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     protected function getVoucherCodesTransfer($idPool)
     {
@@ -166,7 +166,7 @@ class VoucherCodesForm extends AbstractRuleForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

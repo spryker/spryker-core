@@ -129,7 +129,7 @@ class SpyDistributorItemTableMap extends TableMap
      * Relations are not initialized by this method since they are lazy loaded
      *
      * @return void
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function initialize()
     {
@@ -300,7 +300,7 @@ class SpyDistributorItemTableMap extends TableMap
                                  One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                           TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *
-     * @throws PropelException Any exceptions caught during processing will be
+     * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      * @return array           (SpyDistributorItem object, last column rank)
      */
@@ -330,9 +330,9 @@ class SpyDistributorItemTableMap extends TableMap
      * The returned array will contain objects of the default type or
      * objects that inherit from the default.
      *
-     * @param DataFetcherInterface $dataFetcher
+     * @param \Propel\Runtime\DataFetcher\DataFetcherInterface $dataFetcher
      * @return array
-     * @throws PropelException Any exceptions caught during processing will be
+     * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
     public static function populateObjects(DataFetcherInterface $dataFetcher)
@@ -370,9 +370,9 @@ class SpyDistributorItemTableMap extends TableMap
      * XML schema will not be added to the select list and only loaded
      * on demand.
      *
-     * @param Criteria $criteria object containing the columns to add.
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria object containing the columns to add.
      * @param string   $alias    optional table alias
-     * @throws PropelException Any exceptions caught during processing will be
+     * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
     public static function addSelectColumns(Criteria $criteria, $alias = null)
@@ -393,8 +393,8 @@ class SpyDistributorItemTableMap extends TableMap
     /**
      * Returns the TableMap related to this object.
      * This method is not needed for general use but a specific application could have a need.
-     * @return TableMap
-     * @throws PropelException Any exceptions caught during processing will be
+     * @return \Propel\Runtime\Map\TableMap
+     * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
     public static function getTableMap()
@@ -418,10 +418,10 @@ class SpyDistributorItemTableMap extends TableMap
      *
      * @param mixed               $values Criteria or SpyDistributorItem object or primary key or array of primary keys
      *              which is used to create the DELETE statement
-     * @param  ConnectionInterface $con the connection to use
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
      *                         if supported by native driver or if emulated using Propel.
-     * @throws PropelException Any exceptions caught during processing will be
+     * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
      public static function doDelete($values, ConnectionInterface $con = null)
@@ -467,7 +467,7 @@ class SpyDistributorItemTableMap extends TableMap
     /**
      * Deletes all rows from the spy_distributor_item table.
      *
-     * @param ConnectionInterface $con the connection to use
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
@@ -479,9 +479,9 @@ class SpyDistributorItemTableMap extends TableMap
      * Performs an INSERT on the database, given a SpyDistributorItem or Criteria object.
      *
      * @param mixed               $criteria Criteria or SpyDistributorItem object containing data that is used to create the INSERT statement.
-     * @param ConnectionInterface $con the ConnectionInterface connection to use
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
-     * @throws PropelException Any exceptions caught during processing will be
+     * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
     public static function doInsert($criteria, ConnectionInterface $con = null)

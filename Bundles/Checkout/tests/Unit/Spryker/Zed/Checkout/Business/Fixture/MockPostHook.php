@@ -14,12 +14,12 @@ class MockPostHook implements CheckoutPostSaveHookInterface
 {
 
     /**
-     * @var CheckoutResponseTransfer
+     * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     private $checkoutResponse;
 
     /**
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      */
     public function __construct(CheckoutResponseTransfer $checkoutResponse)
     {
@@ -27,8 +27,8 @@ class MockPostHook implements CheckoutPostSaveHookInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */

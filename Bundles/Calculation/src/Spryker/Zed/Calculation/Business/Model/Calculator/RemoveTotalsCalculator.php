@@ -16,7 +16,7 @@ class RemoveTotalsCalculator implements CalculatorInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -31,7 +31,7 @@ class RemoveTotalsCalculator implements CalculatorInterface
     }
 
     /**
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     protected function createTotalsTransfer()
     {
@@ -39,7 +39,7 @@ class RemoveTotalsCalculator implements CalculatorInterface
     }
 
     /**
-     * @return TaxTotalTransfer
+     * @return \Generated\Shared\Transfer\TaxTotalTransfer
      */
     protected function createTaxTotalsTransfer()
     {

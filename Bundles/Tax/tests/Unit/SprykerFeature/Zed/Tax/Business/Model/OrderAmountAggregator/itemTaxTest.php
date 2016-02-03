@@ -63,7 +63,7 @@ class ItemTaxTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {
@@ -85,7 +85,7 @@ class ItemTaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ItemTax
+     * @return \Spryker\Zed\Tax\Business\Model\OrderAmountAggregator\ItemTax
      */
     protected function createItemTaxAggregator()
     {
@@ -101,7 +101,7 @@ class ItemTaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PriceCalculationHelperInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
     protected function createPriceHelperMock()
     {

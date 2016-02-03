@@ -12,15 +12,15 @@ use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method CheckoutFacade getFacade()
+ * @method \Spryker\Zed\Checkout\Business\CheckoutFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function placeOrderAction(QuoteTransfer $quoteTransfer)
     {

@@ -15,12 +15,12 @@ use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionTo
 class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
 {
     /**
-     * @var ProductOptionToTaxBridgeInterface
+     * @var \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface
      */
     protected $taxFacade;
 
     /**
-     * @param ProductOptionToTaxBridgeInterface $taxFacade
+     * @param \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface $taxFacade
      */
     public function __construct(ProductOptionToTaxBridgeInterface $taxFacade)
     {
@@ -28,7 +28,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -41,7 +41,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
      */
@@ -64,7 +64,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[]|ExpenseTransfer[]|ProductOptionTransfer[] $taxableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ExpenseTransfer[]|\Generated\Shared\Transfer\ProductOptionTransfer[] $taxableItems
      *
      * @return array|int[]
      */
@@ -80,7 +80,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return array|int[]
      */
@@ -96,7 +96,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $orderEffectiveTaxRate
      *
      * @return int
@@ -110,7 +110,7 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $orderEffectiveTaxRate
      * @param int $totalTaxAmount
      *

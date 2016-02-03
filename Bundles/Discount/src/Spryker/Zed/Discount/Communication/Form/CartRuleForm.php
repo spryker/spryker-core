@@ -36,25 +36,25 @@ class CartRuleForm extends AbstractRuleForm
     protected $discountFacade;
 
     /**
-     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     protected $calculatorPlugins;
 
     /**
-     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[]
      */
     protected $collectorPlugins;
 
     /**
-     * @var \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[]
      */
     protected $decisionRulePlugins;
 
     /**
      * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
-     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
-     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $collectorPlugins
-     * @param \SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $collectorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      */
     public function __construct(
         DiscountFacade $discountFacade,

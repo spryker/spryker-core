@@ -56,7 +56,7 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
      * @param int $subTotal
      * @param int $expensesTotal
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithFixtureData($subTotal, $expensesTotal)
     {
@@ -72,7 +72,7 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return GrandTotalTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator
      */
     protected function createGrandTotalTotalsCalculator()
     {
@@ -80,7 +80,7 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     private function createQuoteTransfer()
     {
@@ -88,7 +88,7 @@ class GrandTotalTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     protected function createTotalsTransfer()
     {

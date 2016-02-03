@@ -58,7 +58,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
      * @param int $itemGrossUnitPriceWithOptions
      * @param array $calculatedDiscounts
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransferWithFixtureData(
         $itemQuantity,
@@ -118,7 +118,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     protected function createTotalsTransfer()
     {
@@ -126,7 +126,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer()
     {
@@ -134,7 +134,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return DiscountTotalsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator
      */
     protected function createDiscountTotalsCalculator()
     {
@@ -142,7 +142,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createItemTransfer()
     {
@@ -150,7 +150,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return CalculatedDiscountTransfer
+     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer
      */
     protected function createCalculatedDiscountTransfer()
     {
@@ -158,7 +158,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProductOptionTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     protected function createProductOptionTransfer()
     {
@@ -166,7 +166,7 @@ class DiscountTotalsCalculatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function createExpenseTransfer()
     {

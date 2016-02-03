@@ -14,18 +14,18 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 class OrderTotalsAggregator
 {
     /**
-     * @var OrderTotalsAggregatePluginInterface[]
+     * @var \Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
      */
     protected $orderAmountAggregators;
 
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $salesQueryContainer;
 
     /**
-     * @param OrderTotalsAggregatePluginInterface[] $orderAmountAggregators
-     * @param SalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface[] $orderAmountAggregators
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      */
     public function __construct(
         array $orderAmountAggregators = [],
@@ -38,7 +38,7 @@ class OrderTotalsAggregator
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function aggregateByIdSalesOrder($idSalesOrder)
     {
@@ -48,7 +48,7 @@ class OrderTotalsAggregator
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return $orderTransfer
      */
@@ -60,7 +60,7 @@ class OrderTotalsAggregator
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function hydrateOrderTransfer($idSalesOrder)
     {
@@ -80,9 +80,9 @@ class OrderTotalsAggregator
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function applyAmountAggregatorsToOrderTransfer(OrderTransfer $orderTransfer)
     {

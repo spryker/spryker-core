@@ -12,9 +12,9 @@ use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 interface CartToCalculationInterface
 {
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer);
 

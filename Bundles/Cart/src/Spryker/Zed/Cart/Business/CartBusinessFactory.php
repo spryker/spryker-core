@@ -17,13 +17,13 @@ use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
 /**
- * @method CartConfig getConfig()
+ * @method \Spryker\Zed\Cart\CartConfig getConfig()
  */
 class CartBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Operation
+     * @return \Spryker\Zed\Cart\Business\Operation
      */
     public function createCartOperation()
     {
@@ -37,7 +37,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return StorageProviderInterface
+     * @return \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
     protected function createStorageProvider()
     {
@@ -45,7 +45,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemGrouperFacade
+     * @return \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade
      */
     protected function getItemGrouper()
     {
@@ -53,7 +53,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CalculationFacade
+     * @return \Spryker\Zed\Calculation\Business\CalculationFacade
      */
     protected function getCalculator()
     {
@@ -61,7 +61,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MessengerFacade
+     * @return \Spryker\Zed\Messenger\Business\MessengerFacade
      */
     protected function getMessengerFacade()
     {
@@ -69,7 +69,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemExpanderPluginInterface[]
+     * @return \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
      */
     protected function getItemExpanderPlugins()
     {

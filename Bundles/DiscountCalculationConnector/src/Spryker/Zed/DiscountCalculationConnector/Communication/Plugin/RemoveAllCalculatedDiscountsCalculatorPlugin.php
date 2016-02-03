@@ -12,13 +12,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade;
 
 /**
- * @method DiscountCalculationConnectorFacade getFacade()
+ * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade getFacade()
  */
 class RemoveAllCalculatedDiscountsCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {

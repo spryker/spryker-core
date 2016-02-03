@@ -91,9 +91,9 @@ class Distributor implements DistributorInterface
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return CalculatedDiscountTransfer
+     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer
      */
     protected function createBaseCalculatedDiscountTransfer(DiscountTransfer $discountTransfer)
     {

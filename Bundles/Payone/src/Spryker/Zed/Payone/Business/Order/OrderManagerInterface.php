@@ -12,7 +12,7 @@ interface OrderManagerInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransger
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransger
      *
      * @return void
      */

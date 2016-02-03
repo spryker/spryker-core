@@ -54,7 +54,7 @@ class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {
@@ -89,7 +89,7 @@ class DiscountTotalAmountTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return DiscountTotalAmount
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\DiscountTotalAmount
      */
     protected function createDiscountTotalAmountAggregator()
     {

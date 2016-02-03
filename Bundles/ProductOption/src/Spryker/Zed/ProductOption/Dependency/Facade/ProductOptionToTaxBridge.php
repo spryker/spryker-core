@@ -10,12 +10,12 @@ use Spryker\Zed\Tax\Business\TaxFacade;
 class ProductOptionToTaxBridge implements ProductOptionToTaxBridgeInterface
 {
     /**
-     * @var TaxFacade
+     * @var \Spryker\Zed\Tax\Business\TaxFacade
      */
     protected $taxFacade;
 
     /**
-     * @param TaxFacade $taxFacade
+     * @param \Spryker\Zed\Tax\Business\TaxFacade $taxFacade
      */
     public function __construct($taxFacade)
     {

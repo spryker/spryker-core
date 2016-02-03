@@ -40,7 +40,7 @@ class OrderTaxAmountTest  extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTaxAmount
+     * @return \Spryker\Zed\Tax\Business\Model\OrderAmountAggregator\OrderTaxAmount
      */
     protected function createOrderTaxAmountAggregator()
     {
@@ -56,7 +56,7 @@ class OrderTaxAmountTest  extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|PriceCalculationHelperInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
     protected function createPriceHelperMock()
     {
@@ -64,7 +64,7 @@ class OrderTaxAmountTest  extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {

@@ -23,7 +23,7 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
     const COUPON_CODE_2 = 'coupon code 2';
 
     /**
-     * @var StorageProviderInterface
+     * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
     private $provider;
 
@@ -48,7 +48,7 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
         $changedItems = $changedCart->getItems();
         $this->assertCount(2, $changedItems);
 
-        /** @var ItemTransfer $changedItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
         $changedItem = $changedItems[0];
 
         $this->assertEquals($itemId, $changedItem->getId());
@@ -80,12 +80,12 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey($itemId, $skuIndex);
         $this->assertArrayHasKey($newId, $skuIndex);
 
-        /** @var ItemTransfer $addedItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $addedItem */
         $addedItem = $changedItems[$skuIndex[$newId]];
         $this->assertEquals($newId, $addedItem->getId());
         $this->assertEquals($newQuantity, $addedItem->getQuantity());
 
-        /** @var ItemTransfer $existingItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $existingItem */
         $existingItem = $changedItems[$skuIndex[$itemId]];
         $this->assertEquals($itemId, $existingItem->getId());
         $this->assertEquals($existingQuantity, $existingItem->getQuantity());
@@ -114,7 +114,7 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
         $changedCart = $this->provider->removeItems($change);
         $changedItems = $changedCart->getItems();
         $this->assertCount(1, $changedItems);
-        /** @var ItemTransfer $item */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $item */
         $item = $changedItems[0];
         $this->assertEquals($itemId, $item->getId());
         $this->assertEquals($existingQuantity, $item->getQuantity());
@@ -200,7 +200,7 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      * @param string $itemId
      * @param int $itemQuantity
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteWithItem($itemId, $itemQuantity)
     {
@@ -215,7 +215,7 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
      * @param string $itemId
      * @param int $itemQuantity
      *
-     * @return ItemTransfer|ItemTransfer|AbstractTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer|\Generated\Shared\Transfer\ItemTransfer|\Spryker\Shared\Transfer\AbstractTransfer
      */
     protected function createItem($itemId, $itemQuantity)
     {
@@ -228,7 +228,7 @@ class NonPersistentProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer()
     {

@@ -14,17 +14,17 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 /**
- * @method DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class Aggregate extends AbstractDiscountPlugin implements DiscountCollectorPluginInterface
 {
 
     /**
-     * @param DiscountTransfer $discount
-     * @param QuoteTransfer $quoteTransfer
-     * @param DiscountCollectorTransfer $discountCollectorTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discount
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return DiscountableInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\DiscountableInterface[]
      */
     public function collect(
         DiscountTransfer $discount,

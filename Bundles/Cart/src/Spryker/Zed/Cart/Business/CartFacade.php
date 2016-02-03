@@ -17,9 +17,9 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
 {
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addToCart(CartChangeTransfer $cartChangeTransfer)
     {
@@ -27,9 +27,9 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function increaseQuantity(CartChangeTransfer $cartChangeTransfer)
     {
@@ -37,9 +37,9 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeFromCart(CartChangeTransfer $cartChangeTransfer)
     {
@@ -47,9 +47,9 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function decreaseQuantity(CartChangeTransfer $cartChangeTransfer)
     {

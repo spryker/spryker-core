@@ -146,7 +146,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProductFacade|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Product\Business\ProductFacade|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getMockProductFacade()
     {

@@ -14,12 +14,12 @@ class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
 {
 
     /**
-     * @var CheckoutResponseTransfer
+     * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     protected $checkoutResponse;
 
     /**
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      */
     public function __construct(CheckoutResponseTransfer $checkoutResponse)
     {
@@ -27,8 +27,8 @@ class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 class Subtotal implements OrderAmountAggregatorInterface
 {
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -29,7 +29,7 @@ class Subtotal implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
      */

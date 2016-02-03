@@ -13,12 +13,12 @@ class Aggregate implements CollectorInterface
 {
 
     /**
-     * @var CollectorInterface[]
+     * @var \Spryker\Zed\Discount\Business\Collector\CollectorInterface[]
      */
     protected $collectors = [];
 
     /**
-     * @param CollectorInterface[] $collectors
+     * @param \Spryker\Zed\Discount\Business\Collector\CollectorInterface[] $collectors
      */
     public function __construct(array $collectors)
     {
@@ -26,9 +26,9 @@ class Aggregate implements CollectorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return OrderTransfer[]
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer, DiscountCollectorTransfer $discountCollectorTransfer)
     {

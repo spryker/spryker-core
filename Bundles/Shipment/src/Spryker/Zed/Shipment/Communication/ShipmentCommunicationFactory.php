@@ -15,8 +15,8 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 use Spryker\Zed\Shipment\ShipmentConfig;
 
 /**
- * @method ShipmentQueryContainer getQueryContainer()
- * @method ShipmentConfig getConfig()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
  */
 class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 {

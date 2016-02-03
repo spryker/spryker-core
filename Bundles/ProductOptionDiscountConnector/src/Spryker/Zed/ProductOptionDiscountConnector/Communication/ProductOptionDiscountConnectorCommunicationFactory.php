@@ -9,7 +9,7 @@ use Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorCon
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method ProductOptionDiscountConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorConfig getConfig()
  */
 class ProductOptionDiscountConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

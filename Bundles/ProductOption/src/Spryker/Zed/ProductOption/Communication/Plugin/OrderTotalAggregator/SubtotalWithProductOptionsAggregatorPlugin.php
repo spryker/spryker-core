@@ -11,12 +11,12 @@ use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 
 /**
- * @method ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
  */
 class SubtotalWithProductOptionsAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
 {
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */

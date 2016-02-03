@@ -17,9 +17,9 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function calculateInstallmentPaymentsAction(QuoteTransfer $quoteTransfer)
     {

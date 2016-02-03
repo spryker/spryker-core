@@ -13,7 +13,7 @@ class Carrier
 {
 
     /**
-     * @param ShipmentCarrierTransfer $carrierTransfer
+     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
      * @return int
      */

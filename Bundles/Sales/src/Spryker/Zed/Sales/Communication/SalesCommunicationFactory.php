@@ -19,8 +19,8 @@ use Spryker\Zed\Sales\Communication\Form\AddressForm;
 use Spryker\Zed\Sales\SalesConfig;
 
 /**
- * @method SalesQueryContainerInterface getQueryContainer()
- * @method SalesConfig getConfig()
+ * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  */
 class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -38,7 +38,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idSalesOrder
      *
-     * @return CustomerForm
+     * @return \Spryker\Zed\Sales\Communication\Form\CustomerForm
      */
     public function createCustomerForm($idSalesOrder)
     {
@@ -52,7 +52,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idOrderAddress
      *
-     * @return AddressForm
+     * @return \Spryker\Zed\Sales\Communication\Form\AddressForm
      */
     public function createAddressForm($idOrderAddress)
     {
@@ -64,7 +64,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      *
      * @return array
      */
@@ -83,9 +83,9 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param SalesFacade $salesFacade
+     * @param \Spryker\Zed\Sales\Business\SalesFacade $salesFacade
      *
-     * @return OrdersTable
+     * @return \Spryker\Zed\Sales\Communication\Table\OrdersTable
      */
     public function createOrdersTable(SalesFacade $salesFacade)
     {
@@ -96,7 +96,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return SalesToOmsInterface
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     public function getOmsFacade()
     {

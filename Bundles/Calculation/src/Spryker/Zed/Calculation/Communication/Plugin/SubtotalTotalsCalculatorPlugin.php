@@ -13,14 +13,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory;
 
 /**
- * @method CalculationFacade getFacade()
- * @method CalculationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
+ * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
  */
 class SubtotalTotalsCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */

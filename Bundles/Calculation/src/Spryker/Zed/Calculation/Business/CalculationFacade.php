@@ -12,8 +12,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Calculation\CalculationConfig;
 
 /**
- * @method CalculationBusinessFactory getFactory()
- * @method CalculationConfig getConfig()
+ * @method \Spryker\Zed\Calculation\Business\CalculationBusinessFactory getFactory()
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
 class CalculationFacade extends AbstractFacade
 {
@@ -23,9 +23,9 @@ class CalculationFacade extends AbstractFacade
      *
      * @see CalculationConfig::getCalculatorStack
      *
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
@@ -33,7 +33,7 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -43,7 +43,7 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -53,7 +53,7 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -63,7 +63,7 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -73,7 +73,7 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -83,7 +83,7 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -93,7 +93,7 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
@@ -103,8 +103,8 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */

@@ -16,16 +16,16 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
 
 /**
- * @method PayolutionFacade getFacade()
- * @method PayolutionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory getFactory()
  */
 class ReAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
     /**
      * @param array $orderItems
-     * @param SpySalesOrder $orderEntity
-     * @param ReadOnlyArrayObject $data
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return array
      */
@@ -43,9 +43,9 @@ class ReAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfac
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function getOrderTransfer(SpySalesOrder $orderEntity)
     {
@@ -56,9 +56,9 @@ class ReAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfac
     }
 
     /**
-     * @param SpySalesOrder $orderEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     protected function getPaymentEntity(SpySalesOrder $orderEntity)
     {

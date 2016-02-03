@@ -16,9 +16,9 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
 {
 
     /**
-     * @param CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
      *
-     * @return CartChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandItems(CartChangeTransfer $change)
     {

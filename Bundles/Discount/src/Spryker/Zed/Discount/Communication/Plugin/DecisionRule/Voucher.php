@@ -13,16 +13,16 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use Spryker\Zed\Kernel\Business\ModelResult;
 
 /**
- * @method DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePluginInterface
 {
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function check(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)
     {
@@ -42,7 +42,7 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */

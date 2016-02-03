@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 class Item implements OrderAmountAggregatorInterface
 {
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -25,7 +25,7 @@ class Item implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */

@@ -12,12 +12,12 @@ use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionTo
 class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterface
 {
     /**
-     * @var ProductOptionToTaxBridgeInterface
+     * @var \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface
      */
     protected $taxFacade;
 
     /**
-     * @param ProductOptionToTaxBridgeInterface $taxFacade
+     * @param \Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface $taxFacade
      */
     public function __construct(ProductOptionToTaxBridgeInterface $taxFacade)
     {
@@ -25,7 +25,7 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return void
      */
@@ -62,7 +62,7 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return int
      */

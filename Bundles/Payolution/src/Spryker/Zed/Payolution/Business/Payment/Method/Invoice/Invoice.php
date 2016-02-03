@@ -48,7 +48,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
@@ -89,8 +89,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      *
      * @return array
      */
@@ -127,8 +127,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -146,8 +146,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -165,8 +165,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array
@@ -184,8 +184,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param SpyPaymentPayolution $paymentEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return array

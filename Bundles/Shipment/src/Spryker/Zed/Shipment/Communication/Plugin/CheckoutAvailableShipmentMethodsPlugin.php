@@ -12,14 +12,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
 /**
- * @method ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
  */
 class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
 {
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return ShipmentMethodsTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {

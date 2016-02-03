@@ -22,8 +22,8 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
- * @method ProductOptionConfig getConfig()
- * @method ProductOptionQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer getQueryContainer()
  */
 class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
@@ -45,7 +45,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionOrderSaver
+     * @return \Spryker\Zed\ProductOption\Business\Model\ProductOptionOrderSaver
      */
     public function createProductOptionOrderSaver()
     {
@@ -53,7 +53,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemProductOptionGrossPrice
+     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionGrossPrice
      */
     public function createItemProductOptionGrossPriceAggregator()
     {
@@ -61,7 +61,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubtotalWithProductOptions
+     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\SubtotalWithProductOptions
      */
     public function createSubtotalWithProductOption()
     {
@@ -69,7 +69,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemProductOptionTax
+     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\ItemProductOptionTax
      */
     public function createItemProductOptionTaxAggregator()
     {
@@ -77,7 +77,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OrderTaxAmountWithProductOptions
+     * @return \Spryker\Zed\ProductOption\Business\Model\OrderTotalsAggregator\OrderTaxAmountWithProductOptions
      */
     public function createOrderTaxAmountAggregator()
     {
@@ -87,7 +87,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SalesQueryContainerInterface
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected function getSalesQueryContainer()
     {
@@ -95,7 +95,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionToLocaleInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
      */
     protected function getLocaleFacade()
     {
@@ -103,7 +103,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionToProductInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface
      */
     protected function getProductFacade()
     {

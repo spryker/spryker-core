@@ -20,43 +20,43 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemType
  *
  *
  *
- * @method     ChildSpyDistributorItemTypeQuery orderByIdDistributorItemType($order = Criteria::ASC) Order by the id_distributor_item_type column
- * @method     ChildSpyDistributorItemTypeQuery orderByTypeKey($order = Criteria::ASC) Order by the type_key column
- * @method     ChildSpyDistributorItemTypeQuery orderByLastDistribution($order = Criteria::ASC) Order by the last_distribution column
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery orderByIdDistributorItemType($order = Criteria::ASC) Order by the id_distributor_item_type column
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery orderByTypeKey($order = Criteria::ASC) Order by the type_key column
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery orderByLastDistribution($order = Criteria::ASC) Order by the last_distribution column
  *
- * @method     ChildSpyDistributorItemTypeQuery groupByIdDistributorItemType() Group by the id_distributor_item_type column
- * @method     ChildSpyDistributorItemTypeQuery groupByTypeKey() Group by the type_key column
- * @method     ChildSpyDistributorItemTypeQuery groupByLastDistribution() Group by the last_distribution column
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery groupByIdDistributorItemType() Group by the id_distributor_item_type column
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery groupByTypeKey() Group by the type_key column
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery groupByLastDistribution() Group by the last_distribution column
  *
- * @method     ChildSpyDistributorItemTypeQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ChildSpyDistributorItemTypeQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ChildSpyDistributorItemTypeQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildSpyDistributorItemTypeQuery leftJoinSpyDistributorItem($relationAlias = null) Adds a LEFT JOIN clause to the query using the SpyDistributorItem relation
- * @method     ChildSpyDistributorItemTypeQuery rightJoinSpyDistributorItem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the SpyDistributorItem relation
- * @method     ChildSpyDistributorItemTypeQuery innerJoinSpyDistributorItem($relationAlias = null) Adds a INNER JOIN clause to the query using the SpyDistributorItem relation
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery leftJoinSpyDistributorItem($relationAlias = null) Adds a LEFT JOIN clause to the query using the SpyDistributorItem relation
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery rightJoinSpyDistributorItem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the SpyDistributorItem relation
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery innerJoinSpyDistributorItem($relationAlias = null) Adds a INNER JOIN clause to the query using the SpyDistributorItem relation
  *
  * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
- * @method     ChildSpyDistributorItemType findOne(ConnectionInterface $con = null) Return the first ChildSpyDistributorItemType matching the query
- * @method     ChildSpyDistributorItemType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyDistributorItemType matching the query, or a new ChildSpyDistributorItemType object populated from the query conditions when no match is found
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType findOne(ConnectionInterface $con = null) Return the first ChildSpyDistributorItemType matching the query
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyDistributorItemType matching the query, or a new ChildSpyDistributorItemType object populated from the query conditions when no match is found
  *
- * @method     ChildSpyDistributorItemType findOneByIdDistributorItemType(int $id_distributor_item_type) Return the first ChildSpyDistributorItemType filtered by the id_distributor_item_type column
- * @method     ChildSpyDistributorItemType findOneByTypeKey(string $type_key) Return the first ChildSpyDistributorItemType filtered by the type_key column
- * @method     ChildSpyDistributorItemType findOneByLastDistribution(string $last_distribution) Return the first ChildSpyDistributorItemType filtered by the last_distribution column *
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType findOneByIdDistributorItemType(int $id_distributor_item_type) Return the first ChildSpyDistributorItemType filtered by the id_distributor_item_type column
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType findOneByTypeKey(string $type_key) Return the first ChildSpyDistributorItemType filtered by the type_key column
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType findOneByLastDistribution(string $last_distribution) Return the first ChildSpyDistributorItemType filtered by the last_distribution column *
 
- * @method     ChildSpyDistributorItemType requirePk($key, ConnectionInterface $con = null) Return the ChildSpyDistributorItemType by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildSpyDistributorItemType requireOne(ConnectionInterface $con = null) Return the first ChildSpyDistributorItemType matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType requirePk($key, ConnectionInterface $con = null) Return the ChildSpyDistributorItemType by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType requireOne(ConnectionInterface $con = null) Return the first ChildSpyDistributorItemType matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildSpyDistributorItemType requireOneByIdDistributorItemType(int $id_distributor_item_type) Return the first ChildSpyDistributorItemType filtered by the id_distributor_item_type column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildSpyDistributorItemType requireOneByTypeKey(string $type_key) Return the first ChildSpyDistributorItemType filtered by the type_key column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildSpyDistributorItemType requireOneByLastDistribution(string $last_distribution) Return the first ChildSpyDistributorItemType filtered by the last_distribution column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType requireOneByIdDistributorItemType(int $id_distributor_item_type) Return the first ChildSpyDistributorItemType filtered by the id_distributor_item_type column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType requireOneByTypeKey(string $type_key) Return the first ChildSpyDistributorItemType filtered by the type_key column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType requireOneByLastDistribution(string $last_distribution) Return the first ChildSpyDistributorItemType filtered by the last_distribution column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildSpyDistributorItemType[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyDistributorItemType objects based on current ModelCriteria
- * @method     ChildSpyDistributorItemType[]|ObjectCollection findByIdDistributorItemType(int $id_distributor_item_type) Return ChildSpyDistributorItemType objects filtered by the id_distributor_item_type column
- * @method     ChildSpyDistributorItemType[]|ObjectCollection findByTypeKey(string $type_key) Return ChildSpyDistributorItemType objects filtered by the type_key column
- * @method     ChildSpyDistributorItemType[]|ObjectCollection findByLastDistribution(string $last_distribution) Return ChildSpyDistributorItemType objects filtered by the last_distribution column
- * @method     ChildSpyDistributorItemType[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType[]|\Propel\Runtime\Collection\ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyDistributorItemType objects based on current ModelCriteria
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType[]|\Propel\Runtime\Collection\ObjectCollection findByIdDistributorItemType(int $id_distributor_item_type) Return ChildSpyDistributorItemType objects filtered by the id_distributor_item_type column
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType[]|\Propel\Runtime\Collection\ObjectCollection findByTypeKey(string $type_key) Return ChildSpyDistributorItemType objects filtered by the type_key column
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType[]|\Propel\Runtime\Collection\ObjectCollection findByLastDistribution(string $last_distribution) Return ChildSpyDistributorItemType objects filtered by the last_distribution column
+ * @method     \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class SpyDistributorItemTypeQuery extends ModelCriteria
@@ -79,9 +79,9 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      * Returns a new ChildSpyDistributorItemTypeQuery object.
      *
      * @param     string $modelAlias The alias of a model in the query
-     * @param     Criteria $criteria Optional Criteria to build the query from
+     * @param     \Propel\Runtime\ActiveQuery\Criteria $criteria Optional Criteria to build the query from
      *
-     * @return ChildSpyDistributorItemTypeQuery
+     * @return \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery
      */
     public static function create($modelAlias = null, Criteria $criteria = null)
     {
@@ -109,9 +109,9 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      * </code>
      *
      * @param mixed $key Primary key to use for the query
-     * @param ConnectionInterface $con an optional connection object
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con an optional connection object
      *
-     * @return ChildSpyDistributorItemType|array|mixed the result, formatted by the current formatter
+     * @return \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType|array|mixed the result, formatted by the current formatter
      */
     public function findPk($key, ConnectionInterface $con = null)
     {
@@ -140,9 +140,9 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      * Bypass doSelect() and the object formatter by using generated code.
      *
      * @param mixed $key Primary key to use for the query
-     * @param ConnectionInterface $con A connection object
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con A connection object
      *
-     * @return ChildSpyDistributorItemType A model object, or null if the key is not found
+     * @return \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType A model object, or null if the key is not found
      * @throws \Propel\Runtime\Exception\PropelException
      */
     protected function findPkSimple($key, ConnectionInterface $con)
@@ -176,9 +176,9 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      * Find object by primary key.
      *
      * @param     mixed $key Primary key to use for the query
-     * @param     ConnectionInterface $con A connection object
+     * @param     \Propel\Runtime\Connection\ConnectionInterface $con A connection object
      *
-     * @return ChildSpyDistributorItemType|array|mixed the result, formatted by the current formatter
+     * @return \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType|array|mixed the result, formatted by the current formatter
      */
     protected function findPkComplex($key, ConnectionInterface $con)
     {
@@ -197,9 +197,9 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      * $objs = $c->findPks(array(12, 56, 832), $con);
      * </code>
      * @param     array $keys Primary keys to use for the query
-     * @param     ConnectionInterface $con an optional connection object
+     * @param     \Propel\Runtime\Connection\ConnectionInterface $con an optional connection object
      *
-     * @return ObjectCollection|array|mixed the list of results, formatted by the current formatter
+     * @return \Propel\Runtime\Collection\ObjectCollection|array|mixed the list of results, formatted by the current formatter
      */
     public function findPks($keys, ConnectionInterface $con = null)
     {
@@ -220,7 +220,7 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      *
      * @param     mixed $key Primary key to use for the query
      *
-     * @return $this|ChildSpyDistributorItemTypeQuery The current query, for fluid interface
+     * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
@@ -233,7 +233,7 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      *
      * @param     array $keys The list of primary key to use for the query
      *
-     * @return $this|ChildSpyDistributorItemTypeQuery The current query, for fluid interface
+     * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
@@ -257,7 +257,7 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildSpyDistributorItemTypeQuery The current query, for fluid interface
+     * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery The current query, for fluid interface
      */
     public function filterByIdDistributorItemType($idDistributorItemType = null, $comparison = null)
     {
@@ -295,7 +295,7 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildSpyDistributorItemTypeQuery The current query, for fluid interface
+     * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery The current query, for fluid interface
      */
     public function filterByTypeKey($typeKey = null, $comparison = null)
     {
@@ -329,7 +329,7 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildSpyDistributorItemTypeQuery The current query, for fluid interface
+     * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery The current query, for fluid interface
      */
     public function filterByLastDistribution($lastDistribution = null, $comparison = null)
     {
@@ -357,10 +357,10 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
     /**
      * Filter the query by a related \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItem object
      *
-     * @param \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItem|ObjectCollection $spyDistributorItem the related object to use as filter
+     * @param \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItem|\Propel\Runtime\Collection\ObjectCollection $spyDistributorItem the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return ChildSpyDistributorItemTypeQuery The current query, for fluid interface
+     * @return \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery The current query, for fluid interface
      */
     public function filterBySpyDistributorItem($spyDistributorItem, $comparison = null)
     {
@@ -383,7 +383,7 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildSpyDistributorItemTypeQuery The current query, for fluid interface
+     * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery The current query, for fluid interface
      */
     public function joinSpyDistributorItem($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
@@ -430,9 +430,9 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
     /**
      * Exclude object from result
      *
-     * @param   ChildSpyDistributorItemType $spyDistributorItemType Object to remove from the list of results
+     * @param   \SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType $spyDistributorItemType Object to remove from the list of results
      *
-     * @return $this|ChildSpyDistributorItemTypeQuery The current query, for fluid interface
+     * @return $this|\SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery The current query, for fluid interface
      */
     public function prune($spyDistributorItemType = null)
     {
@@ -446,7 +446,7 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
     /**
      * Deletes all rows from the spy_distributor_item_type table.
      *
-     * @param ConnectionInterface $con the connection to use
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public function doDeleteAll(ConnectionInterface $con = null)
@@ -473,10 +473,10 @@ abstract class SpyDistributorItemTypeQuery extends ModelCriteria
     /**
      * Performs a DELETE on the database based on the current ModelCriteria
      *
-     * @param ConnectionInterface $con the connection to use
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
      *                         if supported by native driver or if emulated using Propel.
-     * @throws PropelException Any exceptions caught during processing will be
+     * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
     public function delete(ConnectionInterface $con = null)

@@ -16,7 +16,7 @@ class CartFactory extends AbstractFactory
 {
 
     /**
-     * @return SessionInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     public function createSession()
     {
@@ -24,7 +24,7 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return CartStubInterface
+     * @return \Spryker\Client\Cart\Zed\CartStubInterface
      */
     public function createZedStub()
     {

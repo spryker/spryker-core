@@ -77,7 +77,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @param array|string[] $couponCodes
      *
-     * @return SpyDiscountQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function queryCartRulesIncludingSpecifiedVouchers(array $couponCodes = [])
     {
@@ -110,7 +110,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @return SpyDiscountCollectorQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
      */
     public function queryDiscountCollector()
     {
@@ -131,7 +131,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @param int $idDiscountCollector
      *
-     * @return SpyDiscountCollectorQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
      */
     public function queryDiscountCollectorById($idDiscountCollector)
     {
@@ -141,7 +141,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @param int $idDiscount
      *
-     * @return SpyDiscountCollectorQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
      */
     public function queryDiscountCollectorByDiscountId($idDiscount)
     {
@@ -187,7 +187,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @param array $codes
      *
-     * @return SpyDiscountVoucherQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
     public function queryVoucherPoolByVoucherCodes(array $codes)
     {
@@ -199,7 +199,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @param int $idVoucherCode
      *
-     * @return SpyDiscountVoucherPoolQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
      */
     public function queryVoucherCodeByIdVoucherCode($idVoucherCode)
     {
@@ -217,11 +217,11 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @param SpyDiscountVoucherPool $pool
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $pool
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyDiscountDecisionRuleQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
      */
     public function queryDiscountCollectorBysByIdPool(SpyDiscountVoucherPool $pool)
     {
@@ -229,7 +229,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @return SpySalesDiscountQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
      */
     public function querySalesDisount()
     {
@@ -237,7 +237,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @return SpySalesDiscountCodeQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery
      */
     public function querySalesDisountCode()
     {

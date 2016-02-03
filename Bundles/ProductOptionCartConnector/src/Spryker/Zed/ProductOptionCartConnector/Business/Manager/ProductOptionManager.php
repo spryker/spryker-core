@@ -13,12 +13,12 @@ class ProductOptionManager implements ProductOptionManagerInterface
 {
 
     /**
-     * @var ProductOptionCartConnectorToProductOptionInterface
+     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
      */
     private $productOptionFacade;
 
     /**
-     * @param ProductOptionCartConnectorToProductOptionInterface
+     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
      */
     public function __construct(ProductOptionCartConnectorToProductOptionInterface $productOptionFacade)
     {
@@ -26,9 +26,9 @@ class ProductOptionManager implements ProductOptionManagerInterface
     }
 
     /**
-     * @param CartChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
      *
-     * @return CartChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandProductOptions(CartChangeTransfer $change)
     {
@@ -40,7 +40,7 @@ class ProductOptionManager implements ProductOptionManagerInterface
     }
 
     /**
-     * @param ItemTransfer $cartItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
      *
      * @return void
      */

@@ -11,13 +11,13 @@ use Spryker\Zed\Tax\Business\TaxFacade;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 /**
- * @method TaxFacade getFacade()
+ * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
  */
 class TaxTotalsCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */

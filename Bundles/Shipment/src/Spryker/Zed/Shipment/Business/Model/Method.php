@@ -20,7 +20,7 @@ class Method
 {
 
     /**
-     * @var ShipmentQueryContainerInterface
+     * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -30,7 +30,7 @@ class Method
     protected $plugins;
 
     /**
-     * @param ShipmentQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $queryContainer
      * @param array $plugins
      */
     public function __construct(ShipmentQueryContainerInterface $queryContainer, array $plugins)
@@ -40,7 +40,7 @@ class Method
     }
 
     /**
-     * @param ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return int
      */
@@ -54,9 +54,9 @@ class Method
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return ShipmentMethodsTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
@@ -94,7 +94,7 @@ class Method
     /**
      * @param $idMethod
      *
-     * @return ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function getShipmentMethodTransferById($idMethod)
     {
@@ -126,7 +126,7 @@ class Method
     }
 
     /**
-     * @param ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return int
      */
@@ -147,8 +147,8 @@ class Method
     }
 
     /**
-     * @param SpyShipmentMethod $method
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -167,10 +167,10 @@ class Method
 
 
     /**
-     * @param SpyShipmentMethod $method
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param $availabilityPlugins
      *
-     * @return ShipmentMethodAvailabilityPluginInterface
+     * @return \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface
      */
     protected function getAvailabilityPlugin(SpyShipmentMethod $method, $availabilityPlugins)
     {
@@ -178,8 +178,8 @@ class Method
     }
 
     /**
-     * @param SpyShipmentMethod $method
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
      */
@@ -197,10 +197,10 @@ class Method
     }
 
     /**
-     * @param SpyShipmentMethod $method
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param $pricePlugins
      *
-     * @return ShipmentMethodPricePluginInterface
+     * @return \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface
      */
     protected function getPricePlugin(SpyShipmentMethod $method, $pricePlugins)
     {
@@ -208,8 +208,8 @@ class Method
     }
 
     /**
-     * @param SpyShipmentMethod $method
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
      */
@@ -227,10 +227,10 @@ class Method
     }
 
     /**
-     * @param SpyShipmentMethod $method
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param $deliveryTimePlugins
      *
-     * @return ShipmentMethodDeliveryTimePluginInterface
+     * @return \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface
      */
     protected function getDeliveryTimePlugin(SpyShipmentMethod $method, $deliveryTimePlugins)
     {
@@ -238,7 +238,7 @@ class Method
     }
 
     /**
-     * @param SpyShipmentMethod $shipmentMethodEntity
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
      *
      * @return int
      */

@@ -13,15 +13,15 @@ use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface;
 use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacade;
 
 /**
- * @method PriceCartConnectorFacade getFacade()
+ * @method \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacade getFacade()
  */
 class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return CartChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {

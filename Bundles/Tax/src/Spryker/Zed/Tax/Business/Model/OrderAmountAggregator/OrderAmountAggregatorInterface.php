@@ -9,7 +9,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 interface OrderAmountAggregatorInterface
 {
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */

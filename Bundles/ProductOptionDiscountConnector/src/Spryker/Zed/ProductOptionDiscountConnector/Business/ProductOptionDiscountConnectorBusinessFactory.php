@@ -16,12 +16,12 @@ use Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorCon
 use Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorDependencyProvider;
 
 /**
- * @method ProductOptionDiscountConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductOptionDiscountConnector\ProductOptionDiscountConnectorConfig getConfig()
  */
 class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return DiscountTotalAmount
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\DiscountTotalAmount
      */
     public function createDiscountTotalAmountAggregator()
     {
@@ -29,7 +29,7 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return OrderDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderDiscounts
      */
     public function createOrderDiscountAggregator()
     {
@@ -37,7 +37,7 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return ProductOptionDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ProductOptionDiscounts
      */
     public function createProductOptionDiscountAggregator()
     {
@@ -47,7 +47,7 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return ItemProductOptionTaxWithDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\ItemProductOptionTaxWithDiscounts
      */
     public function createItemProductOptionsAndDiscountsAggregator()
     {
@@ -57,7 +57,7 @@ class ProductOptionDiscountConnectorBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return OrderTaxAmountWithDiscounts
+     * @return \Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator\OrderTaxAmountWithDiscounts
      */
     public function createOrderTaxAmountWithDiscounts()
     {

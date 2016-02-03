@@ -49,9 +49,9 @@ class StackExecutorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $calculatorStack
+     * @param \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $calculatorStack
      *
-     * @return \SprykerFeature\Zed\Calculation\Business\Model\StackExecutor
+     * @return \Spryker\Zed\Calculation\Business\Model\StackExecutor
      */
     protected function createStackExecutor(array $calculatorStack)
     {

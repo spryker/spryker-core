@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 class DiscountTotalAmount implements OrderAmountAggregatorInterface
 {
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -26,7 +26,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
      */
@@ -39,7 +39,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
      */
@@ -54,7 +54,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     protected function assertDisountTotalRequirements(OrderTransfer $orderTransfer)
     {
@@ -62,7 +62,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return int
      */
@@ -79,7 +79,7 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \ArrayObject|CalculatedDiscountTransfer[] $calculatedDiscounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculatedDiscounts
      *
      * @return int
      */

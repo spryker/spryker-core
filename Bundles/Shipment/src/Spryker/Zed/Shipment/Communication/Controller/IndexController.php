@@ -11,7 +11,7 @@ use Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method ShipmentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {

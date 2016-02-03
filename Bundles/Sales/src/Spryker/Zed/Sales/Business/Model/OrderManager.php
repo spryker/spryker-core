@@ -31,36 +31,36 @@ class OrderManager
 {
     const TEST_CUSTOMER_FIRST_NAME = 'test order';
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var SalesToCountryInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
      */
     protected $countryFacade;
 
     /**
-     * @var SalesToOmsInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     protected $omsFacade;
 
     /**
-     * @var OrderReferenceGeneratorInterface
+     * @var \Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface
      */
     protected $orderReferenceGenerator;
 
     /**
-     * @var SalesConfig
+     * @var \Spryker\Zed\Sales\SalesConfig
      */
     private $salesConfiguration;
 
     /**
-     * @param SalesQueryContainerInterface $queryContainer
-     * @param SalesToCountryInterface $countryFacade
-     * @param SalesToOmsInterface $omsFacade
-     * @param OrderReferenceGeneratorInterface $orderReferenceGenerator
-     * @param SalesConfig $salesConfiguration
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface $orderReferenceGenerator
+     * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
@@ -77,9 +77,9 @@ class OrderManager
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
-     * @return OrderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      * @throws \Exception
      *
      * @return void
@@ -115,9 +115,9 @@ class OrderManager
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function saveOrderEntity(QuoteTransfer $quoteTransfer)
     {
@@ -129,9 +129,9 @@ class OrderManager
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param SpySalesOrder $salesOrderEntity
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -161,9 +161,9 @@ class OrderManager
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return SpySalesOrderAddress
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
      */
     protected function saveSalesOrderAddress(AddressTransfer $addressTransfer)
     {
@@ -177,9 +177,9 @@ class OrderManager
     }
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
@@ -200,7 +200,7 @@ class OrderManager
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
@@ -216,9 +216,9 @@ class OrderManager
     }
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return SpySalesOrder[]|ObjectCollection
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getOrderCollection(OrderListTransfer $orderListTransfer)
     {
@@ -230,9 +230,9 @@ class OrderManager
     }
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected function createOrderListQuery(OrderListTransfer $orderListTransfer)
     {
@@ -252,8 +252,8 @@ class OrderManager
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
      * @return void
      */
@@ -267,10 +267,10 @@ class OrderManager
     }
 
     /**
-     * @param SpySalesOrder $salesOrderEntity
-     * @param SpyOmsOrderProcess $omsOrderProcessEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $omsOrderProcessEntity
      * @param $salesOrderItemEntity
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
@@ -291,8 +291,8 @@ class OrderManager
     }
 
     /**
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -307,8 +307,8 @@ class OrderManager
     }
 
     /**
-     * @param SaveOrderTransfer $saveOrderTransfer
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -319,9 +319,9 @@ class OrderManager
         $saveOrderTransfer->setOrderItems($orderItems);
     }
     /**
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return SaveOrderTransfer
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
     protected function getSaveOrderTransfer(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
@@ -334,8 +334,8 @@ class OrderManager
     }
 
     /**
-     * @param AddressTransfer $addresTransfer
-     * @param SpySalesOrderAddress $salesOrderAddressEntity
+     * @param \Generated\Shared\Transfer\AddressTransfer $addresTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
      *
      * @return void
      */
@@ -348,7 +348,7 @@ class OrderManager
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -363,7 +363,7 @@ class OrderManager
     }
 
     /**
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function createSalesOrderEntity()
     {
@@ -371,7 +371,7 @@ class OrderManager
     }
 
     /**
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function createSalesOrderItemEntity()
     {
@@ -379,7 +379,7 @@ class OrderManager
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function createOrderTransfer()
     {
@@ -387,7 +387,7 @@ class OrderManager
     }
 
     /**
-     * @return SpySalesOrderAddress
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
      */
     protected function createSalesOrderAddressEntity()
     {
@@ -395,7 +395,7 @@ class OrderManager
     }
 
     /**
-     * @return SaveOrderTransfer
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
     protected function createSaveOrderTransfer()
     {
@@ -416,7 +416,7 @@ class OrderManager
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */

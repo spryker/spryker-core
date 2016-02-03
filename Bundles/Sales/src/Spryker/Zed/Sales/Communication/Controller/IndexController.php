@@ -12,8 +12,8 @@ use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method SalesCommunicationFactory getFactory()
- * @method SalesFacade getFacade()
+ * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
  */
 class IndexController extends AbstractController
 {

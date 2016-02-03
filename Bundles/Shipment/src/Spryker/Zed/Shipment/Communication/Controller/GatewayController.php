@@ -17,9 +17,9 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return ShipmentMethodsTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     public function getAvailableMethodsAction(QuoteTransfer $quoteTransfer)
     {

@@ -14,12 +14,12 @@ use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 class OrderTaxAmount implements OrderAmountAggregatorInterface
 {
     /**
-     * @var PriceCalculationHelperInterface
+     * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
     protected $priceCalculationHelper;
 
     /**
-     * @param PriceCalculationHelperInterface $priceCalculationHelper
+     * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
      */
     public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
     {
@@ -27,7 +27,7 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -48,7 +48,7 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
      */
@@ -69,7 +69,7 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[]|ExpenseTransfer[] $taxableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ExpenseTransfer[] $taxableItems
      *
      * @return array|int[]
      */
@@ -85,7 +85,7 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $orderEffectiveTaxRate
      *
      * @return int
@@ -99,7 +99,7 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */

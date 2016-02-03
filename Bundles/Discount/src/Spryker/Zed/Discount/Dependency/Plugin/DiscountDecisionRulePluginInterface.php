@@ -14,10 +14,10 @@ interface DiscountDecisionRulePluginInterface
 {
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function check(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer);
 
