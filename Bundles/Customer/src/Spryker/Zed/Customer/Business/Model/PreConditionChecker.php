@@ -48,8 +48,7 @@ class PreConditionChecker implements PreConditionCheckerInterface
             $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
             $checkoutErrorTransfer
                 ->setErrorCode(CheckoutConstants::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED)
-                ->setMessage('Email already taken')
-                ->setStep('email');
+                ->setMessage('Email already taken');
 
             $checkoutResponseTransfer
                 ->setIsSuccess(false)
