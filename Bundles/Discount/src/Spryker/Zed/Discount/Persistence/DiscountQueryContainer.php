@@ -142,7 +142,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @param $idDiscount
+     * @param int $idDiscount
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery
      */

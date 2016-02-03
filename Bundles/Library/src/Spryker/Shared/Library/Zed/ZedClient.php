@@ -110,7 +110,7 @@ class ZedClient
     }
 
     /**
-     * @param $pathInfo
+     * @param string $pathInfo
      *
      * @return bool
      */

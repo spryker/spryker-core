@@ -343,7 +343,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param $idPage
+     * @param int $idPage
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *

@@ -442,7 +442,7 @@ class DataImportWriter implements DataImportWriterInterface
     }
 
     /**
-     * @param $idProductOptionTypeUsage
+     * @param int $idProductOptionTypeUsage
      *
      * @return bool
      */

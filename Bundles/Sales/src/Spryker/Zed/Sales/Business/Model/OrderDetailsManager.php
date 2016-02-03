@@ -89,7 +89,7 @@ class OrderDetailsManager
     }
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
      *
      * @return array
      */

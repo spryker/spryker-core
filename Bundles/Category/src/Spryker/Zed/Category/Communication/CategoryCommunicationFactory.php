@@ -79,7 +79,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
      *
      * @return \Spryker\Zed\Category\Communication\Table\UrlTable
      */

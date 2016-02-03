@@ -173,7 +173,7 @@ class RefundForm extends AbstractForm
     }
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
      *
      * @return \Generated\Shared\Transfer\RefundTransfer[]
      */

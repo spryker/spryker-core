@@ -79,7 +79,7 @@ interface ProductCategoryManagerInterface
     public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign);
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param array $productOrderList
      *
      * @throws \Propel\Runtime\Exception\PropelException

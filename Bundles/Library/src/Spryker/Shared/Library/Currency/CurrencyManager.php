@@ -117,7 +117,7 @@ class CurrencyManager
      * Specify expected decimalPlacesInUse to avoid false rounding
      *
      *
-     * @param $value
+     * @param int|float $value
      * @param int $decimalPlacesInUse
      *
      * @return float

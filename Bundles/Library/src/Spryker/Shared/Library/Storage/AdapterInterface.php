@@ -31,13 +31,14 @@ interface AdapterInterface
     public function getDebug();
 
     /**
-     * @param $debug
+     * @param bool $debug
      *
      * @return self
      */
     public function setDebug($debug);
 
     /**
+     * @return void
      */
     public function connect();
 

@@ -44,14 +44,14 @@ interface PaymentManagerInterface
     public function authorizePayment($idPayment);
 
     /**
-     * @param $idPayment
+     * @param int $idPayment
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function preAuthorizePayment($idPayment);
 
     /**
-     * @param $idPayment
+     * @param int $idPayment
      *
      * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer
      */

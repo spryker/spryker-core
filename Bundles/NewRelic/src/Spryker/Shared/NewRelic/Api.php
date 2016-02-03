@@ -38,7 +38,7 @@ class Api implements ApiInterface
     /**
      * Report an error at this line of code, with a complete stack trace.
      *
-     * @param $message
+     * @param string $message
      * @param \Exception $e
      *
      * @return self
@@ -60,7 +60,7 @@ class Api implements ApiInterface
      * application name in a file loaded by PHP's auto_prepend_file INI setting. This function returns true if it
      * succeeded or false otherwise.
      *
-     * @param $name
+     * @param string $name
      *
      * @return self
      */
@@ -162,7 +162,7 @@ class Api implements ApiInterface
      * If no argument or true as an argument is given, mark the current transaction as a background job. If false is
      * passed as an argument, mark the transaction as a web application.
      *
-     * @param $flag
+     * @param bool $flag
      *
      * @return self
      */

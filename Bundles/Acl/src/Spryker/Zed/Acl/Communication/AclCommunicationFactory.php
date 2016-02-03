@@ -60,7 +60,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getGroupRoleListByGroupId() instead.
      *
-     * @param $idAclGroup
+     * @param int $idAclGroup
      *
      * @return array
      */

@@ -78,7 +78,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GraphViz
+     * @return \Spryker\Tool\Graph\Graph
      */
     protected function createGraphViz()
     {

@@ -74,7 +74,7 @@ class RefundFacade extends AbstractFacade
     }
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem[]
      */
@@ -84,7 +84,7 @@ class RefundFacade extends AbstractFacade
     }
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpense[]
      */

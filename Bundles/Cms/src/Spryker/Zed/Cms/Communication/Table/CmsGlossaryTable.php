@@ -185,7 +185,7 @@ class CmsGlossaryTable extends AbstractTable
     }
 
     /**
-     * @param $searchItems
+     * @param array $searchItems
      *
      * @return array
      */

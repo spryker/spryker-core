@@ -24,7 +24,7 @@ interface OmsQueryContainerInterface
     public function querySalesOrderItemsByState(array $states, $processName);
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */

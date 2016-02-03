@@ -67,7 +67,7 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
 
     /**
      * @param array $array
-     * @param $filterSet
+     * @param string|\Spryker\Zed\Library\Sanitize\FilterSetInterface $filterSet
      *
      * @return self
      */

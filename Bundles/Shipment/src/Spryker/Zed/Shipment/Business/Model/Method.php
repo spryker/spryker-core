@@ -89,7 +89,7 @@ class Method
     }
 
     /**
-     * @param $idMethod
+     * @param int $idMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */

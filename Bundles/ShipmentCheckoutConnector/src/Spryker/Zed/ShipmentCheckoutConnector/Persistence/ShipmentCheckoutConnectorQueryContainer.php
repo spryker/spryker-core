@@ -12,7 +12,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
 {
 
     /**
-     * @param $idSalesOrder
+     * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
@@ -22,7 +22,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
-     * @param $idShipmentMethod
+     * @param int $idShipmentMethod
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */

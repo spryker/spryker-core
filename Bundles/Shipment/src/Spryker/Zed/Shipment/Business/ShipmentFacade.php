@@ -57,7 +57,7 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param $idMethod
+     * @param int $idMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */

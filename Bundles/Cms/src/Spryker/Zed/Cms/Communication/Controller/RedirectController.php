@@ -12,6 +12,7 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -37,7 +38,7 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -132,8 +133,8 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @param $url
-     * @param $data
+     * @param \Generated\Shared\Transfer\UrlTransfer $url
+     * @param array $data
      *
      * @return self
      */
@@ -149,8 +150,8 @@ class RedirectController extends AbstractController
     }
 
     /**
-     * @param $redirect
-     * @param $data
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
+     * @param array $data
      *
      * @return self
      */

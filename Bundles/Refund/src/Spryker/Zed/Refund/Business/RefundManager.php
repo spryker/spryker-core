@@ -100,7 +100,7 @@ class RefundManager
     }
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Refund\Persistence\SpyRefund[]
      */

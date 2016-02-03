@@ -130,7 +130,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return \Generated\Shared\Transfer\PageTransfer
      */

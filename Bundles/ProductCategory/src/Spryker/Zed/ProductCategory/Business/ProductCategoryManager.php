@@ -326,7 +326,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -443,7 +443,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      *
      * @return void
      */

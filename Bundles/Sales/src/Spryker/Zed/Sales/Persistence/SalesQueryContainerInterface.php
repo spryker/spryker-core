@@ -62,7 +62,7 @@ interface SalesQueryContainerInterface
     public function querySalesOrderAddressById($idSalesOrderAddress);
 
     /**
-     * @param $idCustomer
+     * @param int $idCustomer
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
