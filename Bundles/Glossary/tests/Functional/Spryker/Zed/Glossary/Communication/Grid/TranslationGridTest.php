@@ -26,7 +26,7 @@ class TranslationGridTest extends Test
     private $query;
 
     /**
-     * @var request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
 

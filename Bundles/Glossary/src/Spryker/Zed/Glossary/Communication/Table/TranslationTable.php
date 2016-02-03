@@ -82,7 +82,7 @@ class TranslationTable extends AbstractTable
     /**
      * Fetch all existent locales for GlossaryKey
      *
-     * @param $fkGlossaryKey
+     * @param int $fkGlossaryKey
      *
      * @return array
      */

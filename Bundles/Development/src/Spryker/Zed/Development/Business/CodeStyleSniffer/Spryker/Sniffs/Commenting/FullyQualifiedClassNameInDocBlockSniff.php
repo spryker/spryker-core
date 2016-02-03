@@ -9,9 +9,12 @@ namespace Spryker\Sniffs\Commenting;
 class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * @var array
+     */
     public static $whitelistedTypes = [
         'string', 'int', 'integer', 'float', 'bool', 'boolean', 'resource', 'null', 'void', 'callable',
-        'array', 'mixed', 'object', 'false', 'true', 'self', 'static', '$this',
+        'array', 'mixed', 'object', 'false', 'true', 'self', 'static', '$this'
     ];
 
     /**
@@ -81,7 +84,6 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
      * @param int $classNameIndex
      * @param array $classNames
      * @param string $appendix
-     *
      * @return void
      */
     protected function fixClassNames(\PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array $classNames, $appendix)
@@ -153,18 +155,20 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
     /**
      * @param \PHP_CodeSniffer_File $phpCsFile
      * @param string $className
-     *
      * @return string|null
      */
     protected function findInSameNameSpace(\PHP_CodeSniffer_File $phpCsFile, $className)
     {
+        $currentNameSpace = $this->getNamespace($phpCsFile);
+        if (!$currentNameSpace) {
+            return null;
+        }
+
         $file = $phpCsFile->getFilename();
         $dir = dirname($file) . DIRECTORY_SEPARATOR;
         if (!file_exists($dir . $className . '.php')) {
             return null;
         }
-
-        $currentNameSpace = $this->getNamespace($phpCsFile);
 
         return '\\' . $currentNameSpace . '\\' . $className;
     }
@@ -176,28 +180,34 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
      */
     protected function getNamespace(\PHP_CodeSniffer_File $phpCsFile)
     {
-        $className = $this->getClassName($phpCsFile);
-        $classNameParts = explode('\\', $className);
-        array_pop($classNameParts);
+        $tokens = $phpCsFile->getTokens();
 
-        return implode('\\', $classNameParts);
-    }
+        $nsStart = null;
+        foreach ($tokens as $id => $token) {
+            if ($token['code'] !== T_NAMESPACE) {
+                continue;
+            }
 
-    /**
-     * @param \PHP_CodeSniffer_File $phpCsFile
-     *
-     * @return string
-     */
-    protected function getClassName(\PHP_CodeSniffer_File $phpCsFile)
-    {
-        $fileName = $phpCsFile->getFilename();
-        $fileNameParts = explode(DIRECTORY_SEPARATOR, $fileName);
-        $sourceDirectoryPosition = array_search('src', array_values($fileNameParts));
-        $classNameParts = array_slice($fileNameParts, $sourceDirectoryPosition + 1);
-        $className = implode('\\', $classNameParts);
-        $className = str_replace('.php', '', $className);
+            $nsStart = $id + 1;
+            break;
+        }
+        if (!$nsStart) {
+            return '';
+        }
 
-        return $className;
+        $nsEnd = $phpCsFile->findNext(
+            [
+                T_NS_SEPARATOR,
+                T_STRING,
+                T_WHITESPACE,
+            ],
+            $nsStart,
+            null,
+            true
+        );
+
+        $namespace = trim($phpCsFile->getTokensAsString(($nsStart), ($nsEnd - $nsStart)));
+        return $namespace;
     }
 
     /**
@@ -256,7 +266,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
                 }
             }
 
-            $useStatement = '\\' . $useStatement;
+            $useStatement = '\\' . ltrim($useStatement, '\\');
 
             $useStatements[$className] = $useStatement;
         }

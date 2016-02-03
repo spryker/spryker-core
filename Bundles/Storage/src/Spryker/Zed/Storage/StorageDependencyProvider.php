@@ -54,7 +54,7 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */

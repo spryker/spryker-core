@@ -180,8 +180,8 @@ class Api implements ApiInterface
      * Adds a custom metric with the specified name and value, which is of type double. These custom metrics can then
      * be used in custom views in the New Relic User Interface.
      *
-     * @param $metricName
-     * @param $value
+     * @param string $metricName
+     * @param mixed $value
      *
      * @return self
      */
@@ -201,8 +201,8 @@ class Api implements ApiInterface
      * Add a custom parameter to the current web transaction with the specified value. For example, you can add a
      * customer's full name from your customer database.
      *
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      *
      * @return self
      */

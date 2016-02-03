@@ -212,7 +212,7 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
      *
      * @return void
      */

@@ -125,7 +125,7 @@ abstract class AbstractCollector implements ExporterInterface
 
     /**
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
-     * @param $type
+     * @param string $type
      * @param string $timestamp
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface

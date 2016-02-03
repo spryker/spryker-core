@@ -18,8 +18,8 @@ class DiscountCheckoutConnectorFacade extends AbstractFacade
 {
 
     /**
-     * @param $orderTransfer
-     * @param $checkoutRequest
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return void
      */

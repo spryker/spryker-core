@@ -26,7 +26,7 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
     }
 
     /**
-     * @param $localeName
+     * @param string $localeName
      *
      * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
      */

@@ -274,8 +274,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param $idCategory
-     * @param $idParentNode
+     * @param int $idCategory
+     * @param int $idParentNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
      */

@@ -118,7 +118,7 @@ trait Helper
     }
 
     /**
-     * @param $question
+     * @param string $question
      *
      * @throws \RuntimeException
      *
@@ -168,7 +168,7 @@ trait Helper
 
     /**
      * @param string $question
-     * @param null $default
+     * @param string|null $default
      *
      * @return mixed
      */
@@ -183,7 +183,7 @@ trait Helper
     /**
      * @param string $question
      * @param array $options
-     * @param $default
+     * @param string $default
      *
      * @return mixed
      */

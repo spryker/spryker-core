@@ -235,7 +235,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param $exitCode
+     * @param int $exitCode
      *
      * @return self
      */

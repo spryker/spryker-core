@@ -16,7 +16,7 @@ class TouchUpdater implements TouchUpdaterInterface
 
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
-     * @param $idLocale
+     * @param int $idLocale
      *
      * @return void
      */
@@ -36,7 +36,7 @@ class TouchUpdater implements TouchUpdaterInterface
      * @param int $idTouch
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyTouchSearch
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch;
      */
     public function getKeyById($idTouch, LocaleTransfer $locale)
     {

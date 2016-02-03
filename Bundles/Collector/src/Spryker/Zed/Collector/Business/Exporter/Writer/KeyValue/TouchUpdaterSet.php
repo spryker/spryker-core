@@ -43,9 +43,9 @@ class TouchUpdaterSet
     }
 
     /**
-     * @param $key
-     * @param $idTouch
-     * @param null $data
+     * @param string $key
+     * @param int $idTouch
+     * @param array|null $data
      *
      * @return void
      */

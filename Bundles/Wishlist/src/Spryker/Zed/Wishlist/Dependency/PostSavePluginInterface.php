@@ -9,7 +9,7 @@ interface PostSavePluginInterface
 {
 
     /**
-     * @param \ArrayObject||ItemInterface[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      */
     public function trigger(\ArrayObject $items);
 

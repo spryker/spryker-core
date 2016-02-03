@@ -90,7 +90,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
     /**
      * @param \Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController $controller
-     * @param $result
+     * @param \Spryker\Shared\Transfer\TransferInterface $result
      *
      * @return \Spryker\Zed\ZedRequest\Business\Client\Response
      */

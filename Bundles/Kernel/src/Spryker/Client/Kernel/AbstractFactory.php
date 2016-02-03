@@ -26,7 +26,7 @@ abstract class AbstractFactory
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
      *

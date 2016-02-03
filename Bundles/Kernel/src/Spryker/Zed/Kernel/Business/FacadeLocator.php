@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Kernel\Business;
 
 use Spryker\Shared\Kernel\AbstractLocator;
+use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 
 class FacadeLocator extends AbstractLocator

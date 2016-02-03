@@ -101,7 +101,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      *
      * @return string
      */
