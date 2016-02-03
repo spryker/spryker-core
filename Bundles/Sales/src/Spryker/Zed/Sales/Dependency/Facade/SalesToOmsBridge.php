@@ -8,7 +8,6 @@ namespace Spryker\Zed\Sales\Dependency\Facade;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 class SalesToOmsBridge implements SalesToOmsInterface
 {
@@ -78,7 +77,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag)
     {

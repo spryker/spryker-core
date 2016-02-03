@@ -7,16 +7,14 @@
 namespace Spryker\Zed\Auth\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Model\Auth;
 use Spryker\Zed\Auth\Business\Model\PasswordReset;
 use Spryker\Zed\Auth\AuthDependencyProvider;
-use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
 
 /**
- * @method AuthConfig getConfig()
- * @method AuthQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Auth\AuthConfig getConfig()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainer getQueryContainer()
  */
 class AuthBusinessFactory extends AbstractBusinessFactory
 {

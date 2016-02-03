@@ -7,10 +7,9 @@
 namespace Spryker\Zed\Maintenance\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Maintenance\MaintenanceConfig;
 
 /**
- * @method MaintenanceConfig getConfig()
+ * @method \Spryker\Zed\Maintenance\MaintenanceConfig getConfig()
  */
 class MaintenanceCommunicationFactory extends AbstractCommunicationFactory
 {

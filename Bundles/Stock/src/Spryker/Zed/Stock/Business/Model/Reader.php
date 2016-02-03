@@ -10,7 +10,6 @@ use Guzzle\Common\Exception\InvalidArgumentException;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
-use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 class Reader implements ReaderInterface
@@ -73,7 +72,7 @@ class Reader implements ReaderInterface
      *
      * @throws \Guzzle\Common\Exception\InvalidArgumentException
      *
-     * @return SpyStockProduct[]
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
     public function getStocksProduct($sku)
     {

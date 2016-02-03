@@ -6,9 +6,6 @@
 
 namespace Spryker\Sniffs\Factory;
 
-use Symfony\CS\Tokenizer\Token;
-use Symfony\CS\Tokenizer\Tokens;
-
 class CreateVsGetMethodsSniff implements \PHP_CodeSniffer_Sniff
 {
 
@@ -137,7 +134,7 @@ class CreateVsGetMethodsSniff implements \PHP_CodeSniffer_Sniff
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      * @param int $stackPointer
      *
      * @return bool
@@ -159,7 +156,7 @@ class CreateVsGetMethodsSniff implements \PHP_CodeSniffer_Sniff
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      * @param int $stackPointer
      *
      * @return bool
@@ -183,7 +180,7 @@ class CreateVsGetMethodsSniff implements \PHP_CodeSniffer_Sniff
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      * @param int $stackPointer
      *
      * @return bool

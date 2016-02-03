@@ -8,7 +8,6 @@ namespace Unit\Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageMan
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
-use Symfony\Component\Process\Process;
 
 /**
  * @group Spryker

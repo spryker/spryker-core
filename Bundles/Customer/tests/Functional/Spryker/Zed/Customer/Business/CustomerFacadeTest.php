@@ -8,7 +8,6 @@ namespace Functional\Spryker\Zed\Customer\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 
 /**
@@ -28,10 +27,10 @@ class CustomerFacadeTest extends Test
     const TESTER_ADDRESS1 = 'Testerstreet 23';
     const TESTER_ZIP_CODE = '42';
 
-    /** @var AutoCompletion */
+    /** @var \Generated\Zed\Ide\AutoCompletion */
     protected $locator;
 
-    /** @var CustomerFacade */
+    /** @var \Spryker\Zed\Customer\Business\CustomerFacade */
     protected $customerFacade;
 
     /**

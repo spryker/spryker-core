@@ -24,7 +24,7 @@ interface TouchUpdaterInterface
      * @param int $idTouch
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyTouchSearch
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch;
      */
     public function getKeyById($idTouch, LocaleTransfer $locale);
 

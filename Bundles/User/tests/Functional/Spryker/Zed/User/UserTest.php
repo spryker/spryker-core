@@ -47,7 +47,7 @@ class UserTest extends Test
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
@@ -57,7 +57,7 @@ class UserTest extends Test
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */

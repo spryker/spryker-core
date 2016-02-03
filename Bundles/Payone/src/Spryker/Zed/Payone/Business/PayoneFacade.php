@@ -12,13 +12,12 @@ use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method PayoneBusinessFactory getFactory()
+ * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
  */
 class PayoneFacade extends AbstractFacade
 {
@@ -333,7 +332,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
-     * @return PayonePaymentLogTransfer[]
+     * @return \Generated\Shared\Transfer\PayonePaymentLogTransfer[]
      */
     public function getPaymentLogs(ObjectCollection $orders)
     {

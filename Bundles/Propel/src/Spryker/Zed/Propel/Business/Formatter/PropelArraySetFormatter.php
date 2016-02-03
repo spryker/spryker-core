@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Business\Formatter;
 use Propel\Runtime\ActiveQuery\BaseModelCriteria;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
 use Propel\Runtime\Exception\PropelException;
-use Propel\Runtime\Formatter\AbstractFormatter;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 
 class PropelArraySetFormatter extends SimpleArrayFormatter
@@ -22,7 +21,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
      * @param \Propel\Runtime\ActiveQuery\BaseModelCriteria $criteria
      * @param \Propel\Runtime\DataFetcher\DataFetcherInterface $dataFetcher
      *
-     * @return self|AbstractFormatter The current formatter object
+     * @return self|\Propel\Runtime\Formatter\AbstractFormatter The current formatter object
      */
     public function init(BaseModelCriteria $criteria, DataFetcherInterface $dataFetcher = null)
     {

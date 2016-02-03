@@ -7,12 +7,10 @@
 namespace Spryker\Zed\Stock\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
-use Spryker\Zed\Stock\StockConfig;
 
 /**
- * @method StockQueryContainer getQueryContainer()
- * @method StockConfig getConfig()
+ * @method \Spryker\Zed\Stock\Persistence\StockQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Stock\StockConfig getConfig()
  */
 class StockCommunicationFactory extends AbstractCommunicationFactory
 {

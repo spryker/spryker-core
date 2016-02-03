@@ -14,37 +14,32 @@ use Propel\Runtime\Propel;
 use Spryker\Shared\Checkout\CheckoutConstants;
 use Spryker\Shared\Library\Error\ErrorHandler;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
 
     /**
-     * @var CheckoutPreConditionInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
      */
     protected $preConditionStack;
 
     /**
-     * @var CheckoutPreHydrationInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface[]
      */
     protected $preHydrationStack;
 
     /**
-     * @var CheckoutOrderHydrationInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface[]
      */
     protected $orderHydrationStack;
 
     /**
-     * @var CheckoutSaveOrderInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]
      */
     protected $saveOrderStack;
 
     /**
-     * @var CheckoutPostSaveHookInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[]
      */
     protected $postSaveHookStack;
 
@@ -54,11 +49,11 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $omsFacade;
 
     /**
-     * @param CheckoutPreConditionInterface[] $preConditionStack
-     * @param CheckoutPreHydrationInterface[] $preHydrationStack
-     * @param CheckoutOrderHydrationInterface[] $orderHydrationStack
-     * @param CheckoutSaveOrderInterface[] $saveOrderStack
-     * @param CheckoutPostSaveHookInterface[] $postSaveHookStack
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[] $preConditionStack
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface[] $preHydrationStack
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface[] $orderHydrationStack
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[] $saveOrderStack
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[] $postSaveHookStack
      * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface $omsFacade
      */
     public function __construct(

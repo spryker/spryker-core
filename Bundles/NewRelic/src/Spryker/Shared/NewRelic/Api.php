@@ -38,7 +38,7 @@ class Api implements ApiInterface
     /**
      * Report an error at this line of code, with a complete stack trace.
      *
-     * @param $message
+     * @param string $message
      * @param \Exception $e
      *
      * @return self
@@ -60,7 +60,7 @@ class Api implements ApiInterface
      * application name in a file loaded by PHP's auto_prepend_file INI setting. This function returns true if it
      * succeeded or false otherwise.
      *
-     * @param $name
+     * @param string $name
      *
      * @return self
      */
@@ -162,7 +162,7 @@ class Api implements ApiInterface
      * If no argument or true as an argument is given, mark the current transaction as a background job. If false is
      * passed as an argument, mark the transaction as a web application.
      *
-     * @param $flag
+     * @param bool $flag
      *
      * @return self
      */
@@ -180,8 +180,8 @@ class Api implements ApiInterface
      * Adds a custom metric with the specified name and value, which is of type double. These custom metrics can then
      * be used in custom views in the New Relic User Interface.
      *
-     * @param $metricName
-     * @param $value
+     * @param string $metricName
+     * @param mixed $value
      *
      * @return self
      */
@@ -201,8 +201,8 @@ class Api implements ApiInterface
      * Add a custom parameter to the current web transaction with the specified value. For example, you can add a
      * customer's full name from your customer database.
      *
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      *
      * @return self
      */

@@ -66,7 +66,7 @@ class ElasticsearchUpdateWriter implements WriterInterface
     /**
      * @param array $dataSet
      *
-     * @return Document[]
+     * @return \Elastica\Document[]
      */
     protected function createDocuments(array $dataSet)
     {

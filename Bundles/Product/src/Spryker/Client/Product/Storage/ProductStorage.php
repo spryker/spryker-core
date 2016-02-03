@@ -5,9 +5,6 @@
 
 namespace Spryker\Client\Product\Storage;
 
-use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-
 class ProductStorage implements ProductStorageInterface
 {
 

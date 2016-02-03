@@ -8,7 +8,6 @@ namespace Spryker\Zed\Maintenance\Business\Dependency;
 
 use Spryker\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class BundleParser
 {
@@ -80,7 +79,7 @@ class BundleParser
     /**
      * @param $bundle
      *
-     * @return SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     protected function findAllFilesOfBundle($bundle)
     {
@@ -159,7 +158,7 @@ class BundleParser
     /**
      * @param string $bundleName
      *
-     * @return SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     protected function findBundleNamespaceDirectoriesForBundle($bundleName)
     {

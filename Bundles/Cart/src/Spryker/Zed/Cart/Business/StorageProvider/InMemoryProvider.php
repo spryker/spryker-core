@@ -78,7 +78,7 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $cartItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
      *
      * @return array
      */
@@ -96,7 +96,7 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param ItemTransfer[] $existingItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
      * @param int $index
      * @param \Generated\Shared\Transfer\ItemTransfer $item
      *

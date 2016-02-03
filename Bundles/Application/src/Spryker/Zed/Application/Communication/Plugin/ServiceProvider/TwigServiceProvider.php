@@ -8,7 +8,6 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Application\ApplicationConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
@@ -16,17 +15,14 @@ use Spryker\Zed\Application\Business\Model\Twig\RouteResolver;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Library\Twig\Loader\Filesystem;
 use Silex\Application;
-use Spryker\Yves\Application\Application as SprykerApplication;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Spryker\Zed\Application\Business\ApplicationFacade;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 
 /**
- * @method ApplicationFacade getFacade()
- * @method ApplicationCommunicationFactory getFactory()
- * @method ApplicationConfig getConfig()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

@@ -19,17 +19,17 @@ abstract class AbstractGatewayController extends AbstractController
     protected $success = true;
 
     /**
-     * @var Message[]
+     * @var \Spryker\Shared\ZedRequest\Client\Message[]
      */
     private $errorMessages = [];
 
     /**
-     * @var Message[]
+     * @var \Spryker\Shared\ZedRequest\Client\Message[]
      */
     private $infoMessages = [];
 
     /**
-     * @var Message[]
+     * @var \Spryker\Shared\ZedRequest\Client\Message[]
      */
     private $successMessages = [];
 
@@ -112,7 +112,7 @@ abstract class AbstractGatewayController extends AbstractController
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getErrorMessages()
     {
@@ -120,7 +120,7 @@ abstract class AbstractGatewayController extends AbstractController
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getInfoMessages()
     {
@@ -128,7 +128,7 @@ abstract class AbstractGatewayController extends AbstractController
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getSuccessMessages()
     {

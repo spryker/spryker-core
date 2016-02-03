@@ -8,11 +8,10 @@ namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
 /**
- * @method DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisionRulePluginInterface
 {

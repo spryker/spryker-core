@@ -17,17 +17,17 @@ class Installer implements InstallerInterface
 {
 
     /**
-     * @var Group
+     * @var \Spryker\Zed\Acl\Business\Model\Group
      */
     protected $group;
 
     /**
-     * @var Role
+     * @var \Spryker\Zed\Acl\Business\Model\Role
      */
     protected $role;
 
     /**
-     * @var Rule
+     * @var \Spryker\Zed\Acl\Business\Model\Rule
      */
     protected $rule;
 
@@ -42,9 +42,9 @@ class Installer implements InstallerInterface
     protected $config;
 
     /**
-     * @param GroupInterface $group
-     * @param RoleInterface $role
-     * @param RuleInterface $rule
+     * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
+     * @param \Spryker\Zed\Acl\Business\Model\RoleInterface $role
+     * @param \Spryker\Zed\Acl\Business\Model\RuleInterface $rule
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
      * @param \Spryker\Zed\Acl\AclConfig $settings
      */

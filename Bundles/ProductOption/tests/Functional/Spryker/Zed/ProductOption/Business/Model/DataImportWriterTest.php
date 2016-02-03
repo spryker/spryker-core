@@ -7,7 +7,6 @@
 namespace Functional\Spryker\Zed\ProductOption\Business\Model;
 
 use Codeception\TestCase\Test;
-use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -29,7 +28,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
  * @group ProductOption
  * @group DataImportWriterTest
  *
- * @method ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
  */
 class DataImportWriterTest extends Test
 {

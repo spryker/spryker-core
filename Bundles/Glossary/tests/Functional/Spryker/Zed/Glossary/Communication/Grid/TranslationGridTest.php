@@ -8,7 +8,6 @@ namespace Functional\Spryker\Zed\Glossary\Communication\Grid;
 use Codeception\TestCase\Test;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
-use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,7 +26,7 @@ class TranslationGridTest extends Test
     private $query;
 
     /**
-     * @var request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
 

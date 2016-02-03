@@ -16,17 +16,17 @@ abstract class AbstractEventJournal implements EventJournalInterface
 {
 
     /**
-     * @var DataCollectorInterface[]
+     * @var \Spryker\Shared\EventJournal\Model\Collector\DataCollectorInterface[]
      */
     private $dataCollectors = [];
 
     /**
-     * @var WriterInterface[]
+     * @var \Spryker\Shared\EventJournal\Model\Writer\WriterInterface[]
      */
     private $eventWriters = [];
 
     /**
-     * @var FilterInterface[]
+     * @var \Spryker\Shared\EventJournal\Model\Filter\FilterInterface[]
      */
     private $eventFilters = [];
 
@@ -87,7 +87,7 @@ abstract class AbstractEventJournal implements EventJournalInterface
     }
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return void
      */
@@ -99,7 +99,7 @@ abstract class AbstractEventJournal implements EventJournalInterface
     }
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return void
      */
@@ -121,7 +121,7 @@ abstract class AbstractEventJournal implements EventJournalInterface
     }
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return void
      */
@@ -133,7 +133,7 @@ abstract class AbstractEventJournal implements EventJournalInterface
     }
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return void
      */

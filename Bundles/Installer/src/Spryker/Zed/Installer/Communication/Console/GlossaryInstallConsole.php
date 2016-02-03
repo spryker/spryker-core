@@ -6,13 +6,11 @@
 namespace Spryker\Zed\Installer\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
-use Spryker\Zed\Installer\Business\InstallerFacade;
-use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method InstallerFacade getFacade()
+ * @method \Spryker\Zed\Installer\Business\InstallerFacade getFacade()
  */
 class GlossaryInstallConsole extends Console
 {
@@ -37,7 +35,7 @@ class GlossaryInstallConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var GlossaryInstaller $glossaryInstaller */
+        /** @var \Spryker\Zed\Installer\Business\Model\GlossaryInstaller $glossaryInstaller */
         $glossaryInstaller = $this->getFacade()->getGlossaryInstaller();
 
         $messenger = $this->getMessenger();

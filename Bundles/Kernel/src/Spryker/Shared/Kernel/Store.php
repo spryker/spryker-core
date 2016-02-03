@@ -15,7 +15,7 @@ class Store
     const APPLICATION_ZED = 'ZED';
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected static $instance;
 
@@ -81,7 +81,7 @@ class Store
     protected static $defaultStore;
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     public static function getInstance()
     {

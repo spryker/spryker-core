@@ -6,15 +6,12 @@
 namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory;
-use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method GlossaryFacade getFacade()
- * @method GlossaryQueryContainerInterface getQueryContainer()
- * @method GlossaryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {

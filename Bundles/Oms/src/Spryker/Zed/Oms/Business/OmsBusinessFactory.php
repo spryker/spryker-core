@@ -8,7 +8,6 @@ namespace Spryker\Zed\Oms\Business;
 
 use Spryker\Tool\Graph\Graph;
 use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Tool\GraphPhpDocumentor\PhpDocumentorGraph;
 use Spryker\Zed\Oms\Business\Process\ProcessSelector;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Process\Process;
@@ -25,13 +24,11 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
-use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\OmsDependencyProvider;
-use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 /**
- * @method OmsConfig getConfig()
- * @method OmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Oms\OmsConfig getConfig()
+ * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  */
 class OmsBusinessFactory extends AbstractBusinessFactory
 {

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 
 /**
- * @method PriceBusinessFactory getFactory()
+ * @method \Spryker\Zed\Price\Business\PriceBusinessFactory getFactory()
  */
 class PriceFacade extends AbstractFacade
 {

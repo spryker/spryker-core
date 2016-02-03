@@ -29,19 +29,15 @@ use Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Discount\Business\DecisionRule\Voucher;
 use Spryker\Zed\Discount\Business\Writer\VoucherCodesWriter;
-use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Spryker\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
 use Spryker\Zed\Discount\Business\Model\Discount;
 use Spryker\Zed\Discount\Business\Model\VoucherEngine;
-use Spryker\Zed\Discount\Business\Model\CalculatorInterface;
-use Spryker\Zed\Discount\Business\Collector\CollectorInterface;
 use Spryker\Zed\Discount\Business\Model\DecisionRuleEngine;
 
 /**
- * @method DiscountConfig getConfig()
- * @method DiscountQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
  */
 class DiscountBusinessFactory extends AbstractBusinessFactory
 {
@@ -105,7 +101,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getAvailableCalculatorPlugins() instead.
      *
-     * @return CalculatorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\CalculatorInterface[]
      */
     public function createAvailableCalculatorPlugins()
     {
@@ -115,7 +111,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CalculatorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\CalculatorInterface[]
      */
     public function getAvailableCalculatorPlugins()
     {
@@ -125,7 +121,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getAvailableCollectorPlugins() instead.
      *
-     * @return CollectorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Collector\CollectorInterface[]
      */
     public function createAvailableCollectorPlugins()
     {
@@ -135,7 +131,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CollectorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Collector\CollectorInterface[]
      */
     public function getAvailableCollectorPlugins()
     {

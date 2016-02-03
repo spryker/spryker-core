@@ -10,7 +10,7 @@ use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method SearchBusinessFactory getFactory()
+ * @method \Spryker\Zed\Search\Business\SearchBusinessFactory getFactory()
  */
 class SearchFacade extends AbstractFacade
 {

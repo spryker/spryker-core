@@ -7,13 +7,12 @@
 namespace Spryker\Zed\Maintenance\Business\Dependency;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class Manager
 {
 
     /**
-     * @var BundleParser
+     * @var \Spryker\Zed\Maintenance\Business\Dependency\BundleParser
      */
     protected $bundleParser;
 
@@ -23,7 +22,7 @@ class Manager
     protected $bundleDirectory;
 
     /**
-     * @param BundleParser $bundleParser
+     * @param \Spryker\Zed\Maintenance\Business\Dependency\BundleParser $bundleParser
      * @param string $bundleDirectory
      */
     public function __construct(BundleParser $bundleParser, $bundleDirectory)
@@ -97,7 +96,7 @@ class Manager
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     protected function collectCoreBundles()
     {

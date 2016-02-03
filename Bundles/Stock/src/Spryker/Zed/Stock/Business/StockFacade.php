@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method StockBusinessFactory getFactory()
+ * @method \Spryker\Zed\Stock\Business\StockBusinessFactory getFactory()
  */
 class StockFacade extends AbstractFacade
 {

@@ -19,14 +19,14 @@ interface ProcessInterface
     public function draw($highlightState = null, $format = null, $fontSize = null);
 
     /**
-     * @param ProcessInterface[] $subProcesses
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $subProcesses
      *
      * @return void
      */
     public function setSubProcesses($subProcesses);
 
     /**
-     * @return ProcessInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getSubProcesses();
 
@@ -36,7 +36,7 @@ interface ProcessInterface
     public function hasSubProcesses();
 
     /**
-     * @param ProcessInterface $subProcess
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $subProcess
      *
      * @return void
      */
@@ -67,14 +67,14 @@ interface ProcessInterface
     public function getName();
 
     /**
-     * @param StateInterface[] $states
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      *
      * @return void
      */
     public function setStates($states);
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @return void
      */
@@ -83,7 +83,7 @@ interface ProcessInterface
     /**
      * @param string $stateId
      *
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     public function getState($stateId);
 
@@ -99,12 +99,12 @@ interface ProcessInterface
      *
      * @throws \Exception
      *
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     public function getStateFromAllProcesses($stateId);
 
     /**
-     * @return StateInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     public function getStates();
 
@@ -114,21 +114,21 @@ interface ProcessInterface
     public function hasStates();
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      *
      * @return void
      */
     public function addTransition(TransitionInterface $transition);
 
     /**
-     * @param TransitionInterface[] $transitions
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface[] $transitions
      *
      * @return void
      */
     public function setTransitions($transitions);
 
     /**
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getTransitions();
 
@@ -138,37 +138,37 @@ interface ProcessInterface
     public function hasTransitions();
 
     /**
-     * @return StateInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     public function getAllStates();
 
     /**
-     * @return StateInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     public function getAllReservedStates();
 
     /**
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getAllTransitions();
 
     /**
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getAllTransitionsWithoutEvent();
 
     /**
-     * @return EventInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getManualEvents();
 
     /**
-     * @return EventInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getManualEventsBySource();
 
     /**
-     * @return ProcessInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getAllProcesses();
 

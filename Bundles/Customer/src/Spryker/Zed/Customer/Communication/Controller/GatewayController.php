@@ -6,18 +6,15 @@
 
 namespace Spryker\Zed\Customer\Communication\Controller;
 
-use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
-use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method CustomerFacade getFacade()
- * @method CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

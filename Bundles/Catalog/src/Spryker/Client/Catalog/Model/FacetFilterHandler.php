@@ -21,13 +21,13 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
     protected $nestedFilterBuilder;
 
     /**
-     * @var FacetConfig
+     * @var \Spryker\Client\Catalog\Model\FacetConfig
      */
     protected $facetConfig;
 
     /**
      * @param \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface $nestedFilterBuilder
-     * @param FacetConfig $facetConfig
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
      */
     public function __construct(
         NestedFilterBuilderInterface $nestedFilterBuilder,

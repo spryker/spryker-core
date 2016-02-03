@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method GlossaryBusinessFactory getFactory()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryBusinessFactory getFactory()
  */
 class GlossaryFacade extends AbstractFacade
 {

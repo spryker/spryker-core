@@ -20,8 +20,6 @@ use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Zed\Discount\Business\Collector\CollectorInterface;
-use Spryker\Zed\Discount\Business\Model\CalculatorInterface;
 
 class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInterface
 {
@@ -38,7 +36,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     }
 
     /**
-     * @return CalculatorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\CalculatorInterface[]
      */
     public function getAvailableCalculatorPlugins()
     {
@@ -49,7 +47,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     }
 
     /**
-     * @return CollectorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Collector\CollectorInterface[]
      */
     public function getAvailableCollectorPlugins()
     {

@@ -11,7 +11,6 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
@@ -90,7 +89,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
-     * @param DateTime $now
+     * @param \DateTime $now
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -103,7 +102,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
-     * @param StateInterface[] $states
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
      *
@@ -130,7 +129,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
-     * @param StateInterface[] $states
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
      *

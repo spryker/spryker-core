@@ -84,7 +84,7 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomers();
 
     /**
-     * @param $idCustomer
+     * @param int $idCustomer
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */

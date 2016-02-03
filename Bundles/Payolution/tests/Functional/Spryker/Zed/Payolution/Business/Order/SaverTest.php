@@ -18,7 +18,6 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Spryker\Zed\Payolution\Business\Order\Saver;
 use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -60,7 +59,7 @@ class SaverTest extends Test
 
         $paymentTransfer = $orderTransfer->getPayolutionPayment();
         $addressTransfer = $paymentTransfer->getAddress();
-        /** @var SpyPaymentPayolution $paymentEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution $paymentEntity */
         $paymentEntity = SpyPaymentPayolutionQuery::create()->findOneByFkSalesOrder($orderTransfer->getIdSalesOrder());
         $this->assertEquals($addressTransfer->getCity(), $paymentEntity->getCity());
         $this->assertEquals($addressTransfer->getIso2Code(), $paymentEntity->getCountryIso2Code());

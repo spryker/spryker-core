@@ -8,8 +8,6 @@ namespace Spryker\Zed\Oms;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -43,7 +41,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return ConditionInterface[]
+     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface[]
      */
     protected function getConditionPlugins(Container $container)
     {
@@ -55,7 +53,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return CommandInterface[]
+     * @return \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface[]
      */
     protected function getCommandPlugins(Container $container)
     {

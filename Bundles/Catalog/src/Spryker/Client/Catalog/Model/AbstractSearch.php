@@ -32,7 +32,7 @@ abstract class AbstractSearch
     protected $currentPage;
 
     /**
-     * @var FacetConfig
+     * @var \Spryker\Client\Catalog\Model\FacetConfig
      */
     protected $facetConfig;
 
@@ -52,7 +52,7 @@ abstract class AbstractSearch
     protected $facetAggregationBuilder;
 
     /**
-     * @var FacetFilterHandlerInterface
+     * @var \Spryker\Client\Catalog\Model\FacetFilterHandlerInterface
      */
     protected $facetFilterHandler;
 
@@ -67,7 +67,7 @@ abstract class AbstractSearch
     protected $rangeExtractor;
 
     /**
-     * @var CatalogInterface
+     * @var \Spryker\Client\Catalog\Model\CatalogInterface
      */
     protected $catalogModel;
 
@@ -90,13 +90,13 @@ abstract class AbstractSearch
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param FacetConfig $facetConfig
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
      * @param \Elastica\Index $searchIndex
      * @param \Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface $facetAggregation
-     * @param FacetFilterHandlerInterface $facetFilterHandler
+     * @param \Spryker\Client\Catalog\Model\FacetFilterHandlerInterface $facetFilterHandler
      * @param \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface $facetExtractor
      * @param \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface $rangeExtractor
-     * @param CatalogInterface $catalogModel
+     * @param \Spryker\Client\Catalog\Model\CatalogInterface $catalogModel
      */
     public function __construct(
         Request $request,

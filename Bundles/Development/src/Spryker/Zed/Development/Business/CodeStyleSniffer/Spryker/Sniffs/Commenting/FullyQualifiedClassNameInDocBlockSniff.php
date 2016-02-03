@@ -10,11 +10,22 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
 {
 
     /**
+     * @var array
+     */
+    public static $whitelistedTypes = [
+        'string', 'int', 'integer', 'float', 'bool', 'boolean', 'resource', 'null', 'void', 'callable',
+        'array', 'mixed', 'object', 'false', 'true', 'self', 'static', '$this',
+    ];
+
+    /**
      * @return array
      */
     public function register()
     {
         return [
+            T_CLASS,
+            T_INTERFACE,
+            T_TRAIT,
             T_FUNCTION,
             T_VARIABLE,
         ];
@@ -42,7 +53,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
             if ($tokens[$i]['type'] !== 'T_DOC_COMMENT_TAG') {
                 continue;
             }
-            if (!in_array($tokens[$i]['content'], ['@return', '@param', '@throws', '@var'])) {
+            if (!in_array($tokens[$i]['content'], ['@return', '@param', '@throws', '@var', '@method'])) {
                 continue;
             }
 
@@ -54,13 +65,15 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
 
             $content = $tokens[$classNameIndex]['content'];
 
-            // Fix a Sniffer bug with param having the variable also part of the content
             $appendix = '';
-            if ($tokens[$i]['content'] === '@param') {
-                $spaceIndex = strpos($content, ' ');
-
+            $spaceIndex = strpos($content, ' ');
+            if ($spaceIndex) {
                 $appendix = substr($content, $spaceIndex);
                 $content = substr($content, 0, $spaceIndex);
+            }
+
+            if (empty($content)) {
+                continue;
             }
 
             $classNames = explode('|', $content);
@@ -73,6 +86,7 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
      * @param int $classNameIndex
      * @param array $classNames
      * @param string $appendix
+     *
      * @return void
      */
     protected function fixClassNames(\PHP_CodeSniffer_File $phpCsFile, $classNameIndex, array $classNames, $appendix)
@@ -83,13 +97,24 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
                 continue;
             }
 
-            $useStatement = $this->findUseStatementForClassName($phpCsFile, $className);
-            if (!$useStatement) {
+            $arrayOfObject = false;
+            if (substr($className, -2) === '[]') {
+                $arrayOfObject = true;
+                $className = substr($className, 0, -2);
+            }
+
+            if (in_array($className, self::$whitelistedTypes)) {
                 continue;
             }
 
-            $classNames[$key] = $useStatement;
-            $result[$className] = $useStatement;
+            $useStatement = $this->findUseStatementForClassName($phpCsFile, $className);
+            if (!$useStatement) {
+                $phpCsFile->addError('Invalid class name "' . $className . '"', $classNameIndex);
+                continue;
+            }
+
+            $classNames[$key] = $useStatement . ($arrayOfObject ? '[]' : '');
+            $result[$className . ($arrayOfObject ? '[]' : '')] = $classNames[$key];
         }
 
         if (!$result) {
@@ -118,12 +143,76 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
     protected function findUseStatementForClassName(\PHP_CodeSniffer_File $phpCsFile, $className)
     {
         $useStatements = $this->parseUseStatements($phpCsFile);
-
         if (!isset($useStatements[$className])) {
+            $useStatement = $this->findInSameNameSpace($phpCsFile, $className);
+            if ($useStatement) {
+                return $useStatement;
+            }
+
             return null;
         }
 
         return $useStatements[$className];
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     * @param string $className
+     *
+     * @return string|null
+     */
+    protected function findInSameNameSpace(\PHP_CodeSniffer_File $phpCsFile, $className)
+    {
+        $currentNameSpace = $this->getNamespace($phpCsFile);
+        if (!$currentNameSpace) {
+            return null;
+        }
+
+        $file = $phpCsFile->getFilename();
+        $dir = dirname($file) . DIRECTORY_SEPARATOR;
+        if (!file_exists($dir . $className . '.php')) {
+            return null;
+        }
+
+        return '\\' . $currentNameSpace . '\\' . $className;
+    }
+
+    /**
+     * @param \PHP_CodeSniffer_File $phpCsFile
+     *
+     * @return string
+     */
+    protected function getNamespace(\PHP_CodeSniffer_File $phpCsFile)
+    {
+        $tokens = $phpCsFile->getTokens();
+
+        $nsStart = null;
+        foreach ($tokens as $id => $token) {
+            if ($token['code'] !== T_NAMESPACE) {
+                continue;
+            }
+
+            $nsStart = $id + 1;
+            break;
+        }
+        if (!$nsStart) {
+            return '';
+        }
+
+        $nsEnd = $phpCsFile->findNext(
+            [
+                T_NS_SEPARATOR,
+                T_STRING,
+                T_WHITESPACE,
+            ],
+            $nsStart,
+            null,
+            true
+        );
+
+        $namespace = trim($phpCsFile->getTokensAsString(($nsStart), ($nsEnd - $nsStart)));
+
+        return $namespace;
     }
 
     /**
@@ -175,11 +264,14 @@ class FullyQualifiedClassNameInDocBlockSniff implements \PHP_CodeSniffer_Sniff
             if (strpos($useStatement, ' as ') !== false) {
                 list($useStatement, $className) = explode(' as ', $useStatement);
             } else {
-                $lastSeparator = strrpos($useStatement, '\\');
-                $className = substr($useStatement, $lastSeparator + 1);
+                $className = $useStatement;
+                if (strpos($useStatement, '\\') !== false) {
+                    $lastSeparator = strrpos($useStatement, '\\');
+                    $className = substr($useStatement, $lastSeparator + 1);
+                }
             }
 
-            $useStatement = '\\' . $useStatement;
+            $useStatement = '\\' . ltrim($useStatement, '\\');
 
             $useStatements[$className] = $useStatement;
         }

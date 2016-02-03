@@ -16,7 +16,7 @@ class StorageFactory extends AbstractFactory
 {
 
     /**
-     * @return StorageClientInterface
+     * @return \Spryker\Client\Storage\StorageClientInterface
      */
     public function createService()
     {

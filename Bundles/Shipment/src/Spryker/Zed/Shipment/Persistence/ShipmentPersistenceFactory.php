@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Shipment\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Shipment\ShipmentConfig;
 
 /**
- * @method ShipmentConfig getConfig()
- * @method ShipmentQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer getQueryContainer()
  */
 class ShipmentPersistenceFactory extends AbstractPersistenceFactory
 {

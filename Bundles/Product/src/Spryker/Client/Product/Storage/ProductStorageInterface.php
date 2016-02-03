@@ -9,7 +9,7 @@ interface ProductStorageInterface
 {
 
     /**
-     * @param $idProductAbstract
+     * @param int $idProductAbstract
      *
      * @return mixed
      */

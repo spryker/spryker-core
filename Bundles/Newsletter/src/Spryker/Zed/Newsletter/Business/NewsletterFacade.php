@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method NewsletterBusinessFactory getFactory()
+ * @method \Spryker\Zed\Newsletter\Business\NewsletterBusinessFactory getFactory()
  */
 class NewsletterFacade extends AbstractFacade
 {

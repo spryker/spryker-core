@@ -7,7 +7,6 @@
 namespace Spryker\Tool\GraphPhpDocumentor\Adapter;
 
 use phpDocumentor\GraphViz\Edge;
-use phpDocumentor\GraphViz\Graph;
 use phpDocumentor\GraphViz\Node;
 use Spryker\Tool\Graph\GraphAdapterInterface;
 use Spryker\Tool\GraphPhpDocumentor\PhpDocumentorGraph;

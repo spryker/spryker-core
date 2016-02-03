@@ -95,6 +95,7 @@ trait AdapterTrait
     }
 
     /**
+     * @return void
      */
     abstract public function connect();
 

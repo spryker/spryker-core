@@ -16,12 +16,12 @@ class DateFormatter
     const DATE_FORMAT_DATETIME = 'datetime';
 
     /**
-     * @var Context
+     * @var \Spryker\Shared\Library\Context
      */
     private $context;
 
     /**
-     * @param Context $context
+     * @param \Spryker\Shared\Library\Context $context
      */
     public function __construct(Context $context)
     {

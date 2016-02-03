@@ -7,10 +7,9 @@
 namespace Spryker\Zed\CalculationCheckoutConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\CalculationCheckoutConnector\CalculationCheckoutConnectorConfig;
 
 /**
- * @method CalculationCheckoutConnectorConfig getConfig()
+ * @method \Spryker\Zed\CalculationCheckoutConnector\CalculationCheckoutConnectorConfig getConfig()
  */
 class CalculationCheckoutConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

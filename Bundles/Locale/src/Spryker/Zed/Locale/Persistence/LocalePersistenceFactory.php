@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Locale\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Locale\LocaleConfig;
 
 /**
- * @method LocaleConfig getConfig()
- * @method LocaleQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
+ * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainer getQueryContainer()
  */
 class LocalePersistenceFactory extends AbstractPersistenceFactory
 {

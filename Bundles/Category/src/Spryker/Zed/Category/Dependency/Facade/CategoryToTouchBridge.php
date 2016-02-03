@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Category\Dependency\Facade;
 
-use Generated\Shared\Transfer\TouchTransfer;
 use Spryker\Zed\Touch\Business\TouchFacade;
 
 class CategoryToTouchBridge implements CategoryToTouchInterface
@@ -73,7 +72,7 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
     /**
      * @param string $itemType
      *
-     * @return TouchTransfer[]
+     * @return \Generated\Shared\Transfer\TouchTransfer[]
      */
     public function getItemsByType($itemType)
     {

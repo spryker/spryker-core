@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Cms\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Cms\CmsConfig;
 
 /**
- * @method CmsConfig getConfig()
- * @method CmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Cms\CmsConfig getConfig()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
  */
 class CmsPersistenceFactory extends AbstractPersistenceFactory
 {

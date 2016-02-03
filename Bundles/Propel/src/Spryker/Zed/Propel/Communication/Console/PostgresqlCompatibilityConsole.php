@@ -11,10 +11,9 @@ use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Spryker\Zed\Propel\Business\PropelFacade;
 
 /**
- * @method PropelFacade getFacade()
+ * @method \Spryker\Zed\Propel\Business\PropelFacade getFacade()
  */
 class PostgresqlCompatibilityConsole extends Console
 {

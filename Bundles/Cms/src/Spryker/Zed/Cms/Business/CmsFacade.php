@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CmsBusinessFactory getFactory()
+ * @method \Spryker\Zed\Cms\Business\CmsBusinessFactory getFactory()
  */
 class CmsFacade extends AbstractFacade
 {
@@ -335,7 +335,7 @@ class CmsFacade extends AbstractFacade
     /**
      * @param int $idCategoryNode
      *
-     * @return CmsBlockTransfer[]
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
     public function getCmsBlocksByIdCategoryNode($idCategoryNode)
     {

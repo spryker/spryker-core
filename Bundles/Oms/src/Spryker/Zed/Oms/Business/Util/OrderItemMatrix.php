@@ -6,9 +6,6 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Library\Sanitize\Html;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -34,7 +31,7 @@ class OrderItemMatrix
     protected $processes;
 
     /**
-     * @var SpySalesOrderItem[]
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     protected $orderItems;
 
@@ -113,7 +110,7 @@ class OrderItemMatrix
     }
 
     /**
-     * @param SpySalesOrderItem[] $orderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param int $idProcess
      * @param int $idState
      *
@@ -158,7 +155,7 @@ class OrderItemMatrix
     }
 
     /**
-     * @return SpyOmsOrderProcess[]
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess[]
      */
     protected function getActiveProcesses()
     {
@@ -200,7 +197,7 @@ class OrderItemMatrix
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|SpySalesOrderItem[] $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      *
      * @return array
      */

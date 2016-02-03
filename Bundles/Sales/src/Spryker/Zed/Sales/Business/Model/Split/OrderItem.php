@@ -35,14 +35,14 @@ class OrderItem implements ItemInterface
     protected $salesQueryContainer;
 
     /**
-     * @var CalculatorInterface
+     * @var \Spryker\Zed\Sales\Business\Model\Split\CalculatorInterface
      */
     protected $calculator;
 
     /**
      * @param \Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface $validator
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
-     * @param CalculatorInterface $splitCalculator
+     * @param \Spryker\Zed\Sales\Business\Model\Split\CalculatorInterface $splitCalculator
      */
     public function __construct(
         ValidatorInterface $validator,

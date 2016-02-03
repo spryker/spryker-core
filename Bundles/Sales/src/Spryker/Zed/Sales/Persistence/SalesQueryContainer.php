@@ -94,7 +94,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @param $idOrderItem
+     * @param int $idOrderItem
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -130,7 +130,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @param $idCustomer
+     * @param int $idCustomer
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery

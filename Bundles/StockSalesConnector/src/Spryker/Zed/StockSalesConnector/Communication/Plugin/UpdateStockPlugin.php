@@ -8,10 +8,9 @@ namespace Spryker\Zed\StockSalesConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\StockProductTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\StockSalesConnector\Business\StockSalesConnectorCommunicationFactory;
 
 /**
- * @method StockSalesConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\StockSalesConnector\Business\StockSalesConnectorCommunicationFactory getFactory()
  */
 class UpdateStockPlugin extends AbstractPlugin
 {

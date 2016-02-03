@@ -7,10 +7,9 @@
 namespace Spryker\Zed\Cache\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Cache\CacheConfig;
 
 /**
- * @method CacheConfig getConfig()
+ * @method \Spryker\Zed\Cache\CacheConfig getConfig()
  */
 class CacheCommunicationFactory extends AbstractCommunicationFactory
 {

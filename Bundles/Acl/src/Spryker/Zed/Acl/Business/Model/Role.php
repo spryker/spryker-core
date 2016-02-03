@@ -25,12 +25,12 @@ class Role implements RoleInterface
     protected $queryContainer;
 
     /**
-     * @var GroupInterface
+     * @var \Spryker\Zed\Acl\Business\Model\GroupInterface
      */
     protected $group;
 
     /**
-     * @param GroupInterface $group
+     * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
      */
     public function __construct(GroupInterface $group, AclQueryContainer $queryContainer)

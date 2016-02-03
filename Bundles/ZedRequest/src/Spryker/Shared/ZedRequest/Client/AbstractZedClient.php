@@ -12,24 +12,24 @@ abstract class AbstractZedClient
 {
 
     /**
-     * @var HttpClientInterface
+     * @var \Spryker\Shared\ZedRequest\Client\HttpClientInterface
      */
     private $httpClient = null;
 
     /**
-     * @var ResponseInterface
+     * @var \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     private static $lastResponse = null;
 
     /**
-     * @var TransferInterface[]|\Closure[]
+     * @var \Spryker\Shared\Transfer\TransferInterface[]|\Closure[]
      */
     private $metaTransfers = [
 
     ];
 
     /**
-     * @param HttpClientInterface $httpClient
+     * @param \Spryker\Shared\ZedRequest\Client\HttpClientInterface $httpClient
      */
     public function __construct(HttpClientInterface $httpClient)
     {
@@ -50,7 +50,7 @@ abstract class AbstractZedClient
     }
 
     /**
-     * @return TransferInterface[]
+     * @return \Spryker\Shared\Transfer\TransferInterface[]
      */
     private function prepareAndGetMetaTransfers()
     {
@@ -88,7 +88,7 @@ abstract class AbstractZedClient
     /**
      * @throws \BadMethodCallException
      *
-     * @return ResponseInterface
+     * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     public function getLastResponse()
     {

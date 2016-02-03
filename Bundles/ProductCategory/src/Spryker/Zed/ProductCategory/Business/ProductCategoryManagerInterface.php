@@ -10,8 +10,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
 interface ProductCategoryManagerInterface
 {
@@ -43,14 +41,14 @@ interface ProductCategoryManagerInterface
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyProductCategoryQuery[]
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery[]
      */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale);
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return SpyProductCategory[]
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
      */
     public function getCategoriesByProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
 
@@ -81,7 +79,7 @@ interface ProductCategoryManagerInterface
     public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign);
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param array $productOrderList
      *
      * @throws \Propel\Runtime\Exception\PropelException

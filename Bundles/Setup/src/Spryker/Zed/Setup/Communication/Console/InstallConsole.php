@@ -7,12 +7,11 @@
 namespace Spryker\Zed\Setup\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
-use Spryker\Zed\Setup\Communication\SetupCommunicationFactory;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method SetupCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class InstallConsole extends Console
 {

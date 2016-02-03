@@ -63,21 +63,21 @@ interface EventInterface
     public function getName();
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      *
      * @return void
      */
     public function addTransition(TransitionInterface $transition);
 
     /**
-     * @param StateInterface $sourceState
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $sourceState
      *
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getTransitionsBySource(StateInterface $sourceState);
 
     /**
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getTransitions();
 

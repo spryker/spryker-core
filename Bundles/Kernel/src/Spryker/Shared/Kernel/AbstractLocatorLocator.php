@@ -14,7 +14,7 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
 {
 
     /**
-     * @var BundleProxy
+     * @var \Spryker\Shared\Kernel\BundleProxy
      */
     private $bundleProxy;
 
@@ -29,7 +29,7 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
     private static $instance;
 
     /**
-     * @return AbstractLocatorLocator|static
+     * @return \Spryker\Shared\Kernel\AbstractLocatorLocator|static
      */
     public static function getInstance()
     {
@@ -55,7 +55,7 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
      * @param string $bundle
      * @param array $arguments
      *
-     * @return BundleProxy
+     * @return \Spryker\Shared\Kernel\BundleProxy
      */
     public function __call($bundle, array $arguments = null)
     {
@@ -67,7 +67,7 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
     }
 
     /**
-     * @return BundleProxy
+     * @return \Spryker\Shared\Kernel\BundleProxy
      */
     abstract protected function getBundleProxy();
 

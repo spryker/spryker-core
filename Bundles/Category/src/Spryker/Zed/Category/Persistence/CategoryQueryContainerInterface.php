@@ -147,7 +147,7 @@ interface CategoryQueryContainerInterface
     public function queryCategoryById($idCategory);
 
     /**
-     * @param $idNode
+     * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */

@@ -8,7 +8,7 @@ namespace Spryker\Client\Glossary;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method GlossaryFactory getFactory()
+ * @method \Spryker\Client\Glossary\GlossaryFactory getFactory()
  */
 class GlossaryClient extends AbstractClient implements GlossaryClientInterface
 {
@@ -26,7 +26,7 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
     }
 
     /**
-     * @param $localeName
+     * @param string $localeName
      *
      * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
      */

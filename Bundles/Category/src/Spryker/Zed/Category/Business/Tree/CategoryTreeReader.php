@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
@@ -51,7 +50,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getChildren($idNode, LocaleTransfer $locale)
     {
@@ -275,8 +274,8 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param $idCategory
-     * @param $idParentNode
+     * @param int $idCategory
+     * @param int $idParentNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
      */
@@ -288,7 +287,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @return SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getRootNodes()
     {
@@ -300,7 +299,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getAllNodesByIdCategory($idCategory)
     {
@@ -312,7 +311,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getMainNodesByIdCategory($idCategory)
     {
@@ -324,7 +323,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getNotMainNodesByIdCategory($idCategory)
     {
@@ -337,7 +336,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param int $idParentNode
      * @param int $idLocale
      *
-     * @return SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getCategoryNodesWithOrder($idParentNode, $idLocale)
     {

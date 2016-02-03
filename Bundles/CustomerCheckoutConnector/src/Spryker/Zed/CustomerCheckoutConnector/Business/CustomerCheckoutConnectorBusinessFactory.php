@@ -7,17 +7,16 @@
 namespace Spryker\Zed\CustomerCheckoutConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorConfig;
 use Spryker\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorDependencyProvider;
 
 /**
- * @method CustomerCheckoutConnectorConfig getConfig()
+ * @method \Spryker\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorConfig getConfig()
  */
 class CustomerCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CustomerOrderHydratorInterface
+     * @return \Spryker\Zed\CustomerCheckoutConnector\Business\CustomerOrderHydratorInterface
      */
     public function createCustomerOrderHydrator()
     {
@@ -27,7 +26,7 @@ class CustomerCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CustomerOrderSaverInterface
+     * @return \Spryker\Zed\CustomerCheckoutConnector\Business\CustomerOrderSaverInterface
      */
     public function createCustomerOrderSaver()
     {
@@ -37,7 +36,7 @@ class CustomerCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PreConditionCheckerInterface
+     * @return \Spryker\Zed\CustomerCheckoutConnector\Business\PreConditionCheckerInterface
      */
     public function createPreConditionChecker()
     {

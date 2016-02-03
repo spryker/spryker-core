@@ -52,10 +52,9 @@ use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\Validator\Constraints\Uuid;
 use Symfony\Component\Validator\Constraints\Valid;
-use Spryker\Zed\Gui\Communication\GuiCommunicationFactory;
 
 /**
- * @method GuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  */
 class ConstraintsPlugin extends AbstractPlugin
 {

@@ -202,7 +202,7 @@ class OptionPriceToPayTest extends \PHPUnit_Framework_TestCase
     /**
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
-     * @return ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getItems(CalculableInterface $calculableContainer)
     {

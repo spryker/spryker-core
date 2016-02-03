@@ -10,12 +10,12 @@ class DependencyFilter implements DependencyFilterCompositeInterface
 {
 
     /**
-     * @var DependencyFilterInterface[]
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\DependencyFilterInterface[]
      */
     private $dependencyFilter = [];
 
     /**
-     * @param DependencyFilterInterface $dependencyFilter
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\DependencyFilterInterface $dependencyFilter
      *
      * @return self
      */

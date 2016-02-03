@@ -205,7 +205,7 @@ class Environment
     /**
      * We set LC_NUMERIC hard to en_US so numeric conversion is always the same to avoid decimal point problems
      *
-     * @param $currentLocale
+     * @param string $currentLocale
      *
      * @return void
      */

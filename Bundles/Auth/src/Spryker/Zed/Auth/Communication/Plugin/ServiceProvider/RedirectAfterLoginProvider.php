@@ -10,8 +10,6 @@ use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Auth\Business\AuthFacade;
-use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -19,8 +17,8 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @method AuthCommunicationFactory getFactory()
- * @method AuthFacade getFacade()
+ * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Auth\Business\AuthFacade getFacade()
  */
 class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProviderInterface
 {

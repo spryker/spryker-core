@@ -9,23 +9,20 @@ namespace Spryker\Zed\Payolution\Communication\Plugin\Oms\Command;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use Spryker\Zed\Payolution\Business\PayolutionFacade;
-use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 
 /**
- * @method PayolutionFacade getFacade()
- * @method PayolutionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory getFactory()
  */
 class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
     /**
-     * @param SpySalesOrderItem[] $orderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *

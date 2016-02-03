@@ -7,13 +7,12 @@
 namespace Spryker\Zed\Development\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
-use Spryker\Zed\Development\Business\DevelopmentFacade;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method DevelopmentFacade getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
  */
 class CodeCreateConsole extends Console
 {

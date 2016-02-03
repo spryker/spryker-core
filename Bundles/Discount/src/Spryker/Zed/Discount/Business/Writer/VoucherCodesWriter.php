@@ -17,37 +17,37 @@ class VoucherCodesWriter extends AbstractWriter
     const ID_DISCOUNT_DECISION_RULE = 'id_discount_decision_rule';
 
     /**
-     * @var DiscountWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountWriter
      */
     protected $discountWriter;
 
     /**
-     * @var DiscountVoucherPoolWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter
      */
     protected $discountVoucherPoolWriter;
 
     /**
-     * @var DiscountVoucherPoolCategoryWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter
      */
     protected $discountVoucherPoolCategoryWriter;
 
     /**
-     * @var DiscountDecisionRuleWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter
      */
     protected $discountDecisionRuleWriter;
 
     /**
-     * @var DiscountCollectorWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter
      */
     private $discountCollectorWriter;
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
-     * @param DiscountWriter $discountWriter
-     * @param DiscountVoucherPoolWriter $discountVoucherPoolWriter
-     * @param DiscountVoucherPoolCategoryWriter $discountVoucherPoolCategoryWriter
-     * @param DiscountDecisionRuleWriter $discountDecisionRuleWriter
-     * @param DiscountCollectorWriter $discountCollectorWriter
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountWriter $discountWriter
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter $discountVoucherPoolWriter
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter $discountVoucherPoolCategoryWriter
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter $discountDecisionRuleWriter
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter $discountCollectorWriter
      */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,

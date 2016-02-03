@@ -9,7 +9,7 @@ namespace Spryker\Zed\TaxProductConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method TaxProductConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorBusinessFactory getFactory()
  */
 class TaxProductConnectorFacade extends AbstractFacade
 {

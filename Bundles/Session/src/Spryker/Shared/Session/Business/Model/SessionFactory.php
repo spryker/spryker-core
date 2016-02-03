@@ -94,7 +94,7 @@ abstract class SessionFactory
     abstract protected function getSessionLifetime();
 
     /**
-     * @param $handler
+     * @param \SessionHandlerInterface $handler
      *
      * @return void
      */

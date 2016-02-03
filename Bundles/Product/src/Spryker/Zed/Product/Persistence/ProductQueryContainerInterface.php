@@ -29,7 +29,7 @@ interface ProductQueryContainerInterface
     public function queryProductWithAttributesAndProductAbstract($concreteSku, $idLocale);
 
     /**
-     * @param $idProductAbstract
+     * @param int $idProductAbstract
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */

@@ -11,15 +11,13 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
-use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 
 /**
- * @method ProductCategoryQueryContainer getQueryContainer()
- * @method ProductCategoryConfig getConfig()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
  */
 class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 {

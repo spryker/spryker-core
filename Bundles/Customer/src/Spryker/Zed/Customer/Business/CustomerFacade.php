@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CustomerBusinessFactory getFactory()
+ * @method \Spryker\Zed\Customer\Business\CustomerBusinessFactory getFactory()
  */
 class CustomerFacade extends AbstractFacade
 {

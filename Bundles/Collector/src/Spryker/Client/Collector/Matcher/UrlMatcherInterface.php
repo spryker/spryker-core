@@ -12,6 +12,8 @@ interface UrlMatcherInterface
     /**
      * @param string $url
      * @param string $localeName
+     *
+     * @return array
      */
     public function matchUrl($url, $localeName);
 

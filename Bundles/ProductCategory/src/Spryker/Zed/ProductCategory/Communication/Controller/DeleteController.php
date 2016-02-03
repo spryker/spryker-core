@@ -7,17 +7,14 @@
 namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
-use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
-use Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Form;
 
 /**
- * @method ProductCategoryFacade getFacade()
- * @method ProductCategoryCommunicationFactory getFactory()
- * @method ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
+ * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
  */
 class DeleteController extends EditController
 {

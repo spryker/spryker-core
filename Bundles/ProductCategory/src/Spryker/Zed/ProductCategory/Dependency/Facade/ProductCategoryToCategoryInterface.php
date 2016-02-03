@@ -96,7 +96,7 @@ interface ProductCategoryToCategoryInterface
     /**
      * @param int $idCategory
      *
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getNotMainNodesByIdCategory($idCategory);
 

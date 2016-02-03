@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 /**
- * @method DiscountCalculationConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorBusinessFactory getFactory()
  */
 class DiscountCalculationConnectorFacade extends AbstractFacade
 {

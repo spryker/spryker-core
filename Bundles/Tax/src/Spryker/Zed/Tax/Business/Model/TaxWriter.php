@@ -10,8 +10,6 @@ use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
-use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
-use Spryker\Zed\Tax\TaxConfig;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
@@ -31,13 +29,13 @@ class TaxWriter implements TaxWriterInterface
     protected $taxSettings;
 
     /**
-     * @var TaxChangePluginInterface[]
+     * @var \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[]
      */
     protected $taxChangePlugins;
 
     /**
      * @param \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface $queryContainer
-     * @param TaxChangePluginInterface[] $taxChangePlugins
+     * @param \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[] $taxChangePlugins
      */
     public function __construct(
         TaxQueryContainerInterface $queryContainer,

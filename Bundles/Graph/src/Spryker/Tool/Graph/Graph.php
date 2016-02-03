@@ -10,12 +10,12 @@ class Graph implements GraphInterface
 {
 
     /**
-     * @var GraphAdapterInterface
+     * @var \Spryker\Tool\Graph\GraphAdapterInterface
      */
     private $adapter;
 
     /**
-     * @param GraphAdapterInterface $adapter
+     * @param \Spryker\Tool\Graph\GraphAdapterInterface $adapter
      * @param string $name
      * @param array $attributes
      * @param bool $directed

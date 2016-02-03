@@ -7,10 +7,9 @@
 namespace Spryker\Zed\Heartbeat\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Heartbeat\HeartbeatConfig;
 
 /**
- * @method HeartbeatConfig getConfig()
+ * @method \Spryker\Zed\Heartbeat\HeartbeatConfig getConfig()
  */
 class HeartbeatCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -10,12 +10,12 @@ class Calculator implements CalculatorInterface
 {
 
     /**
-     * @var Reader
+     * @var \Spryker\Zed\Stock\Business\Model\Reader
      */
     protected $readerInterface;
 
     /**
-     * @param ReaderInterface $readerInterface
+     * @param \Spryker\Zed\Stock\Business\Model\ReaderInterface $readerInterface
      */
     public function __construct(ReaderInterface $readerInterface)
     {

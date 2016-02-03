@@ -13,13 +13,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use Spryker\Zed\Payone\Business\PayoneFacade;
-use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
- * @method PayoneCommunicationFactory getFactory()
- * @method PayoneFacade getFacade()
+ * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
  */
 class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
 {

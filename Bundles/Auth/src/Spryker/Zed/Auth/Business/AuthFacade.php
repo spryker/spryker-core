@@ -9,7 +9,7 @@ namespace Spryker\Zed\Auth\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method AuthBusinessFactory getFactory()
+ * @method \Spryker\Zed\Auth\Business\AuthBusinessFactory getFactory()
  */
 class AuthFacade extends AbstractFacade
 {

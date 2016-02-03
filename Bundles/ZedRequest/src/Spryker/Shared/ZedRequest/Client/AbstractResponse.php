@@ -54,7 +54,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getErrorMessages()
     {
@@ -93,7 +93,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param Message $errorMessage
+     * @param \Spryker\Shared\ZedRequest\Client\Message $errorMessage
      *
      * @return self
      */
@@ -105,7 +105,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getInfoMessages()
     {
@@ -130,7 +130,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param Message $message
+     * @param \Spryker\Shared\ZedRequest\Client\Message $message
      *
      * @return self
      */
@@ -156,7 +156,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getSuccessMessages()
     {
@@ -195,7 +195,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param Message $successMessage
+     * @param \Spryker\Shared\ZedRequest\Client\Message $successMessage
      *
      * @return self
      */

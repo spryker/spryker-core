@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method PayolutionBusinessFactory getFactory()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionBusinessFactory getFactory()
  */
 class PayolutionFacade extends AbstractFacade
 {

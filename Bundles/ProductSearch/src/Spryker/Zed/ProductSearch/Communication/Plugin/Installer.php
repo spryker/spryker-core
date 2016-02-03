@@ -7,12 +7,10 @@
 namespace Spryker\Zed\ProductSearch\Communication\Plugin;
 
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
-use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
-use Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory;
 
 /**
- * @method ProductSearchCommunicationFactory getFactory()
- * @method ProductSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin
 {

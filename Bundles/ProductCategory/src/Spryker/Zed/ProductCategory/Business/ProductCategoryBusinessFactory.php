@@ -8,18 +8,16 @@ namespace Spryker\Zed\ProductCategory\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
-use Spryker\Zed\ProductCategory\ProductCategoryConfig;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 
 /**
- * @method ProductCategoryConfig getConfig()
- * @method ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
  */
 class ProductCategoryBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return ProductCategoryManagerInterface
+     * @return \Spryker\Zed\ProductCategory\Business\ProductCategoryManagerInterface
      */
     public function createProductCategoryManager()
     {
@@ -157,7 +155,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransferGeneratorInterface
+     * @return \Spryker\Zed\ProductCategory\Business\TransferGeneratorInterface
      */
     public function createProductCategoryTransferGenerator()
     {

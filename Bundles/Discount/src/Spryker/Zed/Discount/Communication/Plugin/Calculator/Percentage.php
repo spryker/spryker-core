@@ -7,17 +7,15 @@
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 /**
- * @method DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class Percentage extends AbstractCalculator
 {
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
      * @param float $number
      *
      * @return float

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 use Spryker\Shared\Library\Communication\Response;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
-use Spryker\Shared\ZedRequest\Client\RequestInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -42,12 +41,12 @@ class TransferServer
     protected $response;
 
     /**
-     * @var Repeater
+     * @var \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater
      */
     private $repeater;
 
     /**
-     * @param Repeater $repeater
+     * @param \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater $repeater
      */
     private function __construct(Repeater $repeater)
     {
@@ -55,7 +54,7 @@ class TransferServer
     }
 
     /**
-     * @param Repeater $repeater
+     * @param \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater $repeater
      *
      * @return self
      */

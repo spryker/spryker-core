@@ -9,10 +9,9 @@ namespace Spryker\Zed\Wishlist\Communication\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use Spryker\Zed\Wishlist\Business\WishlistFacade;
 
 /**
- * @method WishlistFacade getFacade()
+ * @method \Spryker\Zed\Wishlist\Business\WishlistFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

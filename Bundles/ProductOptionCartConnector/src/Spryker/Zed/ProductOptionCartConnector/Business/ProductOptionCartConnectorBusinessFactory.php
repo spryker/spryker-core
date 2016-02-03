@@ -9,11 +9,10 @@ use Spryker\Zed\ProductOptionCartConnector\Business\Manager\ProductOptionManager
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyProvider;
-use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorConfig;
 
 /**
- * @method ProductOptionCartConnectorBusinessFactory getFactory()
- * @method ProductOptionCartConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorConfig getConfig()
  */
 class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
 {

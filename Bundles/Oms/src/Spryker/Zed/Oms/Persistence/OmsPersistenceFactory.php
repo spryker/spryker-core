@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Oms\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Oms\OmsConfig;
 
 /**
- * @method OmsConfig getConfig()
- * @method OmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Oms\OmsConfig getConfig()
+ * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainer getQueryContainer()
  */
 class OmsPersistenceFactory extends AbstractPersistenceFactory
 {

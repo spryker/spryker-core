@@ -12,7 +12,7 @@ class InstalledPackageCollector implements InstalledPackageCollectorInterface
 {
 
     /**
-     * @var InstalledPackageFinderInterface[]
+     * @var \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface[]
      */
     private $installedPackageFinder;
 

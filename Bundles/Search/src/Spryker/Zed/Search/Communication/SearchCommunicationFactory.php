@@ -8,11 +8,10 @@ namespace Spryker\Zed\Search\Communication;
 
 use Spryker\Zed\Search\Communication\Table\SearchTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Search\SearchConfig;
 use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
- * @method SearchConfig getConfig()
+ * @method \Spryker\Zed\Search\SearchConfig getConfig()
  */
 class SearchCommunicationFactory extends AbstractCommunicationFactory
 {

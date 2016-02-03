@@ -5,9 +5,6 @@
 
 namespace Spryker\Client\Glossary\Storage;
 
-use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-
 class GlossaryStorage implements GlossaryStorageInterface
 {
 
@@ -44,7 +41,7 @@ class GlossaryStorage implements GlossaryStorageInterface
     }
 
     /**
-     * @param $keyName
+     * @param string $keyName
      * @param array $parameters
      *
      * @return string

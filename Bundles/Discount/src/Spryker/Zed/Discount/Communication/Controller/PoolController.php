@@ -12,16 +12,13 @@ use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
-use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method DiscountCommunicationFactory getFactory()
- * @method DiscountQueryContainer getQueryContainer()
- * @method DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class PoolController extends AbstractController
 {

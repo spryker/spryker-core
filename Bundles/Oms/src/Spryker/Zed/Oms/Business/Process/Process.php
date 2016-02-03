@@ -15,12 +15,12 @@ class Process implements ProcessInterface
     protected $name;
 
     /**
-     * @var StateInterface[]
+     * @var \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     protected $states = [];
 
     /**
-     * @var TransitionInterface[]
+     * @var \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     protected $transitions = [];
 
@@ -40,7 +40,7 @@ class Process implements ProcessInterface
     protected $drawer;
 
     /**
-     * @var ProcessInterface[]
+     * @var \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     protected $subProcesses = [];
 
@@ -65,7 +65,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param ProcessInterface[] $subProcesses
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $subProcesses
      *
      * @return void
      */
@@ -75,7 +75,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return ProcessInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getSubProcesses()
     {
@@ -91,7 +91,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param ProcessInterface $subProcess
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $subProcess
      *
      * @return void
      */
@@ -137,7 +137,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param StateInterface[] $states
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      *
      * @return void
      */
@@ -147,7 +147,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @return void
      */
@@ -159,7 +159,7 @@ class Process implements ProcessInterface
     /**
      * @param string $stateId
      *
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     public function getState($stateId)
     {
@@ -179,9 +179,9 @@ class Process implements ProcessInterface
     /**
      * @param string $stateId
      *
-     * @throws Exception
+     * @throws \Exception
      *
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     public function getStateFromAllProcesses($stateId)
     {
@@ -195,7 +195,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return StateInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     public function getStates()
     {
@@ -211,7 +211,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      *
      * @return void
      */
@@ -221,7 +221,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param TransitionInterface[] $transitions
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface[] $transitions
      *
      * @return void
      */
@@ -231,7 +231,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getTransitions()
     {
@@ -247,7 +247,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return StateInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     public function getAllStates()
     {
@@ -267,7 +267,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return StateInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     public function getAllReservedStates()
     {
@@ -283,7 +283,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getAllTransitions()
     {
@@ -301,7 +301,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getAllTransitionsWithoutEvent()
     {
@@ -317,7 +317,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return EventInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getManualEvents()
     {
@@ -336,7 +336,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return EventInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getManualEventsBySource()
     {
@@ -360,7 +360,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return ProcessInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getAllProcesses()
     {

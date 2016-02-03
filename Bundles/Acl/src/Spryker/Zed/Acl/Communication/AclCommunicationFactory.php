@@ -9,7 +9,6 @@ namespace Spryker\Zed\Acl\Communication;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Acl\Communication\Table\GroupTable;
-use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Acl\Communication\Form\RoleForm;
@@ -18,15 +17,12 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Acl\Communication\Table\GroupUsersTable;
 use Spryker\Zed\Acl\Communication\Table\RoleTable;
 use Spryker\Zed\Acl\Communication\Table\RulesetTable;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method AclQueryContainer getQueryContainer()
- * @method AclConfig getConfig()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\AclConfig getConfig()
  */
 class AclCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -64,7 +60,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getGroupRoleListByGroupId() instead.
      *
-     * @param $idAclGroup
+     * @param int $idAclGroup
      *
      * @return array
      */

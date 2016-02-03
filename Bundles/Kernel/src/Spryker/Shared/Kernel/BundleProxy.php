@@ -7,7 +7,6 @@
 namespace Spryker\Shared\Kernel;
 
 use Spryker\Shared\Kernel\Locator\LocatorInterface;
-use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class BundleProxy
 {
@@ -20,12 +19,12 @@ class BundleProxy
     private $bundle;
 
     /**
-     * @var LocatorInterface[]
+     * @var \Spryker\Shared\Kernel\Locator\LocatorInterface[]
      */
     private $locator;
 
     /**
-     * @var LocatorMatcherInterface[]
+     * @var \Spryker\Shared\Kernel\Locator\LocatorMatcherInterface[]
      */
     private $locatorMatcher;
 

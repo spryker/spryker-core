@@ -13,7 +13,6 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
 use Spryker\Zed\Url\Persistence\UrlQueryContainer;
-use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 /**
  * @group Spryker

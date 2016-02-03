@@ -9,11 +9,10 @@ namespace Spryker\Zed\Calculation\Business;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Calculation\CalculationConfig;
 
 /**
- * @method CalculationBusinessFactory getFactory()
- * @method CalculationConfig getConfig()
+ * @method \Spryker\Zed\Calculation\Business\CalculationBusinessFactory getFactory()
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
 class CalculationFacade extends AbstractFacade
 {

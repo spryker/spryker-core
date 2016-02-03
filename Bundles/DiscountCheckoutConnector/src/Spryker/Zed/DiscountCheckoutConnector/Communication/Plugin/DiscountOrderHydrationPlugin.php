@@ -10,12 +10,10 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
-use Spryker\Zed\DiscountCheckoutConnector\Business\DiscountCheckoutConnectorFacade;
-use Spryker\Zed\DiscountCheckoutConnector\Communication\DiscountCheckoutConnectorCommunicationFactory;
 
 /**
- * @method DiscountCheckoutConnectorFacade getFacade()
- * @method DiscountCheckoutConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DiscountCheckoutConnector\Business\DiscountCheckoutConnectorFacade getFacade()
+ * @method \Spryker\Zed\DiscountCheckoutConnector\Communication\DiscountCheckoutConnectorCommunicationFactory getFactory()
  */
 class DiscountOrderHydrationPlugin extends AbstractPlugin implements CheckoutOrderHydrationInterface
 {

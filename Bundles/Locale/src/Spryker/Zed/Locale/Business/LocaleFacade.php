@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method LocaleBusinessFactory getFactory()
+ * @method \Spryker\Zed\Locale\Business\LocaleBusinessFactory getFactory()
  */
 class LocaleFacade extends AbstractFacade
 {

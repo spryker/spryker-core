@@ -9,16 +9,14 @@ namespace Spryker\Zed\Sales\Communication;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
-use Spryker\Zed\Sales\SalesConfig;
 
 /**
- * @method SalesQueryContainerInterface getQueryContainer()
- * @method SalesConfig getConfig()
+ * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  */
 class SalesCommunicationFactory extends AbstractCommunicationFactory
 {

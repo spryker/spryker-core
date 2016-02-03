@@ -9,7 +9,6 @@ namespace Spryker\Zed\Installer;
 use Spryker\Zed\Installer\Dependency\Facade\InstallerToGlossaryBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 
 class InstallerDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -44,7 +43,7 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Overwrite on project level.
      *
-     * @return AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
      */
     public function getInstallers()
     {
@@ -54,7 +53,7 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Overwrite on project level.
      *
-     * @return AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
      */
     public function getDemoDataInstallers()
     {

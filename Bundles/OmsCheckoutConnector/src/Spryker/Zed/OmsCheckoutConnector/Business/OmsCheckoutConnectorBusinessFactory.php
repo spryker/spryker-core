@@ -7,16 +7,15 @@
 namespace Spryker\Zed\OmsCheckoutConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\OmsCheckoutConnector\OmsCheckoutConnectorConfig;
 
 /**
- * @method OmsCheckoutConnectorConfig getConfig()
+ * @method \Spryker\Zed\OmsCheckoutConnector\OmsCheckoutConnectorConfig getConfig()
  */
 class OmsCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return OmsOrderHydratorInterface
+     * @return \Spryker\Zed\OmsCheckoutConnector\Business\OmsOrderHydratorInterface
      */
     public function createOmsOrderHydrator()
     {

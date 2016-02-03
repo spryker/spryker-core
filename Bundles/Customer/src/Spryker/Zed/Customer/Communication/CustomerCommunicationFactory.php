@@ -8,16 +8,14 @@ namespace Spryker\Zed\Customer\Communication;
 
 use Spryker\Zed\Customer\Communication\Form\AddressForm;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
 use Spryker\Zed\Customer\Communication\Table\CustomerTable;
-use Spryker\Zed\Customer\CustomerConfig;
 
 /**
- * @method CustomerQueryContainer getQueryContainer()
- * @method CustomerConfig getConfig()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
  */
 class CustomerCommunicationFactory extends AbstractCommunicationFactory
 {

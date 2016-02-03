@@ -5,15 +5,11 @@ namespace Spryker\Zed\Refund\Business\Model;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
-use Generated\Shared\Transfer\RefundExpenseTransfer;
-use Generated\Shared\Transfer\RefundOrderItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use Orm\Zed\Refund\Persistence\SpyRefund;
-use Orm\Zed\Sales\Persistence\SpySalesExpense;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 
 class Refund
@@ -79,7 +75,7 @@ class Refund
         $this->salesQueryContainer->getConnection()->commit();
 
         $orderItemsIds = [];
-        /** @var ItemTransfer $processedOrderItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $processedOrderItem */
         foreach ($processedOrderItems as $processedOrderItem) {
             $orderItemsIds[] = $processedOrderItem->getIdSalesOrderItem();
         }
@@ -95,7 +91,7 @@ class Refund
     }
 
     /**
-     * @param \ArrayObject|RefundOrderItemTransfer[] $orderItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\RefundOrderItemTransfer[] $orderItems
      *
      * @return \ArrayObject
      */
@@ -123,7 +119,7 @@ class Refund
     }
 
     /**
-     * @param \ArrayObject|RefundExpenseTransfer[] $expenses
+     * @param \ArrayObject|\Generated\Shared\Transfer\RefundExpenseTransfer[] $expenses
      *
      * @return \ArrayObject
      */
@@ -163,7 +159,7 @@ class Refund
     /**
      * @param int $idOrder
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getRefundableItems($idOrder)
     {
@@ -177,7 +173,7 @@ class Refund
     /**
      * @param int $idOrder
      *
-     * @return SpySalesExpense[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense[]
      */
     public function getRefundableExpenses($idOrder)
     {

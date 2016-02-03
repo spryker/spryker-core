@@ -58,7 +58,7 @@ class Backtrace
     }
 
     /**
-     * @param $backtraceFile
+     * @param string $backtraceFile
      *
      * @return string
      */

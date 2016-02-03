@@ -16,11 +16,10 @@ use Spryker\Zed\Cart\Business\Operator\IncreaseOperator;
 use Spryker\Zed\Cart\Business\Operator\AddOperator;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Cart\Business\Operator\OperatorInterface;
-use Spryker\Zed\Cart\CartConfig;
 use Spryker\Zed\Cart\CartDependencyProvider;
 
 /**
- * @method CartConfig getConfig()
+ * @method \Spryker\Zed\Cart\CartConfig getConfig()
  */
 class CartBusinessFactory extends AbstractBusinessFactory
 {

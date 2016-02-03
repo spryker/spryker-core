@@ -143,7 +143,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     public function testCalculateTaxOnExpenses()
     {
         $caslculableContainer = $this->getOrderTransfer();
-        /** @var OrderTransfer $orderTransfer */
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
         $orderTransfer = $caslculableContainer->getCalculableObject();
         $itemTransfer = $this->getItemTransfer();
         $orderExpenseTransfer = $this->getExpenseTransfer();
@@ -198,7 +198,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     public function testCalculateTaxOnProductOption()
     {
         $caslculableContainer = $this->getOrderTransfer();
-        /** @var OrderTransfer $orderTransfer */
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
         $orderTransfer = $caslculableContainer->getCalculableObject();
         $itemTransfer = $this->getItemTransfer();
         $optionTransfer = $this->getProductOptionTransfer();

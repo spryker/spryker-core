@@ -10,14 +10,12 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Application\Business\ApplicationFacade;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method ApplicationFacade getFacade()
- * @method ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

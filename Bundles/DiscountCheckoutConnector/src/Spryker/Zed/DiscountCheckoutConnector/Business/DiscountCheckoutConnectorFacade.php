@@ -12,14 +12,14 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method DiscountCheckoutConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\DiscountCheckoutConnector\Business\DiscountCheckoutConnectorBusinessFactory getFactory()
  */
 class DiscountCheckoutConnectorFacade extends AbstractFacade
 {
 
     /**
-     * @param $orderTransfer
-     * @param $checkoutRequest
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return void
      */

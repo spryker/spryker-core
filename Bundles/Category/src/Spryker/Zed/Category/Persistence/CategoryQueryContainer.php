@@ -464,7 +464,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param mixed $isMain true|false|null
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -492,7 +492,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
-     * @param $idNode
+     * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */

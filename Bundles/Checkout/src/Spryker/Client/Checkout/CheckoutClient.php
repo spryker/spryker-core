@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method CheckoutFactory getFactory()
+ * @method \Spryker\Client\Checkout\CheckoutFactory getFactory()
  */
 class CheckoutClient extends AbstractClient implements CheckoutClientInterface
 {

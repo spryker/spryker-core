@@ -9,7 +9,7 @@ namespace Spryker\Zed\OmsDiscountConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method OmsDiscountConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\OmsDiscountConnector\Business\OmsDiscountConnectorBusinessFactory getFactory()
  */
 class OmsDiscountConnectorFacade extends AbstractFacade
 {

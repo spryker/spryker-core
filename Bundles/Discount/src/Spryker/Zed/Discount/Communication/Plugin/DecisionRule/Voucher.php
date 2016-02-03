@@ -8,12 +8,11 @@ namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use Spryker\Zed\Kernel\Business\ModelResult;
 
 /**
- * @method DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePluginInterface
 {

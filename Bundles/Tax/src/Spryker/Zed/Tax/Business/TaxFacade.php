@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 
 /**
- * @method TaxBusinessFactory getFactory()
+ * @method \Spryker\Zed\Tax\Business\TaxBusinessFactory getFactory()
  */
 class TaxFacade extends AbstractFacade
 {

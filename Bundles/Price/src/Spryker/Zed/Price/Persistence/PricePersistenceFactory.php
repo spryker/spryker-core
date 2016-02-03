@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Price\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Price\PriceConfig;
 
 /**
- * @method PriceConfig getConfig()
- * @method PriceQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Price\PriceConfig getConfig()
+ * @method \Spryker\Zed\Price\Persistence\PriceQueryContainer getQueryContainer()
  */
 class PricePersistenceFactory extends AbstractPersistenceFactory
 {

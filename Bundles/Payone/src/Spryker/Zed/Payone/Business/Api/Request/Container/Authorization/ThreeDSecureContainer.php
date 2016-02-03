@@ -86,7 +86,7 @@ class ThreeDSecureContainer extends AbstractContainer
     }
 
     /**
-     * @param RedirectContainer $redirect
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
      *
      * @return void
      */
@@ -96,7 +96,7 @@ class ThreeDSecureContainer extends AbstractContainer
     }
 
     /**
-     * @return RedirectContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     public function getRedirect()
     {

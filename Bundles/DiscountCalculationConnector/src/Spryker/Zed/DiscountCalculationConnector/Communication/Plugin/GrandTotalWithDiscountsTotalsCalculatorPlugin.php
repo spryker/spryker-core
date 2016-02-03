@@ -9,13 +9,11 @@ namespace Spryker\Zed\DiscountCalculationConnector\Communication\Plugin;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
-use Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade;
-use Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method DiscountCalculationConnectorCommunicationFactory getFactory()
- * @method DiscountCalculationConnectorFacade getFacade()
+ * @method \Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade getFacade()
  */
 class GrandTotalWithDiscountsTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculatorPluginInterface
 {

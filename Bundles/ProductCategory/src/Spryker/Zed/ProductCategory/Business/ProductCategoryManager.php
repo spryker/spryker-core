@@ -157,7 +157,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyProductCategory[]
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
      */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale)
     {
@@ -170,7 +170,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return SpyProductCategory[]
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
      */
     public function getCategoriesByProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
@@ -326,7 +326,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -443,7 +443,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      *
      * @return void
      */

@@ -32,7 +32,7 @@ class BatchResult implements BatchResultInterface
     protected $successCount = 0;
 
     /**
-     * @var array|FailedResult[]
+     * @var array|\Spryker\Zed\Collector\Business\Model\FailedResult[]
      */
     protected $failed = [];
 
@@ -111,7 +111,7 @@ class BatchResult implements BatchResultInterface
     }
 
     /**
-     * @param FailedResultInterface $failed
+     * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failed
      *
      * @return void
      */

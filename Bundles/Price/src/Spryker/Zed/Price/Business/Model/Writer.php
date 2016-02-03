@@ -25,7 +25,7 @@ class Writer implements WriterInterface
     protected $queryContainer;
 
     /**
-     * @var ReaderInterface
+     * @var \Spryker\Zed\Price\Business\Model\ReaderInterface
      */
     protected $reader;
 
@@ -41,7 +41,7 @@ class Writer implements WriterInterface
 
     /**
      * @param \Spryker\Zed\Price\Persistence\PriceQueryContainer $queryContainer
-     * @param ReaderInterface $reader
+     * @param \Spryker\Zed\Price\Business\Model\ReaderInterface $reader
      * @param \Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface $touchFacade
      * @param \Spryker\Zed\Price\PriceConfig $priceSettings
      */

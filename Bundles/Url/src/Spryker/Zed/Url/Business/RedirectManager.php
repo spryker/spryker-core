@@ -20,7 +20,7 @@ class RedirectManager implements RedirectManagerInterface
     const ITEM_TYPE_REDIRECT = 'redirect';
 
     /**
-     * @var UrlManagerInterface
+     * @var \Spryker\Zed\Url\Business\UrlManagerInterface
      */
     protected $urlManager;
 
@@ -41,7 +41,7 @@ class RedirectManager implements RedirectManagerInterface
 
     /**
      * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
-     * @param UrlManagerInterface $urlManager
+     * @param \Spryker\Zed\Url\Business\UrlManagerInterface $urlManager
      * @param \Spryker\Zed\Url\Dependency\UrlToTouchInterface $touchFacade
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */

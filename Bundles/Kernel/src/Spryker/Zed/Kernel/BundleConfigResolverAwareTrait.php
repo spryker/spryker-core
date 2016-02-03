@@ -12,12 +12,12 @@ trait BundleConfigResolverAwareTrait
 {
 
     /**
-     * @var AbstractBundleConfig
+     * @var \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     private $config;
 
     /**
-     * @param AbstractBundleConfig $config
+     * @param \Spryker\Zed\Kernel\AbstractBundleConfig $config
      *
      * @return self
      */
@@ -31,7 +31,7 @@ trait BundleConfigResolverAwareTrait
     /**
      * @TODO this method should not be public @see spryker/spryker#940
      *
-     * @return AbstractBundleConfig
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     public function getConfig()
     {
@@ -45,7 +45,7 @@ trait BundleConfigResolverAwareTrait
     /**
      * @throws \Exception
      *
-     * @return AbstractBundleConfig
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     private function resolveBundleConfig()
     {

@@ -12,7 +12,7 @@ class Event implements EventInterface
     protected $id;
 
     /**
-     * @var TransitionInterface[]
+     * @var \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     protected $transitions;
 
@@ -117,7 +117,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      *
      * @return void
      */
@@ -127,9 +127,9 @@ class Event implements EventInterface
     }
 
     /**
-     * @param StateInterface $sourceState
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $sourceState
      *
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getTransitionsBySource(StateInterface $sourceState)
     {
@@ -145,7 +145,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @return TransitionInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
      */
     public function getTransitions()
     {

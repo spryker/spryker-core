@@ -6,10 +6,7 @@
 
 namespace Spryker\Zed\Mail\Business;
 
-use Generated\Shared\Transfer\AttachmentTransfer;
-use Generated\Shared\Transfer\MailHeaderTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\SendMailResponsesTransfer;
 use Generated\Shared\Transfer\SendMailResponseTransfer;
 
@@ -27,13 +24,13 @@ class MandrillMailSender implements MailSenderInterface
     protected $mandrill;
 
     /**
-     * @var InclusionHandlerInterface
+     * @var \Spryker\Zed\Mail\Business\InclusionHandlerInterface
      */
     protected $inclusionHandler;
 
     /**
      * @param \Mandrill $mandrill
-     * @param InclusionHandlerInterface $inclusionHandler
+     * @param \Spryker\Zed\Mail\Business\InclusionHandlerInterface $inclusionHandler
      */
     public function __construct(\Mandrill $mandrill, InclusionHandlerInterface $inclusionHandler)
     {
@@ -172,7 +169,7 @@ class MandrillMailSender implements MailSenderInterface
     {
         $result = [];
 
-        /** @var MailRecipientTransfer $recipient */
+        /** @var \Generated\Shared\Transfer\MailRecipientTransfer $recipient */
         foreach ($recipients as $recipient) {
             $result[] = [
                 'email' => $recipient->getEmail(),
@@ -193,7 +190,7 @@ class MandrillMailSender implements MailSenderInterface
     {
         $result = [];
 
-        /** @var MailHeaderTransfer $header */
+        /** @var \Generated\Shared\Transfer\MailHeaderTransfer $header */
         foreach ($headers as $header) {
             $result[$header->getKey()] = $header->getValue();
         }
@@ -210,7 +207,7 @@ class MandrillMailSender implements MailSenderInterface
     {
         $result = [];
 
-        /** @var MailRecipientTransfer $recipient */
+        /** @var \Generated\Shared\Transfer\MailRecipientTransfer $recipient */
         foreach ($recipients as $recipient) {
             if (empty($recipient->getMergeVars())) {
                 continue;
@@ -233,7 +230,7 @@ class MandrillMailSender implements MailSenderInterface
     protected function extractRecipientMetadata(\ArrayObject $recipientMetadata)
     {
         $result = [];
-        /** @var MailRecipientTransfer $individualData */
+        /** @var \Generated\Shared\Transfer\MailRecipientTransfer $individualData */
         foreach ($recipientMetadata as $individualData) {
             if (empty($individualData->getMetadata())) {
                 continue;
@@ -256,7 +253,7 @@ class MandrillMailSender implements MailSenderInterface
     protected function extractFiles(\ArrayObject $fileInfo)
     {
         $result = [];
-        /** @var AttachmentTransfer $file */
+        /** @var \Generated\Shared\Transfer\AttachmentTransfer $file */
         foreach ($fileInfo as $file) {
             $result[] = [
                 'type' => $this->inclusionHandler->guessType($file->getFileName()),

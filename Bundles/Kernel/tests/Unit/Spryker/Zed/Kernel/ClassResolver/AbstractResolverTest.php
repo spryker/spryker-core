@@ -6,7 +6,6 @@
 
 namespace Unit\Spryker\Zed\Kernel\ClassResolver;
 
-use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**

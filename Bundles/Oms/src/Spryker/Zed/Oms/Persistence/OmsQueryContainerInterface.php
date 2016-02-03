@@ -10,7 +10,6 @@
 namespace Spryker\Zed\Oms\Persistence;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Zed\Oms\Business\Process\StateInterface;
 use DateTime;
 
 interface OmsQueryContainerInterface
@@ -25,7 +24,7 @@ interface OmsQueryContainerInterface
     public function querySalesOrderItemsByState(array $states, $processName);
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -47,14 +46,14 @@ interface OmsQueryContainerInterface
     public function queryLogByIdOrder($idOrder, $orderById = true);
 
     /**
-     * @param DateTime $now
+     * @param \DateTime $now
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsWithExpiredTimeouts(DateTime $now);
 
     /**
-     * @param StateInterface[] $states
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
      *
@@ -63,7 +62,7 @@ interface OmsQueryContainerInterface
     public function countSalesOrderItemsForSku(array $states, $sku, $returnTest = true);
 
     /**
-     * @param StateInterface[] $states
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
      *

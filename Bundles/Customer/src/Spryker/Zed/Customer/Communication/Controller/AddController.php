@@ -7,15 +7,13 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Customer\Business\CustomerFacade;
-use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CustomerFacade getFacade()
- * @method CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class AddController extends AbstractController
 {

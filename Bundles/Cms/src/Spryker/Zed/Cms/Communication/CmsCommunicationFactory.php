@@ -8,7 +8,6 @@ namespace Spryker\Zed\Cms\Communication;
 
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
@@ -17,11 +16,10 @@ use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 
 /**
- * @method CmsQueryContainer getQueryContainer()
- * @method CmsConfig getConfig()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Cms\CmsConfig getConfig()
  */
 class CmsCommunicationFactory extends AbstractCommunicationFactory
 {

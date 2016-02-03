@@ -9,7 +9,7 @@ namespace Spryker\Zed\Availability\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method AvailabilityBusinessFactory getFactory()
+ * @method \Spryker\Zed\Availability\Business\AvailabilityBusinessFactory getFactory()
  */
 class AvailabilityFacade extends AbstractFacade
 {

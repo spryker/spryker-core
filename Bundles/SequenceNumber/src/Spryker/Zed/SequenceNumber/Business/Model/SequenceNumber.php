@@ -17,13 +17,13 @@ use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 class SequenceNumber implements SequenceNumberInterface
 {
 
-    /** @var RandomNumberGenerator */
+    /** @var \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator */
     protected $randomNumberGenerator;
 
-    /** @var SequenceNumberSettingsTransfer */
+    /** @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer */
     protected $sequenceNumberSettings;
 
-    /** @var ConnectionInterface */
+    /** @var \Propel\Runtime\Connection\ConnectionInterface */
     protected $connection;
 
     /**

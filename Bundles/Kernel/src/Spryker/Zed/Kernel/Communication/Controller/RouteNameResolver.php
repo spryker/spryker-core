@@ -39,7 +39,7 @@ class RouteNameResolver implements RouteNameResolverInterface
     }
 
     /**
-     * @param $dashedWord
+     * @param string $dashedWord
      *
      * @return array|string
      */

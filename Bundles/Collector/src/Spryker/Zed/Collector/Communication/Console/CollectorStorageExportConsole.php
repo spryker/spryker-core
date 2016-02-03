@@ -6,14 +6,12 @@
 
 namespace Spryker\Zed\Collector\Communication\Console;
 
-use Spryker\Zed\Collector\Business\CollectorFacade;
-use Spryker\Zed\Collector\Communication\CollectorCommunicationFactory;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method CollectorCommunicationFactory getFactory()
- * @method CollectorFacade getFacade()
+ * @method \Spryker\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Collector\Business\CollectorFacade getFacade()
  */
 class CollectorStorageExportConsole extends AbstractCollectorConsole
 {

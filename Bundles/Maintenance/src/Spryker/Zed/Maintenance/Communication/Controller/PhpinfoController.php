@@ -7,12 +7,10 @@
 namespace Spryker\Zed\Maintenance\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Maintenance\Business\MaintenanceFacade;
-use Spryker\Zed\Maintenance\Communication\MaintenanceCommunicationFactory;
 
 /**
- * @method MaintenanceFacade getFacade()
- * @method MaintenanceCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()
+ * @method \Spryker\Zed\Maintenance\Communication\MaintenanceCommunicationFactory getFactory()
  */
 class PhpinfoController extends AbstractController
 {

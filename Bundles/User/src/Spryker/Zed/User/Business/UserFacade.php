@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\UserTransfer;
 
 /**
- * @method UserBusinessFactory getFactory()
+ * @method \Spryker\Zed\User\Business\UserBusinessFactory getFactory()
  */
 class UserFacade extends AbstractFacade
 {
@@ -170,7 +170,7 @@ class UserFacade extends AbstractFacade
     /**
      * @param int $idUser
      *
-     * @return UserTransfer;
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function removeUser($idUser)
     {

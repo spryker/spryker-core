@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\Country\Communication\Plugin;
 
-use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
-use Spryker\Zed\Country\Communication\CountryCommunicationFactory;
 
 /**
- * @method CountryCommunicationFactory getFactory()
- * @method CountryFacade getFacade()
+ * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Country\Business\CountryFacade getFacade()
  */
 class Installer extends AbstractInstallerPlugin
 {

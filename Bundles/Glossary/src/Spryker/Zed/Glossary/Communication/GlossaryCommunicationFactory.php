@@ -9,12 +9,10 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Spryker\Zed\Glossary\Communication\Table\TranslationTable;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
-use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-use Spryker\Zed\Glossary\GlossaryConfig;
 
 /**
- * @method GlossaryQueryContainerInterface getQueryContainer()
- * @method GlossaryConfig getConfig()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
  */
 class GlossaryCommunicationFactory extends AbstractCommunicationFactory
 {

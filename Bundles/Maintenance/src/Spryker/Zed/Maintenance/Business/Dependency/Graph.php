@@ -12,12 +12,12 @@ class Graph
 {
 
     /**
-     * @var BundleParser
+     * @var \Spryker\Zed\Maintenance\Business\Dependency\BundleParser
      */
     protected $bundleParser;
 
     /**
-     * @var Manager
+     * @var \Spryker\Zed\Maintenance\Business\Dependency\Manager
      */
     protected $manager;
 
@@ -37,8 +37,8 @@ class Graph
     protected $graph;
 
     /**
-     * @param BundleParser $bundleParser
-     * @param Manager $manager
+     * @param \Spryker\Zed\Maintenance\Business\Dependency\BundleParser $bundleParser
+     * @param \Spryker\Zed\Maintenance\Business\Dependency\Manager $manager
      * @param \Spryker\Tool\Graph\GraphInterface $graph
      */
     public function __construct(BundleParser $bundleParser, Manager $manager, GraphInterface $graph)

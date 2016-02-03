@@ -6,17 +6,16 @@
 
 namespace Spryker\Zed\Installer\Business;
 
-use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method InstallerBusinessFactory getFactory()
+ * @method \Spryker\Zed\Installer\Business\InstallerBusinessFactory getFactory()
  */
 class InstallerFacade extends AbstractFacade
 {
 
     /**
-     * @return AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
      */
     public function getInstallers()
     {
@@ -24,7 +23,7 @@ class InstallerFacade extends AbstractFacade
     }
 
     /**
-     * @return AbstractInstaller[]
+     * @return \Spryker\Zed\Installer\Business\Model\AbstractInstaller[]
      */
     public function getDemoDataInstallers()
     {

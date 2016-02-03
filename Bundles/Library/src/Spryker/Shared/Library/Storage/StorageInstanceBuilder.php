@@ -24,7 +24,7 @@ class StorageInstanceBuilder
     const KV_ADAPTER_REDIS = 'redis';
 
     /**
-     * @var AdapterInterface[]
+     * @var \Spryker\Shared\Library\Storage\AdapterInterface[]
      */
     private static $storageInstances = [];
 
@@ -83,7 +83,7 @@ class StorageInstanceBuilder
      *
      * @throws \Exception
      *
-     * @return AdapterInterface
+     * @return \Spryker\Shared\Library\Storage\AdapterInterface
      */
     private static function getStorageInstance($type, $debug = false)
     {

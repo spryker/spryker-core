@@ -10,7 +10,6 @@ use Codeception\TestCase\Test;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 /**
  * @group Locale

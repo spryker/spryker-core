@@ -7,7 +7,6 @@
 namespace Unit\Spryker\Zed\Mail\Business;
 
 use Spryker\Zed\Mail\Business\InclusionHandler;
-use Spryker\Zed\Mail\Business\InclusionHandlerInterface;
 
 /**
  * @group InclusionHandler

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 class VoucherPoolCategory
 {
@@ -43,7 +42,7 @@ class VoucherPoolCategory
     }
 
     /**
-     * @return SpyDiscount[]
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
     public function retrieveActiveAndRunningDiscounts()
     {

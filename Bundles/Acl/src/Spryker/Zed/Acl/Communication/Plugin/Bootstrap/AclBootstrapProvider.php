@@ -9,13 +9,11 @@ namespace Spryker\Zed\Acl\Communication\Plugin\Bootstrap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Acl\Business\AclFacade;
-use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AclCommunicationFactory getFactory()
- * @method AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
  */
 class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
 {

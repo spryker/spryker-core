@@ -15,7 +15,7 @@ class LumberjackFactory extends AbstractFactory
 {
 
     /**
-     * @return EventJournalClientInterface
+     * @return \Spryker\Client\Lumberjack\EventJournalClientInterface
      */
     public function createEventJournalClient()
     {

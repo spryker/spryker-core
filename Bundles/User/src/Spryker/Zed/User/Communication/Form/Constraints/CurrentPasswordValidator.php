@@ -15,7 +15,7 @@ class CurrentPasswordValidator extends ConstraintValidator
 
     /**
      * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint|CurrentPassword $constraint
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword $constraint
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class CurrentPasswordValidator extends ConstraintValidator
 
     /**
      * @param string $password
-     * @param CurrentPassword $constraint
+     * @param \Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword $constraint
      *
      * @return bool
      */

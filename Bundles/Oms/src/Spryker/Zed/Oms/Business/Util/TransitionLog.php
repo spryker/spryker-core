@@ -34,7 +34,7 @@ class TransitionLog implements TransitionLogInterface
     protected $logContext;
 
     /**
-     * @var SpyOmsTransitionLog[]
+     * @var \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
      */
     protected $logEntities;
 
@@ -237,7 +237,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return SpyOmsTransitionLog[]
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
      */
     public function getLogForOrder(SpySalesOrder $order)
     {

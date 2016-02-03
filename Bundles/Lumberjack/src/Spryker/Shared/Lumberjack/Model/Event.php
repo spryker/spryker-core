@@ -28,7 +28,7 @@ class Event implements EventInterface
      * @param string $name
      * @param array|string $data
      *
-     * @throws DataInvalidException
+     * @throws \Spryker\Shared\Lumberjack\Model\DataInvalidException
      *
      * @return void
      */
@@ -65,7 +65,7 @@ class Event implements EventInterface
     /**
      * @param array $fields
      *
-     * @throws DataInvalidException
+     * @throws \Spryker\Shared\Lumberjack\Model\DataInvalidException
      *
      * @return void
      */

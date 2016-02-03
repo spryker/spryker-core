@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 

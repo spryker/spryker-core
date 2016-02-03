@@ -7,7 +7,6 @@
 namespace Spryker\Shared\Log;
 
 use Monolog\Logger;
-use Psr\Log\LoggerInterface;
 use Spryker\Shared\Log\Config\DefaultLoggerConfig;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 

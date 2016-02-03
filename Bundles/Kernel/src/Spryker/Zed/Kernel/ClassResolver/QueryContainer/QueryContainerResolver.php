@@ -16,7 +16,7 @@ class QueryContainerResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @throws QueryContainerNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
      *
      * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */

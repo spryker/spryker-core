@@ -10,12 +10,12 @@ class ViolationFinder implements ViolationFinderInterface
 {
 
     /**
-     * @var ViolationFinderInterface[]
+     * @var \Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinderInterface[]
      */
     private $violationFinder;
 
     /**
-     * @param ViolationFinderInterface $violationFinder
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinderInterface $violationFinder
      *
      * @return self
      */

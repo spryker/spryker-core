@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method SalesFactory getFactory()
+ * @method \Spryker\Client\Sales\SalesFactory getFactory()
  */
 class SalesClient extends AbstractClient implements SalesClientInterface
 {

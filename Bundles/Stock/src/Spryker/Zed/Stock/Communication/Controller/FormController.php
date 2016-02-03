@@ -9,14 +9,12 @@ namespace Spryker\Zed\Stock\Communication\Controller;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Stock\Communication\StockCommunicationFactory;
-use Spryker\Zed\Stock\Business\StockFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method StockCommunicationFactory getFactory()
- * @method StockFacade getFacade()
+ * @method \Spryker\Zed\Stock\Communication\StockCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Stock\Business\StockFacade getFacade()
  */
 class FormController extends AbstractController
 {

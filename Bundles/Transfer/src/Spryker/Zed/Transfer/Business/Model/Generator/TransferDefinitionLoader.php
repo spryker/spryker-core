@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 use Zend\Config\Factory;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -20,7 +19,7 @@ class TransferDefinitionLoader
     const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**
-     * @var DefinitionNormalizer
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer
      */
     private $definitionNormalizer;
 
@@ -35,7 +34,7 @@ class TransferDefinitionLoader
     private $transferDefinitions = [];
 
     /**
-     * @param DefinitionNormalizer $normalizer
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer $normalizer
      * @param array $sourceDirectories
      */
     public function __construct(DefinitionNormalizer $normalizer, array $sourceDirectories)
@@ -76,7 +75,7 @@ class TransferDefinitionLoader
     /**
      * @param array $sourceDirectories
      *
-     * @return \Symfony\Component\Finder\Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     private function getXmlTransferDefinitionFiles(array $sourceDirectories)
     {

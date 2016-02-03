@@ -8,10 +8,9 @@ namespace Spryker\Zed\AvailabilityCheckoutConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\AvailabilityCheckoutConnector\AvailabilityCheckoutConnectorDependencyProvider;
-use Spryker\Zed\AvailabilityCheckoutConnector\AvailabilityCheckoutConnectorConfig;
 
 /**
- * @method AvailabilityCheckoutConnectorConfig getConfig()
+ * @method \Spryker\Zed\AvailabilityCheckoutConnector\AvailabilityCheckoutConnectorConfig getConfig()
  */
 class AvailabilityCheckoutConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -18,7 +18,6 @@ use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 
 class PageManager implements PageManagerInterface
@@ -200,7 +199,7 @@ class PageManager implements PageManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $page
      *
-     * @var SpyCmsGlossaryKeyMapping[]
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
      *
      * @return void
      */

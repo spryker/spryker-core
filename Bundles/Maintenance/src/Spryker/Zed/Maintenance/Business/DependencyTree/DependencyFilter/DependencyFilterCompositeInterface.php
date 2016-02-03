@@ -10,7 +10,7 @@ interface DependencyFilterCompositeInterface extends DependencyFilterInterface
 {
 
     /**
-     * @param DependencyFilterInterface $dependencyFilter
+     * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\DependencyFilterInterface $dependencyFilter
      *
      * @return self
      */

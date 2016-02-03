@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Touch\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Touch\TouchConfig;
 
 /**
- * @method TouchConfig getConfig()
- * @method TouchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Touch\TouchConfig getConfig()
+ * @method \Spryker\Zed\Touch\Persistence\TouchQueryContainer getQueryContainer()
  */
 class TouchPersistenceFactory extends AbstractPersistenceFactory
 {

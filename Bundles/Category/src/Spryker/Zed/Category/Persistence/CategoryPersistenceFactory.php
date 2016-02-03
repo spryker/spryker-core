@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Category\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Category\CategoryConfig;
 
 /**
- * @method CategoryConfig getConfig()
- * @method CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\CategoryConfig getConfig()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
  */
 class CategoryPersistenceFactory extends AbstractPersistenceFactory
 {

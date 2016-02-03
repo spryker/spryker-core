@@ -9,13 +9,11 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 use DateInterval;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
-use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use DateTime;
-use Exception;
 use ErrorException;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Library\Log;
@@ -29,12 +27,12 @@ class Timeout implements TimeoutInterface
     protected $queryContainer;
 
     /**
-     * @var DateTime[]
+     * @var \DateTime[]
      */
     protected $eventToTimeoutBuffer = [];
 
     /**
-     * @var StateInterface[]
+     * @var \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     protected $stateIdToModelBuffer = [];
 
@@ -47,7 +45,7 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param OrderStateMachineInterface $orderStateMachine
+     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface $orderStateMachine
      *
      * @return int
      */
@@ -69,9 +67,9 @@ class Timeout implements TimeoutInterface
     /**
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
-     * @param DateTime $currentTime
+     * @param \DateTime $currentTime
      *
-     * @throws Exception
+     * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
@@ -109,7 +107,7 @@ class Timeout implements TimeoutInterface
      * @param string $stateId
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @throws Exception
+     * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
@@ -126,10 +124,10 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param DateTime $currentTime
+     * @param \DateTime $currentTime
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      *
-     * @return DateTime
+     * @return \DateTime
      */
     protected function calculateTimeoutDateFromEvent(DateTime $currentTime, EventInterface $event)
     {
@@ -197,7 +195,7 @@ class Timeout implements TimeoutInterface
      * @param \DateInterval $interval
      * @param mixed $timeout
      *
-     * @throws ErrorException
+     * @throws \ErrorException
      *
      * @return int
      */

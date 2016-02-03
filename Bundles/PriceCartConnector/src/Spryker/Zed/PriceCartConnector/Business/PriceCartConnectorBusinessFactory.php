@@ -8,12 +8,11 @@ namespace Spryker\Zed\PriceCartConnector\Business;
 
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
 
 /**
- * @method PriceCartConnectorBusinessFactory getFactory()
- * @method PriceCartConnectorConfig getConfig()
+ * @method \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig getConfig()
  */
 class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
 {

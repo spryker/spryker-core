@@ -13,12 +13,12 @@ trait BundleDependencyProviderResolverAwareTrait
 {
 
     /**
-     * @var Container
+     * @var \Spryker\Zed\Kernel\Container
      */
     private $container;
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return self
      */
@@ -55,7 +55,7 @@ trait BundleDependencyProviderResolverAwareTrait
     /**
      * @throws \Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
      *
-     * @return AbstractBundleDependencyProvider
+     * @return \Spryker\Zed\Kernel\AbstractBundleDependencyProvider
      */
     protected function resolveDependencyProvider()
     {
@@ -71,8 +71,8 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @param AbstractBundleDependencyProvider $dependencyProvider
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */
@@ -82,7 +82,7 @@ trait BundleDependencyProviderResolverAwareTrait
     );
 
     /**
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function getContainer()
     {

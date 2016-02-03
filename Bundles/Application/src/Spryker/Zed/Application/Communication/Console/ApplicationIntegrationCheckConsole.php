@@ -8,15 +8,13 @@ namespace Spryker\Zed\Application\Communication\Console;
 
 use Spryker\Shared\Config;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Zed\Application\Business\ApplicationFacade;
-use Spryker\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
  */
 class ApplicationIntegrationCheckConsole extends Console
 {
@@ -55,7 +53,7 @@ class ApplicationIntegrationCheckConsole extends Console
     }
 
     /**
-     * @param AbstractApplicationCheckStep[] $steps
+     * @param \Spryker\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep[] $steps
      *
      * @return void
      */
@@ -70,7 +68,7 @@ class ApplicationIntegrationCheckConsole extends Console
     }
 
     /**
-     * @return AbstractApplicationCheckStep[]
+     * @return \Spryker\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep[]
      */
     protected function getCheckSteps()
     {

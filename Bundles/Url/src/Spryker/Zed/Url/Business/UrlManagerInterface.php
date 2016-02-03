@@ -97,7 +97,7 @@ interface UrlManagerInterface
     public function touchUrlActive($idUrl);
 
     /**
-     * @param $idUrl
+     * @param int $idUrl
      */
     public function touchUrlDeleted($idUrl);
 

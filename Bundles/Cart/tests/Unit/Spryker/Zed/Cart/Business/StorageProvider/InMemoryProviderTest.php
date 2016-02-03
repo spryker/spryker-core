@@ -4,10 +4,8 @@ namespace Unit\Spryker\Zed\Cart\Business\StorageProvider;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use Spryker\Shared\Transfer\AbstractTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\InMemoryProvider;
-use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 
 /**
  * @group Spryker
@@ -53,7 +51,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $changedItems = $changedCart->getItems();
         $this->assertCount(2, $changedItems);
 
-        /** @var ItemTransfer $changedItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
         $changedItem = $changedItems[0];
 
         $this->assertEquals($itemId, $changedItem->getId());
@@ -87,12 +85,12 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey($itemId, $skuIndex);
         $this->assertArrayHasKey($newId, $skuIndex);
 
-        /** @var ItemTransfer $addedItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $addedItem */
         $addedItem = $changedItems[$skuIndex[$newId]];
         $this->assertEquals($newId, $addedItem->getId());
         $this->assertEquals($newQuantity, $addedItem->getQuantity());
 
-        /** @var ItemTransfer $existingItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $existingItem */
         $existingItem = $changedItems[$skuIndex[$itemId]];
         $this->assertEquals($itemId, $existingItem->getId());
         $this->assertEquals($existingQuantity, $existingItem->getQuantity());
@@ -125,7 +123,7 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $changedCart = $this->provider->removeItems($cart, $change);
         $changedItems = $changedCart->getItems();
         $this->assertCount(1, $changedItems);
-        /** @var ItemTransfer $item */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $item */
         $item = $changedItems[0];
         $this->assertEquals($itemId, $item->getId());
         $this->assertEquals($existingQuantity, $item->getQuantity());

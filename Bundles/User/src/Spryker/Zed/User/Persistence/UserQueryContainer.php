@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 
 /**
- * @method UserPersistenceFactory getFactory()
+ * @method \Spryker\Zed\User\Persistence\UserPersistenceFactory getFactory()
  */
 class UserQueryContainer extends AbstractQueryContainer
 {

@@ -18,17 +18,17 @@ class CategoryTreeWriter
 {
 
     /**
-     * @var NodeWriterInterface
+     * @var \Spryker\Zed\Category\Business\Tree\NodeWriterInterface
      */
     protected $nodeWriter;
 
     /**
-     * @var ClosureTableWriterInterface
+     * @var \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface
      */
     protected $closureTableWriter;
 
     /**
-     * @var CategoryTreeReaderInterface
+     * @var \Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface
      */
     protected $categoryTreeReader;
 
@@ -48,9 +48,9 @@ class CategoryTreeWriter
     protected $connection;
 
     /**
-     * @param NodeWriterInterface $nodeWriter
-     * @param ClosureTableWriterInterface $closureTableWriter
-     * @param CategoryTreeReaderInterface $categoryTreeReader
+     * @param \Spryker\Zed\Category\Business\Tree\NodeWriterInterface $nodeWriter
+     * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
+     * @param \Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface $categoryTreeReader
      * @param \Spryker\Zed\Category\Business\Manager\NodeUrlManagerInterface $nodeUrlManager
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface $touchFacade
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
@@ -212,7 +212,7 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
      *
      * @return void
      */

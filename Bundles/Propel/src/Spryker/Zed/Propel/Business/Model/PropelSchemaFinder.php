@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Propel\Business\Model;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaFinder implements PropelSchemaFinderInterface
 {
@@ -27,7 +26,7 @@ class PropelSchemaFinder implements PropelSchemaFinderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     public function getSchemaFiles()
     {

@@ -20,7 +20,6 @@ use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
 use Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
 use Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
@@ -42,17 +41,17 @@ class Customer
     protected $customerReferenceGenerator;
 
     /**
-     * @var PasswordRestoredConfirmationSenderPluginInterface[]
+     * @var \Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface[]
      */
     protected $passwordRestoredConfirmationSender = [];
 
     /**
-     * @var PasswordRestoreTokenSenderPluginInterface[]
+     * @var \Spryker\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface[]
      */
     protected $passwordRestoreTokenSender = [];
 
     /**
-     * @var RegistrationTokenSenderPluginInterface[]
+     * @var \Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface[]
      */
     protected $registrationTokenSender = [];
 

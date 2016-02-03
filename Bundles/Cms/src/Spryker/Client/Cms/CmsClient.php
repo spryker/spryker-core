@@ -7,6 +7,7 @@
 namespace Spryker\Client\Cms;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Spryker\Client\Cms\Storage\CmsBlockStorageInterface;
 use Spryker\Client\Kernel\AbstractClient;
 
 class CmsClient extends AbstractClient implements CmsClientInterface
@@ -23,7 +24,7 @@ class CmsClient extends AbstractClient implements CmsClientInterface
     }
 
     /**
-     * @return CmsBlockStorageInterface
+     * @return \Spryker\Client\Cms\Storage\CmsBlockStorageInterface
      */
     private function createCmsBlockFinder()
     {

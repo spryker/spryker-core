@@ -7,21 +7,18 @@
 namespace Spryker\Zed\ItemGrouperWishlistConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\GroupableContainerTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ItemGrouperWishlistConnector\Business\ItemGrouperWishlistConnectorFacade;
 use Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface;
-use Spryker\Zed\ItemGrouperWishlistConnector\Communication\ItemGrouperWishlistConnectorCommunicationFactory;
 
 /**
- * @method ItemGrouperWishlistConnectorFacade getFacade()
- * @method ItemGrouperWishlistConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ItemGrouperWishlistConnector\Business\ItemGrouperWishlistConnectorFacade getFacade()
+ * @method \Spryker\Zed\ItemGrouperWishlistConnector\Communication\ItemGrouperWishlistConnectorCommunicationFactory getFactory()
  */
 class PreSaveItemGroupingPlugin extends AbstractPlugin implements PreSavePluginInterface
 {
 
     /**
-     * @param ItemTransfer[] $itemsCollection
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsCollection
      *
      * @return void
      */

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Auth;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 
 class AuthDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -57,7 +56,7 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface|null;
+     * @return \Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface|null
      */
     protected function getPasswordResetNotificationSender(Container $container)
     {

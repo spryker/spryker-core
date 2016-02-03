@@ -11,7 +11,6 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Locale\Business\LocaleFacade;

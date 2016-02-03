@@ -8,7 +8,6 @@ namespace Spryker\Zed\Gui\Communication\Table;
 
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Generated\Shared\Transfer\DataTablesTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
@@ -46,7 +45,7 @@ abstract class AbstractTable
     protected $data;
 
     /**
-     * @var TableConfiguration
+     * @var \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected $config;
 
@@ -91,14 +90,14 @@ abstract class AbstractTable
     protected $dataTablesTransfer;
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return mixed
      */
     abstract protected function configure(TableConfiguration $config);
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return mixed
      */
@@ -167,7 +166,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function newTableConfiguration()
     {
@@ -175,7 +174,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return void
      */
@@ -244,7 +243,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     public function getConfiguration()
     {
@@ -316,7 +315,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
@@ -394,7 +393,7 @@ abstract class AbstractTable
      * @todo CD-412 to be rafactored, does to many things and is hard to understand
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @param bool $returnRawResults
      *
      * @return array

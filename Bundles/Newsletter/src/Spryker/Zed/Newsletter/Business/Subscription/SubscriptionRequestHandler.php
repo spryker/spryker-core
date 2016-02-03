@@ -19,12 +19,12 @@ class SubscriptionRequestHandler
 {
 
     /**
-     * @var SubscriptionManagerInterface
+     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface
      */
     protected $subscriptionManager;
 
     /**
-     * @var SubscriberManagerInterface
+     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface
      */
     protected $subscriberManager;
 
@@ -39,8 +39,8 @@ class SubscriptionRequestHandler
     private $subscriberExists;
 
     /**
-     * @param SubscriptionManagerInterface $subscriptionManager
-     * @param SubscriberManagerInterface $subscriberManager
+     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface $subscriptionManager
+     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface $subscriberManager
      * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
      */
     public function __construct(
@@ -55,7 +55,7 @@ class SubscriptionRequestHandler
 
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
-     * @param SubscriberOptInHandlerInterface $optInHandler
+     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface $optInHandler
      *
      * @throws \Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailException
      * @throws \Exception

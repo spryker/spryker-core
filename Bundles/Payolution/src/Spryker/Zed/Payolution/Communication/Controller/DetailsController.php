@@ -7,15 +7,13 @@
 namespace Spryker\Zed\Payolution\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
-use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @method PayolutionCommunicationFactory getFactory()
- * @method PayolutionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface getQueryContainer()
  */
 class DetailsController extends AbstractController
 {

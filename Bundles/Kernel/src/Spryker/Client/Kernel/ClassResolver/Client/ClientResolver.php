@@ -16,7 +16,7 @@ class ClientResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @throws ClientNotFoundException
+     * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
      *
      * @return \Spryker\Client\Kernel\AbstractClient
      */

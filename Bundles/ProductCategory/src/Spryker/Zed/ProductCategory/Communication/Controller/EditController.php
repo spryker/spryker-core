@@ -12,17 +12,14 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
-use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
-use Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ProductCategoryFacade getFacade()
- * @method ProductCategoryCommunicationFactory getFactory()
- * @method ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
+ * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
  */
 class EditController extends AddController
 {
@@ -431,7 +428,7 @@ class EditController extends AddController
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
      */
     protected function getCategoryChildren($idCategoryNode, LocaleTransfer $locale)
     {

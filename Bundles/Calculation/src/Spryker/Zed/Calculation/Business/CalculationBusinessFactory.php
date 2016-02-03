@@ -19,10 +19,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
-use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Calculation\CalculationConfig;
 use Spryker\Zed\Calculation\Communication\Plugin\ItemTotalPriceCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\TaxTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\ProductOptionPriceToPayCalculatorPlugin;
@@ -36,7 +33,7 @@ use Spryker\Zed\Calculation\Communication\Plugin\RemoveAllExpensesCalculatorPlug
 use Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin;
 
 /**
- * @method CalculationConfig getConfig()
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
 class CalculationBusinessFactory extends AbstractBusinessFactory
 {
@@ -188,7 +185,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CalculatorPluginInterface[]|TotalsCalculatorPluginInterface[]
+     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface[]
      */
     public function getCalculatorStack()
     {

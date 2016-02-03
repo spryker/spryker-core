@@ -6,11 +6,9 @@
 
 namespace Spryker\Zed\Console\Communication;
 
-use Spryker\Zed\Console\Business\ConsoleFacade;
 use Spryker\Zed\Console\Business\Model\Environment;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -35,7 +33,7 @@ class ConsoleBootstrap extends Application
     }
 
     /**
-     * @return Command[]
+     * @return \Symfony\Component\Console\Command\Command[]
      */
     protected function getDefaultCommands()
     {

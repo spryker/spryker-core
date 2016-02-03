@@ -8,19 +8,16 @@ namespace Spryker\Zed\User\Communication\Controller;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
-use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\UserForm;
-use Spryker\Zed\User\Communication\UserCommunicationFactory;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 
 /**
- * @method UserFacade getFacade()
- * @method UserCommunicationFactory getFactory()
- * @method UserQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\User\Business\UserFacade getFacade()
+ * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
  */
 class EditController extends AbstractController
 {

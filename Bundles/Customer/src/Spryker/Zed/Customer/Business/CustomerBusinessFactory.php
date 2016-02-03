@@ -9,14 +9,12 @@ namespace Spryker\Zed\Customer\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\Address;
-use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 
 /**
- * @method CustomerConfig getConfig()
- * @method CustomerQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainer getQueryContainer()
  */
 class CustomerBusinessFactory extends AbstractBusinessFactory
 {

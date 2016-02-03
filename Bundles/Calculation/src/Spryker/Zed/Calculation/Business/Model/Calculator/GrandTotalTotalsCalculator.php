@@ -14,18 +14,18 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
 {
 
     /**
-     * @var SubtotalTotalsCalculatorInterface
+     * @var \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface
      */
     protected $subtotalTotalsCalculator;
 
     /**
-     * @var ExpenseTotalsCalculatorInterface
+     * @var \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculatorInterface
      */
     protected $expenseTotalsCalculator;
 
     /**
-     * @param SubtotalTotalsCalculatorInterface $subtotalTotalsCalculatorInterface
-     * @param ExpenseTotalsCalculatorInterface $expenseTotalsCalculator
+     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface $subtotalTotalsCalculatorInterface
+     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculatorInterface $expenseTotalsCalculator
      */
     public function __construct(
         SubtotalTotalsCalculatorInterface $subtotalTotalsCalculatorInterface,

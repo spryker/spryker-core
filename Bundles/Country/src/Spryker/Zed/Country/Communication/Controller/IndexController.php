@@ -14,7 +14,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        /** @var CountryTable $table */
+        /** @var \Spryker\Zed\Country\Communication\Table\CountryTable $table */
         $table = $this->getFactory()->createCountryTable();
 
         return $this->viewResponse([

@@ -9,13 +9,12 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use DateTime;
-use Exception;
 
 interface TimeoutInterface
 {
 
     /**
-     * @param OrderStateMachineInterface $orderStateMachine
+     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface $orderStateMachine
      *
      * @return int
      */
@@ -24,9 +23,9 @@ interface TimeoutInterface
     /**
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
-     * @param DateTime $currentTime
+     * @param \DateTime $currentTime
      *
-     * @throws Exception
+     * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
@@ -38,7 +37,7 @@ interface TimeoutInterface
      * @param string $stateId
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @throws Exception
+     * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void

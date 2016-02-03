@@ -52,7 +52,7 @@ interface TouchQueryContainerInterface
     /**
      * @param string $itemType
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */

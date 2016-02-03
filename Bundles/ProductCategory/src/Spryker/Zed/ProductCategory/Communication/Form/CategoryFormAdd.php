@@ -11,7 +11,6 @@ use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
@@ -230,7 +229,7 @@ class CategoryFormAdd extends AbstractForm
     {
         $fields = $this->getDefaultFormFields();
 
-        /** @var SpyCategory $categoryEntity */
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
         $categoryEntity = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Auth\Business\Model;
 use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Auth\AuthConfig;
-use Spryker\Zed\Auth\Business\AuthBusinessFactory;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Exception\UserNotLoggedException;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;

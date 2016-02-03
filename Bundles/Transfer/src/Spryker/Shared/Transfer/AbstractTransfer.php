@@ -280,7 +280,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      * @param mixed $value
      * @param bool $ignoreMissingProperty
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     private function initializeNestedTransferObject($property, $value, $ignoreMissingProperty = false)
     {
@@ -313,7 +313,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * @param string $type
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     private function createInstance($type)
     {

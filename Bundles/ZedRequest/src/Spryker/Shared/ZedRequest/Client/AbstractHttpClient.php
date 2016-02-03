@@ -107,7 +107,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\RequestException
      *
-     * @return ResponseInterface
+     * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     public function request(
         $pathInfo,
@@ -169,7 +169,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param RequestInterface $requestTransfer
+     * @param \Spryker\Shared\ZedRequest\Client\RequestInterface $requestTransfer
      * @param null $timeoutInSeconds
      *
      * @return \Guzzle\Http\Message\EntityEnclosingRequest
@@ -197,7 +197,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $pathInfo .= $char . 'yvesRequestId=' . $requestId;
 
         $client->setUserAgent('Yves 2.0');
-        /** @var EntityEnclosingRequest $request */
+        /** @var \Guzzle\Http\Message\EntityEnclosingRequest $request */
         $request = $client->post($pathInfo);
         $request->addHeader('X-Yves-Host', 1);
         foreach ($this->getHeaders() as $header => $value) {
@@ -219,7 +219,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      *
      * @throws \LogicException
      *
-     * @return AbstractRequest
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractRequest
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
@@ -280,7 +280,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param RequestInterface $requestTransfer
+     * @param \Spryker\Shared\ZedRequest\Client\RequestInterface $requestTransfer
      * @param string $rawBody
      *
      * @return void
@@ -305,7 +305,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param string $pathInfo
      * @param string $subType
-     * @param ObjectInterface $transfer
+     * @param \Spryker\Shared\ZedRequest\Client\ObjectInterface $transfer
      * @param string $rawBody
      *
      * @return void

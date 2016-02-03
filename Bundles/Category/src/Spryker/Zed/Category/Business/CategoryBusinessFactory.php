@@ -17,14 +17,12 @@ use Spryker\Zed\Category\Business\Tree\CategoryTreeWriter;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
-use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
 use Spryker\Tool\Graph\Graph;
 
 /**
- * @method CategoryQueryContainer getQueryContainer()
- * @method CategoryConfig getConfig()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  */
 class CategoryBusinessFactory extends AbstractBusinessFactory
 {
@@ -80,7 +78,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GraphViz
+     * @return \Spryker\Tool\Graph\Graph
      */
     protected function createGraphViz()
     {
@@ -208,7 +206,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransferGeneratorInterface
+     * @return \Spryker\Zed\Category\Business\TransferGeneratorInterface
      */
     public function createCategoryTransferGenerator()
     {

@@ -7,12 +7,11 @@
 namespace Spryker\Zed\Oms\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
-use Spryker\Zed\Oms\Business\OmsFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method OmsFacade getFacade()
+ * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
  */
 class CheckTimeoutConsole extends Console
 {

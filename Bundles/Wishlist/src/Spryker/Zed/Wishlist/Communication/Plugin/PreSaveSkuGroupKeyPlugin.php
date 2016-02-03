@@ -8,18 +8,16 @@ namespace Spryker\Zed\Wishlist\Communication\Plugin;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface;
-use Spryker\Zed\Wishlist\Business\WishlistFacade;
-use Spryker\Zed\Wishlist\Communication\WishlistCommunicationFactory;
 
 /**
- * @method WishlistFacade getFacade()
- * @method WishlistCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Wishlist\Business\WishlistFacade getFacade()
+ * @method \Spryker\Zed\Wishlist\Communication\WishlistCommunicationFactory getFactory()
  */
 class PreSaveSkuGroupKeyPlugin extends AbstractPlugin implements PreSavePluginInterface
 {
 
     /**
-     * @param ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return void
      */

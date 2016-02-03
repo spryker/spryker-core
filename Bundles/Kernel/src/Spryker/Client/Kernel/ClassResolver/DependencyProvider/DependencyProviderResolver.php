@@ -16,7 +16,7 @@ class DependencyProviderResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @throws DependencyProviderNotFoundException
+     * @throws \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
      *
      * @return \Spryker\Client\Kernel\AbstractDependencyProvider
      */

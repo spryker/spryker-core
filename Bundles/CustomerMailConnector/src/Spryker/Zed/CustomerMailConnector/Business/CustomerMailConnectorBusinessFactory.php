@@ -10,11 +10,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoredConfirmationSender;
 use Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoreTokenSender;
 use Spryker\Zed\CustomerMailConnector\Business\Sender\RegistrationTokenSender;
-use Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
 use Spryker\Zed\CustomerMailConnector\CustomerMailConnectorDependencyProvider;
 
 /**
- * @method CustomerMailConnectorConfig getConfig()
+ * @method \Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig getConfig()
  */
 class CustomerMailConnectorBusinessFactory extends AbstractBusinessFactory
 {

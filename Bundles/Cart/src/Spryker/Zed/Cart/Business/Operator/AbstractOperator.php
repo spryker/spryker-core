@@ -36,7 +36,7 @@ abstract class AbstractOperator implements OperatorInterface
     protected $cartCalculator;
 
     /**
-     * @var ItemExpanderPluginInterface[]
+     * @var \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
      */
     protected $itemExpanderPlugins = [];
 

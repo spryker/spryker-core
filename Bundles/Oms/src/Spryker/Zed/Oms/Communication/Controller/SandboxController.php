@@ -11,7 +11,6 @@ use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Spryker\Zed\Oms\Business\OmsFacade;
 use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderProcessQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
@@ -29,7 +28,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * this class is only for test purpose. It will be removed from repository
  *
- * @method OmsFacade getFacade()
+ * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
  */
 class SandboxController extends AbstractController
 {

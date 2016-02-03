@@ -10,12 +10,10 @@ use Spryker\Zed\ProductOption\Business\Model\ProductOptionReader;
 use Spryker\Zed\ProductOption\Business\Model\DataImportWriter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
-use Spryker\Zed\ProductOption\ProductOptionConfig;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 
 /**
- * @method ProductOptionConfig getConfig()
- * @method ProductOptionQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer getQueryContainer()
  */
 class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {

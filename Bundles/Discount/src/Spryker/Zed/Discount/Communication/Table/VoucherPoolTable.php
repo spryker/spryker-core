@@ -91,7 +91,7 @@ class VoucherPoolTable extends AbstractTable
 
         $queryResults = $this->runQuery($query, $config, true);
 
-        /** @var SpyDiscountVoucherPool $discountVoucherPool */
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPool */
         foreach ($queryResults as $discountVoucherPool) {
             $categoryName = null;
             if ($discountVoucherPool->getVoucherPoolCategory() !== null) {

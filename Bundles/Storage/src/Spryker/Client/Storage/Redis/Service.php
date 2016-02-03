@@ -63,7 +63,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @param $debug
+     * @param bool $debug
      *
      * @return self
      */
@@ -75,7 +75,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * set read write stats array
+     * Sets, reads, writes stats array
      *
      * @return void
      */
@@ -266,7 +266,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return string
      */

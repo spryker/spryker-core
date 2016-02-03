@@ -8,12 +8,10 @@ namespace Spryker\Zed\Heartbeat\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
-use Spryker\Zed\Heartbeat\Business\HeartbeatFacade;
-use Spryker\Zed\Heartbeat\Communication\HeartbeatCommunicationFactory;
 
 /**
- * @method HeartbeatFacade getFacade()
- * @method HeartbeatCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacade getFacade()
+ * @method \Spryker\Zed\Heartbeat\Communication\HeartbeatCommunicationFactory getFactory()
  */
 class SearchHealthIndicatorPlugin extends AbstractPlugin implements HealthIndicatorInterface
 {

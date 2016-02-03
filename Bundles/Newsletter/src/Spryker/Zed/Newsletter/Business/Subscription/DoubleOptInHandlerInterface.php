@@ -12,9 +12,9 @@ interface DoubleOptInHandlerInterface
 {
 
     /**
-     * @param SubscriberOptInSenderInterface $subscriberOptInSender
+     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface $subscriberOptInSender
      *
-     * @return DoubleOptInHandlerInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface
      */
     public function addSubscriberOptInSender(SubscriberOptInSenderInterface $subscriberOptInSender);
 

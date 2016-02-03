@@ -10,7 +10,6 @@ use Spryker\Zed\Country\CountryConfig;
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use Spryker\Zed\Country\Business\CountryManagerInterface;
-use Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface;
 use Spryker\Zed\Country\Business\RegionManagerInterface;
 
 class Install extends AbstractInstaller
@@ -220,7 +219,7 @@ class Install extends AbstractInstaller
     }
 
     /**
-     * @return RegionInstallInterface[]
+     * @return \Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface[]
      */
     protected function getCountriesToInstallRegionsFor()
     {

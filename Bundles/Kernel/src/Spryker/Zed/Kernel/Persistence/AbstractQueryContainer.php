@@ -19,7 +19,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     use BundleDependencyProviderResolverAwareTrait;
 
     /**
-     * @var PersistenceFactoryInterface
+     * @var \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface
      */
     private $factory;
 
@@ -37,7 +37,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
-     * @param AbstractPersistenceFactory $factory
+     * @param \Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory $factory
      *
      * @return self
      */
@@ -49,7 +49,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     }
 
     /**
-     * @return AbstractPersistenceFactory
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory
      */
     protected function getFactory()
     {

@@ -16,7 +16,7 @@ class DependencyProviderResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @throws DependencyProviderNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
      *
      * @return \Spryker\Zed\Kernel\AbstractBundleDependencyProvider
      */

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\ProductCategory\Business;
 
-use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 
@@ -21,9 +20,9 @@ interface TransferGeneratorInterface
     public function convertProductCategory(SpyProductCategory $productCategoryEntity);
 
     /**
-     * @param SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection $productCategoryEntityList
+     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection $productCategoryEntityList
      *
-     * @return ProductCategoryTransfer[]
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
      */
     public function convertProductCategoryCollection(ObjectCollection $productCategoryEntityList);
 

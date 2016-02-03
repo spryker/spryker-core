@@ -8,7 +8,6 @@ namespace Spryker\Zed\Development\Business\CodeStyleFixer;
 
 use Symfony\CS\AbstractFixer;
 use Symfony\CS\FixerInterface;
-use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
 use Symfony\CS\Utils;
 
@@ -34,7 +33,7 @@ class NoInlineAssignmentFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      *
      * @return void
      */
@@ -109,7 +108,7 @@ class NoInlineAssignmentFixer extends AbstractFixer
     /**
      * @param int $index
      * @param int $endIndex
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      * @param int &$indexEqualSign
      *
      * @return bool

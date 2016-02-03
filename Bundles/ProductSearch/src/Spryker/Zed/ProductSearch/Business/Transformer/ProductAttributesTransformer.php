@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductSearch\Business\Transformer;
 use Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface;
 use Spryker\Zed\ProductSearch\Business\Operation\OperationInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
-use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperation;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductAttributesTransformer implements ProductAttributesTransformerInterface
 {
@@ -192,7 +190,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
     }
 
     /**
-     * @return SpyProductSearchAttributesOperation[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperation[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getFieldOperations()
     {

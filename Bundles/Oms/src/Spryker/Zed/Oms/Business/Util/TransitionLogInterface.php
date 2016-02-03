@@ -11,7 +11,6 @@ use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 
 interface TransitionLogInterface
 {
@@ -24,7 +23,7 @@ interface TransitionLogInterface
     public function setEvent(EventInterface $event);
 
     /**
-     * @param SpySalesOrderItem[] $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
      *
      * @return void
      */
@@ -91,7 +90,7 @@ interface TransitionLogInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return SpyOmsTransitionLog[]
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
      */
     public function getLogForOrder(SpySalesOrder $order);
 

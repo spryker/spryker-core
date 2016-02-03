@@ -8,7 +8,6 @@ namespace Spryker\Zed\Development\Business\CodeStyleFixer;
 
 use Symfony\CS\AbstractFixer;
 use Symfony\CS\FixerInterface;
-use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
 
 class SprykerUseStatementFixer extends AbstractFixer
@@ -88,7 +87,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      *
      * @return void
      */
@@ -164,7 +163,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      *
      * @return void
      */
@@ -257,7 +256,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      *
      * @return array
      */
@@ -283,7 +282,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      * @param array $useIndexes
      *
      * @return array
@@ -347,7 +346,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      * @param array $namespaceStatements
      *
      * @return void
@@ -380,7 +379,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      * @param array $useStatement
      * @param int $useStatementStartIndex
      *
@@ -477,7 +476,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param \Symfony\CS\Tokenizer\Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      *
      * @return void
      */

@@ -7,10 +7,9 @@
 namespace Spryker\Zed\Transfer\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Transfer\TransferConfig;
 
 /**
- * @method TransferConfig getConfig()
+ * @method \Spryker\Zed\Transfer\TransferConfig getConfig()
  */
 class TransferCommunicationFactory extends AbstractCommunicationFactory
 {

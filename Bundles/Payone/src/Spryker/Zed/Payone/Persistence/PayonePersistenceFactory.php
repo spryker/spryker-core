@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Payone\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Payone\PayoneConfig;
 
 /**
- * @method PayoneConfig getConfig()
- * @method PayoneQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Payone\PayoneConfig getConfig()
+ * @method \Spryker\Zed\Payone\Persistence\PayoneQueryContainer getQueryContainer()
  */
 class PayonePersistenceFactory extends AbstractPersistenceFactory
 {

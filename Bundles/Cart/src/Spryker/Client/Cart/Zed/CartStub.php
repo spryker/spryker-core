@@ -8,7 +8,6 @@ namespace Spryker\Client\Cart\Zed;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Client\ZedRequest\Stub\BaseStub;
 
 class CartStub extends BaseStub implements CartStubInterface

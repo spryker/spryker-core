@@ -193,7 +193,7 @@ class CheckoutWorkflowTest extends Test
      */
     public function testWorkflowPassesHydratedOrderOnToSave()
     {
-        /** @var OrderTransfer $orderTransfer */
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
         $orderTransfer = new OrderTransfer();
 
         $orderTransfer

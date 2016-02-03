@@ -9,10 +9,9 @@ namespace Spryker\Zed\Storage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Storage\Business\Model\Storage;
 use Spryker\Zed\Storage\StorageDependencyProvider;
-use Spryker\Zed\Storage\StorageConfig;
 
 /**
- * @method StorageConfig getConfig()
+ * @method \Spryker\Zed\Storage\StorageConfig getConfig()
  */
 class StorageBusinessFactory extends AbstractBusinessFactory
 {

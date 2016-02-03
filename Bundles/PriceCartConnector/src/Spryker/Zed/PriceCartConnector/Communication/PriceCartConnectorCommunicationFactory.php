@@ -7,10 +7,9 @@
 namespace Spryker\Zed\PriceCartConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 /**
- * @method PriceCartConnectorConfig getConfig()
+ * @method \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig getConfig()
  */
 class PriceCartConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

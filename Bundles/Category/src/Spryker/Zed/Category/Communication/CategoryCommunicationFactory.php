@@ -11,12 +11,10 @@ use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
-use Spryker\Zed\Category\CategoryConfig;
 
 /**
- * @method CategoryQueryContainer getQueryContainer()
- * @method CategoryConfig getConfig()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  */
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -81,7 +79,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
      *
      * @return \Spryker\Zed\Category\Communication\Table\UrlTable
      */

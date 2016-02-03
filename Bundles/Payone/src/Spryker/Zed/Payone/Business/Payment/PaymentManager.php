@@ -33,7 +33,6 @@ use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
-use Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
 use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
@@ -72,7 +71,7 @@ class PaymentManager implements PaymentManagerInterface
     protected $modeDetector;
 
     /**
-     * @var PaymentMethodMapperInterface[]
+     * @var \Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface[]
      */
     protected $registeredMethodMappers;
 
@@ -101,7 +100,7 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param PaymentMethodMapperInterface $paymentMethodMapper
+     * @param \Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface $paymentMethodMapper
      *
      * @return void
      */
@@ -115,7 +114,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param string $name
      *
-     * @return PaymentMethodMapperInterface|null
+     * @return \Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface|null
      */
     protected function findPaymentMethodMapperByName($name)
     {
@@ -131,7 +130,7 @@ class PaymentManager implements PaymentManagerInterface
      *
      * @throws \Spryker\Zed\Payone\Business\Exception\InvalidPaymentMethodException
      *
-     * @return PaymentMethodMapperInterface
+     * @return \Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface
      */
     protected function getRegisteredPaymentMethodMapper($paymentMethodName)
     {
@@ -197,7 +196,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $paymentEntity
      *
-     * @return PaymentMethodMapperInterface
+     * @return \Spryker\Zed\Payone\Business\Payment\PaymentMethodMapperInterface
      */
     protected function getPaymentMethodMapper(SpyPaymentPayone $paymentEntity)
     {
@@ -267,7 +266,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData)
     {
-        /** @var CreditCardPseudo $paymentMethodMapper */
+        /** @var \Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo $paymentMethodMapper */
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($creditCardData->getPayment()->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapCreditCardCheck($creditCardData);
         $this->setStandardParameter($requestContainer);
@@ -480,7 +479,7 @@ class PaymentManager implements PaymentManagerInterface
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
-     * @return PayonePaymentLogTransfer[]
+     * @return \Generated\Shared\Transfer\PayonePaymentLogTransfer[]
      */
     public function getPaymentLogs(ObjectCollection $orders)
     {
@@ -489,7 +488,7 @@ class PaymentManager implements PaymentManagerInterface
         $transactionStatusLogs = $this->queryContainer->getTransactionStatusLogsByOrderIds($orders)->find()->getData();
 
         $logs = [];
-        /** @var SpyPaymentPayoneApiLog $apiLog */
+        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog $apiLog */
         foreach ($apiLogs as $apiLog) {
             $key = $apiLog->getCreatedAt()->format('Y-m-d\TH:i:s\Z') . 'a' . $apiLog->getIdPaymentPayoneApiLog();
             $payonePaymentLogTransfer = new PayonePaymentLogTransfer();
@@ -497,7 +496,7 @@ class PaymentManager implements PaymentManagerInterface
             $payonePaymentLogTransfer->setLogType(self::LOG_TYPE_API_LOG);
             $logs[$key] = $payonePaymentLogTransfer;
         }
-        /** @var SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
+        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
         foreach ($transactionStatusLogs as $transactionStatusLog) {
             $key = $transactionStatusLog->getCreatedAt()->format('Y-m-d\TH:i:s\Z') . 't' . $transactionStatusLog->getIdPaymentPayoneTransactionStatusLog();
             $payonePaymentLogTransfer = new PayonePaymentLogTransfer();

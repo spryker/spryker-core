@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method PriceCartConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorBusinessFactory getFactory()
  */
 class PriceCartConnectorFacade extends AbstractFacade
 {

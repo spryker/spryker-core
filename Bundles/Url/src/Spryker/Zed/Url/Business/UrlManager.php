@@ -233,7 +233,7 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param $idUrl
+     * @param int $idUrl
      *
      * @return void
      */

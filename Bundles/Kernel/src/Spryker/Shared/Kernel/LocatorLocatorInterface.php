@@ -13,7 +13,7 @@ interface LocatorLocatorInterface
      * @param string $bundle
      * @param array $arguments
      *
-     * @return BundleProxy
+     * @return \Spryker\Shared\Kernel\BundleProxy
      */
     public function __call($bundle, array $arguments = null);
 

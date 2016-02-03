@@ -132,7 +132,7 @@ abstract class AbstractPropelCollectorPlugin
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $baseQuery
      *
-     * @return BatchIterator
+     * @return \Spryker\Zed\Collector\Business\Exporter\BatchIterator
      */
     protected function getBatchIterator(ModelCriteria $baseQuery)
     {
