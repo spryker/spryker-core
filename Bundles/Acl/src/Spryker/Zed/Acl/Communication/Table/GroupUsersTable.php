@@ -2,12 +2,10 @@
 
 namespace Spryker\Zed\Acl\Communication\Table;
 
-use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;
-use Orm\Zed\Acl\Persistence\Map\SpyAclUserHasGroupTableMap;
-use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
+use Orm\Zed\User\Persistence\SpyUser;
+use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 
 class GroupUsersTable extends AbstractTable
 {
@@ -18,18 +16,16 @@ class GroupUsersTable extends AbstractTable
     const PARAMETER_ID_GROUP = 'id-group';
 
     const COL_ID_ACL_GROUP = 'id_acl_group';
-    const COL_FK_USER = 'id_user';
+    const COL_ID_USER = 'id_user';
     const COL_EMAIL = 'email';
     const COL_FIRST_NAME = 'first_name';
     const COL_LAST_NAME = 'last_name';
     const COL_OPTIONS = 'Options';
 
     /**
-     * @var \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
      */
-    protected $hasGroupQuery;
-
-    protected $spyUserQuery;
+    protected $aclQueryContainer;
 
     /**
      * @var int
@@ -37,12 +33,12 @@ class GroupUsersTable extends AbstractTable
     protected $idGroup;
 
     /**
-     * @param \Orm\Zed\Acl\Persistence\SpyAclGroupQuery $hasGroupQuery
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $aclQueryContainer
      * @param int $idAclGroup
      */
-    public function __construct(SpyAclGroupQuery $hasGroupQuery, $idAclGroup)
+    public function __construct(AclQueryContainer $aclQueryContainer, $idAclGroup)
     {
-        $this->hasGroupQuery = $hasGroupQuery;
+        $this->aclQueryContainer = $aclQueryContainer;
         $this->idGroup = $idAclGroup;
     }
 
@@ -59,7 +55,6 @@ class GroupUsersTable extends AbstractTable
         $this->setTableIdentifier('users-in-group');
 
         $config->setHeader([
-            self::COL_ID_ACL_GROUP => 'ID Acl Group',
             self::COL_FIRST_NAME => 'First Name',
             self::COL_LAST_NAME => 'Last Name',
             self::COL_EMAIL => 'Email',
@@ -76,28 +71,18 @@ class GroupUsersTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $group = $this->hasGroupQuery->findOneByIdAclGroup(1);
+        $query = $this->aclQueryContainer->queryGroupUsers($this->idGroup);
 
-        $query = $this->hasGroupQuery
-            ->useSpyAclUserHasGroupQuery()
-                ->filterBySpyAclGroup($group)
-                ->useSpyUserQuery()
-                ->endUse()
-            ->endUse()
-            ->withColumn(SpyAclUserHasGroupTableMap::COL_FK_USER, self::COL_FK_USER)
-            ->withColumn(SpyUserTableMap::COL_FIRST_NAME, self::COL_FIRST_NAME)
-            ->withColumn(SpyUserTableMap::COL_LAST_NAME, self::COL_LAST_NAME)
-            ->withColumn(SpyUserTableMap::COL_USERNAME, self::COL_EMAIL);
-        $usersResult = $this->runQuery($query, $config);
+        /** @var SpyUser[] $userCollection */
+        $userCollection = $this->runQuery($query, $config, true);
 
         $users = [];
-        foreach ($usersResult as $user) {
+        foreach ($userCollection as $user) {
             $users[] = [
-                self::COL_ID_ACL_GROUP => $user[SpyAclGroupTableMap::COL_ID_ACL_GROUP],
-                self::COL_FK_USER => $user[self::COL_FK_USER],
-                self::COL_FIRST_NAME => $user[self::COL_FIRST_NAME],
-                self::COL_LAST_NAME => $user[self::COL_LAST_NAME],
-                self::COL_EMAIL => $user[self::COL_EMAIL],
+                self::COL_ID_USER => $user->getIdUser(),
+                self::COL_FIRST_NAME => $user->getFirstName(),
+                self::COL_LAST_NAME => $user->getLastName(),
+                self::COL_EMAIL => $user->getUsername(),
                 self::COL_OPTIONS => $this->getRemoveUrl($user),
             ];
         }
@@ -106,15 +91,16 @@ class GroupUsersTable extends AbstractTable
     }
 
     /**
-     * @param array $user
+     * @param \Orm\Zed\User\Persistence\SpyUser $user
      *
      * @return string
      */
-    protected function getRemoveUrl(array $user)
+    protected function getRemoveUrl(SpyUser $user)
     {
         return $this->generateRemoveButton('#', 'Remove', [
-            'id' => sprintf('row-%d-%d', $user[self::COL_FK_USER], $this->idGroup),
-            'data-options' => sprintf('{"idUser": %d, "idGroup": %d}', $user[self::COL_FK_USER], $this->idGroup),
+            'id' => sprintf('row-%d-%d', $user->getIdUser(), $this->idGroup),
+            'data-options' => sprintf('{"idUser": %d, "idGroup": %d}', $user->getIdUser(), $this->idGroup),
+            'class' => 'remove-user-from-group',
         ]);
     }
 
