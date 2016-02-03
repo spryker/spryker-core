@@ -131,7 +131,8 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      */
     protected function render(array $parameters = [])
     {
-        $controller = $this->app['request']->attributes->get('_controller');
+        $request = $this->app['request_stack']->getCurrentRequest();
+        $controller = $request->attributes->get('_controller');
 
         if (!is_string($controller) || empty($controller)) {
             return;

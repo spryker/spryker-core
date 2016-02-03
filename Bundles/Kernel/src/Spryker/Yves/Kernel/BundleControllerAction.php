@@ -7,6 +7,7 @@
 namespace Spryker\Yves\Kernel;
 
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
+use Zend\Filter\Word\DashToCamelCase;
 
 class BundleControllerAction implements BundleControllerActionInterface
 {
@@ -27,6 +28,11 @@ class BundleControllerAction implements BundleControllerActionInterface
     private $action;
 
     /**
+     * @var \Zend\Filter\Word\DashToCamelCase
+     */
+    private $filter;
+
+    /**
      * @param string $bundle
      * @param string $controller
      * @param string $action
@@ -39,11 +45,33 @@ class BundleControllerAction implements BundleControllerActionInterface
     }
 
     /**
+     * @param string $value
+     *
+     * @return string
+     */
+    private function filter($value)
+    {
+        return lcfirst($this->getFilter()->filter($value));
+    }
+
+    /**
+     * @return \Zend\Filter\Word\DashToCamelCase
+     */
+    private function getFilter()
+    {
+        if ($this->filter === null) {
+            $this->filter = new DashToCamelCase();
+        }
+
+        return $this->filter;
+    }
+
+    /**
      * @return string
      */
     public function getBundle()
     {
-        return $this->bundle;
+        return $this->filter($this->bundle);
     }
 
     /**
@@ -51,7 +79,7 @@ class BundleControllerAction implements BundleControllerActionInterface
      */
     public function getController()
     {
-        return $this->controller;
+        return $this->filter($this->controller);
     }
 
     /**
@@ -59,7 +87,7 @@ class BundleControllerAction implements BundleControllerActionInterface
      */
     public function getAction()
     {
-        return $this->action;
+        return $this->filter($this->action);
     }
 
 }
