@@ -7,16 +7,15 @@
 namespace Spryker\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\VoucherTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 
 class DiscountVoucherWriter extends AbstractWriter
 {
 
     /**
-     * @param VoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $discountVoucherTransfer
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function create(VoucherTransfer $discountVoucherTransfer)
     {
@@ -28,11 +27,11 @@ class DiscountVoucherWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherTransfer $discountVoucherTransfer
+     * @param \Generated\Shared\Transfer\VoucherTransfer $discountVoucherTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyDiscountVoucher
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
     public function update(VoucherTransfer $discountVoucherTransfer)
     {

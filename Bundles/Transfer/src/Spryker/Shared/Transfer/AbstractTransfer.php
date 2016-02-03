@@ -23,7 +23,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     protected $transferMetadata = [];
 
     /**
-     * @var UnderscoreToCamelCase
+     * @var \Zend\Filter\Word\UnderscoreToCamelCase
      */
     private static $filterUnderscoreToCamelCase;
 
@@ -192,7 +192,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * @param string $property
      *
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return void
      */
@@ -210,7 +210,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * @param string $property
      *
-     * @throws RequiredTransferPropertyException
+     * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return void
      */
@@ -240,7 +240,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * Performance-Speedup. We do not want another instance of the filter for each property.
      *
-     * @return UnderscoreToCamelCase
+     * @return \Zend\Filter\Word\UnderscoreToCamelCase
      */
     private function getFilterUnderscoreToCamelCase()
     {
@@ -280,7 +280,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      * @param mixed $value
      * @param bool $ignoreMissingProperty
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     private function initializeNestedTransferObject($property, $value, $ignoreMissingProperty = false)
     {
@@ -313,7 +313,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * @param string $type
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     private function createInstance($type)
     {

@@ -9,18 +9,17 @@ namespace Functional\Spryker\Zed\Locale;
 use Codeception\TestCase\Test;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 class LocaleTest extends Test
 {
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 
     /**
-     * @var LocaleQueryContainerInterface
+     * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
     protected $localeQueryContainer;
 

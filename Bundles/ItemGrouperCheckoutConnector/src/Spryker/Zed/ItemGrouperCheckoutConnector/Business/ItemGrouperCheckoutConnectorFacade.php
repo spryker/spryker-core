@@ -10,15 +10,15 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 
 /**
- * @method ItemGrouperCheckoutConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\ItemGrouperCheckoutConnector\Business\ItemGrouperCheckoutConnectorBusinessFactory getFactory()
  */
 class ItemGrouperCheckoutConnectorFacade extends AbstractFacade
 {
 
     /**
-     * @param GroupableContainerTransfer $orderItems
+     * @param \Generated\Shared\Transfer\GroupableContainerTransfer $orderItems
      *
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     public function groupOrderItems(GroupableContainerTransfer $orderItems)
     {

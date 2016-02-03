@@ -8,15 +8,12 @@ namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Shipment\Business\ShipmentFacade;
-use Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method ShipmentCommunicationFactory getFactory()
- * @method ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
  */
 class MethodController extends AbstractController
 {
@@ -24,9 +21,9 @@ class MethodController extends AbstractController
     const ID_METHOD_PARAMETER = 'id-method';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addAction(Request $request)
     {
@@ -52,9 +49,9 @@ class MethodController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request)
     {
@@ -86,9 +83,9 @@ class MethodController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {

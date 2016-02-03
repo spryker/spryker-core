@@ -19,7 +19,7 @@ class StockQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idProduct
      *
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryStockByNeverOutOfStockAllTypes($idProduct)
     {
@@ -31,7 +31,7 @@ class StockQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idProduct
      *
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryStockByProducts($idProduct)
     {
@@ -43,7 +43,7 @@ class StockQueryContainer extends AbstractQueryContainer
      * @param int $idStock
      * @param int $idProduct
      *
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryStockProductByStockAndProduct($idStock, $idProduct)
     {
@@ -56,7 +56,7 @@ class StockQueryContainer extends AbstractQueryContainer
      * @param string $sku
      * @param string $type
      *
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryStockProductBySkuAndType($sku, $type)
     {
@@ -75,7 +75,7 @@ class StockQueryContainer extends AbstractQueryContainer
     /**
      * @param string $name
      *
-     * @return SpyStockQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
      */
     public function queryStockByName($name)
     {
@@ -84,7 +84,7 @@ class StockQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyStockQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
      */
     public function queryAllStockTypes()
     {
@@ -92,7 +92,7 @@ class StockQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryAllStockProducts()
     {
@@ -100,7 +100,7 @@ class StockQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryAllStockProductsJoinedStockJoinedProduct()
     {
@@ -118,7 +118,7 @@ class StockQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idStockProduct
      *
-     * @return SpyStockProductQuery
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryStockProductByIdStockProduct($idStockProduct)
     {

@@ -12,32 +12,29 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
-use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
-use Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ProductCategoryFacade getFacade()
- * @method ProductCategoryCommunicationFactory getFactory()
- * @method ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
+ * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
  */
 class EditController extends AddController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
         $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
 
         $currentCategory = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryCategoryById($idCategory)
             ->findOne();
 
@@ -48,7 +45,7 @@ class EditController extends AddController
         }
 
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $form = $this->getFactory()
             ->createCategoryFormEdit($idCategory);
@@ -57,7 +54,7 @@ class EditController extends AddController
 
         if ($form->isValid()) {
             $connection = $this->getFactory()
-                ->createPropelConnection();
+                ->getPropelConnection();
 
             $connection->beginTransaction();
 
@@ -109,8 +106,8 @@ class EditController extends AddController
 
     /**
      * @param $existingCategoryNode
-     * @param NodeTransfer $categoryNodeTransfer
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -136,8 +133,8 @@ class EditController extends AddController
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param array $parentIdList
      *
      * @return void
@@ -161,7 +158,7 @@ class EditController extends AddController
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param array $data
      *
      * @return void
@@ -194,7 +191,7 @@ class EditController extends AddController
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param $productOrder
      *
      * @return void
@@ -206,7 +203,7 @@ class EditController extends AddController
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param $productPreConfig
      *
      * @return void
@@ -217,10 +214,10 @@ class EditController extends AddController
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param array $data
      *
-     * @return CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     protected function updateCategory(LocaleTransfer $locale, array $data)
     {
@@ -234,10 +231,10 @@ class EditController extends AddController
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param array $data
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     protected function updateCategoryNode(LocaleTransfer $locale, array $data)
     {
@@ -247,7 +244,7 @@ class EditController extends AddController
 
         /* @var SpyCategoryNode $currentCategoryNode */
         $existingCategoryNode = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryNodeById($currentCategoryNodeTransfer->getIdCategoryNode())
             ->findOne();
 
@@ -257,11 +254,11 @@ class EditController extends AddController
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param array $data
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     protected function updateCategoryNodeChild(CategoryTransfer $categoryTransfer, LocaleTransfer $locale, array $data)
     {
@@ -270,7 +267,7 @@ class EditController extends AddController
         $nodeTransfer->setIsMain(false);
 
         $existingCategoryNode = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $nodeTransfer->getFkParentCategoryNode())
             ->findOne();
 
@@ -280,8 +277,8 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -300,9 +297,9 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param SpyCategoryNode $node
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -310,7 +307,7 @@ class EditController extends AddController
     {
         $path = [];
         $pathTokens = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryPath($node->getIdCategoryNode(), $locale->getIdLocale(), true, false)
             ->find();
 
@@ -327,8 +324,8 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -352,9 +349,9 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param SpyCategoryNode $node
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -381,8 +378,8 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -402,8 +399,8 @@ class EditController extends AddController
     }
 
     /**
-     * @param SpyCategory $category
-     * @param SpyCategoryNode $node
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $category
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
      *
      * @return array
      */
@@ -429,14 +426,14 @@ class EditController extends AddController
 
     /**
      * @param int $idCategoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyCategoryNode[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
      */
     protected function getCategoryChildren($idCategoryNode, LocaleTransfer $locale)
     {
         return $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryChildren($idCategoryNode, $locale->getIdLocale(), false, false)
             ->find();
     }

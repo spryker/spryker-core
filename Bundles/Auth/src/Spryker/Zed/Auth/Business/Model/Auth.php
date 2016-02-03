@@ -9,7 +9,6 @@ namespace Spryker\Zed\Auth\Business\Model;
 use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Auth\AuthConfig;
-use Spryker\Zed\Auth\Business\AuthBusinessFactory;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Exception\UserNotLoggedException;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
@@ -20,35 +19,35 @@ class Auth implements AuthInterface
 {
 
     /**
-     * @var SessionClientInterface
+     * @var \Spryker\Client\Session\SessionClientInterface
      */
     protected $session;
 
     /**
-     * @var AuthToUserBridge
+     * @var \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge
      */
     protected $userFacade;
 
     /**
-     * @var AuthBusinessFactory
+     * @var \Spryker\Zed\Auth\Business\AuthBusinessFactory
      */
     protected $businessFactory;
 
     /**
-     * @var AuthConfig
+     * @var \Spryker\Zed\Auth\AuthConfig
      */
     protected $authConfig;
 
     /**
-     * @var StaticToken
+     * @var \Spryker\Zed\Auth\Business\Client\StaticToken
      */
     protected $staticToken;
 
     /**
-     * @param SessionClientInterface $session
-     * @param AuthToUserBridge $userBridge
-     * @param AuthConfig $authConfig
-     * @param StaticToken $staticToken
+     * @param \Spryker\Client\Session\SessionClientInterface $session
+     * @param \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge $userBridge
+     * @param \Spryker\Zed\Auth\AuthConfig $authConfig
+     * @param \Spryker\Zed\Auth\Business\Client\StaticToken $staticToken
      */
     public function __construct(
         SessionClientInterface $session,
@@ -95,7 +94,7 @@ class Auth implements AuthInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return string
      */
@@ -116,7 +115,7 @@ class Auth implements AuthInterface
 
     /**
      * @param string $token
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @return string
      */
@@ -236,9 +235,9 @@ class Auth implements AuthInterface
     /**
      * @param string $hash
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getSystemUserByHash($hash)
     {
@@ -264,7 +263,7 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser($token)
     {
@@ -276,9 +275,9 @@ class Auth implements AuthInterface
     /**
      * @param string $token
      *
-     * @throws UserNotLoggedException
+     * @throws \Spryker\Zed\Auth\Business\Exception\UserNotLoggedException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function unserializeUserFromSession($token)
     {

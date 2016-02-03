@@ -6,7 +6,6 @@
 
 namespace Spryker\Shared\Heartbeat\Code;
 
-use Generated\Shared\Transfer\HealthReportTransfer;
 use Generated\Shared\Transfer\HealthDetailTransfer;
 use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 
@@ -14,12 +13,12 @@ abstract class AbstractHealthIndicator implements HealthIndicatorInterface
 {
 
     /**
-     * @var HealthReportTransfer
+     * @var \Generated\Shared\Transfer\HealthReportTransfer
      */
     private $healthIndicatorReport;
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doHealthCheck()
     {
@@ -50,7 +49,7 @@ abstract class AbstractHealthIndicator implements HealthIndicatorInterface
     }
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     private function getHealthIndicatorReport()
     {

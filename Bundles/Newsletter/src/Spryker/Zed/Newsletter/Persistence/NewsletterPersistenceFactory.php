@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Newsletter\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Newsletter\NewsletterConfig;
 
 /**
- * @method NewsletterConfig getConfig()
- * @method NewsletterQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()
+ * @method \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer getQueryContainer()
  */
 class NewsletterPersistenceFactory extends AbstractPersistenceFactory
 {

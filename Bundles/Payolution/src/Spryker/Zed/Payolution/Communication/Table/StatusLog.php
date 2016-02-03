@@ -17,7 +17,7 @@ class StatusLog extends AbstractTable
     const FIELD_DETAILS = 'FIELD_DETAILS';
 
     /**
-     * @var SpyPaymentPayolutionTransactionStatusLogQuery
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     private $statusLogQuery;
 
@@ -37,7 +37,7 @@ class StatusLog extends AbstractTable
     ];
 
     /**
-     * @param SpyPaymentPayolutionTransactionStatusLogQuery $statusLogQuery
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery $statusLogQuery
      * @param int $idPayment
      */
     public function __construct(SpyPaymentPayolutionTransactionStatusLogQuery $statusLogQuery, $idPayment)
@@ -47,9 +47,9 @@ class StatusLog extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -85,7 +85,7 @@ class StatusLog extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

@@ -15,18 +15,18 @@ class Install extends AbstractInstaller
 {
 
     /**
-     * @var Writer
+     * @var \Spryker\Zed\Price\Business\Model\Writer
      */
     protected $writer;
 
     /**
-     * @var PriceConfig
+     * @var \Spryker\Zed\Price\PriceConfig
      */
     protected $config;
 
     /**
-     * @param WriterInterface $writer
-     * @param PriceConfig $config
+     * @param \Spryker\Zed\Price\Business\Model\WriterInterface $writer
+     * @param \Spryker\Zed\Price\PriceConfig $config
      */
     public function __construct(WriterInterface $writer, PriceConfig $config)
     {

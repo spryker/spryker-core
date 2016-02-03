@@ -13,18 +13,18 @@ class Navigation
 {
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     private $keyValueReader;
 
     /**
-     * @var KeyBuilderInterface
+     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     private $urlBuilder;
 
     /**
-     * @param StorageClientInterface $keyValueReader
-     * @param KeyBuilderInterface $urlBuilder
+     * @param \Spryker\Client\Storage\StorageClientInterface $keyValueReader
+     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $urlBuilder
      */
     public function __construct(StorageClientInterface $keyValueReader, KeyBuilderInterface $urlBuilder)
     {

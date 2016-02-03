@@ -6,20 +6,18 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
-use Spryker\Zed\Cart\Business\CartFacade;
-use Spryker\Zed\Cart\Communication\CartCommunicationFactory;
 
 /**
- * @method CartFacade getFacade()
- * @method CartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Cart\Business\CartFacade getFacade()
+ * @method \Spryker\Zed\Cart\Communication\CartCommunicationFactory getFactory()
  */
 class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function expandItems(ChangeTransfer $change)
     {
@@ -31,7 +29,7 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
     }
 
     /**
-     * @param ItemTransfer $cartItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
      *
      * @return string
      */

@@ -10,7 +10,6 @@ use Codeception\TestCase\Test;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;
-use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 use Orm\Zed\Country\Persistence\SpyCountry;
 
 /**
@@ -22,12 +21,12 @@ class CountryFacadeTest extends Test
     const ISO2_CODE = 'qx';
 
     /**
-     * @var CountryFacade
+     * @var \Spryker\Zed\Country\Business\CountryFacade
      */
     protected $countryFacade;
 
     /**
-     * @var CountryQueryContainerInterface
+     * @var \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
     protected $countryQueryContainer;
 
@@ -43,7 +42,7 @@ class CountryFacadeTest extends Test
     }
 
     /**
-     * @return MessengerInterface
+     * @return \Spryker\Zed\Messenger\Business\Model\MessengerInterface
      */
     protected function getMockLogger()
     {

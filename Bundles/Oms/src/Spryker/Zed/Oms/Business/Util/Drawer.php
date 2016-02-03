@@ -6,7 +6,8 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Spryker\Zed\Library\Service\GraphViz;
+use Spryker\Tool\Graph\GraphInterface;
+use Spryker\Tool\Graph\Graph;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
@@ -14,8 +15,6 @@ use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 
 class Drawer implements DrawerInterface
 {
-
-    protected $graphDefault = ['fontname' => 'Verdana', 'labelfontname' => 'Verdana', 'nodesep' => 0.6, 'ranksep' => 0.8];
 
     protected $attributesProcess = ['fontname' => 'Verdana', 'fillcolor' => '#cfcfcf', 'style' => 'filled', 'color' => '#ffffff', 'fontsize' => 12, 'fontcolor' => 'black'];
 
@@ -58,23 +57,24 @@ class Drawer implements DrawerInterface
     protected $commands;
 
     /**
-     * @var GraphViz
+     * @var \Spryker\Tool\Graph\Graph
      */
     protected $graph;
 
     /**
      * @param array $commands
      * @param array $conditions
+     * @param \Spryker\Tool\Graph\GraphInterface $graph
      */
-    public function __construct(array $commands, array $conditions)
+    public function __construct(array $commands, array $conditions, GraphInterface $graph)
     {
         $this->commandModels = $commands;
         $this->conditionModels = $conditions;
-        $this->graph = new GraphViz(true, $this->graphDefault, 'G', false, true);
+        $this->graph = $graph;
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|null $highlightState
      * @param string|null $format
      * @param int|null $fontSize
@@ -85,17 +85,15 @@ class Drawer implements DrawerInterface
     {
         $this->init($format, $fontSize);
 
+        $this->drawClusters($process);
         $this->drawStates($process, $highlightState);
-
         $this->drawTransitions($process);
 
-        $this->drawClusters($process);
-
-        return $this->graph->image($this->format, 'dot');
+        return $this->graph->render($this->format);
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|null $highlightState
      *
      * @return void
@@ -110,7 +108,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      *
      * @return void
      */
@@ -124,7 +122,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @return void
      */
@@ -151,7 +149,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @return void
      */
@@ -167,7 +165,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      *
      * @return void
      */
@@ -176,12 +174,16 @@ class Drawer implements DrawerInterface
         $processes = $process->getAllProcesses();
         foreach ($processes as $subProcess) {
             $group = $subProcess->getName();
-            $this->graph->addCluster($group, $group, $this->attributesProcess);
+            $attributes = $this->attributesProcess;
+            $attributes['label'] = $group;
+
+            $this->graph->addCluster($group, $attributes);
+//            $this->graph->addCluster($group, $group, $attributes);
         }
     }
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      * @param array $attributes
      * @param string|null $name
      * @param bool $highlighted
@@ -219,7 +221,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @return bool
      */
@@ -238,7 +240,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param string $type
      * @param array $attributes
      * @param string|null $fromName
@@ -263,11 +265,11 @@ class Drawer implements DrawerInterface
         $toName = $this->addEdgeToState($transition, $toName);
         $attributes = $this->addEdgeAttributes($transition, $attributes, $label, $type);
 
-        $this->graph->addEdge([$fromName => $toName], $attributes);
+        $this->graph->addEdge($fromName, $toName, $attributes);
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param string $label
      *
      * @return array
@@ -288,7 +290,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param string $label
      *
      * @return array
@@ -351,7 +353,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param array $attributes
      * @param string $label
      * @param string $type
@@ -387,7 +389,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param string $fromName
      *
      * @return string
@@ -400,7 +402,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param TransitionInterface $transition
+     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param string|null $toName
      *
      * @return string

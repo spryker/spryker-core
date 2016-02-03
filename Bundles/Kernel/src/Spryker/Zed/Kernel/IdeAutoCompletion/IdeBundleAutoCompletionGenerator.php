@@ -12,7 +12,7 @@ class IdeBundleAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerato
 {
 
     /**
-     * @param OptionsResolver $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */

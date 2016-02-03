@@ -7,8 +7,6 @@
 namespace Functional\Spryker\Zed\ProductOption\Business\Model;
 
 use Codeception\TestCase\Test;
-use Generated\Zed\Ide\AutoCompletion;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -30,18 +28,18 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
  * @group ProductOption
  * @group DataImportWriterTest
  *
- * @method ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
  */
 class DataImportWriterTest extends Test
 {
 
     /**
-     * @var ProductOptionFacade
+     * @var \Spryker\Zed\ProductOption\Business\ProductOptionFacade
      */
     private $facade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 
@@ -297,9 +295,9 @@ class DataImportWriterTest extends Test
      * @param string $typeKey
      * @param string $valueKey
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyProductOptionType
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionType
      */
     private function createOptionTypeWithValue($typeKey, $valueKey)
     {
@@ -311,12 +309,12 @@ class DataImportWriterTest extends Test
     }
 
     /**
-     * @param SpyProduct $product
-     * @param SpyProductOptionType $optionType
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $product
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionType $optionType
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyProductOptionTypeUsage
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsage
      */
     private function createProductOptionTypeUsage($product, $optionType)
     {

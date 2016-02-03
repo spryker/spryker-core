@@ -6,7 +6,6 @@
 
 namespace Spryker\Yves\Application\Plugin\Provider;
 
-use Spryker\Yves\Application\Application as YvesApplication;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -16,12 +15,12 @@ class CookieServiceProvider implements ServiceProviderInterface
 {
 
     /**
-     * @var YvesApplication
+     * @var \Spryker\Yves\Application\Application
      */
     private $app;
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -36,7 +35,7 @@ class CookieServiceProvider implements ServiceProviderInterface
     /**
      * Handles transparent Cookie insertion
      *
-     * @param FilterResponseEvent $event The event to handle
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event The event to handle
      *
      * @return void
      */
@@ -50,7 +49,7 @@ class CookieServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

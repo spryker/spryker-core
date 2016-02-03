@@ -10,13 +10,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
- * @method NopaymentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Nopayment\Business\NopaymentBusinessFactory getFactory()
  */
 class NopaymentFacade extends AbstractFacade
 {
 
     /**
-     * @param SpySalesOrderItem[] $orderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      *
      * @return array
      */
@@ -26,7 +26,7 @@ class NopaymentFacade extends AbstractFacade
     }
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return array
      */

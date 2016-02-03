@@ -8,7 +8,6 @@ namespace Spryker\Zed\Console;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Symfony\Component\Console\Command\Command;
 
 class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -16,9 +15,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     const COMMANDS = 'commands';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -30,9 +29,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Command[]
+     * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands(Container $container)
     {

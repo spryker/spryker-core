@@ -7,7 +7,6 @@
 namespace Functional\Spryker\Zed\ProductOptionExporter\Business\Model;
 
 use Codeception\TestCase\Test;
-use Generated\Zed\Ide\AutoCompletion;
 use Functional\Spryker\Zed\ProductOption\Persistence\DbFixturesLoader;
 use Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -18,18 +17,18 @@ use Generated\Shared\Transfer\LocaleTransfer;
  * @group ProdutOptionExporter
  * @group DataProcessorTest
  *
- * @method ProductOptionExporterFacade getFacade()
+ * @method \Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade getFacade()
  */
 class DataProcessorTest extends Test
 {
 
     /**
-     * @var ProductOptionExporterFacade
+     * @var \Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterFacade
      */
     private $facade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

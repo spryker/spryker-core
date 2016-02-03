@@ -8,23 +8,21 @@ namespace Spryker\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\ProductCategory\Persistence\QueryExpander\ProductCategoryPathQueryExpander;
-use Spryker\Zed\ProductCategory\ProductCategoryConfig;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
- * @method ProductCategoryConfig getConfig()
- * @method ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
  */
 class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return ProductCategoryPathQueryExpander
+     * @return \Spryker\Zed\ProductCategory\Persistence\QueryExpander\ProductCategoryPathQueryExpander
      */
     public function createProductCategoryPathQueryExpander(LocaleTransfer $locale)
     {
@@ -35,7 +33,7 @@ class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return CategoryQueryContainer
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     protected function getCategoryQueryContainer()
     {
@@ -43,7 +41,7 @@ class ProductCategoryPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function createProductCategoryQuery()
     {

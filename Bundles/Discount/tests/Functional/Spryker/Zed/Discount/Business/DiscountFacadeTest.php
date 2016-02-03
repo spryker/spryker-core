@@ -19,7 +19,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
@@ -68,12 +67,12 @@ class DiscountFacadeTest extends Test
     const DISCOUNT_VOUCHER_POOL_CATEGORY = 'discount-voucher-pool-category';
 
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 
@@ -562,7 +561,7 @@ class DiscountFacadeTest extends Test
     }
 
     /**
-     * @return CalculableContainer
+     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
@@ -574,7 +573,7 @@ class DiscountFacadeTest extends Test
     /**
      * @param array $grossPrices
      *
-     * @return ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getItems(array $grossPrices)
     {

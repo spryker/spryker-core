@@ -7,19 +7,17 @@
 namespace Spryker\Zed\Storage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Client\Storage\StorageClient;
 use Spryker\Zed\Storage\Business\Model\Storage;
 use Spryker\Zed\Storage\StorageDependencyProvider;
-use Spryker\Zed\Storage\StorageConfig;
 
 /**
- * @method StorageConfig getConfig()
+ * @method \Spryker\Zed\Storage\StorageConfig getConfig()
  */
 class StorageBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Storage
+     * @return \Spryker\Zed\Storage\Business\Model\Storage
      */
     public function createStorage()
     {
@@ -29,7 +27,7 @@ class StorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return StorageClient
+     * @return \Spryker\Client\Storage\StorageClient
      */
     protected function getStorageClient()
     {

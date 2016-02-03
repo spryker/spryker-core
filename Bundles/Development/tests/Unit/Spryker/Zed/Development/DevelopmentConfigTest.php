@@ -12,7 +12,7 @@ class DevelopmentConfigTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return DevelopmentConfig
+     * @return \Spryker\Zed\Development\DevelopmentConfig
      */
     private function getConfig()
     {
@@ -25,14 +25,6 @@ class DevelopmentConfigTest extends \PHPUnit_Framework_TestCase
     public function testGetPathToRoot()
     {
         $this->assertTrue(is_string($this->getConfig()->getPathToRoot()));
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetPathToSpryker()
-    {
-        $this->assertTrue(is_string($this->getConfig()->getPathToSpryker()));
     }
 
 }

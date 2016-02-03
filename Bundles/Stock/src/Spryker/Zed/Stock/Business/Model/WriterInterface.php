@@ -13,21 +13,21 @@ interface WriterInterface
 {
 
     /**
-     * @param TypeTransfer $stockTypeTransfer
+     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int
      */
     public function createStockType(TypeTransfer $stockTypeTransfer);
 
     /**
-     * @param TypeTransfer $stockTypeTransfer
+     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int
      */
     public function updateStockType(TypeTransfer $stockTypeTransfer);
 
     /**
-     * @param StockProductTransfer $transferStockProduct
+     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
      */
@@ -48,7 +48,7 @@ interface WriterInterface
     public function incrementStock($sku, $stockType, $incrementBy = 1);
 
     /**
-     * @param StockProductTransfer $transferStockProduct
+     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
      */

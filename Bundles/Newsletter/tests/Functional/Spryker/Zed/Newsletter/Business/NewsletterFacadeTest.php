@@ -26,7 +26,7 @@ class NewsletterFacadeTest extends Test
     const TEST_TYPE2 = 'TEST_TYPE2';
 
     /**
-     * @var NewsletterFacade
+     * @var \Spryker\Zed\Newsletter\Business\NewsletterFacade
      */
     protected $newsletterFacade;
 
@@ -233,7 +233,7 @@ class NewsletterFacadeTest extends Test
     }
 
     /**
-     * @return NewsletterSubscriberTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
     protected function createSubscriber()
     {
@@ -245,7 +245,7 @@ class NewsletterFacadeTest extends Test
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $request
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $request
      *
      * @return void
      */
@@ -258,7 +258,7 @@ class NewsletterFacadeTest extends Test
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $request
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $request
      *
      * @return void
      */

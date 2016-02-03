@@ -15,7 +15,7 @@ class Service implements ServiceInterface
     const KV_PREFIX = 'kv:';
 
     /**
-     * @var ClientInterface
+     * @var \Predis\ClientInterface
      */
     private $client;
 
@@ -30,7 +30,7 @@ class Service implements ServiceInterface
     private $accessStats;
 
     /**
-     * @param ClientInterface $client
+     * @param \Predis\ClientInterface $client
      * @param bool $debug
      */
     public function __construct(ClientInterface $client, $debug = false)
@@ -63,7 +63,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @param $debug
+     * @param bool $debug
      *
      * @return self
      */
@@ -75,7 +75,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * set read write stats array
+     * Sets, reads, writes stats array
      *
      * @return void
      */
@@ -266,7 +266,7 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return string
      */

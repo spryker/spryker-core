@@ -15,10 +15,10 @@ class InMemoryProvider implements StorageProviderInterface
 {
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $increasedItems
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $increasedItems
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function increaseItems(CartTransfer $cart, ChangeTransfer $increasedItems)
     {
@@ -26,10 +26,10 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addItems(CartTransfer $cart, ChangeTransfer $change)
     {
@@ -43,10 +43,10 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $decreasedItems
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $decreasedItems
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function decreaseItems(CartTransfer $cart, ChangeTransfer $decreasedItems)
     {
@@ -54,10 +54,10 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeItems(CartTransfer $cart, ChangeTransfer $change)
     {
@@ -78,7 +78,7 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $cartItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
      *
      * @return array
      */
@@ -96,9 +96,9 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param ItemTransfer[] $existingItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
      * @param int $index
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return void
      */
@@ -116,7 +116,7 @@ class InMemoryProvider implements StorageProviderInterface
 
     /**
      * @param \ArrayObject $existingItems
-     * @param ItemTransfer $changedItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $changedItem
      *
      * @return void
      */
@@ -132,7 +132,7 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return bool
      */
@@ -152,10 +152,10 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addCouponCode(CartTransfer $cart, ChangeTransfer $change)
     {
@@ -165,10 +165,10 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeCouponCode(CartTransfer $cart, ChangeTransfer $change)
     {
@@ -185,9 +185,9 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartTransfer $cart
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCouponCodes(CartTransfer $cart)
     {

@@ -8,12 +8,11 @@ namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use Spryker\Zed\Payone\Business\PayoneCommunicationFactory;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Generated\Shared\Transfer\OrderTransfer;
 
 /**
- * @method PayoneCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Payone\Business\PayoneCommunicationFactory getFactory()
  */
 abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInterface
 {
@@ -26,7 +25,7 @@ abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInt
     private static $resultCache = [];
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool
      */
@@ -48,7 +47,7 @@ abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInt
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

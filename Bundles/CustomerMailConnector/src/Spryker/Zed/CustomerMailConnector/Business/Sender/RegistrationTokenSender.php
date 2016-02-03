@@ -35,7 +35,7 @@ class RegistrationTokenSender extends AbstractSender
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return void
      */

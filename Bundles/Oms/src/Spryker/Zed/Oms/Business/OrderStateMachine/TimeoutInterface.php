@@ -9,38 +9,36 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use DateTime;
-use Exception;
-use Propel\Runtime\Exception\PropelException;
 
 interface TimeoutInterface
 {
 
     /**
-     * @param OrderStateMachineInterface $orderStateMachine
+     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface $orderStateMachine
      *
      * @return int
      */
     public function checkTimeouts(OrderStateMachineInterface $orderStateMachine);
 
     /**
-     * @param ProcessInterface $process
-     * @param SpySalesOrderItem $orderItem
-     * @param DateTime $currentTime
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
+     * @param \DateTime $currentTime
      *
-     * @throws Exception
-     * @throws PropelException
+     * @throws \Exception
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
     public function setNewTimeout(ProcessInterface $process, SpySalesOrderItem $orderItem, DateTime $currentTime);
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string $stateId
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @throws Exception
-     * @throws PropelException
+     * @throws \Exception
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

@@ -17,14 +17,14 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
     const KEY_STORE = '%store%';
 
     /**
-     * @var ClassInfo
+     * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo
      */
     private $classInfo;
 
     /**
      * @param object|string $callerClass
      *
-     * @return AbstractClassResolver
+     * @return \Spryker\Client\Kernel\ClassResolver\AbstractClassResolver
      */
     public function setCallerClass($callerClass)
     {
@@ -35,7 +35,7 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
     }
 
     /**
-     * @return ClassInfo
+     * @return \Spryker\Shared\Kernel\ClassResolver\ClassInfo
      */
     public function getClassInfo()
     {

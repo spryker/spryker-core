@@ -7,20 +7,18 @@
 namespace Spryker\Zed\Refund\Dependency\Facade;
 
 use Spryker\Zed\Sales\Business\SalesFacade;
-use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 
 class RefundToSalesBridge implements RefundToSalesInterface
 {
 
     /**
-     * @var SalesFacade
+     * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected $salesFacade;
 
     /**
-     * @param SalesFacade $salesFacade
+     * @param \Spryker\Zed\Sales\Business\SalesFacade $salesFacade
      */
     public function __construct($salesFacade)
     {
@@ -31,7 +29,7 @@ class RefundToSalesBridge implements RefundToSalesInterface
      * @param int $idSalesOrderItem
      * @param int $quantity
      *
-     * @return ItemSplitResponseTransfer
+     * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
     public function splitSalesOrderItem($idSalesOrderItem, $quantity)
     {
@@ -40,7 +38,7 @@ class RefundToSalesBridge implements RefundToSalesInterface
 
     /**
      * @param int $idRefund
-     * @param OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
+     * @param \Generated\Shared\Transfer\OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
      *
      * @return void
      */
@@ -52,7 +50,7 @@ class RefundToSalesBridge implements RefundToSalesInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
     {

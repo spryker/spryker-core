@@ -8,12 +8,11 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\CommentTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method SalesCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  */
 class CommentController extends AbstractController
 {
@@ -21,9 +20,9 @@ class CommentController extends AbstractController
     /**
      * @TODO check if we can remove this method
      *
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function addAction(Request $request)
     {

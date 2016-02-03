@@ -7,8 +7,6 @@
 namespace Functional\Spryker\Zed\Payolution\Business;
 
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
-use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
 
@@ -16,9 +14,9 @@ class PayolutionFacadeMockBuilder
 {
 
     /**
-     * @param AdapterInterface $adapter
+     * @param \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface $adapter
      *
-     * @return PayolutionFacade
+     * @return \Spryker\Zed\Payolution\Business\PayolutionFacade
      */
     public static function build(AdapterInterface $adapter, \PHPUnit_Framework_TestCase $testCase)
     {
@@ -53,7 +51,7 @@ class PayolutionFacadeMockBuilder
     /**
      * @param \PHPUnit_Framework_TestCase $testCase
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|PayolutionBusinessFactory
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payolution\Business\PayolutionBusinessFactory
      */
     protected static function getBusinessFactoryMock(\PHPUnit_Framework_TestCase $testCase)
     {

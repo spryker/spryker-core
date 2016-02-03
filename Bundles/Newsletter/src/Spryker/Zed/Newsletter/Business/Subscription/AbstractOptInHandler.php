@@ -8,29 +8,28 @@ namespace Spryker\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
-use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber;
 
 abstract class AbstractOptInHandler
 {
 
     /**
-     * @var NewsletterQueryContainer
+     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var SubscriberKeyGeneratorInterface
+     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface
      */
     protected $subscriberKeyGenerator;
 
     /**
-     * @var SubscriberOptInSenderInterface[]
+     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface[]
      */
     protected $subscriberOptInSenders;
 
     /**
-     * @param NewsletterQueryContainer $queryContainer
-     * @param SubscriberKeyGeneratorInterface $subscriberKeyGenerator
+     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
+     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface $subscriberKeyGenerator
      */
     public function __construct(NewsletterQueryContainer $queryContainer, SubscriberKeyGeneratorInterface $subscriberKeyGenerator)
     {
@@ -39,9 +38,9 @@ abstract class AbstractOptInHandler
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $subscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriberTransfer
      *
-     * @return SpyNewsletterSubscriber
+     * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber
      */
     protected function findSubscriberEntity(NewsletterSubscriberTransfer $subscriberTransfer)
     {

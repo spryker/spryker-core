@@ -9,20 +9,18 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Customer\Business\CustomerFacade;
-use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CustomerFacade getFacade()
- * @method CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class AddressController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -40,7 +38,7 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction(Request $request)
     {
@@ -53,7 +51,7 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -86,7 +84,7 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -127,7 +125,7 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -158,7 +156,7 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function createCustomerAddressTransfer()
     {

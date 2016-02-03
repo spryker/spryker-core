@@ -10,17 +10,16 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoredConfirmationSender;
 use Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoreTokenSender;
 use Spryker\Zed\CustomerMailConnector\Business\Sender\RegistrationTokenSender;
-use Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
 use Spryker\Zed\CustomerMailConnector\CustomerMailConnectorDependencyProvider;
 
 /**
- * @method CustomerMailConnectorConfig getConfig()
+ * @method \Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig getConfig()
  */
 class CustomerMailConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return RegistrationTokenSender
+     * @return \Spryker\Zed\CustomerMailConnector\Business\Sender\RegistrationTokenSender
      */
     public function createRegistrationTokenSender()
     {
@@ -32,7 +31,7 @@ class CustomerMailConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PasswordRestoreTokenSender
+     * @return \Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoreTokenSender
      */
     public function createPasswordRestoreTokenSender()
     {
@@ -44,7 +43,7 @@ class CustomerMailConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PasswordRestoredConfirmationSender
+     * @return \Spryker\Zed\CustomerMailConnector\Business\Sender\PasswordRestoredConfirmationSender
      */
     public function createPasswordRestoredConfirmationSender()
     {

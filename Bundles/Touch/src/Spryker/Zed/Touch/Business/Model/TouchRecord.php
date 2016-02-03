@@ -8,7 +8,6 @@ namespace Spryker\Zed\Touch\Business\Model;
 
 use DateTime;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -17,18 +16,18 @@ class TouchRecord implements TouchRecordInterface
 {
 
     /**
-     * @var TouchQueryContainerInterface
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected $touchQueryContainer;
 
     /**
-     * @var ConnectionInterface
+     * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $connection;
 
     /**
-     * @param TouchQueryContainerInterface $queryContainer
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(TouchQueryContainerInterface $queryContainer, ConnectionInterface $connection)
     {
@@ -43,7 +42,7 @@ class TouchRecord implements TouchRecordInterface
      * @param bool $keyChange
      *
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
@@ -72,7 +71,7 @@ class TouchRecord implements TouchRecordInterface
      * @param string $itemType
      * @param int $idItem
      * @param string $itemEvent
-     * @param SpyTouch $touchEntity
+     * @param \Orm\Zed\Touch\Persistence\SpyTouch $touchEntity
      *
      * @return void
      */

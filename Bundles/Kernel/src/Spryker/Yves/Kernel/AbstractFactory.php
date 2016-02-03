@@ -6,14 +6,11 @@
 
 namespace Spryker\Yves\Kernel;
 
-use Generated\Client\Ide\AutoCompletion;
-use Spryker\Shared\Kernel\LocatorLocatorInterface;
-
 abstract class AbstractFactory implements FactoryInterface
 {
 
     /**
-     * @return AutoCompletion|LocatorLocatorInterface
+     * @return \Generated\Client\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
      */
     protected function getLocator()
     {

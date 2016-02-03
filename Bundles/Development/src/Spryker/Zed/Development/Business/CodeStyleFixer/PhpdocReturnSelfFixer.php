@@ -8,7 +8,6 @@ namespace Spryker\Zed\Development\Business\CodeStyleFixer;
 
 use Symfony\CS\AbstractFixer;
 use Symfony\CS\FixerInterface;
-use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
 
 class PhpdocReturnSelfFixer extends AbstractFixer
@@ -21,7 +20,7 @@ class PhpdocReturnSelfFixer extends AbstractFixer
     {
         $tokens = Tokens::fromCode($content);
 
-        /** @var Token $token */
+        /** @var \Symfony\CS\Tokenizer\Token $token */
         foreach ($tokens->findGivenKind(T_DOC_COMMENT) as $token) {
             $token->setContent($this->fixDocBlock($token->getContent()));
         }

@@ -10,17 +10,14 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Glossary\Business\GlossaryBusinessFactory;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
-use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
@@ -33,37 +30,37 @@ class CmsFacadeTest extends Test
 {
 
     /**
-     * @var CmsFacade
+     * @var \Spryker\Zed\Cms\Business\CmsFacade
      */
     protected $cmsFacade;
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @var GlossaryFacade
+     * @var \Spryker\Zed\Glossary\Business\GlossaryFacade
      */
     protected $glossaryFacade;
 
     /**
-     * @var UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacade
      */
     protected $urlFacade;
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 
     /**
-     * @var GlossaryQueryContainerInterface
+     * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
     protected $glossaryQueryContainer;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

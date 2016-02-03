@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\Kernel;
 
-use Generated\Zed\Ide\AutoCompletion;
-
 class Container extends \Pimple
 {
 
     /**
-     * @return AutoCompletion
+     * @return \Generated\Zed\Ide\AutoCompletion
      */
     public function getLocator()
     {

@@ -5,7 +5,7 @@ namespace Unit\Spryker\Zed\Development\Business\CodeStyleFixer\Fixtures\SprykerU
 use Spryker\Zed\Foo;
 use Pyz\Zed\Foo\Bar\Baz;
 use X\Y;
-use Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinder as InstalledPackagesInstalledPackageFinder;
+use Spryker\Zed\Development\Business\InstalledPackages\InstalledPackageFinder as InstalledPackagesInstalledPackageFinder;
 use Foo\InstalledPackageFinder;
 
 class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
@@ -33,10 +33,12 @@ class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
         );
     }
 
-    public function replaceNotYetFunction()
+    public function replaceStaticFunction()
     {
-        //TODO: Baz::x();
-        \Pyz\Zed\Foo\Bar\Baz::x();
+        Baz::x();
+
+        //TODO
+        return \Pyz\Zed\Foo\Bar\Baz::x();
     }
 
     public function doNotReplaceFunction()

@@ -13,18 +13,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Spryker\Zed\Application\Business\ApplicationFacade;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 
 /**
- * @method ApplicationFacade getFacade()
- * @method ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -33,7 +31,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @throws \Exception
      *
@@ -51,7 +49,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Exception
      *
@@ -66,7 +64,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return bool
      */
@@ -76,7 +74,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return bool
      */
@@ -89,7 +87,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $excluded
      *
      * @return bool

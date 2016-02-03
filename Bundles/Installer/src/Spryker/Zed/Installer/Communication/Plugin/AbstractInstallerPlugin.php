@@ -9,23 +9,21 @@ namespace Spryker\Zed\Installer\Communication\Plugin;
 use Psr\Log\LogLevel;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Installer\Business\InstallerFacade;
-use Spryker\Zed\Installer\Communication\InstallerCommunicationFactory;
 
 /**
- * @method InstallerFacade getFacade()
- * @method InstallerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Installer\Business\InstallerFacade getFacade()
+ * @method \Spryker\Zed\Installer\Communication\InstallerCommunicationFactory getFactory()
  */
 abstract class AbstractInstallerPlugin extends AbstractPlugin implements MessengerInterface
 {
 
     /**
-     * @var MessengerInterface
+     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
      */
     protected $messenger;
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return self
      */

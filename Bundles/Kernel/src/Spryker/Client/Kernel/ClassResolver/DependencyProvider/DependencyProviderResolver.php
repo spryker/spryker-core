@@ -6,7 +6,6 @@
 
 namespace Spryker\Client\Kernel\ClassResolver\DependencyProvider;
 
-use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyProviderResolver extends AbstractClassResolver
@@ -17,9 +16,9 @@ class DependencyProviderResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @throws DependencyProviderNotFoundException
+     * @throws \Spryker\Client\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
      *
-     * @return AbstractDependencyProvider
+     * @return \Spryker\Client\Kernel\AbstractDependencyProvider
      */
     public function resolve($callerClass)
     {

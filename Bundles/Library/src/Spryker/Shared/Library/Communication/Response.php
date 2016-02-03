@@ -44,7 +44,7 @@ class Response extends AbstractObject implements
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\Library\Communication\Message[]
      */
     public function getErrorMessages()
     {
@@ -59,7 +59,7 @@ class Response extends AbstractObject implements
     public function hasErrorMessage($messageString)
     {
         $errorMessages = $this->getErrorMessages();
-        /** @var Message $errorMessage */
+        /** @var \Spryker\Shared\Library\Communication\Message $errorMessage */
         foreach ($errorMessages as $errorMessage) {
             if ($errorMessage->getMessage() === $messageString) {
                 return true;
@@ -84,7 +84,7 @@ class Response extends AbstractObject implements
     }
 
     /**
-     * @param Message $errorMessage
+     * @param \Spryker\Shared\Library\Communication\Message $errorMessage
      *
      * @return self
      */
@@ -96,7 +96,7 @@ class Response extends AbstractObject implements
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\Library\Communication\Message[]
      */
     public function getMessages()
     {
@@ -121,7 +121,7 @@ class Response extends AbstractObject implements
     }
 
     /**
-     * @param Message $message
+     * @param \Spryker\Shared\Library\Communication\Message $message
      *
      * @return self
      */
@@ -167,7 +167,7 @@ class Response extends AbstractObject implements
     }
 
     /**
-     * @return TransferInterface|null
+     * @return \Spryker\Shared\Transfer\TransferInterface|null
      */
     public function getTransfer()
     {
@@ -182,7 +182,7 @@ class Response extends AbstractObject implements
     }
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return self
      */

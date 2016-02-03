@@ -7,22 +7,20 @@
 namespace Spryker\Zed\Calculation\Communication\Plugin;
 
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory;
 
 /**
- * @method CalculationFacade getFacade()
- * @method CalculationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
+ * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
  */
 class ExpenseTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculatorPluginInterface
 {
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param $calculableItems
      *
      * @return void

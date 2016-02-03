@@ -10,14 +10,13 @@ use Spryker\Zed\Country\CountryConfig;
 use Spryker\Zed\Installer\Business\Model\AbstractInstaller;
 use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use Spryker\Zed\Country\Business\CountryManagerInterface;
-use Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface;
 use Spryker\Zed\Country\Business\RegionManagerInterface;
 
 class Install extends AbstractInstaller
 {
 
     /**
-     * @var CountryConfig
+     * @var \Spryker\Zed\Country\CountryConfig
      */
     protected $countrySettings;
 
@@ -27,27 +26,27 @@ class Install extends AbstractInstaller
     protected $version;
 
     /**
-     * @var CldrDataProviderInterface
+     * @var \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface
      */
     protected $cldrDataProvider;
 
     /**
-     * @var CldrDataProviderInterface
+     * @var \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface
      */
     protected $codeMappingsProvider;
 
     /**
-     * @var CldrDataProviderInterface
+     * @var \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface
      */
     protected $postalCodeDataProvider;
 
     /**
-     * @var CountryManagerInterface
+     * @var \Spryker\Zed\Country\Business\CountryManagerInterface
      */
     protected $countryManager;
 
     /**
-     * @var RegionManagerInterface
+     * @var \Spryker\Zed\Country\Business\RegionManagerInterface
      */
     protected $regionManager;
 
@@ -67,12 +66,12 @@ class Install extends AbstractInstaller
     protected $postalCodes;
 
     /**
-     * @param CountryManagerInterface $countryManager
-     * @param RegionManagerInterface $regionManager
-     * @param CldrDataProviderInterface $cldrDataProvider
-     * @param CldrDataProviderInterface $codeMappingsProvider
-     * @param CldrDataProviderInterface $postalCodeDataProvider
-     * @param CountryConfig $countrySettings
+     * @param \Spryker\Zed\Country\Business\CountryManagerInterface $countryManager
+     * @param \Spryker\Zed\Country\Business\RegionManagerInterface $regionManager
+     * @param \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface $cldrDataProvider
+     * @param \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface $codeMappingsProvider
+     * @param \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface $postalCodeDataProvider
+     * @param \Spryker\Zed\Country\CountryConfig $countrySettings
      */
     public function __construct(
         CountryManagerInterface $countryManager,
@@ -220,7 +219,7 @@ class Install extends AbstractInstaller
     }
 
     /**
-     * @return RegionInstallInterface[]
+     * @return \Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface[]
      */
     protected function getCountriesToInstallRegionsFor()
     {

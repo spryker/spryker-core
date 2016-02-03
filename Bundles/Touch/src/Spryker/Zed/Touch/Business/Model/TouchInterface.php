@@ -6,15 +6,13 @@
 
 namespace Spryker\Zed\Touch\Business\Model;
 
-use Generated\Shared\Transfer\TouchTransfer;
-
 interface TouchInterface
 {
 
     /**
      * @param string $itemType
      *
-     * @return TouchTransfer[]
+     * @return \Generated\Shared\Transfer\TouchTransfer[]
      */
     public function getItemsByType($itemType);
 

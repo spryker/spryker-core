@@ -6,13 +6,12 @@
 
 namespace Spryker\Zed\Application\Communication\Console;
 
-use Spryker\Zed\Application\Business\ApplicationFacade;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
  */
 class BuildNavigationConsole extends Console
 {
@@ -32,8 +31,8 @@ class BuildNavigationConsole extends Console
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */

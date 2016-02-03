@@ -7,14 +7,12 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\Business\SalesFacade;
-use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method SalesCommunicationFactory getFactory()
- * @method SalesFacade getFacade()
+ * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
  */
 class OrderItemSplitController extends AbstractController
 {

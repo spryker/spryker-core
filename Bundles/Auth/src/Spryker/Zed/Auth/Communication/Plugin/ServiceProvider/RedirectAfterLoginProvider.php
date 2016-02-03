@@ -10,8 +10,6 @@ use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Auth\Business\AuthFacade;
-use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -19,8 +17,8 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @method AuthCommunicationFactory getFactory()
- * @method AuthFacade getFacade()
+ * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Auth\Business\AuthFacade getFacade()
  */
 class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -29,7 +27,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     const LOGIN_URI = '/auth/login';
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -38,7 +36,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -49,7 +47,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param GetResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
      *
      * @return void
      */
@@ -64,7 +62,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return bool
      */
@@ -92,7 +90,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return bool
      */
@@ -117,7 +115,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
      *
      * @return null
      */

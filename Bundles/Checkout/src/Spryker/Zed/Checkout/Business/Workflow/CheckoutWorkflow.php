@@ -14,52 +14,47 @@ use Propel\Runtime\Propel;
 use Spryker\Shared\Checkout\CheckoutConstants;
 use Spryker\Shared\Library\Error\ErrorHandler;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
 
     /**
-     * @var CheckoutPreConditionInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
      */
     protected $preConditionStack;
 
     /**
-     * @var CheckoutPreHydrationInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface[]
      */
     protected $preHydrationStack;
 
     /**
-     * @var CheckoutOrderHydrationInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface[]
      */
     protected $orderHydrationStack;
 
     /**
-     * @var CheckoutSaveOrderInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]
      */
     protected $saveOrderStack;
 
     /**
-     * @var CheckoutPostSaveHookInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[]
      */
     protected $postSaveHookStack;
 
     /**
-     * @var CheckoutToOmsInterface
+     * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface
      */
     protected $omsFacade;
 
     /**
-     * @param CheckoutPreConditionInterface[] $preConditionStack
-     * @param CheckoutPreHydrationInterface[] $preHydrationStack
-     * @param CheckoutOrderHydrationInterface[] $orderHydrationStack
-     * @param CheckoutSaveOrderInterface[] $saveOrderStack
-     * @param CheckoutPostSaveHookInterface[] $postSaveHookStack
-     * @param CheckoutToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[] $preConditionStack
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface[] $preHydrationStack
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface[] $orderHydrationStack
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[] $saveOrderStack
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[] $postSaveHookStack
+     * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface $omsFacade
      */
     public function __construct(
         array $preConditionStack,
@@ -78,9 +73,9 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
     {
@@ -111,8 +106,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequest
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
@@ -128,8 +123,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      *
      * @see https://github.com/spryker/spryker/issues/967
      *
-     * @param CheckoutRequestTransfer $checkoutRequest
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
@@ -149,7 +144,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return bool
      */
@@ -159,10 +154,10 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function doSaveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
@@ -194,7 +189,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function getOrderTransfer()
     {
@@ -202,8 +197,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return void
      */
@@ -219,8 +214,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return void
      */
@@ -232,8 +227,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
@@ -255,7 +250,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     /**
      * @param \Exception $exception
      *
-     * @return CheckoutErrorTransfer
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
     protected function handleCheckoutError(\Exception $exception)
     {

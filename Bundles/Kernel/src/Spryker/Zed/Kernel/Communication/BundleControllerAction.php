@@ -14,17 +14,17 @@ class BundleControllerAction implements BundleControllerActionInterface
 {
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
 
     /**
-     * @var DashToCamelCase
+     * @var \Zend\Filter\Word\DashToCamelCase
      */
     private $filter;
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(Request $request)
     {
@@ -42,7 +42,7 @@ class BundleControllerAction implements BundleControllerActionInterface
     }
 
     /**
-     * @return DashToCamelCase
+     * @return \Zend\Filter\Word\DashToCamelCase
      */
     private function getFilter()
     {

@@ -9,21 +9,16 @@ namespace Spryker\Zed\Tax\Business;
 use Spryker\Zed\Tax\Business\Model\TaxWriter;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
-use Spryker\Zed\Tax\TaxConfig;
-use Spryker\Zed\Tax\Business\Model\TaxReaderInterface;
-use Spryker\Zed\Tax\Business\Model\TaxWriterInterface;
-use Spryker\Zed\Tax\Persistence\TaxQueryContainer;
 
 /**
- * @method TaxConfig getConfig()
- * @method TaxQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Tax\TaxConfig getConfig()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
  */
 class TaxBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return TaxReaderInterface
+     * @return \Spryker\Zed\Tax\Business\Model\TaxReaderInterface
      */
     public function createReaderModel()
     {
@@ -33,7 +28,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TaxWriterInterface
+     * @return \Spryker\Zed\Tax\Business\Model\TaxWriterInterface
      */
     public function createWriterModel()
     {
@@ -44,7 +39,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TaxChangePluginInterface[]
+     * @return \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[]
      */
     public function getTaxChangePlugins()
     {

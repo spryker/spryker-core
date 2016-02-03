@@ -9,19 +9,19 @@ namespace Spryker\Zed\CustomerCheckoutConnector\Business;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Shared\Checkout\CheckoutConstants;
+use Spryker\Shared\CustomerCheckoutConnector\CustomerCheckoutConnectorConstants;
 use Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface;
 
 class PreConditionChecker implements PreConditionCheckerInterface
 {
 
     /**
-     * @var CustomerCheckoutConnectorToCustomerInterface
+     * @var \Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface
      */
     private $customerFacade;
 
     /**
-     * @param CustomerCheckoutConnectorToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface $customerFacade
      */
     public function __construct(CustomerCheckoutConnectorToCustomerInterface $customerFacade)
     {
@@ -29,8 +29,8 @@ class PreConditionChecker implements PreConditionCheckerInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $request
-     * @param CheckoutResponseTransfer $response
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $response
      *
      * @return void
      */
@@ -47,7 +47,7 @@ class PreConditionChecker implements PreConditionCheckerInterface
         if ($this->customerFacade->hasEmail($request->getEmail())) {
             $error = new CheckoutErrorTransfer();
             $error
-                ->setErrorCode(CheckoutConstants::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED)
+                ->setErrorCode(CustomerCheckoutConnectorConstants::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED)
                 ->setMessage('Email already taken')
                 ->setStep('email');
 

@@ -30,12 +30,12 @@ class AddressForm extends AbstractForm
     const SUBMIT = 'submit';
 
     /**
-     * @var SpySalesOrderAddressQuery
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
      */
     protected $addressQuery;
 
     /**
-     * @param SpySalesOrderAddressQuery $addressQuery
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery $addressQuery
      */
     public function __construct(SpySalesOrderAddressQuery $addressQuery)
     {

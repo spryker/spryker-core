@@ -25,7 +25,7 @@ class SolrRead extends Solr implements ReadInterface
     }
 
     /**
-     * @param QueryInterface $query
+     * @param \Solarium\Core\Query\QueryInterface $query
      *
      * @return \Solarium\QueryType\Select\Result\Result
      */

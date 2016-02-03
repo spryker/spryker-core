@@ -7,13 +7,12 @@
 namespace Spryker\Zed\NewRelic\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
-use Spryker\Zed\NewRelic\Communication\NewRelicCommunicationFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method NewRelicCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NewRelic\Communication\NewRelicCommunicationFactory getFactory()
  */
 class RecordDeploymentConsole extends Console
 {
@@ -78,8 +77,8 @@ class RecordDeploymentConsole extends Console
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return int
      */

@@ -19,10 +19,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
-use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Calculation\CalculationConfig;
 use Spryker\Zed\Calculation\Communication\Plugin\ItemTotalPriceCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\TaxTotalsCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\ProductOptionPriceToPayCalculatorPlugin;
@@ -36,13 +33,13 @@ use Spryker\Zed\Calculation\Communication\Plugin\RemoveAllExpensesCalculatorPlug
 use Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin;
 
 /**
- * @method CalculationConfig getConfig()
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
 class CalculationBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return StackExecutor
+     * @return \Spryker\Zed\Calculation\Business\Model\StackExecutor
      */
     public function createStackExecutor()
     {
@@ -52,7 +49,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ExpensePriceToPayCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ExpensePriceToPayCalculator
      */
     public function createExpensePriceToPayCalculator()
     {
@@ -62,7 +59,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GrandTotalTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalTotalsCalculator
      */
     public function createGrandTotalsCalculator()
     {
@@ -78,7 +75,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemPriceToPayCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemPriceToPayCalculator
      */
     public function createItemPriceToPayCalculator()
     {
@@ -88,7 +85,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionPriceToPayCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ProductOptionPriceToPayCalculator
      */
     public function createOptionPriceToPayCalculator()
     {
@@ -98,7 +95,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RemoveAllExpensesCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllExpensesCalculator
      */
     public function createRemoveAllExpensesCalculator()
     {
@@ -108,7 +105,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RemoveTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator
      */
     public function createRemoveTotalsCalculator()
     {
@@ -118,7 +115,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubtotalTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator
      */
     public function createSubtotalTotalsCalculator()
     {
@@ -128,7 +125,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemTotalPriceCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ItemTotalPriceCalculator
      */
     public function createItemTotalCalculator()
     {
@@ -138,7 +135,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubtotalWithoutItemExpensesTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalWithoutItemExpensesTotalsCalculator
      */
     public function createSubtotalWithoutItemExpensesTotalsCalculator()
     {
@@ -148,7 +145,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TaxTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalsCalculator
      */
     public function createTaxTotalsCalculator()
     {
@@ -158,7 +155,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubtotalTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculator
      */
     protected function createSubTotalsCalculator()
     {
@@ -168,7 +165,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ExpenseTotalsCalculator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalsCalculator
      */
     public function createExpenseTotalsCalculator()
     {
@@ -178,7 +175,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PriceCalculationHelper
+     * @return \Spryker\Zed\Calculation\Business\Model\PriceCalculationHelper
      */
     protected function createPriceCalculationHelper()
     {
@@ -188,7 +185,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CalculatorPluginInterface[]|TotalsCalculatorPluginInterface[]
+     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface[]
      */
     public function getCalculatorStack()
     {
@@ -208,7 +205,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RemoveTotalsCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin
      */
     protected function createRemoveTotalsCalculatorPlugin()
     {
@@ -216,7 +213,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RemoveAllExpensesCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Communication\Plugin\RemoveAllExpensesCalculatorPlugin
      */
     protected function createRemoveAllExpensesCalculatorPlugin()
     {
@@ -224,7 +221,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ExpenseTotalsCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin
      */
     protected function createExpenseTotalsCalculatorPlugin()
     {
@@ -232,7 +229,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubtotalTotalsCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin
      */
     protected function createSubtotalTotalsCalculatorPlugin()
     {
@@ -240,7 +237,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubtotalWithoutItemExpensesTotalsCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Communication\Plugin\SubtotalWithoutItemExpensesTotalsCalculatorPlugin
      */
     protected function createSubtotalWithoutItemExpensesTotalsCalculatorPlugin()
     {
@@ -248,7 +245,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GrandTotalTotalsCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin
      */
     protected function createGrandTotalTotalsCalculatorPlugin()
     {
@@ -256,7 +253,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ExpensePriceToPayCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin
      */
     protected function createExpensePriceToPayCalculatorPlugin()
     {
@@ -264,7 +261,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemPriceToPayCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin
      */
     protected function createItemPriceToPayCalculatorPlugin()
     {
@@ -272,7 +269,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionPriceToPayCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Communication\Plugin\ProductOptionPriceToPayCalculatorPlugin
      */
     protected function createProductOptionPriceToPayCalculatorPlugin()
     {
@@ -280,7 +277,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TaxTotalsCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Communication\Plugin\TaxTotalsCalculatorPlugin
      */
     protected function createTaxTotalsCalculatorPlugin()
     {
@@ -288,7 +285,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ItemTotalPriceCalculatorPlugin
+     * @return \Spryker\Zed\Calculation\Communication\Plugin\ItemTotalPriceCalculatorPlugin
      */
     protected function createItemTotalPriceCalculatorPlugin()
     {

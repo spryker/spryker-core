@@ -6,7 +6,6 @@
 
 namespace Spryker\Shared\Log\Config;
 
-use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
 use Spryker\Shared\Config;
 
@@ -25,7 +24,7 @@ class DefaultLoggerConfig implements LoggerConfigInterface
     }
 
     /**
-     * @return HandlerInterface[]
+     * @return \Monolog\Handler\HandlerInterface[]
      */
     public function getHandlers()
     {

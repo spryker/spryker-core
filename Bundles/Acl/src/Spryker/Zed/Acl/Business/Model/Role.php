@@ -11,7 +11,6 @@ use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Orm\Zed\Acl\Persistence\SpyAclRole;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
-use Spryker\Zed\Acl\Business\Exception\GroupNotFoundException;
 use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
@@ -21,18 +20,18 @@ class Role implements RoleInterface
 {
 
     /**
-     * @var AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var GroupInterface
+     * @var \Spryker\Zed\Acl\Business\Model\GroupInterface
      */
     protected $group;
 
     /**
-     * @param GroupInterface $group
-     * @param AclQueryContainer $queryContainer
+     * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
      */
     public function __construct(GroupInterface $group, AclQueryContainer $queryContainer)
     {
@@ -43,9 +42,9 @@ class Role implements RoleInterface
     /**
      * @param string $name
      *
-     * @throws RoleNameExistsException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function addRole($name)
     {
@@ -58,12 +57,12 @@ class Role implements RoleInterface
     }
 
     /**
-     * @param RoleTransfer $roleTransfer
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
      *
-     * @throws RoleNameExistsException
-     * @throws RootNodeModificationException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RootNodeModificationException
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function save(RoleTransfer $roleTransfer)
     {
@@ -117,7 +116,7 @@ class Role implements RoleInterface
     /**
      * @param int $idUser
      *
-     * @return RolesTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getUserRoles($idUser)
     {
@@ -132,7 +131,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * @param RolesTransfer $rolesTransfer
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      * @param int $idAclGroup
      *
      * @return void
@@ -148,9 +147,9 @@ class Role implements RoleInterface
     /**
      * @param int $idGroup
      *
-     * @throws GroupNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\GroupNotFoundException
      *
-     * @return RolesTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getGroupRoles($idGroup)
     {
@@ -171,9 +170,9 @@ class Role implements RoleInterface
     /**
      * @param int $id
      *
-     * @throws EmptyEntityException
+     * @throws \Spryker\Zed\Acl\Business\Exception\EmptyEntityException
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getRoleById($id)
     {
@@ -192,7 +191,7 @@ class Role implements RoleInterface
     /**
      * @param int $idRole
      *
-     * @throws RoleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException
      *
      * @return bool
      */
@@ -213,7 +212,7 @@ class Role implements RoleInterface
     /**
      * @param string $name
      *
-     * @return RoleTransfer
+     * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getByName($name)
     {

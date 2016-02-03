@@ -13,7 +13,7 @@ class EventJournalFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return EventJournal
+     * @return \Spryker\Zed\EventJournal\Business\Model\EventJournal
      */
     public function createEventJournal()
     {

@@ -13,12 +13,12 @@ class CartToItemGrouperBridge implements CartToItemGrouperInterface
 {
 
     /**
-     * @var ItemGrouperFacade
+     * @var \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade
      */
     protected $itemGrouperFacade;
 
     /**
-     * @param ItemGrouperFacade $itemGrouperFacade
+     * @param \Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade $itemGrouperFacade
      */
     public function __construct($itemGrouperFacade)
     {
@@ -26,9 +26,9 @@ class CartToItemGrouperBridge implements CartToItemGrouperInterface
     }
 
     /**
-     * @param GroupableContainerTransfer $groupAbleItems
+     * @param \Generated\Shared\Transfer\GroupableContainerTransfer $groupAbleItems
      *
-     * @return GroupableContainerTransfer
+     * @return \Generated\Shared\Transfer\GroupableContainerTransfer
      */
     public function groupItemsByKey(GroupableContainerTransfer $groupAbleItems)
     {

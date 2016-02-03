@@ -8,9 +8,9 @@ namespace Spryker\Shared\Library\Application;
 
 use Spryker\Shared\Config;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Library\Autoloader;
 use Spryker\Shared\Library\Error\ErrorHandler;
+use Spryker\Shared\Library\LibraryConstants;
 use Spryker\Shared\Library\TestAutoloader;
 
 class Environment
@@ -70,18 +70,29 @@ class Environment
             }
         }
 
+        if (!defined('APPLICATION_SPRYKER_ROOT')) {
+            if (!getenv('APPLICATION_SPRYKER_ROOT')) {
+                $sprykerRoot = APPLICATION_VENDOR_DIR . '/spryker';
+                if (is_dir($sprykerRoot . '/spryker/Bundles')) {
+                    $sprykerRoot = $sprykerRoot . '/spryker/Bundles';
+                }
+                define('APPLICATION_SPRYKER_ROOT', $sprykerRoot);
+            } else {
+                define('APPLICATION_SPRYKER_ROOT', getenv('APPLICATION_SPRYKER_ROOT'));
+            }
+        }
+
         $errorCode = error_reporting();
         self::initializeErrorHandler();
 
-        require_once APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Library/src/Spryker/Shared/Library/Autoloader.php';
+        require_once APPLICATION_SPRYKER_ROOT . '/Library/src/Spryker/Shared/Library/Autoloader.php';
 
         Autoloader::unregister();
-        Autoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
-        TestAutoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
+        Autoloader::register(APPLICATION_SPRYKER_ROOT, APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
+        TestAutoloader::register(APPLICATION_SPRYKER_ROOT, APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
 
-        $coreNamespaces = Config::get(ApplicationConstants::CORE_NAMESPACES);
-
-        $configErrorCode = Config::get(ApplicationConstants::ERROR_LEVEL);
+        $coreNamespaces = Config::get(LibraryConstants::CORE_NAMESPACES);
+        $configErrorCode = Config::get(LibraryConstants::ERROR_LEVEL);
         if ($configErrorCode !== $errorCode) {
             error_reporting($configErrorCode);
             self::initializeErrorHandler();
@@ -91,7 +102,7 @@ class Environment
             Autoloader::allowNamespace($namespace);
         }
 
-        ini_set('display_errors', Config::get(ApplicationConstants::DISPLAY_ERRORS, false));
+        ini_set('display_errors', Config::get(LibraryConstants::DISPLAY_ERRORS, false));
 
         $store = Store::getInstance();
         $locale = current($store->getLocales());
@@ -194,7 +205,7 @@ class Environment
     /**
      * We set LC_NUMERIC hard to en_US so numeric conversion is always the same to avoid decimal point problems
      *
-     * @param $currentLocale
+     * @param string $currentLocale
      *
      * @return void
      */

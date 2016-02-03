@@ -8,21 +8,17 @@ namespace Spryker\Zed\DiscountCheckoutConnector\Business;
 
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
 use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydrator;
-use Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydratorInterface;
-use Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaverInterface;
 use Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorDependencyProvider;
-use Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorConfig;
 
 /**
- * @method DiscountCheckoutConnectorConfig getConfig()
+ * @method \Spryker\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorConfig getConfig()
  */
 class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return DiscountOrderHydratorInterface
+     * @return \Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydratorInterface
      */
     public function createOrderHydrator()
     {
@@ -30,7 +26,7 @@ class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountSaverInterface
+     * @return \Spryker\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaverInterface
      */
     public function createDiscountSaver()
     {
@@ -43,7 +39,7 @@ class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getDiscountFacade() instead.
      *
-     * @return DiscountCheckoutConnectorToDiscountInterface
+     * @return \Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface
      */
     public function createDiscountFacade()
     {
@@ -53,7 +49,7 @@ class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountCheckoutConnectorToDiscountInterface
+     * @return \Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface
      */
     public function getDiscountFacade()
     {

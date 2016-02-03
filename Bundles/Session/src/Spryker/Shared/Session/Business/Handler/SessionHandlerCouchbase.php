@@ -58,12 +58,12 @@ class SessionHandlerCouchbase implements \SessionHandlerInterface
     protected $lifetime;
 
     /**
-     * @var ApiInterface
+     * @var \Spryker\Shared\NewRelic\ApiInterface
      */
     protected $newRelicApi;
 
     /**
-     * @param ApiInterface $newRelicApi
+     * @param \Spryker\Shared\NewRelic\ApiInterface $newRelicApi
      * @param array $hosts
      * @param string|null $user
      * @param string|null $password

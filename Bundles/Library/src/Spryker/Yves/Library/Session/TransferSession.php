@@ -13,12 +13,12 @@ class TransferSession
 {
 
     /**
-     * @var Session
+     * @var \Symfony\Component\HttpFoundation\Session\Session
      */
     protected $session;
 
     /**
-     * @param Session $session
+     * @param \Symfony\Component\HttpFoundation\Session\Session $session
      */
     public function __construct(Session $session)
     {
@@ -27,7 +27,7 @@ class TransferSession
 
     /**
      * @param string $name
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return void
      */
@@ -38,9 +38,9 @@ class TransferSession
 
     /**
      * @param string $name
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function get($name, TransferInterface $transferObject)
     {

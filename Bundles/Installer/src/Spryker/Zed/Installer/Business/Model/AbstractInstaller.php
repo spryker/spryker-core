@@ -13,12 +13,12 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
 {
 
     /**
-     * @var MessengerInterface
+     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
      */
     protected $messenger;
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return self
      */

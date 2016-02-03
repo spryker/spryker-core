@@ -9,9 +9,9 @@ class TableParameters
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return DataTablesTransfer
+     * @return \Generated\Shared\Transfer\DataTablesTransfer
      */
     public static function getTableParameters(Request $request)
     {

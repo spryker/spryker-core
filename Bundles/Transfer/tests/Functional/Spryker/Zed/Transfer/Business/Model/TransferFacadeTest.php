@@ -22,7 +22,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return TransferFacade
+     * @return \Spryker\Zed\Transfer\Business\TransferFacade
      */
     private function getFacade()
     {
@@ -30,7 +30,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MessengerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Messenger\Business\Model\MessengerInterface
      */
     private function getMessenger()
     {
@@ -63,7 +63,7 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return TransferConfig
+     * @return \Spryker\Zed\Transfer\TransferConfig
      */
     private function getConfig()
     {

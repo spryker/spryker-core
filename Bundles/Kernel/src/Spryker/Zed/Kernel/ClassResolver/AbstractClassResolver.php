@@ -14,14 +14,14 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
     const KEY_LAYER = '%layer%';
 
     /**
-     * @var ClassInfo
+     * @var \Spryker\Zed\Kernel\ClassResolver\ClassInfo
      */
     private $classInfo;
 
     /**
      * @param object|string $callerClass
      *
-     * @return AbstractClassResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver
      */
     public function setCallerClass($callerClass)
     {
@@ -32,7 +32,7 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
     }
 
     /**
-     * @return ClassInfo
+     * @return \Spryker\Zed\Kernel\ClassResolver\ClassInfo
      */
     public function getClassInfo()
     {

@@ -9,10 +9,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface;
-use Spryker\Zed\ProductOptionWishlistConnector\Communication\ProductOptionWishlistConnectorCommunicationFactory;
 
 /**
- * @method ProductOptionWishlistConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductOptionWishlistConnector\Communication\ProductOptionWishlistConnectorCommunicationFactory getFactory()
  */
 class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSavePluginInterface
 {
@@ -30,7 +29,7 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return string
      */
@@ -52,7 +51,7 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     }
 
     /**
-     * @param ProductOptionTransfer[] $options
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $options
      *
      * @return array
      */
@@ -69,7 +68,7 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     }
 
     /**
-     * @param ProductOptionTransfer[] $sortedProductOptions
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $sortedProductOptions
      *
      * @return string
      */

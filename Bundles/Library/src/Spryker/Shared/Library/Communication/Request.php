@@ -48,7 +48,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     /**
      * @param string $name
      *
-     * @return TransferInterface|null
+     * @return \Spryker\Shared\Transfer\TransferInterface|null
      */
     public function getMetaTransfer($name)
     {
@@ -65,7 +65,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
 
     /**
      * @param string $name
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return self
      */
@@ -140,7 +140,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     }
 
     /**
-     * @return TransferInterface|null
+     * @return \Spryker\Shared\Transfer\TransferInterface|null
      */
     public function getTransfer()
     {
@@ -155,7 +155,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     }
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return self
      */

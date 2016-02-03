@@ -17,19 +17,19 @@ class NavigationBuilder
     const PATH = 'path';
 
     /**
-     * @var NavigationCollectorInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface
      */
     private $navigationCollector;
 
     /**
-     * @var MenuFormatterInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface
      */
     private $menuFormatter;
 
     /**
-     * @param NavigationCollectorInterface $navigationCollector
-     * @param MenuFormatterInterface $menuFormatter
-     * @param PathExtractorInterface $pathExtractor
+     * @param \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface $navigationCollector
+     * @param \Spryker\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface $menuFormatter
+     * @param \Spryker\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface $pathExtractor
      */
     public function __construct(
         NavigationCollectorInterface $navigationCollector,

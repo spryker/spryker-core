@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductCategory\Communication\Form;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategory;
 
 class CategoryFormEdit extends CategoryFormAdd
 {
@@ -107,7 +106,7 @@ class CategoryFormEdit extends CategoryFormAdd
     {
         $fields = $this->getDefaultFormFields();
 
-        /** @var SpyCategory $categoryEntity */
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
         $categoryEntity = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()

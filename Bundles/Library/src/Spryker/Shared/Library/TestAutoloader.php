@@ -20,7 +20,7 @@ class TestAutoloader
     ];
 
     /**
-     * @var Autoloader
+     * @var \Spryker\Shared\Library\Autoloader
      */
     private static $instance;
 
@@ -71,7 +71,7 @@ class TestAutoloader
     }
 
     /**
-     * @return Autoloader
+     * @return \Spryker\Shared\Library\Autoloader
      */
     public static function unregister()
     {
@@ -91,7 +91,7 @@ class TestAutoloader
     private function getResourceRelativePath($resourceParts)
     {
         $bundle = $resourceParts[3];
-        $relativeResourcePath = 'Bundles/' . $bundle . '/tests/' . implode(DIRECTORY_SEPARATOR, $resourceParts);
+        $relativeResourcePath = '/' . $bundle . '/tests/' . implode(DIRECTORY_SEPARATOR, $resourceParts);
 
         return $relativeResourcePath . '.php';
     }

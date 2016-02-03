@@ -1,0 +1,2 @@
+Spryker PhpDocumentor Graph Adapter
+===================================

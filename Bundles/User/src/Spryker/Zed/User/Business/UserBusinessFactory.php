@@ -9,20 +9,17 @@ namespace Spryker\Zed\User\Business;
 use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\User\Business\Model\Installer;
-use Spryker\Zed\User\Business\Model\UserInterface;
-use Spryker\Zed\User\UserConfig;
 use Spryker\Zed\User\UserDependencyProvider;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
 
 /**
- * @method UserConfig getConfig()
- * @method UserQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\User\UserConfig getConfig()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
  */
 class UserBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return UserInterface
+     * @return \Spryker\Zed\User\Business\Model\UserInterface
      */
     public function createUserModel()
     {
@@ -34,7 +31,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Installer
+     * @return \Spryker\Zed\User\Business\Model\Installer
      */
     public function createInstallerModel()
     {

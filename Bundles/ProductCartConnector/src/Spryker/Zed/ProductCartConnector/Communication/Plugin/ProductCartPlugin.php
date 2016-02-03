@@ -9,20 +9,18 @@ namespace Spryker\Zed\ProductCartConnector\Communication\Plugin;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
-use Spryker\Zed\ProductCartConnector\Communication\ProductCartConnectorCommunicationFactory;
 
 /**
- * @method ProductCartConnectorFacade getFacade()
- * @method ProductCartConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade getFacade()
+ * @method \Spryker\Zed\ProductCartConnector\Communication\ProductCartConnectorCommunicationFactory getFactory()
  */
 class ProductCartPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function expandItems(ChangeTransfer $change)
     {

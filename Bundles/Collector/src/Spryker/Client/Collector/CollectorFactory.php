@@ -9,14 +9,12 @@ namespace Spryker\Client\Collector;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder;
 use Spryker\Client\Collector\Matcher\UrlMatcher;
-use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Client\Storage\StorageClient;
 
 class CollectorFactory extends AbstractFactory
 {
 
     /**
-     * @return UrlMatcher
+     * @return \Spryker\Client\Collector\Matcher\UrlMatcher
      */
     public function createUrlMatcher()
     {
@@ -27,7 +25,7 @@ class CollectorFactory extends AbstractFactory
     }
 
     /**
-     * @return UrlKeyBuilder
+     * @return \Spryker\Client\Collector\KeyBuilder\UrlKeyBuilder
      */
     protected function createUrlKeyBuilder()
     {
@@ -37,9 +35,9 @@ class CollectorFactory extends AbstractFactory
     }
 
     /**
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return StorageClient
+     * @return \Spryker\Client\Storage\StorageClient
      */
     protected function getStorageClient()
     {

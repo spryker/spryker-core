@@ -6,8 +6,6 @@
 namespace Spryker\Zed\Glossary\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Exception\PropelException;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 
 interface GlossaryQueryContainerInterface
@@ -16,19 +14,19 @@ interface GlossaryQueryContainerInterface
     /**
      * @param string $keyName
      *
-     * @return SpyGlossaryKeyQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryKey($keyName);
 
     /**
      * @param string $keyName
      *
-     * @return SpyGlossaryKeyQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryActiveKeysByName($keyName);
 
     /**
-     * @return SpyGlossaryKeyQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryKeys();
 
@@ -36,7 +34,7 @@ interface GlossaryQueryContainerInterface
      * @param string $keyName
      * @param string $localeName
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationByNames($keyName, $localeName);
 
@@ -44,56 +42,56 @@ interface GlossaryQueryContainerInterface
      * @param int $idKey
      * @param int $idLocale
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationByIds($idKey, $idLocale);
 
     /**
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslations();
 
     /**
      * @param string $keyName
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationsByKey($keyName);
 
     /**
      * @param string $localeName
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationsByLocale($localeName);
 
     /**
      * @param int $idGlossaryTranslation
      *
-     * @return SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslationById($idGlossaryTranslation);
 
     /**
-     * @param SpyGlossaryTranslationQuery $query
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $query
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinTranslationQueryWithKeysAndLocales(SpyGlossaryTranslationQuery $query);
 
     /**
      * @param array $relevantLocales
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryAllPossibleTranslations(array $relevantLocales);
 
     /**
      * @param array $relevantLocales
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryAllMissingTranslations(array $relevantLocales);
 
@@ -101,21 +99,21 @@ interface GlossaryQueryContainerInterface
      * @param int $idKey
      * @param array $relevantLocales
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryMissingTranslationsForKey($idKey, array $relevantLocales);
 
     /**
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryDistinctKeysFromQuery(ModelCriteria $query);
 
     /**
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryDistinctLocalesFromQuery(ModelCriteria $query);
 

@@ -19,7 +19,7 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
      * @param int $idWishlist
      * @param int $idProduct
      *
-     * @return SpyWishlistItemQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
      */
     public function queryCustomerWishlistByProductId($idWishlist, $idProduct)
     {
@@ -34,7 +34,7 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
      * @param int $idWishlist
      * @param string $groupKey
      *
-     * @return SpyWishlistItemQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
      */
     public function queryCustomerWishlistByGroupKey($idWishlist, $groupKey)
     {
@@ -46,7 +46,7 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     }
 
     /**
-     * @return SpyWishlistItemQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
      */
     public function queryWishlistItem()
     {
@@ -54,7 +54,7 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     }
 
     /**
-     * @return SpyWishlistQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
      */
     public function queryWishlist()
     {

@@ -8,7 +8,6 @@ namespace Unit\Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageMan
 
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
-use Symfony\Component\Process\Process;
 
 /**
  * @group Spryker
@@ -48,7 +47,7 @@ class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Process
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Process\Process
      */
     private function getProcessMockWithSuccessFullResponse()
     {
@@ -68,7 +67,7 @@ class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Process
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Process\Process
      */
     private function getProcessMockWithErrorResponse()
     {

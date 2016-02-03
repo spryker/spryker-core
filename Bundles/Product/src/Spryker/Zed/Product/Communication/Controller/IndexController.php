@@ -2,21 +2,17 @@
 
 namespace Spryker\Zed\Product\Communication\Controller;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Product\Business\ProductFacade;
-use Spryker\Zed\Product\Communication\ProductCommunicationFactory;
-use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ProductFacade getFacade()
- * @method ProductQueryContainer getQueryContainer()
- * @method ProductCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Product\Business\ProductFacade getFacade()
+ * @method \Spryker\Zed\Product\Persistence\ProductQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
@@ -38,7 +34,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -50,7 +46,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -106,7 +102,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param SpyProduct $product
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $product
      *
      * @return array
      */
@@ -132,7 +128,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param ObjectCollection|SpyProduct[] $productConcreteCollectionCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productConcreteCollectionCollection
      *
      * @return array
      */
@@ -160,7 +156,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param SpyProductAbstract $productAbstract
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstract
      * @param int $idLocale
      *
      * @return array
@@ -189,7 +185,7 @@ class IndexController extends AbstractController
     /**
      * @throws \ErrorException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getCurrentLocale()
     {

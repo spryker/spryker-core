@@ -13,7 +13,7 @@ class ModelResult
 {
 
     /**
-     * @var ActiveRecordInterface
+     * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
     protected $entity = null;
 
@@ -23,7 +23,7 @@ class ModelResult
     protected $entityModifiedColumns = [];
 
     /**
-     * @var TransferInterface
+     * @var \Spryker\Shared\Transfer\TransferInterface
      */
     protected $transfer = null;
 
@@ -40,7 +40,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @param ActiveRecordInterface $entity
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      */
     public function __construct(ActiveRecordInterface $entity = null)
     {
@@ -78,7 +78,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function getTransfer()
     {
@@ -88,7 +88,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @param TransferInterface $transfer
+     * @param \Spryker\Shared\Transfer\TransferInterface $transfer
      *
      * @return self
      */
@@ -122,7 +122,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @return ActiveRecordInterface
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
     public function getEntity()
     {
@@ -132,7 +132,7 @@ class ModelResult
     /**
      * @deprecated
      *
-     * @param ActiveRecordInterface $entity
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      *
      * @return self
      */

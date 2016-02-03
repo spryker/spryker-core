@@ -57,7 +57,7 @@ class Log
      * - without any overhead
      * - if file already exists, it will be truncated first
      *
-     * @param $expression
+     * @param mixed $expression
      * @param string $fileName
      *
      * @return void

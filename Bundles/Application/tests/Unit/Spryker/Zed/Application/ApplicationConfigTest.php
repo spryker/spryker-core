@@ -12,7 +12,7 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return ApplicationConfig
+     * @return \Spryker\Zed\Application\ApplicationConfig
      */
     private function getConfig()
     {

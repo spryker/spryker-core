@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\Discount\Business\Calculator;
 
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
-
 interface CalculatorInterface
 {
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
      * @param float $value
      *
      * @return float

@@ -7,8 +7,6 @@
 namespace Spryker\Zed\Price\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Orm\Zed\Price\Persistence\SpyPriceType;
-use Propel\Runtime\Exception\PropelException;
 
 interface BulkWriterInterface
 {
@@ -17,19 +15,19 @@ interface BulkWriterInterface
      * @param string $name
      *
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyPriceType
+     * @return \Orm\Zed\Price\Persistence\SpyPriceType
      */
     public function createPriceType($name);
 
     /**
-     * @param PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      */
     public function setPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      */
     public function createPriceForProduct(PriceProductTransfer $transferPriceProduct);
 

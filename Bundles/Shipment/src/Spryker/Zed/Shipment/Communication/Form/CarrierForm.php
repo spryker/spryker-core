@@ -20,12 +20,12 @@ class CarrierForm extends AbstractForm
     const CARRIER_ID = 'carrier_id';
 
     /**
-     * @var SpyShipmentCarrierQuery
+     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     protected $carrierQuery;
 
     /**
-     * @param SpyShipmentCarrierQuery $carrierQuery
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery $carrierQuery
      */
     public function __construct(SpyShipmentCarrierQuery $carrierQuery)
     {
@@ -49,7 +49,7 @@ class CarrierForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

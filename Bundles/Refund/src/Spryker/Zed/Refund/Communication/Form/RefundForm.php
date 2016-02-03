@@ -2,12 +2,10 @@
 
 namespace Spryker\Zed\Refund\Communication\Form;
 
-use Generated\Shared\Transfer\RefundTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Refund\Business\RefundFacade;
 use Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
-use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RefundForm extends AbstractForm
@@ -24,29 +22,29 @@ class RefundForm extends AbstractForm
     const FIELD_EXPENSES = 'expenses';
 
     /**
-     * @var SpyRefundQuery
+     * @var \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
     protected $refundQuery;
 
     /**
-     * @var RefundFacade
+     * @var \Spryker\Zed\Refund\Business\RefundFacade
      */
     protected $refundFacade;
 
     /**
-     * @var OrderTransfer
+     * @var \Generated\Shared\Transfer\OrderTransfer
      */
     protected $orderTransfer;
 
     /**
-     * @var PaymentDataPluginInterface
+     * @var \Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface
      */
     protected $paymentDataPlugin;
 
     /**
-     * @param RefundFacade $refundFacade
-     * @param OrderTransfer $orderTransfer
-     * @param PaymentDataPluginInterface $paymentDataPlugin
+     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface $paymentDataPlugin
      */
     public function __construct(RefundFacade $refundFacade, OrderTransfer $orderTransfer, PaymentDataPluginInterface $paymentDataPlugin)
     {
@@ -72,7 +70,7 @@ class RefundForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void
@@ -175,9 +173,9 @@ class RefundForm extends AbstractForm
     }
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
      *
-     * @return RefundTransfer[]
+     * @return \Generated\Shared\Transfer\RefundTransfer[]
      */
     protected function getRefunds($idOrder)
     {

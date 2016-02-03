@@ -6,6 +6,8 @@
 
 namespace Spryker\Shared\Library\Storage;
 
+use Spryker\Shared\Kernel\Store;
+
 abstract class StorageKeyGenerator
 {
 
@@ -30,7 +32,7 @@ abstract class StorageKeyGenerator
      */
     protected static function prependStoreName($key)
     {
-        $storeName = \Spryker\Shared\Kernel\Store::getInstance()->getStoreName();
+        $storeName = Store::getInstance()->getStoreName();
 
         return $storeName . self::KEY_SEPARATOR . $key;
     }

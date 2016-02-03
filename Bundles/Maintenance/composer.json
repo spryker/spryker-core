@@ -14,7 +14,9 @@
     "spryker/application": "^1.0.0",
     "spryker/console": "^1.0.0",
     "spryker/kernel": "^1.0.0",
-    "spryker/library": "^1.0.0"
+    "spryker/library": "^1.0.0",
+    "spryker/tool-graph": "^1.0.0",
+    "spryker/tool-graph-php-documentor": "^1.0.0"
   },
   "require-dev": {},
   "description": "maintenance bundle",

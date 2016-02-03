@@ -8,19 +8,18 @@ namespace Spryker\Client\Wishlist\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class WishlistStub implements WishlistStubInterface
 {
 
     /**
-     * @var ZedRequestClient
+     * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
     protected $zedStub;
 
     /**
-     * @param ZedRequestClient $zedStub
+     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
      */
     public function __construct(ZedRequestClient $zedStub)
     {
@@ -28,9 +27,9 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function addItem(WishlistChangeTransfer $wishlistChange)
     {
@@ -38,9 +37,9 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItem(WishlistChangeTransfer $wishlistChange)
     {
@@ -48,9 +47,9 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function descreaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
@@ -58,9 +57,9 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
@@ -68,9 +67,9 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getCustomerWishlist(CustomerTransfer $customer)
     {

@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\Factory;
 
-use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class FactoryResolver extends AbstractClassResolver
@@ -17,9 +16,9 @@ class FactoryResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractFactory
+     * @return \Spryker\Zed\Kernel\AbstractFactory
      */
     public function resolve($callerClass)
     {

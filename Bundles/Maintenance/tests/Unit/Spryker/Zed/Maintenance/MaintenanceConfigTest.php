@@ -12,7 +12,7 @@ class MaintenanceConfigTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return MaintenanceConfig
+     * @return \Spryker\Zed\Maintenance\MaintenanceConfig
      */
     private function getConfig()
     {

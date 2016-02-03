@@ -17,38 +17,30 @@ use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProvider;
 use Spryker\Zed\Payone\Business\Api\Adapter\Http\Guzzle;
 use Spryker\Zed\Payone\Business\Order\OrderManager;
 use Spryker\Zed\Payone\Business\Payment\PaymentManager;
-use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
-use Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
-use Spryker\Zed\Payone\Business\Payment\PaymentManagerInterface;
-use Spryker\Zed\Payone\Business\Order\OrderManagerInterface;
 use Spryker\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager;
 use Spryker\Zed\Payone\PayoneConfig;
-use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
-use Spryker\Shared\Payone\Dependency\HashInterface;
 use Spryker\Zed\Payone\PayoneDependencyProvider;
-use Spryker\Zed\Payone\Persistence\PayoneQueryContainer;
-use Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder;
 
 /**
- * @method PayoneConfig getConfig()
- * @method PayoneQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Payone\PayoneConfig getConfig()
+ * @method \Spryker\Zed\Payone\Persistence\PayoneQueryContainer getQueryContainer()
  */
 class PayoneBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @var PayoneStandardParameterTransfer
+     * @var \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     private $standardParameter;
 
     /**
-     * @return PaymentManagerInterface
+     * @return \Spryker\Zed\Payone\Business\Payment\PaymentManagerInterface
      */
     public function createPaymentManager()
     {
@@ -69,7 +61,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OrderManagerInterface
+     * @return \Spryker\Zed\Payone\Business\Order\OrderManagerInterface
      */
     public function createOrderManager()
     {
@@ -79,7 +71,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransactionStatusUpdateManager
+     * @return \Spryker\Zed\Payone\Business\TransactionStatus\TransactionStatusUpdateManager
      */
     public function createTransactionStatusManager()
     {
@@ -91,7 +83,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ApiLogFinder
+     * @return \Spryker\Zed\Payone\Business\ApiLog\ApiLogFinder
      */
     public function createApiLogFinder()
     {
@@ -101,7 +93,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AdapterInterface
+     * @return \Spryker\Zed\Payone\Business\Api\Adapter\AdapterInterface
      */
     protected function createExecutionAdapter()
     {
@@ -111,7 +103,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SequenceNumberProviderInterface
+     * @return \Spryker\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface
      */
     protected function createSequenceNumberProvider()
     {
@@ -124,7 +116,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return HashInterface
+     * @return \Spryker\Shared\Payone\Dependency\HashInterface
      */
     protected function createKeyHashProvider()
     {
@@ -134,7 +126,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return HashGenerator
+     * @return \Spryker\Zed\Payone\Business\Key\HashGenerator
      */
     protected function createKeyHashGenerator()
     {
@@ -144,7 +136,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ModeDetectorInterface
+     * @return \Spryker\Shared\Payone\Dependency\ModeDetectorInterface
      */
     protected function createModeDetector()
     {
@@ -154,9 +146,9 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
+     * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
-     * @return TransactionStatusRequest
+     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest
      */
     public function createTransactionStatusUpdateRequest(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer)
     {
@@ -184,7 +176,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getStandardParameter() instead.
      *
-     * @return PayoneStandardParameterTransfer
+     * @return \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected function createStandardParameter()
     {
@@ -194,7 +186,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PayoneStandardParameterTransfer
+     * @return \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected function getStandardParameter()
     {
@@ -206,7 +198,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return HashProvider
+     * @return \Spryker\Zed\Payone\Business\Key\HashProvider
      */
     protected function createHashProvider()
     {
@@ -218,7 +210,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     /**
      * @param $storeConfig
      *
-     * @return CreditCardPseudo
+     * @return \Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo
      */
     protected function createCreditCardPseudo($storeConfig)
     {
@@ -230,7 +222,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     /**
      * @param $storeConfig
      *
-     * @return Invoice
+     * @return \Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice
      */
     protected function createInvoice($storeConfig)
     {
@@ -242,7 +234,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     /**
      * @param $storeConfig
      *
-     * @return OnlineBankTransfer
+     * @return \Spryker\Zed\Payone\Business\Payment\MethodMapper\OnlineBankTransfer
      */
     protected function createOnlineBankTransfer($storeConfig)
     {
@@ -254,7 +246,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     /**
      * @param $storeConfig
      *
-     * @return EWallet
+     * @return \Spryker\Zed\Payone\Business\Payment\MethodMapper\EWallet
      */
     protected function createEWallet($storeConfig)
     {
@@ -266,7 +258,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     /**
      * @param $storeConfig
      *
-     * @return Prepayment
+     * @return \Spryker\Zed\Payone\Business\Payment\MethodMapper\Prepayment
      */
     protected function createPrepayment($storeConfig)
     {

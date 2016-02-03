@@ -12,9 +12,9 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 {
 
     /**
-     * @param SplFileInfo[] $schemaFiles
+     * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
-     * @throws SchemaMergeException
+     * @throws \Spryker\Zed\Propel\Business\Exception\SchemaMergeException
      *
      * @return string
      */
@@ -28,9 +28,9 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param SplFileInfo[] $schemaFiles
+     * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
-     * @throws SchemaMergeException
+     * @throws \Spryker\Zed\Propel\Business\Exception\SchemaMergeException
      *
      * @return void
      */
@@ -50,7 +50,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param SplFileInfo $schemaFile
+     * @param \Symfony\Component\Finder\SplFileInfo $schemaFile
      *
      * @return \SimpleXMLElement
      */
@@ -76,7 +76,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param SplFileInfo $schemaFile
+     * @param \Symfony\Component\Finder\SplFileInfo $schemaFile
      *
      * @return \SimpleXMLElement
      */
@@ -110,7 +110,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param SplFileInfo[] $schemaFiles
+     * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
      * @throws \ErrorException
      *
@@ -229,7 +229,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * @param \SimpleXMLElement $toXmlElement
      * @param \SimpleXMLElement $fromXmlElement
      *
-     * @throws SchemaMergeException
+     * @throws \Spryker\Zed\Propel\Business\Exception\SchemaMergeException
      *
      * @return \SimpleXMLElement
      */

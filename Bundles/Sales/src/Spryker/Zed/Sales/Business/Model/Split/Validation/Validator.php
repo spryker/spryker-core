@@ -17,7 +17,7 @@ class Validator implements ValidatorInterface
     private $messages = [];
 
     /**
-     * @param SpySalesOrderItem $salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      * @param int $quantityToSplit
      *
      * @return bool
@@ -41,7 +41,7 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * @param SpySalesOrderItem $salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      * @param int $quantityToSplit
      *
      * @return bool
@@ -58,7 +58,7 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * @param SpySalesOrderItem $salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      *
      * @return bool
      */
@@ -74,7 +74,7 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * @param SpySalesOrderItem $salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      *
      * @return bool
      */

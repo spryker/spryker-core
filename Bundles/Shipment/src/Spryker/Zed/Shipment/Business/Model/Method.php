@@ -9,10 +9,6 @@ namespace Spryker\Zed\Shipment\Business\Model;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
-use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
-use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPriceCalculationPluginInterface;
-use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodTaxCalculationPluginInterface;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -21,7 +17,7 @@ class Method
 {
 
     /**
-     * @var ShipmentQueryContainerInterface
+     * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -31,7 +27,7 @@ class Method
     protected $plugins;
 
     /**
-     * @param ShipmentQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $queryContainer
      * @param array $plugins
      */
     public function __construct(ShipmentQueryContainerInterface $queryContainer, array $plugins)
@@ -41,7 +37,7 @@ class Method
     }
 
     /**
-     * @param ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return int
      */
@@ -55,9 +51,9 @@ class Method
     }
 
     /**
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
-     * @return ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
@@ -93,9 +89,9 @@ class Method
     }
 
     /**
-     * @param $idMethod
+     * @param int $idMethod
      *
-     * @return ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function getShipmentMethodTransferById($idMethod)
     {
@@ -128,7 +124,7 @@ class Method
     }
 
     /**
-     * @param ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return int
      */
@@ -149,8 +145,8 @@ class Method
     }
 
     /**
-     * @param SpyShipmentMethod $method
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return bool
      */
@@ -160,7 +156,7 @@ class Method
         $isAvailable = true;
 
         if (isset($availabilityPlugins[$method->getAvailabilityPlugin()])) {
-            /** @var ShipmentMethodAvailabilityPluginInterface $availabilityPlugin */
+            /** @var \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface $availabilityPlugin */
             $availabilityPlugin = $availabilityPlugins[$method->getAvailabilityPlugin()];
             $isAvailable = $availabilityPlugin->isAvailable($shipmentMethodAvailabilityTransfer);
         }
@@ -169,8 +165,8 @@ class Method
     }
 
     /**
-     * @param SpyShipmentMethod $method
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return int
      */
@@ -180,7 +176,7 @@ class Method
         $priceCalculationPlugins = $this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS];
 
         if (isset($priceCalculationPlugins[$method->getPriceCalculationPlugin()])) {
-            /** @var ShipmentMethodPriceCalculationPluginInterface $priceCalculationPlugin */
+            /** @var \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPriceCalculationPluginInterface $priceCalculationPlugin */
             $priceCalculationPlugin = $priceCalculationPlugins[$method->getPriceCalculationPlugin()];
             $price = $priceCalculationPlugin->getPrice($shipmentMethodAvailabilityTransfer);
         }
@@ -189,8 +185,8 @@ class Method
     }
 
     /**
-     * @param SpyShipmentMethod $method
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return int
      */
@@ -209,7 +205,7 @@ class Method
 
         $taxCalculationPlugins = $this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS];
         if (isset($taxCalculationPlugins[$method->getTaxCalculationPlugin()])) {
-            /** @var ShipmentMethodTaxCalculationPluginInterface $taxCalculationPlugin */
+            /** @var \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodTaxCalculationPluginInterface $taxCalculationPlugin */
             $taxCalculationPlugin = $taxCalculationPlugins[$method->getTaxCalculationPlugin()];
             $effectiveTaxRate = $taxCalculationPlugin->getTaxRate($shipmentMethodAvailabilityTransfer, $effectiveTaxRate);
         }
@@ -218,8 +214,8 @@ class Method
     }
 
     /**
-     * @param SpyShipmentMethod $method
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return string
      */
@@ -229,7 +225,7 @@ class Method
 
         $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
         if (isset($deliveryTimePlugins[$method->getDeliveryTimePlugin()])) {
-            /** @var ShipmentMethodDeliveryTimePluginInterface $deliveryTimePlugin */
+            /** @var \Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface $deliveryTimePlugin */
             $deliveryTimePlugin = $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
             $timeString = $deliveryTimePlugin->getTime($shipmentMethodAvailabilityTransfer);
         }

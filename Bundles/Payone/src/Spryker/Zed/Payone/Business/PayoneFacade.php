@@ -11,27 +11,19 @@ use Generated\Shared\Transfer\PayoneCreditCardTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
-use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
-use Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
-use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 
 /**
- * @method PayoneBusinessFactory getFactory()
+ * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
  */
 class PayoneFacade extends AbstractFacade
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
@@ -43,7 +35,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return AuthorizationResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function authorizePayment($idPayment)
     {
@@ -53,7 +45,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return AuthorizationResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -63,7 +55,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return CaptureResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer
      */
     public function capturePayment($idPayment)
     {
@@ -73,7 +65,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return DebitResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer
      */
     public function debitPayment($idPayment)
     {
@@ -81,9 +73,9 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param PayoneRefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\PayoneRefundTransfer $refundTransfer
      *
-     * @return RefundResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer
      */
     public function refundPayment(PayoneRefundTransfer $refundTransfer)
     {
@@ -91,9 +83,9 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param PayoneCreditCardTransfer $creditCardData
+     * @param \Generated\Shared\Transfer\PayoneCreditCardTransfer $creditCardData
      *
-     * @return CreditCardCheckResponseContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer
      */
     public function creditCardCheck(PayoneCreditCardTransfer $creditCardData)
     {
@@ -101,9 +93,9 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
+     * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
-     * @return TransactionStatusResponse
+     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
      */
     public function processTransactionStatusUpdate(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer)
     {
@@ -114,7 +106,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -124,7 +116,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -134,7 +126,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -144,7 +136,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -154,7 +146,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -164,7 +156,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -174,7 +166,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -184,7 +176,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -194,7 +186,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -204,7 +196,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -214,7 +206,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -224,9 +216,9 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param PayonePaymentTransfer $payment
+     * @param \Generated\Shared\Transfer\PayonePaymentTransfer $payment
      *
-     * @return PayoneAuthorizationCheckResponseTransfer
+     * @return \Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer
      */
     public function getAuthorizationResponse(PayonePaymentTransfer $payment)
     {
@@ -325,10 +317,10 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
@@ -338,9 +330,9 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param ObjectCollection $orders
+     * @param \Propel\Runtime\Collection\ObjectCollection $orders
      *
-     * @return PayonePaymentLogTransfer[]
+     * @return \Generated\Shared\Transfer\PayonePaymentLogTransfer[]
      */
     public function getPaymentLogs(ObjectCollection $orders)
     {
@@ -350,7 +342,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
     public function getPaymentData($idPayment)
     {
@@ -358,7 +350,7 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param PaymentDataTransfer $paymentData
+     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentData
      * @param int $idOrder
      *
      * @return void

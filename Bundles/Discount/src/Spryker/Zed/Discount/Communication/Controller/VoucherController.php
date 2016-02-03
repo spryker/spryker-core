@@ -9,10 +9,7 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
-use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,8 +17,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method DiscountCommunicationFactory getFactory()
- * @method DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class VoucherController extends AbstractController
 {
@@ -34,7 +31,7 @@ class VoucherController extends AbstractController
     const MESSAGE_TYPE_SUCCESS = 'success';
 
     /**
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createSingleAction(Request $request)
     {
@@ -72,7 +69,7 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createMultipleAction(Request $request)
     {
@@ -108,7 +105,7 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @param VoucherCreateInfoTransfer $voucherCreateInfoInterface
+     * @param \Generated\Shared\Transfer\VoucherCreateInfoTransfer $voucherCreateInfoInterface
      *
      * @return self
      */
@@ -122,7 +119,7 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -162,9 +159,9 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return DiscountVoucherCodesTable
+     * @return \Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable
      */
     protected function getGeneratedCodesTable(Request $request)
     {
@@ -177,9 +174,9 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function exportAction(Request $request)
     {
@@ -223,7 +220,7 @@ class VoucherController extends AbstractController
      * @param int $idPool
      * @param int $batchValue
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function generateCsvFromVouchers($idPool, $batchValue)
     {

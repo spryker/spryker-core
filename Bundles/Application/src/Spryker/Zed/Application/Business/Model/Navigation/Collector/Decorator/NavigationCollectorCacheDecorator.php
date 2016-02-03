@@ -13,18 +13,18 @@ class NavigationCollectorCacheDecorator implements NavigationCollectorInterface
 {
 
     /**
-     * @var NavigationCollectorInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface
      */
     private $navigationCollector;
 
     /**
-     * @var NavigationCacheInterface
+     * @var \Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface
      */
     private $navigationCache;
 
     /**
-     * @param NavigationCollectorInterface $navigationCollector
-     * @param NavigationCacheInterface $navigationCache
+     * @param \Spryker\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface $navigationCollector
+     * @param \Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheInterface $navigationCache
      */
     public function __construct(NavigationCollectorInterface $navigationCollector, NavigationCacheInterface $navigationCache)
     {

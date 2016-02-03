@@ -7,20 +7,19 @@
 namespace Spryker\Zed\Stock\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Stock\Communication\StockCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method StockCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Stock\Communication\StockCommunicationFactory getFactory()
  */
 class GridController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function stockAction(Request $request)
     {
@@ -30,9 +29,9 @@ class GridController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function stockProductAction(Request $request)
     {

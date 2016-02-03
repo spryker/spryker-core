@@ -6,19 +6,17 @@
 
 namespace Spryker\Zed\Search\Business;
 
-use Elastica\Document;
-use Elastica\Response;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method SearchBusinessFactory getFactory()
+ * @method \Spryker\Zed\Search\Business\SearchBusinessFactory getFactory()
  */
 class SearchFacade extends AbstractFacade
 {
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
      */
@@ -44,7 +42,7 @@ class SearchFacade extends AbstractFacade
     }
 
     /**
-     * @return Response
+     * @return \Elastica\Response
      */
     public function delete()
     {
@@ -55,7 +53,7 @@ class SearchFacade extends AbstractFacade
      * @param string $key
      * @param string $type
      *
-     * @return Document
+     * @return \Elastica\Document
      */
     public function getDocument($key, $type)
     {

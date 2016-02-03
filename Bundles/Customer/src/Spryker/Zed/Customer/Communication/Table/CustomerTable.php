@@ -10,7 +10,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -31,12 +30,12 @@ class CustomerTable extends AbstractTable
     const COL_LAST_NAME = 'last_name';
 
     /**
-     * @var CustomerQueryContainer
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
      */
     protected $customerQueryContainer;
 
     /**
-     * @param CustomerQueryContainer $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $customerQueryContainer
      */
     public function __construct(CustomerQueryContainer $customerQueryContainer)
     {
@@ -44,9 +43,9 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -88,9 +87,9 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -106,7 +105,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param SpyCustomer $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
      * @return string
      */
@@ -125,7 +124,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param ObjectCollection $customersCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection $customersCollection
      *
      * @return array
      */
@@ -141,7 +140,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param SpyCustomer $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
      * @return array
      */
@@ -157,7 +156,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param SpyCustomer $customer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
      * @return string
      */
@@ -174,7 +173,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @return SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     protected function prepareQuery()
     {

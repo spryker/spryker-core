@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Stock\Persistence\Propel;
 
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Stock\Persistence\Base\SpyStockProduct as BaseSpyStockProduct;
 
 /**
@@ -23,7 +22,7 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
     /**
      * @param int $amount
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -36,7 +35,7 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
     /**
      * @param int $amount
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

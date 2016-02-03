@@ -8,7 +8,6 @@ namespace Spryker\Zed\Gui\Communication\Table;
 
 use Spryker\Zed\Application\Communication\Plugin\Pimple;
 use Generated\Shared\Transfer\DataTablesTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
@@ -31,12 +30,12 @@ abstract class AbstractTable
     const PARAMETER_VALUE = 'value';
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 
@@ -46,7 +45,7 @@ abstract class AbstractTable
     protected $data;
 
     /**
-     * @var TableConfiguration
+     * @var \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected $config;
 
@@ -86,26 +85,26 @@ abstract class AbstractTable
     protected $tableIdentifier;
 
     /**
-     * @var DataTablesTransfer
+     * @var \Generated\Shared\Transfer\DataTablesTransfer
      */
     protected $dataTablesTransfer;
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return mixed
      */
     abstract protected function configure(TableConfiguration $config);
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return mixed
      */
     abstract protected function prepareData(TableConfiguration $config);
 
     /**
-     * @return DataTablesTransfer
+     * @return \Generated\Shared\Transfer\DataTablesTransfer
      */
     public function getDataTablesTransfer()
     {
@@ -113,7 +112,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param DataTablesTransfer $dataTablesTransfer
+     * @param \Generated\Shared\Transfer\DataTablesTransfer $dataTablesTransfer
      *
      * @return void
      */
@@ -167,7 +166,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function newTableConfiguration()
     {
@@ -175,7 +174,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return void
      */
@@ -244,7 +243,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     public function getConfiguration()
     {
@@ -316,7 +315,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
@@ -393,8 +392,8 @@ abstract class AbstractTable
     /**
      * @todo CD-412 to be rafactored, does to many things and is hard to understand
      *
-     * @param ModelCriteria $query
-     * @param TableConfiguration $config
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @param bool $returnRawResults
      *
      * @return array
@@ -620,7 +619,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param string|Url $url
+     * @param string|\Spryker\Zed\Application\Business\Url\Url $url
      * @param string $title
      * @param array $defaultOptions
      * @param array $customOptions
@@ -711,7 +710,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $searchColumns
      * @param \ArrayObject $column
      *

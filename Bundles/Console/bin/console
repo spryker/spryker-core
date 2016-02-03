@@ -1,7 +1,16 @@
 #!/usr/bin/env php
 <?php
 
-require_once(__DIR__ . '/../../../../../autoload.php');
+foreach ([__DIR__ . '/../../../../../autoload.php', __DIR__ . '/../../../vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        define('SPRYKER_COMPOSER_INSTALL', $file);
+        break;
+    }
+}
+
+unset($file);
+
+require_once SPRYKER_COMPOSER_INSTALL;
 
 $bootstrap = new Spryker\Zed\Console\Communication\ConsoleBootstrap();
 $bootstrap->run();

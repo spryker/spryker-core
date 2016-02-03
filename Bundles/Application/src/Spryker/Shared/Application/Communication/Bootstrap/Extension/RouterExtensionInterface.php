@@ -7,15 +7,14 @@
 namespace Spryker\Shared\Application\Communication\Bootstrap\Extension;
 
 use Spryker\Shared\Application\Communication\Application;
-use Symfony\Component\Routing\RouterInterface;
 
 interface RouterExtensionInterface
 {
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      *
-     * @return RouterInterface[]
+     * @return \Symfony\Component\Routing\RouterInterface[]
      */
     public function getRouter(Application $application);
 

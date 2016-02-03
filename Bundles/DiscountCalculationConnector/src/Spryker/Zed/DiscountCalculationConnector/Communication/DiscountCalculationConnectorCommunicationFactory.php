@@ -6,19 +6,17 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Communication;
 
-use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToDiscountInterface;
 use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorConfig;
 
 /**
- * @method DiscountCalculationConnectorConfig getConfig()
+ * @method \Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorConfig getConfig()
  */
 class DiscountCalculationConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return DiscountCalculationToDiscountInterface
+     * @return \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToDiscountInterface
      */
     public function getDiscountFacade()
     {

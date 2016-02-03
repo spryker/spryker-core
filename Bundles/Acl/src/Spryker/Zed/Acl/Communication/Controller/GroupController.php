@@ -8,9 +8,7 @@ namespace Spryker\Zed\Acl\Communication\Controller;
 
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
-use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
-use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\Form\Form;
@@ -20,8 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method AclCommunicationFactory getFactory()
- * @method AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
  */
 class GroupController extends AbstractController
 {
@@ -43,7 +41,7 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -55,7 +53,7 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -86,9 +84,9 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction(Request $request)
     {
@@ -125,9 +123,9 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Form $form
+     * @param \Symfony\Component\Form\Form $form
      *
-     * @return RolesTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     protected function getRoleTransfersFromForm(Form $form)
     {
@@ -144,9 +142,9 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function usersAction(Request $request)
     {
@@ -182,23 +180,23 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function rolesAction(Request $request)
     {
         $idGroup = $request->get(self::PARAMETER_ID_GROUP);
 
-        $roles = $this->getFactory()->createGroupRoleListByGroupId($idGroup);
+        $roles = $this->getFactory()->getGroupRoleListByGroupId($idGroup);
 
         return $this->jsonResponse($roles);
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function listAction(Request $request)
     {
@@ -209,9 +207,9 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function rulesAction(Request $request)
     {

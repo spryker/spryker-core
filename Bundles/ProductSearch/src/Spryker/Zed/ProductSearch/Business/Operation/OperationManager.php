@@ -13,12 +13,12 @@ class OperationManager implements OperationManagerInterface
 {
 
     /**
-     * @var ProductSearchQueryContainerInterface
+     * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
     protected $productSearchQueryContainer;
 
     /**
-     * @param ProductSearchQueryContainerInterface $productSearchQueryContainer
+     * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQueryContainer
      */
     public function __construct(
         ProductSearchQueryContainerInterface $productSearchQueryContainer

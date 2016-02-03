@@ -19,7 +19,7 @@ class UserTest extends Test
 {
 
     /**
-     * @var UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacade
      */
     protected $userFacade;
 
@@ -47,9 +47,9 @@ class UserTest extends Test
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     private function mockAddUser($data)
     {
@@ -57,9 +57,9 @@ class UserTest extends Test
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     private function mockUserTransfer($data)
     {

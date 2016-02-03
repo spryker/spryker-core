@@ -196,7 +196,7 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Api
+     * @return \Spryker\Shared\NewRelic\Api
      */
     protected function createNewRelicApiMock()
     {

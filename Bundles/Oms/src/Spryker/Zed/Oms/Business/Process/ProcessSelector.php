@@ -12,12 +12,12 @@ class ProcessSelector
 {
 
     /**
-     * @var OmsConfig
+     * @var \Spryker\Zed\Oms\OmsConfig
      */
     protected $config;
 
     /**
-     * @param OmsConfig $config
+     * @param \Spryker\Zed\Oms\OmsConfig $config
      */
     public function __construct(OmsConfig $config)
     {
@@ -25,7 +25,7 @@ class ProcessSelector
     }
 
     /**
-     * @param OrderTransfer $transferOrder
+     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
      *
      * @return string
      */

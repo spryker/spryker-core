@@ -16,9 +16,9 @@ class ItemGrouperCheckoutConnectorDependencyProvider extends AbstractBundleDepen
     const FACADE_ITEM_GROUPER = 'item_grouper_facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {

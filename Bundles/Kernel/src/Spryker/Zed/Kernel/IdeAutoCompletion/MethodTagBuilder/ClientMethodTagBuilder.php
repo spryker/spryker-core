@@ -17,7 +17,7 @@ class ClientMethodTagBuilder extends AbstractSingleFileMethodTagBuilder
     const PATH_PATTERN = '/';
 
     /**
-     * @param OptionsResolver $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */

@@ -12,7 +12,7 @@ interface AuthToUserInterface
 {
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return bool
      */
@@ -21,7 +21,7 @@ interface AuthToUserInterface
     /**
      * @param string $username
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserByUsername($username);
 
@@ -31,7 +31,7 @@ interface AuthToUserInterface
     public function hasCurrentUser();
 
     /**
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser();
 
@@ -51,16 +51,16 @@ interface AuthToUserInterface
     public function isValidPassword($password, $hash);
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function updateUser(UserTransfer $user);
 
     /**
-     * @param UserTransfer $user
+     * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return mixed
      */
@@ -69,7 +69,7 @@ interface AuthToUserInterface
     /**
      * @param int $idUser
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserById($idUser);
 

@@ -8,14 +8,11 @@ namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
-use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
-use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
-use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 
 class Writer implements WriterInterface
@@ -26,24 +23,24 @@ class Writer implements WriterInterface
     const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**
-     * @var StockQueryContainer
+     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var Reader
+     * @var \Spryker\Zed\Stock\Business\Model\Reader
      */
     protected $reader;
 
     /**
-     * @var StockToTouchInterface
+     * @var \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @param StockQueryContainer $queryContainer
-     * @param ReaderInterface $readerInterface
-     * @param StockToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainer $queryContainer
+     * @param \Spryker\Zed\Stock\Business\Model\ReaderInterface $readerInterface
+     * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
      */
     public function __construct(
         StockQueryContainer $queryContainer,
@@ -56,9 +53,9 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param TypeTransfer $stockTypeTransfer
+     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -76,10 +73,10 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param TypeTransfer $stockTypeTransfer
+     * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
-     * @throws PropelException
-     * @throws StockTypeNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockTypeNotFoundException
      *
      * @return int
      */
@@ -101,9 +98,9 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param StockProductTransfer $transferStockProduct
+     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
-     * @throws StockProductAlreadyExistsException
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
      *
      * @return int
      */
@@ -122,10 +119,10 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param StockProductTransfer $transferStockProduct
+     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
-     * @throws PropelException
-     * @throws StockProductNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
      *
      * @return int
      */
@@ -195,7 +192,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param SpyStock $stockTypeEntity
+     * @param \Orm\Zed\Stock\Persistence\SpyStock $stockTypeEntity
      *
      * @return void
      */
@@ -208,7 +205,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param SpyStockProduct $stockProductEntity
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct $stockProductEntity
      *
      * @return void
      */
@@ -221,11 +218,11 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param StockProductTransfer $transferStockProduct
+     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      * @param int $idStockType
      * @param int $idProduct
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */

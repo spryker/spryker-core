@@ -14,7 +14,7 @@ class OmsFacade extends SprykerOmsFacade implements CheckoutToOmsInterface
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return string
      */

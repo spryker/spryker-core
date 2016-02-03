@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
-
 interface ProductCategoryToProductInterface
 {
 
@@ -21,7 +19,7 @@ interface ProductCategoryToProductInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */

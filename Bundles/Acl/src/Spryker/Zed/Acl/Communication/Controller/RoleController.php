@@ -10,10 +10,7 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Spryker\Zed\Acl\Communication\Form\RulesetForm;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Acl\Business\AclFacade;
-use Spryker\Zed\Acl\Communication\AclCommunicationFactory;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,9 +18,9 @@ use Spryker\Zed\Acl\Communication\Form\RoleForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * @method AclCommunicationFactory getFactory()
- * @method AclFacade getFacade()
- * @method AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
  */
 class RoleController extends AbstractController
 {
@@ -44,7 +41,7 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -56,9 +53,9 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -86,9 +83,9 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
@@ -116,9 +113,9 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function rulesetTableAction(Request $request)
     {
@@ -131,9 +128,9 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
     {
@@ -169,8 +166,8 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Form $rulesetForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\Form $rulesetForm
      * @param int $idRole
      *
      * @return void
@@ -191,8 +188,8 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Form $roleForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\Form $roleForm
      *
      * @return void
      */

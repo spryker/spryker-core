@@ -8,7 +8,6 @@ namespace Spryker\Zed\Maintenance\Business\Dependency;
 
 use Spryker\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class BundleParser
 {
@@ -22,7 +21,7 @@ class BundleParser
     protected $coreBundleNamespaces = ['Spryker'];
 
     /**
-     * @var MaintenanceConfig
+     * @var \Spryker\Zed\Maintenance\MaintenanceConfig
      */
     protected $config;
 
@@ -32,7 +31,7 @@ class BundleParser
     protected $bundleConfig;
 
     /**
-     * @param MaintenanceConfig $config
+     * @param \Spryker\Zed\Maintenance\MaintenanceConfig $config
      */
     public function __construct(MaintenanceConfig $config)
     {
@@ -80,7 +79,7 @@ class BundleParser
     /**
      * @param $bundle
      *
-     * @return SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     protected function findAllFilesOfBundle($bundle)
     {
@@ -159,7 +158,7 @@ class BundleParser
     /**
      * @param string $bundleName
      *
-     * @return SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     protected function findBundleNamespaceDirectoriesForBundle($bundleName)
     {
@@ -179,12 +178,8 @@ class BundleParser
         if (isset($this->bundleConfig)) {
             return $this->bundleConfig;
         }
-        $file = APPLICATION_VENDOR_DIR
-            . DIRECTORY_SEPARATOR . 'spryker'
-            . DIRECTORY_SEPARATOR . 'spryker'
-            . DIRECTORY_SEPARATOR . self::CONFIG_FILE;
 
-        $this->bundleConfig = json_decode(file_get_contents($file), true);
+        $this->bundleConfig = json_decode(file_get_contents($this->config->getPathToBundleConfig()), true);
 
         return $this->bundleConfig;
     }

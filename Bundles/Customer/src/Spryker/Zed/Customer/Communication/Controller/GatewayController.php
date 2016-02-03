@@ -6,26 +6,23 @@
 
 namespace Spryker\Zed\Customer\Communication\Controller;
 
-use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
-use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method CustomerFacade getFacade()
- * @method CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function registerAction(CustomerTransfer $customerTransfer)
     {
@@ -34,9 +31,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function confirmRegistrationAction(CustomerTransfer $customerTransfer)
     {
@@ -45,9 +42,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      *
      * @deprecated Use sendPasswordRestoreMailAction() instead.
      */
@@ -59,9 +56,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function sendPasswordRestoreMailAction(CustomerTransfer $customerTransfer)
     {
@@ -70,9 +67,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function restorePasswordAction(CustomerTransfer $customerTransfer)
     {
@@ -81,7 +78,7 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
@@ -93,9 +90,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function hasCustomerWithEmailAndPasswordAction(CustomerTransfer $customerTransfer)
     {
@@ -115,9 +112,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function customerAction(CustomerTransfer $customerTransfer)
     {
@@ -128,9 +125,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function updateAction(CustomerTransfer $customerTransfer)
     {
@@ -142,9 +139,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function updatePasswordAction(CustomerTransfer $customerTransfer)
     {
@@ -156,9 +153,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function addressAction(AddressTransfer $addressTransfer)
     {
@@ -174,9 +171,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return AddressesTransfer|null
+     * @return \Generated\Shared\Transfer\AddressesTransfer|null
      */
     public function addressesAction(CustomerTransfer $customerTransfer)
     {
@@ -193,9 +190,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function updateAddressAction(AddressTransfer $addressTransfer)
     {
@@ -207,9 +204,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function updateAddressAndCustomerDefaultAddressesAction(AddressTransfer $addressTransfer)
     {
@@ -223,9 +220,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function createAddressAndUpdateCustomerDefaultAddressesAction(AddressTransfer $addressTransfer)
     {
@@ -239,9 +236,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function newAddressAction(AddressTransfer $addressTransfer)
     {
@@ -253,9 +250,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer|null
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function deleteAddressAction(AddressTransfer $addressTransfer)
     {
@@ -271,9 +268,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function defaultBillingAddressAction(AddressTransfer $addressTransfer)
     {
@@ -285,9 +282,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function defaultShippingAddressAction(AddressTransfer $addressTransfer)
     {

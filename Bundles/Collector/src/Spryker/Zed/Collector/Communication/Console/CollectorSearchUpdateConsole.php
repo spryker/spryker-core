@@ -6,14 +6,12 @@
 
 namespace Spryker\Zed\Collector\Communication\Console;
 
-use Spryker\Zed\Collector\Business\CollectorFacade;
-use Spryker\Zed\Collector\Communication\CollectorCommunicationFactory;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method CollectorCommunicationFactory getFactory()
- * @method CollectorFacade getFacade()
+ * @method \Spryker\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Collector\Business\CollectorFacade getFacade()
  */
 class CollectorSearchUpdateConsole extends AbstractCollectorConsole
 {
@@ -33,8 +31,8 @@ class CollectorSearchUpdateConsole extends AbstractCollectorConsole
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return int|null|void
      */

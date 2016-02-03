@@ -9,8 +9,6 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
 use Functional\Spryker\Zed\Payolution\Business\Api\Adapter\Http\ReversalAdapterMock;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
 
 class PayolutionFacadeRevertTest extends AbstractFacadeTest
 {
@@ -44,14 +42,14 @@ class PayolutionFacadeRevertTest extends AbstractFacadeTest
             $expectedResponse->getIdentificationReferenceid()
         );
 
-        /** @var SpyPaymentPayolutionTransactionRequestLog $requestLog */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog $requestLog */
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_REVERSAL, $requestLog->getPaymentCode());
         $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
-        /** @var SpyPaymentPayolutionTransactionStatusLog $statusLog */
+        /** @var \Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog $statusLog */
         $statusLog = $this->getStatusLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getStatusLogCollectionForPayment()->count());
         $this->matchStatusLogWithResponse($statusLog, $expectedResponse);
@@ -89,14 +87,14 @@ class PayolutionFacadeRevertTest extends AbstractFacadeTest
             $expectedResponse->getIdentificationReferenceid()
         );
 
-        /** @var SpyPaymentPayolutionTransactionRequestLog $requestLog */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog $requestLog */
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_REVERSAL, $requestLog->getPaymentCode());
         $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
-        /** @var SpyPaymentPayolutionTransactionStatusLog $statusLog */
+        /** @var \Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog $statusLog */
         $statusLog = $this->getStatusLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getStatusLogCollectionForPayment()->count());
         $this->matchStatusLogWithResponse($statusLog, $expectedResponse);

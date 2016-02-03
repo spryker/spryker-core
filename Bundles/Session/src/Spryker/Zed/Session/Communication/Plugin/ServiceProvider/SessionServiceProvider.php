@@ -14,21 +14,20 @@ use Spryker\Shared\Config;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
-use Spryker\Zed\Session\Communication\SessionCommunicationFactory;
 
 /**
- * @method SessionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
  */
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
-     * @var SessionClientInterface
+     * @var \Spryker\Client\Session\SessionClientInterface
      */
     private $client;
 
     /**
-     * @param SessionClientInterface $client
+     * @param \Spryker\Client\Session\SessionClientInterface $client
      *
      * @return void
      */
@@ -38,7 +37,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -55,7 +54,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

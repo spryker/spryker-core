@@ -34,17 +34,17 @@ class MethodForm extends AbstractForm
     const FIELD_TAX_SET = 'fkTaxSet';
 
     /**
-     * @var SpyShipmentMethodQuery
+     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     protected $methodQuery;
 
     /**
-     * @var SpyShipmentCarrierQuery
+     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     protected $carrierQuery;
 
     /**
-     * @var SpyTaxSetQuery
+     * @var \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     protected $taxSetQuery;
 
@@ -59,15 +59,15 @@ class MethodForm extends AbstractForm
     protected $idMethod;
 
     /**
-     * @var ShipmentConfig
+     * @var \Spryker\Zed\Shipment\ShipmentConfig
      */
     protected $shipmentConfig;
 
     /**
-     * @param SpyShipmentMethodQuery $methodQuery
-     * @param SpyShipmentCarrierQuery $carrierQuery
-     * @param SpyTaxSetQuery $taxSetQuery
-     * @param ShipmentConfig $shipmentConfig
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery $methodQuery
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery $carrierQuery
+     * @param \Orm\Zed\Tax\Persistence\SpyTaxSetQuery $taxSetQuery
+     * @param \Spryker\Zed\Shipment\ShipmentConfig $shipmentConfig
      * @param array $plugins
      * @param int|null $idMethod
      */
@@ -104,7 +104,7 @@ class MethodForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

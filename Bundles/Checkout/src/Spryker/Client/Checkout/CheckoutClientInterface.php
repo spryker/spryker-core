@@ -7,15 +7,14 @@
 namespace Spryker\Client\Checkout;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 
 interface CheckoutClientInterface
 {
 
     /**
-     * @param CheckoutRequestTransfer $requestInterface
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $requestInterface
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function requestCheckout(CheckoutRequestTransfer $requestInterface);
 

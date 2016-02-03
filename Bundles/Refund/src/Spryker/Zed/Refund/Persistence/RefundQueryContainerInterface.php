@@ -22,7 +22,7 @@ interface RefundQueryContainerInterface
     /**
      * @param int $idMethod
      *
-     * @return SpyRefundQuery
+     * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
     public function queryRefundByIdRefund($idMethod);
 

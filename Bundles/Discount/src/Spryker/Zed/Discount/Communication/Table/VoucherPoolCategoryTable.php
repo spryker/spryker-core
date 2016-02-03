@@ -14,12 +14,12 @@ class VoucherPoolCategoryTable extends AbstractTable
     const URL_DISCOUNT_POOL_EDIT_CATEGORY = '/discount/pool/edit-category';
 
     /**
-     * @var SpyDiscountVoucherPoolCategoryQuery
+     * @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery
      */
     protected $categoriesQuery;
 
     /**
-     * @param SpyDiscountVoucherPoolCategoryQuery $discountVoucherPoolCategory
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery $discountVoucherPoolCategory
      */
     public function __construct(SpyDiscountVoucherPoolCategoryQuery $discountVoucherPoolCategory)
     {
@@ -27,7 +27,7 @@ class VoucherPoolCategoryTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return mixed
      */
@@ -44,7 +44,7 @@ class VoucherPoolCategoryTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

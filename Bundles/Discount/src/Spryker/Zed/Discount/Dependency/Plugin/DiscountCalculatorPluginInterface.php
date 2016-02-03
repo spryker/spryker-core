@@ -7,13 +7,12 @@
 namespace Spryker\Zed\Discount\Dependency\Plugin;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 interface DiscountCalculatorPluginInterface
 {
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
      * @param mixed $number
      *
      * @return int
@@ -21,7 +20,7 @@ interface DiscountCalculatorPluginInterface
     public function calculate(array $discountableObjects, $number);
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return string
      */

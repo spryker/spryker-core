@@ -9,7 +9,6 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
@@ -20,17 +19,17 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 {
 
     /**
-     * @var PriceCalculationHelperInterface
+     * @var \Spryker\Zed\Calculation\Business\Model\PriceCalculationHelperInterface
      */
     protected $priceCalculationHelper;
 
     /**
-     * @var TaxSetTransfer[]
+     * @var \Generated\Shared\Transfer\TaxSetTransfer[]
      */
     private $calculatedTaxSets = [];
 
     /**
-     * @param PriceCalculationHelperInterface $priceCalculationHelper
+     * @param \Spryker\Zed\Calculation\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
      */
     public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
     {
@@ -38,9 +37,9 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $calculableContainer
-     * @param ItemTransfer[]|ItemTransfer[] $calculableItems
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -54,8 +53,8 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param CalculableInterface $calculableContainer
-     * @param ItemTransfer[]|ItemTransfer[] $calculableItems
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -71,7 +70,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param ItemTransfer|ItemTransfer $taxableItem
+     * @param \Generated\Shared\Transfer\ItemTransfer|\Generated\Shared\Transfer\ItemTransfer $taxableItem
      *
      * @return void
      */
@@ -112,7 +111,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      *
      * @return void
      */

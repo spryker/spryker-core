@@ -16,9 +16,9 @@ class ShipmentDependencyProvider extends AbstractDependencyProvider
     const SESSION = 'session';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     public function provideServiceLayerDependencies(Container $container)
     {

@@ -11,12 +11,12 @@ class BaseMessageTray
 {
 
     /**
-     * @var MessengerToGlossaryInterface
+     * @var \Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @param MessengerToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface $glossaryFacade
      */
     public function __construct(MessengerToGlossaryInterface $glossaryFacade)
     {

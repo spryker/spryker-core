@@ -16,7 +16,7 @@ class CategoryAttributeTable extends AbstractTable
     const TABLE_IDENTIFIER = 'category_attribute_table';
 
     /**
-     * @param SpyCategoryAttributeQuery $categoryAttributeQuery
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery $categoryAttributeQuery
      */
     public function __construct(SpyCategoryAttributeQuery $categoryAttributeQuery)
     {
@@ -26,9 +26,9 @@ class CategoryAttributeTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -51,7 +51,7 @@ class CategoryAttributeTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

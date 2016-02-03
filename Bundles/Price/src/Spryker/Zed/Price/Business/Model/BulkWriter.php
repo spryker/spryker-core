@@ -17,11 +17,11 @@ class BulkWriter extends Writer implements BulkWriterInterface
     protected $recordsToTouch = [];
 
     /**
-     * @param PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @throws \Exception
      *
-     * @return SpyPriceProduct
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
     public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
@@ -41,7 +41,7 @@ class BulkWriter extends Writer implements BulkWriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @throws \Exception
      *

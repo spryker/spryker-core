@@ -13,22 +13,22 @@ interface SubscriptionManagerInterface
 {
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
-     * @param NewsletterTypeTransfer $newsletterType
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
      */
     public function subscribe(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType);
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
-     * @param NewsletterTypeTransfer $newsletterType
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
      *
      * @return bool
      */
     public function isAlreadySubscribed(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType);
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
-     * @param NewsletterTypeTransfer $newsletterType
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
      *
      * @return bool
      */

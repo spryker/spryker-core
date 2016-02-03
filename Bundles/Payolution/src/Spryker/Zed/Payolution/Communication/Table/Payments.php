@@ -19,12 +19,12 @@ class Payments extends AbstractTable
     const PARAM_ID_PAYMENT = 'id-payment';
 
     /**
-     * @var SpyPaymentPayolutionQuery
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
      */
     private $paymentPayolutionQuery;
 
     /**
-     * @param SpyPaymentPayolutionQuery $paymentPayolutionQuery
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery $paymentPayolutionQuery
      */
     public function __construct(SpyPaymentPayolutionQuery $paymentPayolutionQuery)
     {
@@ -32,9 +32,9 @@ class Payments extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -54,7 +54,7 @@ class Payments extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

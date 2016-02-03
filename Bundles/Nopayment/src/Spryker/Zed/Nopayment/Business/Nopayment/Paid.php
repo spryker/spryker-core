@@ -7,16 +7,14 @@
 namespace Spryker\Zed\Nopayment\Business\Nopayment;
 
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainer;
 use Orm\Zed\Nopayment\Persistence\SpyNopaymentPaid;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Propel\Runtime\Exception\PropelException;
 
 class Paid
 {
 
     /**
-     * @var NopaymentQueryContainer
+     * @var \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainer
      */
     protected $queryContainer;
 
@@ -26,9 +24,9 @@ class Paid
     }
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -40,9 +38,9 @@ class Paid
     }
 
     /**
-     * @param SpySalesOrderItem[] $orderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function setAsPaid(array $orderItems)
     {
@@ -54,7 +52,7 @@ class Paid
     }
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool
      */

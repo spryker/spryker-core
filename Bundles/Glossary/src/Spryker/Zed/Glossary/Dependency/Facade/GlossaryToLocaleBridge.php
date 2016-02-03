@@ -6,20 +6,19 @@
 namespace Spryker\Zed\Glossary\Dependency\Facade;
 
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Generated\Shared\Transfer\LocaleTransfer;
 
 class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
 {
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 
     /**
      * GlossaryToLocaleBridge constructor.
      *
-     * @param LocaleFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade
      */
     public function __construct($localeFacade)
     {
@@ -29,7 +28,7 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)
     {
@@ -37,7 +36,7 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {
@@ -55,7 +54,7 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function createLocale($localeName)
     {

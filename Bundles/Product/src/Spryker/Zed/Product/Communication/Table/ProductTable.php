@@ -3,7 +3,6 @@
 namespace Spryker\Zed\Product\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -20,17 +19,17 @@ class ProductTable extends AbstractTable
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
-     * @var SpyProductAbstractQuery
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected $productQuery;
 
     /**
-     * @var ProductToUrlInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
     protected $urlFacade;
 
     /**
-     * @var LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $localeTransfer;
 
@@ -40,9 +39,9 @@ class ProductTable extends AbstractTable
     protected $yvesUrl;
 
     /**
-     * @param SpyProductAbstractQuery $productQuery
-     * @param ProductToUrlInterface $urlFacade
-     * @param LocaleTransfer $localeTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productQuery
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param $yvesUrl
      */
     public function __construct(
@@ -58,9 +57,9 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -79,7 +78,7 @@ class ProductTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
@@ -129,7 +128,7 @@ class ProductTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     protected function getYvesProductUrl(array $item)
     {

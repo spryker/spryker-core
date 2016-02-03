@@ -12,7 +12,7 @@ interface HashGeneratorInterface
 {
 
     /**
-     * @param AbstractRequestContainer $request
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer $request
      * @param string $securityKey
      *
      * @return string

@@ -18,12 +18,12 @@ abstract class AbstractEventJournal implements EventJournalInterface
 {
 
     /**
-     * @var DataCollectorInterface[]
+     * @var \Spryker\Shared\Lumberjack\Model\Collector\DataCollectorInterface[]
      */
     private $dataCollectors = [];
 
     /**
-     * @var WriterInterface[]
+     * @var \Spryker\Shared\Lumberjack\Model\Writer\WriterInterface[]
      */
     private $eventWriters = [];
 
@@ -60,7 +60,7 @@ abstract class AbstractEventJournal implements EventJournalInterface
     }
 
     /**
-     * @param DataCollectorInterface $dataCollector
+     * @param \Spryker\Shared\Lumberjack\Model\Collector\DataCollectorInterface $dataCollector
      *
      * @return void
      */
@@ -70,7 +70,7 @@ abstract class AbstractEventJournal implements EventJournalInterface
     }
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\Lumberjack\Model\EventInterface $event
      *
      * @return void
      */
@@ -82,7 +82,7 @@ abstract class AbstractEventJournal implements EventJournalInterface
     }
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\Lumberjack\Model\EventInterface $event
      *
      * @return void
      */
@@ -93,7 +93,7 @@ abstract class AbstractEventJournal implements EventJournalInterface
     }
 
     /**
-     * @param WriterInterface $writer
+     * @param \Spryker\Shared\Lumberjack\Model\Writer\WriterInterface $writer
      *
      * @return void
      */
@@ -103,7 +103,7 @@ abstract class AbstractEventJournal implements EventJournalInterface
     }
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\Lumberjack\Model\EventInterface $event
      *
      * @return void
      */

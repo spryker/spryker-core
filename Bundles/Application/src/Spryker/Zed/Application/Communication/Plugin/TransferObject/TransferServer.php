@@ -9,7 +9,6 @@ namespace Spryker\Zed\Application\Communication\Plugin\TransferObject;
 use Spryker\Shared\Library\Communication\Response;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
-use Spryker\Shared\ZedRequest\Client\RequestInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -27,27 +26,27 @@ class TransferServer
     protected $repeatIsActive = false;
 
     /**
-     * @var RequestInterface
+     * @var \Spryker\Shared\ZedRequest\Client\RequestInterface
      */
     private $request;
 
     /**
-     * @var HttpRequest
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $httpRequest;
 
     /**
-     * @var ResponseInterface|Response
+     * @var \Spryker\Shared\ZedRequest\Client\ResponseInterface|\Spryker\Shared\Library\Communication\Response
      */
     protected $response;
 
     /**
-     * @var Repeater
+     * @var \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater
      */
     private $repeater;
 
     /**
-     * @param Repeater $repeater
+     * @param \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater $repeater
      */
     private function __construct(Repeater $repeater)
     {
@@ -55,7 +54,7 @@ class TransferServer
     }
 
     /**
-     * @param Repeater $repeater
+     * @param \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater $repeater
      *
      * @return self
      */
@@ -83,7 +82,7 @@ class TransferServer
     }
 
     /**
-     * @return Request
+     * @return \Spryker\Zed\ZedRequest\Business\Client\Request
      */
     public function getRequest()
     {
@@ -103,7 +102,7 @@ class TransferServer
     }
 
     /**
-     * @return HttpRequest
+     * @return \Symfony\Component\HttpFoundation\Request
      */
     private function getHttpRequest()
     {
@@ -115,7 +114,7 @@ class TransferServer
     }
 
     /**
-     * @param HttpRequest $httpRequest
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return self
      */
@@ -127,7 +126,7 @@ class TransferServer
     }
 
     /**
-     * @param ResponseInterface $response
+     * @param \Spryker\Shared\ZedRequest\Client\ResponseInterface $response
      *
      * @return self
      */
@@ -139,7 +138,7 @@ class TransferServer
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function send()
     {

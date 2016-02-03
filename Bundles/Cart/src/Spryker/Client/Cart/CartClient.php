@@ -10,17 +10,15 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Cart\Session\CartSessionInterface;
-use Spryker\Client\Cart\Zed\CartStubInterface;
 
 /**
- * @method CartFactory getFactory()
+ * @method \Spryker\Client\Cart\CartFactory getFactory()
  */
 class CartClient extends AbstractClient implements CartClientInterface
 {
 
     /**
-     * @return CartTransfer|CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\CartTransfer
      */
     public function getCart()
     {
@@ -28,7 +26,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return CartSessionInterface
+     * @return \Spryker\Client\Cart\Session\CartSessionInterface
      */
     protected function getSession()
     {
@@ -36,7 +34,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCart()
     {
@@ -58,9 +56,9 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addItem(ItemTransfer $itemTransfer)
     {
@@ -71,7 +69,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return CartStubInterface
+     * @return \Spryker\Client\Cart\Zed\CartStubInterface
      */
     protected function getZedStub()
     {
@@ -79,9 +77,9 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeItem(ItemTransfer $itemTransfer)
     {
@@ -97,9 +95,9 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemTransfer $itemToFind
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemToFind
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function findItem(ItemTransfer $itemToFind)
     {
@@ -118,10 +116,10 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function changeItemQuantity(ItemTransfer $itemTransfer, $quantity = 1)
     {
@@ -144,10 +142,10 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function decreaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1)
     {
@@ -159,10 +157,10 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function increaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1)
     {
@@ -174,7 +172,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function recalculate()
     {
@@ -185,7 +183,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     protected function createCartChange()
     {
@@ -197,9 +195,9 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     protected function prepareCartChange(ItemTransfer $itemTransfer)
     {
@@ -212,7 +210,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * @param string $coupon
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addCoupon($coupon)
     {
@@ -227,7 +225,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * @param string $coupon
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeCoupon($coupon)
     {
@@ -240,7 +238,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCoupons()
     {
@@ -251,10 +249,10 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     protected function createChangeTransferWithAdjustedQuantity(ItemTransfer $itemTransfer, $quantity)
     {
@@ -269,9 +267,9 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param CartTransfer $cartTransfer
+     * @param \Generated\Shared\Transfer\CartTransfer $cartTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     protected function handleCartResponse(CartTransfer $cartTransfer)
     {
@@ -281,10 +279,10 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemTransfer $newItemTransfer
-     * @param ItemTransfer $oldItemByIdentifier
+     * @param \Generated\Shared\Transfer\ItemTransfer $newItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $oldItemByIdentifier
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function mergeCartItems(ItemTransfer $newItemTransfer, ItemTransfer $oldItemByIdentifier)
     {

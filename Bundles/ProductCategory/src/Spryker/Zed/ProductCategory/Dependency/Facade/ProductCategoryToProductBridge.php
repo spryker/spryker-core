@@ -11,14 +11,14 @@ class ProductCategoryToProductBridge implements ProductCategoryToProductInterfac
 {
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $productFacade;
 
     /**
      * ProductCategoryToProductBridge constructor.
      *
-     * @param ProductFacade $productFacade
+     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
      */
     public function __construct($productFacade)
     {

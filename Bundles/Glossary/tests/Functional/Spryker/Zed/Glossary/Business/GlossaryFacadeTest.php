@@ -10,8 +10,6 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @group Spryker
@@ -26,12 +24,12 @@ class GlossaryFacadeTest extends Test
     const GLOSSARY_KEY = 'glossary_key';
 
     /**
-     * @var SpyGlossaryKeyQuery
+     * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery
      */
     private $query;
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
 
@@ -59,7 +57,7 @@ class GlossaryFacadeTest extends Test
     }
 
     /**
-     * @return LocaleFacade
+     * @return \Spryker\Zed\Locale\Business\LocaleFacade
      */
     private function getLocaleFacade()
     {
@@ -67,7 +65,7 @@ class GlossaryFacadeTest extends Test
     }
 
     /**
-     * @return GlossaryFacade
+     * @return \Spryker\Zed\Glossary\Business\GlossaryFacade
      */
     private function getGlossaryFacade()
     {
@@ -77,7 +75,7 @@ class GlossaryFacadeTest extends Test
     /**
      * @param array $locales
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     private function buildLocaleTransferObject(array $locales)
     {

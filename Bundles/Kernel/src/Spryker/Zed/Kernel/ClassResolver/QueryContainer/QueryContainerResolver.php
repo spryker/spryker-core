@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Kernel\ClassResolver\QueryContainer;
 
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 class QueryContainerResolver extends AbstractClassResolver
 {
@@ -17,9 +16,9 @@ class QueryContainerResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @throws QueryContainerNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
      *
-     * @return AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     public function resolve($callerClass)
     {

@@ -17,7 +17,7 @@ class NoWhitespaceBeforeSemicolonFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'NoWhitespaceBeforeSemicolonFixer';
 
     /**
-     * @var NoWhitespaceBeforeSemicolonFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\NoWhitespaceBeforeSemicolonFixer
      */
     protected $fixer;
 

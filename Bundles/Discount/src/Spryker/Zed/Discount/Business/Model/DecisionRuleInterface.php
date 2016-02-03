@@ -7,19 +7,17 @@
 namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Kernel\Business\ModelResult;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
 interface DecisionRuleInterface
 {
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param CalculableInterface $discountableContainer
-     * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $discountableContainer
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function evaluate(
         DiscountTransfer $discountTransfer,

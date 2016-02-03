@@ -17,12 +17,12 @@ abstract class AbstractRouter implements RouterInterface
 {
 
     /**
-     * @var RequestContext
+     * @var \Symfony\Component\Routing\RequestContext
      */
     protected $context;
 
     /**
-     * @var Application
+     * @var \Silex\Application
      */
     protected $app;
 
@@ -37,7 +37,7 @@ abstract class AbstractRouter implements RouterInterface
      *     false to force http
      *     null to not force anything (both https or http allowed)
      *
-     * @param Application $app
+     * @param \Silex\Application $app
      * @param bool|null $sslEnabled
      */
     public function __construct(Application $app, $sslEnabled = null)

@@ -7,6 +7,9 @@
 namespace Spryker\Zed\Discount;
 
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Business\Exception\MissingCalculatorException;
+use Spryker\Zed\Discount\Business\Exception\MissingCollectorException;
+use Spryker\Zed\Discount\Business\Exception\MissingDecisionRuleException;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\Aggregate;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemExpense;
@@ -17,11 +20,6 @@ use Spryker\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Zed\Discount\Business\Collector\CollectorInterface;
-use Spryker\Zed\Discount\Business\Model\CalculatorInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 
 class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInterface
 {
@@ -38,7 +36,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     }
 
     /**
-     * @return CalculatorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Model\CalculatorInterface[]
      */
     public function getAvailableCalculatorPlugins()
     {
@@ -49,7 +47,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     }
 
     /**
-     * @return CollectorInterface[]
+     * @return \Spryker\Zed\Discount\Business\Collector\CollectorInterface[]
      */
     public function getAvailableCollectorPlugins()
     {
@@ -65,25 +63,39 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     /**
      * @throws \ErrorException
      *
-     * @return DiscountDecisionRulePluginInterface
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface
      */
     public function getDefaultVoucherDecisionRulePlugin()
     {
-        if (!array_key_exists(DiscountConstants::PLUGIN_DECISION_RULE_VOUCHER, $this->getAvailableDecisionRulePlugins())) {
+        $availablePlugins = $this->getAvailableDecisionRulePlugins();
+
+        if (!array_key_exists(DiscountConstants::PLUGIN_DECISION_RULE_VOUCHER, $availablePlugins)) {
             throw new \ErrorException('No default voucher decision rule plugin registered');
         }
 
-        return $this->getAvailableDecisionRulePlugins()[DiscountConstants::PLUGIN_DECISION_RULE_VOUCHER];
+        return $availablePlugins[DiscountConstants::PLUGIN_DECISION_RULE_VOUCHER];
     }
 
     /**
      * @param string $pluginName
      *
-     * @return DiscountDecisionRulePluginInterface
+     * @throws \Spryker\Zed\Discount\Business\Exception\MissingDecisionRuleException
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface
      */
     public function getDecisionRulePluginByName($pluginName)
     {
-        return $this->getAvailableDecisionRulePlugins()[$pluginName];
+        $availableDecisionRules = $this->getAvailableDecisionRulePlugins();
+        if (!isset($availableDecisionRules[$pluginName])) {
+            throw new MissingDecisionRuleException(
+                sprintf(
+                    'Decision Rule Plugin %s could not be found, put it in DiscountConfig::getAvailableDecisionRulePlugins',
+                    $pluginName
+                )
+            );
+        }
+
+        return $availableDecisionRules[$pluginName];
     }
 
     /**
@@ -97,21 +109,46 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     /**
      * @param string $pluginName
      *
-     * @return DiscountCalculatorPluginInterface
+     * @throws \Spryker\Zed\Discount\Business\Exception\MissingCalculatorException
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
     public function getCalculatorPluginByName($pluginName)
     {
-        return $this->getAvailableCalculatorPlugins()[$pluginName];
+        $availableCalculators = $this->getAvailableCalculatorPlugins();
+
+        if (!isset($availableCalculators[$pluginName])) {
+            throw new MissingCalculatorException(
+                sprintf(
+                    'Calculator Plugin %s could not be found, put it in DiscountConfig::getAvailableCalculatorPlugins',
+                    $pluginName
+                )
+            );
+        }
+
+        return $availableCalculators[$pluginName];
     }
 
     /**
      * @param string $pluginName
      *
-     * @return DiscountCollectorPluginInterface
+     * @throws \Spryker\Zed\Discount\Business\Exception\MissingCollectorException
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface
      */
     public function getCollectorPluginByName($pluginName)
     {
-        return $this->getAvailableCollectorPlugins()[$pluginName];
+        $availableCollectors = $this->getAvailableCollectorPlugins();
+        if (!isset($availableCollectors[$pluginName])) {
+            throw new MissingCollectorException(
+                sprintf(
+                    'Collector Plugin %s could not be found, put it in DiscountConfig::getAvailableCollectorPlugins',
+                    $pluginName
+                )
+            );
+        }
+
+        return $availableCollectors[$pluginName];
     }
 
     /**

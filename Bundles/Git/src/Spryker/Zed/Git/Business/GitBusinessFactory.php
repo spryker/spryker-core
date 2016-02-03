@@ -9,17 +9,15 @@ namespace Spryker\Zed\Git\Business;
 use Spryker\Zed\Git\Communication\Console\GitFlowFinishConsole;
 use Spryker\Zed\Git\Communication\Console\GitFlowUpdateConsole;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Git\GitConfig;
-use Symfony\Component\Console\Command\Command;
 
 /**
- * @method GitConfig getConfig()
+ * @method \Spryker\Zed\Git\GitConfig getConfig()
  */
 class GitBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Command[]
+     * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()
     {
@@ -30,7 +28,7 @@ class GitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GitFlowUpdateConsole
+     * @return \Spryker\Zed\Git\Communication\Console\GitFlowUpdateConsole
      */
     protected function createGitFlowUpdateConsole()
     {
@@ -38,7 +36,7 @@ class GitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GitFlowUpdateConsole
+     * @return \Spryker\Zed\Git\Communication\Console\GitFlowUpdateConsole
      */
     protected function createGitFlowFinishConsole()
     {

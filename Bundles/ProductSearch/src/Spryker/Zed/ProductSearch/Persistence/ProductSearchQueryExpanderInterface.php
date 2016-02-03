@@ -13,10 +13,10 @@ interface ProductSearchQueryExpanderInterface
 {
 
     /**
-     * @param ModelCriteria $expandableQuery
-     * @param LocaleTransfer $locale
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale);
 

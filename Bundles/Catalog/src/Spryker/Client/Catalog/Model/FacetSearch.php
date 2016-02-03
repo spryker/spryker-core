@@ -11,7 +11,6 @@ use Elastica\Index;
 use Elastica\Query;
 use Elastica\Query\Filtered;
 use Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface;
-use Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface;
 use Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,7 +20,7 @@ class FacetSearch extends AbstractSearch
 {
 
     /**
-     * @var NestedFilterBuilderInterface
+     * @var \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface
      */
     protected $filterBuilder;
 
@@ -31,14 +30,14 @@ class FacetSearch extends AbstractSearch
     protected $category;
 
     /**
-     * @param Request $request
-     * @param FacetConfig $facetConfig
-     * @param Index $searchIndex
-     * @param FacetAggregationBuilderInterface $facetAggregation
-     * @param FacetFilterHandlerInterface $facetFilterHandler
-     * @param AggregationExtractorInterface $facetExtractor
-     * @param AggregationExtractorInterface $rangeExtractor
-     * @param CatalogInterface $catalogModel
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
+     * @param \Elastica\Index $searchIndex
+     * @param \Spryker\Client\Catalog\Model\Builder\FacetAggregationBuilderInterface $facetAggregation
+     * @param \Spryker\Client\Catalog\Model\FacetFilterHandlerInterface $facetFilterHandler
+     * @param \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface $facetExtractor
+     * @param \Spryker\Client\Catalog\Model\Extractor\AggregationExtractorInterface $rangeExtractor
+     * @param \Spryker\Client\Catalog\Model\CatalogInterface $catalogModel
      * @param array $category
      */
     public function __construct(
@@ -66,9 +65,9 @@ class FacetSearch extends AbstractSearch
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return Query
+     * @return \Elastica\Query
      */
     protected function createSearchQuery(Request $request)
     {
@@ -85,7 +84,7 @@ class FacetSearch extends AbstractSearch
     }
 
     /**
-     * @param Query $query
+     * @param \Elastica\Query $query
      *
      * @return void
      */

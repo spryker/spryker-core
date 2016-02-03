@@ -24,7 +24,7 @@ abstract class AbstractForm implements FormTypeInterface
      *
      * @see FormTypeExtensionInterface::buildForm()
      *
-     * @param FormBuilderInterface $builder The form builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
      * @param array $options The options
      *
      * @return void
@@ -32,17 +32,17 @@ abstract class AbstractForm implements FormTypeInterface
     abstract public function buildForm(FormBuilderInterface $builder, array $options);
 
     /**
-     * @return TransferInterface|array
+     * @return \Spryker\Shared\Transfer\TransferInterface|array
      */
     abstract public function populateFormFields();
 
     /**
-     * @return TransferInterface|null
+     * @return \Spryker\Shared\Transfer\TransferInterface|null
      */
     abstract protected function getDataClass();
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
@@ -70,7 +70,7 @@ abstract class AbstractForm implements FormTypeInterface
      * is discouraged because it leads to a performance penalty. The support
      * for returning type instances may be dropped from future releases.
      *
-     * @return string|null|FormTypeInterface The name of the parent type if any, null otherwise.
+     * @return string|null|\Symfony\Component\Form\FormTypeInterface The name of the parent type if any, null otherwise.
      */
     public function getParent()
     {
@@ -89,8 +89,8 @@ abstract class AbstractForm implements FormTypeInterface
      *
      * @see FormTypeExtensionInterface::buildView()
      *
-     * @param FormView $view The view
-     * @param FormInterface $form The form
+     * @param \Symfony\Component\Form\FormView $view The view
+     * @param \Symfony\Component\Form\FormInterface $form The form
      * @param array $options The options
      *
      * @return void
@@ -112,8 +112,8 @@ abstract class AbstractForm implements FormTypeInterface
      *
      * @see FormTypeExtensionInterface::finishView()
      *
-     * @param FormView $view The view
-     * @param FormInterface $form The form
+     * @param \Symfony\Component\Form\FormView $view The view
+     * @param \Symfony\Component\Form\FormInterface $form The form
      * @param array $options The options
      *
      * @return void

@@ -6,33 +6,30 @@
 
 namespace Spryker\Zed\Country\Persistence;
 
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Orm\Zed\Country\Persistence\SpyRegionQuery;
-
 interface CountryQueryContainerInterface
 {
 
     /**
-     * @return SpyCountryQuery
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
     public function queryCountries();
 
     /**
      * @param string $iso2Code
      *
-     * @return SpyCountryQuery
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
     public function queryCountryByIso2Code($iso2Code);
 
     /**
-     * @return SpyRegionQuery
+     * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
      */
     public function queryRegions();
 
     /**
      * @param string $isoCode
      *
-     * @return SpyRegionQuery
+     * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
      */
     public function queryRegionByIsoCode($isoCode);
 

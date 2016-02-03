@@ -9,7 +9,6 @@ namespace Spryker\Yves\Application\Plugin\Provider\ExceptionService;
 use Spryker\Shared\Application\Communication\Application;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class SubRequestExceptionHandler implements ExceptionHandlerInterface
@@ -18,7 +17,7 @@ class SubRequestExceptionHandler implements ExceptionHandlerInterface
     const DEFAULT_URL_NAME_PREFIX = 'error/';
 
     /**
-     * @var Application
+     * @var \Spryker\Shared\Application\Communication\Application
      */
     protected $application;
 
@@ -28,7 +27,7 @@ class SubRequestExceptionHandler implements ExceptionHandlerInterface
     protected $errorPageNamePrefix;
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      * @param string $errorPageNamePrefix
      */
     public function __construct(Application $application, $errorPageNamePrefix = self::DEFAULT_URL_NAME_PREFIX)
@@ -38,9 +37,9 @@ class SubRequestExceptionHandler implements ExceptionHandlerInterface
     }
 
     /**
-     * @param FlattenException $exception
+     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handleException(FlattenException $exception)
     {

@@ -2,6 +2,7 @@
 
 namespace Unit\Spryker\Zed\Development\Business\CodeStyleFixer\Fixtures\SprykerUseStatementFixer\Input;
 
+use Spryker\Zed\Form\SomeForm;
 use Spryker\Zed\Foo;
 use Spryker\Zed\X\Y\Baz as YBaz;
 use Pyz\Zed\Foo\Bar\Baz;
@@ -21,7 +22,7 @@ class TestClass2Input extends \Pyz\Zed\Foo\Bar\Baz
         new Baz($x);
     }
 
-    public function replaceFunctionC()
+    public function replaceFunctionC(SomeForm $form)
     {
         new Foo();
     }

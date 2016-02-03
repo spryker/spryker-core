@@ -16,12 +16,12 @@ class SearchHealthIndicator extends AbstractHealthIndicator implements HealthInd
     const HEALTH_MESSAGE_UNABLE_TO_CONNECT_TO_SEARCH = 'Unable to connect to search';
 
     /**
-     * @var Client
+     * @var \Elastica\Client
      */
     protected $client;
 
     /**
-     * @param Client $client
+     * @param \Elastica\Client $client
      */
     public function __construct(Client $client)
     {

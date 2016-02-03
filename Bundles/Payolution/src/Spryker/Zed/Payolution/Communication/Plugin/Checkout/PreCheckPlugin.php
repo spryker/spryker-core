@@ -13,19 +13,18 @@ use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
-use Spryker\Zed\Payolution\Business\PayolutionFacade;
 
 /**
- * @method PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
  */
 class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionInterface
 {
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function checkCondition(
         CheckoutRequestTransfer $checkoutRequestTransfer,
@@ -44,8 +43,8 @@ class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionI
     }
 
     /**
-     * @param PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */

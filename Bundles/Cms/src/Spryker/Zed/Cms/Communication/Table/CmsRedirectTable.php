@@ -12,7 +12,6 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 class CmsRedirectTable extends AbstractTable
 {
@@ -21,12 +20,12 @@ class CmsRedirectTable extends AbstractTable
     const REQUEST_ID_URL = 'id-url';
 
     /**
-     * @var SpyUrlQuery
+     * @var \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     protected $urlQuery;
 
     /**
-     * @param SpyUrlQuery $urlQuery
+     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
      */
     public function __construct($urlQuery)
     {
@@ -34,9 +33,9 @@ class CmsRedirectTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -63,7 +62,7 @@ class CmsRedirectTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

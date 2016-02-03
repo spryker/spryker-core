@@ -43,7 +43,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
@@ -53,7 +53,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
             self::OPTION_KEY_APPLICATION => self::APPLICATION,
             self::OPTION_KEY_NAMESPACE_PATTERN => self::NAMESPACE_PATTERN,
             self::OPTION_KEY_PROJECT_PATH_PATTERN => APPLICATION_SOURCE_DIR,
-            self::OPTION_KEY_VENDOR_PATH_PATTERN => APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src',
+            self::OPTION_KEY_VENDOR_PATH_PATTERN => APPLICATION_SPRYKER_ROOT . '/*/src',
         ]);
 
         $resolver->setRequired([
@@ -102,7 +102,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
      * @param string $name
      * @param string $pattern
      *
-     * @return bool|SplFileInfo
+     * @return bool|\Symfony\Component\Finder\SplFileInfo
      */
     protected function findByNameAndPattern($name, $pattern)
     {
@@ -127,7 +127,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
      * @param string $fileName
      * @param string $path
      *
-     * @return bool|SplFileInfo
+     * @return bool|\Symfony\Component\Finder\SplFileInfo
      */
     private function getFileIn($fileName, $path)
     {
@@ -144,7 +144,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
     }
 
     /**
-     * @param SplFileInfo $file
+     * @param \Symfony\Component\Finder\SplFileInfo $file
      * @param string $methodPattern
      *
      * @return string

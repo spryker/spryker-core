@@ -17,7 +17,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
 {
 
     /**
-     * @return SpyPaymentPayolutionQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
      */
     public function queryPayments()
     {
@@ -27,7 +27,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     /**
      * @param int $idPayment
      *
-     * @return SpyPaymentPayolutionQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
      */
     public function queryPaymentById($idPayment)
     {
@@ -39,7 +39,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     /**
      * @param int $idSalesOrder
      *
-     * @return SpyPaymentPayolutionQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
      */
     public function queryPaymentBySalesOrderId($idSalesOrder)
     {
@@ -49,7 +49,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
-     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     public function queryTransactionStatusLog()
     {
@@ -59,7 +59,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     /**
      * @param int $idPayment
      *
-     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     public function queryTransactionStatusLogByPaymentId($idPayment)
     {
@@ -72,7 +72,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     /**
      * @param int $idPayment
      *
-     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     public function queryTransactionStatusLogByPaymentIdLatestFirst($idPayment)
     {
@@ -84,7 +84,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     /**
      * @param int $idSalesOrder
      *
-     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     public function queryTransactionStatusLogBySalesOrderId($idSalesOrder)
     {
@@ -98,7 +98,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     /**
      * @param int $idSalesOrder
      *
-     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     public function queryTransactionStatusLogBySalesOrderIdLatestFirst($idSalesOrder)
     {
@@ -111,7 +111,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
      * @param int $idSalesOrder
      * @param string $paymentCode
      *
-     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     public function queryTransactionStatusLogBySalesOrderIdAndPaymentCodeLatestFirst($idSalesOrder, $paymentCode)
     {
@@ -126,7 +126,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     /**
      * @param int $idPayment
      *
-     * @return SpyPaymentPayolutionTransactionRequestLogQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery
      */
     public function queryTransactionRequestLogByPaymentId($idPayment)
     {

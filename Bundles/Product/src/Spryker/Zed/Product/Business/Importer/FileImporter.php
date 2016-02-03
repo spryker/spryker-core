@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Product\Business\Importer;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Builder\ProductBuilderInterface;
 use Spryker\Zed\Product\Business\Model\ProductBatchResult;
 use Spryker\Zed\Product\Business\Importer\Reader\File;
@@ -19,7 +17,7 @@ class FileImporter implements FileImporterInterface
 {
 
     /**
-     * @var DataValidatorInterface
+     * @var \Spryker\Zed\Product\Business\Validator\DataValidatorInterface
      */
     protected $importProductValidator;
 
@@ -29,12 +27,12 @@ class FileImporter implements FileImporterInterface
     protected $fileReader;
 
     /**
-     * @var ProductBuilderInterface
+     * @var \Spryker\Zed\Product\Business\Builder\ProductBuilderInterface
      */
     protected $productBuilder;
 
     /**
-     * @var ProductWriterInterface
+     * @var \Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface
      */
     protected $productWriter;
 
@@ -46,16 +44,16 @@ class FileImporter implements FileImporterInterface
     private $invalidProducts = [];
 
     /**
-     * @var ProductBatchResultInterface
+     * @var \Spryker\Zed\Product\Business\Model\ProductBatchResultInterface
      */
     private $productBatchResult;
 
     /**
-     * @param DataValidatorInterface $importProductValidator
+     * @param \Spryker\Zed\Product\Business\Validator\DataValidatorInterface $importProductValidator
      * @param File\IteratorReaderInterface $reader
-     * @param ProductBuilderInterface $productBuilder
-     * @param ProductWriterInterface $writer
-     * @param ProductBatchResultInterface $productBatchResult
+     * @param \Spryker\Zed\Product\Business\Builder\ProductBuilderInterface $productBuilder
+     * @param \Spryker\Zed\Product\Business\Importer\Writer\ProductWriterInterface $writer
+     * @param \Spryker\Zed\Product\Business\Model\ProductBatchResultInterface $productBatchResult
      */
     public function __construct(
         DataValidatorInterface $importProductValidator,
@@ -74,7 +72,7 @@ class FileImporter implements FileImporterInterface
     /**
      * @param \SplFileInfo $file
      *
-     * @return ProductBatchResult
+     * @return \Spryker\Zed\Product\Business\Model\ProductBatchResult
      */
     public function importFile(\SplFileInfo $file)
     {
@@ -126,7 +124,7 @@ class FileImporter implements FileImporterInterface
     /**
      * @param array $data
      *
-     * @return ProductAbstractTransfer|ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|\Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected function process(array $data)
     {

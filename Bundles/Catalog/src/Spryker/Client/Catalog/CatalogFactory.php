@@ -18,17 +18,15 @@ use Spryker\Client\Catalog\Model\FulltextSearch;
 use Spryker\Client\Catalog\Model\FacetSearch;
 use Spryker\Client\Catalog\Model\Catalog as ModelCatalog;
 use Elastica\Index;
-use Generated\Client\Ide\FactoryAutoCompletion\Catalog;
 use Spryker\Client\Catalog\Model\FacetConfig;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CatalogFactory extends AbstractFactory
 {
 
     /**
-     * @var Catalog
+     * @var \Generated\Client\Ide\FactoryAutoCompletion\Catalog
      */
     protected $factory;
 
@@ -55,7 +53,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $category
      *
      * @return Model\FacetSearch
@@ -78,7 +76,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return Model\FulltextSearch
      */
@@ -99,7 +97,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return FacetConfig
+     * @return \Spryker\Client\Catalog\Model\FacetConfig
      */
     public function createFacetConfig()
     {
@@ -107,7 +105,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @param FacetConfig $facetConfig
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
      *
      * @return Model\FacetFilterHandler
      */
@@ -120,7 +118,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return Index
+     * @return \Elastica\Index
      */
     protected function getSearchIndex()
     {
@@ -152,7 +150,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return KeyBuilderInterface
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected function getProductKeyBuilder()
     {
@@ -160,7 +158,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return NestedFilterBuilder
+     * @return \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilder
      */
     protected function createNestedFilterBuilder()
     {
@@ -170,7 +168,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return FilterBuilder
+     * @return \Spryker\Client\Catalog\Model\Builder\FilterBuilder
      */
     protected function createFilterBuilder()
     {

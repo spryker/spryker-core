@@ -6,63 +6,56 @@
 
 namespace Spryker\Zed\Tax\Business\Model;
 
-use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
-use Generated\Shared\Transfer\TaxRateCollectionTransfer;
-use Generated\Shared\Transfer\TaxSetCollectionTransfer;
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
-
 interface TaxReaderInterface
 {
 
     /**
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return TaxRateCollectionTransfer
+     * @return \Generated\Shared\Transfer\TaxRateCollectionTransfer
      */
     public function getTaxRates();
 
     /**
      * @param int $id
      *
-     * @throws PropelException
-     * @throws ResourceNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
      *
-     * @return TaxRateTransfer
+     * @return \Generated\Shared\Transfer\TaxRateTransfer
      */
     public function getTaxRate($id);
 
     /**
      * @param int $id
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
     public function taxRateExists($id);
 
     /**
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return TaxSetCollectionTransfer
+     * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
      */
     public function getTaxSets();
 
     /**
      * @param int $id
      *
-     * @throws PropelException
-     * @throws ResourceNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
      *
-     * @return TaxSetTransfer
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
     public function getTaxSet($id);
 
     /**
      * @param int $id
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */

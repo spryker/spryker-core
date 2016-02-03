@@ -11,26 +11,19 @@ use Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandler;
 use Spryker\Zed\Newsletter\Business\Subscription\SingleOptInHandler;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriberManager;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManager;
-use Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface;
-use Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface;
-use Spryker\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface;
-use Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface;
-use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface;
 use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler;
-use Spryker\Zed\Newsletter\NewsletterConfig;
 use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
-use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method NewsletterConfig getConfig()
- * @method NewsletterQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()
+ * @method \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer getQueryContainer()
  */
 class NewsletterBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return SubscriptionRequestHandler
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler
      */
     public function createSubscriptionRequestHandler()
     {
@@ -42,7 +35,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubscriptionManagerInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface
      */
     protected function createSubscriptionManager()
     {
@@ -52,7 +45,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubscriberManagerInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface
      */
     protected function createSubscriberManager()
     {
@@ -63,7 +56,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubscriberOptInHandlerInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface
      */
     public function createSingleOptInHandler()
     {
@@ -74,7 +67,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubscriberOptInHandlerInterface|DoubleOptInHandlerInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface|\Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface
      */
     public function createDoubleOptInHandler()
     {
@@ -93,7 +86,7 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SubscriberKeyGeneratorInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface
      */
     protected function createSubscriberKeyGenerator()
     {

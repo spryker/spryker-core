@@ -9,19 +9,17 @@ namespace Spryker\Zed\Shipment\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
-use Spryker\Zed\Shipment\ShipmentConfig;
 
 /**
- * @method ShipmentQueryContainerInterface getQueryContainer()
- * @method ShipmentConfig getConfig()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
  */
 class ShipmentBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Carrier
+     * @return \Spryker\Zed\Shipment\Business\Model\Carrier
      */
     public function createCarrier()
     {
@@ -29,7 +27,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Method
+     * @return \Spryker\Zed\Shipment\Business\Model\Method
      */
     public function createMethod()
     {

@@ -22,12 +22,12 @@ class TranslationTable extends AbstractTable
     const URL_GLOSSARY_EDIT = '/glossary/edit/';
 
     /**
-     * @var SpyGlossaryTranslationQuery
+     * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery
      */
     protected $glossaryQuery;
 
     /**
-     * @var SpyGlossaryTranslationQuery
+     * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery
      */
     protected $subGlossaryQuery;
 
@@ -37,7 +37,7 @@ class TranslationTable extends AbstractTable
     protected $locales;
 
     /**
-     * @param SpyGlossaryTranslationQuery $glossaryQuery
+     * @param \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery $glossaryQuery
      */
     public function __construct(SpyGlossaryTranslationQuery $glossaryQuery, SpyGlossaryTranslationQuery $subGlossaryKey, array $locales)
     {
@@ -82,7 +82,7 @@ class TranslationTable extends AbstractTable
     /**
      * Fetch all existent locales for GlossaryKey
      *
-     * @param $fkGlossaryKey
+     * @param int $fkGlossaryKey
      *
      * @return array
      */

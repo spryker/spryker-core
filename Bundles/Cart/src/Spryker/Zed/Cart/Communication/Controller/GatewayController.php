@@ -8,19 +8,18 @@ namespace Spryker\Zed\Cart\Communication\Controller;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method CartFacade getFacade()
+ * @method \Spryker\Zed\Cart\Business\CartFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addItemAction(ChangeTransfer $cartChange)
     {
@@ -28,9 +27,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function increaseItemQuantityAction(ChangeTransfer $cartChange)
     {
@@ -38,9 +37,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function decreaseItemQuantityAction(ChangeTransfer $cartChange)
     {
@@ -48,9 +47,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeItemAction(ChangeTransfer $cartChange)
     {
@@ -58,9 +57,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CartTransfer $cartTransfer
+     * @param \Generated\Shared\Transfer\CartTransfer $cartTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function recalculateAction(CartTransfer $cartTransfer)
     {
@@ -68,9 +67,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addCouponCodeAction(ChangeTransfer $cartChange)
     {
@@ -78,9 +77,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeCouponCodeAction(ChangeTransfer $cartChange)
     {
@@ -88,9 +87,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCouponCodesAction(ChangeTransfer $cartChange)
     {

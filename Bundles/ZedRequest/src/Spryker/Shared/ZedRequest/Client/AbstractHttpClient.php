@@ -20,11 +20,11 @@ use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
 use Spryker\Shared\EventJournal\Model\SharedEventJournal;
 use Spryker\Shared\EventJournal\Model\Event;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
+use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
@@ -67,12 +67,12 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected static $timeoutInSeconds = 60;
 
     /**
-     * @var AuthClientInterface
+     * @var \Spryker\Client\Auth\AuthClientInterface
      */
     protected $authClient;
 
     /**
-     * @param AuthClientInterface $authClient
+     * @param \Spryker\Client\Auth\AuthClientInterface $authClient
      * @param string $baseUrl
      */
     public function __construct(
@@ -100,14 +100,14 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param TransferInterface|null $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
      * @param null $timeoutInSeconds
      * @param bool $isBackgroundRequest
      *
-     * @throws RequestException
+     * @throws \Spryker\Shared\ZedRequest\Client\Exception\RequestException
      *
-     * @return ResponseInterface
+     * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     public function request(
         $pathInfo,
@@ -169,10 +169,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param RequestInterface $requestTransfer
+     * @param \Spryker\Shared\ZedRequest\Client\RequestInterface $requestTransfer
      * @param null $timeoutInSeconds
      *
-     * @return EntityEnclosingRequest
+     * @return \Guzzle\Http\Message\EntityEnclosingRequest
      */
     protected function createGuzzleRequest($pathInfo, RequestInterface $requestTransfer, $timeoutInSeconds = null)
     {
@@ -197,7 +197,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $pathInfo .= $char . 'yvesRequestId=' . $requestId;
 
         $client->setUserAgent('Yves 2.0');
-        /** @var EntityEnclosingRequest $request */
+        /** @var \Guzzle\Http\Message\EntityEnclosingRequest $request */
         $request = $client->post($pathInfo);
         $request->addHeader('X-Yves-Host', 1);
         foreach ($this->getHeaders() as $header => $value) {
@@ -214,12 +214,12 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      * @param array $metaTransfers
      *
      * @throws \LogicException
      *
-     * @return AbstractRequest
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractRequest
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
@@ -243,11 +243,11 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param EntityEnclosingRequest $request
+     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
      *
-     * @throws InvalidZedResponseException
+     * @throws \Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException
      *
-     * @return Response
+     * @return \Guzzle\Http\Message\Response
      */
     protected function sendRequest(EntityEnclosingRequest $request)
     {
@@ -260,11 +260,11 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param Response $response
+     * @param \Guzzle\Http\Message\Response $response
      *
-     * @throws InvalidZedResponseException
+     * @throws \Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException
      *
-     * @return ZedResponse
+     * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     protected function getTransferFromResponse(Response $response)
     {
@@ -280,7 +280,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param RequestInterface $requestTransfer
+     * @param \Spryker\Shared\ZedRequest\Client\RequestInterface $requestTransfer
      * @param string $rawBody
      *
      * @return void
@@ -292,7 +292,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $pathInfo
-     * @param ZedResponse $responseTransfer
+     * @param \Spryker\Shared\ZedRequest\Client\ResponseInterface $responseTransfer
      * @param string $rawBody
      *
      * @return void
@@ -305,7 +305,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param string $pathInfo
      * @param string $subType
-     * @param ObjectInterface $transfer
+     * @param \Spryker\Shared\ZedRequest\Client\ObjectInterface $transfer
      * @param string $rawBody
      *
      * @return void
@@ -341,18 +341,18 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @param EntityEnclosingRequest $request
+     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
      *
      * @return void
      */
     protected function forwardDebugSession(EntityEnclosingRequest $request)
     {
-        if (Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
-            if (isset($_COOKIE[Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME)])) {
+        if (Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
+            if (isset($_COOKIE[Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME)])) {
                 $cookie = new Cookie();
-                $cookie->setName(trim(Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME)));
-                $cookie->setValue($_COOKIE[Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME)]);
-                $cookie->setDomain(Config::get(ApplicationConstants::HOST_ZED_API));
+                $cookie->setName(trim(Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME)));
+                $cookie->setValue($_COOKIE[Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME)]);
+                $cookie->setDomain(Config::get(ZedRequestConstants::HOST_ZED_API));
                 $cookieArray = new ArrayCookieJar(true);
                 $cookieArray->add($cookie);
 
@@ -362,7 +362,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * @return Request
+     * @return \Spryker\Client\ZedRequest\Client\Request
      */
     private function getRequest()
     {

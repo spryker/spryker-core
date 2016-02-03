@@ -19,7 +19,7 @@ class SetupConfigTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return SetupConfig
+     * @return \Spryker\Zed\Setup\SetupConfig
      */
     private function getConfig()
     {

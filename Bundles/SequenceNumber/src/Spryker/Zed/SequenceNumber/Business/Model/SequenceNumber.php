@@ -17,19 +17,19 @@ use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 class SequenceNumber implements SequenceNumberInterface
 {
 
-    /** @var RandomNumberGenerator */
+    /** @var \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator */
     protected $randomNumberGenerator;
 
-    /** @var SequenceNumberSettingsTransfer */
+    /** @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer */
     protected $sequenceNumberSettings;
 
-    /** @var ConnectionInterface */
+    /** @var \Propel\Runtime\Connection\ConnectionInterface */
     protected $connection;
 
     /**
-     * @param RandomNumberGeneratorInterface $randomNumberGenerator
-     * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface $randomNumberGenerator
+     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, SequenceNumberSettingsTransfer $sequenceNumberSettings, ConnectionInterface $connection)
     {
@@ -39,7 +39,7 @@ class SequenceNumber implements SequenceNumberInterface
     }
 
     /**
-     * @throws InvalidSequenceNumberException
+     * @throws \Spryker\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException
      *
      * @return string
      */
@@ -58,7 +58,7 @@ class SequenceNumber implements SequenceNumberInterface
     }
 
     /**
-     * @throws InvalidSequenceNumberException
+     * @throws \Spryker\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException
      *
      * @return int
      */
@@ -84,7 +84,7 @@ class SequenceNumber implements SequenceNumberInterface
     }
 
     /**
-     * @return SpySequenceNumber
+     * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumber
      */
     protected function getSequence()
     {

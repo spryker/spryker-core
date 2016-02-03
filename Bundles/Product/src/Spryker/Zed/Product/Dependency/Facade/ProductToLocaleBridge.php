@@ -6,21 +6,19 @@
 namespace Spryker\Zed\Product\Dependency\Facade;
 
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 
 class ProductToLocaleBridge implements ProductToLocaleInterface
 {
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 
     /**
      * CategoryToLocaleBridge constructor.
      *
-     * @param LocaleFacade $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {
@@ -28,7 +26,7 @@ class ProductToLocaleBridge implements ProductToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {
@@ -46,9 +44,9 @@ class ProductToLocaleBridge implements ProductToLocaleInterface
     /**
      * @param string $localeName
      *
-     * @throws MissingLocaleException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName)
     {

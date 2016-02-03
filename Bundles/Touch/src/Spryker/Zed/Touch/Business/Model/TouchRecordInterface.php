@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Touch\Business\Model;
 
-use Propel\Runtime\Exception\PropelException;
-
 interface TouchRecordInterface
 {
 
@@ -18,7 +16,7 @@ interface TouchRecordInterface
      * @param bool $keyChange
      *
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */

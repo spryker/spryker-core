@@ -5,13 +5,11 @@
  */
 namespace Spryker\Zed\AuthMailConnector\Communication;
 
-use Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\AuthMailConnector\AuthMailConnectorDependencyProvider;
-use Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig;
 
 /**
- * @method AuthMailConnectorConfig getConfig()
+ * @method \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig getConfig()
  */
 class AuthMailConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -19,7 +17,7 @@ class AuthMailConnectorCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getMailFacade() instead.
      *
-     * @return AuthMailConnectorToMailInterface
+     * @return \Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInterface
      */
     public function createMailFacade()
     {
@@ -29,7 +27,7 @@ class AuthMailConnectorCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return AuthMailConnectorToMailInterface
+     * @return \Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInterface
      */
     public function getMailFacade()
     {

@@ -11,7 +11,7 @@ use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ProductSearchBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchBusinessFactory getFactory()
  */
 class ProductSearchFacade extends AbstractFacade
 {
@@ -32,7 +32,7 @@ class ProductSearchFacade extends AbstractFacade
     /**
      * @param array $productsRaw
      * @param array $processedProducts
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -44,7 +44,7 @@ class ProductSearchFacade extends AbstractFacade
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
      * @return void
      */

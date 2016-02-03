@@ -16,12 +16,12 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
 {
 
     /**
-     * @var CustomerCheckoutConnectorToCustomerInterface
+     * @var \Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface
      */
     private $customerFacade;
 
     /**
-     * @param CustomerCheckoutConnectorToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface $customerFacade
      */
     public function __construct(CustomerCheckoutConnectorToCustomerInterface $customerFacade)
     {
@@ -29,8 +29,8 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      *
      * @return void
      */
@@ -75,8 +75,8 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      *
      * @return void
      */

@@ -9,20 +9,20 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Model;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
+use Spryker\Shared\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConstants;
 use Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainerInterface;
 
 class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 {
 
     /**
-     * @var ShipmentCheckoutConnectorQueryContainerInterface
+     * @var \Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param ShipmentCheckoutConnectorQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainerInterface $queryContainer
      */
     public function __construct(ShipmentCheckoutConnectorQueryContainerInterface $queryContainer)
     {
@@ -30,8 +30,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
@@ -43,7 +43,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 
         $expenses = $orderTransfer->getExpenses();
         foreach ($expenses as $expenseTransfer) {
-            if (ShipmentConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {
+            if (ShipmentCheckoutConnectorConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {
                 $salesOrderExpense = new SpySalesExpense();
                 $salesOrderExpense->fromArray($expenseTransfer->toArray());
 

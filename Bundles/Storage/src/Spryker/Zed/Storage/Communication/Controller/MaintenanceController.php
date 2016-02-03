@@ -7,15 +7,13 @@
 namespace Spryker\Zed\Storage\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Storage\Business\StorageFacade;
-use Spryker\Zed\Storage\Communication\StorageCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method StorageFacade getFacade()
- * @method StorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Storage\Business\StorageFacade getFacade()
+ * @method \Spryker\Zed\Storage\Communication\StorageCommunicationFactory getFactory()
  */
 class MaintenanceController extends AbstractController
 {
@@ -48,7 +46,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function listAjaxAction()
     {
@@ -60,7 +58,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function dropTimestampsAction()
     {
@@ -71,7 +69,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAllAction()
     {
@@ -84,7 +82,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -101,7 +99,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      *
      * @return string
      */

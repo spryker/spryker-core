@@ -13,7 +13,7 @@ class GlossaryInstaller extends AbstractInstaller
 {
 
     /**
-     * @var InstallerToGlossaryInterface
+     * @var \Spryker\Zed\Installer\Dependency\Facade\InstallerToGlossaryInterface
      */
     protected $glossaryFacade;
 
@@ -23,12 +23,12 @@ class GlossaryInstaller extends AbstractInstaller
     protected $paths;
 
     /**
-     * @var Yaml
+     * @var \Symfony\Component\Yaml\Yaml
      */
     protected $yamlParser;
 
     /**
-     * @param InstallerToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Installer\Dependency\Facade\InstallerToGlossaryInterface $glossaryFacade
      * @param array $paths
      */
     public function __construct(InstallerToGlossaryInterface $glossaryFacade, array $paths = [])

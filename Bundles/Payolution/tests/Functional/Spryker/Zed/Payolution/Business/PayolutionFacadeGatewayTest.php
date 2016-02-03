@@ -21,7 +21,6 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Business\PayolutionFacade;
 
@@ -35,12 +34,12 @@ class PayolutionFacadeGatewayTest extends Test
 {
 
     /**
-     * @var SpySalesOrder
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     private $orderEntity;
 
     /**
-     * @var SpyPaymentPayolution
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     private $paymentEntity;
 
@@ -50,7 +49,7 @@ class PayolutionFacadeGatewayTest extends Test
     private $enableTests = false;
 
     /**
-     * @var PayolutionFacade
+     * @var \Spryker\Zed\Payolution\Business\PayolutionFacade
      */
     private $payolutionFacade;
 
@@ -190,7 +189,7 @@ class PayolutionFacadeGatewayTest extends Test
         $facade = $this->payolutionFacade;
         $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
-        /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
         $preAuthorizationStatusLogEntity = $this
             ->paymentEntity
             ->getSpyPaymentPayolutionTransactionStatusLogs()
@@ -236,7 +235,7 @@ class PayolutionFacadeGatewayTest extends Test
         $facade = $this->payolutionFacade;
         $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
-        /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
         $preAuthorizationStatusLogEntity = $this
             ->paymentEntity
             ->getSpyPaymentPayolutionTransactionStatusLogs()
@@ -288,7 +287,7 @@ class PayolutionFacadeGatewayTest extends Test
     }
 
     /**
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -327,7 +326,7 @@ class PayolutionFacadeGatewayTest extends Test
     }
 
     /**
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

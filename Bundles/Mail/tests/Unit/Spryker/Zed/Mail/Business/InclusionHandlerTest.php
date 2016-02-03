@@ -7,7 +7,6 @@
 namespace Unit\Spryker\Zed\Mail\Business;
 
 use Spryker\Zed\Mail\Business\InclusionHandler;
-use Spryker\Zed\Mail\Business\InclusionHandlerInterface;
 
 /**
  * @group InclusionHandler
@@ -16,7 +15,7 @@ class InclusionHandlerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var InclusionHandlerInterface
+     * @var \Spryker\Zed\Mail\Business\InclusionHandlerInterface
      */
     protected $inclusionHandler;
 

@@ -22,7 +22,7 @@ abstract class AbstractSpyOmsTransitionLog extends BaseSpyOmsTransitionLog
 {
 
     /**
-     * @param ConnectionInterface|null $con
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $con
      *
      * @return bool
      */

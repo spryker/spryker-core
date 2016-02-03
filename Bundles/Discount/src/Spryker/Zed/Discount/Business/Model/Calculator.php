@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\DiscountConfigInterface;
 
@@ -29,18 +28,18 @@ class Calculator implements CalculatorInterface
     protected $calculatedDiscounts = [];
 
     /**
-     * @var CollectorResolver
+     * @var \Spryker\Zed\Discount\Business\Model\CollectorResolver
      */
     protected $collectorResolver;
 
     /**
-     * @var DiscountToMessengerInterface
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected $messengerFacade;
 
     /**
-     * @param CollectorResolver $collectorResolver
-     * @param DiscountToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\Discount\Business\Model\CollectorResolver $collectorResolver
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      */
     public function __construct(
         CollectorResolver $collectorResolver,
@@ -51,10 +50,10 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param DiscountTransfer[] $discountCollection
-     * @param CalculableInterface $container
-     * @param DiscountConfigInterface $config
-     * @param DistributorInterface $discountDistributor
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountCollection
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Spryker\Zed\Discount\DiscountConfigInterface $config
+     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $discountDistributor
      *
      * @return array
      */
@@ -72,9 +71,9 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param DiscountTransfer[] $discountCollection
-     * @param CalculableInterface $container
-     * @param DiscountConfigInterface $config
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountCollection
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
+     * @param \Spryker\Zed\Discount\DiscountConfigInterface $config
      *
      * @return array
      */
@@ -118,7 +117,7 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param DistributorInterface $discountDistributor
+     * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $discountDistributor
      * @param array $calculatedDiscounts
      *
      * @return void
@@ -192,7 +191,7 @@ class Calculator implements CalculatorInterface
     /**
      * @param array $discount
      *
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     protected function getDiscountEntity(array $discount)
     {

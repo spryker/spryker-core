@@ -11,19 +11,17 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\ProductOptionCheckoutConnector\Business\ProductOptionCheckoutConnectorFacade;
-use Spryker\Zed\ProductOptionCheckoutConnector\Communication\ProductOptionCheckoutConnectorCommunicationFactory;
 
 /**
- * @method ProductOptionCheckoutConnectorFacade getFacade()
- * @method ProductOptionCheckoutConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductOptionCheckoutConnector\Business\ProductOptionCheckoutConnectorFacade getFacade()
+ * @method \Spryker\Zed\ProductOptionCheckoutConnector\Communication\ProductOptionCheckoutConnectorCommunicationFactory getFactory()
  */
 class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements CheckoutOrderHydrationInterface
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return void
      */
@@ -35,7 +33,7 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return string
      */
@@ -57,7 +55,7 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     }
 
     /**
-     * @param ProductOptionTransfer[] $options
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $options
      *
      * @return array
      */
@@ -74,7 +72,7 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     }
 
     /**
-     * @param ProductOptionTransfer[] $sortedProductOptions
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $sortedProductOptions
      *
      * @return string
      */

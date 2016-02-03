@@ -3,7 +3,6 @@
 namespace Spryker\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\CartRuleTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
 
 interface CartRuleInterface
 {
@@ -16,9 +15,9 @@ interface CartRuleInterface
     public function getCurrentCartRulesDetailsByIdDiscount($idDiscount);
 
     /**
-     * @param CartRuleTransfer $cartRuleFormTransfer
+     * @param \Generated\Shared\Transfer\CartRuleTransfer $cartRuleFormTransfer
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     public function saveCartRule(CartRuleTransfer $cartRuleFormTransfer);
 

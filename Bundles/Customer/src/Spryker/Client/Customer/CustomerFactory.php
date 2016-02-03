@@ -9,14 +9,12 @@ namespace Spryker\Client\Customer;
 use Spryker\Client\Customer\Session\CustomerSession;
 use Spryker\Client\Customer\Zed\CustomerStub;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Customer\Session\CustomerSessionInterface;
-use Spryker\Client\Customer\Zed\CustomerStubInterface;
 
 class CustomerFactory extends AbstractFactory
 {
 
     /**
-     * @return CustomerStubInterface
+     * @return \Spryker\Client\Customer\Zed\CustomerStubInterface
      */
     public function createZedCustomerStub()
     {
@@ -26,7 +24,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return CustomerSessionInterface
+     * @return \Spryker\Client\Customer\Session\CustomerSessionInterface
      */
     public function createSessionCustomerSession()
     {

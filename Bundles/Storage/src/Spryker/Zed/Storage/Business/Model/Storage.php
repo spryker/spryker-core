@@ -12,12 +12,12 @@ class Storage
 {
 
     /**
-     * @var StorageClient
+     * @var \Spryker\Client\Storage\StorageClient
      */
     private $storageClient;
 
     /**
-     * @param StorageClient $storageClient
+     * @param \Spryker\Client\Storage\StorageClient $storageClient
      */
     public function __construct(StorageClient $storageClient)
     {

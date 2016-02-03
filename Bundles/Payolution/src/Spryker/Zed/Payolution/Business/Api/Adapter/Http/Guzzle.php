@@ -9,7 +9,6 @@ namespace Spryker\Zed\Payolution\Business\Api\Adapter\Http;
 use Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\Exception\RequestException;
-use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 
 class Guzzle extends AbstractHttpAdapter
 {
@@ -17,7 +16,7 @@ class Guzzle extends AbstractHttpAdapter
     const DEFAULT_TIMEOUT = 45;
 
     /**
-     * @var GuzzleClient
+     * @var \Guzzle\Http\Client
      */
     protected $client;
 
@@ -37,7 +36,7 @@ class Guzzle extends AbstractHttpAdapter
     /**
      * @param array|string $data
      *
-     * @return GuzzleRequestInterface
+     * @return \Guzzle\Http\Message\RequestInterface
      */
     protected function buildRequest($data)
     {
@@ -49,7 +48,7 @@ class Guzzle extends AbstractHttpAdapter
     }
 
     /**
-     * @param GuzzleRequestInterface $request
+     * @param \Guzzle\Http\Message\RequestInterface $request
      * @param string $user
      * @param string $password
      *
@@ -61,9 +60,9 @@ class Guzzle extends AbstractHttpAdapter
     }
 
     /**
-     * @param GuzzleRequestInterface $request
+     * @param \Guzzle\Http\Message\RequestInterface $request
      *
-     * @throws ApiHttpRequestException
+     * @throws \Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException
      *
      * @return string
      */

@@ -9,16 +9,13 @@ namespace Functional\Spryker\Zed\Payolution\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
-use Spryker\Zed\Payolution\Business\PayolutionFacade;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
@@ -29,27 +26,27 @@ class AbstractFacadeTest extends Test
 {
 
     /**
-     * @var SpySalesOrder
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     private $orderEntity;
 
     /**
-     * @var SpyPaymentPayolution
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     private $paymentEntity;
 
     /**
-     * @var ResponseConverter
+     * @var \Spryker\Zed\Payolution\Business\Api\Converter\Converter
      */
     private $responseConverter;
 
     /**
-     * @var SpyPaymentPayolutionTransactionRequestLogQuery
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery
      */
     private $requestLogQuery;
 
     /**
-     * @var SpyPaymentPayolutionTransactionStatusLogQuery
+     * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     private $statusLogQuery;
 
@@ -130,7 +127,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function getOrderEntity()
     {
@@ -138,7 +135,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     protected function getPaymentEntity()
     {
@@ -146,7 +143,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return ResponseConverter
+     * @return \Spryker\Zed\Payolution\Business\Api\Converter\Converter
      */
     protected function getResponseConverter()
     {
@@ -154,7 +151,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolutionTransactionRequestLogQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery
      */
     protected function getRequestLogQuery()
     {
@@ -162,7 +159,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery
      */
     protected function getStatusLogQuery()
     {
@@ -170,7 +167,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolutionTransactionRequestLog[]|ObjectCollection
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getRequestLogCollectionForPayment()
     {
@@ -180,7 +177,7 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolutionTransactionStatusLog[]|ObjectCollection
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getStatusLogCollectionForPayment()
     {
@@ -190,9 +187,9 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @param AdapterInterface $adapter
+     * @param \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface $adapter
      *
-     * @return PayolutionFacade
+     * @return \Spryker\Zed\Payolution\Business\PayolutionFacade
      */
     protected function getFacadeMock(AdapterInterface $adapter)
     {
@@ -200,8 +197,8 @@ class AbstractFacadeTest extends Test
     }
 
     /**
-     * @param SpyPaymentPayolutionTransactionStatusLog $statusLog
-     * @param PayolutionTransactionResponseTransfer $response
+     * @param \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog $statusLog
+     * @param \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer $response
      *
      * @return void
      */

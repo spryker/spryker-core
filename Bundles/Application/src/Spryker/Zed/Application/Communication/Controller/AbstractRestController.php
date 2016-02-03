@@ -18,14 +18,14 @@ abstract class AbstractRestController
     const DELETE = 'DELETE';
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function indexAction(Request $request)
     {

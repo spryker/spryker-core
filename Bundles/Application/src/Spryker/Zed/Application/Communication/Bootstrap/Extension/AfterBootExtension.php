@@ -15,7 +15,7 @@ class AfterBootExtension implements AfterBootExtensionInterface
 {
 
     /**
-     * @param Application $app
+     * @param \Spryker\Shared\Application\Communication\Application $app
      *
      * @return void
      */

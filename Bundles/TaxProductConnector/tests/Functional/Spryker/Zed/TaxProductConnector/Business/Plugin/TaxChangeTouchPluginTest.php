@@ -8,7 +8,6 @@ namespace Functional\Spryker\Zed\TaxProductConnector\Business\Plugin;
 
 use Codeception\TestCase\Test;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
-use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -30,12 +29,12 @@ class TaxChangeTouchPluginTest extends Test
     private $productAbstractIds = [];
 
     /**
-     * @var TaxProductConnectorFacade
+     * @var \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade
      */
     private $taxProductConnectorFacade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

@@ -7,12 +7,10 @@
 namespace Spryker\Zed\Oms\Communication\Controller;
 
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Spryker\Zed\Oms\Business\OmsFacade;
 use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderProcessQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
@@ -30,7 +28,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * this class is only for test purpose. It will be removed from repository
  *
- * @method OmsFacade getFacade()
+ * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
  */
 class SandboxController extends AbstractController
 {
@@ -56,7 +54,7 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addAction()
     {
@@ -68,9 +66,9 @@ class SandboxController extends AbstractController
     /**
      * @deprecated
      *
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function triggerAction(Request $request)
     {
@@ -90,7 +88,7 @@ class SandboxController extends AbstractController
     /**
      * Create test order with 4 items
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -138,9 +136,9 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @param SpySalesOrder $order
-     * @param SpyOmsOrderItemState $state
-     * @param SpyOmsOrderProcess $process
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState $state
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $process
      * @param float $price
      * @param string $sku
      *
@@ -195,9 +193,9 @@ class SandboxController extends AbstractController
 
     /**
      * @param array $cities
-     * @param SpyCountry $country
+     * @param \Orm\Zed\Country\Persistence\SpyCountry $country
      *
-     * @return SpySalesOrderAddress
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
      */
     protected function saveTestAddress($cities, SpyCountry $country)
     {
@@ -214,9 +212,9 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @param SpySalesOrderAddress $address
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $address
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function saveTestOrder(SpySalesOrderAddress $address, SpyCustomer $customer)
     {
@@ -237,7 +235,7 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @return SpyOmsOrderProcess
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     protected function saveTestProcess()
     {
@@ -252,7 +250,7 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @return SpyOmsOrderItemState
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     protected function saveTestState()
     {
@@ -267,7 +265,7 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param float $total
      *
      * @return void
@@ -280,7 +278,7 @@ class SandboxController extends AbstractController
     }
 
     /**
-     * @return SpyCustomer
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
     protected function generateCustomer()
     {

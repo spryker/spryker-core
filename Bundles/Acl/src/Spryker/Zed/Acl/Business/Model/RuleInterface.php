@@ -10,27 +10,25 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Acl\AclConstants;
-use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
-use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 interface RuleInterface
 {
 
     /**
-     * @param RuleTransfer $ruleTransfer
+     * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
      * @return mixed
      */
     public function addRule(RuleTransfer $ruleTransfer);
 
     /**
-     * @param RuleTransfer $RuleTransfer
+     * @param \Generated\Shared\Transfer\RuleTransfer $RuleTransfer
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function save(RuleTransfer $RuleTransfer);
 
@@ -44,17 +42,17 @@ interface RuleInterface
     /**
      * @param int $idRole
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function getRoleRules($idRole);
 
     /**
-     * @param RolesTransfer $roles
+     * @param \Generated\Shared\Transfer\RolesTransfer $roles
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function findByRoles(
         RolesTransfer $roles,
@@ -66,23 +64,23 @@ interface RuleInterface
     /**
      * @param int $idGroup
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function getRulesForGroupId($idGroup);
 
     /**
      * @param int $id
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
-     * @return RuleTransfer
+     * @return \Generated\Shared\Transfer\RuleTransfer
      */
     public function getRuleById($id);
 
     /**
      * @param int $id
      *
-     * @throws RuleNotFoundException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
      *
      * @return bool
      */
@@ -98,14 +96,14 @@ interface RuleInterface
     public function isIgnorable($bundle, $controller, $action);
 
     /**
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
-     * @throws UserNotFoundException
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      */
     public function registerSystemUserRules(UserTransfer $userTransfer);
 
     /**
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param string $bundle
      * @param string $controller
      * @param string $action

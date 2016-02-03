@@ -34,7 +34,7 @@ class SolrReadWrite extends SolrRead implements ReadWriteInterface
     }
 
     /**
-     * @param QueryInterface $query
+     * @param \Solarium\Core\Query\QueryInterface $query
      *
      * @return \Solarium\QueryType\Update\Result
      */
@@ -44,7 +44,7 @@ class SolrReadWrite extends SolrRead implements ReadWriteInterface
     }
 
     /**
-     * @param QueryInterface $query
+     * @param \Solarium\Core\Query\QueryInterface $query
      *
      * @return \Solarium\Core\Query\Result\ResultInterface
      */

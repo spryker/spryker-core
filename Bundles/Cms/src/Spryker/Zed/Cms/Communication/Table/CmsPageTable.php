@@ -20,12 +20,12 @@ class CmsPageTable extends AbstractTable
     const REQUEST_ID_PAGE = 'id-page';
 
     /**
-     * @var SpyCmsPageQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     protected $pageQuery;
 
     /**
-     * @param SpyCmsPageQuery $pageQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageQuery $pageQuery
      */
     public function __construct(SpyCmsPageQuery $pageQuery)
     {
@@ -33,9 +33,9 @@ class CmsPageTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -59,7 +59,7 @@ class CmsPageTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

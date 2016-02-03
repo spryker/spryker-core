@@ -7,20 +7,18 @@
 namespace Spryker\Zed\Auth\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Auth\Business\AuthFacade;
-use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Spryker\Zed\Auth\Communication\Form\LoginForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AuthCommunicationFactory getFactory()
- * @method AuthFacade getFacade()
+ * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Auth\Business\AuthFacade getFacade()
  */
 class LoginController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */

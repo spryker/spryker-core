@@ -8,18 +8,16 @@ namespace Spryker\Zed\Payolution\Business;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method PayolutionBusinessFactory getFactory()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionBusinessFactory getFactory()
  */
 class PayolutionFacade extends AbstractFacade
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     public function saveOrderPayment(OrderTransfer $orderTransfer)
     {
@@ -30,9 +28,9 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
@@ -47,7 +45,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -60,7 +58,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function reAuthorizePayment($idPayment)
     {
@@ -73,7 +71,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function revertPayment($idPayment)
     {
@@ -86,7 +84,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function capturePayment($idPayment)
     {
@@ -99,7 +97,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function refundPayment($idPayment)
     {
@@ -110,9 +108,9 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
@@ -125,7 +123,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -138,7 +136,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -151,7 +149,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -164,7 +162,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -177,7 +175,7 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

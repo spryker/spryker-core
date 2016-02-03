@@ -7,16 +7,15 @@
 namespace Spryker\Zed\TaxProductConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
 
 /**
- * @method TaxProductConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorBusinessFactory getFactory()
  */
 class TaxProductConnectorFacade extends AbstractFacade
 {
 
     /**
-     * @return TaxChangeTouchPlugin
+     * @return \Spryker\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin
      */
     public function getTaxChangeTouchPlugin()
     {

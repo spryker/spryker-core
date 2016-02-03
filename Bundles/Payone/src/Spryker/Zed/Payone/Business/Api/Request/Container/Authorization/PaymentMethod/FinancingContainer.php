@@ -19,7 +19,7 @@ class FinancingContainer extends AbstractPaymentMethodContainer
     protected $financingtype;
 
     /**
-     * @var RedirectContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     protected $redirect;
 
@@ -42,7 +42,7 @@ class FinancingContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @param RedirectContainer $redirect
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
      *
      * @return void
      */

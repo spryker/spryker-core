@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\User\Communication\Form\Constraints;
 
-use Spryker\Zed\User\Business\UserFacade;
 use Symfony\Component\Validator\Constraint;
 
 class CurrentPassword extends Constraint
@@ -18,12 +17,12 @@ class CurrentPassword extends Constraint
     protected $message = 'Incorrect current password provided.';
 
     /**
-     * @var UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacade
      */
     protected $facadeUser;
 
     /**
-     * @return UserFacade
+     * @return \Spryker\Zed\User\Business\UserFacade
      */
     public function getFacadeUser()
     {

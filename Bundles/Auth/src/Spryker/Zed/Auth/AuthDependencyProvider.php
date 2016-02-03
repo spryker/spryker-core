@@ -9,7 +9,6 @@ namespace Spryker\Zed\Auth;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 
 class AuthDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -19,9 +18,9 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_SESSION = 'session client';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
@@ -33,9 +32,9 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -55,9 +54,9 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return AuthPasswordResetSenderInterface|null;
+     * @return \Spryker\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface|null
      */
     protected function getPasswordResetNotificationSender(Container $container)
     {

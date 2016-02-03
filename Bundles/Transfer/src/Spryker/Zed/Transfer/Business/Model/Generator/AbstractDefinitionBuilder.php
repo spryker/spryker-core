@@ -11,9 +11,9 @@ abstract class AbstractDefinitionBuilder implements DefinitionBuilderInterface
 
     /**
      * @param array $definitions
-     * @param DefinitionInterface $definitionClass
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface $definitionClass
      *
-     * @return DefinitionInterface[]
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface[]
      */
     protected function buildDefinitions(array $definitions, DefinitionInterface $definitionClass)
     {

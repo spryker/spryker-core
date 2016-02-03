@@ -9,21 +9,17 @@ namespace Spryker\Zed\Touch\Business;
 use Spryker\Zed\Touch\Business\Model\Touch;
 use Spryker\Zed\Touch\Business\Model\TouchRecord;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Touch\Business\Model\TouchInterface;
-use Spryker\Zed\Touch\Business\Model\TouchRecordInterface;
 use Spryker\Zed\Touch\TouchDependencyProvider;
-use Spryker\Zed\Touch\TouchConfig;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
- * @method TouchConfig getConfig()
- * @method TouchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Touch\TouchConfig getConfig()
+ * @method \Spryker\Zed\Touch\Persistence\TouchQueryContainer getQueryContainer()
  */
 class TouchBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return TouchRecordInterface
+     * @return \Spryker\Zed\Touch\Business\Model\TouchRecordInterface
      */
     public function createTouchRecordModel()
     {
@@ -34,7 +30,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TouchInterface
+     * @return \Spryker\Zed\Touch\Business\Model\TouchInterface
      */
     public function createTouchModel()
     {

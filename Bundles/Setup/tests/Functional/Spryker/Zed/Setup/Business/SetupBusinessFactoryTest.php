@@ -19,7 +19,7 @@ class SetupBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return SetupBusinessFactory
+     * @return \Spryker\Zed\Setup\Business\SetupBusinessFactory
      */
     private function getFactory()
     {

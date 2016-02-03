@@ -13,15 +13,11 @@ use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\CmsDependencyProvider;
-use Spryker\Zed\Cms\Communication\CmsCommunicationFactory;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsBlock;
 use Orm\Zed\Cms\Persistence\Base\SpyCmsPage;
@@ -30,9 +26,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsCommunicationFactory getFactory()
- * @method CmsQueryContainer getQueryContainer()
- * @method CmsFacade getFacade()
+ * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
  */
 class GlossaryController extends AbstractController
 {
@@ -48,7 +44,7 @@ class GlossaryController extends AbstractController
     protected $glossaryKeyName = '';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -94,9 +90,9 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
@@ -136,9 +132,9 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function searchAction(Request $request)
     {
@@ -187,7 +183,7 @@ class GlossaryController extends AbstractController
     /**
      * @param array $data
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     private function createKeyMappingTransfer(array $data)
     {
@@ -207,7 +203,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @return CmsToLocaleInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
      */
     private function getLocaleFacade()
     {
@@ -216,7 +212,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @return CmsToGlossaryInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
      */
     private function getGlossaryFacade()
     {
@@ -226,7 +222,7 @@ class GlossaryController extends AbstractController
 
     /**
      * @param array $data
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -241,7 +237,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param SpyCmsPage $pageUrl
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsPage $pageUrl
      *
      * @return array
      */
@@ -257,7 +253,7 @@ class GlossaryController extends AbstractController
 
     /**
      * @param int $idPage
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
@@ -277,7 +273,7 @@ class GlossaryController extends AbstractController
     /**
      * @param array $forms
      * @param int $idForm
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -323,9 +319,9 @@ class GlossaryController extends AbstractController
 
     /**
      * @param array $data
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return KeyTranslationTransfer
+     * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
     private function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer)
     {
@@ -347,11 +343,11 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param $idPage
+     * @param int $idPage
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return SpyCmsPage
+     * @return \Orm\Zed\Cms\Persistence\Base\SpyCmsPage
      */
     private function findCmsPageById($idPage)
     {
@@ -387,9 +383,9 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param SpyCmsBlock $blockEntity
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsBlock $blockEntity
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     protected function createBlockTransfer(SpyCmsBlock $blockEntity)
     {

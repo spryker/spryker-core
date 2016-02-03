@@ -9,7 +9,7 @@ namespace Spryker\Zed\Storage\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method StorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\Storage\Business\StorageBusinessFactory getFactory()
  */
 class StorageFacade extends AbstractFacade
 {

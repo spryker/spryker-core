@@ -7,7 +7,6 @@
 namespace Unit\Spryker\Zed\Kernel\IdeAutoCompletion;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractAutoCompletion extends \PHPUnit_Framework_TestCase
 {
@@ -43,7 +42,7 @@ abstract class AbstractAutoCompletion extends \PHPUnit_Framework_TestCase
     {
         if ($this->baseDir . 'test/') {
             $finder = new Finder();
-            /** @var SplFileInfo $file */
+            /** @var \Symfony\Component\Finder\SplFileInfo $file */
             foreach ($finder->files()->in($this->baseDir . 'test/') as $file) {
                 unlink($file->getPathname());
             }

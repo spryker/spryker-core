@@ -7,15 +7,13 @@
 namespace Spryker\Zed\Newsletter\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 interface NewsletterToGlossaryInterface
 {
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return bool
      */
@@ -23,11 +21,11 @@ interface NewsletterToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function getTranslation($keyName, LocaleTransfer $locale);
 

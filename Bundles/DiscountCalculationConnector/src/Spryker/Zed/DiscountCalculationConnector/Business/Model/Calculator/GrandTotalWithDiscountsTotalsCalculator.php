@@ -8,7 +8,6 @@ namespace Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface;
 
@@ -16,18 +15,18 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
 {
 
     /**
-     * @var SubtotalTotalsCalculatorInterface
+     * @var \Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalTotalsCalculatorInterface
      */
     protected $grandTotalsCalculator;
 
     /**
-     * @var DiscountTotalsCalculatorInterface
+     * @var \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculatorInterface
      */
     protected $discountTotalsCalculator;
 
     /**
-     * @param DiscountCalculationToCalculationInterface $grandTotalsCalculator
-     * @param DiscountTotalsCalculatorInterface $discountTotalsCalculator
+     * @param \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToCalculationInterface $grandTotalsCalculator
+     * @param \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculatorInterface $discountTotalsCalculator
      */
     public function __construct(
         DiscountCalculationToCalculationInterface $grandTotalsCalculator,
@@ -38,8 +37,8 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $container
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      * @param $items
      *
      * @return void
@@ -57,8 +56,8 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param $calculableItems
      *
      * @return int
@@ -78,8 +77,8 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      * @param $calculableItems
      *
      * @return int

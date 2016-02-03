@@ -14,19 +14,19 @@ class TransferGenerator
 {
 
     /**
-     * @var GeneratorInterface
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
     private $generator;
 
     /**
-     * @var DefinitionBuilderInterface
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
     private $definitionBuilder;
 
     /**
-     * @param LoggerInterface $messenger
-     * @param GeneratorInterface $generator
-     * @param DefinitionBuilderInterface $definitionBuilder
+     * @param \Psr\Log\LoggerInterface $messenger
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface $generator
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface $definitionBuilder
      */
     public function __construct(LoggerInterface $messenger, GeneratorInterface $generator, DefinitionBuilderInterface $definitionBuilder)
     {

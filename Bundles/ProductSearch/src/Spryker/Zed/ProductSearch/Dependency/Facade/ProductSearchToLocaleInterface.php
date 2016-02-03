@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 interface ProductSearchToLocaleInterface
 {
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
 

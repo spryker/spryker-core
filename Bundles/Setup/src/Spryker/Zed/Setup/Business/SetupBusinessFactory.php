@@ -8,9 +8,7 @@ namespace Spryker\Zed\Setup\Business;
 
 use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use Spryker\Zed\Setup\Business\Model\Cronjobs;
-use Spryker\Zed\Setup\Business\Model\DirectoryRemoverInterface;
 use Spryker\Zed\Setup\Communication\Console\DeployPreparePropelConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole;
 use Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
@@ -21,18 +19,16 @@ use Spryker\Zed\Setup\Communication\Console\JenkinsEnableConsole;
 use Spryker\Zed\Setup\Communication\Console\JenkinsGenerateConsole;
 use Spryker\Zed\Setup\Communication\Console\Npm\RunnerConsole;
 use Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
-use Spryker\Zed\Setup\SetupConfig;
 use Spryker\Zed\Setup\SetupDependencyProvider;
-use Symfony\Component\Console\Command\Command;
 
 /**
- * @method SetupConfig getConfig()
+ * @method \Spryker\Zed\Setup\SetupConfig getConfig()
  */
 class SetupBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Cronjobs
+     * @return \Spryker\Zed\Setup\Business\Model\Cronjobs
      */
     public function createModelCronjobs()
     {
@@ -42,7 +38,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DirectoryRemoverInterface
+     * @return \Spryker\Zed\Setup\Business\Model\DirectoryRemoverInterface
      */
     public function createModelGeneratedDirectoryRemover()
     {
@@ -54,7 +50,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string $path
      *
-     * @return DirectoryRemoverInterface
+     * @return \Spryker\Zed\Setup\Business\Model\DirectoryRemoverInterface
      */
     protected function createDirectoryRemover($path)
     {
@@ -64,7 +60,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     /**
      * @throws \ErrorException
      *
-     * @return Repeater
+     * @return \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater
      */
     public function getTransferObjectRepeater()
     {
@@ -74,7 +70,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getTransferObjectRepeater() instead.
      *
-     * @return Repeater
+     * @return \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater
      */
     public function createTransferObjectRepeater()
     {
@@ -84,7 +80,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Command[]
+     * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()
     {
@@ -103,7 +99,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GenerateIdeAutoCompletionConsole
+     * @return \Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole
      */
     protected function createGenerateIdeAutoCompletionConsole()
     {
@@ -111,7 +107,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GenerateZedIdeAutoCompletionConsole
+     * @return \Spryker\Zed\Setup\Communication\Console\GenerateZedIdeAutoCompletionConsole
      */
     protected function createGenerateZedIdeAutoCompletionConsole()
     {
@@ -119,7 +115,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GenerateClientIdeAutoCompletionConsole
+     * @return \Spryker\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole
      */
     protected function createGenerateClientIdeAutoCompletionConsole()
     {
@@ -127,7 +123,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RunnerConsole
+     * @return \Spryker\Zed\Setup\Communication\Console\Npm\RunnerConsole
      */
     protected function createRunnerConsole()
     {
@@ -135,7 +131,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RemoveGeneratedDirectoryConsole
+     * @return \Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole
      */
     protected function createRemoveGeneratedDirectoryConsole()
     {
@@ -143,7 +139,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return InstallConsole
+     * @return \Spryker\Zed\Setup\Communication\Console\InstallConsole
      */
     protected function createInstallConsole()
     {
@@ -151,7 +147,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return JenkinsEnableConsole
+     * @return \Spryker\Zed\Setup\Communication\Console\JenkinsEnableConsole
      */
     protected function createJenkinsEnableConsole()
     {
@@ -159,7 +155,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return JenkinsDisableConsole
+     * @return \Spryker\Zed\Setup\Communication\Console\JenkinsDisableConsole
      */
     protected function createJenkinsDisableConsole()
     {
@@ -167,7 +163,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return JenkinsGenerateConsole
+     * @return \Spryker\Zed\Setup\Communication\Console\JenkinsGenerateConsole
      */
     protected function createJenkinsGenerateConsole()
     {
@@ -175,7 +171,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DeployPreparePropelConsole
+     * @return \Spryker\Zed\Setup\Communication\Console\DeployPreparePropelConsole
      */
     protected function createDeployPreparePropelConsole()
     {

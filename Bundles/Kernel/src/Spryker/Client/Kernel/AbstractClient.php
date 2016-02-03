@@ -6,21 +6,19 @@
 
 namespace Spryker\Client\Kernel;
 
-use Spryker\Client\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Client\ZedRequest\Stub\BaseStub;
 use Spryker\Shared\ZedRequest\Client\Message;
 
 abstract class AbstractClient
 {
 
     /**
-     * @var AbstractFactory
+     * @var \Spryker\Client\Kernel\AbstractFactory
      */
     private $factory;
 
     /**
-     * @return AbstractFactory
+     * @return \Spryker\Client\Kernel\AbstractFactory
      */
     protected function getFactory()
     {
@@ -32,9 +30,9 @@ abstract class AbstractClient
     }
 
     /**
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Client\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractFactory
+     * @return \Spryker\Client\Kernel\AbstractFactory
      */
     private function resolveFactory()
     {
@@ -42,7 +40,7 @@ abstract class AbstractClient
     }
 
     /**
-     * @return FactoryResolver
+     * @return \Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {
@@ -50,7 +48,7 @@ abstract class AbstractClient
     }
 
     /**
-     * @return BaseStub
+     * @return \Spryker\Client\ZedRequest\Stub\BaseStub
      */
     protected function getZedStub()
     {
@@ -65,7 +63,7 @@ abstract class AbstractClient
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedInfoMessages()
     {
@@ -73,7 +71,7 @@ abstract class AbstractClient
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getZedSuccessMessages()
     {

@@ -7,7 +7,6 @@
 namespace Spryker\Shared\Log;
 
 use Monolog\Logger;
-use Psr\Log\LoggerInterface;
 use Spryker\Shared\Log\Config\DefaultLoggerConfig;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
@@ -20,9 +19,9 @@ class LoggerFactory
     protected static $loggers = [];
 
     /**
-     * @param LoggerConfigInterface $loggerConfig
+     * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
      *
-     * @return LoggerInterface|null
+     * @return \Psr\Log\LoggerInterface|null
      */
     public static function getInstance(LoggerConfigInterface $loggerConfig = null)
     {
@@ -34,9 +33,9 @@ class LoggerFactory
     }
 
     /**
-     * @param LoggerConfigInterface $loggerConfig
+     * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
      *
-     * @return LoggerInterface
+     * @return \Psr\Log\LoggerInterface
      */
     protected static function createInstanceIfNotExists(LoggerConfigInterface $loggerConfig)
     {

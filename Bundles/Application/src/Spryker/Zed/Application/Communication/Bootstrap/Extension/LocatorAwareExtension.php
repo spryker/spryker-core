@@ -6,14 +6,13 @@
 
 namespace Spryker\Zed\Application\Communication\Bootstrap\Extension;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Kernel\Locator;
 
 class LocatorAwareExtension
 {
 
     /**
-     * @return AutoCompletion
+     * @return \Generated\Zed\Ide\AutoCompletion
      */
     public function getLocator()
     {

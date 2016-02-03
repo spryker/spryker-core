@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductSearch\Business\Transformer;
 use Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface;
 use Spryker\Zed\ProductSearch\Business\Operation\OperationInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
-use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperation;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductAttributesTransformer implements ProductAttributesTransformerInterface
 {
@@ -18,24 +16,24 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
     protected $fieldOperations = [];
 
     /**
-     * @var OperationLocatorInterface
+     * @var \Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface
      */
     private $operationLocator;
 
     /**
-     * @var OperationInterface
+     * @var \Spryker\Zed\ProductSearch\Business\Operation\OperationInterface
      */
     private $defaultOperation;
 
     /**
-     * @var ProductSearchQueryContainerInterface
+     * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
     private $queryContainer;
 
     /**
-     * @param ProductSearchQueryContainerInterface $queryContainer
-     * @param OperationLocatorInterface $operationLocator
-     * @param OperationInterface $defaultOperation
+     * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface $operationLocator
+     * @param \Spryker\Zed\ProductSearch\Business\Operation\OperationInterface $defaultOperation
      */
     public function __construct(
         ProductSearchQueryContainerInterface $queryContainer,
@@ -192,7 +190,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
     }
 
     /**
-     * @return SpyProductSearchAttributesOperation[]|ObjectCollection
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperation[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getFieldOperations()
     {

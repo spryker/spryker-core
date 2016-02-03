@@ -5,21 +5,20 @@
 
 namespace Spryker\Zed\Customer\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 
 class CustomerToLocaleBridge implements CustomerToLocaleInterface
 {
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 
     /**
      * CustomerToLocaleBridge constructor.
      *
-     * @param LocaleFacade $localeFacade
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade $localeFacade
      */
     public function __construct($localeFacade)
     {
@@ -27,7 +26,7 @@ class CustomerToLocaleBridge implements CustomerToLocaleInterface
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {

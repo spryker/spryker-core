@@ -6,13 +6,12 @@
 
 namespace Spryker\Zed\Search\Communication\Console;
 
-use Spryker\Zed\Search\Business\SearchFacade;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method SearchFacade getFacade()
+ * @method \Spryker\Zed\Search\Business\SearchFacade getFacade()
  */
 class SearchConsole extends Console
 {
@@ -34,8 +33,8 @@ class SearchConsole extends Console
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return int|null|void
      */

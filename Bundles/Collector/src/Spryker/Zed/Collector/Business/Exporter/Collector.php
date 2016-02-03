@@ -16,18 +16,18 @@ class Collector
 {
 
     /**
-     * @var TouchQueryContainer
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var ExporterInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\ExporterInterface
      */
     protected $exporter;
 
     /**
-     * @param TouchQueryContainer $queryContainer
-     * @param ExporterInterface $exporter
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $queryContainer
+     * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
      */
     public function __construct(
         TouchQueryContainer $queryContainer,
@@ -38,9 +38,9 @@ class Collector
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return BatchResultInterface[]
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
     public function exportForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
@@ -72,7 +72,7 @@ class Collector
     }
 
     /**
-     * @param BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      *
      * @return void
      */

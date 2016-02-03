@@ -20,12 +20,12 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
 {
 
     /**
-     * @var ControllerCollection
+     * @var \Silex\ControllerCollection
      */
     private $controllerCollection;
 
     /**
-     * @var Application
+     * @var \Silex\Application
      */
     private $app;
 
@@ -48,9 +48,9 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
-     * @return mixed|ControllerCollection
+     * @return mixed|\Silex\ControllerCollection
      */
     public function connect(Application $app)
     {
@@ -93,7 +93,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
      * @param string $actionName
      * @param bool $parseJsonBody
      *
-     * @return Controller
+     * @return \Silex\Controller
      */
     protected function createController(
         $path,
@@ -137,7 +137,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
      * @param string $redirectPath
      * @param int $status
      *
-     * @return Controller
+     * @return \Silex\Controller
      */
     protected function createRedirectController($path, $name, $redirectPath, $status = 302)
     {
@@ -157,7 +157,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
      * @param string $controllerName
      * @param string $actionName
      *
-     * @return Controller
+     * @return \Silex\Controller
      */
     protected function createGetController($path, $name, $bundle, $controllerName, $actionName = 'index')
     {
@@ -173,7 +173,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
      * @param string $actionName
      * @param bool $parseJsonBody
      *
-     * @return Controller
+     * @return \Silex\Controller
      */
     protected function createPostController($path, $name, $bundle, $controllerName, $actionName = 'index', $parseJsonBody = false)
     {
@@ -182,14 +182,14 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
     abstract protected function defineControllers(Application $app);
 
     /**
-     * @param Controller $controller
+     * @param \Silex\Controller $controller
      *
      * @return void
      */

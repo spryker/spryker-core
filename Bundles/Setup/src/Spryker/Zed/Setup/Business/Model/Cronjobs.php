@@ -28,12 +28,12 @@ class Cronjobs
     ];
 
     /**
-     * @var SetupConfig
+     * @var \Spryker\Zed\Setup\SetupConfig
      */
     protected $config;
 
     /**
-     * @param SetupConfig $config
+     * @param \Spryker\Zed\Setup\SetupConfig $config
      */
     public function __construct(SetupConfig $config)
     {
@@ -406,7 +406,7 @@ class Cronjobs
      */
     protected function getCommand($command, $store)
     {
-        $environment = \Spryker\Shared\Library\Environment::getInstance();
+        $environment = Environment::getInstance();
         $environment_name = $environment->getEnvironment();
         if ($environment->isNotDevelopment()) {
             return "<command>[ -f ../../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../../current/deploy/vars

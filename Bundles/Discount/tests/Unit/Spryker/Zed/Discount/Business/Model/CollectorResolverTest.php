@@ -10,8 +10,6 @@ use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Discount\Business\Model\CollectorResolver;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\DiscountConfigInterface;
 use Spryker\Zed\Cart\Business\Model\CalculableContainer;
 use Generated\Shared\Transfer\DiscountTransfer;
 
@@ -117,7 +115,7 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function createDiscountTransfer()
     {
@@ -138,7 +136,7 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @return CalculableContainer
+     * @return \Spryker\Zed\Cart\Business\Model\CalculableContainer
      */
     protected function createCalculableContainer()
     {
@@ -156,7 +154,7 @@ class CollectorResolverTest extends Test
     /**
      * @param array $collectedItems
      *
-     * @return DiscountCollectorPluginInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createCollectorPluginMock(array $collectedItems)
     {
@@ -173,7 +171,7 @@ class CollectorResolverTest extends Test
     /**
      * @param array $collectorPlugins
      *
-     * @return DiscountConfigInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Discount\DiscountConfigInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function getDiscountCollectorConfigurator(array $collectorPlugins)
     {
@@ -197,7 +195,7 @@ class CollectorResolverTest extends Test
     /**
      * @param string $sku
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createItemTransfer($sku)
     {
@@ -208,7 +206,7 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     protected function createCartTransfer()
     {
@@ -216,7 +214,7 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @return DiscountCollectorTransfer
+     * @return \Generated\Shared\Transfer\DiscountCollectorTransfer
      */
     protected function createDiscountCollectorTransfer()
     {
@@ -226,7 +224,7 @@ class CollectorResolverTest extends Test
     /**
      * @param $collectorConfig
      *
-     * @return CollectorResolver
+     * @return \Spryker\Zed\Discount\Business\Model\CollectorResolver
      */
     protected function createCollectorResolver($collectorConfig)
     {

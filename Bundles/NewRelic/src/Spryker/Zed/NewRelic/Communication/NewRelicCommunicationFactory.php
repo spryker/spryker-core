@@ -7,16 +7,15 @@ namespace Spryker\Zed\NewRelic\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Shared\NewRelic\Api;
-use Spryker\Zed\NewRelic\NewRelicConfig;
 
 /**
- * @method NewRelicConfig getConfig()
+ * @method \Spryker\Zed\NewRelic\NewRelicConfig getConfig()
  */
 class NewRelicCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return Api
+     * @return \Spryker\Shared\NewRelic\Api
      */
     public function createNewRelicApi()
     {

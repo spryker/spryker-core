@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Acl;
 
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Config;
@@ -15,7 +14,7 @@ class AclConfig extends AbstractBundleConfig
 {
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

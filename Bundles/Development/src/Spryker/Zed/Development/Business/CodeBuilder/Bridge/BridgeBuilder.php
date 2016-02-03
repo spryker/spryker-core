@@ -15,6 +15,19 @@ class BridgeBuilder
     const TEMPLATE_BRIDGE = 'bridge';
 
     /**
+     * @var string
+     */
+    protected $bundleRootDirectory;
+
+    /**
+     * @param string $bundleRootDirectory
+     */
+    public function __construct($bundleRootDirectory)
+    {
+        $this->bundleRootDirectory = $bundleRootDirectory;
+    }
+
+    /**
      * @param string $bundle
      * @param string $toBundle
      *
@@ -126,7 +139,7 @@ class BridgeBuilder
      */
     protected function getPathToDependencyFiles($bundle)
     {
-        $pathParts = [APPLICATION_VENDOR_DIR, 'spryker', 'spryker', 'Bundles', $bundle, 'src', 'Spryker', 'Zed', $bundle, 'Dependency', 'Facade'];
+        $pathParts = [$this->bundleRootDirectory, $bundle, 'src', 'Spryker', 'Zed', $bundle, 'Dependency', 'Facade'];
 
         return implode(DIRECTORY_SEPARATOR, $pathParts);
     }

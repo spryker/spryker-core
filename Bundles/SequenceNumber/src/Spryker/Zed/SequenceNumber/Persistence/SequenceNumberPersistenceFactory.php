@@ -7,11 +7,10 @@
 namespace Spryker\Zed\SequenceNumber\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\SequenceNumber\SequenceNumberConfig;
 
 /**
- * @method SequenceNumberConfig getConfig()
- * @method SequenceNumberQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\SequenceNumber\SequenceNumberConfig getConfig()
+ * @method \Spryker\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainer getQueryContainer()
  */
 class SequenceNumberPersistenceFactory extends AbstractPersistenceFactory
 {

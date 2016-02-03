@@ -6,20 +6,19 @@
 namespace Spryker\Zed\Stock\Dependency\Facade;
 
 use Spryker\Zed\Product\Business\ProductFacade;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class StockToProductBridge implements StockToProductInterface
 {
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $productFacade;
 
     /**
      * ProductCategoryToProductBridge constructor.
      *
-     * @param ProductFacade $productFacade
+     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
      */
     public function __construct($productFacade)
     {
@@ -29,7 +28,7 @@ class StockToProductBridge implements StockToProductInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -41,7 +40,7 @@ class StockToProductBridge implements StockToProductInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */

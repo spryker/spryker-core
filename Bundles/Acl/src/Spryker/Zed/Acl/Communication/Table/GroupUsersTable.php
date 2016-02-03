@@ -25,7 +25,7 @@ class GroupUsersTable extends AbstractTable
     const COL_OPTIONS = 'Options';
 
     /**
-     * @var SpyAclGroupQuery
+     * @var \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
      */
     protected $hasGroupQuery;
 
@@ -37,7 +37,7 @@ class GroupUsersTable extends AbstractTable
     protected $idGroup;
 
     /**
-     * @param SpyAclGroupQuery $hasGroupQuery
+     * @param \Orm\Zed\Acl\Persistence\SpyAclGroupQuery $hasGroupQuery
      * @param int $idAclGroup
      */
     public function __construct(SpyAclGroupQuery $hasGroupQuery, $idAclGroup)
@@ -47,9 +47,9 @@ class GroupUsersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -70,7 +70,7 @@ class GroupUsersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

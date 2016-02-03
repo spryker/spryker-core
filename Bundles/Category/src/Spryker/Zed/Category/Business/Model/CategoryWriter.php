@@ -8,7 +8,6 @@ namespace Spryker\Zed\Category\Business\Model;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
@@ -17,12 +16,12 @@ class CategoryWriter implements CategoryWriterInterface
 {
 
     /**
-     * @var CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @param CategoryQueryContainer $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
      */
     public function __construct(CategoryQueryContainer $queryContainer)
     {
@@ -30,8 +29,8 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \ErrorException
      *
@@ -52,8 +51,8 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -67,7 +66,7 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param int $idCategory
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -83,11 +82,11 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyCategory
+     * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
     protected function saveCategory(CategoryTransfer $category)
     {
@@ -99,10 +98,10 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -116,8 +115,8 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -146,9 +145,9 @@ class CategoryWriter implements CategoryWriterInterface
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyCategoryAttribute
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute
      */
     protected function getAttributeEntity($idCategory, LocaleTransfer $locale)
     {
@@ -160,7 +159,7 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategory
+     * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
     protected function getCategoryEntity($idCategory)
     {
@@ -168,9 +167,9 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
-     * @param SpyCategoryAttribute $categoryAttributeEntity
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
      *
      * @return void
      */

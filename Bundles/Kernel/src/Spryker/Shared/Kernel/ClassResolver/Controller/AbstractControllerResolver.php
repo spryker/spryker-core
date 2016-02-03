@@ -15,14 +15,14 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     const KEY_CONTROLLER = '%controller%';
 
     /**
-     * @var BundleControllerActionInterface
+     * @var \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface
      */
     protected $bundleControllerAction;
 
     /**
-     * @param BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
-     * @throws ControllerNotFoundException
+     * @throws \Spryker\Shared\Kernel\ClassResolver\Controller\ControllerNotFoundException
      *
      * @return object
      */
@@ -37,7 +37,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     }
 
     /**
-     * @param BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      *
      * @return bool
      */

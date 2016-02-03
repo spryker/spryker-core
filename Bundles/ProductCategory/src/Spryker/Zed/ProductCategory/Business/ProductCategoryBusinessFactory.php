@@ -7,25 +7,17 @@
 namespace Spryker\Zed\ProductCategory\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
-use Spryker\Zed\ProductCategory\ProductCategoryConfig;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 
 /**
- * @method ProductCategoryConfig getConfig()
- * @method ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
  */
 class ProductCategoryBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return ProductCategoryManagerInterface
+     * @return \Spryker\Zed\ProductCategory\Business\ProductCategoryManagerInterface
      */
     public function createProductCategoryManager()
     {
@@ -43,7 +35,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getCategoryQueryContainer() instead.
      *
-     * @return CategoryQueryContainerInterface
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected function createCategoryQueryContainer()
     {
@@ -53,7 +45,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CategoryQueryContainerInterface
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected function getCategoryQueryContainer()
     {
@@ -63,7 +55,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getLocaleFacade() instead.
      *
-     * @return ProductCategoryToLocaleInterface
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface
      */
     protected function createLocaleFacade()
     {
@@ -73,7 +65,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductCategoryToLocaleInterface
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface
      */
     protected function getLocaleFacade()
     {
@@ -83,7 +75,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getProductFacade() instead.
      *
-     * @return ProductCategoryToProductInterface
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     protected function createProductFacade()
     {
@@ -93,7 +85,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductCategoryToProductInterface
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface
      */
     protected function getProductFacade()
     {
@@ -103,7 +95,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getCategoryFacade() instead.
      *
-     * @return ProductCategoryToCategoryInterface
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
      */
     protected function createCategoryFacade()
     {
@@ -113,7 +105,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductCategoryToCategoryInterface
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface
      */
     protected function getCategoryFacade()
     {
@@ -123,7 +115,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getTouchFacade() instead.
      *
-     * @return ProductCategoryToTouchInterface
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface
      */
     protected function createTouchFacade()
     {
@@ -133,7 +125,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductCategoryToTouchInterface
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface
      */
     protected function getTouchFacade()
     {
@@ -143,7 +135,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getCmsFacade() instead.
      *
-     * @return ProductCategoryToCmsInterface
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface
      */
     protected function createCmsFacade()
     {
@@ -155,7 +147,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * TODO: https://spryker.atlassian.net/browse/CD-540
      *
-     * @return ProductCategoryToCmsInterface
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsInterface
      */
     protected function getCmsFacade()
     {
@@ -163,7 +155,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransferGeneratorInterface
+     * @return \Spryker\Zed\ProductCategory\Business\TransferGeneratorInterface
      */
     public function createProductCategoryTransferGenerator()
     {

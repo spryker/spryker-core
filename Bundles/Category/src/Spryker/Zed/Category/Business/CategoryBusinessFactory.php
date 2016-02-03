@@ -11,31 +11,24 @@ use Spryker\Zed\Category\Business\Tree\ClosureTableWriter;
 use Spryker\Zed\Category\Business\Tree\NodeWriter;
 use Spryker\Zed\Category\Business\Model\CategoryWriter;
 use Spryker\Zed\Category\Business\Manager\NodeUrlManager;
-use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
-use Spryker\Zed\Category\Business\Model\CategoryWriterInterface;
 use Spryker\Zed\Category\Business\Renderer\CategoryTreeRenderer;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeWriter;
-use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
-use Spryker\Zed\Category\Business\Tree\NodeWriterInterface;
 use Spryker\Zed\Category\CategoryDependencyProvider;
-use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
-use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
-use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
-use Spryker\Zed\Category\CategoryConfig;
+use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Tool\Graph\Graph;
 
 /**
- * @method CategoryQueryContainer getQueryContainer()
- * @method CategoryConfig getConfig()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  */
 class CategoryBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CategoryTreeWriter
+     * @return \Spryker\Zed\Category\Business\Tree\CategoryTreeWriter
      */
     public function createCategoryTreeWriter()
     {
@@ -52,7 +45,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @param array $category
      *
-     * @return CategoryTreeFormatter
+     * @return \Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter
      */
     public function createCategoryTreeStructure(array $category)
     {
@@ -60,7 +53,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CategoryTreeReader
+     * @return \Spryker\Zed\Category\Business\Tree\CategoryTreeReader
      */
     public function createCategoryTreeReader()
     {
@@ -71,7 +64,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CategoryTreeRenderer
+     * @return \Spryker\Zed\Category\Business\Renderer\CategoryTreeRenderer
      */
     public function createCategoryTreeRenderer()
     {
@@ -79,12 +72,23 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
 
         return new CategoryTreeRenderer(
             $this->getQueryContainer(),
-            $locale
+            $locale,
+            $this->createGraphViz()
         );
     }
 
     /**
-     * @return CategoryWriterInterface
+     * @return \Spryker\Tool\Graph\Graph
+     */
+    protected function createGraphViz()
+    {
+        $adapter = $this->createGraphAdapter();
+
+        return new Graph($adapter, 'Category Tree');
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryWriterInterface
      */
     public function createCategoryWriter()
     {
@@ -94,7 +98,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return NodeWriterInterface
+     * @return \Spryker\Zed\Category\Business\Tree\NodeWriterInterface
      */
     public function createNodeWriter()
     {
@@ -104,7 +108,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ClosureTableWriterInterface
+     * @return \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface
      */
     protected function createClosureTableWriter()
     {
@@ -114,7 +118,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return NodeUrlManager
+     * @return \Spryker\Zed\Category\Business\Manager\NodeUrlManager
      */
     protected function createNodeUrlManager()
     {
@@ -126,7 +130,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return UrlPathGeneratorInterface
+     * @return \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface
      */
     public function createUrlPathGenerator()
     {
@@ -136,7 +140,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getTouchFacade() instead.
      *
-     * @return CategoryToTouchInterface
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface
      */
     protected function createTouchFacade()
     {
@@ -146,7 +150,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CategoryToTouchInterface
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface
      */
     protected function getTouchFacade()
     {
@@ -156,7 +160,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getLocaleFacade() instead.
      *
-     * @return CategoryToLocaleInterface
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
      */
     protected function createLocaleFacade()
     {
@@ -166,7 +170,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CategoryToLocaleInterface
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
      */
     protected function getLocaleFacade()
     {
@@ -176,7 +180,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getUrlFacade() instead.
      *
-     * @return CategoryToUrlInterface
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface
      */
     protected function createUrlFacade()
     {
@@ -186,7 +190,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CategoryToUrlInterface
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface
      */
     protected function getUrlFacade()
     {
@@ -194,7 +198,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CategoryTreeFormatter
+     * @return \Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter
      */
     protected function createCategoryTreeFormatter()
     {
@@ -202,11 +206,19 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransferGeneratorInterface
+     * @return \Spryker\Zed\Category\Business\TransferGeneratorInterface
      */
     public function createCategoryTransferGenerator()
     {
         return new TransferGenerator();
+    }
+
+    /**
+     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
+     */
+    protected function createGraphAdapter()
+    {
+        return new PhpDocumentorGraphAdapter();
     }
 
 }

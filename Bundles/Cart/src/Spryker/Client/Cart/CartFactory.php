@@ -9,14 +9,12 @@ namespace Spryker\Client\Cart;
 use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Cart\Session\CartSession;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Cart\Zed\CartStubInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartFactory extends AbstractFactory
 {
 
     /**
-     * @return SessionInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     public function createSession()
     {
@@ -24,7 +22,7 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return CartStubInterface
+     * @return \Spryker\Client\Cart\Zed\CartStubInterface
      */
     public function createZedStub()
     {

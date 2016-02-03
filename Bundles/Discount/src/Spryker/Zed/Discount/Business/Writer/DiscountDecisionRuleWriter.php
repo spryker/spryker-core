@@ -7,16 +7,15 @@
 namespace Spryker\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DecisionRuleTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 
 class DiscountDecisionRuleWriter extends AbstractWriter
 {
 
     /**
-     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $discountDecisionRuleTransfer
      *
-     * @return SpyDiscountDecisionRule
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
     public function create(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
@@ -28,11 +27,11 @@ class DiscountDecisionRuleWriter extends AbstractWriter
     }
 
     /**
-     * @param DecisionRuleTransfer $discountDecisionRuleTransfer
+     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $discountDecisionRuleTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyDiscountDecisionRule
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule
      */
     public function update(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
@@ -47,9 +46,9 @@ class DiscountDecisionRuleWriter extends AbstractWriter
     }
 
     /**
-     * @param DecisionRuleTransfer $decisionRuleTransfer
+     * @param \Generated\Shared\Transfer\DecisionRuleTransfer $decisionRuleTransfer
      *
-     * @return SpyDiscountDecisionRule|null
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule|null
      */
     public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
     {

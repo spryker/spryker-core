@@ -14,7 +14,7 @@ use Spryker\Shared\Kernel\AbstractClientProvider;
 /**
  * Class ClientStorageProvider
  *
- * @method Client getInstance()
+ * @method \Elastica\Client getInstance()
  */
 abstract class AbstractSearchClientProvider extends AbstractClientProvider
 {
@@ -22,7 +22,7 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
     /**
      * @throws \Exception
      *
-     * @return Client
+     * @return \Elastica\Client
      */
     protected function createZedClient()
     {

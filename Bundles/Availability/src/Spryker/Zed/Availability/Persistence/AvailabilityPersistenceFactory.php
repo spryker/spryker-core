@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Availability\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Availability\AvailabilityConfig;
 
 /**
- * @method AvailabilityConfig getConfig()
- * @method AvailabilityQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer getQueryContainer()
  */
 class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
 {

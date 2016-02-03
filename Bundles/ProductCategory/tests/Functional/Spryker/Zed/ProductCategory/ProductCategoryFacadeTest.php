@@ -12,12 +12,10 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 
 /**
@@ -30,32 +28,32 @@ class ProductCategoryFacadeTest extends Test
 {
 
     /**
-     * @var ProductCategoryFacade
+     * @var \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade
      */
     protected $productCategoryFacade;
 
     /**
-     * @var ProductCategoryQueryContainerInterface
+     * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
      */
     protected $productCategoryQueryContainer;
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $productFacade;
 
     /**
-     * @var CategoryFacade
+     * @var \Spryker\Zed\Category\Business\CategoryFacade
      */
     protected $categoryFacade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

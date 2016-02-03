@@ -6,39 +6,35 @@
 
 namespace Spryker\Zed\Wishlist\Business\Operator;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Wishlist\Business\Storage\StorageInterface;
-use Spryker\Zed\Wishlist\Dependency\PostSavePluginInterface;
-use Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
 abstract class AbstractOperator
 {
 
     /**
-     * @var PreSavePluginInterface[]
+     * @var \Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface[]
      */
     protected $preSavePlugins = [];
 
     /**
-     * @var PostSavePluginInterface[]
+     * @var \Spryker\Zed\Wishlist\Dependency\PostSavePluginInterface[]
      */
     protected $postSavePlugins = [];
 
     /**
-     * @var StorageInterface
+     * @var \Spryker\Zed\Wishlist\Business\Storage\StorageInterface
      */
     protected $storage;
 
     /**
-     * @var WishlistChangeTransfer
+     * @var \Generated\Shared\Transfer\WishlistChangeTransfer
      */
     private $wishlistChange;
 
     /**
-     * @param StorageInterface $storage
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Spryker\Zed\Wishlist\Business\Storage\StorageInterface $storage
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      */
     public function __construct(StorageInterface $storage, WishlistChangeTransfer $wishlistChange)
     {
@@ -47,7 +43,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function executeOperation()
     {
@@ -59,7 +55,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return void
      */
@@ -73,7 +69,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return void
      */
@@ -87,7 +83,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param PreSavePluginInterface[] $preSavePlugins
+     * @param \Spryker\Zed\Wishlist\Dependency\PreSavePluginInterface[] $preSavePlugins
      *
      * @return void
      */
@@ -97,7 +93,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param PostSavePluginInterface[] $postSavePlugins
+     * @param \Spryker\Zed\Wishlist\Dependency\PostSavePluginInterface[] $postSavePlugins
      *
      * @return void
      */
@@ -107,7 +103,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistItem
      */
     abstract protected function applyOperation(WishlistChangeTransfer $wishlistItem);
 

@@ -10,18 +10,16 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller;
 use Spryker\Zed\Locale\Business\Manager\LocaleManager;
-use Spryker\Zed\Locale\LocaleConfig;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 
 /**
- * @method LocaleConfig getConfig()
- * @method LocaleQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
+ * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainer getQueryContainer()
  */
 class LocaleBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return LocaleManager
+     * @return \Spryker\Zed\Locale\Business\Manager\LocaleManager
      */
     public function createLocaleManager()
     {
@@ -32,7 +30,7 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransferGeneratorInterface
+     * @return \Spryker\Zed\Locale\Business\TransferGeneratorInterface
      */
     protected function createTransferGenerator()
     {
@@ -40,9 +38,9 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
-     * @return LocaleInstaller
+     * @return \Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller
      */
     public function createInstaller(MessengerInterface $messenger)
     {

@@ -7,10 +7,9 @@
 namespace Spryker\Zed\Heartbeat\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Heartbeat\HeartbeatConfig;
 
 /**
- * @method HeartbeatConfig getConfig()
+ * @method \Spryker\Zed\Heartbeat\HeartbeatConfig getConfig()
  */
 class HeartbeatPersistenceFactory extends AbstractPersistenceFactory
 {

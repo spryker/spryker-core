@@ -7,22 +7,21 @@
 namespace Spryker\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
 
 interface DoubleOptInHandlerInterface
 {
 
     /**
-     * @param SubscriberOptInSenderInterface $subscriberOptInSender
+     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInSenderInterface $subscriberOptInSender
      *
-     * @return DoubleOptInHandlerInterface
+     * @return \Spryker\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface
      */
     public function addSubscriberOptInSender(SubscriberOptInSenderInterface $subscriberOptInSender);
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
     public function approveSubscriberByKey(NewsletterSubscriberTransfer $newsletterSubscriber);
 

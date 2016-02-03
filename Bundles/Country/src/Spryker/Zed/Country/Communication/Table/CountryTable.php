@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Country\Communication\Table;
 
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -16,12 +15,12 @@ class CountryTable extends AbstractTable
 {
 
     /**
-     * @var SpyCountryQuery
+     * @var \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
     protected $countryQuery;
 
     /**
-     * @param SpyCountryQuery $countryQuery
+     * @param \Orm\Zed\Country\Persistence\SpyCountryQuery $countryQuery
      */
     public function __construct(SpyCountryQuery $countryQuery)
     {
@@ -29,9 +28,9 @@ class CountryTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -48,9 +47,9 @@ class CountryTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
     protected function prepareData(TableConfiguration $config)
     {

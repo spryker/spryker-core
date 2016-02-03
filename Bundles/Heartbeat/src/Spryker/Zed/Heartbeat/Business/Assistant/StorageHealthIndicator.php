@@ -18,12 +18,12 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     const KEY_HEARTBEAT = 'heartbeat';
 
     /**
-     * @var Client
+     * @var \Predis\Client
      */
     protected $client;
 
     /**
-     * @param Client $client
+     * @param \Predis\Client $client
      */
     public function __construct(Client $client)
     {

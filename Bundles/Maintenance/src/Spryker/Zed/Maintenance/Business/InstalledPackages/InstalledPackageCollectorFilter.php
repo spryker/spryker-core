@@ -13,12 +13,12 @@ class InstalledPackageCollectorFilter implements InstalledPackageCollectorInterf
 {
 
     /**
-     * @var InstalledPackageCollectorInterface
+     * @var \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface
      */
     private $installedPackageCollector;
 
     /**
-     * @param InstalledPackageCollectorInterface $installedPackageCollector
+     * @param \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface $installedPackageCollector
      */
     public function __construct(InstalledPackageCollectorInterface $installedPackageCollector)
     {
@@ -26,7 +26,7 @@ class InstalledPackageCollectorFilter implements InstalledPackageCollectorInterf
     }
 
     /**
-     * @return InstalledPackagesTransfer
+     * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     public function getInstalledPackages()
     {
@@ -45,7 +45,7 @@ class InstalledPackageCollectorFilter implements InstalledPackageCollectorInterf
     }
 
     /**
-     * @param InstalledPackageTransfer $package
+     * @param \Generated\Shared\Transfer\InstalledPackageTransfer $package
      *
      * @return string
      */

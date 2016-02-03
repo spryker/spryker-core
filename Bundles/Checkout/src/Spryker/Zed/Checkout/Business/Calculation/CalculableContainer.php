@@ -8,18 +8,17 @@ namespace Spryker\Zed\Checkout\Business\Calculation;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Generated\Shared\Transfer\CalculableContainerTransfer;
 
 class CalculableContainer implements CalculableInterface
 {
 
     /**
-     * @var CartTransfer
+     * @var \Generated\Shared\Transfer\CartTransfer
      */
     private $cart;
 
     /**
-     * @param CartTransfer $cart
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
      */
     public function __construct(CartTransfer $cart)
     {
@@ -27,7 +26,7 @@ class CalculableContainer implements CalculableInterface
     }
 
     /**
-     * @return CalculableContainerTransfer
+     * @return \Generated\Shared\Transfer\CalculableContainerTransfer
      */
     public function getCalculableObject()
     {

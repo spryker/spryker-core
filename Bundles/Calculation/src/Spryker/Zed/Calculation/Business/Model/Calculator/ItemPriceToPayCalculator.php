@@ -6,9 +6,6 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
@@ -17,7 +14,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
 {
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
      * @return void
      */
@@ -32,7 +29,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
@@ -50,7 +47,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
@@ -62,7 +59,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param \ArrayObject|DiscountTransfer[] $discounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discounts
      *
      * @return int
      */
@@ -77,7 +74,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param \ArrayObject|ExpenseTransfer[] $expenses
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
      *
      * @return int
      */
@@ -92,7 +89,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param \ArrayObject|ProductOptionTransfer[] $options
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $options
      *
      * @return int
      */
@@ -107,7 +104,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param \ArrayObject|ProductOptionTransfer[] $options
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $options
      *
      * @return int
      */
@@ -122,9 +119,9 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param CalculableInterface $calculableContainer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
      *
-     * @return ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getItems(CalculableInterface $calculableContainer)
     {
@@ -134,7 +131,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     /**
      * //@todo why set to gross, why not keep 0?
      *
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $priceToPay
      *
      * @return int

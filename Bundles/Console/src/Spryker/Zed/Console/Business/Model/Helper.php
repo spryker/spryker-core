@@ -2,10 +2,8 @@
 
 namespace Spryker\Zed\Console\Business\Model;
 
-use Silex\Application;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\DialogHelper;
-use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Output\OutputInterface;
 
 trait Helper
@@ -120,7 +118,7 @@ trait Helper
     }
 
     /**
-     * @param $question
+     * @param string $question
      *
      * @throws \RuntimeException
      *
@@ -142,7 +140,7 @@ trait Helper
      * If he answers nothing, it will use the default value. If he answers abort,
      * it will throw a RuntimeException.
      *
-     * @param OutputInterface $output An Output instance
+     * @param \Symfony\Component\Console\Output\OutputInterface $output An Output instance
      * @param string|array $question The question to ask
      * @param bool $default The default answer if the user enters nothing
      *
@@ -170,7 +168,7 @@ trait Helper
 
     /**
      * @param string $question
-     * @param null $default
+     * @param string|null $default
      *
      * @return mixed
      */
@@ -185,7 +183,7 @@ trait Helper
     /**
      * @param string $question
      * @param array $options
-     * @param $default
+     * @param string $default
      *
      * @return mixed
      */
@@ -216,12 +214,12 @@ trait Helper
     }
 
     /**
-     * @return Application
+     * @return \Silex\Application
      */
     abstract protected function getApplication();
 
     /**
-     * @return HelperSet
+     * @return \Symfony\Component\Console\Helper\HelperSet
      */
     abstract protected function getHelperSet();
 

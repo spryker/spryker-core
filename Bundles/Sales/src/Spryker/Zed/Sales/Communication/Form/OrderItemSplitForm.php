@@ -21,12 +21,12 @@ class OrderItemSplitForm extends AbstractForm
     const VALIDATION_MESSAGE_QUANTITY = 'Please provide quantity.';
 
     /**
-     * @var SpySalesOrderItem
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected $orderItem;
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      */
     public function __construct(SpySalesOrderItem $orderItem = null)
     {
@@ -34,7 +34,7 @@ class OrderItemSplitForm extends AbstractForm
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      *
      * @return void
      */
@@ -60,7 +60,7 @@ class OrderItemSplitForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

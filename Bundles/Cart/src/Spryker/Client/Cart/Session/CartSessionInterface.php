@@ -12,12 +12,12 @@ interface CartSessionInterface
 {
 
     /**
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function getCart();
 
     /**
-     * @param CartTransfer $cartTransfer
+     * @param \Generated\Shared\Transfer\CartTransfer $cartTransfer
      *
      * @return self
      */

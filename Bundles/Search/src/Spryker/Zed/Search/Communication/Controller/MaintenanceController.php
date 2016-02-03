@@ -7,15 +7,13 @@
 namespace Spryker\Zed\Search\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Search\Business\SearchFacade;
-use Spryker\Zed\Search\Communication\SearchCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method SearchFacade getFacade()
- * @method SearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Search\Business\SearchFacade getFacade()
+ * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
 class MaintenanceController extends AbstractController
 {
@@ -35,7 +33,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function dropTimestampsAction()
     {
@@ -55,7 +53,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function listAjaxAction()
     {
@@ -67,7 +65,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAllAction()
     {
@@ -79,7 +77,7 @@ class MaintenanceController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */

@@ -19,19 +19,19 @@ class RefundTable extends AbstractTable
     const PARAM_ID_REFUND = 'id-refund';
 
     /**
-     * @var RefundFacade
+     * @var \Spryker\Zed\Refund\Business\RefundFacade
      */
     protected $refundFacade;
 
     /**
-     * @var DateFormatter
+     * @var \Spryker\Shared\Library\DateFormatter
      */
     protected $dateFormatter;
 
     /**
-     * @param SpyRefundQuery $refundQuery
-     * @param RefundFacade $refundFacade
-     * @param DateFormatter $dateFormatter
+     * @param \Orm\Zed\Refund\Persistence\SpyRefundQuery $refundQuery
+     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
+     * @param \Spryker\Shared\Library\DateFormatter $dateFormatter
      */
     public function __construct(SpyRefundQuery $refundQuery, RefundFacade $refundFacade, DateFormatter $dateFormatter)
     {
@@ -41,9 +41,9 @@ class RefundTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -70,7 +70,7 @@ class RefundTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

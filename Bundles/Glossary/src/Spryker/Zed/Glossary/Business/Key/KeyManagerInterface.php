@@ -5,20 +5,15 @@
 
 namespace Spryker\Zed\Glossary\Business\Key;
 
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Zed\Glossary\Business\Exception\KeyExistsException;
-use Spryker\Zed\Glossary\Business\Exception\MissingKeyException;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
-
 interface KeyManagerInterface
 {
 
     /**
      * @param string $keyName
      *
-     * @throws KeyExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -34,9 +29,9 @@ interface KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @throws MissingKeyException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      *
-     * @return SpyGlossaryKey
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
      */
     public function getKey($keyName);
 
@@ -44,7 +39,7 @@ interface KeyManagerInterface
      * @param string $currentKeyName
      * @param string $newKeyName
      *
-     * @throws MissingKeyException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      *
      * @return bool
      */
@@ -60,7 +55,7 @@ interface KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @throws MissingKeyException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      *
      * @return int
      */

@@ -17,9 +17,9 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_COLLECTOR = 'collector facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -29,9 +29,9 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
@@ -42,7 +42,7 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */
@@ -54,7 +54,7 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */

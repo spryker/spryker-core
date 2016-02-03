@@ -6,16 +6,15 @@
 
 namespace Spryker\Shared\Log;
 
-use Psr\Log\LoggerInterface;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
 trait LoggerTrait
 {
 
     /**
-     * @param LoggerConfigInterface $loggerConfig
+     * @param \Spryker\Shared\Log\Config\LoggerConfigInterface $loggerConfig
      *
-     * @return LoggerInterface|null
+     * @return \Psr\Log\LoggerInterface|null
      */
     protected function getLogger(LoggerConfigInterface $loggerConfig = null)
     {

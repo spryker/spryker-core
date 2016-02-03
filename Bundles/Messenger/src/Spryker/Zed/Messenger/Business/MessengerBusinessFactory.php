@@ -7,22 +7,18 @@ namespace Spryker\Zed\Messenger\Business;
 
 use Spryker\Shared\Messenger\MessengerConstants;
 use Spryker\Zed\Messenger\Business\Model\InMemoryMessageTray;
-use Spryker\Zed\Messenger\Business\Model\MessageTrayInterface;
 use Spryker\Zed\Messenger\Business\Model\SessionMessageTray;
-use Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface;
 use Spryker\Zed\Messenger\MessengerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Messenger\MessengerConfig;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * @method MessengerConfig getConfig()
+ * @method \Spryker\Zed\Messenger\MessengerConfig getConfig()
  */
 class MessengerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return MessageTrayInterface
+     * @return \Spryker\Zed\Messenger\Business\Model\MessageTrayInterface
      */
     public function createMessageTray()
     {
@@ -35,7 +31,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return InMemoryMessageTray
+     * @return \Spryker\Zed\Messenger\Business\Model\InMemoryMessageTray
      */
     public function createInMemoryMessageTray()
     {
@@ -43,7 +39,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SessionMessageTray
+     * @return \Spryker\Zed\Messenger\Business\Model\SessionMessageTray
      */
     public function createSessionMessageTray()
     {
@@ -51,7 +47,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SessionInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     public function getSession()
     {
@@ -59,7 +55,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MessengerToGlossaryInterface
+     * @return \Spryker\Zed\Messenger\Dependency\Facade\MessengerToGlossaryInterface
      */
     public function getGlossaryFacade()
     {

@@ -16,9 +16,9 @@ class TransferGenerator implements TransferGeneratorInterface
 {
 
     /**
-     * @param SpyCategory $categoryEntity
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      *
-     * @return CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function convertCategory(SpyCategory $categoryEntity)
     {
@@ -27,9 +27,9 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyCategory[]|ObjectCollection $categoryEntityList
+     * @param \Orm\Zed\Category\Persistence\SpyCategory[]|\Propel\Runtime\Collection\ObjectCollection $categoryEntityList
      *
-     * @return CategoryTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryTransfer[]
      */
     public function convertCategoryCollection(ObjectCollection $categoryEntityList)
     {
@@ -42,9 +42,9 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyCategoryNode $nodeEntity
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $nodeEntity
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     public function convertCategoryNode(SpyCategoryNode $nodeEntity)
     {
@@ -53,9 +53,9 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyCategoryNode[]|ObjectCollection $categoryNodeEntityList
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection $categoryNodeEntityList
      *
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function convertCategoryNodeCollection(ObjectCollection $categoryNodeEntityList)
     {

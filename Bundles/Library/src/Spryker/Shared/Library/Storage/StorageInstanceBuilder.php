@@ -8,9 +8,7 @@ namespace Spryker\Shared\Library\Storage;
 
 use Elastica\Client;
 use Spryker\Shared\Config;
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface as KeyValueReadInterface;
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface as KeyValueReadWriteInterface;
-use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Library\LibraryConstants;
 
 /**
  * Class StorageInstanceBuilder
@@ -26,7 +24,7 @@ class StorageInstanceBuilder
     const KV_ADAPTER_REDIS = 'redis';
 
     /**
-     * @var AdapterInterface[]
+     * @var \Spryker\Shared\Library\Storage\AdapterInterface[]
      */
     private static $storageInstances = [];
 
@@ -38,7 +36,7 @@ class StorageInstanceBuilder
     /**
      * @throws \ErrorException
      *
-     * @return Client
+     * @return \Elastica\Client
      */
     public static function getElasticsearchInstance()
     {
@@ -46,9 +44,9 @@ class StorageInstanceBuilder
 
         if (array_key_exists($adapterName, self::$searchInstances) === false) {
             self::$searchInstances[$adapterName] = new Client([
-                'protocol' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT),
-                'port' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__PORT),
-                'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
+                'protocol' => Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT),
+                'port' => Config::get(LibraryConstants::ELASTICA_PARAMETER__PORT),
+                'host' => Config::get(LibraryConstants::ELASTICA_PARAMETER__HOST),
             ]);
         }
 
@@ -60,7 +58,7 @@ class StorageInstanceBuilder
      *
      * @throws \Exception
      *
-     * @return KeyValueReadWriteInterface
+     * @return \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface
      */
     public static function getStorageReadWriteInstance($debug = false)
     {
@@ -72,7 +70,7 @@ class StorageInstanceBuilder
      *
      * @throws \Exception
      *
-     * @return KeyValueReadInterface
+     * @return \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface
      */
     public static function getStorageReadInstance($debug = false)
     {
@@ -85,11 +83,11 @@ class StorageInstanceBuilder
      *
      * @throws \Exception
      *
-     * @return AdapterInterface
+     * @return \Spryker\Shared\Library\Storage\AdapterInterface
      */
     private static function getStorageInstance($type, $debug = false)
     {
-        $kvAdapter = Config::get(ApplicationConstants::STORAGE_KV_SOURCE);
+        $kvAdapter = Config::get(LibraryConstants::STORAGE_KV_SOURCE);
 
         $storageAdapter = self::createStorageAdapterName($type, $kvAdapter);
 
@@ -115,15 +113,15 @@ class StorageInstanceBuilder
         switch ($kvAdapter) {
             case self::KV_ADAPTER_REDIS:
                 return [
-                    'protocol' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
-                    'port' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT),
-                    'host' => Config::get(ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST),
+                    'protocol' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL),
+                    'port' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_PORT),
+                    'host' => Config::get(LibraryConstants::YVES_STORAGE_SESSION_REDIS_HOST),
                 ];
             case self::SEARCH_ELASTICA_ADAPTER:
                 return [
-                    'protocol' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT),
-                    'port' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__PORT),
-                    'host' => Config::get(ApplicationConstants::ELASTICA_PARAMETER__HOST),
+                    'protocol' => Config::get(LibraryConstants::ELASTICA_PARAMETER__TRANSPORT),
+                    'port' => Config::get(LibraryConstants::ELASTICA_PARAMETER__PORT),
+                    'host' => Config::get(LibraryConstants::ELASTICA_PARAMETER__HOST),
                 ];
         }
         throw new \ErrorException('Missing implementation for adapter ' . $kvAdapter);

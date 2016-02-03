@@ -8,17 +8,16 @@ namespace Spryker\Zed\User\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Orm\Zed\User\Persistence\SpyUserQuery;
-use Spryker\Zed\User\UserConfig;
 
 /**
- * @method UserConfig getConfig()
- * @method UserQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\User\UserConfig getConfig()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
  */
 class UserPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return SpyUserQuery
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function createUserQuery()
     {

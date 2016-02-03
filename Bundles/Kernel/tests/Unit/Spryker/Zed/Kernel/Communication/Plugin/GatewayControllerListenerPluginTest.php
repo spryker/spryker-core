@@ -154,7 +154,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Repeater
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater
      */
     private function createRepeaterMock()
     {
@@ -164,7 +164,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
      * @return void
      */
@@ -191,7 +191,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $oldTransferServer
+     * @param \Spryker\Shared\Transfer\TransferInterface $oldTransferServer
      *
      * @return void
      */
@@ -231,7 +231,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|TransferInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Transfer\TransferInterface
      */
     private function getTransferMock()
     {

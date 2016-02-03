@@ -9,26 +9,23 @@ namespace Spryker\Zed\ProductCategory\Communication\Controller;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
-use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * @method ProductCategoryFacade getFacade()
- * @method ProductCategoryCommunicationFactory getFactory()
- * @method ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
+ * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
  */
 class AddController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -40,7 +37,7 @@ class AddController extends AbstractController
 
         if ($form->isValid()) {
             $localeTransfer = $this->getFactory()
-                ->createCurrentLocale();
+                ->getCurrentLocale();
 
             $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
             $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
@@ -60,15 +57,15 @@ class AddController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function productCategoryTableAction(Request $request)
     {
         $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $productCategoryTable = $this->getFactory()
             ->createProductCategoryTable($locale, $idCategory);
@@ -79,15 +76,15 @@ class AddController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function productTableAction(Request $request)
     {
         $idCategory = $request->get(ProductCategoryConstants::PARAM_ID_CATEGORY);
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $productTable = $this->getFactory()
             ->createProductTable($locale, $idCategory);
@@ -100,7 +97,7 @@ class AddController extends AbstractController
     /**
      * @param array $data
      *
-     * @return CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     protected function createCategoryTransferFromData(array $data)
     {
@@ -111,7 +108,7 @@ class AddController extends AbstractController
     /**
      * @param array $data
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     protected function createCategoryNodeTransferFromData(array $data)
     {

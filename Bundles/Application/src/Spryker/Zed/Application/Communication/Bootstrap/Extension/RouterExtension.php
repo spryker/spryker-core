@@ -10,15 +10,14 @@ use Spryker\Shared\Application\Communication\Bootstrap\Extension\RouterExtension
 use Spryker\Shared\Application\Communication\Application;
 use Spryker\Shared\Application\Business\Routing\SilexRouter;
 use Spryker\Zed\Application\Business\Model\Router\MvcRouter;
-use Symfony\Component\Routing\RouterInterface;
 
 class RouterExtension implements RouterExtensionInterface
 {
 
     /**
-     * @param Application $app
+     * @param \Spryker\Shared\Application\Communication\Application $app
      *
-     * @return RouterInterface[]
+     * @return \Symfony\Component\Routing\RouterInterface[]
      */
     public function getRouter(Application $app)
     {

@@ -5,21 +5,20 @@
 
 namespace Spryker\Zed\Category\Dependency\Facade;
 
-use Generated\Shared\Transfer\TouchTransfer;
 use Spryker\Zed\Touch\Business\TouchFacade;
 
 class CategoryToTouchBridge implements CategoryToTouchInterface
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 
     /**
      * CategoryToTouchBridge constructor.
      *
-     * @param TouchFacade $touchFacade
+     * @param \Spryker\Zed\Touch\Business\TouchFacade $touchFacade
      */
     public function __construct($touchFacade)
     {
@@ -73,7 +72,7 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
     /**
      * @param string $itemType
      *
-     * @return TouchTransfer[]
+     * @return \Generated\Shared\Transfer\TouchTransfer[]
      */
     public function getItemsByType($itemType)
     {

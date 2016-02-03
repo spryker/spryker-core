@@ -7,12 +7,11 @@
 namespace Spryker\Zed\Maintenance\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Maintenance\Business\MaintenanceFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
- * @method MaintenanceFacade getFacade()
+ * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()
  */
 class DependencyController extends AbstractController
 {
@@ -20,11 +19,9 @@ class DependencyController extends AbstractController
     const QUERY_BUNDLE = 'bundle';
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $bundles = $this->getFacade()->getAllBundles();
 
@@ -34,7 +31,7 @@ class DependencyController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -51,7 +48,7 @@ class DependencyController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -68,9 +65,9 @@ class DependencyController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return StreamedResponse
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function graphAction(Request $request)
     {
@@ -82,6 +79,53 @@ class DependencyController extends AbstractController
         };
 
         return $this->streamedResponse($callback);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function dependencyTreeGraphAction(Request $request)
+    {
+        if (!$request->query->get('bundle', false)) {
+            $this->addErrorMessage('You must specify a bundle for which the graph should be build');
+
+            return $this->redirectResponse('/maintenance/dependency');
+        }
+
+        $callback = function () use ($request) {
+            $bundleToView = $request->query->get('bundle', false);
+            echo $this->getFacade()->drawDetailedDependencyTreeGraph($bundleToView);
+        };
+
+        return $this->streamedResponse($callback);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function simpleAction(Request $request)
+    {
+        $callback = function () use ($request) {
+            $bundleToView = $request->query->get('bundle', false);
+            echo $this->getFacade()->drawSimpleDependencyTreeGraph($bundleToView);
+        };
+
+        return $this->streamedResponse($callback);
+    }
+
+    /**
+     * @return array
+     */
+    public function adjacencyMatrixAction()
+    {
+        $matrixData = $this->getFacade()->getAdjacencyMatrixData();
+        $engineBundleList = $this->getFacade()->getEngineBundleList();
+
+        return $this->viewResponse(['matrixData' => $matrixData, 'engineBundles' => $engineBundleList]);
     }
 
 }

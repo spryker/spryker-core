@@ -8,19 +8,18 @@ namespace Spryker\Zed\Wishlist\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method WishlistBusinessFactory getFactory()
+ * @method \Spryker\Zed\Wishlist\Business\WishlistBusinessFactory getFactory()
  */
 class WishlistFacade extends AbstractFacade
 {
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function addItem(WishlistChangeTransfer $wishlistChange)
     {
@@ -28,9 +27,9 @@ class WishlistFacade extends AbstractFacade
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeItem(WishlistChangeTransfer $wishlistChange)
     {
@@ -38,9 +37,9 @@ class WishlistFacade extends AbstractFacade
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function decreaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
@@ -48,9 +47,9 @@ class WishlistFacade extends AbstractFacade
     }
 
     /**
-     * @param WishlistChangeTransfer $wishlistChange
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function increaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
@@ -58,9 +57,9 @@ class WishlistFacade extends AbstractFacade
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getCustomerWishlist(CustomerTransfer $customerTransfer)
     {

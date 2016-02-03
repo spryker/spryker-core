@@ -12,7 +12,7 @@ interface CustomerToSequenceNumberInterface
 {
 
     /**
-     * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
+     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
      *
      * @return string
      */

@@ -6,15 +6,13 @@
 
 namespace Spryker\Zed\Touch\Persistence;
 
-use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-
 interface TouchQueryContainerInterface
 {
 
     /**
      * @param string $itemType
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryTouchListByItemType($itemType);
 
@@ -22,7 +20,7 @@ interface TouchQueryContainerInterface
      * @param string $itemType
      * @param string $itemId
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryTouchEntry($itemType, $itemId);
 
@@ -31,7 +29,7 @@ interface TouchQueryContainerInterface
      * @param string $itemId
      * @param string $itemEvent
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryUpdateTouchEntry($itemType, $itemId, $itemEvent);
 
@@ -40,23 +38,23 @@ interface TouchQueryContainerInterface
      * @param string $itemEvent
      * @param array $itemIds
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryTouchEntries($itemType, $itemEvent, array $itemIds);
 
     /**
      * @param string $itemType
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryTouchDeleteStorageAndSearch($itemType);
 
     /**
      * @param string $itemType
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryTouchDeleteOnlyByItemType($itemType);
 

@@ -7,18 +7,17 @@
 namespace Spryker\Zed\Wishlist\Dependency\Facade;
 
 use Spryker\Zed\Product\Business\ProductFacade;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class WishlistToProductBridge implements WishlistToProductInterface
 {
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $productFacade;
 
     /**
-     * @param ProductFacade $productFacade
+     * @param \Spryker\Zed\Product\Business\ProductFacade $productFacade
      */
     public function __construct($productFacade)
     {
@@ -28,7 +27,7 @@ class WishlistToProductBridge implements WishlistToProductInterface
     /**
      * @param string $concreteSku
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku)
     {

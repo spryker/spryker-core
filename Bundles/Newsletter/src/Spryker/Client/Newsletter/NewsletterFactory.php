@@ -8,13 +8,12 @@ namespace Spryker\Client\Newsletter;
 
 use Spryker\Client\Newsletter\Zed\NewsletterStub;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Newsletter\Zed\NewsletterStubInterface;
 
 class NewsletterFactory extends AbstractFactory
 {
 
     /**
-     * @return NewsletterStubInterface
+     * @return \Spryker\Client\Newsletter\Zed\NewsletterStubInterface
      */
     public function createZedNewsletterStub()
     {

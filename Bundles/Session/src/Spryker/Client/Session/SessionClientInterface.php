@@ -12,9 +12,9 @@ interface SessionClientInterface extends SessionInterface
 {
 
     /**
-     * @param SessionInterface $container
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $container
      *
-     * @return SessionClientInterface
+     * @return \Spryker\Client\Session\SessionClientInterface
      */
     public function setContainer(SessionInterface $container);
 

@@ -15,12 +15,12 @@ class RedisReader implements ReaderInterface
     const READER_NAME = 'redis-reader';
 
     /**
-     * @var ReadInterface
+     * @var \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface
      */
     protected $redis;
 
     /**
-     * @param ReadInterface $redis
+     * @param \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadInterface $redis
      */
     public function __construct(ReadInterface $redis)
     {

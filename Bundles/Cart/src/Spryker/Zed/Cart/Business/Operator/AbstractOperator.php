@@ -21,35 +21,35 @@ abstract class AbstractOperator implements OperatorInterface
 {
 
     /**
-     * @var StorageProviderInterface
+     * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
     protected $storageProvider;
 
     /**
-     * @var LoggerInterface
+     * @var \Psr\Log\LoggerInterface
      */
     protected $messenger;
 
     /**
-     * @var CartToCalculationInterface
+     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
      */
     protected $cartCalculator;
 
     /**
-     * @var ItemExpanderPluginInterface[]
+     * @var \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
      */
     protected $itemExpanderPlugins = [];
 
     /**
-     * @var CartToItemGrouperInterface
+     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface
      */
     protected $itemGrouperFacade;
 
     /**
-     * @param StorageProviderInterface $storageProvider
-     * @param CartToCalculationInterface $cartCalculator
-     * @param CartToItemGrouperInterface $itemGrouperFacade
-     * @param LoggerInterface $messenger
+     * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $storageProvider
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $cartCalculator
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface $itemGrouperFacade
+     * @param \Psr\Log\LoggerInterface $messenger
      */
     public function __construct(
         StorageProviderInterface $storageProvider,
@@ -65,9 +65,9 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function executeOperation(ChangeTransfer $cartChange)
     {
@@ -84,9 +84,9 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param CartTransfer $cart
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     private function recalculate(CartTransfer $cart)
     {
@@ -97,10 +97,10 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param CartTransfer $cart
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     abstract protected function changeCart(CartTransfer $cart, ChangeTransfer $change);
 
@@ -110,9 +110,9 @@ abstract class AbstractOperator implements OperatorInterface
     abstract protected function createSuccessMessage();
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     protected function expandChangedItems(ChangeTransfer $change)
     {
@@ -124,7 +124,7 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param ItemExpanderPluginInterface $itemExpander
+     * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface $itemExpander
      *
      * @return void
      */
@@ -134,9 +134,9 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param CartTransfer $cart
+     * @param \Generated\Shared\Transfer\CartTransfer $cart
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     protected function getGroupedCartItems(CartTransfer $cart)
     {

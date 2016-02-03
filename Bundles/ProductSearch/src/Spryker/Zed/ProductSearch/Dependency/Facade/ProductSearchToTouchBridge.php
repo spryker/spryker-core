@@ -11,14 +11,14 @@ class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 
     /**
      * CmsToTouchBridge constructor.
      *
-     * @param TouchFacade $touchFacade
+     * @param \Spryker\Zed\Touch\Business\TouchFacade $touchFacade
      */
     public function __construct($touchFacade)
     {

@@ -6,12 +6,11 @@
 
 namespace Spryker\Zed\Touch\Business;
 
-use Generated\Shared\Transfer\TouchTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 
 /**
- * @method TouchBusinessFactory getFactory()
+ * @method \Spryker\Zed\Touch\Business\TouchBusinessFactory getFactory()
  */
 class TouchFacade extends AbstractFacade
 {
@@ -111,7 +110,7 @@ class TouchFacade extends AbstractFacade
     /**
      * @param string $itemType
      *
-     * @return TouchTransfer[]
+     * @return \Generated\Shared\Transfer\TouchTransfer[]
      */
     public function getItemsByType($itemType)
     {

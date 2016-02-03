@@ -15,9 +15,9 @@ class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDepende
     const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {

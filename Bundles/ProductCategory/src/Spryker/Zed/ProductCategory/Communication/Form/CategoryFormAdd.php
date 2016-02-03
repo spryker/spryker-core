@@ -11,7 +11,6 @@ use Spryker\Zed\Gui\Communication\Form\AbstractForm;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
@@ -29,17 +28,17 @@ class CategoryFormAdd extends AbstractForm
     const FK_NODE_CATEGORY = 'fk_category';
 
     /**
-     * @var CategoryQueryContainerInterface
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
 
     /**
-     * @var ProductCategoryQueryContainerInterface
+     * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
      */
     protected $productCategoryQueryContainer;
 
     /**
-     * @var LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
 
@@ -54,9 +53,9 @@ class CategoryFormAdd extends AbstractForm
     protected $idParentNode;
 
     /**
-     * @param CategoryQueryContainerInterface $categoryQueryContainer
-     * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
-     * @param LocaleTransfer $locale
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idCategory
      * @param int $idParentNode
      */
@@ -75,7 +74,7 @@ class CategoryFormAdd extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void
@@ -169,7 +168,7 @@ class CategoryFormAdd extends AbstractForm
     }
 
     /**
-     * @param SpyCategoryNode $node
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $node
      *
      * @return string
      */
@@ -230,7 +229,7 @@ class CategoryFormAdd extends AbstractForm
     {
         $fields = $this->getDefaultFormFields();
 
-        /** @var SpyCategory $categoryEntity */
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
         $categoryEntity = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()

@@ -7,18 +7,17 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Shared\Checkout\CheckoutConstants;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 use Spryker\Zed\Checkout\Business\Calculation\CalculableContainer;
 
 /**
- * @method CalculationCheckoutConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\CalculationCheckoutConnector\Business\CalculationCheckoutConnectorBusinessFactory getFactory()
  */
 class CalculationCheckoutConnectorFacade extends AbstractFacade
 {
 
     /**
-     * @param CheckoutRequestTransfer $request
-     * @param CheckoutResponseTransfer $response
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $response
      *
      * @return void
      */
@@ -42,9 +41,9 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade
     }
 
     /**
-     * @param CalculableContainer $calculableContainer
+     * @param \Spryker\Zed\Checkout\Business\Calculation\CalculableContainer $calculableContainer
      *
-     * @return CalculableInterface
+     * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
      */
     public function recalculate(CalculableContainer $calculableContainer)
     {

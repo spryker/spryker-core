@@ -27,7 +27,7 @@ interface ReadWriteInterface
     public function createSelect();
 
     /**
-     * @param QueryInterface $query
+     * @param \Solarium\Core\Query\QueryInterface $query
      *
      * @return \Solarium\QueryType\Select\Result\Result
      */
@@ -44,14 +44,14 @@ interface ReadWriteInterface
     public function createUpdate();
 
     /**
-     * @param QueryInterface $query
+     * @param \Solarium\Core\Query\QueryInterface $query
      *
      * @return \Solarium\Core\Query\Result\ResultInterface
      */
     public function execute(QueryInterface $query);
 
     /**
-     * @param QueryInterface $query
+     * @param \Solarium\Core\Query\QueryInterface $query
      *
      * @return \Solarium\QueryType\Update\Result
      */

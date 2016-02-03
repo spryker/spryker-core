@@ -8,7 +8,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 
 class VoucherCodesWriter extends AbstractWriter
 {
@@ -18,37 +17,37 @@ class VoucherCodesWriter extends AbstractWriter
     const ID_DISCOUNT_DECISION_RULE = 'id_discount_decision_rule';
 
     /**
-     * @var DiscountWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountWriter
      */
     protected $discountWriter;
 
     /**
-     * @var DiscountVoucherPoolWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter
      */
     protected $discountVoucherPoolWriter;
 
     /**
-     * @var DiscountVoucherPoolCategoryWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter
      */
     protected $discountVoucherPoolCategoryWriter;
 
     /**
-     * @var DiscountDecisionRuleWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter
      */
     protected $discountDecisionRuleWriter;
 
     /**
-     * @var DiscountCollectorWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter
      */
     private $discountCollectorWriter;
 
     /**
-     * @param DiscountQueryContainerInterface $queryContainer
-     * @param DiscountWriter $discountWriter
-     * @param DiscountVoucherPoolWriter $discountVoucherPoolWriter
-     * @param DiscountVoucherPoolCategoryWriter $discountVoucherPoolCategoryWriter
-     * @param DiscountDecisionRuleWriter $discountDecisionRuleWriter
-     * @param DiscountCollectorWriter $discountCollectorWriter
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountWriter $discountWriter
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter $discountVoucherPoolWriter
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWriter $discountVoucherPoolCategoryWriter
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter $discountDecisionRuleWriter
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter $discountCollectorWriter
      */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,
@@ -68,9 +67,9 @@ class VoucherCodesWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherCodesTransfer $voucherCodesTransfer
+     * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      *
-     * @return VoucherPoolTransfer
+     * @return \Generated\Shared\Transfer\VoucherPoolTransfer
      */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
     {
@@ -87,8 +86,8 @@ class VoucherCodesWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherCodesTransfer $voucherCodesTransfer
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return void
      */
@@ -107,7 +106,7 @@ class VoucherCodesWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherCodesTransfer $voucherCodesTransfer
+     * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      *
      * @return void
      */
@@ -137,8 +136,8 @@ class VoucherCodesWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherCodesTransfer $voucherCodesTransfer
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return null
      */
@@ -160,7 +159,7 @@ class VoucherCodesWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherCodesTransfer $voucherCodesTransfer
+     * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      *
      * @return void
      */
@@ -182,10 +181,10 @@ class VoucherCodesWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherCodesTransfer $voucherCodesTransfer
+     * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      * @param $voucherPoolCategory
      *
-     * @return SpyDiscountVoucherPool
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
     protected function saveDiscountVoucherPool(VoucherCodesTransfer $voucherCodesTransfer, $voucherPoolCategory)
     {
@@ -197,10 +196,10 @@ class VoucherCodesWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherCodesTransfer $voucherCodesTransfer
+     * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      * @param $voucherPool
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function saveDiscount(VoucherCodesTransfer $voucherCodesTransfer, $voucherPool)
     {
@@ -215,9 +214,9 @@ class VoucherCodesWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherCodesTransfer $voucherCodesTransfer
+     * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     public function createDiscountTransfer(VoucherCodesTransfer $voucherCodesTransfer)
     {

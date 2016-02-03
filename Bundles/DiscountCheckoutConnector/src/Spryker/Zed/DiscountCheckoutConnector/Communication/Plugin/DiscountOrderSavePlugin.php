@@ -10,19 +10,17 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
-use Spryker\Zed\DiscountCheckoutConnector\Business\DiscountCheckoutConnectorFacade;
-use Spryker\Zed\DiscountCheckoutConnector\Communication\DiscountCheckoutConnectorCommunicationFactory;
 
 /**
- * @method DiscountCheckoutConnectorFacade getFacade()
- * @method DiscountCheckoutConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DiscountCheckoutConnector\Business\DiscountCheckoutConnectorFacade getFacade()
+ * @method \Spryker\Zed\DiscountCheckoutConnector\Communication\DiscountCheckoutConnectorCommunicationFactory getFactory()
  */
 class DiscountOrderSavePlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */

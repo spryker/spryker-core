@@ -12,7 +12,7 @@ interface PayolutionSessionInterface
 {
 
     /**
-     * @param PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
+     * @param \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
      *
      * @return self
      */
@@ -24,7 +24,7 @@ interface PayolutionSessionInterface
     public function hasInstallmentPayments();
 
     /**
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPayments();
 

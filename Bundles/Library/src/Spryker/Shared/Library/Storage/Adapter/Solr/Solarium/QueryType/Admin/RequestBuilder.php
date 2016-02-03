@@ -18,7 +18,7 @@ class RequestBuilder extends BaseRequestBuilder
     /**
      * Build request for a system query
      *
-     * @param QueryInterface $query
+     * @param \Solarium\Core\Query\QueryInterface $query
      *
      * @return \Solarium\Core\Client\Request
      */

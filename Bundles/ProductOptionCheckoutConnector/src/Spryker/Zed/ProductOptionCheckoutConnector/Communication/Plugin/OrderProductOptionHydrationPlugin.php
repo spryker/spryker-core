@@ -10,19 +10,17 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
-use Spryker\Zed\ProductOptionCheckoutConnector\Business\ProductOptionCheckoutConnectorFacade;
-use Spryker\Zed\ProductOptionCheckoutConnector\Communication\ProductOptionCheckoutConnectorCommunicationFactory;
 
 /**
- * @method ProductOptionCheckoutConnectorFacade getFacade()
- * @method ProductOptionCheckoutConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductOptionCheckoutConnector\Business\ProductOptionCheckoutConnectorFacade getFacade()
+ * @method \Spryker\Zed\ProductOptionCheckoutConnector\Communication\ProductOptionCheckoutConnectorCommunicationFactory getFactory()
  */
 class OrderProductOptionHydrationPlugin extends AbstractPlugin implements CheckoutOrderHydrationInterface
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequest
      *
      * @return void
      */

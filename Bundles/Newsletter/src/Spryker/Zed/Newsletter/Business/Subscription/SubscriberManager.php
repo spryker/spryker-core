@@ -14,18 +14,18 @@ class SubscriberManager implements SubscriberManagerInterface
 {
 
     /**
-     * @var NewsletterQueryContainer
+     * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var SubscriberKeyGeneratorInterface
+     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface
      */
     protected $subscriberKeyGenerator;
 
     /**
-     * @param NewsletterQueryContainer $queryContainer
-     * @param SubscriberKeyGeneratorInterface $subscriberKeyGenerator
+     * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer $queryContainer
+     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface $subscriberKeyGenerator
      */
     public function __construct(NewsletterQueryContainer $queryContainer, SubscriberKeyGeneratorInterface $subscriberKeyGenerator)
     {
@@ -36,7 +36,7 @@ class SubscriberManager implements SubscriberManagerInterface
     /**
      * @param string $email
      *
-     * @return NewsletterSubscriberTransfer|null
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer|null
      */
     public function loadSubscriberByEmail($email)
     {
@@ -52,9 +52,9 @@ class SubscriberManager implements SubscriberManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriberTransfer
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriberTransfer
      *
-     * @return NewsletterSubscriberTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
     public function createSubscriberFromTransfer(NewsletterSubscriberTransfer $newsletterSubscriberTransfer)
     {
@@ -72,7 +72,7 @@ class SubscriberManager implements SubscriberManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $subscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriber
      *
      * @return void
      */
@@ -92,9 +92,9 @@ class SubscriberManager implements SubscriberManagerInterface
     }
 
     /**
-     * @param SpyNewsletterSubscriber $subscriberEntity
+     * @param \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber $subscriberEntity
      *
-     * @return NewsletterSubscriberTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
      */
     protected function convertSubscriberEntityToTransfer(SpyNewsletterSubscriber $subscriberEntity)
     {

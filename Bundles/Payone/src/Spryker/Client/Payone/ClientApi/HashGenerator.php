@@ -13,7 +13,7 @@ class HashGenerator implements HashGeneratorInterface
 {
 
     /**
-     * @var HashInterface
+     * @var \Spryker\Shared\Payone\Dependency\HashInterface
      */
     protected $hashProvider;
 
@@ -67,7 +67,7 @@ class HashGenerator implements HashGeneratorInterface
     ];
 
     /**
-     * @param HashInterface $hashProvider
+     * @param \Spryker\Shared\Payone\Dependency\HashInterface $hashProvider
      */
     public function __construct(HashInterface $hashProvider)
     {

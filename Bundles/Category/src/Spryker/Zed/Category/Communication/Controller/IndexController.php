@@ -7,19 +7,15 @@
 namespace Spryker\Zed\Category\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Category\Business\CategoryFacade;
-use Spryker\Zed\Category\Communication\CategoryCommunicationFactory;
-use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method CategoryFacade getFacade()
- * @method CategoryCommunicationFactory getFactory()
- * @method CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
+ * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
  */
 class IndexController extends AbstractController
 {
@@ -40,7 +36,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function rootNodeTableAction()
     {
@@ -53,9 +49,9 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function nodeAction(Request $request)
     {
@@ -71,9 +67,9 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function nodeByNameAction(Request $request)
     {
@@ -81,7 +77,7 @@ class IndexController extends AbstractController
 
         $idCategory = $this->getFacade()->getCategoryNodeIdentifier(
             trim($categoryName),
-            $this->getFactory()->createCurrentLocale()
+            $this->getFactory()->getCurrentLocale()
         );
 
         $children = $this->getCategoryChildrenByIdCategory($idCategory);
@@ -94,7 +90,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -102,7 +98,7 @@ class IndexController extends AbstractController
     {
         $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
 
-        /** @var CategoryAttributeTable $table */
+        /** @var \Spryker\Zed\Category\Communication\Table\CategoryAttributeTable $table */
         $table = $this->getFactory()
             ->createCategoryAttributeTable($idCategory);
 
@@ -112,7 +108,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -129,7 +125,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      */
@@ -142,7 +138,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param AbstractTable $table
+     * @param \Spryker\Zed\Gui\Communication\Table\AbstractTable $table
      *
      * @return array
      */
@@ -166,7 +162,7 @@ class IndexController extends AbstractController
         return $this->getFacade()
             ->getTreeNodeChildrenByIdCategoryAndLocale(
                 $idCategory,
-                $this->getFactory()->createCurrentLocale()
+                $this->getFactory()->getCurrentLocale()
             );
     }
 

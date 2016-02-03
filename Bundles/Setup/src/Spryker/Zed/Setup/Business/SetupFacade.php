@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Setup\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method SetupBusinessFactory getFactory()
+ * @method \Spryker\Zed\Setup\Business\SetupBusinessFactory getFactory()
  */
 class SetupFacade extends AbstractFacade
 {
@@ -51,7 +50,7 @@ class SetupFacade extends AbstractFacade
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */
@@ -62,7 +61,7 @@ class SetupFacade extends AbstractFacade
     }
 
     /**
-     * @return Command[]
+     * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()
     {

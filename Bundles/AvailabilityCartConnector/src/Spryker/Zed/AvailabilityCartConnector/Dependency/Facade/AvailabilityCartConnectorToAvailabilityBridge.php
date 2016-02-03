@@ -12,12 +12,12 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
 {
 
     /**
-     * @var AvailabilityFacade
+     * @var \Spryker\Zed\Availability\Business\AvailabilityFacade
      */
     protected $availabilityFacade;
 
     /**
-     * @param AvailabilityFacade $availabilityFacade
+     * @param \Spryker\Zed\Availability\Business\AvailabilityFacade $availabilityFacade
      */
     public function __construct($availabilityFacade)
     {

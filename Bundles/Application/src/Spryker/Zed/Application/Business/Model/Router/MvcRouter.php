@@ -21,17 +21,17 @@ class MvcRouter implements RouterInterface
 {
 
     /**
-     * @var RequestContext
+     * @var \Symfony\Component\Routing\RequestContext
      */
     private $context;
 
     /**
-     * @var Application
+     * @var \Silex\Application
      */
     private $app;
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      */
     public function __construct(Application $app)
     {
@@ -39,7 +39,7 @@ class MvcRouter implements RouterInterface
     }
 
     /**
-     * @param RequestContext $context
+     * @param \Symfony\Component\Routing\RequestContext $context
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class MvcRouter implements RouterInterface
     }
 
     /**
-     * @return RequestContext
+     * @return \Symfony\Component\Routing\RequestContext
      */
     public function getContext()
     {
@@ -59,7 +59,7 @@ class MvcRouter implements RouterInterface
     /**
      * Gets the RouteCollection instance associated with this Router.
      *
-     * @return RouteCollection A RouteCollection instance
+     * @return \Symfony\Component\Routing\RouteCollection A RouteCollection instance
      */
     public function getRouteCollection()
     {

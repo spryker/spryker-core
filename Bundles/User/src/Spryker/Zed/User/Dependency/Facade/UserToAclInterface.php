@@ -6,20 +6,18 @@
 
 namespace Spryker\Zed\User\Dependency\Facade;
 
-use Generated\Shared\Transfer\GroupsTransfer;
-
 interface UserToAclInterface
 {
 
     /**
      * @param int $idUser
      *
-     * @return GroupsTransfer
+     * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getUserGroups($idUser);
 
     /**
-     * @return GroupsTransfer
+     * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getAllGroups();
 

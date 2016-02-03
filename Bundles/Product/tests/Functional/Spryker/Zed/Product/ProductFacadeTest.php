@@ -6,11 +6,11 @@
 
 namespace Functional\Spryker\Zed\Product;
 
+use Spryker\Shared\Kernel\Store;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
@@ -43,27 +43,27 @@ class ProductFacadeTest extends Test
     const PRODUCT_CONCRETE_NAME = 'Product concrete name';
 
     /**
-     * @var ProductFacade
+     * @var \Spryker\Zed\Product\Business\ProductFacade
      */
     protected $productFacade;
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 
     /**
-     * @var UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacade
      */
     protected $urlFacade;
 
     /**
-     * @var ProductQueryContainer
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainer
      */
     protected $productQueryContainer;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 
@@ -327,7 +327,7 @@ class ProductFacadeTest extends Test
      */
     public function testGetProductConcrete()
     {
-        $localeName = \Spryker\Shared\Kernel\Store::getInstance()->getCurrentLocale();
+        $localeName = Store::getInstance()->getCurrentLocale();
         $localeTransfer = $this->localeFacade->getLocale($localeName);
 
         $taxRateEntity = new SpyTaxRate();

@@ -7,9 +7,7 @@
 namespace Spryker\Shared\Kernel;
 
 use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
-use Spryker\Shared\NewRelic\Api;
 
 class Store
 {
@@ -17,7 +15,7 @@ class Store
     const APPLICATION_ZED = 'ZED';
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected static $instance;
 
@@ -83,7 +81,7 @@ class Store
     protected static $defaultStore;
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     public static function getInstance()
     {
@@ -118,16 +116,6 @@ class Store
      */
     protected function publish()
     {
-        header('X-Store: ' . $this->getStoreName());
-        header('X-Env: ' . APPLICATION_ENV);
-
-        $newRelicApi = new Api();
-        $newRelicApi->addCustomParameter('store', $this->getStoreName());
-
-        if ($this->currentLocale !== null) {
-            header('X-Locale: ' . $this->getCurrentLocale());
-            $newRelicApi->addCustomParameter('locale', $this->getCurrentLocale());
-        }
     }
 
     /**
@@ -290,7 +278,7 @@ class Store
      */
     public function getTimezone()
     {
-        return Config::get(ApplicationConstants::PROJECT_TIMEZONE);
+        return Config::get(KernelConstants::PROJECT_TIMEZONE);
     }
 
     /**
@@ -332,7 +320,7 @@ class Store
      */
     public function getStorePrefix()
     {
-        $prefix = Config::get(ApplicationConstants::STORE_PREFIX, '');
+        $prefix = Config::get(KernelConstants::STORE_PREFIX, '');
         $prefix .= $this->getStoreName();
 
         return $prefix;

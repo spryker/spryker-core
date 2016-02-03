@@ -13,9 +13,7 @@ use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
-use Spryker\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 class InvoiceTest extends Test
 {
@@ -37,7 +35,7 @@ class InvoiceTest extends Test
     }
 
     /**
-     * @return CheckoutRequestTransfer
+     * @return \Generated\Shared\Transfer\CheckoutRequestTransfer
      */
     private function getCheckoutRequestTransfer()
     {
@@ -154,7 +152,7 @@ class InvoiceTest extends Test
     }
 
     /**
-     * @return PayolutionConfig
+     * @return \Spryker\Zed\Payolution\PayolutionConfig
      */
     private function getBundleConfigMock()
     {
@@ -168,7 +166,7 @@ class InvoiceTest extends Test
     }
 
     /**
-     * @return SpyPaymentPayolution
+     * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     private function getPaymentEntityMock()
     {
@@ -177,7 +175,7 @@ class InvoiceTest extends Test
             []
         );
 
-        /** @var SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock */
+        /** @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock */
         $paymentEntityMock = $this->getMock(
             'Orm\Zed\Payolution\Persistence\SpyPaymentPayolution',
             [

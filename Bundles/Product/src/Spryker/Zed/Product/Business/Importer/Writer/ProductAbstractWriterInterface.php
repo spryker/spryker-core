@@ -12,7 +12,7 @@ interface ProductAbstractWriterInterface
 {
 
     /**
-     * @param ProductAbstractTransfer $product
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $product
      *
      * @return bool
      */

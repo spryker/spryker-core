@@ -4,9 +4,6 @@
  */
 namespace Spryker\Zed\Wishlist\Persistence;
 
-use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
-use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
-
 interface WishlistQueryContainerInterface
 {
 
@@ -14,7 +11,7 @@ interface WishlistQueryContainerInterface
      * @param int $idWishlist
      * @param int $idProduct
      *
-     * @return SpyWishlistItemQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
      */
     public function queryCustomerWishlistByProductId($idWishlist, $idProduct);
 
@@ -22,17 +19,17 @@ interface WishlistQueryContainerInterface
      * @param int $idWishlist
      * @param string $groupKey
      *
-     * @return SpyWishlistItemQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
      */
     public function queryCustomerWishlistByGroupKey($idWishlist, $groupKey);
 
     /**
-     * @return SpyWishlistItemQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
      */
     public function queryWishlistItem();
 
     /**
-     * @return SpyWishlistQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
      */
     public function queryWishlist();
 

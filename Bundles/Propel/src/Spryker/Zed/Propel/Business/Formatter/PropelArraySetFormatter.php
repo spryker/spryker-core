@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Business\Formatter;
 use Propel\Runtime\ActiveQuery\BaseModelCriteria;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
 use Propel\Runtime\Exception\PropelException;
-use Propel\Runtime\Formatter\AbstractFormatter;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 
 class PropelArraySetFormatter extends SimpleArrayFormatter
@@ -19,10 +18,10 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
      * Define the hydration schema based on a query object.
      * Fills the Formatter's properties using a Criteria as source
      *
-     * @param BaseModelCriteria $criteria
-     * @param DataFetcherInterface $dataFetcher
+     * @param \Propel\Runtime\ActiveQuery\BaseModelCriteria $criteria
+     * @param \Propel\Runtime\DataFetcher\DataFetcherInterface $dataFetcher
      *
-     * @return self|AbstractFormatter The current formatter object
+     * @return self|\Propel\Runtime\Formatter\AbstractFormatter The current formatter object
      */
     public function init(BaseModelCriteria $criteria, DataFetcherInterface $dataFetcher = null)
     {
@@ -39,9 +38,9 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
     }
 
     /**
-     * @param DataFetcherInterface $dataFetcher
+     * @param \Propel\Runtime\DataFetcher\DataFetcherInterface $dataFetcher
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return array
      */

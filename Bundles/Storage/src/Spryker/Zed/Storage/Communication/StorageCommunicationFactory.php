@@ -7,20 +7,17 @@
 namespace Spryker\Zed\Storage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Zed\Collector\Business\CollectorFacade;
 use Spryker\Zed\Storage\Communication\Table\StorageTable;
 use Spryker\Zed\Storage\StorageDependencyProvider;
-use Spryker\Zed\Storage\StorageConfig;
 
 /**
- * @method StorageConfig getConfig()
+ * @method \Spryker\Zed\Storage\StorageConfig getConfig()
  */
 class StorageCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return StorageTable
+     * @return \Spryker\Zed\Storage\Communication\Table\StorageTable
      */
     public function createStorageTable()
     {
@@ -30,7 +27,7 @@ class StorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return StorageClientInterface
+     * @return \Spryker\Client\Storage\StorageClientInterface
      */
     public function getStorageClient()
     {
@@ -38,7 +35,7 @@ class StorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return StorageClientInterface
+     * @return \Spryker\Client\Storage\StorageClientInterface
      */
     public function createStorageClient()
     {
@@ -48,7 +45,7 @@ class StorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CollectorFacade
+     * @return \Spryker\Zed\Collector\Business\CollectorFacade
      */
     public function getCollectorFacade()
     {

@@ -7,18 +7,16 @@
 namespace Spryker\Zed\Console\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Console\ConsoleConfig;
 use Spryker\Zed\Console\ConsoleDependencyProvider;
-use Symfony\Component\Console\Command\Command;
 
 /**
- * @method ConsoleConfig getConfig()
+ * @method \Spryker\Zed\Console\ConsoleConfig getConfig()
  */
 class ConsoleBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Command[]
+     * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()
     {

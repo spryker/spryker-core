@@ -31,18 +31,18 @@ class VoucherPoolTable extends AbstractTable
     const SPACE_SEPARATOR = ' ';
 
     /**
-     * @var SpyDiscountVoucherPoolQuery
+     * @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
      */
     protected $poolQuery;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
 
     /**
-     * @param SpyDiscountVoucherPoolQuery $discountVoucherPool
-     * @param DiscountConfig $discountConfig
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery $discountVoucherPool
+     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
      */
     public function __construct(SpyDiscountVoucherPoolQuery $discountVoucherPool, DiscountConfig $discountConfig)
     {
@@ -51,9 +51,9 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -72,7 +72,7 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
@@ -91,7 +91,7 @@ class VoucherPoolTable extends AbstractTable
 
         $queryResults = $this->runQuery($query, $config, true);
 
-        /** @var SpyDiscountVoucherPool $discountVoucherPool */
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPool */
         foreach ($queryResults as $discountVoucherPool) {
             $categoryName = null;
             if ($discountVoucherPool->getVoucherPoolCategory() !== null) {
@@ -111,7 +111,7 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPool
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPool
      *
      * @return string
      */
@@ -126,7 +126,7 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPool
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPool
      *
      * @return string
      */
@@ -141,7 +141,7 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPool
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPool
      *
      * @return string
      */
@@ -157,7 +157,7 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPoolEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPoolEntity
      *
      * @return string|null
      */

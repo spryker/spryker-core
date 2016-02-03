@@ -8,21 +8,17 @@ namespace Spryker\Zed\Glossary\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Spryker\Zed\Glossary\Communication\Table\TranslationTable;
-use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use Spryker\Zed\Glossary\GlossaryDependencyProvider;
-use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-use Spryker\Zed\Glossary\GlossaryConfig;
-use Symfony\Component\Form\FormInterface;
 
 /**
- * @method GlossaryQueryContainerInterface getQueryContainer()
- * @method GlossaryConfig getConfig()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
  */
 class GlossaryCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return GlossaryToLocaleInterface
+     * @return \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface
      */
     protected function getLocaleFacade()
     {
@@ -53,7 +49,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getQueryContainer() instead.
      *
-     * @return GlossaryQueryContainerInterface
+     * @return \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
     public function createQueryContainer()
     {
@@ -65,7 +61,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param array $locales
      *
-     * @return TranslationTable
+     * @return \Spryker\Zed\Glossary\Communication\Table\TranslationTable
      */
     public function createTranslationTable(array $locales)
     {
@@ -82,7 +78,7 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
      * @param array $locales
      * @param string $type
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createTranslationForm(array $locales, $type)
     {

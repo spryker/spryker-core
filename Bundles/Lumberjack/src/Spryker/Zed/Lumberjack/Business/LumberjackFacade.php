@@ -12,13 +12,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @deprecated Lumberjack is deprecated use EventJournal instead.
  *
- * @method LumberjackBusinessFactory getFactory()
+ * @method \Spryker\Zed\Lumberjack\Business\LumberjackBusinessFactory getFactory()
  */
 class LumberjackFacade extends AbstractFacade
 {
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\Lumberjack\Model\EventInterface $event
      *
      * @return void
      */

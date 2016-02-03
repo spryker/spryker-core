@@ -15,9 +15,9 @@ class SalesDependencyProvider extends AbstractDependencyProvider
     const SERVICE_ZED = 'zed service';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     public function provideServiceLayerDependencies(Container $container)
     {

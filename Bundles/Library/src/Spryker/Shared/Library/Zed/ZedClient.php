@@ -6,6 +6,7 @@
 
 namespace Spryker\Shared\Library\Zed;
 
+use Spryker\Client\EventJournal\EventJournalClient;
 use Spryker\Shared\Library\Communication\Response as CommunicationResponse;
 use Guzzle\Http\Client;
 use Guzzle\Http\Message\EntityEnclosingRequest;
@@ -17,11 +18,11 @@ use Spryker\Client\EventJournal\EventJournal;
 use Spryker\Shared\EventJournal\Model\Event;
 use Spryker\Shared\Library\Communication\ObjectInterface;
 use Spryker\Shared\Config;
+use Spryker\Shared\Library\LibraryConstants;
 use Spryker\Shared\Library\System;
 use Spryker\Shared\Library\Communication\Request;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use Spryker\Shared\Application\ApplicationConstants;
 
 class ZedClient
 {
@@ -80,7 +81,7 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      * @param array $metaTransfers
      * @param null $timeoutInSeconds
      * @param bool $isBackgroundRequest
@@ -109,7 +110,7 @@ class ZedClient
     }
 
     /**
-     * @param $pathInfo
+     * @param string $pathInfo
      *
      * @return bool
      */
@@ -137,10 +138,10 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param Request $requestTransfer
+     * @param \Spryker\Shared\Library\Communication\Request $requestTransfer
      * @param int $timeoutInSeconds
      *
-     * @return EntityEnclosingRequest
+     * @return \Guzzle\Http\Message\EntityEnclosingRequest
      */
     protected function createGuzzleRequest($pathInfo, Request $requestTransfer, $timeoutInSeconds = null)
     {
@@ -165,7 +166,7 @@ class ZedClient
         $pathInfo .= $char . 'yvesRequestId=' . $requestId;
 
         $client->setUserAgent('Yves 2.0');
-        /** @var EntityEnclosingRequest $request */
+        /** @var \Guzzle\Http\Message\EntityEnclosingRequest $request */
         $request = $client->post($pathInfo);
         $request->addHeader('X-Yves-Host', 1);
 
@@ -178,12 +179,12 @@ class ZedClient
     }
 
     /**
-     * @param TransferInterface $transferObject
+     * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      * @param array $metaTransfers
      *
      * @throws \LogicException
      *
-     * @return Request
+     * @return \Spryker\Shared\Library\Communication\Request
      */
     protected function createRequestTransfer(TransferInterface $transferObject, array $metaTransfers)
     {
@@ -212,11 +213,11 @@ class ZedClient
     }
 
     /**
-     * @param EntityEnclosingRequest $request
+     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
      *
      * @throws Exception\InvalidZedResponseException
      *
-     * @return Response
+     * @return \Guzzle\Http\Message\Response
      */
     protected function sendRequest(EntityEnclosingRequest $request)
     {
@@ -229,7 +230,7 @@ class ZedClient
     }
 
     /**
-     * @param Response $response
+     * @param \Guzzle\Http\Message\Response $response
      *
      * @throws Exception\InvalidZedResponseException
      *
@@ -250,7 +251,7 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param Request $requestTransfer
+     * @param \Spryker\Shared\Library\Communication\Request $requestTransfer
      * @param string $rawBody
      *
      * @return void
@@ -262,12 +263,12 @@ class ZedClient
 
     /**
      * @param string $pathInfo
-     * @param Response $responseTransfer
+     * @param \Guzzle\Http\Message\Response $responseTransfer
      * @param string $rawBody
      *
      * @return void
      */
-    protected function logResponse($pathInfo, \Spryker\Shared\Library\Communication\Response $responseTransfer, $rawBody)
+    protected function logResponse($pathInfo, Response $responseTransfer, $rawBody)
     {
         $this->doLog($pathInfo, Types::TRANSFER_RESPONSE, $responseTransfer, $rawBody);
     }
@@ -275,7 +276,7 @@ class ZedClient
     /**
      * @param string $pathInfo
      * @param string $subType
-     * @param ObjectInterface $transfer
+     * @param \Spryker\Shared\Library\Communication\ObjectInterface $transfer
      * @param string $rawBody
      *
      * @return void
@@ -311,17 +312,17 @@ class ZedClient
     }
 
     /**
-     * @param EntityEnclosingRequest $request
+     * @param \Guzzle\Http\Message\EntityEnclosingRequest $request
      *
      * @return void
      */
     protected function forwardDebugSession(EntityEnclosingRequest $request)
     {
-        if (Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
+        if (Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
             $cookie = new Cookie();
-            $cookie->setName(trim(Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME)));
-            $cookie->setValue($_COOKIE[Config::get(ApplicationConstants::TRANSFER_DEBUG_SESSION_NAME)]);
-            $cookie->setDomain(Config::get(ApplicationConstants::HOST_ZED_API));
+            $cookie->setName(trim(Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_NAME)));
+            $cookie->setValue($_COOKIE[Config::get(LibraryConstants::TRANSFER_DEBUG_SESSION_NAME)]);
+            $cookie->setDomain(Config::get(LibraryConstants::HOST_ZED_API));
             $cookieArray = new ArrayCookieJar(true);
             $cookieArray->add($cookie);
 

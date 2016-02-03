@@ -21,12 +21,12 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var CategoryStructureInput
+     * @var \Unit\Spryker\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInput
      */
     protected $input;
 
     /**
-     * @var CategoryStructureExpected
+     * @var \Unit\Spryker\Zed\Category\Business\Tree\Fixtures\Expected\CategoryStructureExpected
      */
     protected $expected;
 

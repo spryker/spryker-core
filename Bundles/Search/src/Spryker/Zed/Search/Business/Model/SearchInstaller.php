@@ -7,24 +7,23 @@
 namespace Spryker\Zed\Search\Business\Model;
 
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 
 class SearchInstaller implements SearchInstallerInterface
 {
 
     /**
-     * @var AbstractInstallerPlugin[]
+     * @var \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
      */
     private $installer;
 
     /**
-     * @var MessengerInterface
+     * @var \Spryker\Zed\Messenger\Business\Model\MessengerInterface
      */
     private $messenger;
 
     /**
      * @param array $installer
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      */
     public function __construct(array $installer, MessengerInterface $messenger)
     {

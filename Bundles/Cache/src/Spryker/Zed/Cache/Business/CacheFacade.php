@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Cache\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Cache\CacheConfig;
 
 /**
- * @method CacheBusinessFactory getFactory()
- * @method CacheConfig getConfig()
+ * @method \Spryker\Zed\Cache\Business\CacheBusinessFactory getFactory()
+ * @method \Spryker\Zed\Cache\CacheConfig getConfig()
  */
 class CacheFacade extends AbstractFacade
 {

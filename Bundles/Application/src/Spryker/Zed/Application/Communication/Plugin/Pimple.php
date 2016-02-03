@@ -8,23 +8,21 @@ namespace Spryker\Zed\Application\Communication\Plugin;
 
 use Spryker\Shared\Application\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Application\Business\ApplicationFacade;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 
 /**
- * @method ApplicationFacade getFacade()
- * @method ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class Pimple extends AbstractPlugin
 {
 
     /**
-     * @var Application
+     * @var \Spryker\Shared\Application\Communication\Application
      */
     protected static $application;
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      *
      * @return void
      */
@@ -34,7 +32,7 @@ class Pimple extends AbstractPlugin
     }
 
     /**
-     * @return Application
+     * @return \Spryker\Shared\Application\Communication\Application
      */
     public function getApplication()
     {

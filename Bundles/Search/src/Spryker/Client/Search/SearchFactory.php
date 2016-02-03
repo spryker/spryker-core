@@ -8,13 +8,12 @@ namespace Spryker\Client\Search;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Provider\IndexClientProvider;
-use Spryker\Client\ZedRequest\Client\ZedClient;
 
 class SearchFactory extends AbstractFactory
 {
 
     /**
-     * @return ZedClient
+     * @return \Spryker\Client\ZedRequest\Client\ZedClient
      */
     public function createIndexClient()
     {
@@ -22,7 +21,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return IndexClientProvider
+     * @return \Spryker\Client\Search\Provider\IndexClientProvider
      */
     protected function createProviderIndexClientProvider()
     {

@@ -21,18 +21,18 @@ class AddressForm extends AbstractForm
     const PREFERED_COUNTRY_NAME = 'Germany';
 
     /**
-     * @var CountryFacade
+     * @var \Spryker\Zed\Country\Business\CountryFacade
      */
     protected $countryFacade;
 
     /**
-     * @var CustomerQueryContainer
+     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainer
      */
     protected $customerQueryContainer;
 
     /**
-     * @param CustomerToCountryInterface $countryFacade
-     * @param CustomerQueryContainer $queryContainer
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainer $queryContainer
      */
     public function __construct(CustomerToCountryInterface $countryFacade, CustomerQueryContainer $queryContainer)
     {
@@ -60,7 +60,7 @@ class AddressForm extends AbstractForm
     }
 
     /**
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function getDataClass()
     {
@@ -68,7 +68,7 @@ class AddressForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void
@@ -76,7 +76,7 @@ class AddressForm extends AbstractForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $preferedCountry = $this->countryFacade
-            ->getPreferedCountryByName(self::PREFERED_COUNTRY_NAME);
+            ->getPreferredCountryByName(self::PREFERED_COUNTRY_NAME);
 
         $builder
             ->add(AddressTransfer::ID_CUSTOMER_ADDRESS, 'hidden')

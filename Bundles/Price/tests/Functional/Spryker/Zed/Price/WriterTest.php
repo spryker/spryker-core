@@ -9,7 +9,6 @@ namespace Functional\Spryker\Zed\Price;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Price\Business\PriceFacade;
-use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -31,12 +30,12 @@ class WriterTest extends Test
     const DUMMY_NEW_PRICE_2 = 100;
 
     /**
-     * @var PriceFacade
+     * @var \Spryker\Zed\Price\Business\PriceFacade
      */
     private $priceFacade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

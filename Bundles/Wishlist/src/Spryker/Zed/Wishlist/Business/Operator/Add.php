@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Wishlist\Business\Operator;
 
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 
 class Add extends AbstractOperator
 {
@@ -14,9 +13,9 @@ class Add extends AbstractOperator
     const OPERATION_NAME = 'ADD';
 
     /**
-     * @param WishlistChangeTransfer $wishlistItem
+     * @param \Generated\Shared\Transfer\WishlistChangeTransfer $wishlistItem
      *
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     protected function applyOperation(WishlistChangeTransfer $wishlistItem)
     {

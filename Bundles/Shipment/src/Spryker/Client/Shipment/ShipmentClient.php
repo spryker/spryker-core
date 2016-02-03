@@ -6,20 +6,19 @@
 
 namespace Spryker\Client\Shipment;
 
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method ShipmentFactory getFactory()
+ * @method \Spryker\Client\Shipment\ShipmentFactory getFactory()
  */
 class ShipmentClient extends AbstractClient implements ShipmentClientInterface
 {
 
     /**
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
      *
-     * @return ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability)
     {

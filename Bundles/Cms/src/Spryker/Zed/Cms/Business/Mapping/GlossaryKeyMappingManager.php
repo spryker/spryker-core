@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use Spryker\Zed\Cms\Business\Page\PageManagerInterface;
@@ -19,7 +18,6 @@ use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 {
@@ -27,36 +25,36 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
 
     /**
-     * @var CmsToGlossaryInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @var TemplateManagerInterface
+     * @var \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
      */
     protected $templateManager;
 
     /**
-     * @var PageManagerInterface
+     * @var \Spryker\Zed\Cms\Business\Page\PageManagerInterface
      */
     protected $pageManager;
 
     /**
-     * @var ConnectionInterface
+     * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $connection;
 
     /**
-     * @param CmsToGlossaryInterface $glossaryFacade
-     * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param TemplateManagerInterface $templateManager
-     * @param PageManagerInterface $pageManager
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
+     * @param \Spryker\Zed\Cms\Business\Page\PageManagerInterface $pageManager
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
         CmsToGlossaryInterface $glossaryFacade,
@@ -77,8 +75,8 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @param string $placeholder
      * @param array $data
      *
-     * @throws MissingGlossaryKeyMappingException
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */
@@ -93,9 +91,9 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @param int $idPage
      * @param string $placeholder
      *
-     * @throws MissingGlossaryKeyMappingException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     public function getPagePlaceholderMapping($idPage, $placeholder)
     {
@@ -110,9 +108,9 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param PageKeyMappingTransfer $pageKeyMapping
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMapping
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping)
     {
@@ -124,9 +122,9 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param PageKeyMappingTransfer $pageKeyMapping
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMapping
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping)
     {
@@ -139,13 +137,13 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param PageKeyMappingTransfer $pageKeyMapping
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMapping
      *
-     * @throws MappingAmbiguousException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     protected function createPageKeyMapping(PageKeyMappingTransfer $pageKeyMapping)
     {
@@ -161,14 +159,14 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param PageKeyMappingTransfer $pageKeyMapping
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMapping
      *
-     * @throws MappingAmbiguousException
-     * @throws MissingGlossaryKeyMappingException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     protected function updatePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping)
     {
@@ -195,7 +193,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @param int $idPage
      * @param string $placeholder
      *
-     * @throws MappingAmbiguousException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException
      *
      * @return void
      */
@@ -223,9 +221,9 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     /**
      * @param int $idMapping
      *
-     * @throws MissingGlossaryKeyMappingException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
      *
-     * @return SpyCmsGlossaryKeyMapping
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping
      */
     protected function getGlossaryKeyMappingById($idMapping)
     {
@@ -239,13 +237,13 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $placeholder
      * @param string $value
-     * @param LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      * @param bool $autoGlossaryKeyIncrement
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     public function addPlaceholderText(PageTransfer $page, $placeholder, $value, LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true)
     {
@@ -292,12 +290,12 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $placeholder
      *
-     * @throws MissingGlossaryKeyMappingException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
@@ -329,9 +327,9 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param SpyCmsGlossaryKeyMapping $mappingEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping $mappingEntity
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     protected function convertMappingEntityToTransfer(SpyCmsGlossaryKeyMapping $mappingEntity)
     {
@@ -344,7 +342,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     /**
      * @param string $keyName
      * @param string $value
-     * @param LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return void
      */
@@ -358,11 +356,11 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $placeholder
      * @param int $idKey
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     protected function createPageKeyMappingTransfer(PageTransfer $page, $placeholder, $idKey)
     {
@@ -375,13 +373,13 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $placeholder
      * @param string $keyName
      * @param string $value
-     * @param LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     protected function createGlossaryPageKeyMapping(PageTransfer $page, $placeholder,  $keyName, $value, LocaleTransfer $localeTransfer = null)
     {

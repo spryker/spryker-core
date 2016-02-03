@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel;
 
-use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
@@ -14,12 +13,12 @@ trait BundleDependencyProviderResolverAwareTrait
 {
 
     /**
-     * @var Container
+     * @var \Spryker\Zed\Kernel\Container
      */
     private $container;
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return self
      */
@@ -33,7 +32,7 @@ trait BundleDependencyProviderResolverAwareTrait
     /**
      * @param string $key
      *
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return mixed
      */
@@ -54,9 +53,9 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @throws DependencyProviderNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
      *
-     * @return AbstractBundleDependencyProvider
+     * @return \Spryker\Zed\Kernel\AbstractBundleDependencyProvider
      */
     protected function resolveDependencyProvider()
     {
@@ -64,7 +63,7 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @return DependencyProviderResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver
      */
     protected function getDependencyProviderResolver()
     {
@@ -72,8 +71,8 @@ trait BundleDependencyProviderResolverAwareTrait
     }
 
     /**
-     * @param AbstractBundleDependencyProvider $dependencyProvider
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */
@@ -83,7 +82,7 @@ trait BundleDependencyProviderResolverAwareTrait
     );
 
     /**
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function getContainer()
     {

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Business\TaxFacade;
-use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 
@@ -32,12 +31,12 @@ class WriterTest extends Test
     const NON_EXISTENT_ID = 999999999;
 
     /**
-     * @var TaxFacade
+     * @var \Spryker\Zed\Tax\Business\TaxFacade
      */
     private $taxFacade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

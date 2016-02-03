@@ -20,7 +20,7 @@ class RulesetTable extends AbstractTable
     const EMPTY_HEADER_NAME = 'empty';
 
     /**
-     * @var AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
      */
     protected $aclQueryContainer;
 
@@ -30,7 +30,7 @@ class RulesetTable extends AbstractTable
     protected $idRole;
 
     /**
-     * @param AclQueryContainer $aclQueryContainer
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $aclQueryContainer
      * @param int $idRole
      */
     public function __construct(AclQueryContainer $aclQueryContainer, $idRole)
@@ -40,7 +40,7 @@ class RulesetTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return mixed
      */
@@ -73,7 +73,7 @@ class RulesetTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

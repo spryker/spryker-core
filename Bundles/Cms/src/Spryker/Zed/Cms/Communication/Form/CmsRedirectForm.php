@@ -23,12 +23,12 @@ class CmsRedirectForm extends AbstractForm
     const FIELD_STATUS = 'status';
 
     /**
-     * @var SpyUrlQuery
+     * @var \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     protected $urlByIdQuery;
 
     /**
-     * @var CmsToUrlInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
      */
     protected $urlFacade;
 
@@ -47,8 +47,8 @@ class CmsRedirectForm extends AbstractForm
      */
 
     /**
-     * @param SpyUrlQuery $urlByIdQuery
-     * @param CmsToUrlInterface $urlFacade
+     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlByIdQuery
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
      * @param string $formType
      */
     public function __construct(SpyUrlQuery $urlByIdQuery, CmsToUrlInterface $urlFacade, $formType)
@@ -75,7 +75,7 @@ class CmsRedirectForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

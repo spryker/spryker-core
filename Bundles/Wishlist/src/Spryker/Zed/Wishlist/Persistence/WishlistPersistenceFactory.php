@@ -7,11 +7,10 @@
 namespace Spryker\Zed\Wishlist\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Wishlist\WishlistConfig;
 
 /**
- * @method WishlistConfig getConfig()
- * @method WishlistQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Wishlist\WishlistConfig getConfig()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer getQueryContainer()
  */
 class WishlistPersistenceFactory extends AbstractPersistenceFactory
 {

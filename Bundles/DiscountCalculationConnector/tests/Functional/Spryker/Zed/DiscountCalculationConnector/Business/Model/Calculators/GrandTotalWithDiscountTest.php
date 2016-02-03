@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\ExpenseTotalsTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Shared\Sales\Code\ExpenseConstants;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -35,6 +34,7 @@ class GrandTotalWithDiscountTest extends Test
     const ITEM_SALESRULE_DISCOUNT_AMOUNT = 1000;
     const ORDER_SHIPPING_COSTS = 2000;
     const EXPENSE_NAME_SHIPPING_COSTS = 'Shipping Costs';
+    const EXPENSE_TYPE_SHIPPING = 'shipping';
 
     /**
      * @return void
@@ -111,7 +111,7 @@ class GrandTotalWithDiscountTest extends Test
 
         $expense = $this->getExpenseWithFixtureData();
         $expense->setName(self::EXPENSE_NAME_SHIPPING_COSTS)
-            ->setType(ExpenseConstants::EXPENSE_SHIPPING)
+            ->setType(self::EXPENSE_TYPE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS / 2)
             ->setGrossPrice(self::ORDER_SHIPPING_COSTS / 2);
         $item->addExpense($expense);
@@ -187,7 +187,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return GrandTotalWithDiscountsTotalsCalculator
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator\GrandTotalWithDiscountsTotalsCalculator
      */
     protected function getCalculator()
     {
@@ -198,7 +198,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return TotalsTransfer
+     * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     protected function getTotals()
     {
@@ -210,7 +210,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     protected function getDiscount()
     {
@@ -218,7 +218,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return CalculableContainer
+     * @return \Spryker\Zed\Sales\Business\Model\CalculableContainer
      */
     protected function getOrderWithFixtureData()
     {
@@ -231,7 +231,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function getItemWithFixtureData()
     {
@@ -241,7 +241,7 @@ class GrandTotalWithDiscountTest extends Test
     }
 
     /**
-     * @return ExpenseTransfer
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function getExpenseWithFixtureData()
     {

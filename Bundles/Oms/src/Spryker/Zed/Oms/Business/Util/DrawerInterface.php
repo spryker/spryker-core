@@ -13,7 +13,7 @@ interface DrawerInterface
 {
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|null $highlightState
      * @param string|null $format
      * @param int|null $fontSize
@@ -23,7 +23,7 @@ interface DrawerInterface
     public function draw(ProcessInterface $process, $highlightState = null, $format = null, $fontSize = null);
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|null $highlightState
      *
      * @return void
@@ -31,28 +31,28 @@ interface DrawerInterface
     public function drawStates(ProcessInterface $process, $highlightState = null);
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      *
      * @return void
      */
     public function drawTransitions(ProcessInterface $process);
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @return void
      */
     public function drawTransitionsEvents(StateInterface $state);
 
     /**
-     * @param StateInterface $state
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @return void
      */
     public function drawTransitionsConditions(StateInterface $state);
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      *
      * @return void
      */

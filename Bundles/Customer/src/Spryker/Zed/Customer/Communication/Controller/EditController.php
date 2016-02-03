@@ -10,23 +10,21 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Customer\Business\CustomerFacade;
-use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CustomerFacade getFacade()
- * @method CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class EditController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -38,7 +36,7 @@ class EditController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /** @var CustomerTransfer $data */
+            /** @var \Generated\Shared\Transfer\CustomerTransfer $data */
             $data = $form->getData();
 
             $this->getFacade()
@@ -66,7 +64,7 @@ class EditController extends AbstractController
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function createCustomerTransfer()
     {
@@ -74,7 +72,7 @@ class EditController extends AbstractController
     }
 
     /**
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function createAddressTransfer()
     {
@@ -99,7 +97,7 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return bool
      */
@@ -129,7 +127,7 @@ class EditController extends AbstractController
      * @param int $idCustomer
      * @param int $billingAddress
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function createCustomAddressTransfer($idCustomer, $billingAddress)
     {

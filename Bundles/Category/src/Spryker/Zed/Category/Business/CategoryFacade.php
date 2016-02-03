@@ -12,14 +12,14 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method CategoryBusinessFactory getFactory()
+ * @method \Spryker\Zed\Category\Business\CategoryBusinessFactory getFactory()
  */
 class CategoryFacade extends AbstractFacade
 {
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -33,7 +33,7 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param int $idNode
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     public function getNodeById($idNode)
     {
@@ -48,7 +48,7 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return int
      */
@@ -61,7 +61,7 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return int
      */
@@ -75,7 +75,7 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      *
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getAllNodesByIdCategory($idCategory)
     {
@@ -91,7 +91,7 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      *
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getMainNodesByIdCategory($idCategory)
     {
@@ -107,7 +107,7 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      *
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getNotMainNodesByIdCategory($idCategory)
     {
@@ -121,8 +121,8 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return int
      */
@@ -134,8 +134,8 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -147,8 +147,8 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -172,8 +172,8 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $createUrlPath
      *
      * @return int
@@ -186,8 +186,8 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -200,7 +200,7 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $deleteChildren
      *
      * @return int
@@ -223,7 +223,7 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getRootNodes()
     {
@@ -238,7 +238,7 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -251,7 +251,7 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */
@@ -264,7 +264,7 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeStartNode
      *
      * @return array
@@ -278,7 +278,7 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return array
      */

@@ -14,7 +14,7 @@ class InstallProductSearch extends AbstractInstaller
 {
 
     /**
-     * @var Client
+     * @var \Elastica\Client
      */
     protected $client;
 
@@ -29,7 +29,7 @@ class InstallProductSearch extends AbstractInstaller
     protected $indexType;
 
     /**
-     * @param Client $client
+     * @param \Elastica\Client $client
      * @param string $indexName
      * @param string $indexType
      */

@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Oms\Business;
 
+use Spryker\Tool\Graph\Graph;
+use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
 use Spryker\Zed\Oms\Business\Process\ProcessSelector;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Process\Process;
@@ -20,27 +22,13 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\Dummy;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
-use Spryker\Zed\Oms\Business\OrderStateMachine\DummyInterface;
-use Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface;
-use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
-use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManagerInterface;
-use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
-use Spryker\Zed\Oms\Business\Process\EventInterface;
-use Spryker\Zed\Oms\Business\Process\ProcessInterface;
-use Spryker\Zed\Oms\Business\Process\StateInterface;
-use Spryker\Zed\Oms\Business\Process\TransitionInterface;
-use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
-use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
-use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\OmsDependencyProvider;
-use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 /**
- * @method OmsConfig getConfig()
- * @method OmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Oms\OmsConfig getConfig()
+ * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  */
 class OmsBusinessFactory extends AbstractBusinessFactory
 {
@@ -48,7 +36,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @param array $array
      *
-     * @return ReadOnlyArrayObject
+     * @return \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject
      */
     public function createUtilReadOnlyArrayObject(array $array = [])
     {
@@ -58,7 +46,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @param array $logContext
      *
-     * @return OrderStateMachineInterface
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
      */
     public function createOrderStateMachineOrderStateMachine(array $logContext = [])
     {
@@ -78,7 +66,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string $xmlFolder
      *
-     * @return BuilderInterface
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
      */
     public function createOrderStateMachineBuilder($xmlFolder = null)
     {
@@ -92,7 +80,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DummyInterface
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\DummyInterface
      */
     public function createModelDummy()
     {
@@ -102,7 +90,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return FinderInterface
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface
      */
     public function createOrderStateMachineFinder()
     {
@@ -116,7 +104,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TimeoutInterface
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface
      */
     public function createOrderStateMachineTimeout()
     {
@@ -128,7 +116,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @param array $logContext
      *
-     * @return TransitionLogInterface
+     * @return \Spryker\Zed\Oms\Business\Util\TransitionLogInterface
      */
     public function createUtilTransitionLog(array $logContext)
     {
@@ -138,7 +126,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PersistenceManagerInterface
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManagerInterface
      */
     public function createOrderStateMachinePersistenceManager()
     {
@@ -146,7 +134,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return EventInterface
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface
      */
     public function createProcessEvent()
     {
@@ -154,7 +142,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     public function createProcessState()
     {
@@ -162,7 +150,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return TransitionInterface
+     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface
      */
     public function createProcessTransition()
     {
@@ -170,7 +158,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProcessInterface
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface
      */
     public function createProcessProcess()
     {
@@ -178,18 +166,38 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DrawerInterface
+     * @return \Spryker\Zed\Oms\Business\Util\DrawerInterface
      */
     public function createUtilDrawer()
     {
         return new Drawer(
-                $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
-                $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS)
-            ); // @TODO do not inject the whole config, just inject what is needed
+            $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
+            $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
+            $this->createGraph()
+        );
     }
 
     /**
-     * @return OrderItemMatrix
+     * @return \Spryker\Tool\Graph\Graph
+     */
+    protected function createGraph()
+    {
+        $adapter = $this->createGraphAdapter();
+        $graph = new Graph($adapter, 'Statemachine', $this->getConfig()->getGraphDefaults(), true, false);
+
+        return $graph;
+    }
+
+    /**
+     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
+     */
+    protected function createGraphAdapter()
+    {
+        return new PhpDocumentorGraphAdapter();
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Util\OrderItemMatrix
      */
     public function createUtilOrderItemMatrix()
     {
@@ -197,7 +205,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProcessSelector
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessSelector
      */
     public function createProcessSelector()
     {

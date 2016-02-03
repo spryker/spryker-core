@@ -6,8 +6,8 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 
 abstract class AbstractClassResolver
@@ -106,7 +106,7 @@ abstract class AbstractClassResolver
      */
     private function getProjectNamespaces()
     {
-        return Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACES);
+        return Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACES);
     }
 
     /**
@@ -116,7 +116,7 @@ abstract class AbstractClassResolver
      */
     private function getCoreNamespaces()
     {
-        return Config::getInstance()->get(ApplicationConstants::CORE_NAMESPACES);
+        return Config::getInstance()->get(KernelConstants::CORE_NAMESPACES);
     }
 
 }

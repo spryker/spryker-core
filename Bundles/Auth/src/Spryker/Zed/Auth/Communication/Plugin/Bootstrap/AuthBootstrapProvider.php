@@ -10,19 +10,17 @@ use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Auth\Business\AuthFacade;
-use Spryker\Zed\Auth\Communication\AuthCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method AuthCommunicationFactory getFactory()
- * @method AuthFacade getFacade()
+ * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Auth\Business\AuthFacade getFacade()
  */
 class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -31,7 +29,7 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

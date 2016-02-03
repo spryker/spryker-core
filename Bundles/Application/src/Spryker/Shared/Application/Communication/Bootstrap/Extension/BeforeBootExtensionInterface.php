@@ -12,7 +12,7 @@ interface BeforeBootExtensionInterface
 {
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      */
     public function beforeBoot(Application $application);
 

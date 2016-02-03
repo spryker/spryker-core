@@ -15,27 +15,25 @@ use Spryker\Zed\Application\Business\Model\Twig\RouteResolver;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Library\Twig\Loader\Filesystem;
 use Silex\Application;
-use Spryker\Yves\Application\Application as SprykerApplication;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Spryker\Zed\Application\Business\ApplicationFacade;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 
 /**
- * @method ApplicationFacade getFacade()
- * @method ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
-     * @var SprykerApplication
+     * @var \Spryker\Yves\Application\Application
      */
     private $app;
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -56,8 +54,8 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/',
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/',
 
-                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/src/Spryker/Zed/%1$s/Presentation/',
-                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/src/Spryker/Zed/%1$s/Presentation/',
+                    $this->getConfig()->getBundlesDirectory() . '/%1$s/src/Spryker/Zed/%1$s/Presentation/',
+                    $this->getConfig()->getBundlesDirectory() . '/%1$s/src/Spryker/Zed/%1$s/Presentation/',
                 ]
             );
         });
@@ -98,7 +96,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     /**
      * Handles string responses.
      *
-     * @param GetResponseForControllerResultEvent $event The event to handle
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event The event to handle
      *
      * @return void
      */
@@ -115,7 +113,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -129,7 +127,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      *
      * @param array $parameters
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function render(array $parameters = [])
     {
@@ -166,7 +164,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      */
     protected function provideFormTypeTemplates()
     {
-        $path = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Presentation/Form/Type';
+        $path = $this->getConfig()->getBundlesDirectory() . '/Gui/src/Spryker/Zed/Gui/Presentation/Form/Type';
 
         $this->app['twig.loader.filesystem']->addPath(
             $path

@@ -25,7 +25,7 @@ class VoucherForm extends AbstractForm
     const FIELD_CODE_LENGTH = 'code_length';
 
     /**
-     * @var DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
     protected $discountQueryContainer;
 
@@ -35,13 +35,13 @@ class VoucherForm extends AbstractForm
     protected $isMultiple;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
 
     /**
-     * @param DiscountQueryContainer $discountQueryContainer
-     * @param DiscountConfig $discountConfig
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
+     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
      * @param bool $isMultiple
      */
     public function __construct(DiscountQueryContainer $discountQueryContainer, DiscountConfig $discountConfig, $isMultiple = false)
@@ -166,7 +166,7 @@ class VoucherForm extends AbstractForm
     }
 
     /**
-     * @param SpyDiscountVoucherPool $discountVoucherPoolEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPoolEntity
      *
      * @return string
      */

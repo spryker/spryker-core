@@ -17,13 +17,13 @@ use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributesOperationTab
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery;
 
 /**
- * @method ProductSearchPersistenceFactory getFactory()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchPersistenceFactory getFactory()
  */
 class ProductSearchQueryContainer extends AbstractQueryContainer implements ProductSearchQueryContainerInterface
 {
 
     /**
-     * @return SpyProductSearchAttributesOperationQuery
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
      */
     public function queryFieldOperations()
     {
@@ -43,9 +43,9 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
      * @param array $productIds
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function getExportableProductsByLocale(array $productIds, LocaleTransfer $locale)
     {
@@ -76,7 +76,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      * @param int $idAttribute
      * @param string $copyTarget
      *
-     * @return SpyProductSearchAttributesOperationQuery
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery
      */
     public function queryAttributeOperation($idAttribute, $copyTarget)
     {
@@ -89,10 +89,10 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param ModelCriteria $expandableQuery
-     * @param LocaleTransfer $locale
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function expandProductQuery(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {

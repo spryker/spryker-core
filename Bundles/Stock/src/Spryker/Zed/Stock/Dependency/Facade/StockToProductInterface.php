@@ -6,15 +6,13 @@
 
 namespace Spryker\Zed\Stock\Dependency\Facade;
 
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
-
 interface StockToProductInterface
 {
 
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -23,7 +21,7 @@ interface StockToProductInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */

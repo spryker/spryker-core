@@ -10,7 +10,6 @@ use Codeception\TestCase\Test;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 /**
  * @group Locale
@@ -19,12 +18,12 @@ class LocaleFacadeTest extends Test
 {
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 
     /**
-     * @var LocaleQueryContainerInterface
+     * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
     protected $localeQueryContainer;
 

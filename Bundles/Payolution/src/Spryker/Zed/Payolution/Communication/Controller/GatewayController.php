@@ -7,20 +7,18 @@
 namespace Spryker\Zed\Payolution\Communication\Controller;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use Spryker\Zed\Payolution\Business\PayolutionFacade;
 
 /**
- * @method PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function calculateInstallmentPaymentsAction(CheckoutRequestTransfer $checkoutRequestTransfer)
     {

@@ -10,7 +10,6 @@ use Codeception\TestCase\Test;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Spryker\Zed\Tax\Business\TaxFacade;
-use Generated\Zed\Ide\AutoCompletion;
 
 /**
  * @group Business
@@ -29,12 +28,12 @@ class ReaderTest extends Test
     const NON_EXISTENT_ID = 999999999;
 
     /**
-     * @var TaxFacade
+     * @var \Spryker\Zed\Tax\Business\TaxFacade
      */
     private $taxFacade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

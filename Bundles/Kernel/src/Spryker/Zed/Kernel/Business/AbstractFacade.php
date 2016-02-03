@@ -6,19 +6,18 @@
 
 namespace Spryker\Zed\Kernel\Business;
 
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractFacade
 {
 
     /**
-     * @var BusinessFactoryInterface
+     * @var \Spryker\Zed\Kernel\Business\BusinessFactoryInterface
      */
     private $factory;
 
     /**
-     * @param AbstractBusinessFactory $factory
+     * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $factory
      *
      * @return self
      */
@@ -30,7 +29,7 @@ abstract class AbstractFacade
     }
 
     /**
-     * @return BusinessFactoryInterface
+     * @return \Spryker\Zed\Kernel\Business\BusinessFactoryInterface
      */
     protected function getFactory()
     {
@@ -42,9 +41,9 @@ abstract class AbstractFacade
     }
 
     /**
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractBusinessFactory
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
      */
     private function resolveFactory()
     {
@@ -52,7 +51,7 @@ abstract class AbstractFacade
     }
 
     /**
-     * @return FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {

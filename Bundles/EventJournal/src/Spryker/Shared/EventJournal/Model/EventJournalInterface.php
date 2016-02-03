@@ -11,22 +11,22 @@ interface EventJournalInterface
 {
 
     /**
-     * @param DataCollectorInterface $dataCollector
+     * @param \Spryker\Shared\EventJournal\Model\Collector\DataCollectorInterface $dataCollector
      */
     public function setDataCollector(DataCollectorInterface $dataCollector);
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      */
     public function applyCollectors(EventInterface $event);
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      */
     public function saveEvent(EventInterface $event);
 
     /**
-     * @param WriterInterface $writer
+     * @param \Spryker\Shared\EventJournal\Model\Writer\WriterInterface $writer
      */
     public function setEventWriter(WriterInterface $writer);
 

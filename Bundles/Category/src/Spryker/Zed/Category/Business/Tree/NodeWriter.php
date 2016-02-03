@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
@@ -18,12 +17,12 @@ class NodeWriter implements NodeWriterInterface
     const CATEGORY_URL_IDENTIFIER_LENGTH = 4;
 
     /**
-     * @var CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @param CategoryQueryContainer $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
      */
     public function __construct(CategoryQueryContainer $queryContainer)
     {
@@ -31,9 +30,9 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -52,8 +51,8 @@ class NodeWriter implements NodeWriterInterface
     /**
      * @param int $nodeId
      *
-     * @throws NodeNotFoundException
-     * @throws PropelException
+     * @throws \Spryker\Zed\Category\Business\Tree\Exception\NodeNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return int
      */
@@ -72,9 +71,9 @@ class NodeWriter implements NodeWriterInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

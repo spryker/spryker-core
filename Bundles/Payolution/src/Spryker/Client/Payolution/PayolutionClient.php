@@ -9,18 +9,17 @@ namespace Spryker\Client\Payolution;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Payolution\Session\PayolutionSession;
 
 /**
- * @method PayolutionFactory getFactory()
+ * @method \Spryker\Client\Payolution\PayolutionFactory getFactory()
  */
 class PayolutionClient extends AbstractClient implements PayolutionClientInterface
 {
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
@@ -31,7 +30,7 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
-     * @return PayolutionSession
+     * @return \Spryker\Client\Payolution\Session\PayolutionSession
      */
     protected function getSession()
     {
@@ -39,9 +38,9 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
-     * @param PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
+     * @param \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function storeInstallmentPaymentsInSession(PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer)
     {
@@ -59,7 +58,7 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     }
 
     /**
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function getInstallmentPaymentsFromSession()
     {

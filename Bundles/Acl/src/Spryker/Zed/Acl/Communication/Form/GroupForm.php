@@ -23,18 +23,18 @@ class GroupForm extends AbstractForm
     const VALIDATE_EDIT = 'edit';
 
     /**
-     * @var AclQueryContainer
+     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 
     /**
-     * @param AclQueryContainer $queryContainer
-     * @param Request $request
+     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainer $queryContainer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(AclQueryContainer $queryContainer, Request $request)
     {
@@ -43,7 +43,7 @@ class GroupForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

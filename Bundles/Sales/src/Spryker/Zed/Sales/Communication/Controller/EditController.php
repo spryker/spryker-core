@@ -5,19 +5,17 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\Business\SalesFacade;
 use Symfony\Component\HttpFoundation\Request;
-use Spryker\Zed\Sales\Communication\SalesCommunicationFactory;
 
 /**
- * @method SalesCommunicationFactory getFactory()
- * @method SalesFacade getFacade()
+ * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
  */
 class EditController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -43,7 +41,7 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */

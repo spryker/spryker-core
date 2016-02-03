@@ -6,16 +6,15 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface CollectionToArrayTransformerInterface
 {
 
     /**
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      *
-     * @return SpySalesOrderItem[] $orderItems
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      */
     public function transformCollectionToArray(ObjectCollection $orderItems);
 

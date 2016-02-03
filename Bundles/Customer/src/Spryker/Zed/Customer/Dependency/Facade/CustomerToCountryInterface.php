@@ -6,9 +6,6 @@
 
 namespace Spryker\Zed\Customer\Dependency\Facade;
 
-use Generated\Shared\Transfer\CountryCollectionTransfer;
-use Generated\Shared\Transfer\CountryTransfer;
-
 interface CustomerToCountryInterface
 {
 
@@ -22,12 +19,12 @@ interface CustomerToCountryInterface
     /**
      * @param string$countryName
      *
-     * @return CountryTransfer
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getPreferedCountryByName($countryName);
+    public function getPreferredCountryByName($countryName);
 
     /**
-     * @return CountryCollectionTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getAvailableCountries();
 

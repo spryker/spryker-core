@@ -7,18 +7,15 @@ namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Glossary\Business\GlossaryFacade;
-use Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory;
-use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method GlossaryCommunicationFactory getFactory()
- * @method GlossaryFacade getFacade()
- * @method GlossaryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer getQueryContainer()
  */
 class KeyController extends AbstractController
 {
@@ -26,9 +23,9 @@ class KeyController extends AbstractController
     const TERM = 'term';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function ajaxAction(Request $request)
     {
@@ -63,9 +60,9 @@ class KeyController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function suggestAction(Request $request)
     {

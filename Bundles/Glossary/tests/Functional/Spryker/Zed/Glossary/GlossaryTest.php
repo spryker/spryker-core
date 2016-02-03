@@ -24,27 +24,27 @@ class GlossaryTest extends Test
 {
 
     /**
-     * @var GlossaryFacade|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Glossary\Business\GlossaryFacade|\PHPUnit_Framework_MockObject_MockObject
      */
     private $glossaryFacade;
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     private $localeFacade;
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     private $touchFacade;
 
     /**
-     * @var GlossaryQueryContainer
+     * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer
      */
     private $glossaryQueryContainer;
 
     /**
-     * @var TouchQueryContainer
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     private $touchQueryContainer;
 

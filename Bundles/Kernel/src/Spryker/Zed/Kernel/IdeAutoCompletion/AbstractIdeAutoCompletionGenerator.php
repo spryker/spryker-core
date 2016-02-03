@@ -40,7 +40,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     protected $options;
 
     /**
-     * @var MethodTagBuilderInterface[]
+     * @var \Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\MethodTagBuilderInterface[]
      */
     protected $methodTagBuilder = [];
 
@@ -57,7 +57,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
@@ -98,7 +98,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     }
 
     /**
-     * @param MethodTagBuilderInterface $methodTagBuilder
+     * @param \Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\MethodTagBuilderInterface $methodTagBuilder
      *
      * @return self
      */
@@ -154,7 +154,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     }
 
     /**
-     * @return BundleNameFinder
+     * @return \Spryker\Zed\Kernel\BundleNameFinder
      */
     protected function getBundleNameFinder()
     {

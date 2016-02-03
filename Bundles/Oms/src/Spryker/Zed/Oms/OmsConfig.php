@@ -30,7 +30,20 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @return array
+     */
+    public function getGraphDefaults()
+    {
+        return [
+            'fontname' => 'Verdana',
+            'labelfontname' => 'Verdana',
+            'nodesep' => 0.6,
+            'ranksep' => 0.8,
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return string|null
      */

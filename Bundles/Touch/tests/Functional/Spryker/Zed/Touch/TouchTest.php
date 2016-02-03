@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Touch\Business\TouchBusinessFactory;
 use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**
@@ -24,12 +23,12 @@ class TouchTest extends Test
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 
     /**
-     * @var TouchQueryContainerInterface
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected $touchQueryContainer;
 

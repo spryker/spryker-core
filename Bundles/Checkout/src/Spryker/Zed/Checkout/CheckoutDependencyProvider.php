@@ -9,11 +9,6 @@ namespace Spryker\Zed\Checkout;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsBridge;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
 class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -27,9 +22,9 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_CALCULATION = 'calculation facade';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -61,9 +56,9 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return CheckoutPreConditionInterface[]
+     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
      */
     protected function getCheckoutPreConditions(Container $container)
     {
@@ -71,9 +66,9 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return CheckoutPreHydrationInterface[]
+     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface[]
      */
     protected function getCheckoutPreHydrator(Container $container)
     {
@@ -81,9 +76,9 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return CheckoutOrderHydrationInterface[]
+     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface[]
      */
     protected function getCheckoutOrderHydrators(Container $container)
     {
@@ -91,9 +86,9 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return CheckoutSaveOrderInterface[]
+     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]
      */
     protected function getCheckoutOrderSavers(Container $container)
     {
@@ -101,9 +96,9 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return CheckoutPostSaveHookInterface[]
+     * @return \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[]
      */
     protected function getCheckoutPostHooks(Container $container)
     {

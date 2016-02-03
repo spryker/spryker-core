@@ -9,13 +9,13 @@ use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\EventJournal\Model\EventInterface;
 
 /**
- * @method EventJournalFactory getFactory()
+ * @method \Spryker\Client\EventJournal\EventJournalFactory getFactory()
  */
 class EventJournalClient extends AbstractClient implements EventJournalClientInterface
 {
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
      * @return void
      */

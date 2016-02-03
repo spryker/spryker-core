@@ -8,26 +8,21 @@ namespace Spryker\Zed\Acl\Business;
 
 use Spryker\Zed\Acl\Business\Model\Role;
 use Spryker\Zed\Acl\Business\Model\Group;
-use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Acl\AclConfig;
-use Spryker\Zed\Acl\Business\Model\GroupInterface;
-use Spryker\Zed\Acl\Business\Model\RoleInterface;
 use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Business\Model\RuleValidator;
 use Spryker\Zed\Acl\Business\Model\Installer;
 use Spryker\Zed\Acl\Business\Model\Rule;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
 
 /**
- * @method AclConfig getConfig()
- * @method AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\AclConfig getConfig()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
  */
 class AclBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return GroupInterface
+     * @return \Spryker\Zed\Acl\Business\Model\GroupInterface
      */
     public function createGroupModel()
     {
@@ -37,7 +32,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RoleInterface
+     * @return \Spryker\Zed\Acl\Business\Model\RoleInterface
      */
     public function createRoleModel()
     {
@@ -48,7 +43,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Rule
+     * @return \Spryker\Zed\Acl\Business\Model\Rule
      */
     public function createRuleModel()
     {
@@ -62,7 +57,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RuleValidator
+     * @return \Spryker\Zed\Acl\Business\Model\RuleValidator
      */
     public function createRuleValidatorHelper()
     {
@@ -70,7 +65,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Installer
+     * @return \Spryker\Zed\Acl\Business\Model\Installer
      */
     public function createInstallerModel()
     {
@@ -84,7 +79,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AclToUserInterface
+     * @return \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
      */
     public function getUserFacade()
     {

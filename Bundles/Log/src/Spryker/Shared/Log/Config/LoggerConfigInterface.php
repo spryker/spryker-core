@@ -6,8 +6,6 @@
 
 namespace Spryker\Shared\Log\Config;
 
-use Monolog\Handler\HandlerInterface;
-
 interface LoggerConfigInterface
 {
 
@@ -17,7 +15,7 @@ interface LoggerConfigInterface
     public function getChannelName();
 
     /**
-     * @return HandlerInterface[]
+     * @return \Monolog\Handler\HandlerInterface[]
      */
     public function getHandlers();
 

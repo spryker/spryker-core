@@ -8,16 +8,15 @@ namespace Spryker\Client\Cart\Zed;
 
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
-use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Client\ZedRequest\Stub\BaseStub;
 
 class CartStub extends BaseStub implements CartStubInterface
 {
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addItem(ChangeTransfer $changeTransfer)
     {
@@ -25,9 +24,9 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeItem(ChangeTransfer $changeTransfer)
     {
@@ -35,9 +34,9 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function increaseItemQuantity(ChangeTransfer $changeTransfer)
     {
@@ -45,9 +44,9 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function decreaseItemQuantity(ChangeTransfer $changeTransfer)
     {
@@ -55,9 +54,9 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function addCoupon(ChangeTransfer $changeTransfer)
     {
@@ -65,9 +64,9 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function removeCoupon(ChangeTransfer $changeTransfer)
     {
@@ -75,9 +74,9 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeTransfer|TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\ChangeTransfer|\Spryker\Shared\Transfer\TransferInterface $changeTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function clearCoupons(ChangeTransfer $changeTransfer)
     {
@@ -85,9 +84,9 @@ class CartStub extends BaseStub implements CartStubInterface
     }
 
     /**
-     * @param CartTransfer|TransferInterface $cartTransfer
+     * @param \Generated\Shared\Transfer\CartTransfer|\Spryker\Shared\Transfer\TransferInterface $cartTransfer
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function recalculate(CartTransfer $cartTransfer)
     {

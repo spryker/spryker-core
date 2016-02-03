@@ -11,9 +11,9 @@ abstract class AbstractDependencyProvider implements BundleDependencyProviderInt
     const CLIENT_SEARCH = 'search client';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     public function provideServiceLayerDependencies(Container $container)
     {
@@ -26,7 +26,7 @@ abstract class AbstractDependencyProvider implements BundleDependencyProviderInt
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
      * @return void
      */
@@ -38,7 +38,7 @@ abstract class AbstractDependencyProvider implements BundleDependencyProviderInt
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
      * @return void
      */
@@ -50,7 +50,7 @@ abstract class AbstractDependencyProvider implements BundleDependencyProviderInt
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
      * @return void
      */
@@ -62,7 +62,7 @@ abstract class AbstractDependencyProvider implements BundleDependencyProviderInt
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
      * @return void
      */

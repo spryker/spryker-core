@@ -6,25 +6,21 @@
 
 namespace Spryker\Zed\Cms\Communication\Controller;
 
-use Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Cms\Business\CmsFacade;
-use Spryker\Zed\Cms\Communication\CmsCommunicationFactory;
 use Spryker\Zed\Cms\Communication\Form\CmsBlockForm;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Table\CmsBlockTable;
 use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CmsCommunicationFactory getFactory()
- * @method CmsFacade getFacade()
- * @method CmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
  */
 class BlockController extends AbstractController
 {
@@ -46,7 +42,7 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -57,7 +53,9 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @return array|RedirectResponse
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addAction(Request $request)
     {
@@ -84,7 +82,7 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -120,7 +118,7 @@ class BlockController extends AbstractController
     /**
      * @param array $data
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     private function createPageTransfer(array $data)
     {
@@ -132,7 +130,7 @@ class BlockController extends AbstractController
 
     /**
      * @param array $data
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
      */
@@ -149,7 +147,7 @@ class BlockController extends AbstractController
     /**
      * @param array $data
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     private function createBlockTransfer(array $data)
     {
@@ -163,7 +161,7 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @return LocaleFacade
+     * @return \Functional\Spryker\Zed\ProductOption\Mock\LocaleFacade
      */
     private function getLocaleFacade()
     {
@@ -171,9 +169,9 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function searchCategoryAction(Request $request)
     {

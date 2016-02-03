@@ -7,24 +7,23 @@
 namespace Spryker\Client\Cms\Storage;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Spryker\Client\Storage\StorageClientInterface;
 
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     private $storage;
 
     /**
-     * @var KeyBuilderInterface
+     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface KeyBuilderInterface
      */
     private $keyBuilder;
 
     /**
-     * @param StorageClientInterface $storage
-     * @param KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Client\Storage\StorageClientInterface $storage
+     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface KeyBuilderInterface $keyBuilder
      */
     public function __construct($storage, $keyBuilder)
     {
@@ -33,7 +32,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return array
      */

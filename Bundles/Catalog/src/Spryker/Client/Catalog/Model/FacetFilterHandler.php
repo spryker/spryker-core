@@ -16,18 +16,18 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
 {
 
     /**
-     * @var NestedFilterBuilderInterface
+     * @var \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface
      */
     protected $nestedFilterBuilder;
 
     /**
-     * @var FacetConfig
+     * @var \Spryker\Client\Catalog\Model\FacetConfig
      */
     protected $facetConfig;
 
     /**
-     * @param NestedFilterBuilderInterface $nestedFilterBuilder
-     * @param FacetConfig $facetConfig
+     * @param \Spryker\Client\Catalog\Model\Builder\NestedFilterBuilderInterface $nestedFilterBuilder
+     * @param \Spryker\Client\Catalog\Model\FacetConfig $facetConfig
      */
     public function __construct(
         NestedFilterBuilderInterface $nestedFilterBuilder,
@@ -38,8 +38,8 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
     }
 
     /**
-     * @param Query $query
-     * @param Request $request
+     * @param \Elastica\Query $query
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      */

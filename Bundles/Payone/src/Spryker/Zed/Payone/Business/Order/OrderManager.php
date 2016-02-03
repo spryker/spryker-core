@@ -17,12 +17,12 @@ class OrderManager implements OrderManagerInterface
 {
 
     /**
-     * @var PayoneConfig
+     * @var \Spryker\Zed\Payone\PayoneConfig
      */
     private $config;
 
     /**
-     * @param PayoneConfig $config
+     * @param \Spryker\Zed\Payone\PayoneConfig $config
      */
     public function __construct(PayoneConfig $config)
     {
@@ -49,9 +49,9 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param PayonePaymentTransfer $paymentTransfer
+     * @param \Generated\Shared\Transfer\PayonePaymentTransfer $paymentTransfer
      *
-     * @return SpyPaymentPayone
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
     protected function savePayment(PayonePaymentTransfer $paymentTransfer)
     {
@@ -69,8 +69,8 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param SpyPaymentPayone $payment
-     * @param PaymentDetailTransfer $paymentDetailTransfer
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $payment
+     * @param \Generated\Shared\Transfer\PaymentDetailTransfer $paymentDetailTransfer
      *
      * @return void
      */

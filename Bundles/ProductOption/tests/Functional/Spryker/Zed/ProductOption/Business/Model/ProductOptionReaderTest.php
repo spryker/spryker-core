@@ -16,11 +16,8 @@ use Spryker\Zed\Locale\Business\LocaleBusinessFactory;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionPersistenceFactory;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
 
 /**
  * @group Business
@@ -28,7 +25,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
  * @group ProductOption
  * @group ProductOptionReaderTest
  *
- * @method ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
  */
 class ProductOptionReaderTest extends Test
 {
@@ -45,27 +42,27 @@ class ProductOptionReaderTest extends Test
     protected $ids = [];
 
     /**
-     * @var ProductOptionFacade
+     * @var \Spryker\Zed\ProductOption\Business\ProductOptionFacade
      */
     protected $facade;
 
     /**
-     * @var ProductOptionToLocaleInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
      */
     private $localeFacade;
 
     /**
-     * @var ProductOptionToProductInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface
      */
     private $productFacade;
 
     /**
-     * @var ProductQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     private $productQueryContainer;
 
     /**
-     * @var ProductOptionQueryContainer
+     * @var \Functional\Spryker\Zed\ProductOption\Mock\ProductOptionQueryContainer
      */
     private $productOptionQueryContainer;
 

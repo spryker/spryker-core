@@ -14,47 +14,45 @@ use Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProvider
 use Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config;
-use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
-use Symfony\Component\Routing\RouterInterface;
 
 class Bootstrap
 {
 
     /**
-     * @var BeforeBootExtensionInterface[]
+     * @var \Spryker\Shared\Application\Communication\Bootstrap\Extension\BeforeBootExtensionInterface[]
      */
     private $beforeBootExtensions = [];
 
     /**
-     * @var AfterBootExtensionInterface[]
+     * @var \Spryker\Shared\Application\Communication\Bootstrap\Extension\AfterBootExtensionInterface[]
      */
     private $afterBootExtensions = [];
 
     /**
-     * @var TwigExtensionInterface[]
+     * @var \Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface[]
      */
     private $twigExtensions = [];
 
     /**
-     * @var GlobalTemplateVariableExtensionInterface[]
+     * @var \Spryker\Shared\Application\Communication\Bootstrap\Extension\GlobalTemplateVariableExtensionInterface[]
      */
     private $globalTemplateVariableExtensions = [];
 
     /**
-     * @var ServiceProviderExtensionInterface[]
+     * @var \Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface[]
      */
     private $serviceProviderExtensions = [];
 
     /**
-     * @var RouterExtensionInterface[]
+     * @var \Spryker\Shared\Application\Communication\Bootstrap\Extension\RouterExtensionInterface[]
      */
     private $routerExtensions = [];
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      */
     public function __construct(Application $application)
     {
@@ -62,7 +60,7 @@ class Bootstrap
     }
 
     /**
-     * @return Application
+     * @return \Spryker\Shared\Application\Communication\Application
      */
     public function boot()
     {
@@ -82,7 +80,7 @@ class Bootstrap
     }
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      *
      * @return void
      */
@@ -98,7 +96,7 @@ class Bootstrap
     }
 
     /**
-     * @param BeforeBootExtensionInterface $beforeBootExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\BeforeBootExtensionInterface $beforeBootExtension
      *
      * @return self
      */
@@ -110,7 +108,7 @@ class Bootstrap
     }
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      *
      * @return void
      */
@@ -122,7 +120,7 @@ class Bootstrap
     }
 
     /**
-     * @param AfterBootExtensionInterface $afterBootExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\AfterBootExtensionInterface $afterBootExtension
      *
      * @return self
      */
@@ -134,7 +132,7 @@ class Bootstrap
     }
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      *
      * @return void
      */
@@ -146,7 +144,7 @@ class Bootstrap
     }
 
     /**
-     * @param TwigExtensionInterface $twigExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface $twigExtension
      *
      * @return self
      */
@@ -158,7 +156,7 @@ class Bootstrap
     }
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      *
      * @return \Twig_Extension[]
      */
@@ -174,7 +172,7 @@ class Bootstrap
     }
 
     /**
-     * @param GlobalTemplateVariableExtensionInterface $globalTemplateVariableExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\GlobalTemplateVariableExtensionInterface $globalTemplateVariableExtension
      *
      * @return self
      */
@@ -186,7 +184,7 @@ class Bootstrap
     }
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      *
      * @return array
      */
@@ -217,7 +215,7 @@ class Bootstrap
     }
 
     /**
-     * @param ServiceProviderExtensionInterface $serviceProviderExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface $serviceProviderExtension
      *
      * @return self
      */
@@ -229,9 +227,9 @@ class Bootstrap
     }
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      *
-     * @return ServiceProviderInterface[]
+     * @return \Silex\ServiceProviderInterface[]
      */
     protected function getServiceProviders(Application $application)
     {
@@ -259,7 +257,7 @@ class Bootstrap
     }
 
     /**
-     * @param RouterExtensionInterface $routerExtension
+     * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\RouterExtensionInterface $routerExtension
      *
      * @return self
      */
@@ -271,9 +269,9 @@ class Bootstrap
     }
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      *
-     * @return RouterInterface[]
+     * @return \Symfony\Component\Routing\RouterInterface[]
      */
     protected function getRouters(Application $application)
     {
@@ -334,7 +332,7 @@ class Bootstrap
     }
 
     /**
-     * @param Application $application
+     * @param \Spryker\Shared\Application\Communication\Application $application
      *
      * @throws \Exception
      *

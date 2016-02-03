@@ -11,14 +11,14 @@ class CheckoutToOmsBridge implements CheckoutToOmsInterface
 {
 
     /**
-     * @var OmsFacade
+     * @var \Spryker\Zed\Oms\Business\OmsFacade
      */
     protected $omsFacade;
 
     /**
      * SalesToOmsBridge constructor.
      *
-     * @param OmsFacade $omsFacade
+     * @param \Spryker\Zed\Oms\Business\OmsFacade $omsFacade
      */
     public function __construct($omsFacade)
     {

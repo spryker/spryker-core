@@ -19,12 +19,12 @@ class ServiceTest extends Test
 {
 
     /**
-     * @var Service
+     * @var \Spryker\Client\Storage\Redis\Service
      */
     protected $redisService;
 
     /**
-     * @var ClientInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Predis\ClientInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $clientMock;
 

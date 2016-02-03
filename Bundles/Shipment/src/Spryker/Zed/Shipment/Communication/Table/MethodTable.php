@@ -12,7 +12,6 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
 class MethodTable extends AbstractTable
 {
@@ -33,12 +32,12 @@ class MethodTable extends AbstractTable
     const ID_METHOD_PARAMETER = 'id-method';
 
     /**
-     * @var SpyShipmentMethodQuery
+     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     protected $methodQuery;
 
     /**
-     * @param SpyShipmentMethodQuery $methodQuery
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery $methodQuery
      */
     public function __construct(SpyShipmentMethodQuery $methodQuery)
     {
@@ -46,9 +45,9 @@ class MethodTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -61,7 +60,7 @@ class MethodTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
@@ -99,7 +98,7 @@ class MethodTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return void
      */
@@ -121,7 +120,7 @@ class MethodTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return void
      */
@@ -133,7 +132,7 @@ class MethodTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return void
      */
@@ -148,7 +147,7 @@ class MethodTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return void
      */
@@ -158,7 +157,7 @@ class MethodTable extends AbstractTable
     }
 
     /**
-     * @param SpyShipmentMethod $method
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param int $idShipmentMethod
      *
      * @return array

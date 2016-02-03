@@ -9,16 +9,15 @@ namespace Spryker\Zed\Mail\Business;
 use Spryker\Shared\Config;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Shared\Mail\MailConstants;
-use Spryker\Zed\Mail\MailConfig;
 
 /**
- * @method MailConfig getConfig()
+ * @method \Spryker\Zed\Mail\MailConfig getConfig()
  */
 class MailBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return MailSenderInterface
+     * @return \Spryker\Zed\Mail\Business\MailSenderInterface
      */
     public function createMailSender()
     {
@@ -39,7 +38,7 @@ class MailBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return InclusionHandlerInterface
+     * @return \Spryker\Zed\Mail\Business\InclusionHandlerInterface
      */
     protected function createInclusionHandler()
     {

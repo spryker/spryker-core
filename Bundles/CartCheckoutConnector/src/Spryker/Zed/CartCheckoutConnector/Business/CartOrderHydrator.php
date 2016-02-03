@@ -14,8 +14,8 @@ class CartOrderHydrator implements CartOrderHydratorInterface
 {
 
     /**
-     * @param OrderTransfer $order
-     * @param CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\OrderTransfer $order
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      *
      * @return void
      */
@@ -29,7 +29,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $cartItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
      *
      * @return \ArrayObject
      */
@@ -48,7 +48,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     }
 
     /**
-     * @param ItemTransfer $cartItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
      *
      * @return array
      */
@@ -64,7 +64,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     }
 
     /**
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function getItemTransfer()
     {
@@ -72,9 +72,9 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     }
 
     /**
-     * @param ItemTransfer $cartItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartItemTransfer
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createItemTransfer(ItemTransfer $cartItemTransfer)
     {

@@ -15,12 +15,12 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
 
     /**
-     * @var CustomerCheckoutConnectorToCustomerInterface
+     * @var \Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface
      */
     private $customerFacade;
 
     /**
-     * @param CustomerCheckoutConnectorToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface $customerFacade
      */
     public function __construct(CustomerCheckoutConnectorToCustomerInterface $customerFacade)
     {
@@ -28,8 +28,8 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
@@ -58,7 +58,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     }
 
     /**
-     * @param CustomerTransfer $customer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
      *
      * @return void
      */

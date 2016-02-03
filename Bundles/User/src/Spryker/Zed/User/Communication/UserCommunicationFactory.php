@@ -12,23 +12,19 @@ use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 use Spryker\Zed\User\Communication\Table\UsersTable;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
-use Spryker\Zed\User\Dependency\Facade\UserToAclInterface;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Spryker\Zed\User\UserDependencyProvider;
-use Spryker\Zed\User\UserConfig;
-use Symfony\Component\Form\FormInterface;
 
 /**
- * @method UserQueryContainer getQueryContainer()
- * @method UserConfig getConfig()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\User\UserConfig getConfig()
  */
 class UserCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @param UserFacade $userFacade
+     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createResetPasswordForm(UserFacade $userFacade)
     {
@@ -38,7 +34,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UsersTable
+     * @return \Spryker\Zed\User\Communication\Table\UsersTable
      */
     public function createUserTable()
     {
@@ -48,7 +44,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createUserForm()
     {
@@ -59,9 +55,9 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param int $idUser
-     * @param UserFacade $userFacade
+     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createUpdateUserForm($idUser, UserFacade $userFacade)
     {
@@ -71,7 +67,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UserToAclInterface
+     * @return \Spryker\Zed\User\Dependency\Facade\UserToAclInterface
      */
     public function getAclFacade()
     {
@@ -81,7 +77,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getAclFacade() instead.
      *
-     * @return UserToAclInterface
+     * @return \Spryker\Zed\User\Dependency\Facade\UserToAclInterface
      */
     public function createAclFacade()
     {

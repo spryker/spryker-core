@@ -17,7 +17,7 @@ class EWalletContainer extends AbstractPaymentMethodContainer
     protected $wallettype;
 
     /**
-     * @var RedirectContainer
+     * @var \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     protected $redirect;
 
@@ -40,7 +40,7 @@ class EWalletContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @param RedirectContainer $redirect
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
      *
      * @return void
      */
@@ -50,7 +50,7 @@ class EWalletContainer extends AbstractPaymentMethodContainer
     }
 
     /**
-     * @return RedirectContainer
+     * @return \Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer
      */
     public function getRedirect()
     {

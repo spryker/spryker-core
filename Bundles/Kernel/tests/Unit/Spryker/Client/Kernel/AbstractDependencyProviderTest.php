@@ -32,7 +32,7 @@ class AbstractDependencyProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return AbstractDependencyProvider
+     * @return \Spryker\Client\Kernel\AbstractDependencyProvider
      */
     private function getAbstractDependencyProviderMock()
     {

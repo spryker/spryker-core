@@ -7,10 +7,9 @@
 namespace Spryker\Client\Auth;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Auth\Token\TokenService;
 
 /**
- * @method AuthFactory getFactory()
+ * @method \Spryker\Client\Auth\AuthFactory getFactory()
  */
 class AuthClient extends AbstractClient implements AuthClientInterface
 {
@@ -37,7 +36,7 @@ class AuthClient extends AbstractClient implements AuthClientInterface
     }
 
     /**
-     * @return TokenService
+     * @return \Spryker\Client\Auth\Token\TokenService
      */
     private function getTokenService()
     {

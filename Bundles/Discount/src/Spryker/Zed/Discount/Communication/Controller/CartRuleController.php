@@ -4,16 +4,13 @@ namespace Spryker\Zed\Discount\Communication\Controller;
 
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method DiscountCommunicationFactory getFactory()
- * @method DiscountFacade getFacade()
- * @method DiscountQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
  */
 class CartRuleController extends AbstractController
 {
@@ -34,7 +31,7 @@ class CartRuleController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {
@@ -46,7 +43,7 @@ class CartRuleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -64,7 +61,7 @@ class CartRuleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -82,7 +79,7 @@ class CartRuleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -106,7 +103,7 @@ class CartRuleController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */

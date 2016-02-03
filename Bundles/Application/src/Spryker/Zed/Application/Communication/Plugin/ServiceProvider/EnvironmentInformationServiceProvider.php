@@ -10,18 +10,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Application\Business\Model\Twig\EnvironmentInfo;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Application\Business\ApplicationFacade;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 
 /**
- * @method ApplicationFacade getFacade()
- * @method ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class EnvironmentInformationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -30,7 +28,7 @@ class EnvironmentInformationServiceProvider extends AbstractPlugin implements Se
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

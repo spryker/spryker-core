@@ -6,22 +6,21 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ShipmentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentBusinessFactory getFactory()
  */
 class ShipmentFacade extends AbstractFacade
 {
 
     /**
-     * @param ShipmentCarrierTransfer $carrierTransfer
+     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
-     * @return ShipmentCarrierTransfer
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer)
     {
@@ -32,9 +31,9 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return ShipmentCarrierTransfer
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
     public function createMethod(ShipmentMethodTransfer $methodTransfer)
     {
@@ -45,9 +44,9 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
-     * @return ShipmentTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
@@ -58,9 +57,9 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param $idMethod
+     * @param int $idMethod
      *
-     * @return ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function getShipmentMethodTransferById($idMethod)
     {
@@ -97,9 +96,9 @@ class ShipmentFacade extends AbstractFacade
     }
 
     /**
-     * @param ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return ShipmentCarrierTransfer
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {

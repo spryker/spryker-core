@@ -6,9 +6,6 @@
 
 namespace Unit\Spryker\Zed\Console\Business\Model\Console;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock;
 
 class ConsoleTest extends \PHPUnit_Framework_TestCase
@@ -62,7 +59,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private function getCommunicationFactoryMock()
     {
@@ -72,7 +69,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function getFacadeMock()
     {
@@ -80,7 +77,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private function getQueryContainerMock()
     {
@@ -88,7 +85,7 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ConsoleMock
+     * @return \Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock
      */
     private function getConsole()
     {

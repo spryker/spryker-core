@@ -13,9 +13,9 @@ class GroupKeyExpander
 {
 
     /**
-     * @param ChangeTransfer $change
+     * @param \Generated\Shared\Transfer\ChangeTransfer $change
      *
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     public function expand(ChangeTransfer $change)
     {
@@ -27,7 +27,7 @@ class GroupKeyExpander
     }
 
     /**
-     * @param ItemTransfer $cartItem
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
      *
      * @return string
      */
@@ -66,7 +66,7 @@ class GroupKeyExpander
     }
 
     /**
-     * @param ProductOptionTransfer[] $sortedProductOptions
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $sortedProductOptions
      *
      * @return string
      */

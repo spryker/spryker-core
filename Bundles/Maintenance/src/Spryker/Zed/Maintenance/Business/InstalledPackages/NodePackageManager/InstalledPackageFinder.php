@@ -15,12 +15,12 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
 {
 
     /**
-     * @var InstalledPackagesTransfer
+     * @var \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     private $collection;
 
     /**
-     * @var Process
+     * @var \Symfony\Component\Process\Process
      */
     private $process;
 
@@ -30,8 +30,8 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     private $path;
 
     /**
-     * @param InstalledPackagesTransfer $collection
-     * @param Process $process
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $collection
+     * @param \Symfony\Component\Process\Process $process
      * @param string $path
      */
     public function __construct(InstalledPackagesTransfer $collection, Process $process, $path)
@@ -42,7 +42,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     }
 
     /**
-     * @return InstalledPackagesTransfer
+     * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     public function findInstalledPackages()
     {

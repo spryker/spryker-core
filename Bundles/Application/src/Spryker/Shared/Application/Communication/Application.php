@@ -11,9 +11,6 @@ use Silex\Application\TwigTrait;
 use Silex\Application\UrlGeneratorTrait;
 use Spryker\Shared\Gui\Form\AbstractForm;
 use Symfony\Cmf\Component\Routing\ChainRouter;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\Routing\RouterInterface;
 
 class Application extends \Silex\Application
@@ -33,19 +30,19 @@ class Application extends \Silex\Application
      *
      * @see createBuilder()
      *
-     * @param string|FormTypeInterface $type The type of the form
+     * @param string|\Symfony\Component\Form\FormTypeInterface $type The type of the form
      * @param mixed $data The initial data
      * @param array $options The options
      *
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      *
-     * @return FormInterface The form named after the type
+     * @return \Symfony\Component\Form\FormInterface The form named after the type
      *
      * @deprecated Use buildForm() instead.
      */
     public function createForm($type = 'form', $data = null, array $options = [])
     {
-        /** @var FormInterface $form */
+        /** @var \Symfony\Component\Form\FormInterface $form */
         $form = $this['form.factory']->create($type, $data, $options);
         $request = ($this[self::REQUEST_STACK]) ? $this[self::REQUEST_STACK]->getCurrentRequest() : $this[self::REQUEST];
         $form->handleRequest($request);
@@ -54,12 +51,12 @@ class Application extends \Silex\Application
     }
 
     /**
-     * @param AbstractForm $form
+     * @param \Spryker\Shared\Gui\Form\AbstractForm $form
      * @param array $options The options
      *
-     * @throws InvalidOptionsException if any given option is not applicable to the given type
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      *
-     * @return FormInterface The form named after the type
+     * @return \Symfony\Component\Form\FormInterface The form named after the type
      */
     public function buildForm(AbstractForm $form, array $options = [])
     {
@@ -77,7 +74,7 @@ class Application extends \Silex\Application
     /**
      * Add a router to the list of routers.
      *
-     * @param RouterInterface $router The router
+     * @param \Symfony\Component\Routing\RouterInterface $router The router
      * @param int $priority The priority of the router
      *
      * @return void

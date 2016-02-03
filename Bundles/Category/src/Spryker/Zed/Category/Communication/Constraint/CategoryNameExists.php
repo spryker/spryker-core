@@ -16,7 +16,7 @@ class CategoryNameExists extends Constraint
     public $message = 'A category with the name {{ value }} already exists in the Database!';
 
     /**
-     * @var CategoryQueryContainer
+     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     protected $queryContainer;
 
@@ -26,14 +26,14 @@ class CategoryNameExists extends Constraint
     protected $idCategory;
 
     /**
-     * @var LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
 
     /**
-     * @param CategoryQueryContainer $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param mixed $options
      */
     public function __construct(
@@ -49,7 +49,7 @@ class CategoryNameExists extends Constraint
     }
 
     /**
-     * @return CategoryQueryContainer
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
     public function getQueryContainer()
     {
@@ -57,7 +57,7 @@ class CategoryNameExists extends Constraint
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale()
     {

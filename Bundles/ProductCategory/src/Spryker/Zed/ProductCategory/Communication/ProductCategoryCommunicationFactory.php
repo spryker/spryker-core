@@ -8,25 +8,16 @@ namespace Spryker\Zed\ProductCategory\Communication;
 
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsBridge;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge;
-use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductBridge;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormAdd;
 use Spryker\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Spryker\Zed\ProductCategory\ProductCategoryConfig;
-use Symfony\Component\Form\FormInterface;
 
 /**
- * @method ProductCategoryQueryContainer getQueryContainer()
- * @method ProductCategoryConfig getConfig()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
  */
 class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -34,7 +25,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getCurrentLocale() instead.
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function createCurrentLocale()
     {
@@ -44,7 +35,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {
@@ -57,7 +48,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      *
      * @throws \ErrorException
      *
-     * @return ProductCategoryToProductBridge
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductBridge
      */
     public function createProductFacade()
     {
@@ -69,7 +60,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @throws \ErrorException
      *
-     * @return ProductCategoryToProductBridge
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductBridge
      */
     public function getProductFacade()
     {
@@ -81,7 +72,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      *
      * @throws \ErrorException
      *
-     * @return ProductCategoryToCategoryBridge
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge
      */
     public function createCategoryFacade()
     {
@@ -93,7 +84,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @throws \ErrorException
      *
-     * @return ProductCategoryToCategoryBridge
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge
      */
     public function getCategoryFacade()
     {
@@ -105,7 +96,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      *
      * @throws \ErrorException
      *
-     * @return ProductCategoryToCmsBridge
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsBridge
      */
     public function createCmsFacade()
     {
@@ -119,7 +110,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      *
      * @throws \ErrorException
      *
-     * @return ProductCategoryToCmsBridge
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsBridge
      */
     public function getCmsFacade()
     {
@@ -129,7 +120,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getCategoryQueryContainer() instead.
      *
-     * @return CategoryQueryContainerInterface
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     public function createCategoryQueryContainer()
     {
@@ -139,7 +130,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CategoryQueryContainerInterface
+     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     public function getCategoryQueryContainer()
     {
@@ -149,7 +140,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getProductQueryContainer() instead.
      *
-     * @return ProductQueryContainerInterface
+     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     public function createProductQueryContainer()
     {
@@ -159,7 +150,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ProductQueryContainerInterface
+     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     public function getProductQueryContainer()
     {
@@ -169,7 +160,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idParentNode
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCategoryFormAdd($idParentNode)
     {
@@ -187,7 +178,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idCategory
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCategoryFormEdit($idCategory)
     {
@@ -205,7 +196,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idCategory
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCategoryFormDelete($idCategory)
     {
@@ -221,10 +212,10 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idCategory
      *
-     * @return ProductCategoryTable
+     * @return \Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable
      */
     public function createProductCategoryTable(LocaleTransfer $locale, $idCategory)
     {
@@ -232,10 +223,10 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param int $idCategory
      *
-     * @return ProductTable
+     * @return \Spryker\Zed\ProductCategory\Communication\Table\ProductTable
      */
     public function createProductTable(LocaleTransfer $locale, $idCategory)
     {
@@ -247,7 +238,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
      *
      * @throws \ErrorException
      *
-     * @return ConnectionInterface
+     * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     public function createPropelConnection()
     {
@@ -259,7 +250,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @throws \ErrorException
      *
-     * @return ConnectionInterface
+     * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     public function getPropelConnection()
     {

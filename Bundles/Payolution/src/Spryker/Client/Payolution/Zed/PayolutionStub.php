@@ -7,19 +7,18 @@
 namespace Spryker\Client\Payolution\Zed;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class PayolutionStub implements PayolutionStubInterface
 {
 
     /**
-     * @var ZedRequestClient
+     * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
     protected $zedRequestClient;
 
     /**
-     * @param ZedRequestClient $zedRequestClient
+     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedRequestClient
      */
     public function __construct(ZedRequestClient $zedRequestClient)
     {
@@ -27,9 +26,9 @@ class PayolutionStub implements PayolutionStubInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
     {

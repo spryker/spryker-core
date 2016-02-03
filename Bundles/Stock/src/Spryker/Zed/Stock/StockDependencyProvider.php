@@ -18,9 +18,9 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_PRODUCT = 'facade product';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {

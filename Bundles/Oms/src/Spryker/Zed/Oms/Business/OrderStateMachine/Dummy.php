@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Propel\Runtime\Exception\PropelException;
-use Exception;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
@@ -20,12 +18,12 @@ class Dummy implements DummyInterface
 {
 
     /**
-     * @var Builder
+     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\Builder
      */
     protected $builder;
 
     /**
-     * @param BuilderInterface $builder
+     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
      */
     public function __construct(BuilderInterface $builder)
     {
@@ -35,8 +33,8 @@ class Dummy implements DummyInterface
     /**
      * @param string $processName
      *
-     * @throws Exception
-     * @throws PropelException
+     * @throws \Exception
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return array
      */

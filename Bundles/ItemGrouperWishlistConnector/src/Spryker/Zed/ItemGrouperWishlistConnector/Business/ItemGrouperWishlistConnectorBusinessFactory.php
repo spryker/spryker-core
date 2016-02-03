@@ -5,13 +5,11 @@
  */
 namespace Spryker\Zed\ItemGrouperWishlistConnector\Business;
 
-use Spryker\Zed\ItemGrouperWishlistConnector\Dependency\Facade\ItemGrouperWishlistConnectorToItemGrouperInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorDependencyProvider;
-use Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorConfig;
 
 /**
- * @method ItemGrouperWishlistConnectorConfig getConfig()
+ * @method \Spryker\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorConfig getConfig()
  */
 class ItemGrouperWishlistConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -19,7 +17,7 @@ class ItemGrouperWishlistConnectorBusinessFactory extends AbstractBusinessFactor
     /**
      * @deprecated Use getItemGrouperFacade() instead.
      *
-     * @return ItemGrouperWishlistConnectorToItemGrouperInterface
+     * @return \Spryker\Zed\ItemGrouperWishlistConnector\Dependency\Facade\ItemGrouperWishlistConnectorToItemGrouperInterface
      */
     public function createItemGrouperFacade()
     {
@@ -29,7 +27,7 @@ class ItemGrouperWishlistConnectorBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return ItemGrouperWishlistConnectorToItemGrouperInterface
+     * @return \Spryker\Zed\ItemGrouperWishlistConnector\Dependency\Facade\ItemGrouperWishlistConnectorToItemGrouperInterface
      */
     public function getItemGrouperFacade()
     {

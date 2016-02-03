@@ -7,19 +7,18 @@
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue;
 
 use Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface;
-use Spryker\Shared\Library\Storage\Adapter\KeyValue\RedisReadWrite;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class RedisWriter implements WriterInterface
 {
 
     /**
-     * @var ReadWriteInterface|RedisReadWrite
+     * @var \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface|\Spryker\Shared\Library\Storage\Adapter\KeyValue\RedisReadWrite
      */
     protected $redis;
 
     /**
-     * @param ReadWriteInterface $kvAdapter
+     * @param \Spryker\Shared\Library\Storage\Adapter\KeyValue\ReadWriteInterface $kvAdapter
      */
     public function __construct(ReadWriteInterface $kvAdapter)
     {

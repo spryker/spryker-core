@@ -14,11 +14,9 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Kernel\Container;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
@@ -42,7 +40,7 @@ class SalesFacadeTest extends Test
 {
 
     /**
-     * @var SalesFacade
+     * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected $salesFacade;
 
@@ -67,7 +65,7 @@ class SalesFacadeTest extends Test
             ->will($this->returnValue('CheckoutTest01'));
 
         $initialStateEntity = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConstants::INITIAL_STATUS)
+            ->filterByName('new')
             ->findOneOrCreate();
         $initialStateEntity->save();
 
@@ -114,7 +112,7 @@ class SalesFacadeTest extends Test
     }
 
     /**
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     private function getValidBaseOrderTransfer()
     {
@@ -215,7 +213,7 @@ class SalesFacadeTest extends Test
         $orderTransfer = $this->getValidBaseOrderTransfer();
 
         $initialState = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConstants::INITIAL_STATUS)
+            ->filterByName('new')
             ->findOneOrCreate();
         $initialState->save();
 
@@ -282,7 +280,7 @@ class SalesFacadeTest extends Test
         $orderTransfer = $this->getValidBaseOrderTransfer();
 
         $initialState = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConstants::INITIAL_STATUS)
+            ->filterByName('new')
             ->findOneOrCreate();
         $initialState->save();
         $this->assertNotNull($initialState->getIdOmsOrderItemState());
@@ -370,7 +368,7 @@ class SalesFacadeTest extends Test
     /**
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyOmsOrderProcess
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     protected function getProcessEntity()
     {

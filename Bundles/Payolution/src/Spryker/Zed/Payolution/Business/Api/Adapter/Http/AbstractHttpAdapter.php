@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Payolution\Business\Api\Adapter\Http;
 
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 
 abstract class AbstractHttpAdapter implements AdapterInterface
 {
@@ -86,7 +85,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     /**
      * @param object $request
      *
-     * @throws ApiHttpRequestException
+     * @throws \Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException
      *
      * @return string
      */

@@ -15,7 +15,7 @@ class WishlistSession implements WishlistSessionInterface
     const WISHLIST_SESSION_IDENTIFIER = 'wishlist session identifier';
 
     /**
-     * @param SessionInterface $session
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      */
     public function __construct(SessionInterface $session)
     {
@@ -23,7 +23,7 @@ class WishlistSession implements WishlistSessionInterface
     }
 
     /**
-     * @return WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function getWishlist()
     {
@@ -37,7 +37,7 @@ class WishlistSession implements WishlistSessionInterface
     }
 
     /**
-     * @param WishlistTransfer $wishlist
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlist
      *
      * @return self
      */

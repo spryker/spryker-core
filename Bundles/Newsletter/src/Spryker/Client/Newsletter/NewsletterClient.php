@@ -7,21 +7,19 @@
 namespace Spryker\Client\Newsletter;
 
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method NewsletterFactory getFactory()
+ * @method \Spryker\Client\Newsletter\NewsletterFactory getFactory()
  */
 class NewsletterClient extends AbstractClient implements NewsletterClientInterface
 {
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -30,9 +28,9 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -41,9 +39,9 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
-     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
@@ -52,9 +50,9 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
@@ -63,9 +61,9 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     }
 
     /**
-     * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
+     * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {

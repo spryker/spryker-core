@@ -13,7 +13,7 @@ interface DistributorInterface
 
     /**
      * @param array $discountableObjects
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      */
     public function distribute(array $discountableObjects, DiscountTransfer $discountTransfer);
 

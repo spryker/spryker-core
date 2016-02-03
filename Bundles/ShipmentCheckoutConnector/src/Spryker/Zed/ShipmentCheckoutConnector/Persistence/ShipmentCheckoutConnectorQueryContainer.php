@@ -6,19 +6,15 @@
 namespace Spryker\Zed\ShipmentCheckoutConnector\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
 
 class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer implements ShipmentCheckoutConnectorQueryContainerInterface
 {
 
     /**
-     * @param $idSalesOrder
+     * @param int $idSalesOrder
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrderById($idSalesOrder)
     {
@@ -26,9 +22,9 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
-     * @param $idShipmentMethod
+     * @param int $idShipmentMethod
      *
-     * @return SpyShipmentMethodQuery
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryShipmentOrderById($idShipmentMethod)
     {
@@ -36,7 +32,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
-     * @return SalesQueryContainerInterface
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected function getSalesQueryContainer()
     {
@@ -44,7 +40,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
-     * @return ShipmentQueryContainerInterface
+     * @return \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
     protected function getShipmentQueryContainer()
     {

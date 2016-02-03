@@ -9,11 +9,8 @@ namespace Spryker\Zed\Sales\Business\Model;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\AddressTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
-use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
@@ -28,22 +25,22 @@ class OrderManager
 {
 
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var SalesToCountryInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
      */
     protected $countryFacade;
 
     /**
-     * @var SalesToOmsInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     protected $omsFacade;
 
     /**
-     * @var OrderReferenceGeneratorInterface
+     * @var \Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface
      */
     protected $orderReferenceGenerator;
 
@@ -60,12 +57,12 @@ class OrderManager
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Exception
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function saveOrder(OrderTransfer $orderTransfer)
     {
@@ -93,11 +90,11 @@ class OrderManager
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function saveOrderEntity(OrderTransfer $orderTransfer)
     {
@@ -122,11 +119,11 @@ class OrderManager
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param $orderEntity
      * @param $orderProcess
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -162,9 +159,9 @@ class OrderManager
     }
 
     /**
-     * @param AddressTransfer|null $address
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $address
      *
-     * @return SpySalesOrderAddress|null
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress|null
      */
     protected function saveAddressTransfer(AddressTransfer $address)
     {
@@ -183,7 +180,7 @@ class OrderManager
     }
 
     /**
-     * @param ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
      * @return void
      */
@@ -205,9 +202,9 @@ class OrderManager
     }
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
@@ -228,7 +225,7 @@ class OrderManager
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
@@ -244,9 +241,9 @@ class OrderManager
     }
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return SpySalesOrder[]|ObjectCollection
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getOrderCollection(OrderListTransfer $orderListTransfer)
     {
@@ -258,9 +255,9 @@ class OrderManager
     }
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected function createOrderListQuery(OrderListTransfer $orderListTransfer)
     {

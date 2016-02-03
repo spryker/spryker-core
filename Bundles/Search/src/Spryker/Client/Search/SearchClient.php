@@ -6,17 +6,16 @@
 
 namespace Spryker\Client\Search;
 
-use Elastica\Index;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method SearchFactory getFactory()
+ * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class SearchClient extends AbstractClient
 {
 
     /**
-     * @return Index
+     * @return \Elastica\Index
      */
     public function getIndexClient()
     {

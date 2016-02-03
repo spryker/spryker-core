@@ -7,15 +7,13 @@
 namespace Spryker\Zed\Oms\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Oms\Business\OmsFacade;
-use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method OmsFacade getFacade()
- * @method OmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
+ * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  */
 class IndexController extends AbstractController
 {
@@ -34,9 +32,9 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function drawAction(Request $request)
     {
@@ -73,7 +71,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      */
@@ -91,9 +89,9 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function drawPreviewVersionAction(Request $request)
     {

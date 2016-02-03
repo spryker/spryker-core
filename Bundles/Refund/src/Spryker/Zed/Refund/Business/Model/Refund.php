@@ -5,39 +5,35 @@ namespace Spryker\Zed\Refund\Business\Model;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
-use Generated\Shared\Transfer\RefundExpenseTransfer;
-use Generated\Shared\Transfer\RefundOrderItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use Orm\Zed\Refund\Persistence\SpyRefund;
-use Orm\Zed\Sales\Persistence\SpySalesExpense;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
 
 class Refund
 {
 
     /**
-     * @var RefundToSalesInterface
+     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
      */
     protected $salesFacade;
 
     /**
-     * @var RefundToOmsInterface
+     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface
      */
     protected $omsFacade;
 
     /**
-     * @var SalesQueryContainer
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainer
      */
     protected $salesQueryContainer;
 
     /**
-     * @param RefundToSalesInterface $salesFacade
-     * @param RefundToOmsInterface $omsFacade
-     * @param SalesQueryContainer $salesQueryContainer
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $salesFacade
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainer $salesQueryContainer
      */
     public function __construct(
         RefundToSalesInterface $salesFacade,
@@ -50,9 +46,9 @@ class Refund
     }
 
     /**
-     * @param RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
-     * @return RefundTransfer
+     * @return \Generated\Shared\Transfer\RefundTransfer
      */
     public function saveRefund(RefundTransfer $refundTransfer)
     {
@@ -79,7 +75,7 @@ class Refund
         $this->salesQueryContainer->getConnection()->commit();
 
         $orderItemsIds = [];
-        /** @var ItemTransfer $processedOrderItem */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $processedOrderItem */
         foreach ($processedOrderItems as $processedOrderItem) {
             $orderItemsIds[] = $processedOrderItem->getIdSalesOrderItem();
         }
@@ -95,7 +91,7 @@ class Refund
     }
 
     /**
-     * @param \ArrayObject|RefundOrderItemTransfer[] $orderItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\RefundOrderItemTransfer[] $orderItems
      *
      * @return \ArrayObject
      */
@@ -123,7 +119,7 @@ class Refund
     }
 
     /**
-     * @param \ArrayObject|RefundExpenseTransfer[] $expenses
+     * @param \ArrayObject|\Generated\Shared\Transfer\RefundExpenseTransfer[] $expenses
      *
      * @return \ArrayObject
      */
@@ -163,7 +159,7 @@ class Refund
     /**
      * @param int $idOrder
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getRefundableItems($idOrder)
     {
@@ -177,7 +173,7 @@ class Refund
     /**
      * @param int $idOrder
      *
-     * @return SpySalesExpense[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense[]
      */
     public function getRefundableExpenses($idOrder)
     {

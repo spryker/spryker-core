@@ -11,14 +11,14 @@ class ProductOptionExporterToProductOptionBridge implements ProductOptionExporte
 {
 
     /**
-     * @var ProductOptionFacade
+     * @var \Spryker\Zed\ProductOption\Business\ProductOptionFacade
      */
     protected $productOptionFacade;
 
     /**
      * ProductOptionExporterToProductOptionBridge constructor.
      *
-     * @param ProductOptionFacade $productOptionFacade
+     * @param \Spryker\Zed\ProductOption\Business\ProductOptionFacade $productOptionFacade
      */
     public function __construct($productOptionFacade)
     {

@@ -10,35 +10,32 @@ use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
-use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
-use Spryker\Zed\Tax\TaxConfig;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Collection\Collection;
 
 class TaxWriter implements TaxWriterInterface
 {
 
     /**
-     * @var TaxQueryContainerInterface
+     * @var \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var TaxConfig
+     * @var \Spryker\Zed\Tax\TaxConfig
      */
     protected $taxSettings;
 
     /**
-     * @var TaxChangePluginInterface[]
+     * @var \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[]
      */
     protected $taxChangePlugins;
 
     /**
-     * @param TaxQueryContainerInterface $queryContainer
-     * @param TaxChangePluginInterface[] $taxChangePlugins
+     * @param \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[] $taxChangePlugins
      */
     public function __construct(
         TaxQueryContainerInterface $queryContainer,
@@ -49,11 +46,11 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return TaxRateTransfer
+     * @return \Generated\Shared\Transfer\TaxRateTransfer
      */
     public function createTaxRate(TaxRateTransfer $taxRateTransfer)
     {
@@ -65,10 +62,10 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
-     * @throws PropelException
-     * @throws ResourceNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
      *
      * @return int
      */
@@ -90,13 +87,13 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxSetTransfer $taxSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
-     * @throws PropelException
-     * @throws ResourceNotFoundException
-     * @throws MissingTaxRateException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException
      *
-     * @return TaxSetTransfer
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
     public function createTaxSet(TaxSetTransfer $taxSetTransfer)
     {
@@ -120,11 +117,11 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxSetTransfer $taxSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
-     * @throws PropelException
-     * @throws ResourceNotFoundException
-     * @throws MissingTaxRateException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException
      *
      * @return int
      */
@@ -156,10 +153,10 @@ class TaxWriter implements TaxWriterInterface
 
     /**
      * @param int $taxSetId
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
-     * @throws PropelException
-     * @throws ResourceNotFoundException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
      *
      * @return int
      */
@@ -190,9 +187,9 @@ class TaxWriter implements TaxWriterInterface
      * @param int $taxSetId
      * @param int $taxRateId
      *
-     * @throws PropelException
-     * @throws ResourceNotFoundException
-     * @throws MissingTaxRateException
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException
      *
      * @return int
      */
@@ -226,7 +223,7 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param int $id
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -242,7 +239,7 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param int $id
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */

@@ -13,9 +13,9 @@ class DefaultExceptionHandler implements ExceptionHandlerInterface
 {
 
     /**
-     * @param FlattenException $exception
+     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handleException(FlattenException $exception)
     {

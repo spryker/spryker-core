@@ -11,12 +11,12 @@ class PropelMigrationCleaner implements PropelMigrationCleanerInterface
 {
 
     /**
-     * @var PropelBaseFolderFinderInterface
+     * @var \Spryker\Zed\Maintenance\Business\Model\PropelBaseFolderFinderInterface
      */
     protected $finder;
 
     /**
-     * @param PropelBaseFolderFinderInterface $finder
+     * @param \Spryker\Zed\Maintenance\Business\Model\PropelBaseFolderFinderInterface $finder
      */
     public function __construct(PropelBaseFolderFinderInterface $finder)
     {

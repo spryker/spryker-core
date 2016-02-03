@@ -8,21 +8,20 @@ namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
-use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use Spryker\Zed\Kernel\Business\ModelResult;
 
 /**
- * @method DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
 class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePluginInterface
 {
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param CalculableInterface $container
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
-     * @return ModelResult
+     * @return \Spryker\Zed\Kernel\Business\ModelResult
      */
     public function check(DiscountTransfer $discountTransfer, CalculableInterface $container)
     {
@@ -52,7 +51,7 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
     }
 
     /**
-     * @param CalculableInterface $container
+     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $container
      *
      * @return bool
      */

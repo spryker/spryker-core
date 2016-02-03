@@ -23,7 +23,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
 {
 
     /**
-     * @var CustomerCheckoutConnectorFacade
+     * @var \Spryker\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorFacade
      */
     protected $customerCheckoutConnectorFacade;
 

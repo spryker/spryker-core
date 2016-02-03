@@ -13,17 +13,17 @@ class Doctor
 {
 
     /**
-     * @var HealthReportTransfer
+     * @var \Generated\Shared\Transfer\HealthReportTransfer
      */
     protected $healthReport;
 
     /**
-     * @var HealthIndicatorInterface[]
+     * @var \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface[]
      */
     protected $healthIndicator;
 
     /**
-     * @param HealthIndicatorInterface[] $healthIndicator
+     * @param \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface[] $healthIndicator
      */
     public function __construct(array $healthIndicator)
     {
@@ -44,7 +44,7 @@ class Doctor
     }
 
     /**
-     * @param HealthIndicatorInterface $healthIndicator
+     * @param \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface $healthIndicator
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class Doctor
     }
 
     /**
-     * @return HealthReportTransfer
+     * @return \Generated\Shared\Transfer\HealthReportTransfer
      */
     public function getReport()
     {

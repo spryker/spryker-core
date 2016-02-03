@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Propel\Communication\Console;
 
 use Spryker\Shared\Config;
-use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -30,8 +30,8 @@ class BuildSqlConsole extends Console
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return int|null|void
      */
@@ -39,7 +39,7 @@ class BuildSqlConsole extends Console
     {
         $this->info('Build sql');
 
-        $config = Config::get(ApplicationConstants::PROPEL);
+        $config = Config::get(PropelConstants::PROPEL);
         $command = 'vendor/bin/propel sql:build --config-dir '
             . $config['paths']['phpConfDir']
             . ' --schema-dir ' . $config['paths']['schemaDir'];

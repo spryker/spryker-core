@@ -16,12 +16,12 @@ class StorageTable extends AbstractTable
     const ACTIONS = 'Actions';
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     protected $storageClient;
 
     /**
-     * @param StorageClientInterface $storageClient
+     * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
      */
     public function __construct(StorageClientInterface $storageClient)
     {
@@ -29,9 +29,9 @@ class StorageTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -47,7 +47,7 @@ class StorageTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */

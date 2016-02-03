@@ -1,0 +1,6 @@
+{
+  "name": "spryker/graph",
+  "require-dev": {
+    "codeception/codeception": "~2.1.0"
+  }
+}

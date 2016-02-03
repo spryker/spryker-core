@@ -8,19 +8,18 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method SalesFacade getFacade()
+ * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrdersAction(OrderListTransfer $orderListTransfer)
     {
@@ -28,9 +27,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetailsAction(OrderTransfer $orderTransfer)
     {

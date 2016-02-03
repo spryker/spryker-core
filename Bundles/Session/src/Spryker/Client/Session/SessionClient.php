@@ -9,18 +9,17 @@ namespace Spryker\Client\Session;
 use Spryker\Client\Kernel\AbstractClient;
 use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 
 class SessionClient extends AbstractClient implements SessionClientInterface
 {
 
     /**
-     * @var SessionInterface
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     protected static $container = null;
 
     /**
-     * @param SessionInterface $container
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $container
      *
      * @return void
      */
@@ -30,7 +29,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * @return SessionInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     protected function getContainer()
     {
@@ -251,7 +250,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Registers a SessionBagInterface with the session.
      *
-     * @param SessionBagInterface $bag
+     * @param \Symfony\Component\HttpFoundation\Session\SessionBagInterface $bag
      */
     public function registerBag(SessionBagInterface $bag)
     {
@@ -263,7 +262,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      *
      * @param string $name
      *
-     * @return SessionBagInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface
      */
     public function getBag($name)
     {
@@ -273,7 +272,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * Gets session meta.
      *
-     * @return MetadataBag
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag
      */
     public function getMetadataBag()
     {

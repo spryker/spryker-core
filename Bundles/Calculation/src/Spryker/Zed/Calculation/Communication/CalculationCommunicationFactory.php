@@ -7,10 +7,9 @@
 namespace Spryker\Zed\Calculation\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Calculation\CalculationConfig;
 
 /**
- * @method CalculationConfig getConfig()
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
 class CalculationCommunicationFactory extends AbstractCommunicationFactory
 {

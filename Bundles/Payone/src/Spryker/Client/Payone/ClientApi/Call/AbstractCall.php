@@ -15,24 +15,24 @@ abstract class AbstractCall
 {
 
     /**
-     * @var PayoneStandardParameterTransfer
+     * @var \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected $standardParameter;
 
     /**
-     * @var HashGeneratorInterface
+     * @var \Spryker\Client\Payone\ClientApi\HashGeneratorInterface
      */
     protected $hashGenerator;
 
     /**
-     * @var ModeDetectorInterface
+     * @var \Spryker\Shared\Payone\Dependency\ModeDetectorInterface
      */
     protected $modeDetector;
 
     /**
-     * @param PayoneStandardParameterTransfer $standardParameterTransfer
-     * @param HashGeneratorInterface $hashGenerator
-     * @param ModeDetectorInterface $modeDetector
+     * @param \Generated\Shared\Transfer\PayoneStandardParameterTransfer $standardParameterTransfer
+     * @param \Spryker\Client\Payone\ClientApi\HashGeneratorInterface $hashGenerator
+     * @param \Spryker\Shared\Payone\Dependency\ModeDetectorInterface $modeDetector
      */
     public function __construct(
         PayoneStandardParameterTransfer $standardParameterTransfer,
@@ -45,7 +45,7 @@ abstract class AbstractCall
     }
 
     /**
-     * @param AbstractRequest $container
+     * @param \Spryker\Client\Payone\ClientApi\Request\AbstractRequest $container
      *
      * @return void
      */
@@ -72,7 +72,7 @@ abstract class AbstractCall
     }
 
     /**
-     * @return PayoneStandardParameterTransfer
+     * @return \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected function getStandardParameter()
     {
@@ -80,7 +80,7 @@ abstract class AbstractCall
     }
 
     /**
-     * @return HashGeneratorInterface
+     * @return \Spryker\Client\Payone\ClientApi\HashGeneratorInterface
      */
     protected function getHashGenerator()
     {
@@ -88,7 +88,7 @@ abstract class AbstractCall
     }
 
     /**
-     * @return ModeDetectorInterface
+     * @return \Spryker\Shared\Payone\Dependency\ModeDetectorInterface
      */
     protected function getModeDetector()
     {

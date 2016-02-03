@@ -10,26 +10,24 @@ use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface;
 use Spryker\Zed\Payolution\Business\Exception\NoMethodMapperException;
 use Spryker\Zed\Payolution\Business\Exception\OrderGrandTotalException;
-use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Spryker\Zed\Payolution\Business\Payment\Method\Installment\InstallmentInterface;
-use Spryker\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface;
 use Spryker\Zed\Payolution\PayolutionConfig;
 
 abstract class AbstractPaymentHandler
 {
 
     /**
-     * @var AdapterInterface
+     * @var \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface
      */
     protected $executionAdapter;
 
     /**
-     * @var ConverterInterface
+     * @var \Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface
      */
     protected $converter;
 
     /**
-     * @var PayolutionConfig
+     * @var \Spryker\Zed\Payolution\PayolutionConfig
      */
     protected $config;
 
@@ -39,9 +37,9 @@ abstract class AbstractPaymentHandler
     protected $methodMappers = [];
 
     /**
-     * @param AdapterInterface $executionAdapter
-     * @param ConverterInterface $converter
-     * @param PayolutionConfig $config
+     * @param \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface $executionAdapter
+     * @param \Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface $converter
+     * @param \Spryker\Zed\Payolution\PayolutionConfig $config
      */
     public function __construct(
         AdapterInterface $executionAdapter,
@@ -54,7 +52,7 @@ abstract class AbstractPaymentHandler
     }
 
     /**
-     * @return PayolutionConfig
+     * @return \Spryker\Zed\Payolution\PayolutionConfig
      */
     protected function getConfig()
     {
@@ -62,7 +60,7 @@ abstract class AbstractPaymentHandler
     }
 
     /**
-     * @param InvoiceInterface | InstallmentInterface $mapper
+     * @param \Spryker\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface | InstallmentInterface $mapper
      *
      * @return void
      */
@@ -74,9 +72,9 @@ abstract class AbstractPaymentHandler
     /**
      * @param string $accountBrand
      *
-     * @throws NoMethodMapperException
+     * @throws \Spryker\Zed\Payolution\Business\Exception\NoMethodMapperException
      *
-     * @return InvoiceInterface | InstallmentInterface
+     * @return \Spryker\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface | InstallmentInterface
      */
     protected function getMethodMapper($accountBrand)
     {
@@ -92,7 +90,7 @@ abstract class AbstractPaymentHandler
      * @param int $min
      * @param int $max
      *
-     * @throws OrderGrandTotalException
+     * @throws \Spryker\Zed\Payolution\Business\Exception\OrderGrandTotalException
      *
      * @return void
      */
@@ -110,7 +108,7 @@ abstract class AbstractPaymentHandler
     /**
      * @param array | string $requestData
      *
-     * @return PayolutionTransactionResponseTransfer | PayolutionCalculationResponseTransfer
+     * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer | PayolutionCalculationResponseTransfer
      */
     abstract protected function sendRequest($requestData);
 

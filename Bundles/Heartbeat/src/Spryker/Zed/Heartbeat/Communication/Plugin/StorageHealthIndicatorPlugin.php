@@ -6,21 +6,18 @@
 
 namespace Spryker\Zed\Heartbeat\Communication\Plugin;
 
-use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
-use Spryker\Zed\Heartbeat\Business\HeartbeatFacade;
-use Spryker\Zed\Heartbeat\Communication\HeartbeatCommunicationFactory;
 
 /**
- * @method HeartbeatFacade getFacade()
- * @method HeartbeatCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacade getFacade()
+ * @method \Spryker\Zed\Heartbeat\Communication\HeartbeatCommunicationFactory getFactory()
  */
 class StorageHealthIndicatorPlugin extends AbstractPlugin implements HealthIndicatorInterface
 {
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doHealthCheck()
     {

@@ -920,7 +920,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param AbstractRequestContainer $container
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer $container
      *
      * @return void
      */
@@ -938,7 +938,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param AbstractRequestContainer $container
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer $container
      *
      * @return void
      */

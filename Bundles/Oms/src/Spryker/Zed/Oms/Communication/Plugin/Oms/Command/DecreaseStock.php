@@ -14,8 +14,8 @@ class DecreaseStock implements CommandByItemInterface
 {
 
     /**
-     * @param SpySalesOrderItem $orderItem
-     * @param ReadOnlyArrayObject $data
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return array
      */

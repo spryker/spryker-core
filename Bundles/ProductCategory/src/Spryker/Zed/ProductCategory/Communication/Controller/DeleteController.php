@@ -7,25 +7,22 @@
 namespace Spryker\Zed\ProductCategory\Communication\Controller;
 
 use Spryker\Shared\ProductCategory\ProductCategoryConstants;
-use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
-use Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory;
-use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Form;
 
 /**
- * @method ProductCategoryFacade getFacade()
- * @method ProductCategoryCommunicationFactory getFactory()
- * @method ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
+ * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
  */
 class DeleteController extends EditController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -44,7 +41,7 @@ class DeleteController extends EditController
         if ($form->isValid()) {
             $data = $form->getData();
             $localeTransfer = $this->getFactory()
-                ->createCurrentLocale();
+                ->getCurrentLocale();
             $this->getFacade()->deleteCategory(
                 $data['id_category_node'],
                 $data['fk_parent_category_node'],
@@ -66,7 +63,7 @@ class DeleteController extends EditController
     protected function categoryExists($idCategory)
     {
         $categoryCount = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryCategoryById($idCategory)
             ->count();
 
@@ -79,17 +76,17 @@ class DeleteController extends EditController
 
     /**
      * @param int $idCategory
-     * @param Form $form
+     * @param \Symfony\Component\Form\Form $form
      *
      * @return array
      */
     protected function getViewData($idCategory, Form $form)
     {
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $categoryEntity = $this->getFactory()
-            ->createCategoryQueryContainer()
+            ->getCategoryQueryContainer()
             ->queryCategoryById($idCategory)
             ->findOne();
 

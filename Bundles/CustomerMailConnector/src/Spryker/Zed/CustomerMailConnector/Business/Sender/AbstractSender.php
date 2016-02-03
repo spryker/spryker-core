@@ -16,24 +16,24 @@ abstract class AbstractSender
 {
 
     /**
-     * @var CustomerMailConnectorConfig
+     * @var \Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig
      */
     protected $config;
 
     /**
-     * @var CustomerMailConnectorToMailInterface
+     * @var \Spryker\Zed\CustomerMailConnector\Dependency\Facade\CustomerMailConnectorToMailInterface
      */
     protected $mailFacade;
 
     /**
-     * @var CustomerMailConnectorToGlossaryInterface
+     * @var \Spryker\Zed\CustomerMailConnector\Dependency\Facade\CustomerMailConnectorToGlossaryInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @param CustomerMailConnectorConfig $config
-     * @param CustomerMailConnectorToMailInterface $mailFacade
-     * @param CustomerMailConnectorToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\CustomerMailConnector\CustomerMailConnectorConfig $config
+     * @param \Spryker\Zed\CustomerMailConnector\Dependency\Facade\CustomerMailConnectorToMailInterface $mailFacade
+     * @param \Spryker\Zed\CustomerMailConnector\Dependency\Facade\CustomerMailConnectorToGlossaryInterface $glossaryFacade
      */
     public function __construct(
         CustomerMailConnectorConfig $config,
@@ -46,7 +46,7 @@ abstract class AbstractSender
     }
 
     /**
-     * @return MailTransfer
+     * @return \Generated\Shared\Transfer\MailTransfer
      */
     protected function createMailTransfer()
     {
@@ -54,7 +54,7 @@ abstract class AbstractSender
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      * @param string $email
      *
      * @return void
@@ -67,7 +67,7 @@ abstract class AbstractSender
     }
 
     /**
-     * @return MailRecipientTransfer
+     * @return \Generated\Shared\Transfer\MailRecipientTransfer
      */
     protected function createMailRecipientTransfer()
     {
@@ -75,7 +75,7 @@ abstract class AbstractSender
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      * @param array $globalMergeVars
      *
      * @return void
@@ -88,7 +88,7 @@ abstract class AbstractSender
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return void
      */

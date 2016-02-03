@@ -13,12 +13,12 @@ class ModeDetector implements ModeDetectorInterface
 {
 
     /**
-     * @var PayoneConfig
+     * @var \Spryker\Zed\Payone\PayoneConfig
      */
     protected $config;
 
     /**
-     * @param PayoneConfig $config
+     * @param \Spryker\Zed\Payone\PayoneConfig $config
      */
     public function __construct(PayoneConfig $config)
     {

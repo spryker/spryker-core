@@ -15,12 +15,12 @@ class CustomerSession implements CustomerSessionInterface
     const SESSION_KEY = 'customer data';
 
     /**
-     * @var SessionClientInterface
+     * @var \Spryker\Client\Session\SessionClientInterface
      */
     private $sessionClient;
 
     /**
-     * @param SessionClientInterface $sessionClient
+     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
      */
     public function __construct(SessionClientInterface $sessionClient)
     {
@@ -44,7 +44,7 @@ class CustomerSession implements CustomerSessionInterface
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer()
     {
@@ -52,9 +52,9 @@ class CustomerSession implements CustomerSessionInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function setCustomer(CustomerTransfer $customerTransfer)
     {

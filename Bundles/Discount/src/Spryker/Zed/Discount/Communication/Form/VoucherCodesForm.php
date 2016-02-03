@@ -4,7 +4,6 @@ namespace Spryker\Zed\Discount\Communication\Form;
 
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Shared\Transfer\AbstractTransfer;
 use Spryker\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
@@ -37,24 +36,24 @@ class VoucherCodesForm extends AbstractRuleForm
     protected $availablePoolCategories;
 
     /**
-     * @var DiscountConfig
+     * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
 
     /**
-     * @var CamelCaseToUnderscore
+     * @var \Zend\Filter\Word\CamelCaseToUnderscore
      */
     protected $camelCaseToUnderscore;
 
     /**
-     * @var DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
     protected $discountQueryContainer;
 
     /**
-     * @param DiscountConfig $discountConfig
-     * @param CamelCaseToUnderscore $camelCaseToUnderscore
-     * @param DiscountQueryContainer $discountQueryContainer
+     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
+     * @param \Zend\Filter\Word\CamelCaseToUnderscore $camelCaseToUnderscore
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
      */
     public function __construct(
         DiscountConfig $discountConfig,
@@ -111,7 +110,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param int $idPool
      *
-     * @return AbstractTransfer
+     * @return \Spryker\Shared\Transfer\AbstractTransfer
      */
     protected function getVoucherCodesTransfer($idPool)
     {
@@ -141,7 +140,7 @@ class VoucherCodesForm extends AbstractRuleForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

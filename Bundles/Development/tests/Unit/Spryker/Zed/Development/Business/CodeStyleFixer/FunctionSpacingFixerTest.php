@@ -16,7 +16,7 @@ class FunctionSpacingFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'FunctionSpacingFixer';
 
     /**
-     * @var FunctionSpacingFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\FunctionSpacingFixer
      */
     protected $fixer;
 

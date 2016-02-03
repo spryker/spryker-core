@@ -14,21 +14,20 @@ use Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Spryker\Zed\Kernel\Communication\KernelCommunicationFactory;
 
 /**
- * @method KernelCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
  */
 class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
-     * @var GatewayControllerListenerInterface
+     * @var \Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface
      */
     protected $controllerListener;
 
     /**
-     * @param GatewayControllerListenerInterface $controllerListener
+     * @param \Spryker\Zed\Kernel\Communication\GatewayControllerListenerInterface $controllerListener
      *
      * @return void
      */
@@ -38,7 +37,7 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -56,7 +55,7 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

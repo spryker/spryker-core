@@ -11,7 +11,7 @@ class PropelSchemaWriter implements PropelSchemaWriterInterface
 {
 
     /**
-     * @var Filesystem
+     * @var \Symfony\Component\Filesystem\Filesystem
      */
     private $filesystem;
 
@@ -21,7 +21,7 @@ class PropelSchemaWriter implements PropelSchemaWriterInterface
     private $targetDirectory;
 
     /**
-     * @param Filesystem $filesystem
+     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param string $targetDirectory
      */
     public function __construct(Filesystem $filesystem, $targetDirectory)

@@ -9,13 +9,11 @@ namespace Spryker\Zed\Payone\Communication\Plugin\Refund;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Payone\Business\PayoneFacade;
 use Spryker\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
-use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 
 /**
- * @method PayoneFacade getFacade()
- * @method PayoneCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
+ * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  */
 class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInterface
 {
@@ -23,7 +21,7 @@ class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInter
     /**
      * @param int $idOrder
      *
-     * @return PaymentDataTransfer
+     * @return \Generated\Shared\Transfer\PaymentDataTransfer
      */
     public function getPaymentData($idOrder)
     {
@@ -31,7 +29,7 @@ class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInter
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -41,7 +39,7 @@ class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInter
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */
@@ -51,7 +49,7 @@ class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInter
     }
 
     /**
-     * @param PaymentDataTransfer $paymentData
+     * @param \Generated\Shared\Transfer\PaymentDataTransfer $paymentData
      * @param int $idOrder
      *
      * @return void

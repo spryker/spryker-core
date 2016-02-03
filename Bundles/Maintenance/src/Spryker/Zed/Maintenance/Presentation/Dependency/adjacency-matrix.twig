@@ -1,0 +1,33 @@
+
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Adjacency Matrix' } %}
+        {% block widget_content %}
+            <div class="show-scroll">
+                <table class="table table-bordered table-condensed nowrap">
+                    <tr>
+                        <th>From - To</th>
+                        {% for fromBundle, toBundles in matrixData %}
+                            <th{% if fromBundle in engineBundles  %} style="color: red"{% endif %}>{{ fromBundle }}</th>
+                        {% endfor %}
+                    </tr>
+                    {% for fromBundle, toBundles in matrixData %}
+                        <tr>
+                            <th{% if fromBundle in engineBundles  %} style="color: red"{% endif %}>{{ fromBundle }}</th>
+                            {% for bundle, dependencies in toBundles %}
+                                {% if dependencies | length > 0 %}
+                                    <td>1</td>
+                                {% else %}
+                                    <td>0</td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

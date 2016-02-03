@@ -17,18 +17,18 @@ class CategoryTreeBuilder
     const SUBTREE_DEPTH = 3;
 
     /**
-     * @var StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     protected $kvReader;
 
     /**
-     * @var KeyBuilderInterface
+     * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected $keyBuilder;
 
     /**
-     * @param StorageClientInterface $kvReader
-     * @param KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Client\Storage\StorageClientInterface $kvReader
+     * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      */
     public function __construct(StorageClientInterface $kvReader, KeyBuilderInterface $keyBuilder)
     {

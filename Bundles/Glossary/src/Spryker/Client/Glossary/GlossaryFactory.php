@@ -7,10 +7,7 @@ namespace Spryker\Client\Glossary;
 
 use Spryker\Client\Glossary\KeyBuilder\GlossaryKeyBuilder;
 use Spryker\Client\Glossary\Storage\GlossaryStorage;
-use Spryker\Client\Glossary\Storage\GlossaryStorageInterface;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Storage\StorageClientInterface;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class GlossaryFactory extends AbstractFactory
 {
@@ -18,7 +15,7 @@ class GlossaryFactory extends AbstractFactory
     /**
      * @param string $locale
      *
-     * @return GlossaryStorageInterface
+     * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
      */
     public function createTranslator($locale)
     {
@@ -30,7 +27,7 @@ class GlossaryFactory extends AbstractFactory
     }
 
     /**
-     * @return StorageClientInterface
+     * @return \Spryker\Client\Storage\StorageClientInterface
      */
     protected function getStorage()
     {
@@ -38,7 +35,7 @@ class GlossaryFactory extends AbstractFactory
     }
 
     /**
-     * @return KeyBuilderInterface
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected function createKeyBuilder()
     {
@@ -48,7 +45,7 @@ class GlossaryFactory extends AbstractFactory
     /**
      * @deprecated Use createKeyBuilder() instead.
      *
-     * @return KeyBuilderInterface
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     protected function getKeyBuilder()
     {

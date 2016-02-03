@@ -12,14 +12,14 @@ class SalesCheckoutConnectorToSalesBridge implements SalesCheckoutConnectorToSal
 {
 
     /**
-     * @var SalesFacade
+     * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected $salesFacade;
 
     /**
      * SalesCheckoutConnectorToSalesBridge constructor.
      *
-     * @param SalesFacade $salesFacade
+     * @param \Spryker\Zed\Sales\Business\SalesFacade $salesFacade
      */
     public function __construct($salesFacade)
     {
@@ -27,9 +27,9 @@ class SalesCheckoutConnectorToSalesBridge implements SalesCheckoutConnectorToSal
     }
 
     /**
-     * @param OrderTransfer $transferOrder
+     * @param \Generated\Shared\Transfer\OrderTransfer $transferOrder
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function saveOrder(OrderTransfer $transferOrder)
     {

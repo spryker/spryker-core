@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Formatter\AbstractFormatter;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
@@ -22,47 +21,47 @@ abstract class AbstractCollector implements ExporterInterface
     const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
-     * @var CollectorPluginInterface[]
+     * @var \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
      */
     protected $collectorPlugins = [];
 
     /**
-     * @var FailedResultInterface
+     * @var \Spryker\Zed\Collector\Business\Model\FailedResultInterface
      */
     protected $failedResultPrototype;
 
     /**
-     * @var BatchResultInterface
+     * @var \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
     protected $batchResultPrototype;
 
     /**
-     * @var WriterInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
      */
     protected $writer;
 
     /**
-     * @var TouchUpdaterInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
      */
     protected $touchUpdater;
 
     /**
-     * @var MarkerInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\MarkerInterface
      */
     protected $marker;
 
     /**
-     * @var TouchQueryContainer
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @param TouchQueryContainer $queryContainer
-     * @param WriterInterface $writer
-     * @param MarkerInterface $marker
-     * @param FailedResultInterface $failedResultPrototype
-     * @param BatchResultInterface $batchResultPrototype
-     * @param TouchUpdaterInterface $touchUpdater
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $queryContainer
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
+     * @param \Spryker\Zed\Collector\Business\Exporter\MarkerInterface $marker
+     * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failedResultPrototype
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResultPrototype
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      */
     public function __construct(
         TouchQueryContainer $queryContainer,
@@ -82,7 +81,7 @@ abstract class AbstractCollector implements ExporterInterface
 
     /**
      * @param string $touchItemType
-     * @param CollectorPluginInterface $plugin
+     * @param \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface $plugin
      *
      * @return void
      */
@@ -93,9 +92,9 @@ abstract class AbstractCollector implements ExporterInterface
 
     /**
      * @param string $type
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return BatchResultInterface
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
     public function exportByType($type, LocaleTransfer $locale)
     {
@@ -125,11 +124,11 @@ abstract class AbstractCollector implements ExporterInterface
     }
 
     /**
-     * @param BatchResultInterface $batchResult
-     * @param $type
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
+     * @param string $type
      * @param string $timestamp
      *
-     * @return BatchResultInterface
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
     protected function finishExport(BatchResultInterface $batchResult, $type, $timestamp)
     {
@@ -141,7 +140,7 @@ abstract class AbstractCollector implements ExporterInterface
     }
 
     /**
-     * @return AbstractFormatter
+     * @return \Propel\Runtime\Formatter\AbstractFormatter
      */
     protected function getFormatter()
     {

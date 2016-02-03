@@ -22,7 +22,7 @@ class MaintenanceBusinessFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return MaintenanceBusinessFactory
+     * @return \Spryker\Zed\Maintenance\Business\MaintenanceBusinessFactory
      */
     private function getFactory()
     {

@@ -10,41 +10,34 @@ use Spryker\Zed\Price\Business\Model\BulkWriter;
 use Spryker\Zed\Price\Business\Model\Writer;
 use Spryker\Zed\Price\Business\Model\Reader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Price\Business\Model\BulkWriterInterface;
-use Spryker\Zed\Price\Persistence\PriceQueryContainer;
-use Spryker\Zed\Price\Business\Model\WriterInterface;
-use Spryker\Zed\Price\Business\Model\ReaderInterface;
-use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
-use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Spryker\Zed\Price\Business\Internal\Install;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\Price\PriceConfig;
 use Spryker\Zed\Price\PriceDependencyProvider;
 
 /**
- * @method PriceConfig getConfig()
- * @method PriceQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Price\PriceConfig getConfig()
+ * @method \Spryker\Zed\Price\Persistence\PriceQueryContainer getQueryContainer()
  */
 class PriceBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @var PriceQueryContainer
+     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainer
      */
     private $queryContainer;
 
     /**
-     * @var PriceToTouchInterface
+     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var PriceToProductInterface
+     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface
      */
     protected $productFacade;
 
     /**
-     * @return ReaderInterface
+     * @return \Spryker\Zed\Price\Business\Model\ReaderInterface
      */
     public function createReaderModel()
     {
@@ -56,7 +49,7 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return WriterInterface
+     * @return \Spryker\Zed\Price\Business\Model\WriterInterface
      */
     public function createWriterModel()
     {
@@ -69,7 +62,7 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return BulkWriterInterface
+     * @return \Spryker\Zed\Price\Business\Model\BulkWriterInterface
      */
     public function createBulkWriterModel()
     {
@@ -82,7 +75,7 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PriceToProductInterface
+     * @return \Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface
      */
     protected function getProductFacade()
     {
@@ -90,7 +83,7 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PriceToTouchInterface
+     * @return \Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface
      */
     protected function getTouchFacade()
     {
@@ -102,9 +95,9 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
-     * @return Install
+     * @return \Spryker\Zed\Price\Business\Internal\Install
      */
     public function createInstaller(MessengerInterface $messenger)
     {

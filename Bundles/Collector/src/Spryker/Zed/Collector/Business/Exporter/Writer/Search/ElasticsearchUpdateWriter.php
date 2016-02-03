@@ -15,12 +15,12 @@ class ElasticsearchUpdateWriter implements WriterInterface
 {
 
     /**
-     * @var Client
+     * @var \Elastica\Client
      */
     protected $client;
 
     /**
-     * @var Index
+     * @var \Elastica\Index
      */
     protected $index;
 
@@ -30,7 +30,7 @@ class ElasticsearchUpdateWriter implements WriterInterface
     protected $type;
 
     /**
-     * @param Client $searchClient
+     * @param \Elastica\Client $searchClient
      * @param string $indexName
      * @param string $type
      */
@@ -66,7 +66,7 @@ class ElasticsearchUpdateWriter implements WriterInterface
     /**
      * @param array $dataSet
      *
-     * @return Document[]
+     * @return \Elastica\Document[]
      */
     protected function createDocuments(array $dataSet)
     {

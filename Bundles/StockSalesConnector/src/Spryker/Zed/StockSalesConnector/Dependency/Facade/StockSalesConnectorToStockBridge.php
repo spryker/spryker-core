@@ -12,14 +12,14 @@ class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInte
 {
 
     /**
-     * @var StockFacade
+     * @var \Spryker\Zed\Stock\Business\StockFacade
      */
     protected $stockFacade;
 
     /**
      * StockToSalesBridge constructor.
      *
-     * @param StockFacade $stockFacade
+     * @param \Spryker\Zed\Stock\Business\StockFacade $stockFacade
      */
     public function __construct($stockFacade)
     {
@@ -27,7 +27,7 @@ class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInte
     }
 
     /**
-     * @param StockProductTransfer $transferStockProduct
+     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
      */

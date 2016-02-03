@@ -7,19 +7,12 @@
 namespace Spryker\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Silex\Application;
-use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Locator;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -30,27 +23,27 @@ abstract class AbstractController
     const TWIG_MESSENGER_PLUGIN = 'TwigMessengerPlugin';
 
     /**
-     * @var Application
+     * @var \Silex\Application
      */
     private $application;
 
     /**
-     * @var AbstractCommunicationFactory
+     * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private $factory;
 
     /**
-     * @var AbstractFacade
+     * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private $facade;
 
     /**
-     * @var AbstractQueryContainer
+     * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private $queryContainer;
 
     /**
-     * @var MessengerFacade
+     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
      */
     private $messengerFacade;
 
@@ -62,7 +55,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param Application $application
+     * @param \Silex\Application $application
      *
      * @return self
      */
@@ -74,7 +67,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     protected function getFactory()
     {
@@ -86,9 +79,9 @@ abstract class AbstractController
     }
 
     /**
-     * @throws FactoryNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private function resolveFactory()
     {
@@ -96,7 +89,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
      */
     private function getFactoryResolver()
     {
@@ -104,7 +97,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacade()
     {
@@ -116,9 +109,9 @@ abstract class AbstractController
     }
 
     /**
-     * @throws FacadeNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
      *
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function resolveFacade()
     {
@@ -126,7 +119,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return FacadeResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver
      */
     private function getFacadeResolver()
     {
@@ -134,7 +127,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     protected function getQueryContainer()
     {
@@ -146,9 +139,9 @@ abstract class AbstractController
     }
 
     /**
-     * @throws QueryContainerNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException
      *
-     * @return AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private function resolveQueryContainer()
     {
@@ -156,7 +149,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return QueryContainerResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver
      */
     private function getQueryContainerResolver()
     {
@@ -168,7 +161,7 @@ abstract class AbstractController
      * @param int $status
      * @param array $headers
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function redirectResponse($url, $status = 302, $headers = [])
     {
@@ -180,7 +173,7 @@ abstract class AbstractController
      * @param int $status
      * @param array $headers
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     protected function jsonResponse($data = null, $status = 200, $headers = [])
     {
@@ -192,7 +185,7 @@ abstract class AbstractController
      * @param int $status
      * @param array $headers
      *
-     * @return StreamedResponse
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     protected function streamedResponse($callback = null, $status = 200, $headers = [])
     {
@@ -250,7 +243,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return MessengerFacade
+     * @return \Spryker\Zed\Messenger\Business\MessengerFacade
      */
     protected function getMessengerFacade()
     {
@@ -265,7 +258,7 @@ abstract class AbstractController
      * @param string $message
      * @param array $data
      *
-     * @return MessageTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer
      */
     private function createMessageTransfer($message, array $data = [])
     {
@@ -300,7 +293,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return Application
+     * @return \Silex\Application
      */
     protected function getApplication()
     {
@@ -342,7 +335,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return AutoCompletion
+     * @return \Generated\Zed\Ide\AutoCompletion
      */
     private function getLocator()
     {

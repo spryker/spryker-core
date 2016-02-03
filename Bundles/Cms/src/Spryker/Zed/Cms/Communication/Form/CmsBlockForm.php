@@ -30,12 +30,12 @@ class CmsBlockForm extends AbstractForm
     const FIELD_IS_ACTIVE = 'is_active';
 
     /**
-     * @var SpyCmsTemplateQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
     protected $templateQuery;
 
     /**
-     * @var SpyCmsBlockQuery
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery
      */
     protected $blockPageByIdQuery;
 
@@ -70,8 +70,8 @@ class CmsBlockForm extends AbstractForm
     protected $selectValue;
 
     /**
-     * @param SpyCmsTemplateQuery $templateQuery
-     * @param SpyCmsBlockQuery $blockPageByIdQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery $templateQuery
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlockQuery $blockPageByIdQuery
      * @param string $formType
      * @param int $idCmsBlock
      */
@@ -104,7 +104,7 @@ class CmsBlockForm extends AbstractForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

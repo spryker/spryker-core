@@ -52,10 +52,9 @@ use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\Validator\Constraints\Uuid;
 use Symfony\Component\Validator\Constraints\Valid;
-use Spryker\Zed\Gui\Communication\GuiCommunicationFactory;
 
 /**
- * @method GuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  */
 class ConstraintsPlugin extends AbstractPlugin
 {
@@ -88,7 +87,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return NotBlank
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
     public function createConstraintNotBlank($options = null)
     {
@@ -96,7 +95,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @return Blank
+     * @return \Symfony\Component\Validator\Constraints\Blank
      */
     public function createConstraintBlank()
     {
@@ -106,7 +105,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return NotNull
+     * @return \Symfony\Component\Validator\Constraints\NotNull
      */
     public function createConstraintNotNull($options = null)
     {
@@ -116,7 +115,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return IsNull
+     * @return \Symfony\Component\Validator\Constraints\IsNull
      */
     public function createConstraintNull($options = null)
     {
@@ -126,7 +125,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return IsTrue
+     * @return \Symfony\Component\Validator\Constraints\IsTrue
      */
     public function createConstraintTrue($options = null)
     {
@@ -136,7 +135,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return IsFalse
+     * @return \Symfony\Component\Validator\Constraints\IsFalse
      */
     public function createConstraintFalse($options = null)
     {
@@ -146,7 +145,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Type
+     * @return \Symfony\Component\Validator\Constraints\Type
      */
     public function createConstraintType($options = null)
     {
@@ -156,7 +155,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Email
+     * @return \Symfony\Component\Validator\Constraints\Email
      */
     public function createConstraintEmail($options = null)
     {
@@ -166,7 +165,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Length
+     * @return \Symfony\Component\Validator\Constraints\Length
      */
     public function createConstraintLength($options = null)
     {
@@ -176,7 +175,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Url
+     * @return \Symfony\Component\Validator\Constraints\Url
      */
     public function createConstraintUrl($options = null)
     {
@@ -186,7 +185,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Regex
+     * @return \Symfony\Component\Validator\Constraints\Regex
      */
     public function createConstraintRegex($options = null)
     {
@@ -196,7 +195,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Ip
+     * @return \Symfony\Component\Validator\Constraints\Ip
      */
     public function createConstraintIp($options = null)
     {
@@ -206,7 +205,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Uuid
+     * @return \Symfony\Component\Validator\Constraints\Uuid
      */
     public function createConstraintUuid($options = null)
     {
@@ -216,7 +215,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Range
+     * @return \Symfony\Component\Validator\Constraints\Range
      */
     public function createConstraintRange($options = null)
     {
@@ -226,7 +225,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return EqualTo
+     * @return \Symfony\Component\Validator\Constraints\EqualTo
      */
     public function createConstraintEqualTo($options = null)
     {
@@ -236,7 +235,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return NotEqualTo
+     * @return \Symfony\Component\Validator\Constraints\NotEqualTo
      */
     public function createConstraintNotEqualTo($options = null)
     {
@@ -246,7 +245,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return IdenticalTo
+     * @return \Symfony\Component\Validator\Constraints\IdenticalTo
      */
     public function createConstraintIdenticalTo($options = null)
     {
@@ -256,7 +255,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return NotIdenticalTo
+     * @return \Symfony\Component\Validator\Constraints\NotIdenticalTo
      */
     public function createConstraintNotIdenticalTo($options = null)
     {
@@ -266,7 +265,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return LessThan
+     * @return \Symfony\Component\Validator\Constraints\LessThan
      */
     public function createConstraintLessThan($options = null)
     {
@@ -276,7 +275,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return LessThanOrEqual
+     * @return \Symfony\Component\Validator\Constraints\LessThanOrEqual
      */
     public function createConstraintLessThanOrEqual($options = null)
     {
@@ -286,7 +285,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return GreaterThan
+     * @return \Symfony\Component\Validator\Constraints\GreaterThan
      */
     public function createConstraintGreaterThan($options = null)
     {
@@ -296,7 +295,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return GreaterThanOrEqual
+     * @return \Symfony\Component\Validator\Constraints\GreaterThanOrEqual
      */
     public function createConstraintGreaterThanOrEqual($options = null)
     {
@@ -306,7 +305,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Date
+     * @return \Symfony\Component\Validator\Constraints\Date
      */
     public function createConstraintDate($options = null)
     {
@@ -316,7 +315,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return DateTime
+     * @return \Symfony\Component\Validator\Constraints\DateTime
      */
     public function createConstraintDateTime($options = null)
     {
@@ -326,7 +325,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Time
+     * @return \Symfony\Component\Validator\Constraints\Time
      */
     public function createConstraintTime($options = null)
     {
@@ -336,7 +335,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Choice
+     * @return \Symfony\Component\Validator\Constraints\Choice
      */
     public function createConstraintChoice($options = null)
     {
@@ -346,7 +345,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Collection
+     * @return \Symfony\Component\Validator\Constraints\Collection
      */
     public function createConstraintCollection($options = null)
     {
@@ -356,7 +355,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Count
+     * @return \Symfony\Component\Validator\Constraints\Count
      */
     public function createConstraintCount($options = null)
     {
@@ -366,7 +365,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Language
+     * @return \Symfony\Component\Validator\Constraints\Language
      */
     public function createConstraintLanguage($options = null)
     {
@@ -376,7 +375,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Locale
+     * @return \Symfony\Component\Validator\Constraints\Locale
      */
     public function createConstraintLocale($options = null)
     {
@@ -386,7 +385,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Country
+     * @return \Symfony\Component\Validator\Constraints\Country
      */
     public function createConstraintCountry($options = null)
     {
@@ -396,7 +395,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return File
+     * @return \Symfony\Component\Validator\Constraints\File
      */
     public function createConstraintFile($options = null)
     {
@@ -406,7 +405,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Image
+     * @return \Symfony\Component\Validator\Constraints\Image
      */
     public function createConstraintImage($options = null)
     {
@@ -416,7 +415,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return CardScheme
+     * @return \Symfony\Component\Validator\Constraints\CardScheme
      */
     public function createConstraintCardScheme($options = null)
     {
@@ -426,7 +425,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Currency
+     * @return \Symfony\Component\Validator\Constraints\Currency
      */
     public function createConstraintCurrency($options = null)
     {
@@ -436,7 +435,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Luhn
+     * @return \Symfony\Component\Validator\Constraints\Luhn
      */
     public function createConstraintLuhn($options = null)
     {
@@ -446,7 +445,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Iban
+     * @return \Symfony\Component\Validator\Constraints\Iban
      */
     public function createConstraintIban($options = null)
     {
@@ -456,7 +455,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Isbn
+     * @return \Symfony\Component\Validator\Constraints\Isbn
      */
     public function createConstraintIsbn($options = null)
     {
@@ -466,7 +465,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Issn
+     * @return \Symfony\Component\Validator\Constraints\Issn
      */
     public function createConstraintIssn($options = null)
     {
@@ -476,7 +475,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Callback
+     * @return \Symfony\Component\Validator\Constraints\Callback
      */
     public function createConstraintCallback($options = null)
     {
@@ -486,7 +485,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Expression
+     * @return \Symfony\Component\Validator\Constraints\Expression
      */
     public function createConstraintExpression($options = null)
     {
@@ -496,7 +495,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return All
+     * @return \Symfony\Component\Validator\Constraints\All
      */
     public function createConstraintAll($options = null)
     {
@@ -506,7 +505,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return UserPassword
+     * @return \Symfony\Component\Security\Core\Validator\Constraints\UserPassword
      */
     public function createConstraintUserPassword($options = null)
     {
@@ -516,7 +515,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Valid
+     * @return \Symfony\Component\Validator\Constraints\Valid
      */
     public function createConstraintValid($options = null)
     {
@@ -526,7 +525,7 @@ class ConstraintsPlugin extends AbstractPlugin
     /**
      * @param mixed $options
      *
-     * @return Required
+     * @return \Symfony\Component\Validator\Constraints\Required
      */
     public function createConstraintRequired($options = null)
     {

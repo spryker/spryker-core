@@ -5,8 +5,6 @@ namespace Spryker\Zed\Discount\Communication\Table;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
-use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -14,12 +12,12 @@ class DiscountVoucherCodesTable extends AbstractTable
 {
 
     /**
-     * @var SpyDiscountQuery
+     * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     protected $discountQueryContainer;
 
     /**
-     * @var DataTablesTransfer
+     * @var \Generated\Shared\Transfer\DataTablesTransfer
      */
     protected $dataTablesTransfer;
 
@@ -34,7 +32,7 @@ class DiscountVoucherCodesTable extends AbstractTable
     protected $batchValue;
 
     /**
-     * @param DiscountQueryContainer $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $discountQueryContainer
      * @param int $idPool
      * @param int $batchValue
      */
@@ -47,9 +45,9 @@ class DiscountVoucherCodesTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -73,7 +71,7 @@ class DiscountVoucherCodesTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
@@ -91,7 +89,7 @@ class DiscountVoucherCodesTable extends AbstractTable
 
         $result = [];
 
-        /** @var SpyDiscountVoucher $code */
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $code */
         foreach ($collectionObject as $code) {
             $result[] = [
                 SpyDiscountVoucherTableMap::COL_CODE => $code->getCode(),

@@ -12,12 +12,12 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
 {
 
     /**
-     * @var FlashMessagesTransfer
+     * @var \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     protected static $messages;
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -32,7 +32,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -47,7 +47,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     }
 
     /**
-     * @param MessageTransfer $message
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
@@ -62,7 +62,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     }
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getMessages()
     {
@@ -70,7 +70,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
     }
 
     /**
-     * @return FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     protected static function getFlashMessagesTransfer()
     {

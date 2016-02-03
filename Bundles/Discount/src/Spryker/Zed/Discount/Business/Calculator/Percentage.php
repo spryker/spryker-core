@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\Discount\Business\Calculator;
 
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
-
 class Percentage implements CalculatorInterface
 {
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
      * @param float $percentage
      *
      * @return int

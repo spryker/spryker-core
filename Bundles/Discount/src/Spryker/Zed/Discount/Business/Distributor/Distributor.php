@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Discount\Business\Distributor;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Discount\Business\Model\DiscountableInterface;
 
 class Distributor implements DistributorInterface
 {
@@ -18,8 +17,8 @@ class Distributor implements DistributorInterface
     protected $roundingError = 0;
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
-     * @param DiscountTransfer $discountTransfer
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return void
      */
@@ -57,7 +56,7 @@ class Distributor implements DistributorInterface
     }
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface[] $discountableObjects
      *
      * @return int
      */
@@ -73,7 +72,7 @@ class Distributor implements DistributorInterface
     }
 
     /**
-     * @param DiscountableInterface $discountableItemTransfer
+     * @param \Spryker\Zed\Discount\Business\Model\DiscountableInterface $discountableItemTransfer
      *
      * @return int
      */

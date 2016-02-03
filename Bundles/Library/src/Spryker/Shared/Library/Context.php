@@ -38,11 +38,11 @@ class Context
     /**
      * Creates Context object based on given context name.
      *
-     * @param string|Context|null $context
+     * @param string|\Spryker\Shared\Library\Context|null $context
      *
      * @throws \Exception
      *
-     * @return Context
+     * @return \Spryker\Shared\Library\Context
      */
     public static function getInstance($context = null)
     {
@@ -66,7 +66,7 @@ class Context
     /**
      * Sets default context, should be used only while bootstrapping the system
      *
-     * @param string|Context $context
+     * @param string|\Spryker\Shared\Library\Context $context
      *
      * @return void
      */
@@ -199,7 +199,7 @@ class Context
     /**
      * Converts date/time to context't timezone from external context's timezone.
      *
-     * @param Context|string $contextFrom context from which to convert
+     * @param \Spryker\Shared\Library\Context|string $contextFrom context from which to convert
      * @param string|\DateTime $dateTime date/time to be converted
      * @param string $format output format
      *
@@ -218,7 +218,7 @@ class Context
     /**
      * Converts date/time from context's timezone to external context't timezone.
      *
-     * @param Context|string $contextTo context to which to convert
+     * @param \Spryker\Shared\Library\Context|string $contextTo context to which to convert
      * @param string|\DateTime $dateTime date/time to be converted
      * @param string $format output format
      *

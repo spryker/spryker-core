@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\Store;
 
 class CustomerConfig extends AbstractBundleConfig
@@ -21,7 +20,7 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->get(ApplicationConstants::HOST_YVES);
+        return $this->get(CustomerConstants::HOST_YVES);
     }
 
     /**
@@ -45,7 +44,7 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return SequenceNumberSettingsTransfer
+     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
     public function getCustomerReferenceDefaults()
     {

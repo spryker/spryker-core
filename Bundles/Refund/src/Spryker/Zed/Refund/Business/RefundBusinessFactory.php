@@ -8,22 +8,17 @@ namespace Spryker\Zed\Refund\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Refund\Business\Model\Refund;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
-use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
-use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
 use Spryker\Zed\Refund\RefundDependencyProvider;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainer;
-use Spryker\Zed\Refund\RefundConfig;
 
 /**
- * @method RefundQueryContainerInterface getQueryContainer()
- * @method RefundConfig getConfig()
+ * @method \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Refund\RefundConfig getConfig()
  */
 class RefundBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Refund
+     * @return \Spryker\Zed\Refund\Business\Model\Refund
      */
     public function createRefundModel()
     {
@@ -35,7 +30,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RefundManager
+     * @return \Spryker\Zed\Refund\Business\RefundManager
      */
     public function createRefundManager()
     {
@@ -46,7 +41,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RefundToSalesInterface
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
      */
     public function getSalesFacade()
     {
@@ -56,7 +51,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getSalesFacade() instead.
      *
-     * @return RefundToSalesInterface
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
      */
     protected function createSalesFacade()
     {
@@ -66,7 +61,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return RefundToOmsInterface
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface
      */
     protected function getOmsFacade()
     {
@@ -76,7 +71,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getOmsFacade() instead.
      *
-     * @return RefundToOmsInterface
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface
      */
     protected function createOmsFacade()
     {
@@ -86,7 +81,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return SalesQueryContainer
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainer
      */
     protected function getSalesQueryContainer()
     {
@@ -96,7 +91,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getSalesQueryContainer() instead.
      *
-     * @return SalesQueryContainer
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainer
      */
     protected function createSalesQueryContainer()
     {

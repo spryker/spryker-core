@@ -15,9 +15,9 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
 
     /**
      * @param string $value
-     * @param Constraint $constraint
+     * @param \Symfony\Component\Validator\Constraint $constraint
      *
-     * @throws UnexpectedTypeException
+     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
     }
 
     /**
-     * @param CategoryFieldNotBlank $constraint
+     * @param \Spryker\Zed\ProductCategory\Communication\Form\Constraints\CategoryFieldNotBlank $constraint
      *
      * @return bool
      */

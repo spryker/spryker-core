@@ -6,12 +6,11 @@
 namespace Spryker\Zed\Maintenance\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
-use Spryker\Zed\Maintenance\Business\MaintenanceFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method MaintenanceFacade getFacade()
+ * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()
  */
 class PropelMigrationCleanerConsole extends Console
 {
@@ -31,8 +30,8 @@ class PropelMigrationCleanerConsole extends Console
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @throws \Exception
      *

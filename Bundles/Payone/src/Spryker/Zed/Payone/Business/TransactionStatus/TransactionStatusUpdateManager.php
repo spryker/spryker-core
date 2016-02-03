@@ -12,7 +12,6 @@ use Spryker\Shared\Payone\PayoneTransactionStatusConstants;
 use Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use Spryker\Zed\Payone\Business\Key\HashGenerator;
 use Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
 
@@ -20,24 +19,24 @@ class TransactionStatusUpdateManager
 {
 
     /**
-     * @var PayoneQueryContainerInterface
+     * @var \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var PayoneStandardParameterTransfer
+     * @var \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected $standardParameter;
 
     /**
-     * @var HashGenerator
+     * @var \Spryker\Zed\Payone\Business\Key\HashGenerator
      */
     protected $hashGenerator;
 
     /**
-     * @param PayoneQueryContainerInterface $queryContainer
-     * @param PayoneStandardParameterTransfer $standardParameter
-     * @param HashGenerator $hashGenerator
+     * @param \Spryker\Zed\Payone\Persistence\PayoneQueryContainerInterface $queryContainer
+     * @param \Generated\Shared\Transfer\PayoneStandardParameterTransfer $standardParameter
+     * @param \Spryker\Zed\Payone\Business\Key\HashGenerator $hashGenerator
      */
     public function __construct(
         PayoneQueryContainerInterface $queryContainer,
@@ -50,9 +49,9 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param TransactionStatusUpdateInterface $request
+     * @param \Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface $request
      *
-     * @return TransactionStatusResponse
+     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
      */
     public function processTransactionStatusUpdate(TransactionStatusUpdateInterface $request)
     {
@@ -67,7 +66,7 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param TransactionStatusUpdateInterface $request
+     * @param \Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface $request
      *
      * @return void
      */
@@ -104,7 +103,7 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param TransactionStatusUpdateInterface $request
+     * @param \Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface $request
      *
      * @return void
      */
@@ -124,9 +123,9 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param TransactionStatusUpdateInterface $request
+     * @param \Spryker\Shared\Payone\Dependency\TransactionStatusUpdateInterface $request
      *
-     * @return bool|TransactionStatusResponse
+     * @return bool|\Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
      */
     protected function validate(TransactionStatusUpdateInterface $request)
     {
@@ -149,7 +148,7 @@ class TransactionStatusUpdateManager
     /**
      * @param string $errorMessage
      *
-     * @return TransactionStatusResponse
+     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
      */
     protected function createErrorResponse($errorMessage)
     {
@@ -160,7 +159,7 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @return TransactionStatusResponse
+     * @return \Spryker\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse
      */
     protected function createSuccessResponse()
     {
@@ -172,7 +171,7 @@ class TransactionStatusUpdateManager
     /**
      * @param string $transactionId
      *
-     * @return SpyPaymentPayone
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayone
      */
     protected function findPaymentByTransactionId($transactionId)
     {
@@ -275,7 +274,7 @@ class TransactionStatusUpdateManager
             return false;
         }
 
-        /** @var SpyPaymentPayoneTransactionStatusLog $statusLog */
+        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog $statusLog */
         $statusLog = array_shift($statusLogs);
 
         $statuses = [
@@ -329,7 +328,7 @@ class TransactionStatusUpdateManager
      * @param int $idSalesOrderItem
      * @param string $status
      *
-     * @return SpyPaymentPayoneTransactionStatusLog|null
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog|null
      */
     private function getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status)
     {
@@ -339,7 +338,7 @@ class TransactionStatusUpdateManager
             return null;
         }
 
-        /** @var SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
+        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
         $transactionStatusLog = array_shift($transactionStatusLogs);
 
         if ($transactionStatusLog->getStatus() !== $status) {
@@ -353,7 +352,7 @@ class TransactionStatusUpdateManager
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
-     * @return SpyPaymentPayoneTransactionStatusLog[]
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog[]
      */
     private function getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem)
     {
@@ -370,7 +369,7 @@ class TransactionStatusUpdateManager
             ->getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, array_keys($ids))
             ->find();
 
-        /** @var SpyPaymentPayoneTransactionStatusLogOrderItem $relation */
+        /** @var \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem $relation */
         foreach ($relations as $relation) {
             unset($ids[$relation->getIdPaymentPayoneTransactionStatusLog()]);
         }
@@ -380,7 +379,7 @@ class TransactionStatusUpdateManager
 
     /**
      * @param int $idSalesOrderItem
-     * @param SpyPaymentPayoneTransactionStatusLog $statusLog
+     * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog $statusLog
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

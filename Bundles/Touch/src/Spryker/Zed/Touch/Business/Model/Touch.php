@@ -17,18 +17,18 @@ class Touch implements TouchInterface
     const BULK_UPDATE_CHUNK_SIZE = 250;
 
     /**
-     * @var TouchQueryContainerInterface
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected $touchQueryContainer;
 
     /**
-     * @var ConnectionInterface
+     * @var \Propel\Runtime\Connection\ConnectionInterface
      */
     protected $connection;
 
     /**
-     * @param TouchQueryContainerInterface $queryContainer
-     * @param ConnectionInterface $connection
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(TouchQueryContainerInterface $queryContainer, ConnectionInterface $connection)
     {
@@ -58,7 +58,7 @@ class Touch implements TouchInterface
     /**
      * @param string $itemType
      *
-     * @return TouchTransfer[]
+     * @return \Generated\Shared\Transfer\TouchTransfer[]
      */
     public function getItemsByType($itemType)
     {

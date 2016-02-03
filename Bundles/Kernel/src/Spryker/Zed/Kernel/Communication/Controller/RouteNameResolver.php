@@ -14,12 +14,12 @@ class RouteNameResolver implements RouteNameResolverInterface
 {
 
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(Request $request)
     {
@@ -39,7 +39,7 @@ class RouteNameResolver implements RouteNameResolverInterface
     }
 
     /**
-     * @param $dashedWord
+     * @param string $dashedWord
      *
      * @return array|string
      */

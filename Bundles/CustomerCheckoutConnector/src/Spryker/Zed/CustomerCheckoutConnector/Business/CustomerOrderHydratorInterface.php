@@ -13,8 +13,8 @@ interface CustomerOrderHydratorInterface
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param CheckoutRequestTransfer $request
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $request
      *
      * @return void
      */

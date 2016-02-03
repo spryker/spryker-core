@@ -8,19 +8,16 @@ namespace Spryker\Zed\User\Communication\Controller;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
-use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\UserForm;
-use Spryker\Zed\User\Communication\UserCommunicationFactory;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
-use Spryker\Zed\User\Persistence\UserQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 
 /**
- * @method UserFacade getFacade()
- * @method UserCommunicationFactory getFactory()
- * @method UserQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\User\Business\UserFacade getFacade()
+ * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
  */
 class EditController extends AbstractController
 {
@@ -28,9 +25,9 @@ class EditController extends AbstractController
     const USER_LISTING_URL = '/user';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -65,9 +62,9 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
     {
@@ -103,9 +100,9 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function activateUserAction(Request $request)
     {
@@ -129,9 +126,9 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deactivateUserAction(Request $request)
     {
@@ -155,9 +152,9 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
@@ -181,7 +178,7 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -211,7 +208,7 @@ class EditController extends AbstractController
 
     /**
      * @param array $formData
-     * @param UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @return bool
      */

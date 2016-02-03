@@ -8,20 +8,16 @@ namespace Spryker\Zed\Search\Communication;
 
 use Spryker\Zed\Search\Communication\Table\SearchTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Client\Search\SearchClient;
-use Spryker\Zed\Collector\Business\CollectorFacade;
-use Spryker\Zed\Search\SearchConfig;
 use Spryker\Zed\Search\SearchDependencyProvider;
-use Spryker\Zed\Storage\Communication\Table\StorageTable;
 
 /**
- * @method SearchConfig getConfig()
+ * @method \Spryker\Zed\Search\SearchConfig getConfig()
  */
 class SearchCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return StorageTable
+     * @return \Spryker\Zed\Storage\Communication\Table\StorageTable
      */
     public function createSearchTable()
     {
@@ -31,7 +27,7 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return SearchClient
+     * @return \Spryker\Client\Search\SearchClient
      */
     public function getSearchClient()
     {
@@ -41,7 +37,7 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getSearchClient() instead.
      *
-     * @return SearchClient
+     * @return \Spryker\Client\Search\SearchClient
      */
     public function createSearchClient()
     {
@@ -51,7 +47,7 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CollectorFacade
+     * @return \Spryker\Zed\Collector\Business\CollectorFacade
      */
     public function getCollectorFacade()
     {
@@ -61,7 +57,7 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getCollectorFacade() instead.
      *
-     * @return CollectorFacade
+     * @return \Spryker\Zed\Collector\Business\CollectorFacade
      */
     public function createCollectorFacade()
     {

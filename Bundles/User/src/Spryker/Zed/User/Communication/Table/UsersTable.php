@@ -23,12 +23,12 @@ class UsersTable extends AbstractTable
     const PARAM_ID_USER = 'id-user';
 
     /**
-     * @var UserQueryContainer
+     * @var \Spryker\Zed\User\Persistence\UserQueryContainer
      */
     protected $userQueryContainer;
 
     /**
-     * @param UserQueryContainer $userQueryContainer
+     * @param \Spryker\Zed\User\Persistence\UserQueryContainer $userQueryContainer
      */
     public function __construct(UserQueryContainer $userQueryContainer)
     {
@@ -36,9 +36,9 @@ class UsersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -69,7 +69,7 @@ class UsersTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return mixed
      */

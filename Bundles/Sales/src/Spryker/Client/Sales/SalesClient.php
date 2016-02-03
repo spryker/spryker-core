@@ -11,15 +11,15 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method SalesFactory getFactory()
+ * @method \Spryker\Client\Sales\SalesFactory getFactory()
  */
 class SalesClient extends AbstractClient implements SalesClientInterface
 {
 
     /**
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
@@ -29,9 +29,9 @@ class SalesClient extends AbstractClient implements SalesClientInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {

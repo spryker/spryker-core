@@ -24,7 +24,7 @@ class TransitionLog implements TransitionLogInterface
     const ARGV = 'argv';
 
     /**
-     * @var OmsQueryContainerInterface
+     * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -34,12 +34,12 @@ class TransitionLog implements TransitionLogInterface
     protected $logContext;
 
     /**
-     * @var SpyOmsTransitionLog[]
+     * @var \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
      */
     protected $logEntities;
 
     /**
-     * @param OmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param array $logContext
      */
     public function __construct(OmsQueryContainerInterface $queryContainer, array $logContext)
@@ -49,7 +49,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param EventInterface $event
+     * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      *
      * @return void
      */
@@ -85,8 +85,8 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param SpySalesOrderItem $item
-     * @param CommandInterface $command
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface $command
      *
      * @return void
      */
@@ -96,8 +96,8 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param SpySalesOrderItem $item
-     * @param ConditionInterface $condition
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item
+     * @param \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface $condition
      *
      * @return void
      */
@@ -107,7 +107,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param SpySalesOrderItem $item
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item
      * @param string $stateName
      *
      * @return void
@@ -118,7 +118,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param SpySalesOrderItem $item
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $item
      * @param string $stateName
      *
      * @return void
@@ -153,9 +153,9 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param SpySalesOrderItem $salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      *
-     * @return SpyOmsTransitionLog
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog
      */
     protected function initEntity(SpySalesOrderItem $salesOrderItem)
     {
@@ -188,7 +188,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param SpySalesOrderItem $salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      *
      * @return void
      */
@@ -227,7 +227,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @return SpyOmsTransitionLog
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog
      */
     protected function getEntity()
     {
@@ -235,9 +235,9 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return SpyOmsTransitionLog[]
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
      */
     public function getLogForOrder(SpySalesOrder $order)
     {

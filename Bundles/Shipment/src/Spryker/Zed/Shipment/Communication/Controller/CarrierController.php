@@ -8,22 +8,20 @@ namespace Spryker\Zed\Shipment\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Shipment\Business\ShipmentFacade;
-use Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ShipmentCommunicationFactory getFactory()
- * @method ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
  */
 class CarrierController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|RedirectResponse
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addAction(Request $request)
     {

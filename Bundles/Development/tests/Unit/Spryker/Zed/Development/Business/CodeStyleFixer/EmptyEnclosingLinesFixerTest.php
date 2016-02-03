@@ -16,7 +16,7 @@ class EmptyEnclosingLinesFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'EmptyEnclosingLinesFixer';
 
     /**
-     * @var EmptyEnclosingLinesFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\EmptyEnclosingLinesFixer
      */
     protected $fixer;
 

@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
@@ -119,7 +118,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ChangeTransfer
+     * @return \Generated\Shared\Transfer\ChangeTransfer
      */
     private function getChangeTransfer()
     {
@@ -132,9 +131,9 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param ProductConcreteTransfer $returnValue
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $returnValue
      *
-     * @return ProductManager
+     * @return \Spryker\Zed\ProductCartConnector\Business\Manager\ProductManager
      */
     public function getProductManager(ProductConcreteTransfer $returnValue)
     {
@@ -149,7 +148,7 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ProductFacade|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Product\Business\ProductFacade|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getMockProductFacade()
     {

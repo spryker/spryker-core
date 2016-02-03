@@ -14,22 +14,18 @@ use Spryker\Zed\Cart\Business\Operator\DecreaseOperator;
 use Spryker\Zed\Cart\Business\Operator\RemoveOperator;
 use Spryker\Zed\Cart\Business\Operator\IncreaseOperator;
 use Spryker\Zed\Cart\Business\Operator\AddOperator;
-use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
-use Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Cart\Business\Operator\OperatorInterface;
-use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
-use Spryker\Zed\Cart\CartConfig;
 use Spryker\Zed\Cart\CartDependencyProvider;
 
 /**
- * @method CartConfig getConfig()
+ * @method \Spryker\Zed\Cart\CartConfig getConfig()
  */
 class CartBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createAddOperator()
     {
@@ -44,7 +40,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createIncreaseOperator()
     {
@@ -59,7 +55,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createRemoveOperator()
     {
@@ -74,7 +70,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createDecreaseOperator()
     {
@@ -89,7 +85,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createCouponCodeAddOperator()
     {
@@ -104,7 +100,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createCouponCodeRemoveOperator()
     {
@@ -119,7 +115,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     public function createCouponCodeClearOperator()
     {
@@ -134,7 +130,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return StorageProviderInterface
+     * @return \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
     protected function createStorageProvider()
     {
@@ -142,7 +138,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CartToItemGrouperInterface
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface
      */
     public function getItemGrouper()
     {
@@ -152,7 +148,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getCartCalculator() instead.
      *
-     * @return CartToCalculationInterface
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
      */
     public function createCartCalculator()
     {
@@ -162,7 +158,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CartToCalculationInterface
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
      */
     public function getCartCalculator()
     {
@@ -170,9 +166,9 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param OperatorInterface $operator
+     * @param \Spryker\Zed\Cart\Business\Operator\OperatorInterface $operator
      *
-     * @return OperatorInterface
+     * @return \Spryker\Zed\Cart\Business\Operator\OperatorInterface
      */
     protected function configureCartOperator(OperatorInterface $operator)
     {

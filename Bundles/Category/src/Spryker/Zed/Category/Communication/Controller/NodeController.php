@@ -9,23 +9,20 @@ namespace Spryker\Zed\Category\Communication\Controller;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Category\Business\CategoryFacade;
-use Spryker\Zed\Category\Communication\CategoryCommunicationFactory;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method CategoryFacade getFacade()
- * @method CategoryCommunicationFactory getFactory()
- * @method CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
+ * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
  */
 class NodeController extends AbstractController
 {
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -34,7 +31,7 @@ class NodeController extends AbstractController
         $idCategoryNode = $request->get(CategoryConstants::PARAM_ID_NODE);
 
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $nodeList = $this->getQueryContainer()
             ->getCategoryNodesWithOrder($idCategoryNode, $locale->getIdLocale())
@@ -57,14 +54,14 @@ class NodeController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function reorderAction(Request $request)
     {
         $locale = $this->getFactory()
-            ->createCurrentLocale();
+            ->getCurrentLocale();
 
         $categoryNodesToReorder = (array) json_decode($request->request->get('nodes'), true);
 

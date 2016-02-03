@@ -14,18 +14,18 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
 {
 
     /**
-     * @var SalesToSequenceNumberInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface
      */
     protected $sequenceNumberFacade;
 
     /**
-     * @var SequenceNumberSettingsTransfer
+     * @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
     protected $sequenceNumberSettings;
 
     /**
-     * @param SalesToSequenceNumberInterface $sequenceNumberFacade
-     * @param SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface $sequenceNumberFacade
+     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer
      */
     public function __construct(
         SalesToSequenceNumberInterface $sequenceNumberFacade,
@@ -36,7 +36,7 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return string
      */

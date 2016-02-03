@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
@@ -39,47 +38,47 @@ interface FinderInterface
     /**
      * @param string $sku
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function getReservedOrderItemsForSku($sku);
 
     /**
      * @param string $sku
      *
-     * @return SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function countReservedOrderItemsForSku($sku);
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return array
      */
     public function getGroupedManuallyExecutableEvents(SpySalesOrder $order);
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag);
 
     /**
-     * @param SpySalesOrder $order
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag);
 
     /**
-     * @return ProcessInterface[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getProcesses();
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return string
      */

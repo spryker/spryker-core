@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\Facade;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class FacadeResolver extends AbstractClassResolver
@@ -17,9 +16,9 @@ class FacadeResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @throws FacadeNotFoundException
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException
      *
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     public function resolve($callerClass)
     {

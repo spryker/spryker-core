@@ -15,7 +15,7 @@ interface ProductCategoryToCategoryInterface
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return bool
      */
@@ -23,7 +23,7 @@ interface ProductCategoryToCategoryInterface
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return int
      */
@@ -31,7 +31,7 @@ interface ProductCategoryToCategoryInterface
 
     /**
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return int
      */
@@ -40,21 +40,21 @@ interface ProductCategoryToCategoryInterface
     /**
      * @param int $idCategoryNode
      *
-     * @return NodeTransfer
+     * @return \Generated\Shared\Transfer\NodeTransfer
      */
     public function getNodeById($idCategoryNode);
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return int
      */
     public function createCategory(CategoryTransfer $category, LocaleTransfer $locale);
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $createUrlPath
      *
      * @return int
@@ -62,8 +62,8 @@ interface ProductCategoryToCategoryInterface
     public function createCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale, $createUrlPath = true);
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -71,7 +71,7 @@ interface ProductCategoryToCategoryInterface
 
     /**
      * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $deleteChildren
      *
      * @return int
@@ -86,8 +86,8 @@ interface ProductCategoryToCategoryInterface
     public function deleteCategory($idCategory);
 
     /**
-     * @param CategoryTransfer $category
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\CategoryTransfer $category
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
@@ -96,7 +96,7 @@ interface ProductCategoryToCategoryInterface
     /**
      * @param int $idCategory
      *
-     * @return NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getNotMainNodesByIdCategory($idCategory);
 

@@ -9,13 +9,13 @@ namespace Spryker\Client\Storage;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method StorageFactory getFactory()
+ * @method \Spryker\Client\Storage\StorageFactory getFactory()
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {
 
     /**
-     * @return StorageClientInterface $service
+     * @return \Spryker\Client\Storage\StorageClientInterface $service
      */
     public function getService()
     {

@@ -13,7 +13,6 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
 use Spryker\Zed\Url\Persistence\UrlQueryContainer;
-use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 /**
  * @group Spryker
@@ -25,22 +24,22 @@ class UrlFacadeTest extends Test
 {
 
     /**
-     * @var UrlFacade
+     * @var \Spryker\Zed\Url\Business\UrlFacade
      */
     protected $urlFacade;
 
     /**
-     * @var UrlQueryContainerInterface
+     * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
     protected $urlQueryContainer;
 
     /**
-     * @var TouchQueryContainer
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected $touchQueryContainer;
 
     /**
-     * @var LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 

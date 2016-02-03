@@ -14,12 +14,12 @@ class RegionManager implements RegionManagerInterface
 {
 
     /**
-     * @var CountryQueryContainerInterface
+     * @var \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
     protected $countryQueryContainer;
 
     /**
-     * @param CountryQueryContainerInterface $countryQueryContainer
+     * @param \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface $countryQueryContainer
      */
     public function __construct(
         CountryQueryContainerInterface $countryQueryContainer
@@ -52,7 +52,7 @@ class RegionManager implements RegionManagerInterface
     /**
      * @param string $isoCode
      *
-     * @throws RegionExistsException
+     * @throws \Spryker\Zed\Country\Business\Exception\RegionExistsException
      *
      * @return void
      */

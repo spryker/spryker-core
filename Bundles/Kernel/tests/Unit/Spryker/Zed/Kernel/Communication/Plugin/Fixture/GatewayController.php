@@ -18,9 +18,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param TransferInterface $foo
+     * @param \Spryker\Shared\Transfer\TransferInterface $foo
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function goodAction(TransferInterface $foo)
     {
@@ -28,9 +28,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CartTransfer $foo
+     * @param \Generated\Shared\Transfer\CartTransfer $foo
      *
-     * @return CartTransfer
+     * @return \Generated\Shared\Transfer\CartTransfer
      */
     public function good2Action(CartTransfer $foo)
     {
@@ -38,10 +38,10 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param TransferInterface $foo
-     * @param TransferInterface $bar
+     * @param \Spryker\Shared\Transfer\TransferInterface $foo
+     * @param \Spryker\Shared\Transfer\TransferInterface $bar
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function twoTransferParametersAction(TransferInterface $foo, TransferInterface $bar)
     {
@@ -52,11 +52,11 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param TransferInterface $foo
+     * @param \Spryker\Shared\Transfer\TransferInterface $foo
      * @param mixed $bar
      * @param mixed $baz
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function tooManyParametersAction(TransferInterface $foo, $bar, $baz)
     {

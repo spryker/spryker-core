@@ -8,7 +8,6 @@ namespace Spryker\Zed\Development\Business\CodeStyleFixer;
 
 use Symfony\CS\AbstractFixer;
 use Symfony\CS\FixerInterface;
-use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
 
 class FunctionSpacingFixer extends AbstractFixer
@@ -32,7 +31,7 @@ class FunctionSpacingFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens|Token[] $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens|\Symfony\CS\Tokenizer\Token[] $tokens
      *
      * @return void
      */
@@ -98,7 +97,7 @@ class FunctionSpacingFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens $tokens
      * @param int $openingBraceIndex
      *
      * @return bool
@@ -109,7 +108,7 @@ class FunctionSpacingFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens $tokens
+     * @param \Symfony\CS\Tokenizer\Tokens $tokens
      * @param int $closingBraceIndex
      *
      * @return bool

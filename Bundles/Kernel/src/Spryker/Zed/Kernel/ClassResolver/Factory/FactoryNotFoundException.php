@@ -7,15 +7,15 @@
 namespace Spryker\Zed\Kernel\ClassResolver\Factory;
 
 use Spryker\Shared\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 
 class FactoryNotFoundException extends \Exception
 {
 
     /**
-     * @param ClassInfo $callerClassInfo
+     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
     public function __construct(ClassInfo $callerClassInfo)
     {
@@ -23,7 +23,7 @@ class FactoryNotFoundException extends \Exception
     }
 
     /**
-     * @param ClassInfo $callerClassInfo
+     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
      *
      * @return string
      */
@@ -40,7 +40,7 @@ class FactoryNotFoundException extends \Exception
 
         $message .= sprintf(
             'E.g. %1$s\\Zed\\%2$s\\%3$s\\%2$s%3$sFactory' . PHP_EOL . PHP_EOL,
-            Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
+            Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle(),
             $callerClassInfo->getLayer()
         );

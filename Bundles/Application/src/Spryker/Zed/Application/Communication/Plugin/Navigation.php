@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\Application\Communication\Plugin;
 
-use Spryker\Zed\Application\Business\ApplicationFacade;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 
 /**
- * @method ApplicationFacade getFacade()
- * @method ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class Navigation extends AbstractPlugin
 {

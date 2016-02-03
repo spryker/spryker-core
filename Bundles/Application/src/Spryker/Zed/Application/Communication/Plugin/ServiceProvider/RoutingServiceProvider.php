@@ -10,12 +10,10 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Cmf\Component\Routing\ChainRouter;
-use Spryker\Zed\Application\Business\ApplicationFacade;
-use Spryker\Zed\Application\Communication\ApplicationCommunicationFactory;
 
 /**
- * @method ApplicationFacade getFacade()
- * @method ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -28,7 +26,7 @@ class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderIn
     public function register(Application $app)
     {
         $app['url_matcher'] = $app->share(function () use ($app) {
-            /** @var ChainRouter $chainRouter */
+            /** @var \Symfony\Cmf\Component\Routing\ChainRouter $chainRouter */
             $chainRouter = $app['routers'];
             $chainRouter->setContext($app['request_context']);
 
@@ -41,7 +39,7 @@ class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

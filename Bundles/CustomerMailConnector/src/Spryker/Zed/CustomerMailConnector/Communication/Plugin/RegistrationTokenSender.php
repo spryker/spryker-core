@@ -8,12 +8,10 @@ namespace Spryker\Zed\CustomerMailConnector\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
-use Spryker\Zed\CustomerMailConnector\Business\CustomerMailConnectorFacade;
-use Spryker\Zed\CustomerMailConnector\Communication\CustomerMailConnectorCommunicationFactory;
 
 /**
- * @method CustomerMailConnectorFacade getFacade()
- * @method CustomerMailConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerMailConnector\Business\CustomerMailConnectorFacade getFacade()
+ * @method \Spryker\Zed\CustomerMailConnector\Communication\CustomerMailConnectorCommunicationFactory getFactory()
  */
 class RegistrationTokenSender extends AbstractPlugin implements RegistrationTokenSenderPluginInterface
 {

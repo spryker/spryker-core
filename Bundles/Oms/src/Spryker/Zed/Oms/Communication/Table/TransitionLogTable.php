@@ -14,14 +14,14 @@ class TransitionLogTable extends AbstractTable
 {
 
     /**
-     * @var OmsQueryContainerInterface
+     * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
     protected $omsQueryContainer;
 
     /**
      * TransitionLogTable constructor.
      *
-     * @param OmsQueryContainerInterface $omsQueryContainer
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $omsQueryContainer
      */
     public function __construct(OmsQueryContainerInterface $omsQueryContainer)
     {

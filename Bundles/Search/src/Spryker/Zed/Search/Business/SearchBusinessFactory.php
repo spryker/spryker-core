@@ -8,22 +8,20 @@ namespace Spryker\Zed\Search\Business;
 
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 use Spryker\Zed\Search\Business\Model\Search;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
-use Spryker\Zed\Search\SearchConfig;
 use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
- * @method SearchConfig getConfig()
+ * @method \Spryker\Zed\Search\SearchConfig getConfig()
  */
 class SearchBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
-     * @return SearchInstaller
+     * @return \Spryker\Zed\Search\Business\Model\SearchInstaller
      */
     public function createSearchInstaller(MessengerInterface $messenger)
     {
@@ -34,7 +32,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Search
+     * @return \Spryker\Zed\Search\Business\Model\Search
      */
     public function createSearch()
     {
@@ -44,7 +42,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AbstractInstallerPlugin[]
+     * @return \Spryker\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin[]
      */
     public function getInstallers()
     {

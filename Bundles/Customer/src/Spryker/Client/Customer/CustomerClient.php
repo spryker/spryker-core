@@ -8,19 +8,16 @@ namespace Spryker\Client\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\AddressesTransfer;
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\ZedRequest\Client\Response;
 
 /**
- * @method CustomerFactory getFactory()
+ * @method \Spryker\Client\Customer\CustomerFactory getFactory()
  */
 class CustomerClient extends AbstractClient implements CustomerClientInterface
 {
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
@@ -39,9 +36,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer)
     {
@@ -53,9 +50,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function registerCustomer(CustomerTransfer $customerTransfer)
     {
@@ -65,9 +62,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
@@ -77,9 +74,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      *
      * @deprecated Use sendPasswordRestoreMail() instead
      */
@@ -91,9 +88,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer)
     {
@@ -103,9 +100,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
@@ -115,9 +112,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function setCustomer(CustomerTransfer $customerTransfer)
     {
@@ -129,7 +126,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer()
     {
@@ -141,9 +138,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomerByEmail(CustomerTransfer $customerTransfer)
     {
@@ -155,9 +152,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function updateCustomer(CustomerTransfer $customerTransfer)
     {
@@ -167,9 +164,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function updateCustomerPassword(CustomerTransfer $customerTransfer)
     {
@@ -179,9 +176,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return Response
+     * @return \Spryker\Client\ZedRequest\Client\Response
      */
     public function deleteCustomer(CustomerTransfer $customerTransfer)
     {
@@ -191,9 +188,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function login(CustomerTransfer $customerTransfer)
     {
@@ -229,9 +226,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return AddressesTransfer
+     * @return \Generated\Shared\Transfer\AddressesTransfer
      */
     public function getAddresses(CustomerTransfer $customerTransfer)
     {
@@ -241,9 +238,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function getAddress(AddressTransfer $addressTransfer)
     {
@@ -253,9 +250,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function updateAddress(AddressTransfer $addressTransfer)
     {
@@ -265,9 +262,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
@@ -277,9 +274,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
@@ -289,9 +286,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function createAddress(AddressTransfer $addressTransfer)
     {
@@ -301,9 +298,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function deleteAddress(AddressTransfer $addressTransfer)
     {
@@ -313,9 +310,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function setDefaultShippingAddress(AddressTransfer $addressTransfer)
     {
@@ -325,9 +322,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer)
     {

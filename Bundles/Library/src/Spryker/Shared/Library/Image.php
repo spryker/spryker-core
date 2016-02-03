@@ -8,8 +8,6 @@ namespace Spryker\Shared\Library;
 
 use Spryker\Shared\Config;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Product\ProductConstants;
-use Spryker\Shared\Application\ApplicationConstants;
 
 class Image
 {
@@ -45,6 +43,9 @@ class Image
     /**
      * @param string $filename
      *
+     * @throws \ErrorException
+     * @throws \Exception
+     *
      * @return string
      */
     public static function getAbsoluteProductImageUrl($filename)
@@ -56,10 +57,10 @@ class Image
 
             switch ($applicationName) {
                 case 'ZED':
-                    return self::getSchema() . Config::get(ApplicationConstants::HOST_ZED_GUI) . self::PLACEHOLDER_PRODUCT_ZED;
+                    return self::getSchema() . Config::get(LibraryConstants::HOST_ZED_GUI) . self::PLACEHOLDER_PRODUCT_ZED;
 
                 case 'YVES':
-                    return self::getSchema() . Config::get(ApplicationConstants::HOST_YVES) . self::PLACEHOLDER_PRODUCT_YVES;
+                    return self::getSchema() . Config::get(LibraryConstants::HOST_YVES) . self::PLACEHOLDER_PRODUCT_YVES;
 
                 default:
                     throw new \ErrorException('Invalid Application name');
@@ -78,7 +79,7 @@ class Image
             [
                 $urlDomain,
                 Store::getInstance()->getStoreName(),
-                Config::get(ProductConstants::PRODUCT_IMAGE_IMAGE_URL_PREFIX), $urlKey,
+                Config::get(LibraryConstants::PRODUCT_IMAGE_IMAGE_URL_PREFIX), $urlKey,
             ]
 
         );
@@ -92,13 +93,13 @@ class Image
     protected static function getAbsoluteProductImageUrlForCloudUsage($objectName)
     {
         if (static::getProtocol() === self::HTTP) {
-            $host = Config::get(ApplicationConstants::CLOUD_CDN_STATIC_MEDIA_HTTP);
+            $host = Config::get(LibraryConstants::CLOUD_CDN_STATIC_MEDIA_HTTP);
         } else {
-            $host = Config::get(ApplicationConstants::CLOUD_CDN_STATIC_MEDIA_HTTPS);
+            $host = Config::get(LibraryConstants::CLOUD_CDN_STATIC_MEDIA_HTTPS);
         }
 
-        return $host . '/' . Config::get(ApplicationConstants::CLOUD_CDN_STATIC_MEDIA_PREFIX)
-            . Config::get(ApplicationConstants::CLOUD_CDN_PRODUCT_IMAGES_PATH_NAME) . $objectName;
+        return $host . '/' . Config::get(LibraryConstants::CLOUD_CDN_STATIC_MEDIA_PREFIX)
+            . Config::get(LibraryConstants::CLOUD_CDN_PRODUCT_IMAGES_PATH_NAME) . $objectName;
     }
 
     /**
@@ -178,10 +179,10 @@ class Image
     protected static function getStaticMediaUrl()
     {
         if (self::HTTPS === self::getProtocol()) {
-            return Config::get(ApplicationConstants::HOST_SSL_STATIC_MEDIA);
+            return Config::get(LibraryConstants::HOST_SSL_STATIC_MEDIA);
         }
 
-        return Config::get(ApplicationConstants::HOST_STATIC_MEDIA);
+        return Config::get(LibraryConstants::HOST_STATIC_MEDIA);
     }
 
     /**

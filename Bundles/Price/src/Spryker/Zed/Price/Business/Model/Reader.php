@@ -6,12 +6,7 @@
 
 namespace Spryker\Zed\Price\Business\Model;
 
-use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
-use Spryker\Zed\Price\Persistence\PriceQueryContainer;
-use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Orm\Zed\Price\Persistence\SpyPriceType;
-use Spryker\Zed\Price\PriceConfig;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class Reader implements ReaderInterface
 {
@@ -21,17 +16,17 @@ class Reader implements ReaderInterface
     const SKU_UNKNOWN = 'sku unknown';
 
     /**
-     * @var PriceQueryContainer
+     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var PriceToProductInterface
+     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface
      */
     protected $productFacade;
 
     /**
-     * @var PriceConfig
+     * @var \Spryker\Zed\Price\PriceConfig
      */
     protected $priceSettings;
 
@@ -41,9 +36,9 @@ class Reader implements ReaderInterface
     protected $priceTypeEntityByNameCache = [];
 
     /**
-     * @param PriceQueryContainer $queryContainer
-     * @param PriceToProductInterface $productFacade
-     * @param PriceConfig $priceSettings
+     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainer $queryContainer
+     * @param \Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface $productFacade
+     * @param \Spryker\Zed\Price\PriceConfig $priceSettings
      */
     public function __construct(
         $queryContainer,
@@ -63,7 +58,7 @@ class Reader implements ReaderInterface
         $priceTypes = [];
         $priceTypeEntities = $this->queryContainer->queryAllPriceTypes()->find();
 
-        /** @var SpyPriceType $priceType */
+        /** @var \Orm\Zed\Price\Persistence\SpyPriceType $priceType */
         foreach ($priceTypeEntities as $priceType) {
             $priceTypes[] = $priceType->getName();
         }
@@ -92,7 +87,7 @@ class Reader implements ReaderInterface
      *
      * @throws \Exception
      *
-     * @return SpyPriceType
+     * @return \Orm\Zed\Price\Persistence\SpyPriceType
      */
     public function getPriceTypeByName($priceTypeName)
     {
@@ -172,11 +167,11 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @throws \Exception
      *
-     * @return SpyPriceProduct
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
     protected function getPriceEntity($sku, SpyPriceType $priceType)
     {
@@ -198,7 +193,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @return bool
      */
@@ -213,7 +208,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
      * @return bool
      */
@@ -228,9 +223,9 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
-     * @return SpyPriceProduct
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
     protected function getPriceEntityForProductConcrete($sku, $priceType)
     {
@@ -241,9 +236,9 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
-     * @return SpyPriceProduct
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
      */
     protected function getPriceEntityForProductAbstract($sku, $priceType)
     {
@@ -255,7 +250,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $priceType
      *
-     * @return SpyPriceType
+     * @return \Orm\Zed\Price\Persistence\SpyPriceType
      */
     protected function handleDefaultPriceType($priceType = null)
     {
@@ -269,7 +264,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
@@ -281,7 +276,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws MissingProductException
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */

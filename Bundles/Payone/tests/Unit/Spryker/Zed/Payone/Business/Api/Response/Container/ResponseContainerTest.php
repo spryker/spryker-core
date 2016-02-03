@@ -213,7 +213,7 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param AbstractResponseContainer $container
+     * @param \Spryker\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer $container
      *
      * @return void
      */

@@ -8,18 +8,17 @@ namespace Spryker\Zed\Payolution\Dependency\Facade;
 
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 class PayolutionToGlossaryBridge implements PayolutionToGlossaryInterface
 {
 
     /**
-     * @var GlossaryFacade
+     * @var \Spryker\Zed\Glossary\Business\GlossaryFacade
      */
     protected $glossaryFacade;
 
     /**
-     * @param GlossaryFacade $glossaryFacade
+     * @param \Spryker\Zed\Glossary\Business\GlossaryFacade $glossaryFacade
      */
     public function __construct($glossaryFacade)
     {
@@ -28,7 +27,7 @@ class PayolutionToGlossaryBridge implements PayolutionToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return bool
      */
@@ -41,7 +40,7 @@ class PayolutionToGlossaryBridge implements PayolutionToGlossaryInterface
      * @param string $keyName
      * @param array $data
      *
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */

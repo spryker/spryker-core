@@ -4,12 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\Spryker\Zed\Acl;
+namespace Functional\Spryker\Zed\Acl\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
@@ -25,17 +24,17 @@ class AclTest extends Test
 {
 
     /**
-     * @var AclFacade
+     * @var \Spryker\Zed\Acl\Business\AclFacade
      */
     protected $facade;
 
     /**
-     * @var UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacade
      */
     protected $userFacade;
 
     /**
-     * @var RolesTransfer
+     * @var \Generated\Shared\Transfer\RolesTransfer
      */
     protected $rolesTransfer;
 
@@ -104,7 +103,7 @@ class AclTest extends Test
     /**
      * @param array $data
      *
-     * @return UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
     private function mockAddUser(array $data)
     {
@@ -191,7 +190,7 @@ class AclTest extends Test
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
         $groupData = $this->mockGroupData();
-        $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
+        $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
@@ -206,7 +205,7 @@ class AclTest extends Test
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
         $groupData = $this->mockGroupData();
-        $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
+        $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
 
         $removed = $this->facade->removeRole($roleDto->getIdAclRole());
         $this->assertTrue($removed);
@@ -226,7 +225,7 @@ class AclTest extends Test
         $groupData = $this->mockGroupData();
         $roleData = $this->mockRoleData();
         $transferRole = $this->facade->addRole($roleData['name']);
-        $transferGroup = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
+        $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $transferRole);
         $this->assertNotNull($transferRole->getIdAclRole());
@@ -239,7 +238,7 @@ class AclTest extends Test
     public function testAddRuleAndAddToRole()
     {
         $groupData = $this->mockGroupData();
-        $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
+        $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name'], $this->rolesTransfer);
 

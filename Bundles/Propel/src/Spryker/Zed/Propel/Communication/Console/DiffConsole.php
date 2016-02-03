@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Propel\Communication\Console;
 
 use Spryker\Shared\Config;
-use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,8 +32,8 @@ class DiffConsole extends Console
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return int|null|void
      */
@@ -43,7 +43,7 @@ class DiffConsole extends Console
 
         $this->info('Create diff');
 
-        $config = Config::get(ApplicationConstants::PROPEL);
+        $config = Config::get(PropelConstants::PROPEL);
         $command = 'vendor/bin/propel diff --config-dir '
             . $config['paths']['phpConfDir']
             . ' --schema-dir ' . $config['paths']['schemaDir'];

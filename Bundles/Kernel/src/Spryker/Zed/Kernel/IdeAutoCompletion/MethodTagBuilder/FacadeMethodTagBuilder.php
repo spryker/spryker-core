@@ -16,7 +16,7 @@ class FacadeMethodTagBuilder extends AbstractSingleFileMethodTagBuilder
     const FILE_NAME_SUFFIX = 'Facade.php';
 
     /**
-     * @param OptionsResolver $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */

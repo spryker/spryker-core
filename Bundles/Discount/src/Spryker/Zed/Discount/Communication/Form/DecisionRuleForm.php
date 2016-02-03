@@ -29,7 +29,7 @@ class DecisionRuleForm extends AbstractRuleForm
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void

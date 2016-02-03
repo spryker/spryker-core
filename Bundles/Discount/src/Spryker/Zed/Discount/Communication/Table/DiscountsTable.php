@@ -24,12 +24,12 @@ class DiscountsTable extends AbstractTable
     const URL_DISCOUNT_CART_RULE_EDIT = '/discount/cart-rule/edit';
 
     /**
-     * @var SpyDiscountQuery
+     * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     protected $discountQuery;
 
     /**
-     * @param SpyDiscountQuery $discountQuery
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountQuery $discountQuery
      */
     public function __construct(SpyDiscountQuery $discountQuery)
     {
@@ -37,9 +37,9 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return TableConfiguration
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -59,7 +59,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
@@ -71,7 +71,7 @@ class DiscountsTable extends AbstractTable
             ->where('fk_discount_voucher_pool IS NULL');
 
         $queryResult = $this->runQuery($query, $config, true);
-        /** @var SpyDiscount $item */
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscount $item */
         foreach ($queryResult as $item) {
             $chosenDecisionRules = array_column($item->getDecisionRules()->toArray(), self::DECISION_RULE_PLUGIN);
 
@@ -92,7 +92,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscount $discount
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discount
      *
      * @return string
      */
@@ -105,7 +105,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscount $discount
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discount
      *
      * @return string
      */
@@ -119,7 +119,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param SpyDiscount $item
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $item
      *
      * @return array
      */

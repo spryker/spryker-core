@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use Spryker\Zed\Discount\Business\Writer\DiscountWriter;
 use Spryker\Zed\Discount\Communication\Form\CartRuleForm;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 class CartRule implements CartRuleInterface
 {
@@ -23,22 +22,22 @@ class CartRule implements CartRuleInterface
     const COLLECTOR_ITERATOR = 'collector_';
 
     /**
-     * @var DiscountQueryContainer
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
-     * @var DiscountDecisionRuleWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter
      */
     protected $discountDecisionRuleWriter;
 
     /**
-     * @var DiscountWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountWriter
      */
     protected $discountWriter;
 
@@ -53,16 +52,16 @@ class CartRule implements CartRuleInterface
     ];
 
     /**
-     * @var DiscountCollectorWriter
+     * @var \Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter
      */
     protected $discountCollectorWriter;
 
     /**
-     * @param DiscountQueryContainer $queryContainer
-     * @param Store $store
-     * @param DiscountDecisionRuleWriter $discountDecisionRuleWriter
-     * @param DiscountWriter $discountWriter
-     * @param DiscountCollectorWriter $discountCollectorWriter
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainer $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter $discountDecisionRuleWriter
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountWriter $discountWriter
+     * @param \Spryker\Zed\Discount\Business\Writer\DiscountCollectorWriter $discountCollectorWriter
      */
     public function __construct(
         DiscountQueryContainer $queryContainer,
@@ -79,9 +78,9 @@ class CartRule implements CartRuleInterface
     }
 
     /**
-     * @param CartRuleTransfer $cartRuleFormTransfer
+     * @param \Generated\Shared\Transfer\CartRuleTransfer $cartRuleFormTransfer
      *
-     * @return DiscountTransfer
+     * @return \Generated\Shared\Transfer\DiscountTransfer
      */
     public function saveCartRule(CartRuleTransfer $cartRuleFormTransfer)
     {
@@ -153,9 +152,9 @@ class CartRule implements CartRuleInterface
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     protected function saveDiscount($discountTransfer)
     {

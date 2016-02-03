@@ -19,7 +19,7 @@ interface AdapterInterface
     public function sendRawRequest(array $params);
 
     /**
-     * @param AbstractRequestContainer $container
+     * @param \Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer $container
      *
      * @return mixed
      */

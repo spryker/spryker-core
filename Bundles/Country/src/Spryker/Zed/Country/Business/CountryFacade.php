@@ -6,25 +6,33 @@
 
 namespace Spryker\Zed\Country\Business;
 
-use Generated\Shared\Transfer\CountryCollectionTransfer;
-use Generated\Shared\Transfer\CountryTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 
 /**
- * @method CountryBusinessFactory getFactory()
+ * @method \Spryker\Zed\Country\Business\CountryBusinessFactory getFactory()
  */
 class CountryFacade extends AbstractFacade
 {
 
     /**
-     * @param LoggerInterface $messenger
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
     public function install(LoggerInterface $messenger)
     {
         $this->getFactory()->createInstaller($messenger)->install();
+    }
+
+    /**
+     * @param string $iso2Code
+     *
+     * @return bool
+     */
+    public function hasCountry($iso2Code)
+    {
+        return $this->getFactory()->createCountryManager()->hasCountry($iso2Code);
     }
 
     /**
@@ -38,7 +46,7 @@ class CountryFacade extends AbstractFacade
     }
 
     /**
-     * @return CountryCollectionTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getAvailableCountries()
     {
@@ -52,13 +60,27 @@ class CountryFacade extends AbstractFacade
     /**
      * @param string $countryName
      *
-     * @return CountryTransfer
+     * @deprecated Use getPreferredCountryByName()
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferedCountryByName($countryName)
     {
+        trigger_error('Deprecated, use getPreferredCountryByName() instead.', E_USER_DEPRECATED);
+
+        return $this->getPreferredCountryByName($countryName);
+    }
+
+    /**
+     * @param string $countryName
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getPreferredCountryByName($countryName)
+    {
         $countryTransfer = $this->getFactory()
             ->createCountryManager()
-            ->getPreferedCountryByName($countryName);
+            ->getPreferredCountryByName($countryName);
 
         return $countryTransfer;
     }

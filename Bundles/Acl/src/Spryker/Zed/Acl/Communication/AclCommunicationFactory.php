@@ -9,7 +9,6 @@ namespace Spryker\Zed\Acl\Communication;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Acl\Communication\Table\GroupTable;
-use Spryker\Zed\Acl\AclConfig;
 use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Acl\Communication\Form\RoleForm;
@@ -18,16 +17,12 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Acl\Communication\Table\GroupUsersTable;
 use Spryker\Zed\Acl\Communication\Table\RoleTable;
 use Spryker\Zed\Acl\Communication\Table\RulesetTable;
-use Spryker\Zed\Acl\Persistence\AclQueryContainer;
-use Spryker\Zed\User\Business\UserFacade;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method AclQueryContainer getQueryContainer()
- * @method AclConfig getConfig()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\AclConfig getConfig()
  */
 class AclCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -35,7 +30,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getUserFacade() instead.
      *
-     * @return UserFacade
+     * @return \Spryker\Zed\User\Business\UserFacade
      */
     public function createUserFacade()
     {
@@ -45,7 +40,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UserFacade
+     * @return \Spryker\Zed\User\Business\UserFacade
      */
     public function getUserFacade()
     {
@@ -53,7 +48,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return GroupTable
+     * @return \Spryker\Zed\Acl\Communication\Table\GroupTable
      */
     public function createGroupTable()
     {
@@ -65,7 +60,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use getGroupRoleListByGroupId() instead.
      *
-     * @param $idAclGroup
+     * @param int $idAclGroup
      *
      * @return array
      */
@@ -98,7 +93,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idAclGroup
      *
-     * @return GroupUsersTable
+     * @return \Spryker\Zed\Acl\Communication\Table\GroupUsersTable
      */
     public function createGroupUsersTable($idAclGroup)
     {
@@ -109,10 +104,10 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $options
      *
-     * @return GroupForm
+     * @return \Spryker\Zed\Acl\Communication\Form\GroupForm
      */
     public function createGroupForm(Request $request, array $options)
     {
@@ -125,7 +120,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return RoleTable
+     * @return \Spryker\Zed\Acl\Communication\Table\RoleTable
      */
     public function createRoleTable()
     {
@@ -133,9 +128,9 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param RoleTransfer $roleTransfer
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
      *
-     * @return Form
+     * @return \Symfony\Component\Form\Form
      */
     public function createRoleForm(RoleTransfer $roleTransfer)
     {
@@ -146,9 +141,9 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param RuleTransfer $ruleTransfer
+     * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
-     * @return Form|FormInterface
+     * @return \Symfony\Component\Form\Form|\Symfony\Component\Form\FormInterface
      */
     public function createRulesetForm(RuleTransfer $ruleTransfer)
     {
@@ -160,7 +155,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idAclRole
      *
-     * @return RulesetTable
+     * @return \Spryker\Zed\Acl\Communication\Table\RulesetTable
      */
     public function createRulesetTable($idAclRole)
     {

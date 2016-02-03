@@ -9,21 +9,20 @@ namespace Spryker\Client\ZedRequest;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Transfer\TransferInterface;
 use Spryker\Client\ZedRequest\Client\ZedClient;
-use Spryker\Shared\ZedRequest\Client\Message;
 
 /**
- * @method ZedRequestFactory getFactory()
+ * @method \Spryker\Client\ZedRequest\ZedRequestFactory getFactory()
  */
 class ZedRequestClient extends AbstractClient
 {
 
     /**
-     * @var ZedClient
+     * @var \Spryker\Client\ZedRequest\Client\ZedClient
      */
     private $zedClient;
 
     /**
-     * @return ZedClient
+     * @return \Spryker\Client\ZedRequest\Client\ZedClient
      */
     private function getClient()
     {
@@ -36,11 +35,11 @@ class ZedRequestClient extends AbstractClient
 
     /**
      * @param $url
-     * @param TransferInterface $object
+     * @param \Spryker\Shared\Transfer\TransferInterface $object
      * @param null $timeoutInSeconds
      * @param bool|false $isBackgroundRequest
      *
-     * @return TransferInterface
+     * @return \Spryker\Shared\Transfer\TransferInterface
      */
     public function call($url, TransferInterface $object, $timeoutInSeconds = null, $isBackgroundRequest = false)
     {
@@ -48,7 +47,7 @@ class ZedRequestClient extends AbstractClient
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getLastResponseInfoMessages()
     {
@@ -56,7 +55,7 @@ class ZedRequestClient extends AbstractClient
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getLastResponseErrorMessages()
     {
@@ -64,7 +63,7 @@ class ZedRequestClient extends AbstractClient
     }
 
     /**
-     * @return Message[]
+     * @return \Spryker\Shared\ZedRequest\Client\Message[]
      */
     public function getLastResponseSuccessMessages()
     {

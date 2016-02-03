@@ -24,7 +24,7 @@ class ContainerKeyNotFoundException extends \Exception
     }
 
     /**
-     * @param ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      * @param string $key
      *
      * @return string

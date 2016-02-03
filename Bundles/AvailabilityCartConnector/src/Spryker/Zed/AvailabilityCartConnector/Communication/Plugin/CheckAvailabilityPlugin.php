@@ -6,11 +6,10 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Communication\Plugin;
 
-use Spryker\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnectorCommunicationFactory as CommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method CommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityCartConnector\Communication\AvailabilityCartConnectorCommunicationFactory getFactory()
  */
 class CheckAvailabilityPlugin extends AbstractPlugin
 {

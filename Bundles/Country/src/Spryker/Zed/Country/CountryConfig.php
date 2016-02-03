@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Country;
 
-use Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CountryConfig extends AbstractBundleConfig
@@ -25,7 +24,7 @@ class CountryConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return RegionInstallInterface[]
+     * @return \Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface[]
      */
     protected function getCountriesToInstallRegionsFor()
     {

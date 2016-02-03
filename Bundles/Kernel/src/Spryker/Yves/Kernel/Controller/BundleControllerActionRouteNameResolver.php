@@ -16,17 +16,17 @@ class BundleControllerActionRouteNameResolver implements RouteNameResolverInterf
 {
 
     /**
-     * @var BundleControllerActionInterface
+     * @var \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface
      */
     private $bundleControllerAction;
 
     /**
-     * @var CamelCaseToDash
+     * @var \Zend\Filter\Word\CamelCaseToDash
      */
     private $filter;
 
     /**
-     * @param BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      */
     public function __construct(BundleControllerActionInterface $bundleControllerAction)
     {
@@ -56,7 +56,7 @@ class BundleControllerActionRouteNameResolver implements RouteNameResolverInterf
     }
 
     /**
-     * @return CamelCaseToDash
+     * @return \Zend\Filter\Word\CamelCaseToDash
      */
     private function getFilter()
     {

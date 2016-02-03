@@ -8,7 +8,6 @@ namespace Functional\Spryker\Zed\Glossary\Communication\Grid;
 use Codeception\TestCase\Test;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
-use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,12 +21,12 @@ class TranslationGridTest extends Test
 {
 
     /**
-     * @var SpyGlossaryKeyQuery
+     * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery
      */
     private $query;
 
     /**
-     * @var request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
 
@@ -63,7 +62,7 @@ class TranslationGridTest extends Test
     }
 
     /**
-     * @return LocaleFacade
+     * @return \Spryker\Zed\Locale\Business\LocaleFacade
      */
     private function getLocaleFacade()
     {
@@ -71,7 +70,7 @@ class TranslationGridTest extends Test
     }
 
     /**
-     * @return GlossaryQueryContainer
+     * @return \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer
      */
     private function getGlossaryQueryContainer()
     {

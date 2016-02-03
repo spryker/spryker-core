@@ -7,18 +7,17 @@
 namespace Spryker\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory;
 
 class DiscountVoucherPoolCategoryWriter extends AbstractWriter
 {
 
     /**
-     * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyDiscountVoucherPoolCategory
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
      */
     public function create(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
@@ -30,11 +29,11 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
     }
 
     /**
-     * @param VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
+     * @param \Generated\Shared\Transfer\VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyDiscountVoucherPoolCategory
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
      */
     public function update(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
@@ -51,7 +50,7 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
     /**
      * @param string $discountPoolCategoryName
      *
-     * @return SpyDiscountVoucherPoolCategory
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory
      */
     public function getOrCreateByName($discountPoolCategoryName)
     {

@@ -11,15 +11,15 @@ use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method MailBusinessFactory getFactory()
+ * @method \Spryker\Zed\Mail\Business\MailBusinessFactory getFactory()
  */
 class MailFacade extends AbstractFacade
 {
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return SendMailResponsesTransfer
+     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
@@ -27,7 +27,7 @@ class MailFacade extends AbstractFacade
     }
 
     /**
-     * @param SendMailResponsesTransfer $mailResponses
+     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $mailResponses
      *
      * @return bool
      */

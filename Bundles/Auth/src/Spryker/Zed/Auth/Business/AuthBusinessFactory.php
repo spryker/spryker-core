@@ -6,26 +6,21 @@
 
 namespace Spryker\Zed\Auth\Business;
 
-use Spryker\Client\Session\SessionClientInterface;
-use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\Auth\Business\Model\Auth;
 use Spryker\Zed\Auth\Business\Model\PasswordReset;
 use Spryker\Zed\Auth\AuthDependencyProvider;
-use Spryker\Zed\Auth\Persistence\AuthQueryContainer;
-use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
 /**
- * @method AuthConfig getConfig()
- * @method AuthQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Auth\AuthConfig getConfig()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainer getQueryContainer()
  */
 class AuthBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return Auth
+     * @return \Spryker\Zed\Auth\Business\Model\Auth
      */
     public function createAuthModel()
     {
@@ -38,9 +33,9 @@ class AuthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return SessionClientInterface
+     * @return \Spryker\Client\Session\SessionClientInterface
      */
     protected function getSessionClient()
     {
@@ -48,9 +43,9 @@ class AuthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return AuthToUserBridge
+     * @return \Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge
      */
     protected function getUserFacade()
     {
@@ -58,7 +53,7 @@ class AuthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return StaticToken
+     * @return \Spryker\Zed\Auth\Business\Client\StaticToken
      */
     public function createStaticTokenClient()
     {
@@ -66,7 +61,7 @@ class AuthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PasswordReset
+     * @return \Spryker\Zed\Auth\Business\Model\PasswordReset
      */
     public function createPasswordReset()
     {

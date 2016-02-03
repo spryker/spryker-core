@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\ProductSearch\Business;
 
-use Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
 use Spryker\Zed\ProductSearch\Business\Operation\OperationManager;
 use Spryker\Zed\ProductSearch\Business\Locator\OperationLocator;
@@ -15,48 +14,36 @@ use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessor;
 use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Library\Storage\StorageInstanceBuilder;
-use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch;
-use Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface;
-use Spryker\Zed\ProductSearch\Business\Operation\OperationInterface;
-use Spryker\Zed\ProductSearch\Business\Operation\OperationManagerInterface;
-use Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessorInterface;
-use Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformerInterface;
-use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorInterface;
-use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
-use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
-use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
-use Spryker\Zed\ProductSearch\ProductSearchConfig;
 use Spryker\Zed\ProductSearch\Business\Operation\AddToResult;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToField;
 use Spryker\Zed\ProductSearch\Business\Operation\CopyToMultiField;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
-use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer;
 
 /**
- * @method ProductSearchConfig getConfig()
- * @method ProductSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer getQueryContainer()
  */
 class ProductSearchBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return ProductAttributesTransformerInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformerInterface
      */
     public function createProductAttributesTransformer()
     {
         return new ProductAttributesTransformer(
-            $this->getProductSearchQueryContainer(),
+            $this->getQueryContainer(),
             $this->createOperationLocator(),
             $this->createDefaultOperation()
         );
     }
 
     /**
-     * @return ProductSearchProcessorInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Processor\ProductSearchProcessorInterface
      */
     public function createProductSearchProcessor()
     {
@@ -67,9 +54,9 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
-     * @return InstallProductSearch
+     * @return \Spryker\Zed\ProductSearch\Business\Internal\InstallProductSearch
      */
     public function createInstaller(MessengerInterface $messenger)
     {
@@ -86,9 +73,9 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws ContainerKeyNotFoundException
+     * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return ProductSearchToCollectorInterface
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorInterface
      */
     protected function getCollectorFacade()
     {
@@ -96,7 +83,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperationInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Operation\OperationInterface
      */
     protected function createDefaultOperation()
     {
@@ -104,7 +91,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperationLocatorInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Locator\OperationLocatorInterface
      */
     protected function createOperationLocator()
     {
@@ -119,39 +106,43 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OperationManagerInterface
+     * @return \Spryker\Zed\ProductSearch\Business\Operation\OperationManagerInterface
      */
     protected function createOperationManager()
     {
         return new OperationManager(
-            $this->getProductSearchQueryContainer()
+            $this->getQueryContainer()
         );
     }
 
     /**
-     * @deprecated Use getProductSearchQueryContainer() instead.
+     * @deprecated Use getQueryContainer() instead.
      *
-     * @return ProductSearchQueryContainerInterface
+     * @return \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
     protected function createProductSearchQueryContainer()
     {
-        trigger_error('Deprecated, use getProductSearchQueryContainer() instead.', E_USER_DEPRECATED);
+        trigger_error('Deprecated, use getQueryContainer() instead.', E_USER_DEPRECATED);
 
-        return $this->getProductSearchQueryContainer();
+        return $this->getQueryContainer();
     }
 
     /**
-     * @return ProductSearchQueryContainerInterface
+     * @deprecated Use getQueryContainer() directly.
+     *
+     * @return \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
     protected function getProductSearchQueryContainer()
     {
+        trigger_error('Deprecated, use getQueryContainer() instead.', E_USER_DEPRECATED);
+
         return $this->getQueryContainer();
     }
 
     /**
      * @deprecated Use getLocaleFacade() instead.
      *
-     * @return ProductSearchToLocaleInterface
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface
      */
     protected function createLocaleFacade()
     {
@@ -161,7 +152,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductSearchToLocaleInterface
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface
      */
     protected function getLocaleFacade()
     {
@@ -171,7 +162,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use getTouchFacade() instead.
      *
-     * @return ProductSearchToTouchInterface
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface
      */
     protected function createTouchFacade()
     {
@@ -181,7 +172,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductSearchToTouchInterface
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface
      */
     protected function getTouchFacade()
     {
@@ -189,7 +180,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return KeyBuilderInterface
+     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
     public function createKeyBuilder()
     {
@@ -205,7 +196,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array|OperationInterface[]
+     * @return array|\Spryker\Zed\ProductSearch\Business\Operation\OperationInterface[]
      */
     protected function getPossibleOperations()
     {
@@ -218,7 +209,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AddToResult
+     * @return \Spryker\Zed\ProductSearch\Business\Operation\AddToResult
      */
     protected function createAddToResult()
     {
@@ -226,7 +217,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CopyToField
+     * @return \Spryker\Zed\ProductSearch\Business\Operation\CopyToField
      */
     protected function createCopyToField()
     {
@@ -234,7 +225,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CopyToFacet
+     * @return \Spryker\Zed\ProductSearch\Business\Operation\CopyToFacet
      */
     protected function createCopyToFacet()
     {
@@ -242,7 +233,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CopyToMultiField
+     * @return \Spryker\Zed\ProductSearch\Business\Operation\CopyToMultiField
      */
     protected function createCopyToMultiField()
     {

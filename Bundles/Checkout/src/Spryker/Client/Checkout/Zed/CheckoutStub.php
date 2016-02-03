@@ -7,20 +7,18 @@
 namespace Spryker\Client\Checkout\Zed;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Client\ZedRequest\Client\ZedClient;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CheckoutStub implements CheckoutStubInterface
 {
 
     /**
-     * @var ZedClient
+     * @var \Spryker\Client\ZedRequest\Client\ZedClient
      */
     protected $zedStub;
 
     /**
-     * @param ZedRequestClient $zedStub
+     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
      */
     public function __construct(ZedRequestClient $zedStub)
     {
@@ -28,9 +26,9 @@ class CheckoutStub implements CheckoutStubInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $transferCheckout
+     * @param \Generated\Shared\Transfer\CheckoutRequestTransfer $transferCheckout
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function requestCheckout(CheckoutRequestTransfer $transferCheckout)
     {

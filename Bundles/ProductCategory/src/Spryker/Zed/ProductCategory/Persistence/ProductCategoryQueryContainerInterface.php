@@ -8,24 +8,22 @@ namespace Spryker\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
 interface ProductCategoryQueryContainerInterface
 {
 
     /**
-     * @param ModelCriteria $query
-     * @param LocaleTransfer $locale
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param bool $excludeDirectParent
      * @param bool $excludeRoot
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function expandProductCategoryPathQuery(ModelCriteria $query, LocaleTransfer $locale, $excludeDirectParent = true, $excludeRoot = true);
 
     /**
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductCategoryMappingsByCategoryId($idCategory);
 
@@ -33,40 +31,40 @@ interface ProductCategoryQueryContainerInterface
      * @param int $idProductAbstract
      * @param int $idCategoryNode
      *
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductCategoryMappingByIds($idProductAbstract, $idCategoryNode);
 
     /**
      * @param string $sku
      * @param string $categoryName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale);
 
     /**
      * @param int $idProductAbstract
      *
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryLocalizedProductCategoryMappingByIdProduct($idProductAbstract);
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale);
 
     /**
      * @param $term
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param null $idExcludedCategory
      *
-     * @return SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractCollectionBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null);
 

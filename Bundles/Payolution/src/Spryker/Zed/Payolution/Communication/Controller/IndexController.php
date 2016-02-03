@@ -6,11 +6,10 @@
 namespace Spryker\Zed\Payolution\Communication\Controller;
 
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method PayolutionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
@@ -28,7 +27,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction()
     {

@@ -12,7 +12,7 @@ interface ServiceInterface extends StorageClientInterface
 {
 
     /**
-     * @param $debug
+     * @param bool $debug
      *
      * @return self
      */

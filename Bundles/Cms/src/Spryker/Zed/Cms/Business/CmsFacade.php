@@ -10,18 +10,10 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
-use Spryker\Zed\Cms\Business\Exception\MissingPageException;
-use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
-use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
- * @method CmsBusinessFactory getFactory()
+ * @method \Spryker\Zed\Cms\Business\CmsBusinessFactory getFactory()
  */
 class CmsFacade extends AbstractFacade
 {
@@ -30,9 +22,9 @@ class CmsFacade extends AbstractFacade
      * @param string $name
      * @param string $path
      *
-     * @throws TemplateExistsException
+     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateExistsException
      *
-     * @return CmsTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     public function createTemplate($name, $path)
     {
@@ -44,9 +36,9 @@ class CmsFacade extends AbstractFacade
     /**
      * @param string $path
      *
-     * @throws MissingTemplateException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      *
-     * @return CmsTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     public function getTemplate($path)
     {
@@ -68,11 +60,11 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     public function savePage(PageTransfer $pageTransfer)
     {
@@ -82,9 +74,9 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function saveBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -94,9 +86,9 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageKeyMappingTransfer $pageKeyMappingTransfer
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer)
     {
@@ -106,9 +98,9 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageKeyMappingTransfer $pageKeyMappingTransfer
+     * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer)
     {
@@ -146,9 +138,9 @@ class CmsFacade extends AbstractFacade
      * @param int $idPage
      * @param string $placeholder
      *
-     * @throws MissingGlossaryKeyMappingException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     public function getPagePlaceholderMapping($idPage, $placeholder)
     {
@@ -158,9 +150,9 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param CmsTemplateTransfer $cmsTemplateTransfer
+     * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplateTransfer
      *
-     * @return CmsTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     public function saveTemplate(CmsTemplateTransfer $cmsTemplateTransfer)
     {
@@ -174,8 +166,8 @@ class CmsFacade extends AbstractFacade
      * @param string $placeholder
      * @param array $data
      *
-     * @throws MissingGlossaryKeyMappingException
-     * @throws MissingTranslationException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */
@@ -187,11 +179,11 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      * @param string $value
      *
-     * @return PageKeyMappingTransfer
+     * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
     public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value)
     {
@@ -201,12 +193,12 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $placeholder
      *
-     * @throws MissingGlossaryKeyMappingException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return bool
      */
@@ -218,12 +210,12 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createPageUrl(PageTransfer $pageTransfer, $url)
     {
@@ -233,7 +225,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
      */
@@ -244,7 +236,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -255,7 +247,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
@@ -266,10 +258,10 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function savePageUrlAndTouch(PageTransfer $pageTransfer, $url)
     {
@@ -279,10 +271,10 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $pageTransfer
-     * @param CmsBlockTransfer $blockTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     public function savePageBlockAndTouch(PageTransfer $pageTransfer, CmsBlockTransfer $blockTransfer)
     {
@@ -343,7 +335,7 @@ class CmsFacade extends AbstractFacade
     /**
      * @param int $idCategoryNode
      *
-     * @return CmsBlockTransfer[]
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
     public function getCmsBlocksByIdCategoryNode($idCategoryNode)
     {

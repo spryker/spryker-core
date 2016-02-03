@@ -7,15 +7,15 @@
 namespace Spryker\Zed\Kernel\ClassResolver\Facade;
 
 use Spryker\Shared\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 
 class FacadeNotFoundException extends \Exception
 {
 
     /**
-     * @param ClassInfo $callerClassInfo
+     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
     public function __construct(ClassInfo $callerClassInfo)
     {
@@ -23,7 +23,7 @@ class FacadeNotFoundException extends \Exception
     }
 
     /**
-     * @param ClassInfo $callerClassInfo
+     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
      *
      * @return string
      */
@@ -39,7 +39,7 @@ class FacadeNotFoundException extends \Exception
 
         $message .= sprintf(
             'E.g. %s\\Zed\\%2$s\\Business\\%2$sFacade',
-            Config::getInstance()->get(ApplicationConstants::PROJECT_NAMESPACE),
+            Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );
 

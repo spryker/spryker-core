@@ -9,62 +9,57 @@ namespace Spryker\Zed\Cms\Business\Page;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Block\BlockManagerInterface;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
-use Spryker\Zed\Cms\Business\Exception\PageExistsException;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 class PageManager implements PageManagerInterface
 {
 
     /**
-     * @var CmsQueryContainerInterface
+     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @var TemplateManagerInterface
+     * @var \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
      */
     protected $templateManager;
 
     /**
-     * @var BlockManagerInterface
+     * @var \Spryker\Zed\Cms\Business\Block\BlockManagerInterface
      */
     protected $blockManager;
 
     /**
-     * @var CmsToGlossaryInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @var CmsToTouchInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
      */
     protected $touchFacade;
 
     /**
-     * @var CmsToUrlInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
      */
     protected $urlFacade;
 
     /**
-     * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param TemplateManagerInterface $templateManager
-     * @param BlockManagerInterface $blockManager
-     * @param CmsToGlossaryInterface $glossaryFacade
-     * @param CmsToTouchInterface $touchFacade
-     * @param CmsToUrlInterface $urlFacade
+     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
+     * @param \Spryker\Zed\Cms\Business\Block\BlockManagerInterface $blockManager
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
      */
     public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, BlockManagerInterface $blockManager, CmsToGlossaryInterface $glossaryFacade, CmsToTouchInterface $touchFacade, CmsToUrlInterface $urlFacade)
     {
@@ -77,13 +72,13 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      *
-     * @throws MissingTemplateException
-     * @throws MissingPageException
-     * @throws PageExistsException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\PageExistsException
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     public function savePage(PageTransfer $page)
     {
@@ -97,13 +92,13 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      *
-     * @throws MissingTemplateException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     protected function createPage(PageTransfer $page)
     {
@@ -120,13 +115,13 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      * @throws \Exception
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     protected function updatePage(PageTransfer $page)
     {
@@ -145,7 +140,7 @@ class PageManager implements PageManagerInterface
     /**
      * @param int $idTemplate
      *
-     * @throws MissingTemplateException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
      *
      * @return void
      */
@@ -159,7 +154,7 @@ class PageManager implements PageManagerInterface
     /**
      * @param int $idPage
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
      * @return void
      */
@@ -173,9 +168,9 @@ class PageManager implements PageManagerInterface
     /**
      * @param int $idPage
      *
-     * @throws MissingPageException
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return SpyCmsPage
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
     public function getPageById($idPage)
     {
@@ -189,9 +184,9 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param SpyCmsPage $page
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $page
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     public function convertPageEntityToTransfer(SpyCmsPage $page)
     {
@@ -202,9 +197,9 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      *
-     * @var SpyCmsGlossaryKeyMapping[]
+     * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
      *
      * @return void
      */
@@ -220,12 +215,12 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $url
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createPageUrl(PageTransfer $page, $url)
     {
@@ -235,13 +230,13 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param PageTransfer $page
+     * @param \Generated\Shared\Transfer\PageTransfer $page
      * @param string $url
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @throws UrlExistsException
+     * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createPageUrlWithLocale(PageTransfer $page, $url, LocaleTransfer $localeTransfer)
     {
@@ -251,10 +246,10 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      *
-     * @return UrlTransfer
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function savePageUrlAndTouch(PageTransfer $pageTransfer, $url)
     {
@@ -269,10 +264,10 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @param PageTransfer $page
-     * @param CmsBlockTransfer $blockTransfer
+     * @param \Generated\Shared\Transfer\PageTransfer $page
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $blockTransfer
      *
-     * @return PageTransfer
+     * @return \Generated\Shared\Transfer\PageTransfer
      */
     public function savePageBlockAndTouch(PageTransfer $page, CmsBlockTransfer $blockTransfer)
     {

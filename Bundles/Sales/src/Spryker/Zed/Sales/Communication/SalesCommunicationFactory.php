@@ -9,24 +9,20 @@ namespace Spryker\Zed\Sales\Communication;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
-use Spryker\Zed\Sales\SalesConfig;
-use Symfony\Component\Form\FormInterface;
 
 /**
- * @method SalesQueryContainerInterface getQueryContainer()
- * @method SalesConfig getConfig()
+ * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  */
 class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createOrderItemSplitForm()
     {
@@ -38,7 +34,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idSalesOrder
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCustomerForm($idSalesOrder)
     {
@@ -52,7 +48,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idOrderAddress
      *
-     * @return FormInterface
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createAddressForm($idOrderAddress)
     {
@@ -64,7 +60,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      *
      * @return array
      */
@@ -83,7 +79,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OrdersTable
+     * @return \Spryker\Zed\Sales\Communication\Table\OrdersTable
      */
     public function createOrdersTable()
     {
@@ -94,7 +90,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return SalesToOmsInterface
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     public function getOmsFacade()
     {

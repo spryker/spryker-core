@@ -8,7 +8,6 @@ namespace Functional\Spryker\Zed\Price;
 
 use Codeception\TestCase\Test;
 use Spryker\Zed\Price\Business\PriceFacade;
-use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
@@ -31,12 +30,12 @@ class ReaderTest extends Test
     const DUMMY_PRICE_2 = 100;
 
     /**
-     * @var PriceFacade
+     * @var \Spryker\Zed\Price\Business\PriceFacade
      */
     private $priceFacade;
 
     /**
-     * @var AutoCompletion
+     * @var \Generated\Zed\Ide\AutoCompletion
      */
     protected $locator;
 

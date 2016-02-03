@@ -15,8 +15,6 @@ use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Exception\PropelException;
 
 class PriceQueryContainer extends AbstractQueryContainer
 {
@@ -26,7 +24,7 @@ class PriceQueryContainer extends AbstractQueryContainer
     /**
      * @param string $name
      *
-     * @return SpyPriceTypeQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
      */
     public function queryPriceType($name)
     {
@@ -34,7 +32,7 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyPriceTypeQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
      */
     public function queryAllPriceTypes()
     {
@@ -43,11 +41,11 @@ class PriceQueryContainer extends AbstractQueryContainer
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyPriceProductQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function queryPriceEntityForProductAbstract($sku, SpyPriceType $priceType)
     {
@@ -60,11 +58,11 @@ class PriceQueryContainer extends AbstractQueryContainer
 
     /**
      * @param string $sku
-     * @param SpyPriceType $priceType
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyPriceProductQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function queryPriceEntityForProductConcrete($sku, SpyPriceType $priceType)
     {
@@ -78,10 +76,10 @@ class PriceQueryContainer extends AbstractQueryContainer
     /**
      * @deprecated Will be removed in 1.0.0.
      *
-     * @param SpyPriceProductQuery $query
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProductQuery $query
      * @param int $idPriceProduct
      *
-     * @return SpyPriceProductQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function addFilter($query, $idPriceProduct)
     {
@@ -91,12 +89,12 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
-     * @param SpyPriceType $priceType
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyPriceProductQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function querySpecificPriceForProductAbstract(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType)
     {
@@ -109,12 +107,12 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
-     * @param SpyPriceType $priceType
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyPriceProductQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function querySpecificPriceForProductConcrete(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType)
     {
@@ -129,7 +127,7 @@ class PriceQueryContainer extends AbstractQueryContainer
     /**
      * @param int $idPriceProduct
      *
-     * @return SpyPriceProductQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function queryPriceProductEntity($idPriceProduct)
     {
@@ -138,7 +136,7 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyPriceProductQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function queryPriceGrid()
     {
@@ -152,7 +150,7 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyPriceTypeQuery
+     * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
      */
     public function queryPriceTypeGrid()
     {
@@ -161,9 +159,9 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryPriceTypeForm()
     {

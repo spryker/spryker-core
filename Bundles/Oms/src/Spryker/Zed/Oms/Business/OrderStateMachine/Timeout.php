@@ -9,38 +9,35 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 use DateInterval;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
-use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use DateTime;
-use Exception;
 use ErrorException;
 use Propel\Runtime\Collection\ObjectCollection;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Library\Log;
 
 class Timeout implements TimeoutInterface
 {
 
     /**
-     * @var OmsQueryContainerInterface
+     * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var DateTime[]
+     * @var \DateTime[]
      */
     protected $eventToTimeoutBuffer = [];
 
     /**
-     * @var StateInterface[]
+     * @var \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     protected $stateIdToModelBuffer = [];
 
     /**
-     * @param OmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      */
     public function __construct(OmsQueryContainerInterface $queryContainer)
     {
@@ -48,7 +45,7 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param OrderStateMachineInterface $orderStateMachine
+     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface $orderStateMachine
      *
      * @return int
      */
@@ -68,12 +65,12 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param ProcessInterface $process
-     * @param SpySalesOrderItem $orderItem
-     * @param DateTime $currentTime
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
+     * @param \DateTime $currentTime
      *
-     * @throws Exception
-     * @throws PropelException
+     * @throws \Exception
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -106,12 +103,12 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string $stateId
-     * @param SpySalesOrderItem $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @throws Exception
-     * @throws PropelException
+     * @throws \Exception
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
@@ -127,10 +124,10 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param DateTime $currentTime
-     * @param EventInterface $event
+     * @param \DateTime $currentTime
+     * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      *
-     * @return DateTime
+     * @return \DateTime
      */
     protected function calculateTimeoutDateFromEvent(DateTime $currentTime, EventInterface $event)
     {
@@ -152,9 +149,9 @@ class Timeout implements TimeoutInterface
 
     /**
      * @param string $stateId
-     * @param ProcessInterface $process
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      *
-     * @return StateInterface
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface
      */
     protected function getStateFromProcess($stateId, ProcessInterface $process)
     {
@@ -166,7 +163,7 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      *
      * @return array
      */
@@ -185,7 +182,7 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @return ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
     protected function findItemsWithExpiredTimeouts()
     {
@@ -198,7 +195,7 @@ class Timeout implements TimeoutInterface
      * @param \DateInterval $interval
      * @param mixed $timeout
      *
-     * @throws ErrorException
+     * @throws \ErrorException
      *
      * @return int
      */

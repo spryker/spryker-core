@@ -17,7 +17,7 @@ class PhpdocReturnSelfFixerTest extends \PHPUnit_Framework_TestCase
     const FIXER_NAME = 'PhpdocReturnSelfFixer';
 
     /**
-     * @var PhpdocReturnSelfFixer
+     * @var \Spryker\Zed\Development\Business\CodeStyleFixer\PhpdocReturnSelfFixer
      */
     protected $fixer;
 

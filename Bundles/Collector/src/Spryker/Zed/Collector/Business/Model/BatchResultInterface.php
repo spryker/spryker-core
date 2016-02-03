@@ -47,7 +47,7 @@ interface BatchResultInterface
     public function setTotalCount($totalCount);
 
     /**
-     * @param FailedResultInterface $failed
+     * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failed
      */
     public function addFailedResult(FailedResultInterface $failed);
 
@@ -77,12 +77,12 @@ interface BatchResultInterface
     public function setIsFailed($failed = true);
 
     /**
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getProcessedLocale();
 
     /**
-     * @param LocaleTransfer $processedLocale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $processedLocale
      */
     public function setProcessedLocale(LocaleTransfer $processedLocale);
 

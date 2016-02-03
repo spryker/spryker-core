@@ -7,13 +7,12 @@
 namespace Spryker\Zed\Cart;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 class CartConfig extends AbstractBundleConfig
 {
 
     /**
-     * @return ItemExpanderPluginInterface[]
+     * @return \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
      */
     public function getCartItemPlugins()
     {

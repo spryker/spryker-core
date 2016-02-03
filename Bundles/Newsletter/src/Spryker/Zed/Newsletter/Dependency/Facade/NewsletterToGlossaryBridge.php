@@ -8,18 +8,17 @@ namespace Spryker\Zed\Newsletter\Dependency\Facade;
 
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
 
 class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
 {
 
     /**
-     * @var GlossaryFacade
+     * @var \Spryker\Zed\Glossary\Business\GlossaryFacade
      */
     protected $glossaryFacade;
 
     /**
-     * @param GlossaryFacade $glossaryFacade
+     * @param \Spryker\Zed\Glossary\Business\GlossaryFacade $glossaryFacade
      */
     public function __construct($glossaryFacade)
     {
@@ -28,7 +27,7 @@ class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return bool
      */
@@ -39,9 +38,9 @@ class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return TranslationTransfer
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function getTranslation($keyName, LocaleTransfer $locale)
     {

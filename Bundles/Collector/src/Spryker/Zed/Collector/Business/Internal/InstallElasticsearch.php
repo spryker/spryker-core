@@ -13,7 +13,7 @@ class InstallElasticsearch extends AbstractInstaller
 {
 
     /**
-     * @var Client
+     * @var \Elastica\Client
      */
     private $client;
 
@@ -23,7 +23,7 @@ class InstallElasticsearch extends AbstractInstaller
     private $indexName;
 
     /**
-     * @param Client $client
+     * @param \Elastica\Client $client
      * @param string $indexName
      */
     public function __construct(Client $client, $indexName)

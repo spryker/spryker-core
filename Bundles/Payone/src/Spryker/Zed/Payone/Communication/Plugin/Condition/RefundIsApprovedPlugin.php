@@ -7,12 +7,10 @@
 namespace Spryker\Zed\Payone\Communication\Plugin\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Payone\Business\PayoneFacade;
-use Spryker\Zed\Payone\Communication\PayoneCommunicationFactory;
 
 /**
- * @method PayoneFacade getFacade()
- * @method PayoneCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Payone\Business\PayoneFacade getFacade()
+ * @method \Spryker\Zed\Payone\Communication\PayoneCommunicationFactory getFactory()
  */
 class RefundIsApprovedPlugin extends AbstractPlugin
 {
@@ -20,7 +18,7 @@ class RefundIsApprovedPlugin extends AbstractPlugin
     const NAME = 'RefundIsApprovedPlugin';
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return bool
      */

@@ -27,7 +27,7 @@ class SolrLocal extends Solr implements LocalInterface
     }
 
     /**
-     * @param QueryInterface $query
+     * @param \Solarium\Core\Query\QueryInterface $query
      *
      * @return \Solarium\Core\Query\Result\ResultInterface
      */

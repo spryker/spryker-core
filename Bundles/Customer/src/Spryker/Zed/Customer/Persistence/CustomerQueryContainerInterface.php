@@ -6,10 +6,7 @@
 
 namespace Spryker\Zed\Customer\Persistence;
 
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 
 interface CustomerQueryContainerInterface extends QueryContainerInterface
 {
@@ -17,7 +14,7 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     /**
      * @param string $email
      *
-     * @return SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomerByEmail($email);
 
@@ -25,28 +22,28 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      * @param string $email
      * @param int $exceptIdCustomer
      *
-     * @return SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomerByEmailApartFromIdCustomer($email, $exceptIdCustomer);
 
     /**
      * @param int $id
      *
-     * @return SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomerById($id);
 
     /**
      * @param string $token
      *
-     * @return SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomerByRegistrationKey($token);
 
     /**
      * @param string $token
      *
-     * @return SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomerByRestorePasswordKey($token);
 
@@ -54,42 +51,42 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      * @param int $idAddress
      * @param string $email
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyCustomerAddressQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
     public function queryAddressForCustomer($idAddress, $email);
 
     /**
      * @param int $idAddress
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyCustomerAddressQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
     public function queryAddress($idAddress);
 
     /**
      * @param string $email
      *
-     * @return SpyCustomerAddressQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
     public function queryAddressesForCustomer($email);
 
     /**
-     * @return SpyCustomerAddressQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
     public function queryAddresses();
 
     /**
-     * @return SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomers();
 
     /**
-     * @param $idCustomer
+     * @param int $idCustomer
      *
-     * @return SpyCustomerAddressQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
     public function queryAddressByIdCustomer($idCustomer);
 

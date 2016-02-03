@@ -13,9 +13,9 @@ class TransferGenerator implements TransferGeneratorInterface
 {
 
     /**
-     * @param SpyLocale $localeEntity
+     * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
      *
-     * @return LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function convertLocale(SpyLocale $localeEntity)
     {
@@ -24,9 +24,9 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @param SpyLocale $localeEntityList
+     * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntityList
      *
-     * @return LocaleTransfer[]
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function convertLocaleCollection(SpyLocale $localeEntityList)
     {

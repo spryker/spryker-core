@@ -37,7 +37,7 @@ class DistributorTest extends Test
     const DISCOUNT_AMOUNT_NEGATIVE = -100;
 
     /**
-     * @var DiscountFacade
+     * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
     protected $discountFacade;
 
@@ -192,7 +192,7 @@ class DistributorTest extends Test
     /**
      * @param array $grossPrices
      *
-     * @return array|ItemTransfer[]
+     * @return array|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getItems(array $grossPrices)
     {

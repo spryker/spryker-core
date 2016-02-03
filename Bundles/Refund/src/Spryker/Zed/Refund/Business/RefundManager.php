@@ -8,28 +8,25 @@ namespace Spryker\Zed\Refund\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Orm\Zed\Refund\Persistence\SpyRefund;
 use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
-use Orm\Zed\Sales\Persistence\SpySalesExpense;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class RefundManager
 {
 
     /**
-     * @var RefundQueryContainerInterface
+     * @var \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface
      */
     protected $refundQueryContainer;
 
     /**
-     * @var SalesQueryContainerInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected $salesQueryContainer;
 
     /**
-     * @param RefundQueryContainerInterface $refundQueryContainer
-     * @param SalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface $refundQueryContainer
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      */
     public function __construct(RefundQueryContainerInterface $refundQueryContainer, SalesQueryContainerInterface $salesQueryContainer)
     {
@@ -38,7 +35,7 @@ class RefundManager
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int
      */
@@ -73,7 +70,7 @@ class RefundManager
     /**
      * @param int $idOrder
      *
-     * @return SpySalesOrderItem[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     public function getRefundableItems($idOrder)
     {
@@ -89,7 +86,7 @@ class RefundManager
     /**
      * @param int $idOrder
      *
-     * @return SpySalesExpense[]
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpense[]
      */
     public function getRefundableExpenses($idOrder)
     {
@@ -103,9 +100,9 @@ class RefundManager
     }
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
      *
-     * @return SpyRefund[]
+     * @return \Orm\Zed\Refund\Persistence\SpyRefund[]
      */
     public function getRefunds($idOrder)
     {

@@ -14,12 +14,12 @@ class CustomerMailConnectorToMailBridge implements CustomerMailConnectorToMailIn
 {
 
     /**
-     * @var MailFacade
+     * @var \Spryker\Zed\Mail\Business\MailFacade
      */
     protected $mailFacade;
 
     /**
-     * @param MailFacade $mailFacade
+     * @param \Spryker\Zed\Mail\Business\MailFacade $mailFacade
      */
     public function __construct($mailFacade)
     {
@@ -27,9 +27,9 @@ class CustomerMailConnectorToMailBridge implements CustomerMailConnectorToMailIn
     }
 
     /**
-     * @param MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return SendMailResponsesTransfer
+     * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
@@ -37,7 +37,7 @@ class CustomerMailConnectorToMailBridge implements CustomerMailConnectorToMailIn
     }
 
     /**
-     * @param SendMailResponsesTransfer $mailResponses
+     * @param \Generated\Shared\Transfer\SendMailResponsesTransfer $mailResponses
      *
      * @return bool
      */

@@ -11,14 +11,14 @@ class ProductToTouchBridge implements ProductToTouchInterface
 {
 
     /**
-     * @var TouchFacade
+     * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
     protected $touchFacade;
 
     /**
      * ProductCategoryToTouchBridge constructor.
      *
-     * @param TouchFacade $touchFacade
+     * @param \Spryker\Zed\Touch\Business\TouchFacade $touchFacade
      */
     public function __construct($touchFacade)
     {
