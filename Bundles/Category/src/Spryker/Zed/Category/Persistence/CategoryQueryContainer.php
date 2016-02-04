@@ -23,6 +23,9 @@ use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
+/**
+ * @method CategoryPersistenceFactory getFactory()
+ */
 class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQueryContainerInterface
 {
 
@@ -33,7 +36,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryNodeWithDirectParent($idLocale)
     {
-        $query = SpyCategoryNodeQuery::create()
+        $query = $this->getFactory()->createCategoryNodeQuery()
             ->addJoin(
                 SpyCategoryNodeTableMap::COL_FK_CATEGORY,
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
@@ -82,7 +85,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryNodeById($idNode)
     {
-        return SpyCategoryNodeQuery::create()->filterByIdCategoryNode($idNode);
+        return $this->getFactory()->createCategoryNodeQuery()->filterByIdCategoryNode($idNode);
     }
 
     /**
@@ -92,7 +95,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryFirstLevelChildren($idNode)
     {
-        return SpyCategoryNodeQuery::create()
+        return $this->getFactory()->createCategoryNodeQuery()
             ->filterByFkParentCategoryNode($idNode)
             ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
@@ -105,7 +108,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
     {
-        return SpyCategoryNodeQuery::create()
+        return $this->getFactory()->createCategoryNodeQuery()
             ->filterByFkParentCategoryNode($idParentNode)
             ->where(
                 SpyCategoryNodeTableMap::COL_FK_CATEGORY . ' = ?',
@@ -118,7 +121,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryRootNodes()
     {
-        return SpyCategoryAttributeQuery::create()
+        return $this->getFactory()->createCategoryAttributeQuery()
             ->joinLocale()
             ->addJoin(
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
@@ -148,7 +151,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryFirstLevelChildrenByIdLocale($idNode, $idLocale)
     {
-        $nodeQuery = SpyCategoryNodeQuery::create()
+        $nodeQuery = $this->getFactory()->createCategoryNodeQuery()
             ->joinParentCategoryNode('parentNode')
             ->addJoin(
                 SpyCategoryNodeTableMap::COL_FK_CATEGORY,
@@ -177,7 +180,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryClosureTableByNodeId($idNode)
     {
-        $query = SpyCategoryClosureTableQuery::create();
+        $query = $this->getFactory()->createCategoryClosureTableQuery();
 
         return $query->where(
             SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE . ' = ?',
@@ -197,7 +200,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryClosureTableParentEntries($idNode)
     {
-        $query = SpyCategoryClosureTableQuery::create('node');
+        $query = $this->getFactory()->createCategoryClosureTableQuery();
 
         $joinCategoryNodeDescendant = new Join(
             'node.fk_category_node_descendant',
@@ -248,7 +251,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryClosureTableFilterByIdNode($idNode)
     {
-        return SpyCategoryClosureTableQuery::create()
+        return $this->getFactory()->createCategoryClosureTableQuery()
             ->filterByFkCategoryNode($idNode);
     }
 
@@ -259,7 +262,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryClosureTableFilterByIdNodeDescendant($idNodeDescendant)
     {
-        return SpyCategoryClosureTableQuery::create()
+        return $this->getFactory()->createCategoryClosureTableQuery()
             ->filterByFkCategoryNodeDescendant($idNodeDescendant);
     }
 
@@ -273,7 +276,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryChildren($idNode, $idLocale, $onlyOneLevel = true, $excludeStartNode = true)
     {
-        $nodeQuery = SpyCategoryNodeQuery::create();
+        $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
         $nodeQuery
             ->useCategoryQuery()
                 ->useAttributeQuery()
@@ -321,7 +324,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             $depth = 0;
         }
 
-        $nodeQuery = SpyCategoryNodeQuery::create();
+        $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
 
         if ($excludeRootNode) {
             $nodeQuery->filterByIsRoot(0);
@@ -361,7 +364,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function getChildrenPath($idParentNode, $excludeRoot = true)
     {
-        $query = new SpyCategoryClosureTableQuery();
+        $query = $this->getFactory()->createCategoryClosureTableQuery();
         $query->filterByFkCategoryNode($idParentNode)
             ->innerJoinNode()
             ->where(SpyCategoryClosureTableTableMap::COL_DEPTH . '> ?', 0);
@@ -382,7 +385,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function getParentPath($idChildNode, $idLocale, $excludeRoot = true)
     {
-        $query = new SpyCategoryClosureTableQuery();
+        $query = $this->getFactory()->createCategoryClosureTableQuery();
         $query->filterByFkCategoryNodeDescendant($idChildNode)
             ->innerJoinNode()
             ->useNodeQuery()
@@ -408,7 +411,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryRootNode()
     {
-        return SpyCategoryNodeQuery::create()
+        return $this->getFactory()->createCategoryNodeQuery()
             ->filterByIsRoot(true)
             ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
@@ -420,7 +423,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryDescendant($idNode)
     {
-        return SpyCategoryClosureTableQuery::create()->filterByFkCategoryNode($idNode);
+        return $this->getFactory()->createCategoryClosureTableQuery()->filterByFkCategoryNode($idNode);
     }
 
     /**
@@ -430,7 +433,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryAttributeByCategoryId($idCategory)
     {
-        return SpyCategoryAttributeQuery::create()->filterByFkCategory($idCategory);
+        return $this->getFactory()->createCategoryAttributeQuery()->filterByFkCategory($idCategory);
     }
 
     /**
@@ -471,7 +474,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     protected function queryNodesByCategoryId($idCategory, $isMain)
     {
-        $query = SpyCategoryNodeQuery::create()
+        $query = $this->getFactory()->createCategoryNodeQuery()
             ->filterByFkCategory($idCategory);
 
         if ($isMain !== null) {
@@ -488,7 +491,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryCategoryById($idCategory)
     {
-        return SpyCategoryQuery::create()->filterByIdCategory($idCategory);
+        return $this->getFactory()->createCategoryQuery()->filterByIdCategory($idCategory);
     }
 
     /**
@@ -498,7 +501,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryCategoryNodeByNodeId($idNode)
     {
-        return SpyCategoryNodeQuery::create()->filterByIdCategoryNode($idNode);
+        return $this->getFactory()->createCategoryNodeQuery()->filterByIdCategoryNode($idNode);
     }
 
     /**
@@ -508,7 +511,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryCategory($idLocale)
     {
-        return SpyCategoryQuery::create()
+        return $this->getFactory()->createCategoryQuery()
             ->joinAttribute()
             ->innerJoinNode()
             ->addAnd(
@@ -530,7 +533,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryAttributeByCategoryIdAndLocale($idCategory, $idLocale)
     {
-        return SpyCategoryAttributeQuery::create()
+        return $this->getFactory()->createCategoryAttributeQuery()
             ->joinLocale()
             ->filterByFkLocale($idLocale)
             ->filterByFkCategory($idCategory)
@@ -547,7 +550,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryCategoryAttributesByName($name, $idLocale)
     {
-        return SpyCategoryAttributeQuery::create()
+        return $this->getFactory()->createCategoryAttributeQuery()
             ->filterByName($name)
             ->filterByFkLocale($idLocale);
     }
@@ -561,7 +564,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryCategoryNode($idLocale)
     {
-        $nodeQuery = SpyCategoryNodeQuery::create();
+        $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
         $nodeQuery->useCategoryQuery()
             ->useAttributeQuery()
             ->filterByFkLocale($idLocale)
@@ -825,7 +828,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryNodeByCategoryName($categoryName, $idLocale)
     {
-        $nodeQuery = SpyCategoryNodeQuery::create();
+        $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
         $nodeQuery
             ->useCategoryQuery()
                 ->useAttributeQuery()
@@ -844,7 +847,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryNodeByCategoryKey($categoryKey)
     {
-        $nodeQuery = SpyCategoryNodeQuery::create();
+        $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
         $nodeQuery->useCategoryQuery()
             ->filterByCategoryKey($categoryKey)
             ->endUse();
@@ -859,7 +862,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryUrlByIdCategoryNode($idCategoryNode)
     {
-        return SpyUrlQuery::create()
+        return $this->getFactory()->createUrlQuery()
             ->joinSpyLocale()
             ->filterByFkResourceCategorynode($idCategoryNode)
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME);
@@ -873,7 +876,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function getCategoryNodesWithOrder($idParentNode, $idLocale)
     {
-        return SpyCategoryNodeQuery::create()
+        return $this->getFactory()->createCategoryNodeQuery()
             ->filterByFkParentCategoryNode($idParentNode)
             ->useCategoryQuery()
                 ->innerJoinAttribute()
