@@ -16,6 +16,9 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 
+/**
+ * @method PricePersistenceFactory getFactory()
+ */
 class PriceQueryContainer extends AbstractQueryContainer
 {
 
@@ -28,7 +31,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      */
     public function queryPriceType($name)
     {
-        return SpyPriceTypeQuery::create()->filterByName($name);
+        return $this->getFactory()->createPriceTypeQuery()->filterByName($name);
     }
 
     /**
@@ -36,7 +39,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      */
     public function queryAllPriceTypes()
     {
-        return SpyPriceTypeQuery::create();
+        return $this->getFactory()->createPriceTypeQuery();
     }
 
     /**
@@ -49,7 +52,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      */
     public function queryPriceEntityForProductAbstract($sku, SpyPriceType $priceType)
     {
-        return SpyPriceProductQuery::create()
+        return $this->getFactory()->createPriceProductQuery()
             ->filterByPriceType($priceType)
             ->useSpyProductAbstractQuery()
             ->filterBySku($sku)
@@ -66,7 +69,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      */
     public function queryPriceEntityForProductConcrete($sku, SpyPriceType $priceType)
     {
-        return SpyPriceProductQuery::create()
+        return $this->getFactory()->createPriceProductQuery()
             ->filterByPriceType($priceType)
             ->useProductQuery()
             ->filterBySku($sku)
@@ -83,7 +86,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      */
     public function querySpecificPriceForProductAbstract(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType)
     {
-        return SpyPriceProductQuery::create()
+        return $this->getFactory()->createPriceProductQuery()
             ->filterByPrice($transferPriceProduct->getPrice())
             ->filterByPriceType($priceType)
             ->useSpyProductAbstractQuery()
@@ -101,7 +104,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      */
     public function querySpecificPriceForProductConcrete(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType)
     {
-        return SpyPriceProductQuery::create()
+        return $this->getFactory()->createPriceProductQuery()
             ->filterByPrice($transferPriceProduct->getPrice())
             ->filterByPriceType($priceType)
             ->useProductQuery()
@@ -116,7 +119,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      */
     public function queryPriceProductEntity($idPriceProduct)
     {
-        return SpyPriceProductQuery::create()
+        return $this->getFactory()->createPriceProductQuery()
             ->filterByIdPriceProduct($idPriceProduct);
     }
 
@@ -125,7 +128,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      */
     public function queryPriceGrid()
     {
-        return SpyPriceProductQuery::create()
+        return $this->getFactory()->createPriceProductQuery()
             ->joinProduct()
             ->withColumn(SpyProductTableMap::COL_SKU, 'sku_product_concrete')
             ->joinSpyProductAbstract()
@@ -139,7 +142,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      */
     public function queryPriceTypeGrid()
     {
-        return SpyPriceTypeQuery::create()
+        return $this->getFactory()->createPriceTypeQuery()
             ->withColumn(SpyPriceTypeTableMap::COL_NAME, 'name');
     }
 
@@ -150,7 +153,7 @@ class PriceQueryContainer extends AbstractQueryContainer
      */
     public function queryPriceTypeForm()
     {
-        return SpyPriceTypeQuery::create()
+        return $this->getFactory()->createPriceTypeQuery()
             ->select([
                 SpyPriceTypeTableMap::COL_NAME => 'value',
                 SpyPriceTypeTableMap::COL_NAME => 'label',
