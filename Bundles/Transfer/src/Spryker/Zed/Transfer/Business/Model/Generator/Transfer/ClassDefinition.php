@@ -95,16 +95,6 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @return void
-     */
-    private function addBundles(array $bundles)
-    {
-        foreach ($bundles as $bundle) {
-            $this->addBundle($bundle);
-        }
-    }
-
-    /**
      * @param string $bundle
      *
      * @return void
@@ -504,7 +494,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'return' => $this->getReturnType($property),
+            'return' => '\ArrayObject|' . $this->getReturnType($property),
             'bundles' => $property['bundles'],
         ];
         $this->methods[$methodName] = $method;
