@@ -6,34 +6,7 @@
 
 {% block content %}
 
-    <div class="overview-nav">
-        <div class="nav-item pull-left">
-            <div><span class="fa fa-eye"></span></div>
-        </div>
-        <div class="nav-item pull-left">
-            <div><span class="fa fa-shopping-cart"></span></div>
-        </div>
-        <div class="nav-item pull-left">
-            <div><span class="fa fa-euro"></span></div>
-        </div>
-        <div class="nav-item pull-left">
-            <div><span class="fa fa-credit-card"></span></div>
-        </div>
-        <div class="nav-item pull-left">
-            <div><span class="fa fa-truck"></span></div>
-        </div>
-        <div class="nav-item pull-left">
-            <div>
-                <span class="fa fa-percent"></span>
-                <span>&percnt;</span>
-            </div>
-        </div>
-        <div class="nav-item pull-left">
-            <div><span class="fa fa-map-marker"></span></div>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-
+    {% include '@Sales/Details/boxes/order-navigation.twig' %}
     {% include '@Sales/Details/boxes/order-overview.twig' %}
 
     {#{% include '@Sales/Details/section/customer-details.twig' %}#}

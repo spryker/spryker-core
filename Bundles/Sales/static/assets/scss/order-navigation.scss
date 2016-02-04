@@ -3,20 +3,37 @@
   margin: 0 auto 30px;
   border-right: 1px solid #ccc;
 }
+
 .overview-nav .nav-item {
   width: 14.285%;
   text-align: center;
-  font-size: 50px;
 }
+
 .overview-nav .nav-item > div {
   border-width: 1px 0 1px 1px;
   border-color: #ccc;
   border-style: solid;
 }
+
 .overview-nav .nav-item > div > span {
   display: block;
+  font-size: 50px;
   line-height: 80px;
+
+  @media (max-width: 550px) {
+    font-size: 25px;
+    line-height: 50px;
+  }
 }
+
+.overview-nav .nav-item .text {
+  font-size: 18px;
+
+  @media (max-width: 550px) {
+    display: none;
+  }
+}
+
 .overview-nav .nav-item > div > span:hover {
   color: red;
   margin: 0;
