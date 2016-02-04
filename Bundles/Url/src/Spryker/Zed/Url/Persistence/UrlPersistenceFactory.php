@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Url\Persistence;
 
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -14,4 +16,21 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class UrlPersistenceFactory extends AbstractPersistenceFactory
 {
+
+    /**
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function createUrlQuery()
+    {
+        return SpyUrlQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
+     */
+    public function createUrlRedirectQuery()
+    {
+        return SpyUrlRedirectQuery::create();
+    }
+
 }

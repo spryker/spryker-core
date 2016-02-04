@@ -12,6 +12,9 @@ use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
+/**
+ * @method UrlPersistenceFactory getFactory()
+ */
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface
 {
 
@@ -25,7 +28,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      */
     public function queryUrl($url)
     {
-        $query = SpyUrlQuery::create();
+        $query = $this->getFactory()->createUrlQuery();
         $query->filterByUrl($url);
 
         return $query;
@@ -33,7 +36,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
 
     public function queryTranslationById($id)
     {
-        $query = SpyUrlQuery::create();
+        $query = $this->getFactory()->createUrlQuery();
         $query->filterByIdUrl($id);
 
         return $query;
@@ -46,7 +49,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      */
     public function queryUrlById($id)
     {
-        $query = SpyUrlQuery::create();
+        $query = $this->getFactory()->createUrlQuery();
         $query->filterByIdUrl($id);
 
         return $query;
@@ -57,7 +60,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      */
     public function queryUrls()
     {
-        $query = SpyUrlQuery::create();
+        $query = $this->getFactory()->createUrlQuery();
 
         return $query;
     }
@@ -67,7 +70,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      */
     public function queryUrlsWithRedirect()
     {
-        $query = SpyUrlQuery::create();
+        $query = $this->getFactory()->createUrlQuery();
         $query->innerJoinSpyUrlRedirect()
             ->withColumn(SpyUrlRedirectTableMap::COL_TO_URL, self::TO_URL)
             ->withColumn(SpyUrlRedirectTableMap::COL_STATUS, self::STATUS);
@@ -80,7 +83,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      */
     public function queryRedirects()
     {
-        $query = SpyUrlRedirectQuery::create();
+        $query = $this->getFactory()->createUrlRedirectQuery();
 
         return $query;
     }
@@ -92,7 +95,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      */
     public function queryRedirectById($idUrlRedirect)
     {
-        $query = SpyUrlRedirectQuery::create();
+        $query = $this->getFactory()->createUrlRedirectQuery();
         $query->filterByIdUrlRedirect($idUrlRedirect);
 
         return $query;
@@ -115,7 +118,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      */
     public function queryUrlByIdWithRedirect($id)
     {
-        $query = SpyUrlQuery::create();
+        $query = $this->getFactory()->createUrlQuery();
         $query->leftJoinSpyUrlRedirect()
             ->withColumn(SpyUrlRedirectTableMap::COL_TO_URL, self::TO_URL)
             ->withColumn(SpyUrlRedirectTableMap::COL_STATUS, self::STATUS)
@@ -132,7 +135,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      */
     public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
     {
-        $query = SpyUrlQuery::create();
+        $query = $this->getFactory()->createUrlQuery();
         $query->filterByFkResourceCategorynode($idCategoryNode);
         $query->filterByFkLocale($idLocale);
 
