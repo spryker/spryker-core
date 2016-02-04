@@ -10,8 +10,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
-use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
-use Orm\Zed\Stock\Persistence\SpyStockQuery;
 
 /**
  * @method StockPersistenceFactory getFactory()

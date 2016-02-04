@@ -15,6 +15,9 @@ use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
+/**
+ * @method TaxPersistenceFactory getFactory()
+ */
 class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContainerInterface
 {
 
@@ -25,7 +28,7 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
      */
     public function queryTaxRate($id)
     {
-        return SpyTaxRateQuery::create()->filterByIdTaxRate($id);
+        return $this->getFactory()->createTaxRateQuery()->filterByIdTaxRate($id);
     }
 
     /**
@@ -33,7 +36,7 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
      */
     public function queryAllTaxRates()
     {
-        return SpyTaxRateQuery::create();
+        return $this->getFactory()->createTaxRateQuery();
     }
 
     /**
@@ -43,7 +46,7 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
      */
     public function queryTaxSet($id)
     {
-        return SpyTaxSetQuery::create()->filterByIdTaxSet($id);
+        return $this->getFactory()->createTaxSetQuery()->filterByIdTaxSet($id);
     }
 
     /**
@@ -51,7 +54,7 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
      */
     public function queryAllTaxSets()
     {
-        return SpyTaxSetQuery::create();
+        return $this->getFactory()->createTaxSetQuery();
     }
 
     /**
