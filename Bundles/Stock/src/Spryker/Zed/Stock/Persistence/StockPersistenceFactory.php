@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Stock\Persistence;
 
+use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -14,4 +16,21 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class StockPersistenceFactory extends AbstractPersistenceFactory
 {
+
+    /**
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function createStockProductQuery()
+    {
+        return SpyStockProductQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
+     */
+    public function createStockQuery()
+    {
+        return SpyStockQuery::create();
+    }
+
 }

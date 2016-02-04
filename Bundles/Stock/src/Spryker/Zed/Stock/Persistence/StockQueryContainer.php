@@ -13,6 +13,9 @@ use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 
+/**
+ * @method StockPersistenceFactory getFactory()
+ */
 class StockQueryContainer extends AbstractQueryContainer
 {
 
@@ -23,7 +26,7 @@ class StockQueryContainer extends AbstractQueryContainer
      */
     public function queryStockByNeverOutOfStockAllTypes($idProduct)
     {
-        return SpyStockProductQuery::create()
+        return $this->getFactory()->createStockProductQuery()
             ->filterByIsNeverOutOfStock(true)
             ->filterByFkProduct($idProduct);
     }
@@ -35,7 +38,7 @@ class StockQueryContainer extends AbstractQueryContainer
      */
     public function queryStockByProducts($idProduct)
     {
-        return SpyStockProductQuery::create()
+        return $this->getFactory()->createStockProductQuery()
             ->filterByFkProduct($idProduct);
     }
 
@@ -47,7 +50,7 @@ class StockQueryContainer extends AbstractQueryContainer
      */
     public function queryStockProductByStockAndProduct($idStock, $idProduct)
     {
-        return SpyStockProductQuery::create()
+        return $this->getFactory()->createStockProductQuery()
             ->filterByFkStock($idStock)
             ->filterByFkProduct($idProduct);
     }
@@ -79,7 +82,7 @@ class StockQueryContainer extends AbstractQueryContainer
      */
     public function queryStockByName($name)
     {
-        return SpyStockQuery::create()
+        return $this->getFactory()->createStockQuery()
             ->filterByName($name);
     }
 
@@ -88,7 +91,7 @@ class StockQueryContainer extends AbstractQueryContainer
      */
     public function queryAllStockTypes()
     {
-        return SpyStockQuery::create();
+        return $this->getFactory()->createStockQuery();
     }
 
     /**
@@ -96,7 +99,7 @@ class StockQueryContainer extends AbstractQueryContainer
      */
     public function queryAllStockProducts()
     {
-        return SpyStockProductQuery::create();
+        return $this->getFactory()->createStockProductQuery();
     }
 
     /**
@@ -104,7 +107,7 @@ class StockQueryContainer extends AbstractQueryContainer
      */
     public function queryAllStockProductsJoinedStockJoinedProduct()
     {
-        $query = SpyStockProductQuery::create()
+        $query = $this->getFactory()->createStockProductQuery()
             ->withColumn(SpyStockProductTableMap::COL_ID_STOCK_PRODUCT, 'id_stock_product')
             ->withColumn(SpyProductTableMap::COL_SKU, 'sku')
             ->withColumn(SpyStockTableMap::COL_ID_STOCK, 'id_stock')
@@ -122,7 +125,7 @@ class StockQueryContainer extends AbstractQueryContainer
      */
     public function queryStockProductByIdStockProduct($idStockProduct)
     {
-        return SpyStockProductQuery::create()
+        return $this->getFactory()->createStockProductQuery()
             ->filterByIdStockProduct($idStockProduct);
     }
 
