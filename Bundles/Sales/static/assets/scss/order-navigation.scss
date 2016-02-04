@@ -1,0 +1,24 @@
+.overview-nav {
+  max-width: 1000px;
+  margin: 0 auto 30px;
+  border-right: 1px solid #ccc;
+}
+.overview-nav .nav-item {
+  width: 14.285%;
+  text-align: center;
+  font-size: 50px;
+}
+.overview-nav .nav-item > div {
+  border-width: 1px 0 1px 1px;
+  border-color: #ccc;
+  border-style: solid;
+}
+.overview-nav .nav-item > div > span {
+  display: block;
+  line-height: 80px;
+}
+.overview-nav .nav-item > div > span:hover {
+  color: red;
+  margin: 0;
+  padding: 0;
+}

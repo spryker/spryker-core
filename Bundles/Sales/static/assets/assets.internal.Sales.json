@@ -1,0 +1,12 @@
+[{
+    "priority": 80,
+    "assets": {
+        "js": [],
+        "css": [
+            "/scss/order-navigation.scss",
+            "/scss/order-details.scss"
+        ],
+        "images": [],
+        "fonts": []
+    }
+}]
