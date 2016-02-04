@@ -16,7 +16,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 /**
- * @method TaxPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Tax\Persistence\TaxPersistenceFactory getFactory()
  */
 class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContainerInterface
 {

@@ -20,7 +20,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 
 /**
- * @method ProductPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Product\Persistence\ProductPersistenceFactory getFactory()
  */
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {

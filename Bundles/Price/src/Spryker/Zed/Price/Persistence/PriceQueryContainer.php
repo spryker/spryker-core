@@ -17,7 +17,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 /**
- * @method PricePersistenceFactory getFactory()
+ * @method \Spryker\Zed\Price\Persistence\PricePersistenceFactory getFactory()
  */
 class PriceQueryContainer extends AbstractQueryContainer
 {

@@ -14,7 +14,7 @@ use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
- * @method OmsPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory getFactory()
  */
 class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContainerInterface
 {

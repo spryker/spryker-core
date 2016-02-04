@@ -9,7 +9,7 @@ namespace Spryker\Zed\Locale\Persistence;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method LocalePersistenceFactory getFactory()
+ * @method \Spryker\Zed\Locale\Persistence\LocalePersistenceFactory getFactory()
  */
 class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQueryContainerInterface
 {

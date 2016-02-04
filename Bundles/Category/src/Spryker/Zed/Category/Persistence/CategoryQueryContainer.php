@@ -24,7 +24,7 @@ use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 /**
- * @method CategoryPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Category\Persistence\CategoryPersistenceFactory getFactory()
  */
 class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQueryContainerInterface
 {

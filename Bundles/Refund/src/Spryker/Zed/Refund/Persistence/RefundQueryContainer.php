@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 
 /**
- * @method RefundPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Refund\Persistence\RefundPersistenceFactory getFactory()
  */
 class RefundQueryContainer extends AbstractQueryContainer implements RefundQueryContainerInterface
 {

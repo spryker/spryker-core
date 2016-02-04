@@ -16,7 +16,7 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
 /**
- * @method TouchPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Touch\Persistence\TouchPersistenceFactory getFactory()
  */
 class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryContainerInterface
 {

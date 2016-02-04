@@ -13,7 +13,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 /**
- * @method TaxProductConnectorPersistenceFactory getFactory()
+ * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorPersistenceFactory getFactory()
  */
 class TaxProductConnectorQueryContainer extends AbstractQueryContainer implements TaxProductConnectorQueryContainerInterface
 {

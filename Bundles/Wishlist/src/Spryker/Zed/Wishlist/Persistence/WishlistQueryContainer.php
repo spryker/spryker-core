@@ -13,7 +13,7 @@ use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 
 /**
- * @method WishlistPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistPersistenceFactory getFactory()
  */
 class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQueryContainerInterface
 {

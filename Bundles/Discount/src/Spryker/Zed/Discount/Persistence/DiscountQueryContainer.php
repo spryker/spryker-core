@@ -15,7 +15,7 @@ use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 
 /**
- * @method DiscountPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountPersistenceFactory getFactory()
  */
 class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQueryContainerInterface
 {

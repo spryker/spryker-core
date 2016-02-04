@@ -12,7 +12,7 @@ use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 
 /**
- * @method StockPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Stock\Persistence\StockPersistenceFactory getFactory()
  */
 class StockQueryContainer extends AbstractQueryContainer
 {

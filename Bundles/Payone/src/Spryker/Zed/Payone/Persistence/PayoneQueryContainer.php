@@ -14,7 +14,7 @@ use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery;
 
 /**
- * @method PayonePersistenceFactory getFactory()
+ * @method \Spryker\Zed\Payone\Persistence\PayonePersistenceFactory getFactory()
  */
 class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQueryContainerInterface
 {

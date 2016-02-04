@@ -13,7 +13,7 @@ use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 /**
- * @method UrlPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Url\Persistence\UrlPersistenceFactory getFactory()
  */
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface
 {

@@ -26,7 +26,7 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 
 /**
- * @method CmsPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Cms\Persistence\CmsPersistenceFactory getFactory()
  */
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {

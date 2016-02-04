@@ -8,13 +8,10 @@ namespace Spryker\Zed\Payolution\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Spryker\Shared\Payolution\PayolutionConstants;
 
 /**
- * @method PayolutionPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Payolution\Persistence\PayolutionPersistenceFactory getFactory()
  */
 class PayolutionQueryContainer extends AbstractQueryContainer implements PayolutionQueryContainerInterface
 {

@@ -19,7 +19,7 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 
 /**
- * @method GlossaryPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryPersistenceFactory getFactory()
  */
 class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQueryContainerInterface
 {
@@ -398,7 +398,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      * @param $fkGlossaryKey
      * @param array $locales
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryGlossaryKeyTranslationsByLocale($fkGlossaryKey, array $locales)

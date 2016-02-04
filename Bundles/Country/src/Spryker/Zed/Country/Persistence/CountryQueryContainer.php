@@ -11,7 +11,7 @@ use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
 
 /**
- * @method CountryPersistenceFactory getFactory()
+ * @method \Spryker\Zed\Country\Persistence\CountryPersistenceFactory getFactory()
  */
 class CountryQueryContainer extends AbstractQueryContainer implements CountryQueryContainerInterface
 {
