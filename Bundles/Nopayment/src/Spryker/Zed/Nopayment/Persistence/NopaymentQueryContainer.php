@@ -7,9 +7,11 @@
 namespace Spryker\Zed\Nopayment\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Nopayment\Persistence\SpyNopaymentPaidQuery;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 
+/**
+ * @method NopaymentPersistenceFactory getFactory()
+ */
 class NopaymentQueryContainer extends AbstractQueryContainer
 {
 
@@ -20,7 +22,7 @@ class NopaymentQueryContainer extends AbstractQueryContainer
      */
     public function queryOrderItem(SpySalesOrderItem $orderItem)
     {
-        return SpyNopaymentPaidQuery::create()
+        return $this->getFactory()->createNopaymentPaidQuery()
             ->findByFkSalesOrderItem($orderItem->getIdSalesOrderItem());
     }
 
