@@ -10,6 +10,9 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 
+/**
+ * @method ShipmentPersistenceFactory getFactory()
+ */
 class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQueryContainerInterface
 {
 
@@ -18,7 +21,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
      */
     public function queryCarriers()
     {
-        return new SpyShipmentCarrierQuery();
+        return $this->getFactory()->createShipmentCarrierQuery();
     }
 
     /**
@@ -34,7 +37,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
      */
     public function queryMethods()
     {
-        return new SpyShipmentMethodQuery();
+        return $this->getFactory()->createShipmentMethodQuery();
     }
 
     /**
