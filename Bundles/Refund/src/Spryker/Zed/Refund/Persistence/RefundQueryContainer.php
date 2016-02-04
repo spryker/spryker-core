@@ -9,6 +9,9 @@ namespace Spryker\Zed\Refund\Persistence;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 
+/**
+ * @method RefundPersistenceFactory getFactory()
+ */
 class RefundQueryContainer extends AbstractQueryContainer implements RefundQueryContainerInterface
 {
 
@@ -17,7 +20,7 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
      */
     public function queryRefund()
     {
-        return (new SpyRefundQuery());
+        return $this->getFactory()->createRefundQuery();
     }
 
     /**
@@ -27,7 +30,7 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
      */
     public function queryRefundsByIdSalesOrder($idOrder)
     {
-        $query = SpyRefundQuery::create();
+        $query = $this->getFactory()->createRefundQuery();
         $query->filterByFkSalesOrder($idOrder);
 
         return $query;

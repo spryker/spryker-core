@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Refund\Persistence;
 
+use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -14,4 +15,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class RefundPersistenceFactory extends AbstractPersistenceFactory
 {
+
+    /**
+     * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
+     */
+    public function createRefundQuery()
+    {
+        return SpyRefundQuery::create();
+    }
+
 }
