@@ -156,6 +156,7 @@ class ObjectBuilder extends PropelObjectBuilder
             $script .= "
                         break;";
         }
+
         $script .= "
                 }
             }
@@ -163,9 +164,10 @@ class ObjectBuilder extends PropelObjectBuilder
         } catch (Exception \$e) {
             Propel::log(\$e->getMessage(), Propel::LOG_ERR);
             if (class_exists('\\Spryker\\Shared\\Library\\Environment') && (\\Spryker\\Shared\\Library\\Environment::isDevelopment() || \\Spryker\\Shared\\Library\\Environment::isTesting())) {
+                \$formatter = new \\NilPortugues\\Sql\\QueryFormatter\\Formatter();
                 \$message = \$e->getMessage() . PHP_EOL . PHP_EOL
                     . 'Executed query: ' . PHP_EOL
-                    . Propel::getConnection()->getLastExecutedQuery()
+                    . \$formatter->formate(Propel::getConnection()->getLastExecutedQuery())
                 ;
                 throw new PropelException(\$message);
             }
