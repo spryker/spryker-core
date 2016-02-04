@@ -12,6 +12,9 @@ use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 
+/**
+ * @method WishlistPersistenceFactory getFactory()
+ */
 class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQueryContainerInterface
 {
 
@@ -23,11 +26,11 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
      */
     public function queryCustomerWishlistByProductId($idWishlist, $idProduct)
     {
-        $criteria = new Criteria();
-        $criteria->add(SpyWishlistItemTableMap::COL_FK_WISHLIST, $idWishlist)
-            ->addAnd(SpyWishlistItemTableMap::COL_FK_PRODUCT, $idProduct);
+        $query = $this->getFactory()->createWishlistItemQuery()
+            ->filterByFkWishlist($idWishlist)
+            ->filterByFkProduct($idProduct);
 
-        return SpyWishlistItemQuery::create(null, $criteria);
+        return $query;
     }
 
     /**
@@ -38,11 +41,11 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
      */
     public function queryCustomerWishlistByGroupKey($idWishlist, $groupKey)
     {
-        $criteria = new Criteria();
-        $criteria->add(SpyWishlistItemTableMap::COL_FK_WISHLIST, $idWishlist);
-        $criteria->addAnd(SpyWishlistItemTableMap::COL_GROUP_KEY, $groupKey);
+        $query = $this->getFactory()->createWishlistItemQuery()
+            ->filterByFkWishlist($idWishlist)
+            ->filterByGroupKey($groupKey);
 
-        return SpyWishlistItemQuery::create(null, $criteria);
+        return $query;
     }
 
     /**
@@ -50,7 +53,7 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
      */
     public function queryWishlistItem()
     {
-        return SpyWishlistItemQuery::create();
+        return $this->getFactory()->createWishlistItemQuery();
     }
 
     /**
@@ -58,7 +61,7 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
      */
     public function queryWishlist()
     {
-        return SpyWishlistQuery::create();
+        return $this->getFactory()->createWishlistQuery();
     }
 
 }
