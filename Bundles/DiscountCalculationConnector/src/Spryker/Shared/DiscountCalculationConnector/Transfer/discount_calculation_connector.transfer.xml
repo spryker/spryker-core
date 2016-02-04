@@ -21,6 +21,8 @@
         <property name="quantity" type="int" />
         <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
+        <property name="unitGrossPriceWithDiscounts" type="int"/>
+        <property name="sumGrossPriceWithDiscounts" type="int" />
     </transfer>
 
     <transfer name="ProductOption">

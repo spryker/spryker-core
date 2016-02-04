@@ -7,7 +7,6 @@ namespace Spryker\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
@@ -35,6 +34,14 @@ class SumGrossCalculatedDiscountAmountCalculator implements CalculatorInterface
 
         $totalDiscountUnitGrossAmount = $this->getCalculatedDiscountsUnitGrossAmount($itemTransfer->getCalculatedDiscounts());
         $totalDiscountSumGrossAmount = $this->getCalculatedDiscountsSumGrossAmount($itemTransfer->getCalculatedDiscounts());
+
+        $itemTransfer->setUnitGrossPriceWithDiscounts(
+            $itemTransfer->getUnitGrossPrice() - $totalDiscountUnitGrossAmount
+        );
+
+        $itemTransfer->setSumGrossPriceWithDiscounts(
+            $itemTransfer->getSumGrossPrice() - $totalDiscountSumGrossAmount
+        );
 
         $totalDiscountUnitGrossAmount += $this->getProductOptionGrossUnitTotalAmount($itemTransfer->getProductOptions());
         $totalDiscountSumGrossAmount += $this->getProductOptionGrossSumTotalAmount($itemTransfer->getProductOptions());

@@ -144,6 +144,8 @@
 
     <transfer name="Item">
         <property name="calculatedDiscounts" type="calculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="unitGrossPriceWithDiscounts" type="int"/>
+        <property name="sumGrossPriceWithDiscounts" type="int" />
     </transfer>
 
     <transfer name="Expense">
