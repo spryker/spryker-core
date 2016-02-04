@@ -6,6 +6,39 @@
 
 {% block content %}
 
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order Overview' } %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-sm-4">
+                    <p><b>{{ 'Order ID' | trans }}:</b> 12334</p>
+                    <p><b>{{ 'Order date' | trans }}:</b> 12334</p>
+                    <p><b>{{ 'Grand total' | trans }}:</b> 12334</p>
+                    <p><b>{{ 'Discount' | trans }}:</b> 12334</p>
+                    <p><b>{{ 'Item Quantity' | trans }}:</b> 12334</p>
+                </div>
+                <div class="col-sm-4">
+                    <p><b>{{ 'Customer name' | trans }}:</b> First Name</p>
+                    <p><b>{{ 'Email' | trans }}:</b> a@spryker.com</p>
+                    <p><b>{{ 'Status' | trans }}:</b> <span class="label label-info">Status</span></p>
+                    <p><b>{{ 'Other order' | trans }}:</b> (123)</p>
+                </div>
+                <div class="col-sm-4">
+                    <h3>Comments <div class="pull-right"><a href="" class="btn btn-xs btn-primary">{{ 'Add Message' | trans }}</a></div></h3>
+                    <div class="order-details-chat">
+                        {% for i in 1..6 %}
+                        <div class="chat">
+                            <div class="chat-author"><span>Username</span></div>
+                            <div class="chat-body">This is my message</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
     {% include '@Sales/Details/section/customer-details.twig' %}
 
     <div class="spy-layout">
@@ -14,11 +47,6 @@
         {% include '@Sales/Details/section/payment-logs.twig' %}
         {% include '@Sales/Details/section/expenses.twig' %}
         {% include '@Sales/Details/section/refunds.twig' %}
-        {#{% include '@Sales/Details/section/invoices.twig' %}#}
-        {#{% include '@Sales/Details/section/payment-overview.twig' %}#}
-        {#{% include '@Sales/Details/section/shipping.twig' %}#}
-        {#{% include '@Sales/Details/section/returns.twig' %}#}
-        {#{% include '@Sales/Details/section/comments.twig' %}#}
     </div>
 
 {% endblock %}

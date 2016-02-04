@@ -10,7 +10,8 @@
         ],
         "css": [
             "/scss/spryker.scss",
-            "/scss/sprites.scss"
+            "/scss/sprites.scss",
+            "/scss/order-details.scss"
         ],
         "images": [],
         "fonts": []
