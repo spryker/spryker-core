@@ -12,6 +12,9 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
+/**
+ * @method TaxProductConnectorPersistenceFactory getFactory()
+ */
 class TaxProductConnectorQueryContainer extends AbstractQueryContainer implements TaxProductConnectorQueryContainerInterface
 {
 
@@ -24,7 +27,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      */
     public function getAbstractAbstractIdsForTaxRate($idTaxRate)
     {
-        return SpyProductAbstractQuery::create()
+        return $this->getFactory()->createProductAbstractQuery()
             ->select([
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             ])
@@ -46,7 +49,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      */
     public function getProductAbstractIdsForTaxSet($idTaxSet)
     {
-        return SpyProductAbstractQuery::create()
+        return $this->getFactory()->createProductAbstractQuery()
             ->addJoin(
                 SpyProductAbstractTableMap::COL_FK_TAX_SET,
                 SpyTaxSetTableMap::COL_ID_TAX_SET,
