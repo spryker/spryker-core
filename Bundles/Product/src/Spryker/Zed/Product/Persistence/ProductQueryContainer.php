@@ -8,7 +8,6 @@ namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -18,14 +17,11 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
-use Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery;
-use Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 
+/**
+ * @method ProductPersistenceFactory getFactory()
+ */
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {
 
@@ -39,7 +35,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function getProductWithAttributeQuery($skus, LocaleTransfer $locale)
     {
-        $query = SpyProductQuery::create();
+        $query = $this->getFactory()->createProductQuery();
         $query->filterBySku($skus);
         $query->useSpyProductLocalizedAttributesQuery()
                     ->filterByFkLocale($locale->getIdLocale())
@@ -63,7 +59,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryProductWithAttributesAndProductAbstract($concreteSku, $idLocale)
     {
-        $query = SpyProductQuery::create();
+        $query = $this->getFactory()->createProductQuery();
 
         $query->filterBySku($concreteSku)
             ->useSpyProductLocalizedAttributesQuery()
@@ -82,7 +78,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryTaxSetForProductAbstract($idProductAbstract)
     {
-        return SpyTaxSetQuery::create()
+        return $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
                 ->filterByIdProductAbstract($idProductAbstract)
             ->endUse();
@@ -93,7 +89,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryProductAbstract()
     {
-        return SpyProductAbstractQuery::create();
+        return $this->getFactory()->createProductAbstractQuery();
     }
 
     /**
@@ -103,7 +99,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryProductConcreteBySku($sku)
     {
-        return SpyProductQuery::create()
+        return $this->getFactory()->createProductQuery()
             ->filterBySku($sku);
     }
 
@@ -114,7 +110,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryProductAbstractBySku($sku)
     {
-        return SpyProductAbstractQuery::create()
+        return $this->getFactory()->createProductAbstractQuery()
             ->filterBySku($sku);
     }
 
@@ -125,7 +121,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function querySkuFromProductAbstractById($idProductAbstract)
     {
-        return SpyProductAbstractQuery::create()
+        return $this->getFactory()->createProductAbstractQuery()
             ->filterByIdProductAbstract($idProductAbstract);
     }
 
@@ -136,7 +132,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryAbstractSkuForm()
     {
-        return SpyProductAbstractQuery::create()
+        return $this->getFactory()->createProductAbstractQuery()
             ->select([
                 SpyProductAbstractTableMap::COL_SKU => 'value',
                 SpyProductAbstractTableMap::COL_SKU => 'label',
@@ -152,7 +148,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryConcreteSkuForm()
     {
-        return $query = SpyProductQuery::create()
+        return $query = $this->getFactory()->createProductQuery()
             ->select([
                 SpyProductTableMap::COL_SKU => 'value',
                 SpyProductTableMap::COL_SKU => 'label',
@@ -168,7 +164,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryAttributeByName($attributeName)
     {
-        $query = SpyProductAttributesMetadataQuery::create();
+        $query = $this->getFactory()->createProductAttributesMetadataQuery();
         $query->filterByKey($attributeName);
 
         return $query;
@@ -181,7 +177,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryAttributeTypeByName($attributeType)
     {
-        $query = SpyProductAttributeTypeQuery::create();
+        $query = $this->getFactory()->createProductAttributeTypeQuery();
         $query->filterByName($attributeType);
 
         return $query;
@@ -195,7 +191,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryProductAbstractAttributeCollection($idProductAbstract, $fkCurrentLocale)
     {
-        $query = SpyProductAbstractLocalizedAttributesQuery::create();
+        $query = $this->getFactory()->createProductAbstractLocalizedAttributesQuery();
         $query
             ->filterByFkProductAbstract($idProductAbstract)
             ->filterByFkLocale($fkCurrentLocale);
@@ -211,7 +207,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryProductConcreteAttributeCollection($idProductConcrete, $fkCurrentLocale)
     {
-        $query = SpyProductLocalizedAttributesQuery::create();
+        $query = $this->getFactory()->createProductLocalizedAttributesQuery();
         $query
             ->filterByFkProduct($idProductConcrete)
             ->filterByFkLocale($fkCurrentLocale);
@@ -354,7 +350,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
     public function queryProductConcreteByProductAbstract(SpyProductAbstract $productAbstract)
     {
-        return SpyProductQuery::create()
+        return $this->getFactory()->createProductQuery()
             ->filterByFkProductAbstract($productAbstract->getIdProductAbstract());
     }
 
