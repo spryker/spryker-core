@@ -6,7 +6,6 @@
     <transfer name="Discount">
         <property name="displayName" type="string" />
         <property name="amount" type="int" />
-        <property name="action" type="string" />
         <property name="voucherCode" type="string" />
     </transfer>
 
