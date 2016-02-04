@@ -6,6 +6,11 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -14,4 +19,45 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class SalesPersistenceFactory extends AbstractPersistenceFactory
 {
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    public function createSalesOrderQuery()
+    {
+        return SpySalesOrderQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function createSalesOrderItemQuery()
+    {
+        return SpySalesOrderItemQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
+     */
+    public function createSalesExpenseQuery()
+    {
+        return SpySalesExpenseQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
+     */
+    public function createSalesOrderAddressQuery()
+    {
+        return SpySalesOrderAddressQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
+     */
+    public function createSalesOrderCommentQuery()
+    {
+        return SpySalesOrderCommentQuery::create();
+    }
+
 }

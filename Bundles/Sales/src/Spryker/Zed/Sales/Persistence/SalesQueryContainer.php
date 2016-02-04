@@ -8,12 +8,10 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 
+/**
+ * @method SalesPersistenceFactory getFactory()
+ */
 class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryContainerInterface
 {
 
@@ -22,7 +20,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function querySalesOrder()
     {
-        return new SpySalesOrderQuery();
+        return $this->getFactory()->createSalesOrderQuery();
     }
 
     /**
@@ -30,7 +28,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function querySalesOrderItem()
     {
-        return new SpySalesOrderItemQuery();
+        return $this->getFactory()->createSalesOrderItemQuery();
     }
 
     /**
@@ -38,7 +36,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function querySalesExpense()
     {
-        return new SpySalesExpenseQuery();
+        return $this->getFactory()->createSalesExpenseQuery();
     }
 
     /**
@@ -48,7 +46,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function querySalesOrderItemsByIdSalesOrder($idOrder)
     {
-        $query = new SpySalesOrderItemQuery();
+        $query = $this->getFactory()->createSalesOrderItemQuery();
 
         return $query->filterByFkSalesOrder($idOrder);
     }
@@ -74,7 +72,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function querySalesOrderAddressById($idSalesOrderAddress)
     {
-        $query = new SpySalesOrderAddressQuery();
+        $query = $this->getFactory()->createSalesOrderAddressQuery();
         $query->filterByIdSalesOrderAddress($idSalesOrderAddress);
 
         return $query;
@@ -87,7 +85,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function querySalesExpensesByOrderId($idOrder)
     {
-        $query = new SpySalesExpenseQuery();
+        $query = $this->getFactory()->createSalesExpenseQuery();
         $query->filterByFkSalesOrder($idOrder);
 
         return $query;
@@ -100,7 +98,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function queryOrderItemById($idOrderItem)
     {
-        $query = SpySalesOrderItemQuery::create();
+        $query = $this->getFactory()->createSalesOrderItemQuery();
         $query->filterByIdSalesOrderItem($idOrderItem);
 
         return $query;
@@ -111,7 +109,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function queryComments()
     {
-        $query = SpySalesOrderCommentQuery::create();
+        $query = $this->getFactory()->createSalesOrderCommentQuery();
 
         return $query;
     }
@@ -123,7 +121,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function querySalesOrderById($idSalesOrder)
     {
-        $query = SpySalesOrderQuery::create();
+        $query = $this->getFactory()->createSalesOrderQuery();
         $query->filterByIdSalesOrder($idSalesOrder);
 
         return $query;
@@ -137,7 +135,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria = null)
     {
-        $query = SpySalesOrderQuery::create(null, $criteria);
+        $query = $this->getFactory()->createSalesOrderQuery();
         $query->filterByFkCustomer($idCustomer);
 
         return $query;
@@ -151,7 +149,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function querySalesOrderDetails($idSalesOrder, $idCustomer)
     {
-        $query = SpySalesOrderQuery::create('order');
+        $query = $this->getFactory()->createSalesOrderQuery();
         $query
             ->filterByIdSalesOrder($idSalesOrder)
             ->filterByFkCustomer($idCustomer);
