@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Country\Persistence;
 
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Country\Persistence\SpyRegionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -14,4 +16,21 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CountryPersistenceFactory extends AbstractPersistenceFactory
 {
+
+    /**
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
+     */
+    public function createCountryQuery()
+    {
+        return SpyCountryQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
+     */
+    public function createRegionQuery()
+    {
+        return SpyRegionQuery::create();
+    }
+
 }

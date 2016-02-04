@@ -10,6 +10,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
 
+/**
+ * @method CountryPersistenceFactory getFactory()
+ */
 class CountryQueryContainer extends AbstractQueryContainer implements CountryQueryContainerInterface
 {
 
@@ -18,7 +21,7 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
      */
     public function queryCountries()
     {
-        return SpyCountryQuery::create();
+        return $this->getFactory()->createCountryQuery();
     }
 
     /**
@@ -40,7 +43,7 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
      */
     public function queryRegions()
     {
-        return SpyRegionQuery::create();
+        return $this->getFactory()->createRegionQuery();
     }
 
     /**
