@@ -27,7 +27,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryFieldOperations()
     {
-        $fieldOperations = SpyProductSearchAttributesOperationQuery::create()
+        $fieldOperations = $this->getFactory()->createProductSearchAttributesOperationQuery()
             ->joinWith('SpyProductAttributesMetadata')
             ->addAscendingOrderByColumn(
                 SpyProductSearchAttributesOperationTableMap::COL_SOURCE_ATTRIBUTE_ID
@@ -49,7 +49,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function getExportableProductsByLocale(array $productIds, LocaleTransfer $locale)
     {
-        $query = SpyProductQuery::create();
+        $query = $this->getFactory()->createProductQuery();
         $query
             ->filterByIdProduct($productIds)
             ->useSpyProductLocalizedAttributesQuery()
@@ -80,7 +80,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryAttributeOperation($idAttribute, $copyTarget)
     {
-        $query = SpyProductSearchAttributesOperationQuery::create();
+        $query = $this->getFactory()->createProductSearchAttributesOperationQuery();
         $query
             ->filterBySourceAttributeId($idAttribute)
             ->filterByTargetField($copyTarget);
