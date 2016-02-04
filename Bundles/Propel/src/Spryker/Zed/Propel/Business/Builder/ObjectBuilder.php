@@ -167,7 +167,7 @@ class ObjectBuilder extends PropelObjectBuilder
                 \$formatter = new \\NilPortugues\\Sql\\QueryFormatter\\Formatter();
                 \$message = \$e->getMessage() . PHP_EOL . PHP_EOL
                     . 'Executed query: ' . PHP_EOL
-                    . \$formatter->formate(Propel::getConnection()->getLastExecutedQuery())
+                    . \$formatter->format(\$stmt->getExecutedQueryString())
                 ;
                 throw new PropelException(\$message);
             }
