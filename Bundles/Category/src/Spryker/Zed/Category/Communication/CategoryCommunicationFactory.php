@@ -22,18 +22,6 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     protected $currentLocale;
 
     /**
-     * @deprecated Use getCurrentLocale() instead.
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function createCurrentLocale()
-    {
-        trigger_error('Deprecated, use getCurrentLocale() instead.', E_USER_DEPRECATED);
-
-        return $this->getCurrentLocale();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()

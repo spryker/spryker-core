@@ -74,21 +74,6 @@ class PriceQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @deprecated Will be removed in 1.0.0.
-     *
-     * @param \Orm\Zed\Price\Persistence\SpyPriceProductQuery $query
-     * @param int $idPriceProduct
-     *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
-     */
-    public function addFilter($query, $idPriceProduct)
-    {
-        trigger_error('Deprecated, method name confusion about filter meaning to filter out. Use query method directly.', E_USER_DEPRECATED);
-
-        return $query->filterByIdPriceProduct($idPriceProduct, Criteria::NOT_EQUAL);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *

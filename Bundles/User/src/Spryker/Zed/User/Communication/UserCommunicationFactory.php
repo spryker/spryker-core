@@ -96,16 +96,4 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(UserDependencyProvider::FACADE_ACL);
     }
 
-    /**
-     * @deprecated Use getAclFacade() instead.
-     *
-     * @return \Spryker\Zed\User\Dependency\Facade\UserToAclInterface
-     */
-    public function createAclFacade()
-    {
-        trigger_error('Deprecated, use getAclFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getAclFacade();
-    }
-
 }

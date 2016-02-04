@@ -37,18 +37,6 @@ class DiscountCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getDiscountFacade() instead.
-     *
-     * @return \Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface
-     */
-    public function createDiscountFacade()
-    {
-        trigger_error('Deprecated, use getDiscountFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getDiscountFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface
      */
     public function getDiscountFacade()

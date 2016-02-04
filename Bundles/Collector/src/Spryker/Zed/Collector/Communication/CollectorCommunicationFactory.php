@@ -16,18 +16,6 @@ class CollectorCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated Use getLocaleFacade() instead.
-     *
-     * @return \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface
-     */
-    public function createLocaleFacade()
-    {
-        trigger_error('Deprecated, use getLocaleFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getLocaleFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface
      */
     public function getLocaleFacade()

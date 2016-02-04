@@ -16,18 +16,6 @@ class ItemGrouperCheckoutConnectorBusinessFactory extends AbstractBusinessFactor
 {
 
     /**
-     * @deprecated Use getItemGrouperFacade() instead.
-     *
-     * @return \Spryker\Zed\ItemGrouperCheckoutConnector\Dependency\Facade\ItemGrouperCheckoutConnectorToItemGrouperInterface
-     */
-    public function createItemGrouperFacade()
-    {
-        trigger_error('Deprecated, use getItemGrouperFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getItemGrouperFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\ItemGrouperCheckoutConnector\Dependency\Facade\ItemGrouperCheckoutConnectorToItemGrouperInterface
      */
     public function getItemGrouperFacade()

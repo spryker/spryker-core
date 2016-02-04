@@ -16,12 +16,12 @@ class ModeDetector implements ModeDetectorInterface
 {
 
     /**
+     * @deprecated Will be removed. Needs refactoring to use Zed getMode().
+     *
      * @return string
      */
     public function getMode()
     {
-        trigger_error('Deprecated, will be removed.', E_USER_DEPRECATED);
-
         if (Environment::isNotProduction()) {
             return self::MODE_TEST;
         }

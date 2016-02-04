@@ -99,35 +99,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getAvailableCalculatorPlugins() instead.
-     *
-     * @return \Spryker\Zed\Discount\Business\Model\CalculatorInterface[]
-     */
-    public function createAvailableCalculatorPlugins()
-    {
-        trigger_error('Deprecated, use getAvailableCalculatorPlugins() instead.', E_USER_DEPRECATED);
-
-        $this->getAvailableCalculatorPlugins();
-    }
-
-    /**
      * @return \Spryker\Zed\Discount\Business\Model\CalculatorInterface[]
      */
     public function getAvailableCalculatorPlugins()
     {
         return $this->getConfig()->getAvailableCalculatorPlugins();
-    }
-
-    /**
-     * @deprecated Use getAvailableCollectorPlugins() instead.
-     *
-     * @return \Spryker\Zed\Discount\Business\Collector\CollectorInterface[]
-     */
-    public function createAvailableCollectorPlugins()
-    {
-        trigger_error('Deprecated, use getAvailableCollectorPlugins() instead.', E_USER_DEPRECATED);
-
-        return $this->getAvailableCollectorPlugins();
     }
 
     /**

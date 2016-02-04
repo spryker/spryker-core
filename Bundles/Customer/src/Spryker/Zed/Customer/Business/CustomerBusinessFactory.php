@@ -20,18 +20,6 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @deprecated Use getQueryContainer() instead.
-     *
-     * @return \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
-     */
-    public function createQueryContainer()
-    {
-        trigger_error('Deprecated, use getQueryContainer() instead.', E_USER_DEPRECATED);
-
-        return $this->getQueryContainer();
-    }
-
-    /**
      * @return \Spryker\Zed\Customer\Business\Customer\Customer
      */
     public function createCustomer()
@@ -69,35 +57,11 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getCountryFacade() instead.
-     *
-     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface
-     */
-    protected function createCountryFacade()
-    {
-        trigger_error('Deprecated, use getCountryFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getCountryFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface
      */
     protected function getCountryFacade()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY);
-    }
-
-    /**
-     * @deprecated Use getLocaleFacade() instead.
-     *
-     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
-     */
-    protected function createLocaleFacade()
-    {
-        trigger_error('Deprecated, use getLocaleFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getLocaleFacade();
     }
 
     /**
@@ -117,18 +81,6 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getSequenceNumberFacade(),
             $this->getConfig()->getCustomerReferenceDefaults()
         );
-    }
-
-    /**
-     * @deprecated Use getSequenceNumberFacade() instead.
-     *
-     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface
-     */
-    protected function createSequenceNumberFacade()
-    {
-        trigger_error('Deprecated, use getSequenceNumberFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getSequenceNumberFacade();
     }
 
     /**

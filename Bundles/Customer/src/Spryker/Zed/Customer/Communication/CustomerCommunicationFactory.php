@@ -25,18 +25,6 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated Use getQueryContainer() instead.
-     *
-     * @return \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
-     */
-    public function createQueryContainer()
-    {
-        trigger_error('Deprecated, use getQueryContainer() instead.', E_USER_DEPRECATED);
-
-        return $this->getQueryContainer();
-    }
-
-    /**
      * @return \Spryker\Zed\Customer\Communication\Table\CustomerTable
      */
     public function createCustomerTable()

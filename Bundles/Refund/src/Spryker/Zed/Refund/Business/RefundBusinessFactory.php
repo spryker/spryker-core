@@ -49,18 +49,6 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getSalesFacade() instead.
-     *
-     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
-     */
-    protected function createSalesFacade()
-    {
-        trigger_error('Deprecated, use getSalesFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getSalesFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface
      */
     protected function getOmsFacade()
@@ -69,35 +57,11 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getOmsFacade() instead.
-     *
-     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToOmsInterface
-     */
-    protected function createOmsFacade()
-    {
-        trigger_error('Deprecated, use getOmsFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getOmsFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainer
      */
     protected function getSalesQueryContainer()
     {
         return $this->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_SALES);
-    }
-
-    /**
-     * @deprecated Use getSalesQueryContainer() instead.
-     *
-     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainer
-     */
-    protected function createSalesQueryContainer()
-    {
-        trigger_error('Deprecated, use getSalesQueryContainer() instead.', E_USER_DEPRECATED);
-
-        return $this->getSalesQueryContainer();
     }
 
 }

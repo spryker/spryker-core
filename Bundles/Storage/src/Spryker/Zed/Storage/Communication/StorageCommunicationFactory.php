@@ -35,16 +35,6 @@ class StorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
-     */
-    public function createStorageClient()
-    {
-        trigger_error('Deprecated, use getStorageClient() instead.', E_USER_DEPRECATED);
-
-        return $this->getStorageClient();
-    }
-
-    /**
      * @return \Spryker\Zed\Collector\Business\CollectorFacade
      */
     public function getCollectorFacade()

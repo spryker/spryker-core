@@ -160,25 +160,6 @@ class Group implements GroupInterface
     }
 
     /**
-     * @deprecated Since 0.19.0, to be removed in 1.0.0, use getUserGroups() instead.
-     *
-     * @param int $idUser
-     *
-     * @return \Generated\Shared\Transfer\GroupTransfer
-     */
-    public function getUserGroup($idUser)
-    {
-        trigger_error('Deprecated, use getUserGroups() instead.', E_USER_DEPRECATED);
-
-        $groupEntity = $this->queryContainer->queryUserGroupByIdUser($idUser)->findOne();
-
-        $groupTransfer = new GroupTransfer();
-        $groupTransfer->fromArray($groupEntity->toArray(), true);
-
-        return $groupTransfer;
-    }
-
-    /**
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\GroupsTransfer

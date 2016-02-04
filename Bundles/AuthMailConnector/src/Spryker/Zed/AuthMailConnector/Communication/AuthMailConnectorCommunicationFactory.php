@@ -15,18 +15,6 @@ class AuthMailConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated Use getMailFacade() instead.
-     *
-     * @return \Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInterface
-     */
-    public function createMailFacade()
-    {
-        trigger_error('Deprecated, use getMailFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getMailFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInterface
      */
     public function getMailFacade()

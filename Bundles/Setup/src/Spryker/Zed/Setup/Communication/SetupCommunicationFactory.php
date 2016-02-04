@@ -22,16 +22,4 @@ class SetupCommunicationFactory extends AbstractCommunicationFactory
         return $this->getConfig()->getSetupInstallCommandNames();
     }
 
-    /**
-     * @deprecated Use getSetupInstallCommandNames() instead.
-     *
-     * @return array
-     */
-    public function createSetupInstallCommandNames()
-    {
-        trigger_error('Deprecated, use getSetupInstallCommandNames() instead.', E_USER_DEPRECATED);
-
-        return $this->getSetupInstallCommandNames();
-    }
-
 }

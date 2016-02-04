@@ -12,18 +12,6 @@ class KernelCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated Use getMessengerFacade() instead.
-     *
-     * @return \Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerInterface
-     */
-    public function createMessengerFacade()
-    {
-        trigger_error('Deprecated, use getMessengerFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getMessengerFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerInterface
      */
     public function getMessengerFacade()
