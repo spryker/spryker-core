@@ -1,10 +1,18 @@
 {
   "name": "spryker/graph-php-documentor",
   "require": {
-    "spryker/tool-graph": "^1.0.0",
+    "spryker/graph": "^1.0.0",
     "phpdocumentor/graphviz": "~1.0.0"
   },
   "require-dev": {
     "codeception/codeception": "~2.1.0"
+  },
+  "description": "graph php documentor bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
   }
 }
