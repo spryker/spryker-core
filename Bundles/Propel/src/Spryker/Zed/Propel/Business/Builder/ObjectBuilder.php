@@ -10,8 +10,6 @@ use Propel\Generator\Model\Column;
 use Propel\Generator\Builder\Om\ObjectBuilder as PropelObjectBuilder;
 use Propel\Generator\Model\IdMethod;
 use Propel\Generator\Platform\PlatformInterface;
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config;
 
 class ObjectBuilder extends PropelObjectBuilder
 {
@@ -164,24 +162,17 @@ class ObjectBuilder extends PropelObjectBuilder
             \$stmt->execute();
         } catch (Exception \$e) {
             Propel::log(\$e->getMessage(), Propel::LOG_ERR);
-";
+            if (class_exists('\\Spryker\\Shared\\Library\\Environment') && (\\Spryker\\Shared\\Library\\Environment::isDevelopment() || \\Spryker\\Shared\\Library\\Environment::isTesting())) {
+                \$message = \$e->getMessage() . PHP_EOL . PHP_EOL
+                    . 'Executed query: ' . PHP_EOL
+                    . Propel::getConnection()->getLastExecutedQuery()
+                ;
+                throw new PropelException(\$message);
+            }
 
-        if (Config::get(ApplicationConstants::PROPEL_DEBUG)) {
-            $script .= "
-            \$message = \$e->getMessage() . PHP_EOL . PHP_EOL
-                . 'Executed query: ' . PHP_EOL
-                . Propel::getConnection()->getLastExecutedQuery()
-            ;
-            throw new PropelException(\$message);
-";
-        }
-
-        if (!Config::get(ApplicationConstants::PROPEL_DEBUG)) {
-            $script .= "
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', \$sql), 0, \$e);
         }
 ";
-        }
 
         // if auto-increment, get the id after
         if ($platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {
