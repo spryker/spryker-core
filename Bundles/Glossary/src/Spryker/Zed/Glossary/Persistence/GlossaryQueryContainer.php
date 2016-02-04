@@ -9,6 +9,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\ModelJoin;
+use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
@@ -17,6 +18,9 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 
+/**
+ * @method GlossaryPersistenceFactory getFactory()
+ */
 class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQueryContainerInterface
 {
 
@@ -59,7 +63,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      */
     public function queryKeys()
     {
-        return new SpyGlossaryKeyQuery();
+        return $this->getFactory()->createGlossaryKeyQuery();
     }
 
     /**
@@ -88,7 +92,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      */
     public function queryTranslations()
     {
-        return new SpyGlossaryTranslationQuery();
+        return $this->getFactory()->createGlossaryTranslationQuery();
     }
 
     /**

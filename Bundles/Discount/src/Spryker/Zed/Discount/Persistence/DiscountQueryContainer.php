@@ -6,19 +6,13 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
 use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
-use Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 
 /**
  * @method DiscountPersistenceFactory getFactory()
