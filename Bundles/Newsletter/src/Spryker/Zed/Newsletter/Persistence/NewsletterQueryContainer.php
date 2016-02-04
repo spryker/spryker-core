@@ -7,10 +7,10 @@
 namespace Spryker\Zed\Newsletter\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery;
-use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery;
-use Orm\Zed\Newsletter\Persistence\SpyNewsletterTypeQuery;
 
+/**
+ * @method NewsletterPersistenceFactory getFactory()
+ */
 class NewsletterQueryContainer extends AbstractQueryContainer
 {
 
@@ -82,7 +82,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
      */
     public function querySubscriber()
     {
-        return SpyNewsletterSubscriberQuery::create();
+        return $this->getFactory()->createNewsletterSubscriberQuery();
     }
 
     /**
@@ -90,7 +90,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
      */
     public function querySubscription()
     {
-        return SpyNewsletterSubscriptionQuery::create();
+        return $this->getFactory()->createNewsletterSubscriptionQuery();
     }
 
     /**
@@ -98,7 +98,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
      */
     public function queryNewsletterType()
     {
-        return SpyNewsletterTypeQuery::create();
+        return $this->getFactory()->createNewsletterTypeQuery();
     }
 
 }
