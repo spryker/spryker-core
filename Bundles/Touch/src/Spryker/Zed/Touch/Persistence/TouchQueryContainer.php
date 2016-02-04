@@ -15,6 +15,9 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
+/**
+ * @method TouchPersistenceFactory getFactory()
+ */
 class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryContainerInterface
 {
 
@@ -29,7 +32,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      */
     public function queryTouchListByItemType($itemType)
     {
-        $query = SpyTouchQuery::create();
+        $query = $this->getFactory()->createTouchQuery();
         $query->filterByItemType($itemType);
 
         return $query;
@@ -43,7 +46,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      */
     public function queryTouchEntry($itemType, $itemId)
     {
-        $query = SpyTouchQuery::create();
+        $query = $this->getFactory()->createTouchQuery();
         $query
             ->setQueryKey(self::TOUCH_ENTRY_QUERY_KEY)
             ->filterByItemType($itemType)
@@ -61,7 +64,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      */
     public function queryUpdateTouchEntry($itemType, $itemId, $itemEvent)
     {
-        $query = SpyTouchQuery::create();
+        $query = $this->getFactory()->createTouchQuery();
         $query
             ->filterByItemType($itemType)
             ->filterByItemId($itemId)
@@ -81,7 +84,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      */
     public function createBasicExportableQuery($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)
     {
-        $query = SpyTouchQuery::create();
+        $query = $this->getFactory()->createTouchQuery();
         $query
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
@@ -96,7 +99,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      */
     public function queryExportTypes()
     {
-        $query = SpyTouchQuery::create();
+        $query = $this->getFactory()->createTouchQuery();
         $query
             ->addSelectColumn(SpyTouchTableMap::COL_ITEM_TYPE)
             ->setDistinct()
@@ -114,7 +117,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      */
     public function queryTouchEntries($itemType, $itemEvent, array $itemIds)
     {
-        $query = SpyTouchQuery::create()
+        $query = $this->getFactory()->createTouchQuery()
             ->setQueryKey(self::TOUCH_ENTRIES_QUERY_KEY)
             ->filterByItemType($itemType)
             ->filterByItemEvent($itemEvent)
@@ -130,7 +133,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      */
     public function queryTouchDeleteStorageAndSearch($itemType)
     {
-        $query = SpyTouchQuery::create();
+        $query = $this->getFactory()->createTouchQuery();
         $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
             ->filterByItemType($itemType)
             ->leftJoinTouchSearch()
@@ -150,7 +153,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      */
     public function queryTouchDeleteOnlyByItemType($itemType)
     {
-        $query = SpyTouchQuery::create();
+        $query = $this->getFactory()->createTouchQuery();
         $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
             ->filterByItemType($itemType);
 
