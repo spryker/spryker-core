@@ -68,18 +68,6 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getTransferObjectRepeater() instead.
-     *
-     * @return \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater
-     */
-    public function createTransferObjectRepeater()
-    {
-        trigger_error('Deprecated, use getTransferObjectRepeater() instead.', E_USER_DEPRECATED);
-
-        return $this->getTransferObjectRepeater();
-    }
-
-    /**
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()

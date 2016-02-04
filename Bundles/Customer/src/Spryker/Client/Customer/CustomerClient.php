@@ -77,20 +77,6 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     *
-     * @deprecated Use sendPasswordRestoreMail() instead
-     */
-    public function forgotPassword(CustomerTransfer $customerTransfer)
-    {
-        trigger_error('Deprecated, use sendPasswordRestoreMail() instead.', E_USER_DEPRECATED);
-
-        return $this->sendPasswordRestoreMail($customerTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer)
     {

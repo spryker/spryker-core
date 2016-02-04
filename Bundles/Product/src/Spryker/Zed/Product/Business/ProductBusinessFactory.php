@@ -45,18 +45,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getYvesUrl() instead.
-     *
-     * @return string
-     */
-    public function createYvesUrl()
-    {
-        trigger_error('Deprecated, use getYvesUrl() instead.', E_USER_DEPRECATED);
-
-        return $this->getYvesUrl();
-    }
-
-    /**
      * @return string
      */
     public function getYvesUrl()

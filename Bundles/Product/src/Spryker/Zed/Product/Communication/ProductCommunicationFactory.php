@@ -35,35 +35,11 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use getLocaleFacade() instead.
-     *
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
-     */
-    public function createLocaleFacade()
-    {
-        trigger_error('Deprecated, use getLocaleFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getLocaleFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @deprecated Use getProductOptionsFacade() instead.
-     *
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToProductOptionInterface
-     */
-    public function createProductOptionsFacade()
-    {
-        trigger_error('Deprecated, use getProductOptionsFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getProductOptionsFacade();
     }
 
     /**
@@ -75,35 +51,11 @@ class ProductCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use getUrlFacade() instead.
-     *
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
-     */
-    public function createUrlFacade()
-    {
-        trigger_error('Deprecated, use getUrlFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getUrlFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
     public function getUrlFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_URL);
-    }
-
-    /**
-     * @deprecated Use getProductCategoryQueryContainer() instead.
-     *
-     * @return \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
-     */
-    public function createProductCategoryQueryContainer()
-    {
-        trigger_error('Deprecated, use getProductCategoryQueryContainer() instead.', E_USER_DEPRECATED);
-
-        return $this->getProductCategoryQueryContainer();
     }
 
     /**

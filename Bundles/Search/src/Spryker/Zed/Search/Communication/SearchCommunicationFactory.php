@@ -35,35 +35,11 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use getSearchClient() instead.
-     *
-     * @return \Spryker\Client\Search\SearchClient
-     */
-    public function createSearchClient()
-    {
-        trigger_error('Deprecated, use getSearchClient() instead.', E_USER_DEPRECATED);
-
-        return $this->getSearchClient();
-    }
-
-    /**
      * @return \Spryker\Zed\Collector\Business\CollectorFacade
      */
     public function getCollectorFacade()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::FACADE_COLLECTOR);
-    }
-
-    /**
-     * @deprecated Use getCollectorFacade() instead.
-     *
-     * @return \Spryker\Zed\Collector\Business\CollectorFacade
-     */
-    public function createCollectorFacade()
-    {
-        trigger_error('Deprecated, use getCollectorFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getCollectorFacade();
     }
 
     /**

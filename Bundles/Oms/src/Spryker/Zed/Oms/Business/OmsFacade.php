@@ -164,35 +164,6 @@ class OmsFacade extends AbstractFacade
     }
 
     /**
-     * @deprecated
-     *
-     * @param string $processName
-     *
-     * @return \Spryker\Zed\Oms\Business\Process\Process
-     */
-    public function getProcess($processName)
-    {
-        trigger_error('Deprecated, will be removed. Use createProcess() directly', E_USER_DEPRECATED);
-
-        return $this->getFactory()
-            ->createOrderStateMachineBuilder()
-            ->createProcess($processName);
-    }
-
-    /**
-     * @deprecated
-     *
-     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\Dummy
-     */
-    public function getDummy()
-    {
-        trigger_error('Deprecated, will be removed.', E_USER_DEPRECATED);
-
-        return $this->getFactory()
-            ->createModelDummy();
-    }
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return \Spryker\Zed\Oms\Business\Process\Event[]

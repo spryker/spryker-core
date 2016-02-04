@@ -26,38 +26,12 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @deprecated Use getCurrentLocale() instead.
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function createCurrentLocale()
-    {
-        trigger_error('Deprecated, use getCurrentLocale() instead.', E_USER_DEPRECATED);
-
-        return $this->getCurrentLocale();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale()
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_LOCALE)
             ->getCurrentLocale();
-    }
-
-    /**
-     * @deprecated Use getProductFacade() instead.
-     *
-     * @throws \ErrorException
-     *
-     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductBridge
-     */
-    public function createProductFacade()
-    {
-        trigger_error('Deprecated, use getProductFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getProductFacade();
     }
 
     /**
@@ -71,20 +45,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use getCategoryFacade() instead.
-     *
-     * @throws \ErrorException
-     *
-     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge
-     */
-    public function createCategoryFacade()
-    {
-        trigger_error('Deprecated, use getCategoryFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getCategoryFacade();
-    }
-
-    /**
      * @throws \ErrorException
      *
      * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryBridge
@@ -92,20 +52,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     public function getCategoryFacade()
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CATEGORY);
-    }
-
-    /**
-     * @deprecated Use getCmsFacade() instead.
-     *
-     * @throws \ErrorException
-     *
-     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCmsBridge
-     */
-    public function createCmsFacade()
-    {
-        trigger_error('Deprecated, use getCmsFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getCmsFacade();
     }
 
     /**
@@ -121,18 +67,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use getCategoryQueryContainer() instead.
-     *
-     * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
-     */
-    public function createCategoryQueryContainer()
-    {
-        trigger_error('Deprecated, use getCategoryQueryContainer() instead.', E_USER_DEPRECATED);
-
-        return $this->getCategoryQueryContainer();
-    }
-
-    /**
      * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     public function getCategoryQueryContainer()
@@ -140,17 +74,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::CATEGORY_QUERY_CONTAINER);
     }
 
-    /**
-     * @deprecated Use getProductQueryContainer() instead.
-     *
-     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
-     */
-    public function createProductQueryContainer()
-    {
-        trigger_error('Deprecated, use getProductQueryContainer() instead.', E_USER_DEPRECATED);
-
-        return $this->getProductQueryContainer();
-    }
 
     /**
      * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -252,20 +175,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     public function createProductTable(LocaleTransfer $locale, $idCategory)
     {
         return new ProductTable($this->getQueryContainer(), $locale, $idCategory);
-    }
-
-    /**
-     * @deprecated Use getPropelConnection() instead.
-     *
-     * @throws \ErrorException
-     *
-     * @return \Propel\Runtime\Connection\ConnectionInterface
-     */
-    public function createPropelConnection()
-    {
-        trigger_error('Deprecated, use getPropelConnection() instead.', E_USER_DEPRECATED);
-
-        return $this->getPropelConnection();
     }
 
     /**

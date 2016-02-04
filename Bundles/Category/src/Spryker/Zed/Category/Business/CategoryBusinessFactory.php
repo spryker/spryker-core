@@ -138,18 +138,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getTouchFacade() instead.
-     *
-     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface
-     */
-    protected function createTouchFacade()
-    {
-        trigger_error('Deprecated, use getTouchFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getTouchFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface
      */
     protected function getTouchFacade()
@@ -158,35 +146,11 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getLocaleFacade() instead.
-     *
-     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
-     */
-    protected function createLocaleFacade()
-    {
-        trigger_error('Deprecated, use getLocaleFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getLocaleFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
      */
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @deprecated Use getUrlFacade() instead.
-     *
-     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface
-     */
-    protected function createUrlFacade()
-    {
-        trigger_error('Deprecated, use getUrlFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getUrlFacade();
     }
 
     /**

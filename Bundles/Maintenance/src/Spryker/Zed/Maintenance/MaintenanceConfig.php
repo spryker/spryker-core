@@ -44,18 +44,6 @@ class MaintenanceConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated use getBundleDirectory() instead
-     *
-     * @return string
-     */
-    public function getPathToSpryker()
-    {
-        trigger_error('Deprecated, use getBundleDirectory() instead.', E_USER_DEPRECATED);
-
-        return $this->getBundleDirectory();
-    }
-
-    /**
      * @return string
      */
     public function getPathToFossFile()

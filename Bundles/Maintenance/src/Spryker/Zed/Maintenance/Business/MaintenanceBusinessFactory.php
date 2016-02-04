@@ -191,18 +191,6 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated will be removed. Core does not contain any base or map directories of Propel anymore
-     *
-     * @return \Spryker\Zed\Maintenance\Business\Model\PropelBaseFolderFinder
-     */
-    public function createPropelBaseFolderFinder()
-    {
-        trigger_error('Deprecated, will be removed.', E_USER_DEPRECATED);
-
-        return new PropelBaseFolderFinder($this->getConfig()->getPathToSpryker());
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\InstalledPackagesTransfer
      */
     protected function createInstalledPackageTransfer()

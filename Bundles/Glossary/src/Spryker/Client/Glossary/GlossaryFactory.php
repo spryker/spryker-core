@@ -42,16 +42,4 @@ class GlossaryFactory extends AbstractFactory
         return new GlossaryKeyBuilder();
     }
 
-    /**
-     * @deprecated Use createKeyBuilder() instead.
-     *
-     * @return \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
-     */
-    protected function getKeyBuilder()
-    {
-        trigger_error('Deprecated, use createKeyBuilder() instead.', E_USER_DEPRECATED);
-
-        return $this->createKeyBuilder();
-    }
-
 }

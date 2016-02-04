@@ -45,20 +45,6 @@ class GatewayController extends AbstractGatewayController
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     *
-     * @deprecated Use sendPasswordRestoreMailAction() instead.
-     */
-    public function forgotPasswordAction(CustomerTransfer $customerTransfer)
-    {
-        trigger_error('Deprecated, use sendPasswordRestoreMail() instead.', E_USER_DEPRECATED);
-
-        return $this->sendPasswordRestoreMailAction($customerTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function sendPasswordRestoreMailAction(CustomerTransfer $customerTransfer)
     {

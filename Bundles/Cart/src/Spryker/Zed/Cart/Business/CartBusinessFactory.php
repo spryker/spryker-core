@@ -146,18 +146,6 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getCartCalculator() instead.
-     *
-     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
-     */
-    public function createCartCalculator()
-    {
-        trigger_error('Deprecated, use getCartCalculator() instead.', E_USER_DEPRECATED);
-
-        return $this->getCartCalculator();
-    }
-
-    /**
      * @return \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
      */
     public function getCartCalculator()

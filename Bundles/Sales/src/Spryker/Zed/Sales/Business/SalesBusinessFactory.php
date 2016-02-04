@@ -56,18 +56,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getQueryContainer() directly instead.
-     *
-     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainer
-     */
-    public function createSalesQueryContainer()
-    {
-        trigger_error('Deprecated, use getQueryContainer() directly instead.', E_USER_DEPRECATED);
-
-        return $this->getQueryContainer();
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Business\Model\Split\ItemInterface
      */
     public function createOrderItemSplitter()
@@ -108,18 +96,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     protected function getSequenceNumberFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SEQUENCE_NUMBER);
-    }
-
-    /**
-     * @deprecated Use getSequenceNumberFacade() instead.
-     *
-     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface
-     */
-    protected function createSequenceNumberFacade()
-    {
-        trigger_error('Deprecated, use getSequenceNumberFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getSequenceNumberFacade();
     }
 
     /**

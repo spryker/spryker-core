@@ -116,59 +116,11 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getQueryContainer() instead.
-     *
-     * @return \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
-     */
-    protected function createProductSearchQueryContainer()
-    {
-        trigger_error('Deprecated, use getQueryContainer() instead.', E_USER_DEPRECATED);
-
-        return $this->getQueryContainer();
-    }
-
-    /**
-     * @deprecated Use getQueryContainer() directly.
-     *
-     * @return \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
-     */
-    protected function getProductSearchQueryContainer()
-    {
-        trigger_error('Deprecated, use getQueryContainer() instead.', E_USER_DEPRECATED);
-
-        return $this->getQueryContainer();
-    }
-
-    /**
-     * @deprecated Use getLocaleFacade() instead.
-     *
-     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface
-     */
-    protected function createLocaleFacade()
-    {
-        trigger_error('Deprecated, use getLocaleFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getLocaleFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface
      */
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @deprecated Use getTouchFacade() instead.
-     *
-     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface
-     */
-    protected function createTouchFacade()
-    {
-        trigger_error('Deprecated, use getTouchFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getTouchFacade();
     }
 
     /**

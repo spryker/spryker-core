@@ -50,18 +50,6 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use getUserFacade() instead.
-     *
-     * @return \Spryker\Zed\User\Business\UserFacade
-     */
-    public function createUserFacade()
-    {
-        trigger_error('Deprecated, use getUserFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getUserFacade();
-    }
-
-    /**
      * @return \Spryker\Zed\User\Business\UserFacade
      */
     public function getUserFacade()

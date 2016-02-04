@@ -26,16 +26,4 @@ class ShipmentCheckoutConnectorCommunicationFactory extends AbstractCommunicatio
         );
     }
 
-    /**
-     * @deprecated Use getShipmentFacade() instead.
-     *
-     * @return \Spryker\Zed\Shipment\Business\ShipmentFacade
-     */
-    public function createShipmentFacade()
-    {
-        trigger_error('Deprecated, use getShipmentFacade() instead.', E_USER_DEPRECATED);
-
-        return $this->getShipmentFacade();
-    }
-
 }

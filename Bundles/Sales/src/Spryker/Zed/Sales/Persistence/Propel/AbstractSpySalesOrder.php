@@ -21,36 +21,6 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
 {
 
     /**
-     * Set the value of [increment_id] column.
-     *
-     * @param string $v new value
-     *
-     * @deprecated
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder The current object (for fluent API support)
-     */
-    public function setIncrementId($v)
-    {
-        trigger_error('Deprecated, use setOrderReference() instead.', E_USER_DEPRECATED);
-
-        $this->setOrderReference($v);
-    }
-
-    /**
-     * Get the [increment_id] column value.
-     *
-     * @deprecated
-     *
-     * @return string
-     */
-    public function getIncrementId()
-    {
-        trigger_error('Deprecated, use getOrderReference() instead.', E_USER_DEPRECATED);
-
-        return $this->getOrderReference();
-    }
-
-    /**
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolution
      */
     public function getSpyPaymentPayolution()

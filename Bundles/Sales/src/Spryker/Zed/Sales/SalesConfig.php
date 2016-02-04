@@ -61,42 +61,6 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated
-     *
-     * @return array
-     */
-    public function getOrderIncrementKeys()
-    {
-        trigger_error('Deprecated, will be removed.', E_USER_DEPRECATED);
-
-        return ['2', '5', '9', '3', '8', '1', '7', '6', '4'];
-    }
-
-    /**
-     * @deprecated
-     *
-     * @return array
-     */
-    public function getOrderIncrementPrefix()
-    {
-        trigger_error('Deprecated, will be removed.', E_USER_DEPRECATED);
-
-        return 6;
-    }
-
-    /**
-     * @deprecated
-     *
-     * @return int
-     */
-    public function getOrderIncrementDigits()
-    {
-        trigger_error('Deprecated, will be removed.', E_USER_DEPRECATED);
-
-        return 11;
-    }
-
-    /**
      * @throws \Exception
      *
      * @return int

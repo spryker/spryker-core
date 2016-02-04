@@ -174,18 +174,6 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use getStandardParameter() instead.
-     *
-     * @return \Generated\Shared\Transfer\PayoneStandardParameterTransfer
-     */
-    protected function createStandardParameter()
-    {
-        trigger_error('Deprecated, use getStandardParameter() instead.', E_USER_DEPRECATED);
-
-        return $this->getStandardParameter();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\PayoneStandardParameterTransfer
      */
     protected function getStandardParameter()
