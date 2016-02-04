@@ -7,17 +7,14 @@
 namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
-use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 
 /**
+ * @method OmsPersistenceFactory getFactory()
  */
 class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContainerInterface
 {
@@ -63,7 +60,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function queryLogForOrder(SpySalesOrder $order)
     {
-        return SpyOmsTransitionLogQuery::create()
+        return $this->getFactory()->createOmsTransitionLogQuery()
             ->filterByOrder($order)
             ->orderBy(SpyOmsTransitionLogTableMap::COL_ID_OMS_TRANSITION_LOG, Criteria::DESC);
     }
@@ -76,7 +73,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function queryLogByIdOrder($idOrder, $orderById = true)
     {
-        $transitionLogQuery = new SpyOmsTransitionLogQuery();
+        $transitionLogQuery = $this->getFactory()->createOmsTransitionLogQuery();
 
         $transitionLogQuery
             ->filterByFkSalesOrder($idOrder);
@@ -183,7 +180,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function getActiveProcesses(array $activeProcesses)
     {
-        $query = SpyOmsOrderProcessQuery::create();
+        $query = $this->getFactory()->createOmsOrderProcessQuery();
 
         return $query->filterByName($activeProcesses);
     }
@@ -195,7 +192,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function getOrderItemStates(array $orderItemStates)
     {
-        $query = SpyOmsOrderItemStateQuery::create();
+        $query = $this->getFactory()->createOmsOrderItemStateQuery();
 
         return $query->filterByIdOmsOrderItemState($orderItemStates);
     }
@@ -208,7 +205,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function queryMatrixOrderItems(array $processIds, array $stateBlacklist)
     {
-        $query = SpySalesOrderItemQuery::create();
+        $query = $this->getFactory()->createSalesOrderItemQuery();
         $query->filterByFkOmsOrderProcess($processIds);
         if ($stateBlacklist) {
             $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
@@ -224,7 +221,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function querySalesOrderItemStatesByName(array $orderItemStates)
     {
-        $query = SpyOmsOrderItemStateQuery::create();
+        $query = $this->getFactory()->createOmsOrderItemStateQuery();
         $query->filterByName($orderItemStates);
 
         return $query;
