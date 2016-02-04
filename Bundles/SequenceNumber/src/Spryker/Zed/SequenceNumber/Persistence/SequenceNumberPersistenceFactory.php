@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\SequenceNumber\Persistence;
 
+use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -14,4 +15,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class SequenceNumberPersistenceFactory extends AbstractPersistenceFactory
 {
+
+    /**
+     * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery
+     */
+    public function createSequenceNumberQuery()
+    {
+        return SpySequenceNumberQuery::create();
+    }
+
 }

@@ -9,6 +9,9 @@ namespace Spryker\Zed\SequenceNumber\Persistence;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 
+/**
+ * @method SequenceNumberPersistenceFactory getFactory()
+ */
 class SequenceNumberQueryContainer extends AbstractQueryContainer implements SequenceNumberQueryContainerInterface
 {
 
@@ -17,12 +20,17 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
      */
     public function querySequenceNumber()
     {
-        return (new SpySequenceNumberQuery());
+        return $this->getFactory()->createSequenceNumberQuery();
     }
 
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery
+     */
     public function querySequenceNumbersByIdSalesOrder($idSalesOrder)
     {
-        $query = SpySequenceNumberQuery::create();
+        $query = $this->getFactory()->createSequenceNumberQuery();
         $query->filterByFkSalesOrder($idSalesOrder);
 
         return $query;
