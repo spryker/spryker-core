@@ -7,8 +7,10 @@
 namespace Spryker\Zed\Locale\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 
+/**
+ * @method LocalePersistenceFactory getFactory()
+ */
 class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQueryContainerInterface
 {
 
@@ -19,8 +21,7 @@ class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQuery
      */
     public function queryLocaleByName($localeName)
     {
-        $query = SpyLocaleQuery::create();
-        $query
+        $query = $this->getFactory()->createLocaleQuery()
             ->filterByLocaleName($localeName);
 
         return $query;
@@ -31,7 +32,7 @@ class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQuery
      */
     public function queryLocales()
     {
-        $query = SpyLocaleQuery::create();
+        $query = $this->getFactory()->createLocaleQuery();
 
         return $query;
     }
