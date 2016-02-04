@@ -7,9 +7,11 @@
 namespace Spryker\Zed\Auth\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Auth\Persistence\Base\SpyResetPasswordQuery;
 use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 
+/**
+ * @method AuthPersistenceFactory getFactory()
+ */
 class AuthQueryContainer extends AbstractQueryContainer
 {
 
@@ -18,7 +20,7 @@ class AuthQueryContainer extends AbstractQueryContainer
      */
     public function queryResetPassword()
     {
-        return SpyResetPasswordQuery::create();
+        return $this->getFactory()->createResetPasswordQuery();
     }
 
     /**
@@ -28,7 +30,7 @@ class AuthQueryContainer extends AbstractQueryContainer
      */
     public function queryForActiveCode($code)
     {
-        return SpyResetPasswordQuery::create()
+        return $this->getFactory()->createResetPasswordQuery()
             ->filterByCode($code)
             ->filterByStatus(SpyResetPasswordTableMap::COL_STATUS_ACTIVE);
     }
