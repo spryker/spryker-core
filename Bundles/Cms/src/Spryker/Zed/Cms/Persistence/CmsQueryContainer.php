@@ -25,6 +25,9 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 
+/**
+ * @method CmsPersistenceFactory getFactory()
+ */
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
 
@@ -45,7 +48,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryTemplates()
     {
-        $query = SpyCmsTemplateQuery::create();
+        $query = $this->getFactory()->createCmsTemplateQuery();
 
         return $query;
     }
@@ -81,7 +84,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryPages()
     {
-        $query = SpyCmsPageQuery::create();
+        $query = $this->getFactory()->createCmsPageQuery();
 
         return $query;
     }
@@ -91,7 +94,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryBlocks()
     {
-        $query = SpyCmsBlockQuery::create();
+        $query = $this->getFactory()->createCmsBlockQuery();
 
         return $query;
     }
@@ -243,7 +246,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryGlossaryKeyMappings()
     {
-        $query = SpyCmsGlossaryKeyMappingQuery::create();
+        $query = $this->getFactory()->createCmsGlossaryKeyMappingQuery();
 
         return $query;
     }
