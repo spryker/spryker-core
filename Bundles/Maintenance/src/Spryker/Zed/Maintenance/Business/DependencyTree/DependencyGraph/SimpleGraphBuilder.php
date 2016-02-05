@@ -6,19 +6,19 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
-use Spryker\Tool\Graph\GraphInterface;
+use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 
 class SimpleGraphBuilder implements GraphBuilderInterface
 {
 
     /**
-     * @var \Spryker\Tool\Graph\GraphInterface
+     * @var \Spryker\Shared\Graph\GraphInterface
      */
     private $graph;
 
     /**
-     * @param \Spryker\Tool\Graph\GraphInterface $graph
+     * @param \Spryker\Shared\Graph\GraphInterface $graph
      */
     public function __construct(GraphInterface $graph)
     {

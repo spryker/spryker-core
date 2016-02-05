@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Tool\Graph;
+namespace Spryker\Shared\Graph;
 
 class Graph implements GraphInterface
 {
 
     /**
-     * @var \Spryker\Tool\Graph\GraphAdapterInterface
+     * @var \Spryker\Shared\Graph\GraphAdapterInterface
      */
     private $adapter;
 
     /**
-     * @param \Spryker\Tool\Graph\GraphAdapterInterface $adapter
+     * @param \Spryker\Shared\Graph\GraphAdapterInterface $adapter
      * @param string $name
      * @param array $attributes
      * @param bool $directed

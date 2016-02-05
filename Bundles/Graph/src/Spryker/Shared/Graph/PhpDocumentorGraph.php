@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Tool\GraphPhpDocumentor;
+namespace Spryker\Shared\Graph;
 
 use phpDocumentor\GraphViz\Graph;
 

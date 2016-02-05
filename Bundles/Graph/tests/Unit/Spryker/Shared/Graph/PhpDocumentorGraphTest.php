@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\Spryker\Tool\GraphPhpDocumentor;
+namespace Unit\Spryker\Shared\Graph;
 
-use Spryker\Tool\GraphPhpDocumentor\PhpDocumentorGraph;
+use Spryker\Shared\Graph\PhpDocumentorGraph;
 
 /**
  * @group Spryker

@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
-use Spryker\Tool\Graph\GraphInterface;
+use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
@@ -53,7 +53,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
     ];
 
     /**
-     * @param \Spryker\Tool\Graph\GraphInterface $graph
+     * @param \Spryker\Shared\Graph\GraphInterface $graph
      */
     public function __construct(GraphInterface $graph)
     {

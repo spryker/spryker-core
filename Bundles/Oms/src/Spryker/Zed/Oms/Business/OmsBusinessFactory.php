@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Oms\Business;
 
-use Spryker\Tool\Graph\Graph;
-use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Shared\Graph\Graph;
+use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
 use Spryker\Zed\Oms\Business\Process\ProcessSelector;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Process\Process;
@@ -178,7 +178,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Tool\Graph\Graph
+     * @return \Spryker\Shared\Graph\Graph
      */
     protected function createGraph()
     {
@@ -189,7 +189,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
+     * @return \Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter
      */
     protected function createGraphAdapter()
     {

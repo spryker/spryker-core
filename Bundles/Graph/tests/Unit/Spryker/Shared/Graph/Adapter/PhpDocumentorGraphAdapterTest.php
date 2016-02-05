@@ -4,9 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Tool\GraphPhpDocumentor;
+namespace Unit\Spryker\Shared\Graph;
 
-use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Shared\Graph\PhpDocumentorGraph;
 
 /**
  * @group Spryker
@@ -144,7 +145,7 @@ class PhpDocumentorGraphAdapterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
+     * @return \Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter
      */
     private function getAdapter()
     {
@@ -154,7 +155,7 @@ class PhpDocumentorGraphAdapterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
+     * @return \Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter
      */
     private function getGraph()
     {

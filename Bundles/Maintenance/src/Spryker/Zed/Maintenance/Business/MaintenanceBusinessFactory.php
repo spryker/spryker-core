@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Maintenance\Business;
 
-use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Tool\Graph\Graph;
+use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Shared\Graph\Graph;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\BranchAliasUpdater;
@@ -134,7 +134,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Tool\Graph\Graph
+     * @return \Spryker\Shared\Graph\Graph
      */
     public function createDependencyGraph()
     {
@@ -150,7 +150,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      * @param bool $directed
      * @param bool $strict
      *
-     * @return \Spryker\Tool\Graph\Graph
+     * @return \Spryker\Shared\Graph\Graph
      */
     protected function createGraphViz($name, array $attributes = [], $directed = true, $strict = true)
     {
@@ -371,7 +371,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
+     * @return \Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter
      */
     protected function createGraphVizAdapter()
     {

@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Maintenance\Business\Dependency;
 
-use Spryker\Tool\Graph\GraphInterface;
+use Spryker\Shared\Graph\GraphInterface;
 
 class Graph
 {
@@ -32,14 +32,14 @@ class Graph
     protected $format = 'svg';
 
     /**
-     * @var \Spryker\Tool\Graph\GraphInterface
+     * @var \Spryker\Shared\Graph\GraphInterface
      */
     protected $graph;
 
     /**
      * @param \Spryker\Zed\Maintenance\Business\Dependency\BundleParser $bundleParser
      * @param \Spryker\Zed\Maintenance\Business\Dependency\Manager $manager
-     * @param \Spryker\Tool\Graph\GraphInterface $graph
+     * @param \Spryker\Shared\Graph\GraphInterface $graph
      */
     public function __construct(BundleParser $bundleParser, Manager $manager, GraphInterface $graph)
     {

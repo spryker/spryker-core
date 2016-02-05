@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
+use Spryker\Shared\Graph\Graph;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriter;
 use Spryker\Zed\Category\Business\Tree\NodeWriter;
@@ -17,8 +19,6 @@ use Spryker\Zed\Category\Business\Tree\CategoryTreeWriter;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Tool\Graph\Graph;
 
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
@@ -78,7 +78,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Tool\Graph\Graph
+     * @return \Spryker\Shared\Graph\Graph
      */
     protected function createGraphViz()
     {
@@ -178,7 +178,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
+     * @return \Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter
      */
     protected function createGraphAdapter()
     {

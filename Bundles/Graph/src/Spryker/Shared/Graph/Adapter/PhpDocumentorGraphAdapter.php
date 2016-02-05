@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Tool\GraphPhpDocumentor\Adapter;
+namespace Spryker\Shared\Graph\Adapter;
 
 use phpDocumentor\GraphViz\Edge;
 use phpDocumentor\GraphViz\Node;
-use Spryker\Tool\Graph\GraphAdapterInterface;
-use Spryker\Tool\GraphPhpDocumentor\PhpDocumentorGraph;
+use Spryker\Shared\Graph\GraphAdapterInterface;
+use Spryker\Shared\Graph\PhpDocumentorGraph;
 
 class PhpDocumentorGraphAdapter implements GraphAdapterInterface
 {
@@ -20,7 +20,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
     private $graph;
 
     /**
-     * @param \Spryker\Tool\GraphPhpDocumentor\PhpDocumentorGraph|null $graph
+     * @param \Spryker\Shared\Graph\PhpDocumentorGraph|null $graph
      */
     public function __construct(PhpDocumentorGraph $graph = null)
     {
@@ -32,7 +32,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
     }
 
     /**
-     * @return \Spryker\Tool\GraphPhpDocumentor\PhpDocumentorGraph
+     * @return \Spryker\Shared\Graph\PhpDocumentorGraph
      */
     private function createPhpDocumentorGraph()
     {

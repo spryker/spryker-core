@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\Spryker\Tool\Graph;
+namespace Unit\Spryker\Shared\Graph;
 
-use Spryker\Tool\Graph\Graph;
-use Spryker\Tool\Graph\GraphAdapterInterface;
+use Spryker\Shared\Graph\Graph;
+use Spryker\Shared\Graph\GraphAdapterInterface;
 
 /**
  * @group Spryker
@@ -138,7 +138,7 @@ class GraphTest extends \PHPUnit_Framework_TestCase
      * @param bool $directed
      * @param bool $strict
      *
-     * @return \Spryker\Tool\Graph\Graph
+     * @return \Spryker\Shared\Graph\Graph
      */
     private function getGraph($name = self::GRAPH_NAME, array $attributes = [], $directed = true, $strict = true)
     {
@@ -148,7 +148,7 @@ class GraphTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Tool\Graph\GraphAdapterInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Graph\GraphAdapterInterface
      */
     private function createAdapterMock()
     {
@@ -159,7 +159,7 @@ class GraphTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Tool\Graph\Graph
+     * @return \Spryker\Shared\Graph\Graph
      */
     private function getGraphWithNodes()
     {

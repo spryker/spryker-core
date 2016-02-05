@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Spryker\Tool\Graph\GraphInterface;
-use Spryker\Tool\Graph\Graph;
+use Spryker\Shared\Graph\GraphInterface;
+use Spryker\Shared\Graph\Graph;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
@@ -57,14 +57,14 @@ class Drawer implements DrawerInterface
     protected $commands;
 
     /**
-     * @var \Spryker\Tool\Graph\Graph
+     * @var \Spryker\Shared\Graph\Graph
      */
     protected $graph;
 
     /**
      * @param array $commands
      * @param array $conditions
-     * @param \Spryker\Tool\Graph\GraphInterface $graph
+     * @param \Spryker\Shared\Graph\GraphInterface $graph
      */
     public function __construct(array $commands, array $conditions, GraphInterface $graph)
     {
@@ -178,7 +178,6 @@ class Drawer implements DrawerInterface
             $attributes['label'] = $group;
 
             $this->graph->addCluster($group, $attributes);
-//            $this->graph->addCluster($group, $group, $attributes);
         }
     }
 

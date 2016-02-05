@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Tool\Graph;
+namespace Spryker\Shared\Graph;
 
 interface GraphInterface
 {
