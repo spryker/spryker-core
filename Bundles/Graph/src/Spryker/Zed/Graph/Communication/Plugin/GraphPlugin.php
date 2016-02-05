@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Graph\Communication\Plugin;
 
 use Spryker\Shared\Graph\GraphInterface;
+use Spryker\Zed\Graph\Communication\Exception\GraphNotInitializedException;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -17,7 +18,7 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
 {
 
     /**
-     * @var GraphInterface
+     * @var \Spryker\Shared\Graph\GraphInterface
      */
     private $graph;
 
@@ -26,17 +27,26 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
      * @param array $attributes
      * @param bool $directed
      * @param bool $strict
+     *
+     * @return self
      */
-    public function __construct($name, array $attributes = [], $directed = true, $strict = true)
+    public function init($name, array $attributes = [], $directed = true, $strict = true)
     {
         $this->graph = $this->getFactory()->createGraph($name, $attributes, $directed, $strict);
+
+        return $this;
     }
 
     /**
+     * @throws \Spryker\Zed\Graph\Communication\Exception\GraphNotInitializedException
      * @return \Spryker\Shared\Graph\GraphInterface
      */
     protected function getGraph()
     {
+        if ($this->graph === null) {
+            throw new GraphNotInitializedException();
+        }
+
         return $this->graph;
     }
 

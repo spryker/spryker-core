@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Oms\Business;
 
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Oms\Business\Process\ProcessSelector;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Process\Process;
@@ -171,12 +172,12 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new Drawer(
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
-            $this->createGraph()
+            $this->createGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false)
         );
     }
 
     /**
-     * @return \Spryker\Shared\Graph\GraphInterface
+     * @return GraphPlugin
      */
     protected function createGraph()
     {

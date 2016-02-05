@@ -34,7 +34,7 @@ class MaintenanceDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getGraphPlugin()
     {
-        return new GraphPlugin('Dependency Tree');
+        return new GraphPlugin();
     }
 
 }

@@ -76,7 +76,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getGraphPlugin()
     {
-        return new GraphPlugin('Category Tree');
+        return new GraphPlugin();
     }
 
 }

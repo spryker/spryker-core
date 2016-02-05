@@ -14,7 +14,7 @@ class GraphConfig extends AbstractBundleConfig
 {
 
     /**
-     * @return GraphAdapterInterface
+     * @return \Spryker\Shared\Graph\GraphAdapterInterface
      */
     public function getGraphAdapterName()
     {

@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Maintenance\Business;
 
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\BranchAliasUpdater;
@@ -140,13 +141,13 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         $bundleParser = $this->createDependencyBundleParser();
         $manager = $this->createDependencyManager();
 
-        return new DependencyGraph($bundleParser, $manager, $this->createGraphViz());
+        return new DependencyGraph($bundleParser, $manager, $this->createGraphViz()->init('Dependency Tree'));
     }
 
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return \Spryker\Shared\Graph\GraphInterface
+     * @return GraphPlugin
      */
     protected function createGraphViz()
     {
@@ -360,7 +361,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createDetailedGraphBuilder()
     {
-        return new DetailedGraphBuilder($this->createGraphViz());
+        return new DetailedGraphBuilder($this->createGraphViz()->init('Dependency Tree'));
     }
 
     /**
@@ -403,7 +404,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSimpleGraphBuilder()
     {
-        return new SimpleGraphBuilder($this->createGraphViz());
+        return new SimpleGraphBuilder($this->createGraphViz()->init('Dependency Tree'));
     }
 
     /**

@@ -16,6 +16,7 @@ use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeWriter;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Spryker\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -71,12 +72,12 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryTreeRenderer(
             $this->getQueryContainer(),
             $locale,
-            $this->createGraphViz()
+            $this->createGraphViz()->init('Category Tree')
         );
     }
 
     /**
-     * @return \Spryker\Shared\Graph\Graph
+     * @return GraphPlugin
      */
     protected function createGraphViz()
     {

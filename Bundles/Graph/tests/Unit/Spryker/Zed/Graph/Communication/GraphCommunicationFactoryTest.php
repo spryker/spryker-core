@@ -5,6 +5,7 @@
  */
 
 namespace Unit\Spryker\Zed\Graph\Communication;
+
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Graph\Communication\Exception\GraphAdapterNameIsAnObjectException;
 use Spryker\Zed\Graph\Communication\Exception\InvalidGraphAdapterException;
@@ -78,7 +79,7 @@ class GraphCommunicationFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string|object $return
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|GraphConfig
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Graph\GraphConfig
      */
     protected function getConfigMock($return)
     {

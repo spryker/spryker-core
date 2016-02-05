@@ -81,11 +81,11 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Graph\GraphInterface
+     * @return GraphPlugin
      */
     protected function getGraphPlugin()
     {
-        return new GraphPlugin('Statemachine', [], true, false);
+        return new GraphPlugin();
     }
 
 }

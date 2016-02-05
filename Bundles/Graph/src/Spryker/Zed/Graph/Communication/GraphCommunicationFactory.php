@@ -41,7 +41,7 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Spryker\Shared\Graph\GraphAdapterInterface
      */
-    private function createAdapter()
+    protected function createAdapter()
     {
         $adapterName = $this->getConfig()->getGraphAdapterName();
 

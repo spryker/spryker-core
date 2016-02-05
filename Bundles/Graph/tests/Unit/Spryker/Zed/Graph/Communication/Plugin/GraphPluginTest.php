@@ -8,6 +8,7 @@
 namespace Unit\Spryker\Zed\Graph\Communication\Plugin;
 
 use Spryker\Shared\Graph\GraphInterface;
+use Spryker\Zed\Graph\Communication\Exception\GraphNotInitializedException;
 use Spryker\Zed\Graph\Communication\GraphCommunicationFactory;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 
@@ -26,6 +27,34 @@ class GraphPluginTest extends \PHPUnit_Framework_TestCase
     const GROUP_NAME = 'group name';
     const CLUSTER_NAME = 'cluster name';
     const ATTRIBUTES = ['attribute' => 'value', 'html attribute' => '<h1>Html Value</h1>'];
+
+    /**
+     * @return void
+     */
+    public function testGetGraphMustThrowExceptionIfGraphWasNotInitialized()
+    {
+        $this->setExpectedException(GraphNotInitializedException::class);
+
+        $graphPlugin = new GraphPlugin();
+        $this->assertInstanceOf(GraphPlugin::class, $graphPlugin->addNode(self::NODE_A));
+    }
+
+    /**
+     * @return void
+     */
+    public function testInit()
+    {
+        $graphMock = $this->getMock(GraphInterface::class, ['create', 'addNode', 'addEdge', 'addCluster', 'render']);
+        $graphMock->method('render')->willReturn('');
+
+        $factoryMock = $this->getMock(GraphCommunicationFactory::class);
+        $factoryMock->method('createGraph')->willReturn($graphMock);
+
+        $pluginMock = $this->getMock(GraphPlugin::class, ['getFactory'], ['name'], '', false);
+        $pluginMock->method('getFactory')->willReturn($factoryMock);
+
+        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->init(self::GRAPH_NAME));
+    }
 
     /**
      * @return void
@@ -92,7 +121,7 @@ class GraphPluginTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|GraphPlugin
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
     protected function getPluginMock()
     {
@@ -102,10 +131,9 @@ class GraphPluginTest extends \PHPUnit_Framework_TestCase
         $factoryMock = $this->getMock(GraphCommunicationFactory::class);
         $factoryMock->method('createGraph')->willReturn($graphMock);
 
-        $pluginMock = $this->getMock(GraphPlugin::class, ['getFactory', 'getGraph'], ['name'], '', false);
+        $pluginMock = $this->getMock(GraphPlugin::class, ['getFactory'], ['name'], '', false);
         $pluginMock->method('getFactory')->willReturn($factoryMock);
-        $pluginMock->method('getGraph')->willReturn($graphMock);
 
-        return $pluginMock;
+        return $pluginMock->init(self::GRAPH_NAME);
     }
 }
