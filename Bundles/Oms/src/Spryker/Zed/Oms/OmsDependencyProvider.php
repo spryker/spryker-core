@@ -81,7 +81,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return GraphPlugin
+     * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
     protected function getGraphPlugin()
     {

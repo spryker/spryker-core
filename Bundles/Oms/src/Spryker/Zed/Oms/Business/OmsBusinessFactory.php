@@ -177,7 +177,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GraphPlugin
+     * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
     protected function createGraph()
     {
