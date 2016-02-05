@@ -40,11 +40,17 @@ class BuildModelConsole extends Console
         $this->info('Build propel models');
 
         $config = Config::get(PropelConstants::PROPEL);
-        $command = 'vendor/bin/propel model:build --config-dir '
+        $command = 'APPLICATION_ENV=' . APPLICATION_ENV
+            . ' APPLICATION_STORE=' . APPLICATION_STORE
+            . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
+            . ' APPLICATION=' . APPLICATION
+            . ' vendor/bin/propel model:build --config-dir '
             . $config['paths']['phpConfDir']
             . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';
 
-        $process = new Process($command, APPLICATION_ROOT_DIR);
+//        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($command) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+
+        $process = new Process($command, APPLICATION_ROOT_DIR, ['APPLICATION_ENV' => APPLICATION_ENV]);
 
         return $process->run(function ($type, $buffer) {
             echo $buffer;

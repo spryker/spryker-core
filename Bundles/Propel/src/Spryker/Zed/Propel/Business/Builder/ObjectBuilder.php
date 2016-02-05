@@ -9,10 +9,20 @@ namespace Spryker\Zed\Propel\Business\Builder;
 use Propel\Generator\Model\Column;
 use Propel\Generator\Builder\Om\ObjectBuilder as PropelObjectBuilder;
 use Propel\Generator\Model\IdMethod;
+use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\PlatformInterface;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Config;
+use Spryker\Shared\Library\Application\Environment;
 
 class ObjectBuilder extends PropelObjectBuilder
 {
+
+    public function __construct(Table $table)
+    {
+        parent::__construct($table);
+        Environment::initialize('Zed');
+    }
 
     /**
      * Change default propel behaviour
@@ -157,24 +167,33 @@ class ObjectBuilder extends PropelObjectBuilder
                         break;";
         }
 
-        $script .= "
+        if (Config::get(ApplicationConstants::PROPEL_SHOW_EXTENDED_EXCEPTION, false)) {
+            $script .= "
                 }
             }
             \$stmt->execute();
         } catch (Exception \$e) {
             Propel::log(\$e->getMessage(), Propel::LOG_ERR);
-            if (class_exists('\\Spryker\\Shared\\Library\\Environment') && (\\Spryker\\Shared\\Library\\Environment::isDevelopment() || \\Spryker\\Shared\\Library\\Environment::isTesting())) {
-                \$formatter = new \\NilPortugues\\Sql\\QueryFormatter\\Formatter();
-                \$message = \$e->getMessage() . PHP_EOL . PHP_EOL
-                    . 'Executed query: ' . PHP_EOL
-                    . \$formatter->format(\$stmt->getExecutedQueryString())
-                ;
-                throw new PropelException(\$message);
-            }
+            \$message = \$e->getMessage() . PHP_EOL . PHP_EOL
+                . 'Executed query: ' . PHP_EOL
+                . \$stmt->getExecutedQueryString()
+            ;
+            throw new PropelException(\$message);
+       }
+";
+        }
 
+        if (!Config::get(ApplicationConstants::PROPEL_SHOW_EXTENDED_EXCEPTION, false)) {
+            $script .= "
+                }
+            }
+            \$stmt->execute();
+        } catch (Exception \$e) {
+            Propel::log(\$e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', \$sql), 0, \$e);
         }
 ";
+        }
 
         // if auto-increment, get the id after
         if ($platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {

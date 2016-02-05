@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Customer\Communication\Controller;
 
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 /**
@@ -20,6 +21,9 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
+        $customer = new SpyCustomer();
+        $customer->save();
+
         $table = $this->getFactory()
             ->createCustomerTable();
 
