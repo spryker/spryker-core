@@ -10,9 +10,13 @@
       "YvesUnit": "tests/"
     }
   },
-  "require": {},
+  "require": {
+    "spryker/kernel": "^1.0.0",
+    "spryker/library": "^1.0.0",
+    "spryker/new-relic": "^1.0.0"
+  },
   "require-dev": {},
-  "description": "eventjournal bundle",
+  "description": "event journal bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "extra": {

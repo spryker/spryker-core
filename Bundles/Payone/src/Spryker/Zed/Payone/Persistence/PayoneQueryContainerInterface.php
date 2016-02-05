@@ -32,11 +32,11 @@ interface PayoneQueryContainerInterface
     public function getApiLogByPaymentAndRequestTypeQuery($fkPayment, $requestType);
 
     /**
-     * @param int $orderId
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery
      */
-    public function getPaymentByOrderId($orderId);
+    public function getPaymentByOrderId($idOrder);
 
     /**
      * @param int $orderId

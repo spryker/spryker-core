@@ -40,7 +40,7 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
      *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    private function resolveFacade()
+    protected function resolveFacade()
     {
         return $this->getFacadeResolver()->resolve($this);
     }
@@ -48,7 +48,7 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     /**
      * @return \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver
      */
-    private function getFacadeResolver()
+    protected function getFacadeResolver()
     {
         return new FacadeResolver();
     }

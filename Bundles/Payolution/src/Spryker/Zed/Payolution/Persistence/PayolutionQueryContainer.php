@@ -8,11 +8,11 @@ namespace Spryker\Zed\Payolution\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
-use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 use Spryker\Shared\Payolution\PayolutionConstants;
 
+/**
+ * @method \Spryker\Zed\Payolution\Persistence\PayolutionPersistenceFactory getFactory()
+ */
 class PayolutionQueryContainer extends AbstractQueryContainer implements PayolutionQueryContainerInterface
 {
 
@@ -21,7 +21,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
      */
     public function queryPayments()
     {
-        return SpyPaymentPayolutionQuery::create();
+        return $this->getFactory()->createPaymentPayolutionQuery();
     }
 
     /**
@@ -53,7 +53,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
      */
     public function queryTransactionStatusLog()
     {
-        return SpyPaymentPayolutionTransactionStatusLogQuery::create();
+        return $this->getFactory()->createPaymentPayolutionTransactionStatusLogQuery();
     }
 
     /**
@@ -130,7 +130,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
      */
     public function queryTransactionRequestLogByPaymentId($idPayment)
     {
-        $query = SpyPaymentPayolutionTransactionRequestLogQuery::create();
+        $query = $this->getFactory()->createPaymentPayolutionTransactionRequestLogQuery();
 
         return $query->filterByFkPaymentPayolution($idPayment);
     }

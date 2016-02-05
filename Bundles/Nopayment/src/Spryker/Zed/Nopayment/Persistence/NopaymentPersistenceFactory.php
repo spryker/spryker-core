@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Nopayment\Persistence;
 
+use Orm\Zed\Nopayment\Persistence\SpyNopaymentPaidQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -14,4 +15,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class NopaymentPersistenceFactory extends AbstractPersistenceFactory
 {
+
+    /**
+     * @return \Orm\Zed\Nopayment\Persistence\SpyNopaymentPaidQuery
+     */
+    public function createNopaymentPaidQuery()
+    {
+        return SpyNopaymentPaidQuery::create();
+    }
+
 }

@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Auth\Persistence;
 
+use Orm\Zed\Auth\Persistence\SpyResetPasswordQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -16,8 +17,11 @@ class AuthPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @var \Generated\Zed\Ide\FactoryAutoCompletion\AuthPersistence
+     * @return \Orm\Zed\Auth\Persistence\SpyResetPasswordQuery
      */
-    protected $factory;
+    public function createResetPasswordQuery()
+    {
+        return SpyResetPasswordQuery::create();
+    }
 
 }

@@ -10,9 +10,12 @@
       "YvesUnit": "tests/"
     }
   },
-  "require": {},
+  "require": {
+    "spryker/console": "^1.0.0",
+    "spryker/kernel": "^1.0.0"
+  },
   "require-dev": {},
-  "description": "newrelic bundle",
+  "description": "new relic bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "extra": {

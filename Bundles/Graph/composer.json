@@ -2,5 +2,13 @@
   "name": "spryker/graph",
   "require-dev": {
     "codeception/codeception": "~2.1.0"
+  },
+  "description": "graph bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
   }
 }

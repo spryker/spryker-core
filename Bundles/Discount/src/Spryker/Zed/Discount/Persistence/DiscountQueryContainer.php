@@ -6,22 +6,16 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
 use Spryker\Zed\Discount\Communication\Form\VoucherCodesForm;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
-use Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 
 /**
- * Class DiscountQueryContainer
+ * @method \Spryker\Zed\Discount\Persistence\DiscountPersistenceFactory getFactory()
  */
 class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQueryContainerInterface
 {
@@ -39,7 +33,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryVoucher($code)
     {
-        return (new SpyDiscountVoucherQuery())->filterByCode($code);
+        return $this->getFactory()->createDiscountVoucherQuery()->filterByCode($code);
     }
 
     /**
@@ -49,7 +43,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDecisionRules($idDiscount)
     {
-        return (new SpyDiscountDecisionRuleQuery())
+        return $this->getFactory()->createDiscountDecisionRuleQuery()
             ->filterByFkDiscount($idDiscount);
     }
 
@@ -60,7 +54,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     {
         $now = new \DateTime();
 
-        $query = (new SpyDiscountQuery())
+        $query = $this->getFactory()->createDiscountQuery()
             ->filterByIsActive(true)
             ->where(
                 '(' . SpyDiscountTableMap::COL_VALID_FROM . ' <= ? AND '
@@ -101,7 +95,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryVoucherPool()
     {
-        return (new SpyDiscountVoucherPoolQuery());
+        return $this->getFactory()->createDiscountVoucherPoolQuery();
     }
 
     /**
@@ -109,7 +103,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscount()
     {
-        return (new SpyDiscountQuery());
+        return $this->getFactory()->createDiscountQuery();
     }
 
     /**
@@ -117,7 +111,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscountCollector()
     {
-        return new SpyDiscountCollectorQuery();
+        return $this->getFactory()->createDiscountCollectorQuery();
     }
 
     /**
@@ -125,7 +119,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscountDecisionRule()
     {
-        return (new SpyDiscountDecisionRuleQuery())
+        return $this->getFactory()->createDiscountDecisionRuleQuery()
             ->joinDiscount()
             ->withColumn(SpyDiscountTableMap::COL_DISPLAY_NAME, 'discount_name')
             ->withColumn(SpyDiscountTableMap::COL_AMOUNT, 'discount_amount');
@@ -156,7 +150,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscountVoucher()
     {
-        return (new SpyDiscountVoucherQuery())
+        return $this->getFactory()->createDiscountVoucherQuery()
             ->joinVoucherPool()
             ->withColumn(SpyDiscountVoucherPoolTableMap::COL_NAME, 'voucher_pool');
     }
@@ -166,7 +160,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscountVoucherPool()
     {
-        return (new SpyDiscountVoucherPoolQuery());
+        return $this->getFactory()->createDiscountVoucherPoolQuery();
     }
 
     /**
@@ -175,8 +169,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     public function queryDiscountVoucherPoolJoinedVoucherPoolCategory()
     {
         return $this->queryDiscountVoucherPool()
-                    ->joinVoucherPoolCategory()
-                    ->withColumn(SpyDiscountVoucherPoolCategoryTableMap::COL_NAME, 'category');
+            ->joinVoucherPoolCategory()
+            ->withColumn(SpyDiscountVoucherPoolCategoryTableMap::COL_NAME, 'category');
     }
 
     /**
@@ -184,7 +178,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscountVoucherPoolCategory()
     {
-        return (new SpyDiscountVoucherPoolCategoryQuery());
+        return $this->getFactory()->createDiscountVoucherPoolCategoryQuery();
     }
 
     /**

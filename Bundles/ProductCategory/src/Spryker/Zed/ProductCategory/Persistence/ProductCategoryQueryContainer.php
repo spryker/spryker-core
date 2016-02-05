@@ -188,7 +188,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     public function queryProductAbstractCollectionBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null)
     {
         $idExcludedCategory = (int) $idExcludedCategory;
-        $query = SpyProductAbstractQuery::create();
+        $query = $this->getFactory()->createProductAbstractQuery();
 
         $query->addJoin(
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
@@ -256,7 +256,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      */
     public function queryProductCategoryPreconfig($idCategory, $idProductAbstract)
     {
-        return SpyProductQuery::create()
+        return $this->getFactory()->createProductQuery()
             ->filterByFkProductAbstract($idProductAbstract)
             ->addAnd(
                 SpyProductTableMap::COL_IS_ACTIVE,

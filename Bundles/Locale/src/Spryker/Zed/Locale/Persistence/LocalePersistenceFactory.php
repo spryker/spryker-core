@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Locale\Persistence;
 
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -14,4 +15,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class LocalePersistenceFactory extends AbstractPersistenceFactory
 {
+    /**
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
+     */
+    public function createLocaleQuery()
+    {
+        return SpyLocaleQuery::create();
+    }
 }
