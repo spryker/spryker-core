@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Category;
 
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\Connection;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -21,6 +22,8 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
     const FACADE_URL = 'url facade';
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+
+    const PLUGIN_GRAPH = 'graph plugin';
 
     /**
      * @var \Spryker\Zed\Kernel\Container
@@ -42,7 +45,13 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return (new Connection())->get();
+            $connection = new Connection();
+
+            return $connection->get();
+        };
+
+        $container[self::PLUGIN_GRAPH] = function (Container $container) {
+            return $this->getGraphPlugin();
         };
 
         return $container;
@@ -60,6 +69,14 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Graph\GraphInterface
+     */
+    protected function getGraphPlugin()
+    {
+        return new GraphPlugin('Category Tree');
     }
 
 }

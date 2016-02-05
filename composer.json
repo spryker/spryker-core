@@ -1,7 +1,7 @@
 {
   "name": "spryker/spryker",
   "require":{
-    "phpdocumentor/graphviz": "~1.0.0"
+    "phpdocumentor/graphviz": "dev-master#a906a90"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,

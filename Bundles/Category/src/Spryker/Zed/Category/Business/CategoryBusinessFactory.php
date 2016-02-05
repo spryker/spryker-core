@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Category\Business;
 
-use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Shared\Graph\Graph;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriter;
 use Spryker\Zed\Category\Business\Tree\NodeWriter;
@@ -82,9 +80,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createGraphViz()
     {
-        $adapter = $this->createGraphAdapter();
-
-        return new Graph($adapter, 'Category Tree');
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_GRAPH);
     }
 
     /**
@@ -175,14 +171,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryTransferGenerator()
     {
         return new TransferGenerator();
-    }
-
-    /**
-     * @return \Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter
-     */
-    protected function createGraphAdapter()
-    {
-        return new PhpDocumentorGraphAdapter();
     }
 
 }

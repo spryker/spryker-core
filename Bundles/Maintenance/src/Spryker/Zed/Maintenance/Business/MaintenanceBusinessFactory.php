@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Maintenance\Business;
 
-use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Shared\Graph\Graph;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\BranchAliasUpdater;
@@ -55,6 +53,7 @@ use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackage
 use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
 use Spryker\Zed\Maintenance\Business\Model\PropelBaseFolderFinder;
+use Spryker\Zed\Maintenance\MaintenanceDependencyProvider;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Finder\Finder as SfFinder;
 
@@ -141,23 +140,17 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         $bundleParser = $this->createDependencyBundleParser();
         $manager = $this->createDependencyManager();
 
-        return new DependencyGraph($bundleParser, $manager, $this->createGraphViz('Bundle Graph'));
+        return new DependencyGraph($bundleParser, $manager, $this->createGraphViz());
     }
 
     /**
-     * @param string $name
-     * @param array $attributes
-     * @param bool $directed
-     * @param bool $strict
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return \Spryker\Shared\Graph\Graph
+     * @return \Spryker\Shared\Graph\GraphInterface
      */
-    protected function createGraphViz($name, array $attributes = [], $directed = true, $strict = true)
+    protected function createGraphViz()
     {
-        $adapter = $this->createGraphVizAdapter();
-        $graph = new Graph($adapter, $name, $attributes, $directed, $strict);
-
-        return $graph;
+        return $this->getProvidedDependency(MaintenanceDependencyProvider::PLUGIN_GRAPH);
     }
 
     /**
@@ -367,15 +360,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createDetailedGraphBuilder()
     {
-        return new DetailedGraphBuilder($this->createGraphViz('Detailed Dependencies'));
-    }
-
-    /**
-     * @return \Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter
-     */
-    protected function createGraphVizAdapter()
-    {
-        return new PhpDocumentorGraphAdapter();
+        return new DetailedGraphBuilder($this->createGraphViz());
     }
 
     /**
@@ -418,7 +403,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSimpleGraphBuilder()
     {
-        return new SimpleGraphBuilder($this->createGraphViz('Bundle Dependencies'));
+        return new SimpleGraphBuilder($this->createGraphViz());
     }
 
     /**

@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Spryker\Shared\Graph\GraphInterface;
-use Spryker\Shared\Graph\Graph;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;

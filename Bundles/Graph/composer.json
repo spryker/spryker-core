@@ -1,5 +1,8 @@
 {
   "name": "spryker/graph",
+  "require": {
+    "phpdocumentor/graphviz": "dev-master#a906a90"
+  },
   "require-dev": {
     "codeception/codeception": "~2.1.0"
   },

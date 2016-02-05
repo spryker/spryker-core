@@ -6,12 +6,12 @@
 
 namespace Spryker\Shared\Graph;
 
-use phpDocumentor\GraphViz\Graph;
+use phpDocumentor\GraphViz\Graph as BasePhpDocumentorGraph;
 
 /**
  * PhpDocumentor graph has no option to make a graph strict, if this is fixed on their side this class can be removed
  */
-class PhpDocumentorGraph extends Graph
+class PhpDocumentorGraph extends BasePhpDocumentorGraph
 {
 
     const GRAPH = 'graph';

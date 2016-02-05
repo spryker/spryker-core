@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Oms;
 
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -17,6 +18,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     const COMMAND_PLUGINS = 'COMMAND_PLUGINS';
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+
+    const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +34,10 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::COMMAND_PLUGINS] = function (Container $container) {
             return $this->getCommandPlugins($container);
+        };
+
+        $container[self::PLUGIN_GRAPH] = function (Container $container) {
+            return $this->getGraphPlugin();
         };
 
         return $container;
@@ -71,6 +78,14 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
         };
+    }
+
+    /**
+     * @return \Spryker\Shared\Graph\GraphInterface
+     */
+    protected function getGraphPlugin()
+    {
+        return new GraphPlugin('Statemachine', [], true, false);
     }
 
 }
