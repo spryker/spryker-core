@@ -7,9 +7,9 @@
 namespace Spryker\Shared\Graph\Adapter;
 
 use phpDocumentor\GraphViz\Edge;
+use phpDocumentor\GraphViz\Graph;
 use phpDocumentor\GraphViz\Node;
 use Spryker\Shared\Graph\GraphAdapterInterface;
-use Spryker\Shared\Graph\PhpDocumentorGraph;
 
 class PhpDocumentorGraphAdapter implements GraphAdapterInterface
 {
@@ -19,24 +19,17 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      */
     private $graph;
 
-    /**
-     * @param \Spryker\Shared\Graph\PhpDocumentorGraph|null $graph
-     */
-    public function __construct(PhpDocumentorGraph $graph = null)
+    public function __construct()
     {
-        if ($graph === null) {
-            $graph = $this->createPhpDocumentorGraph();
-        }
-
-        $this->graph = $graph;
+        $this->graph = $this->createPhpDocumentorGraph();
     }
 
     /**
-     * @return \Spryker\Shared\Graph\PhpDocumentorGraph
+     * @return \phpDocumentor\GraphViz\Graph
      */
     private function createPhpDocumentorGraph()
     {
-        return new PhpDocumentorGraph();
+        return new Graph();
     }
 
     /**
@@ -52,8 +45,9 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
         $this->graph = $this->createPhpDocumentorGraph();
         $this->graph->setName($name);
 
-        $type = $this->getType($directed, $strict);
+        $type = $this->getType($directed);
         $this->graph->setType($type);
+        $this->graph->setStrict($strict);
 
         $this->addAttributesTo($attributes, $this->graph);
 
@@ -62,19 +56,12 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
 
     /**
      * @param bool $directed
-     * @param bool $strict
      *
      * @return string
      */
-    private function getType($directed, $strict)
+    private function getType($directed)
     {
-        $type = $directed ? self::DIRECTED_GRAPH : self::GRAPH;
-
-        if ($strict) {
-            $type = 'strict ' . $type;
-        }
-
-        return $type;
+        return $directed ? self::DIRECTED_GRAPH : self::GRAPH;
     }
 
     /**

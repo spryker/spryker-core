@@ -6,8 +6,8 @@
 
 namespace Unit\Spryker\Shared\Graph;
 
+use phpDocumentor\GraphViz\Graph;
 use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Shared\Graph\PhpDocumentorGraph;
 
 /**
  * @group Spryker
@@ -125,7 +125,7 @@ class PhpDocumentorGraphAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testRender()
     {
-        $phpDocumentorMock = $this->getMock(PhpDocumentorGraph::class, ['export']);
+        $phpDocumentorMock = $this->getMock(Graph::class, ['export']);
         $adapter = new PhpDocumentorGraphAdapter($phpDocumentorMock);
         $adapter->create(self::GRAPH_NAME);
 
@@ -137,7 +137,7 @@ class PhpDocumentorGraphAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderWithFileName()
     {
-        $phpDocumentorMock = $this->getMock(PhpDocumentorGraph::class, ['export']);
+        $phpDocumentorMock = $this->getMock(Graph::class, ['export']);
         $adapter = new PhpDocumentorGraphAdapter($phpDocumentorMock);
         $adapter->create(self::GRAPH_NAME);
 
