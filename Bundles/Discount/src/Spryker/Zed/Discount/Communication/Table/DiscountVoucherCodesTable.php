@@ -61,6 +61,13 @@ class DiscountVoucherCodesTable extends AbstractTable
             SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => 'Batch Value',
         ]);
 
+        $config->setSortable([
+            SpyDiscountVoucherTableMap::COL_CODE,
+            SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES,
+            SpyDiscountVoucherTableMap::COL_CREATED_AT,
+            SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH,
+        ]);
+
         $config->setFooterFromHeader();
 
         $config->setSearchable(
