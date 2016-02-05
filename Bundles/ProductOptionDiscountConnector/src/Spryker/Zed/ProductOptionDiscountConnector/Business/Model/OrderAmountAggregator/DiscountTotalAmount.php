@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator;
 
-use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
@@ -20,9 +19,8 @@ class DiscountTotalAmount implements OrderAmountAggregatorInterface
     {
         $this->assertDisountTotalRequirements($orderTransfer);
 
-        $orderTransfer->getTotals()->setDiscountTotal(
-            $this->getTotalDiscountAmountWithProductOptions($orderTransfer)
-        );
+        $orderTransfer->getTotals()
+            ->setDiscountTotal($this->getTotalDiscountAmountWithProductOptions($orderTransfer));
     }
 
     /**

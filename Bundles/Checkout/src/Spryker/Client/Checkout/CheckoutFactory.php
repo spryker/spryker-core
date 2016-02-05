@@ -17,12 +17,7 @@ class CheckoutFactory extends AbstractFactory
      */
     public function createZedStub()
     {
-        $zedStub = $this->getProvidedDependency(CheckoutDependencyProvider::SERVICE_ZED);
-        $checkoutStub = new CheckoutStub(
-            $zedStub
-        );
-
-        return $checkoutStub;
+        return new CheckoutStub($this->getProvidedDependency(CheckoutDependencyProvider::SERVICE_ZED));
     }
 
 }

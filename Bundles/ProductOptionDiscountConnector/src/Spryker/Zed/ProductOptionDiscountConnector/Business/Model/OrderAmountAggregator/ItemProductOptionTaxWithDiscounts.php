@@ -48,6 +48,9 @@ class ItemProductOptionTaxWithDiscounts implements OrderAmountAggregatorInterfac
                 continue;
             }
 
+            $itemTransfer->requireUnitGrossPriceWithProductOptionAndDiscountAmounts()
+                ->requireSumGrossPriceWithProductOptionAndDiscountAmounts();
+
             $unitTaxAmount = $this->taxFacade->getTaxAmountFromGrossPrice(
                 $itemTransfer->getUnitGrossPriceWithProductOptionAndDiscountAmounts(), $effectiveTaxRate
             );

@@ -5,8 +5,6 @@
 
 namespace Spryker\Zed\Tax\Business\Model\OrderAmountAggregator;
 
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 
@@ -49,6 +47,7 @@ class ItemTax implements OrderAmountAggregatorInterface
             if (empty($item->getTaxRate())) {
                 continue;
             }
+            $item->requireUnitGrossPrice()->requireSumGrossPrice();
 
             $item->setUnitTaxAmount(
                 $this->priceCalculationHelper->getTaxValueFromPrice(

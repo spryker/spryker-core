@@ -17,11 +17,8 @@ class Item implements OrderAmountAggregatorInterface
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $this->assertItemRequirements($itemTransfer);
-            $itemTransfer->setSumGrossPrice($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
-            $itemTransfer->setRefundableAmount($itemTransfer->getSumGrossPrice() - $itemTransfer->getCanceledAmount());
-        }
+        $this->assertItemAggregatorRequirements($orderTransfer);
+        $this->updateOrderItems($orderTransfer);
     }
 
     /**
@@ -33,6 +30,30 @@ class Item implements OrderAmountAggregatorInterface
     {
         $itemTransfer->requireUnitGrossPrice()
             ->requireQuantity();
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function assertItemAggregatorRequirements(OrderTransfer $orderTransfer)
+    {
+        $orderTransfer->requireItems();
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function updateOrderItems(OrderTransfer $orderTransfer)
+    {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $this->assertItemRequirements($itemTransfer);
+            $itemTransfer->setSumGrossPrice($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
+            $itemTransfer->setRefundableAmount($itemTransfer->getSumGrossPrice() - $itemTransfer->getCanceledAmount());
+        }
     }
 
 }

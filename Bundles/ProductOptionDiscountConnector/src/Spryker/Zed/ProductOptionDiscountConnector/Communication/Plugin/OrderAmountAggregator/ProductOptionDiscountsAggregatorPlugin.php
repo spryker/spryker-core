@@ -23,6 +23,6 @@ class ProductOptionDiscountsAggregatorPlugin extends AbstractDiscountPlugin impl
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $this->getFacade()->aggregateProductOptionDiscounts($orderTransfer);
+        $this->getFacade()->aggregateItemWithProductOptionsDiscounts($orderTransfer);
     }
 }

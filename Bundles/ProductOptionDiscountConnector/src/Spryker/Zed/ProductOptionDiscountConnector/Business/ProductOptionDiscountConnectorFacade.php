@@ -38,7 +38,7 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade
      *
      * @return void
      */
-    public function aggregateProductOptionDiscounts(OrderTransfer $orderTransfer)
+    public function aggregateItemWithProductOptionsDiscounts(OrderTransfer $orderTransfer)
     {
         $this->getFactory()->createProductOptionDiscountAggregator()->aggregate($orderTransfer);
     }
@@ -48,7 +48,7 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade
      *
      * @return void
      */
-    public function aggregateProductOptionTaxWithDiscounts(OrderTransfer $orderTransfer)
+    public function aggregateItemWithProductOptionsAndDiscountsTaxAmount(OrderTransfer $orderTransfer)
     {
         $this->getFactory()->createItemProductOptionsAndDiscountsAggregator()->aggregate($orderTransfer);
     }
@@ -58,7 +58,7 @@ class ProductOptionDiscountConnectorFacade extends AbstractFacade
      *
      * @return void
      */
-    public function aggregateOrderTaxAmountWithDiscounts(OrderTransfer $orderTransfer)
+    public function aggregateOrderTotalTaxAmountWithDiscounts(OrderTransfer $orderTransfer)
     {
         $this->getFactory()->createOrderTaxAmountWithDiscounts()->aggregate($orderTransfer);
     }

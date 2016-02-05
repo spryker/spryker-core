@@ -56,8 +56,7 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
      */
     protected function getHydratedSalesProductOptions(OrderTransfer $orderTransfer)
     {
-        $salesOrderItems = $this->salesQueryContainer->querySalesOrderItem()
-            ->findByFkSalesOrder($orderTransfer->getIdSalesOrder());
+        $salesOrderItems = $this->getSalesOrderItems($orderTransfer);
 
         $hydratedProductOptions = [];
         foreach ($salesOrderItems as $salesOrderItemEntity) {
@@ -143,5 +142,17 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
     {
         $itemTransfer->setUnitGrossPriceWithProductOptions($itemTransfer->getUnitGrossPrice());
         $itemTransfer->setSumGrossPriceWithProductOptions($itemTransfer->getSumGrossPrice());
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getSalesOrderItems(OrderTransfer $orderTransfer)
+    {
+        return $this->salesQueryContainer
+            ->querySalesOrderItem()
+            ->findByFkSalesOrder($orderTransfer->getIdSalesOrder());
     }
 }

@@ -13,10 +13,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\AddressTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
@@ -355,11 +353,12 @@ class OrderManager
     protected function isTestOrder(QuoteTransfer $quoteTransfer)
     {
         $shipingAddressTransfer = $quoteTransfer->getShippingAddress();
-        if ($shipingAddressTransfer->getFirstName() === self::TEST_CUSTOMER_FIRST_NAME) {
-            return true;
+
+        if ($shipingAddressTransfer === null || $shipingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**

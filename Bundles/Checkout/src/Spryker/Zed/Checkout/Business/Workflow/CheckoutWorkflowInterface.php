@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Checkout\Business\Workflow;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutWorkflowInterface

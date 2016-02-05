@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Discount\Business\Model\OrderAmountAggregator;
 
-use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class DiscountTotalAmount implements OrderAmountAggregatorInterface

@@ -24,6 +24,6 @@ class ItemsWithProductOptionsAndDiscountsTaxAggregatorPlugin extends AbstractDis
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $this->getFacade()->aggregateProductOptionTaxWithDiscounts($orderTransfer);
+        $this->getFacade()->aggregateItemWithProductOptionsAndDiscountsTaxAmount($orderTransfer);
     }
 }

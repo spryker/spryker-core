@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator;
 
-use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class OrderDiscounts implements OrderAmountAggregatorInterface
@@ -38,7 +37,7 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
     ) {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                $orderCalculatedDiscounts = $this->sumCalculatedDiscounts(
+                $orderCalculatedDiscounts = $this->getSumOfCalculatedDiscounts(
                     $orderCalculatedDiscounts,
                     $productOptionTransfer->getCalculatedDiscounts()
                 );
@@ -55,24 +54,21 @@ class OrderDiscounts implements OrderAmountAggregatorInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[]
      */
-    public function sumCalculatedDiscounts(\ArrayObject $orderCalculatedDiscounts, \ArrayObject $calculatedDiscounts)
+    public function getSumOfCalculatedDiscounts(\ArrayObject $orderCalculatedDiscounts, \ArrayObject $calculatedDiscounts)
     {
-        foreach ($calculatedDiscounts as $calculatedDiscountDiscountTransfer) {
-            $displayName = $calculatedDiscountDiscountTransfer->getDisplayName();
+        foreach ($calculatedDiscounts as $calculatedDiscountTransfer) {
+            $displayName = $calculatedDiscountTransfer->getDisplayName();
             if ($orderCalculatedDiscounts->offsetExists($displayName) === false) {
-                $orderCalculatedDiscounts[$displayName] = clone $calculatedDiscountDiscountTransfer;
+                $orderCalculatedDiscounts[$displayName] = clone $calculatedDiscountTransfer;
                 continue;
             }
 
-            $orderCalculatedDiscountTransfer = $orderCalculatedDiscounts[$displayName];
-            $orderCalculatedDiscountTransfer->setUnitGrossAmount(
-                $orderCalculatedDiscountTransfer->getUnitGrossAmount() + $calculatedDiscountDiscountTransfer->getUnitGrossAmount()
+            $orderCalculatedDiscounts[$displayName]->setUnitGrossAmount(
+                $orderCalculatedDiscounts[$displayName]->getUnitGrossAmount() + $calculatedDiscountTransfer->getUnitGrossAmount()
             );
-            $orderCalculatedDiscountTransfer->setSumGrossAmount(
-                $orderCalculatedDiscountTransfer->getSumGrossAmount() + $calculatedDiscountDiscountTransfer->getSumGrossAmount()
+            $orderCalculatedDiscounts[$displayName]->setSumGrossAmount(
+                $orderCalculatedDiscounts[$displayName]->getSumGrossAmount() + $calculatedDiscountTransfer->getSumGrossAmount()
             );
-
-            $orderCalculatedDiscounts[$displayName] = $orderCalculatedDiscountTransfer;
         }
 
         return $orderCalculatedDiscounts;

@@ -152,7 +152,8 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
             $totalItemUnitDiscountAmount = $this->getCalculatedDiscountUnitGrossAmount($itemTransfer->getCalculatedDiscounts());
             $totalItemSumDiscountAmount = $this->getCalculatedDiscountSumGrossAmount($itemTransfer->getCalculatedDiscounts());
 
-            list($productOptionUnitAmount, $productOptionSumAmount) = $this->getProductOptionCalculatedDiscounts($itemTransfer);
+            $productOptionUnitAmount = $this->getProductOptionUnitAmount($itemTransfer);
+            $productOptionSumAmount = $this->getProductOptionSumAmount($itemTransfer);
 
             $itemTransfer->setUnitGrossPriceWithProductOptionAndDiscountAmounts(
                 $itemTransfer->getUnitGrossPriceWithProductOptions() - $totalItemUnitDiscountAmount - $productOptionUnitAmount
@@ -188,25 +189,36 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return array
+     * @return int
      */
-    protected function getProductOptionCalculatedDiscounts(ItemTransfer $itemTransfer)
+    protected function getProductOptionUnitAmount(ItemTransfer $itemTransfer)
     {
         $productOptionUnitAmount = 0;
-        $productOptionSumAmount = 0;
-
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
             $productOptionUnitAmount += $this->getCalculatedDiscountUnitGrossAmount(
                 $productOptionTransfer->getCalculatedDiscounts()
             );
+        }
 
+        return $productOptionUnitAmount;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return int
+     */
+    protected function getProductOptionSumAmount(ItemTransfer $itemTransfer)
+    {
+        $productOptionSumAmount = 0;
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
             $productOptionSumAmount += $this->getCalculatedDiscountSumGrossAmount(
                 $productOptionTransfer->getCalculatedDiscounts()
             );
         }
-
-        return array($productOptionUnitAmount, $productOptionSumAmount);
+        return $productOptionSumAmount;
     }
+
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

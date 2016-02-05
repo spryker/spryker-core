@@ -11,9 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
@@ -144,13 +141,13 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     protected function triggerStateMachine(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $itemIds = [];
+        $salesOrderItemIds = [];
 
         foreach ($checkoutResponseTransfer->getSaveOrder()->getOrderItems() as $item) {
-            $itemIds[] = $item->getIdSalesOrderItem();
+            $salesOrderItemIds[] = $item->getIdSalesOrderItem();
         }
 
-        $this->omsFacade->triggerEventForNewOrderItems($itemIds);
+        $this->omsFacade->triggerEventForNewOrderItems($salesOrderItemIds);
     }
 
     /**

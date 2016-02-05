@@ -6,18 +6,24 @@
 namespace Spryker\Zed\Sales\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 
 class GrandTotal implements OrderAmountAggregatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $totalsTransfer = $orderTransfer->getTotals();
+        $orderTotalsTransfer = $orderTransfer->getTotals();
+        if ($orderTotalsTransfer === null) {
+            $orderTotalsTransfer = new TotalsTransfer();
+        }
 
         $grandTotal = $this->getCalculatedGrandTotal($orderTransfer);
-        $totalsTransfer->setGrandTotal($grandTotal);
+        $orderTotalsTransfer->setGrandTotal($grandTotal);
     }
 
 

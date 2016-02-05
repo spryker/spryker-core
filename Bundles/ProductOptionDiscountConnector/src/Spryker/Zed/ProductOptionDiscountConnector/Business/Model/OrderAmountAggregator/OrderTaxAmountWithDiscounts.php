@@ -5,10 +5,7 @@
 
 namespace Spryker\Zed\ProductOptionDiscountConnector\Business\Model\OrderAmountAggregator;
 
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Spryker\Zed\ProductOptionDiscountConnector\Dependency\Facade\ProductOptionToTaxBridgeInterface;
 
@@ -103,6 +100,9 @@ class OrderTaxAmountWithDiscounts implements OrderAmountAggregatorInterface
      */
     protected function getTotalTaxAmount(OrderTransfer $orderTransfer, $orderEffectiveTaxRate)
     {
+        $orderTransfer->requireTotals();
+        $orderTransfer->getTotals()->requireGrandTotal();
+
         return $this->taxFacade->getTaxAmountFromGrossPrice(
             $orderTransfer->getTotals()->getGrandTotal(),
             $orderEffectiveTaxRate

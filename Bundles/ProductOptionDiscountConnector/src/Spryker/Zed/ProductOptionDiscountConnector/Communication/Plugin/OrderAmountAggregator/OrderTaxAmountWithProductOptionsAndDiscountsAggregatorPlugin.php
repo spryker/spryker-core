@@ -23,6 +23,6 @@ class OrderTaxAmountWithProductOptionsAndDiscountsAggregatorPlugin extends Abstr
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $this->getFacade()->aggregateOrderTaxAmountWithDiscounts($orderTransfer);
+        $this->getFacade()->aggregateOrderTotalTaxAmountWithDiscounts($orderTransfer);
     }
 }

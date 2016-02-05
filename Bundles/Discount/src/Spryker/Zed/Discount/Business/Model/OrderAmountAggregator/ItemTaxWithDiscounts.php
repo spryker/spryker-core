@@ -25,6 +25,8 @@ class ItemTaxWithDiscounts implements OrderAmountAggregatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
@@ -33,6 +35,8 @@ class ItemTaxWithDiscounts implements OrderAmountAggregatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     protected function addExpenseTaxes(OrderTransfer $orderTransfer)
     {

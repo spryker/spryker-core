@@ -93,8 +93,6 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
     }
 
-
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity

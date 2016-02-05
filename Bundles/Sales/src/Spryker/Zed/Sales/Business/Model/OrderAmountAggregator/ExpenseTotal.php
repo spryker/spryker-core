@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use Orm\Zed\Sales\Persistence\SpySalesExpense;
 
 class ExpenseTotal implements OrderAmountAggregatorInterface
 {
