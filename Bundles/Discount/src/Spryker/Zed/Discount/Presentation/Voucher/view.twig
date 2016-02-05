@@ -20,7 +20,7 @@
                 </tr>
                 <tr>
                     <td>Value</td>
-                    <td>{% if discount.type == 'percent' %}{{ discount.amount }} %{% else %}{{ discount.amount }}{% endif %}</td>
+                    <td>{% if discount.calculatorPlugin == 'PLUGIN_CALCULATOR_PERCENTAGE' %}{{ discount.amount }} %{% else %}{{ discount.amount | currency }} {% endif %}</td>
                 </tr>
                 <tr>
                     <td>Generated Vouchers</td>
