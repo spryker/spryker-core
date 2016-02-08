@@ -60,7 +60,7 @@ interface TaxWriterInterface
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
      *
-     * @return int
+     * @return int|null
      */
     public function addTaxRateToTaxSet($taxSetId, TaxRateTransfer $taxRateTransfer);
 
@@ -72,7 +72,7 @@ interface TaxWriterInterface
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException
      *
-     * @return int
+     * @return int|null
      */
     public function removeTaxRateFromTaxSet($taxSetId, $taxRateId);
 
@@ -80,6 +80,8 @@ interface TaxWriterInterface
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     public function deleteTaxRate($id);
 
@@ -87,6 +89,8 @@ interface TaxWriterInterface
      * @param int $id
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     public function deleteTaxSet($id);
 

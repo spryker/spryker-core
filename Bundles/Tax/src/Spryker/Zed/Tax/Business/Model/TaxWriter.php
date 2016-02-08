@@ -101,7 +101,7 @@ class TaxWriter implements TaxWriterInterface
         $taxSetEntity->setName($taxSetTransfer->getName());
 
         if ($taxSetTransfer->getTaxRates()->count() === 0) {
-            throw new MissingTaxRateException();
+            throw new MissingTaxRateException($taxSetTransfer->getName() . ' tax set is missing tax rates');
         }
 
         foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
@@ -158,7 +158,7 @@ class TaxWriter implements TaxWriterInterface
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
      *
-     * @return int
+     * @return int|null
      */
     public function addTaxRateToTaxSet($taxSetId, TaxRateTransfer $taxRateTransfer)
     {
@@ -170,7 +170,7 @@ class TaxWriter implements TaxWriterInterface
 
         $taxRate = $this->queryContainer->queryTaxRate($taxRateTransfer->getIdTaxRate())->findOne();
         if ($taxSetEntity->getSpyTaxRates()->contains($taxRate)) {
-            return;
+            return null;
         }
 
         $taxRateEntity = $this->findOrCreateTaxRateEntity($taxRateTransfer);
@@ -191,7 +191,7 @@ class TaxWriter implements TaxWriterInterface
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException
      *
-     * @return int
+     * @return int|null
      */
     public function removeTaxRateFromTaxSet($taxSetId, $taxRateId)
     {
@@ -204,7 +204,7 @@ class TaxWriter implements TaxWriterInterface
         $taxRate = $this->queryContainer->queryTaxRate($taxRateId)->findOne();
 
         if (!$taxSetEntity->getSpyTaxRates()->contains($taxRate)) {
-            return;
+            return null;
         }
 
         if ($taxSetEntity->getSpyTaxRates()->count() === 1) {
@@ -252,6 +252,13 @@ class TaxWriter implements TaxWriterInterface
         }
     }
 
+    /**
+     * @param TaxRateTransfer $taxRateTransfer
+     *
+     * @throws PropelException
+     *
+     * @return SpyTaxRate
+     */
     private function createTaxRateEntity(TaxRateTransfer $taxRateTransfer)
     {
         $taxRateEntity = new SpyTaxRate();
@@ -261,6 +268,11 @@ class TaxWriter implements TaxWriterInterface
         return $taxRateEntity;
     }
 
+    /**
+     * @param TaxRateTransfer $taxRateTransfer
+     *
+     * @return SpyTaxRate
+     */
     private function findOrCreateTaxRateEntity(TaxRateTransfer $taxRateTransfer)
     {
         if (!empty($taxRateTransfer->getIdTaxRate())) {
