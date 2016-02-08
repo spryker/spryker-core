@@ -19,11 +19,6 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      */
     private $graph;
 
-    public function __construct()
-    {
-        $this->graph = $this->createPhpDocumentorGraph();
-    }
-
     /**
      * @return \phpDocumentor\GraphViz\Graph
      */

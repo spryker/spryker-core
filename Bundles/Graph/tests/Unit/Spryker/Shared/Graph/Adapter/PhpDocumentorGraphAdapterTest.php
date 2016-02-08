@@ -125,8 +125,7 @@ class PhpDocumentorGraphAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testRender()
     {
-        $phpDocumentorMock = $this->getMock(Graph::class, ['export']);
-        $adapter = new PhpDocumentorGraphAdapter($phpDocumentorMock);
+        $adapter = new PhpDocumentorGraphAdapter();
         $adapter->create(self::GRAPH_NAME);
 
         $this->assertInternalType('string', $adapter->render('svg'));
@@ -137,8 +136,7 @@ class PhpDocumentorGraphAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderWithFileName()
     {
-        $phpDocumentorMock = $this->getMock(Graph::class, ['export']);
-        $adapter = new PhpDocumentorGraphAdapter($phpDocumentorMock);
+        $adapter = new PhpDocumentorGraphAdapter();
         $adapter->create(self::GRAPH_NAME);
 
         $this->assertInternalType('string', $adapter->render('svg', sys_get_temp_dir() . '/filename'));

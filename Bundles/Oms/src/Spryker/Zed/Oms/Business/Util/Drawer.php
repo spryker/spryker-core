@@ -56,7 +56,7 @@ class Drawer implements DrawerInterface
     protected $commands;
 
     /**
-     * @var \Spryker\Shared\Graph\Graph
+     * @var \Spryker\Shared\Graph\GraphInterface
      */
     protected $graph;
 

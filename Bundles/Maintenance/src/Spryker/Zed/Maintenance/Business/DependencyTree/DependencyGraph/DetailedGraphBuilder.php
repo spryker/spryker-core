@@ -17,7 +17,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
 {
 
     /**
-     * @var GraphViz
+     * @var \Spryker\Shared\Graph\GraphInterface
      */
     private $graph;
 
