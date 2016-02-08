@@ -20,6 +20,7 @@ class OrderItemSplitController extends AbstractController
     const SALES_ORDER_DETAIL_URL = '/sales/details?id-sales-order=%d';
     const SPLIT_SUCCESS_MESSAGE = 'Order item with "%d" was successfully split.';
 
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

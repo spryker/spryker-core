@@ -2,12 +2,9 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
-use Spryker\Shared\Gui\Form\AbstractForm;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
+use Symfony\Component\Form\AbstractType;
 
-abstract class AbstractRuleForm extends AbstractForm
+abstract class AbstractRuleForm extends AbstractType
 {
 
     const DECISION_RULES_PREFIX = 'PLUGIN_DECISION_RULE_';
@@ -55,10 +52,8 @@ abstract class AbstractRuleForm extends AbstractForm
             ['', '', ' '],
             $decisionRuleName
         );
-
         return mb_convert_case($decisionRuleName, MB_CASE_TITLE, 'UTF-8');
     }
-
     /**
      * @return array
      */
@@ -66,14 +61,11 @@ abstract class AbstractRuleForm extends AbstractForm
     {
         $plugins = [];
         $availablePlugins = array_keys($this->availableCalculatorPlugins);
-
         foreach ($availablePlugins as $plugin) {
             $plugins[$plugin] = $this->filterChoicesLabels($plugin);
         }
-
         return $plugins;
     }
-
     /**
      * @return array
      */
@@ -81,14 +73,23 @@ abstract class AbstractRuleForm extends AbstractForm
     {
         $plugins = [];
         $availablePlugins = array_keys($this->availableCollectorPlugins);
-
         foreach ($availablePlugins as $plugin) {
             $plugins[$plugin] = $this->filterChoicesLabels($plugin);
         }
-
         return $plugins;
     }
-
+    /**
+     * @return array
+     */
+    protected function getAvailableDecisionRulePlugins()
+    {
+        $plugins = [];
+        $availablePlugins = array_keys($this->availableDecisionRulePlugins);
+        foreach ($availablePlugins as $plugin) {
+            $plugins[$plugin] = $this->filterChoicesLabels($plugin);
+        }
+        return $plugins;
+    }
     /**
      * @return array|string[]
      */

@@ -10,13 +10,14 @@ use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\AddressForm;
-use Spryker\Zed\Sales\SalesConfig;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\OrderItemSplitDataProvider;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
+
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
@@ -26,41 +27,52 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return Form\OrderItemSplitForm
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createOrderItemSplitForm()
     {
-        $form = new OrderItemSplitForm();
-
-        return $this->createForm($form);
+        $formType = new OrderItemSplitForm();
+        return $this->getFormFactory()->create($formType);
     }
 
     /**
-     * @param int $idSalesOrder
+     * @param array $formData
+     * @param array $formOptions
      *
-     * @return \Spryker\Zed\Sales\Communication\Form\CustomerForm
+     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCustomerForm($idSalesOrder)
+    public function createCustomerForm(array $formData = [], array $formOptions = [])
     {
-        $customerQuery = $this->getQueryContainer()->querySalesOrderById($idSalesOrder);
-
-        $form = new CustomerForm($customerQuery);
-
-        return $this->createForm($form);
+        $customerFormType = new CustomerForm();
+        return $this->getFormFactory()->create($customerFormType, $formData, $formOptions);
     }
 
     /**
-     * @param int $idOrderAddress
-     *
-     * @return \Spryker\Zed\Sales\Communication\Form\AddressForm
+     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider
      */
-    public function createAddressForm($idOrderAddress)
+    public function createCustomerFormDataProvider()
     {
-        $addressQuery = $this->getQueryContainer()->querySalesOrderAddressById($idOrderAddress);
+        return new CustomerFormDataProvider($this->getQueryContainer());
+    }
 
-        $form = new AddressForm($addressQuery);
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createAddressForm(array $formData = [], array $formOptions = [])
+    {
+        $addressFormType = new AddressForm();
+        return $this->getFormFactory()->create($addressFormType, $formData, $formOptions);
+    }
 
-        return $this->createForm($form);
+    /**
+     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider
+     */
+    public function createAddressFormDataProvider()
+    {
+        return new AddressFormDataProvider($this->getQueryContainer());
     }
 
     /**
@@ -71,16 +83,25 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function createOrderItemSplitFormCollection(ObjectCollection $orderItems)
     {
         $formCollectionArray = [];
-
+        $orderItemSplitDataProvider = $this->createOrderItemSplitDataProvider();
         foreach ($orderItems as $item) {
-            $form = new OrderItemSplitForm($item);
-            $formCollectionArray[$item->getIdSalesOrderItem()] = $this->createForm($form, [
-                'action' => '/sales/order-item-split/split',
-            ])->createView();
+            $formType = new OrderItemSplitForm();
+            $formCollectionArray[$item->getIdSalesOrderItem()] = $this
+                ->getFormFactory()
+                ->create($formType, $orderItemSplitDataProvider->getData($item), $orderItemSplitDataProvider->getOptions())
+                ->createView();
         }
-
         return $formCollectionArray;
     }
+
+    /**
+     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\OrderItemSplitDataProvider
+     */
+    public function createOrderItemSplitDataProvider()
+    {
+        return new OrderItemSplitDataProvider();
+    }
+
 
     /**
      * @param \Spryker\Zed\Sales\Business\SalesFacade $salesFacade

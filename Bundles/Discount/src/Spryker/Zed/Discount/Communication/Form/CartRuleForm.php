@@ -3,11 +3,8 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Zed\Discount\Business\DiscountFacade;
-use Spryker\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\FormBuilderInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CartRuleForm extends AbstractRuleForm
 {
@@ -15,7 +12,6 @@ class CartRuleForm extends AbstractRuleForm
     const FIELD_DISPLAY_NAME = 'display_name';
     const FIELD_DESCRIPTION = 'description';
     const FIELD_AMOUNT = 'amount';
-    const FIELD_TYPE = 'type';
     const FIELD_VALID_FROM = 'valid_from';
     const FIELD_VALID_TO = 'valid_to';
     const FIELD_IS_PRIVILEGED = 'is_privileged';
@@ -27,13 +23,6 @@ class CartRuleForm extends AbstractRuleForm
 
     const VALID_FROM = 'valid_from';
     const VALID_TO = 'valid_to';
-
-    const DATE_NOW = 'now';
-
-    /**
-     * @var \Spryker\Zed\Discount\Business\DiscountFacade
-     */
-    protected $discountFacade;
 
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
@@ -51,67 +40,25 @@ class CartRuleForm extends AbstractRuleForm
     protected $decisionRulePlugins;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface[] $collectorPlugins
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      */
-    public function __construct(
-        DiscountFacade $discountFacade,
-        array $calculatorPlugins,
-        array $collectorPlugins,
-        array $decisionRulePlugins
-    ) {
-        parent::__construct(
-            $calculatorPlugins,
-            $collectorPlugins,
-            $decisionRulePlugins
-        );
+    public function __construct(array $calculatorPlugins, array $collectorPlugins, array $decisionRulePlugins)
+    {
+        parent::__construct($calculatorPlugins, $collectorPlugins, $decisionRulePlugins);
 
-        $this->discountFacade = $discountFacade;
         $this->calculatorPlugins = $calculatorPlugins;
         $this->collectorPlugins = $collectorPlugins;
         $this->decisionRulePlugins = $decisionRulePlugins;
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function populateFormFields()
+    public function getName()
     {
-        $idDiscount = $this->getRequest()->query->getInt(DiscountConfig::PARAM_ID_DISCOUNT);
-
-        if ($idDiscount > 0) {
-            $cartRuleDefaultData = $this->discountFacade->getCurrentCartRulesDetailsByIdDiscount($idDiscount);
-
-            return $cartRuleDefaultData;
-        }
-
-        return [
-            self::VALID_FROM => new \DateTime('now'),
-            self::VALID_TO => new \DateTime('now'),
-            'decision_rules' => [
-                'rule_1' => [
-                    'value' => '',
-                    'rules' => '',
-                ],
-            ],
-            'collector_plugins' => [
-                'plugin_1' => [
-                    'collector_plugin' => '',
-                    'value' => '',
-                ],
-            ],
-            'group' => [],
-        ];
-    }
-
-    /**
-     * @return null
-     */
-    protected function getDataClass()
-    {
-        return null;
+        return 'cart_rule';
     }
 
     /**
@@ -122,60 +69,170 @@ class CartRuleForm extends AbstractRuleForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(self::FIELD_DISPLAY_NAME, 'text', [
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->add(self::FIELD_DESCRIPTION, 'textarea')
-            ->add(self::FIELD_AMOUNT, 'text', [
-                'label' => 'Amount',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ])
-            ->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
-                'label' => 'Calculator Plugin',
-                'choices' => $this->getAvailableCalculatorPlugins(),
-                'empty_data' => null,
-                'required' => false,
-                'placeholder' => false,
-            ])
-            ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-                'type' => new CollectorPluginForm($this->collectorPlugins),
-                'label' => null,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'allow_extra_fields' => true,
-            ])
-            ->add(self::FIELD_COLLECTOR_LOGICAL_OPERATOR, 'choice', [
-                'label' => 'Logical operator for combining multiple collectors',
-                'choices' => $this->getCollectorLogicalOperators(),
-                'required' => true,
-            ])
-            ->add(self::FIELD_VALID_FROM, 'date')
-            ->add(self::FIELD_VALID_TO, 'date')
-            ->add(self::FIELD_IS_PRIVILEGED, 'checkbox', [
-                'label' => 'Is Combinable with other discounts',
-            ])
-            ->add(self::FIELD_IS_ACTIVE, 'checkbox', [
-                'label' => 'Is Active',
-            ])
-            ->add(self::FIELD_DECISION_RULES, 'collection', [
-                'type' => new DecisionRuleForm($this->decisionRulePlugins),
-                'label' => null,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'allow_extra_fields' => true,
-            ]);
+        $this
+            ->addDisplayNameField($builder)
+            ->addDescriptionField($builder)
+            ->addAmountField($builder)
+            ->addCalculatorPluginField($builder)
+            ->addCollectorPluginsField($builder)
+            ->addCollectorLogicalOperatorField($builder)
+            ->addValidFromField($builder)
+            ->addValidToField($builder)
+            ->addIsPrivilegedField($builder)
+            ->addIsActiveField($builder)
+            ->addDecisionRulesField($builder);
     }
-
     /**
-     * @return string
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
      */
-    public function getName()
+    protected function addDisplayNameField(FormBuilderInterface $builder)
     {
-        return 'cart_rule';
+        $builder->add(self::FIELD_DISPLAY_NAME, 'text', [
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        return $this;
+    }
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addDescriptionField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_DESCRIPTION, 'textarea');
+        return $this;
+    }
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addAmountField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_AMOUNT, 'text', [
+            'label' => 'Amount',
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        return $this;
+    }
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidFromField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_VALID_FROM, 'date');
+        return $this;
+    }
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidToField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_VALID_TO, 'date');
+        return $this;
+    }
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsPrivilegedField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_IS_PRIVILEGED, 'checkbox', [
+            'label' => 'Is Combinable with other discounts',
+        ]);
+        return $this;
+    }
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsActiveField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox', [
+            'label' => 'Is Active',
+        ]);
+        return $this;
+    }
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCalculatorPluginField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
+            'label' => 'Calculator Plugin',
+            'choices' => $this->getAvailableCalculatorPlugins(),
+            'empty_data' => null,
+            'required' => false,
+            'placeholder' => false,
+        ]);
+        return $this;
+    }
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCollectorPluginsField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
+            'type' => new CollectorPluginForm(
+                $this->calculatorPlugins,
+                $this->collectorPlugins,
+                $this->decisionRulePlugins
+            ),
+            'label' => null,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'allow_extra_fields' => true,
+        ]);
+        return $this;
+    }
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addDecisionRulesField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_DECISION_RULES, 'collection', [
+            'type' => new DecisionRuleForm(
+                $this->calculatorPlugins,
+                $this->collectorPlugins,
+                $this->decisionRulePlugins
+            ),
+            'label' => null,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'allow_extra_fields' => true,
+        ]);
+        return $this;
+    }
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCollectorLogicalOperatorField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_COLLECTOR_LOGICAL_OPERATOR, 'choice', [
+            'label' => 'Logical operator for combining multiple collectors',
+            'choices' => $this->getCollectorLogicalOperators(),
+            'required' => true,
+        ]);
+        return $this;
     }
 }

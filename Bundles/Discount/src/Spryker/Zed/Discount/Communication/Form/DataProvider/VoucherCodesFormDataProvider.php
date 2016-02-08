@@ -55,7 +55,6 @@ class VoucherCodesFormDataProvider
                     'value' => '',
                 ],
             ],
-//            'group' => [],
         ];
     }
 
