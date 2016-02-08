@@ -128,4 +128,13 @@ class DependencyController extends AbstractController
         return $this->viewResponse(['matrixData' => $matrixData, 'engineBundles' => $engineBundleList]);
     }
 
+    /**
+     * @return void
+     */
+    public function externalDependencyTreeAction()
+    {
+        $externalDependencyTree = $this->getFacade()->getExternalDependencyTree();
+        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($externalDependencyTree) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+    }
+
 }

@@ -140,4 +140,12 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
         $this->getFactory()->createComposerJsonUpdater()->update();
     }
 
+    /**
+     * @return array
+     */
+    public function getExternalDependencyTree()
+    {
+        return $this->getFactory()->createExternalDependencyTree();
+    }
+
 }

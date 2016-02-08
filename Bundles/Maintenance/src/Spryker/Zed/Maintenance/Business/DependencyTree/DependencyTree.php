@@ -18,6 +18,7 @@ class DependencyTree extends AbstractDependencyTree
     const META_FOREIGN_BUNDLE_IS_ENGINE = 'foreign bundle is engine';
     const META_FOREIGN_LAYER = 'foreign layer';
     const META_FOREIGN_CLASS_NAME = 'foreign class name';
+    const META_FOREIGN_IS_EXTERNAL = 'foreign is external';
     const META_APPLICATION = 'application';
     const META_BUNDLE = 'bundle';
     const META_BUNDLE_IS_ENGINE = 'is engine';
