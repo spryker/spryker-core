@@ -32,7 +32,7 @@ class Doctor
     }
 
     /**
-     * @return self
+     * @return $this
      */
     public function doHealthCheck()
     {

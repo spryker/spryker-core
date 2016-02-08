@@ -97,7 +97,7 @@ class CmsPageForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIdCmsPageField(FormBuilderInterface $builder)
     {
@@ -109,7 +109,7 @@ class CmsPageForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addFkTemplateField(FormBuilderInterface $builder)
     {
@@ -121,7 +121,7 @@ class CmsPageForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addUrlField(FormBuilderInterface $builder)
     {
@@ -134,7 +134,7 @@ class CmsPageForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return self
+     * @return $this
      */
     protected function addCurrentTemplateField(FormBuilderInterface $builder, array $choices)
     {
@@ -149,7 +149,7 @@ class CmsPageForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIdUrlField(FormBuilderInterface $builder)
     {
@@ -164,7 +164,7 @@ class CmsPageForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {

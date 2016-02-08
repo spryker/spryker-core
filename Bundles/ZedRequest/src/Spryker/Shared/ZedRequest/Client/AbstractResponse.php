@@ -81,7 +81,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param array $errorMessages
      *
-     * @return self
+     * @return $this
      */
     public function addErrorMessages(array $errorMessages)
     {
@@ -95,7 +95,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param \Spryker\Shared\ZedRequest\Client\Message $errorMessage
      *
-     * @return self
+     * @return $this
      */
     public function addErrorMessage(Message $errorMessage)
     {
@@ -132,7 +132,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param \Spryker\Shared\ZedRequest\Client\Message $message
      *
-     * @return self
+     * @return $this
      */
     public function addInfoMessage(Message $message)
     {
@@ -144,7 +144,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param array $messages
      *
-     * @return self
+     * @return $this
      */
     public function addInfoMessages(array $messages)
     {
@@ -183,7 +183,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param array $successMessages
      *
-     * @return self
+     * @return $this
      */
     public function addSuccessMessages(array $successMessages)
     {
@@ -197,7 +197,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param \Spryker\Shared\ZedRequest\Client\Message $successMessage
      *
-     * @return self
+     * @return $this
      */
     public function addSuccessMessage(Message $successMessage)
     {
@@ -217,7 +217,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param bool $success
      *
-     * @return self
+     * @return $this
      */
     public function setSuccess($success)
     {
@@ -259,7 +259,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
-     * @return self
+     * @return $this
      */
     public function setTransfer(TransferInterface $transferObject)
     {

@@ -17,7 +17,7 @@ interface DefinitionInterface
     /**
      * @param array $definition
      *
-     * @return self
+     * @return $this
      */
     public function setDefinition(array $definition);
 

@@ -19,7 +19,7 @@ interface CartSessionInterface
     /**
      * @param \Generated\Shared\Transfer\CartTransfer $cartTransfer
      *
-     * @return self
+     * @return $this
      */
     public function setCart(CartTransfer $cartTransfer);
 
@@ -31,7 +31,7 @@ interface CartSessionInterface
     /**
      * @param $itemCount
      *
-     * @return self
+     * @return $this
      */
     public function setItemCount($itemCount);
 

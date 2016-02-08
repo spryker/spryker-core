@@ -38,7 +38,7 @@ class DecisionRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addDecisionRulePluginField(FormBuilderInterface $builder)
     {
@@ -54,7 +54,7 @@ class DecisionRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addValueField(FormBuilderInterface $builder)
     {
@@ -68,7 +68,7 @@ class DecisionRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addRemoveButton(FormBuilderInterface $builder)
     {
@@ -84,7 +84,7 @@ class DecisionRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIdDiscountDecisionRuleField(FormBuilderInterface $builder)
     {

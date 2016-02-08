@@ -90,7 +90,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
@@ -106,7 +106,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addVoucherPoolCategoryField(FormBuilderInterface $builder)
     {
@@ -124,7 +124,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
@@ -138,7 +138,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIsPrivilegedField(FormBuilderInterface $builder)
     {
@@ -152,7 +152,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
@@ -164,7 +164,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addAmountField(FormBuilderInterface $builder)
     {
@@ -184,7 +184,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addValidFromField(FormBuilderInterface $builder)
     {
@@ -198,7 +198,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addValidToField(FormBuilderInterface $builder)
     {
@@ -212,7 +212,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCalculatorPluginField(FormBuilderInterface $builder)
     {
@@ -233,7 +233,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCollectorPluginsField(FormBuilderInterface $builder)
     {
@@ -251,7 +251,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addDecisionRulesField(FormBuilderInterface $builder)
     {
@@ -269,7 +269,7 @@ class VoucherCodesForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCollectorLogicalOperatorField(FormBuilderInterface $builder)
     {

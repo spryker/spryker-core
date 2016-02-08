@@ -14,7 +14,7 @@ interface PayolutionSessionInterface
     /**
      * @param \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
      *
-     * @return self
+     * @return $this
      */
     public function setInstallmentPayments(PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer);
 

@@ -31,7 +31,7 @@ trait AdapterTrait
     /**
      * @param array $config
      *
-     * @return self
+     * @return $this
      */
     public function setConfig(array $config)
     {
@@ -51,7 +51,7 @@ trait AdapterTrait
     /**
      * @param $resource
      *
-     * @return self
+     * @return $this
      */
     protected function setResource($resource)
     {
@@ -85,7 +85,7 @@ trait AdapterTrait
     /**
      * @param $debug
      *
-     * @return self
+     * @return $this
      */
     public function setDebug($debug)
     {

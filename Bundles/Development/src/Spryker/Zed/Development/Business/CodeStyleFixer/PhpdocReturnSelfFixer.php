@@ -33,7 +33,7 @@ class PhpdocReturnSelfFixer extends AbstractFixer
      */
     public function getDescription()
     {
-        return 'Methods returning self should be `@return self`';
+        return 'Methods returning self should be `@return $this`';
     }
 
     /**
@@ -65,10 +65,10 @@ class PhpdocReturnSelfFixer extends AbstractFixer
     protected function fixDocBlock($content)
     {
         $replace = function ($matches) {
-            return '@return ' . $matches[1] . 'self' . $matches[2];
+            return '@return ' . $matches[1] . '$this' . $matches[2];
         };
 
-        $content = preg_replace_callback('/\@return\s+([\w+\|]+\||\s*)\$this(\|[\w+\|]+|\s*)\b/', $replace, $content);
+        $content = preg_replace_callback('/\@return\s+([\w+\|]+\||\s*)self(\|[\w+\|]+|\s*)\b/', $replace, $content);
 
         return $content;
     }

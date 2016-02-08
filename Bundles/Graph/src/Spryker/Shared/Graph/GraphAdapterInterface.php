@@ -22,7 +22,7 @@ interface GraphAdapterInterface extends GraphInterface
      * @param bool $directed
      * @param bool $strict
      *
-     * @return self
+     * @return $this
      */
     public function create($name, array $attributes = [], $directed = true, $strict = true);
 

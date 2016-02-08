@@ -27,7 +27,7 @@ class Environment
     protected static $instance;
 
     /**
-     * @return self
+     * @return $this
      */
     public static function getInstance()
     {

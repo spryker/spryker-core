@@ -20,7 +20,7 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
     /**
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
-     * @return self
+     * @return $this
      */
     public function setMessenger(MessengerInterface $messenger)
     {

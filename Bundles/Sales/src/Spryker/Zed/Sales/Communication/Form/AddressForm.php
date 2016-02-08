@@ -93,7 +93,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
@@ -109,7 +109,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addMiddleNameField(FormBuilderInterface $builder)
     {
@@ -121,7 +121,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addLastNameField(FormBuilderInterface $builder)
     {
@@ -137,7 +137,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
@@ -154,7 +154,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addAddress1Field(FormBuilderInterface $builder)
     {
@@ -166,7 +166,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCompanyField(FormBuilderInterface $builder)
     {
@@ -178,7 +178,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCityField(FormBuilderInterface $builder)
     {
@@ -190,7 +190,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addZipCodeField(FormBuilderInterface $builder)
     {
@@ -202,7 +202,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addPoBoxField(FormBuilderInterface $builder)
     {
@@ -214,7 +214,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addPhoneField(FormBuilderInterface $builder)
     {
@@ -226,7 +226,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCellPhoneField(FormBuilderInterface $builder)
     {
@@ -238,7 +238,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
@@ -250,7 +250,7 @@ class AddressForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCommentField(FormBuilderInterface $builder)
     {

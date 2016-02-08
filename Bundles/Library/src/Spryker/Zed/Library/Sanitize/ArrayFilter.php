@@ -69,7 +69,7 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      * @param array $array
      * @param string|\Spryker\Zed\Library\Sanitize\FilterSetInterface $filterSet
      *
-     * @return self
+     * @return $this
      */
     public static function fromArray(array $array, $filterSet)
     {

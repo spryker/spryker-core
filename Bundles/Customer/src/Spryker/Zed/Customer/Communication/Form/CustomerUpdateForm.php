@@ -47,7 +47,7 @@ class CustomerUpdateForm extends CustomerForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
@@ -64,7 +64,7 @@ class CustomerUpdateForm extends CustomerForm
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return self
+     * @return $this
      */
     protected function addDefaultBillingAddressField(FormBuilderInterface $builder, array $choices)
     {
@@ -81,7 +81,7 @@ class CustomerUpdateForm extends CustomerForm
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return self
+     * @return $this
      */
     protected function addDefaultShippingAddressField(FormBuilderInterface $builder, array $choices)
     {

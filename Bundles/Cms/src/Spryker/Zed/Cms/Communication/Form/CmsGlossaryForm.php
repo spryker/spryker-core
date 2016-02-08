@@ -100,7 +100,7 @@ class CmsGlossaryForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addFkPageField(FormBuilderInterface $builder)
     {
@@ -112,7 +112,7 @@ class CmsGlossaryForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addPlaceholderField(FormBuilderInterface $builder)
     {
@@ -128,7 +128,7 @@ class CmsGlossaryForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addGlossaryKeyField(FormBuilderInterface $builder)
     {
@@ -140,7 +140,7 @@ class CmsGlossaryForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIdCmsGlossaryKeyMappingField(FormBuilderInterface $builder)
     {
@@ -152,7 +152,7 @@ class CmsGlossaryForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addTemplateNameField(FormBuilderInterface $builder)
     {
@@ -164,7 +164,7 @@ class CmsGlossaryForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addSearchOptionField(FormBuilderInterface $builder)
     {
@@ -184,7 +184,7 @@ class CmsGlossaryForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addTranslationField(FormBuilderInterface $builder)
     {

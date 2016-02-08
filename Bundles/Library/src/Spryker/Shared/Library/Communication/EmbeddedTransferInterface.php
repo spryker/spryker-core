@@ -14,7 +14,7 @@ interface EmbeddedTransferInterface
     /**
      * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
-     * @return self
+     * @return $this
      */
     public function setTransfer(TransferInterface $transferObject);
 

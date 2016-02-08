@@ -17,7 +17,7 @@ interface TaxableItemInterface
     /**
      * @param int $taxPercentage
      *
-     * @return self
+     * @return $this
      */
     public function setTaxPercentage($taxPercentage);
 
@@ -29,7 +29,7 @@ interface TaxableItemInterface
     /**
      * @param int $price
      *
-     * @return self
+     * @return $this
      */
     public function setPriceToPay($price);
 

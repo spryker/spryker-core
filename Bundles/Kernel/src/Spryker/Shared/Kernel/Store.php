@@ -248,7 +248,7 @@ class Store
     /**
      * @param string $storeName
      *
-     * @return self
+     * @return $this
      */
     public function setStoreName($storeName)
     {

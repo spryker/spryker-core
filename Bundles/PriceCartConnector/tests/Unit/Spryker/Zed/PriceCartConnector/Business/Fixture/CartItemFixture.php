@@ -30,7 +30,7 @@ class CartItemFixture extends AbstractTransfer implements ItemInterface
     /**
      * @param string $identifier
      *
-     * @return self
+     * @return $this
      */
     public function setId($identifier)
     {
@@ -50,7 +50,7 @@ class CartItemFixture extends AbstractTransfer implements ItemInterface
     /**
      * @param int $quantity
      *
-     * @return self
+     * @return $this
      */
     public function setQuantity($quantity = 1)
     {

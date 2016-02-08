@@ -47,7 +47,7 @@ class Url
      *
      * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
      *
-     * @return self
+     * @return $this
      */
     public static function parse($url)
     {
@@ -79,7 +79,7 @@ class Url
      * @param array $query
      * @param array $options
      *
-     * @return self
+     * @return $this
      */
     public static function generate($url, array $query = [], array $options = [])
     {
@@ -168,7 +168,7 @@ class Url
     /**
      * @param array|string $path
      *
-     * @return self
+     * @return $this
      */
     public function setPath($path)
     {
@@ -185,7 +185,7 @@ class Url
     /**
      * Normalize the URL so that double slashes and relative paths are removed
      *
-     * @return self
+     * @return $this
      */
     public function normalizePath()
     {
@@ -214,7 +214,7 @@ class Url
      *
      * @param array|string $relativePath
      *
-     * @return self
+     * @return $this
      */
     public function addPath($relativePath)
     {
@@ -246,7 +246,7 @@ class Url
     /**
      * @param $scheme
      *
-     * @return self
+     * @return $this
      */
     public function setScheme($scheme)
     {
@@ -258,7 +258,7 @@ class Url
     /**
      * @param $port
      *
-     * @return self
+     * @return $this
      */
     public function setPort($port)
     {
@@ -270,7 +270,7 @@ class Url
     /**
      * @param $host
      *
-     * @return self
+     * @return $this
      */
     public function setHost($host)
     {
@@ -303,7 +303,7 @@ class Url
      * @param $key
      * @param $value
      *
-     * @return self
+     * @return $this
      */
     public function addQuery($key, $value)
     {
@@ -317,7 +317,7 @@ class Url
      *
      * @param array $query Query to set
      *
-     * @return self
+     * @return $this
      */
     public function setQuery(array $query)
     {

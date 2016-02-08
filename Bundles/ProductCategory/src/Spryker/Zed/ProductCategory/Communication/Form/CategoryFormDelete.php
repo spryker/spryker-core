@@ -33,7 +33,7 @@ class CategoryFormDelete extends CategoryFormEdit
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addDeleteChildrenField(FormBuilderInterface $builder)
     {
@@ -49,7 +49,7 @@ class CategoryFormDelete extends CategoryFormEdit
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return self
+     * @return $this
      */
     protected function addCategoryNodeField(FormBuilderInterface $builder, array $choices)
     {

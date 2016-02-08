@@ -41,7 +41,7 @@ class Api implements ApiInterface
      * @param string $message
      * @param \Exception $e
      *
-     * @return self
+     * @return $this
      */
     public function noticeError($message, \Exception $e)
     {
@@ -62,7 +62,7 @@ class Api implements ApiInterface
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      */
     public function setAppName($name)
     {
@@ -87,7 +87,7 @@ class Api implements ApiInterface
      *
      * @param $name
      *
-     * @return self
+     * @return $this
      */
     public function setNameOfTransaction($name)
     {
@@ -116,7 +116,7 @@ class Api implements ApiInterface
      * very long time to download even small files, and you wouldn't want that download time to skew the real
      * transaction time.
      *
-     * @return self
+     * @return $this
      */
     public function markEndOfTransaction()
     {
@@ -132,7 +132,7 @@ class Api implements ApiInterface
      * slow for known reasons and you do not want them always being reported as the transaction trace or skewing your
      * site averages.
      *
-     * @return self
+     * @return $this
      */
     public function markIgnoreTransaction()
     {
@@ -147,7 +147,7 @@ class Api implements ApiInterface
      * Do not generate Apdex metrics for this transaction. This is useful when you have either very short or very long
      * transactions (such as file downloads) that can skew your apdex score.
      *
-     * @return self
+     * @return $this
      */
     public function markIgnoreApdex()
     {
@@ -164,7 +164,7 @@ class Api implements ApiInterface
      *
      * @param bool $flag
      *
-     * @return self
+     * @return $this
      */
     public function markAsBackgroundJob($flag = true)
     {
@@ -183,7 +183,7 @@ class Api implements ApiInterface
      * @param string $metricName
      * @param mixed $value
      *
-     * @return self
+     * @return $this
      */
     public function addCustomMetric($metricName, $value)
     {
@@ -204,7 +204,7 @@ class Api implements ApiInterface
      * @param string $key
      * @param mixed $value
      *
-     * @return self
+     * @return $this
      */
     public function addCustomParameter($key, $value)
     {
@@ -221,7 +221,7 @@ class Api implements ApiInterface
      *
      * @param string $tracer
      *
-     * @return self
+     * @return $this
      */
     public function addCustomTracer($tracer = 'classname::function_name')
     {
@@ -239,7 +239,7 @@ class Api implements ApiInterface
      *
      * @param bool $flag
      *
-     * @return self
+     * @return $this
      */
     public function getBrowserTimingHeader($flag = true)
     {
@@ -257,7 +257,7 @@ class Api implements ApiInterface
      *
      * @param bool $flag
      *
-     * @return self
+     * @return $this
      */
     public function getBrowserTimingFooter($flag = true)
     {
@@ -272,7 +272,7 @@ class Api implements ApiInterface
      * Prevents the output filter from attempting to insert RUM JAvaScript for this current transaction. Useful for
      * AJAX calls, for example.
      *
-     * @return self
+     * @return $this
      */
     public function disableAutoRUM()
     {
@@ -288,7 +288,7 @@ class Api implements ApiInterface
      *
      * @throws \Spryker\Shared\NewRelic\Exception\RecordDeploymentException
      *
-     * @return self
+     * @return $this
      */
     public function recordDeployment(array $params = [])
     {

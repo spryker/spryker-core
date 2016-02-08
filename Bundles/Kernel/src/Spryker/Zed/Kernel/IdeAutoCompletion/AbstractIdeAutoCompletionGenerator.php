@@ -100,7 +100,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     /**
      * @param \Spryker\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\MethodTagBuilderInterface $methodTagBuilder
      *
-     * @return self
+     * @return $this
      */
     public function addMethodTagBuilder(MethodTagBuilderInterface $methodTagBuilder)
     {

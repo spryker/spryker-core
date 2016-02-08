@@ -36,7 +36,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     /**
      * @param string $host
      *
-     * @return self
+     * @return $this
      */
     public function setHost($host)
     {
@@ -67,7 +67,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
      * @param string $name
      * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
-     * @return self
+     * @return $this
      */
     public function addMetaTransfer($name, TransferInterface $transferObject)
     {
@@ -90,7 +90,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     /**
      * @param string $password
      *
-     * @return self
+     * @return $this
      */
     public function setPassword($password)
     {
@@ -110,7 +110,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     /**
      * @param string $sessionId
      *
-     * @return self
+     * @return $this
      */
     public function setSessionId($sessionId)
     {
@@ -130,7 +130,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     /**
      * @param string $time
      *
-     * @return self
+     * @return $this
      */
     public function setTime($time)
     {
@@ -157,7 +157,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     /**
      * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
-     * @return self
+     * @return $this
      */
     public function setTransfer(TransferInterface $transferObject)
     {
@@ -178,7 +178,7 @@ class Request extends AbstractObject implements EmbeddedTransferInterface
     /**
      * @param string $username
      *
-     * @return self
+     * @return $this
      */
     public function setUsername($username)
     {

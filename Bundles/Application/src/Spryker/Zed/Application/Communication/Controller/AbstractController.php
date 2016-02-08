@@ -56,7 +56,7 @@ abstract class AbstractController
     /**
      * @param \Silex\Application $application
      *
-     * @return self
+     * @return $this
      */
     public function setApplication(Application $application)
     {
@@ -208,7 +208,7 @@ abstract class AbstractController
      * @param string $message
      * @param array $data
      *
-     * @return self
+     * @return $this
      */
     protected function addSuccessMessage($message, array $data = [])
     {
@@ -219,7 +219,7 @@ abstract class AbstractController
      * @param string $message
      * @param array $data
      *
-     * @return self
+     * @return $this
      */
     protected function addInfoMessage($message, array $data = [])
     {
@@ -232,7 +232,7 @@ abstract class AbstractController
      * @param string $message
      * @param array $data
      *
-     * @return self
+     * @return $this
      */
     protected function addErrorMessage($message, array $data = [])
     {

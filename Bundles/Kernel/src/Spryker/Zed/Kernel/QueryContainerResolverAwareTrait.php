@@ -20,7 +20,7 @@ trait QueryContainerResolverAwareTrait
     /**
      * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer
      *
-     * @return self
+     * @return $this
      */
     public function setQueryContainer(AbstractQueryContainer $queryContainer)
     {

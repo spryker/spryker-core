@@ -25,7 +25,7 @@ class Message extends AbstractObject
     /**
      * @param array $data
      *
-     * @return self
+     * @return $this
      */
     public function setData($data)
     {
@@ -45,7 +45,7 @@ class Message extends AbstractObject
     /**
      * @param string $message
      *
-     * @return self
+     * @return $this
      */
     public function setMessage($message)
     {

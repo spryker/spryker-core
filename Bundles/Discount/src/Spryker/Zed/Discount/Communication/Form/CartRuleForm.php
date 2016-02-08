@@ -72,7 +72,7 @@ class CartRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addDisplayNameField(FormBuilderInterface $builder)
     {
@@ -88,7 +88,7 @@ class CartRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
@@ -100,7 +100,7 @@ class CartRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addAmountField(FormBuilderInterface $builder)
     {
@@ -117,7 +117,7 @@ class CartRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addValidFromField(FormBuilderInterface $builder)
     {
@@ -129,7 +129,7 @@ class CartRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addValidToField(FormBuilderInterface $builder)
     {
@@ -141,7 +141,7 @@ class CartRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIsPrivilegedField(FormBuilderInterface $builder)
     {
@@ -155,7 +155,7 @@ class CartRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
@@ -169,7 +169,7 @@ class CartRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCalculatorPluginField(FormBuilderInterface $builder)
     {
@@ -187,7 +187,7 @@ class CartRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCollectorPluginsField(FormBuilderInterface $builder)
     {
@@ -205,7 +205,7 @@ class CartRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addDecisionRulesField(FormBuilderInterface $builder)
     {
@@ -223,7 +223,7 @@ class CartRuleForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCollectorLogicalOperatorField(FormBuilderInterface $builder)
     {

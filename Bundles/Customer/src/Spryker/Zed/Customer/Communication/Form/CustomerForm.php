@@ -48,6 +48,9 @@ class CustomerForm extends AbstractType
         return 'customer';
     }
 
+    /**
+     * @return void
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
@@ -77,7 +80,7 @@ class CustomerForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIdCustomerField(FormBuilderInterface $builder)
     {
@@ -89,7 +92,7 @@ class CustomerForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
@@ -121,7 +124,7 @@ class CustomerForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
@@ -136,7 +139,7 @@ class CustomerForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addLastNameField(FormBuilderInterface $builder)
     {
@@ -152,7 +155,7 @@ class CustomerForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return self
+     * @return $this
      */
     protected function addGenderField(FormBuilderInterface $builder, array $choices)
     {
@@ -171,7 +174,7 @@ class CustomerForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addSendPasswordField(FormBuilderInterface $builder)
     {

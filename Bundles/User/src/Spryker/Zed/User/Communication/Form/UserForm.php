@@ -64,7 +64,7 @@ class UserForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
@@ -83,7 +83,7 @@ class UserForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addPasswordField(FormBuilderInterface $builder)
     {
@@ -105,7 +105,7 @@ class UserForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
@@ -122,7 +122,7 @@ class UserForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addLastNameField(FormBuilderInterface $builder)
     {
@@ -140,7 +140,7 @@ class UserForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return self
+     * @return $this
      */
     protected function addGroupField(FormBuilderInterface $builder, array $choices)
     {

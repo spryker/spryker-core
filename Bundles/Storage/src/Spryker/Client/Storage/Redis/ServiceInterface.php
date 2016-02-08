@@ -14,7 +14,7 @@ interface ServiceInterface extends StorageClientInterface
     /**
      * @param bool $debug
      *
-     * @return self
+     * @return $this
      */
     public function setDebug($debug);
 

@@ -98,7 +98,7 @@ class Bootstrap
     /**
      * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\BeforeBootExtensionInterface $beforeBootExtension
      *
-     * @return self
+     * @return $this
      */
     public function addBeforeBootExtension(BeforeBootExtensionInterface $beforeBootExtension)
     {
@@ -122,7 +122,7 @@ class Bootstrap
     /**
      * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\AfterBootExtensionInterface $afterBootExtension
      *
-     * @return self
+     * @return $this
      */
     public function addAfterBootExtension(AfterBootExtensionInterface $afterBootExtension)
     {
@@ -146,7 +146,7 @@ class Bootstrap
     /**
      * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface $twigExtension
      *
-     * @return self
+     * @return $this
      */
     public function addTwigExtension(TwigExtensionInterface $twigExtension)
     {
@@ -174,7 +174,7 @@ class Bootstrap
     /**
      * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\GlobalTemplateVariableExtensionInterface $globalTemplateVariableExtension
      *
-     * @return self
+     * @return $this
      */
     public function addGlobalTemplateVariableExtension(GlobalTemplateVariableExtensionInterface $globalTemplateVariableExtension)
     {
@@ -215,7 +215,7 @@ class Bootstrap
     /**
      * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\ServiceProviderExtensionInterface $serviceProviderExtension
      *
-     * @return self
+     * @return $this
      */
     public function addServiceProviderExtension(ServiceProviderExtensionInterface $serviceProviderExtension)
     {
@@ -257,7 +257,7 @@ class Bootstrap
     /**
      * @param \Spryker\Shared\Application\Communication\Bootstrap\Extension\RouterExtensionInterface $routerExtension
      *
-     * @return self
+     * @return $this
      */
     public function addRouterExtension(RouterExtensionInterface $routerExtension)
     {

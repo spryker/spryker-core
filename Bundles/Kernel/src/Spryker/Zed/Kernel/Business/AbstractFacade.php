@@ -19,7 +19,7 @@ abstract class AbstractFacade
     /**
      * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $factory
      *
-     * @return self
+     * @return $this
      */
     public function setFactory(AbstractBusinessFactory $factory)
     {

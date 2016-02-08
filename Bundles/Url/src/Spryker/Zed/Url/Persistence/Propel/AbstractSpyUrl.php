@@ -81,7 +81,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
      *
      * @throws \Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException
      *
-     * @return self
+     * @return $this
      */
     public function setResource($resourceType, $resourceId)
     {

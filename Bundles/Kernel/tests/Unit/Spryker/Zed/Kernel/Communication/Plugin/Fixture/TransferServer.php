@@ -20,7 +20,7 @@ class TransferServer extends CoreTransferServer
     /**
      * @param \Spryker\Shared\Library\Communication\Request $request
      *
-     * @return self
+     * @return $this
      */
     public function setFixtureRequest(Request $request)
     {

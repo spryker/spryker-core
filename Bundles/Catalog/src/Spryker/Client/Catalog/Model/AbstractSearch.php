@@ -203,7 +203,7 @@ abstract class AbstractSearch
     /**
      * @param \Elastica\Query $query
      *
-     * @return self
+     * @return $this
      */
     protected function addSortingToQuery(Query $query)
     {

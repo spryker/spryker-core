@@ -95,7 +95,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
     /**
      * @param string $encoding
      *
-     * @return self
+     * @return $this
      */
     public function setEncoding($encoding)
     {
@@ -115,7 +115,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
     /**
      * @param string $key
      *
-     * @return self
+     * @return $this
      */
     public function setKey($key)
     {
@@ -135,7 +135,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
     /**
      * @param string $api_version
      *
-     * @return self
+     * @return $this
      */
     public function setApiVersion($api_version)
     {
@@ -155,7 +155,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
     /**
      * @param int $mid
      *
-     * @return self
+     * @return $this
      */
     public function setMid($mid)
     {
@@ -175,7 +175,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
     /**
      * @param string $mode
      *
-     * @return self
+     * @return $this
      */
     public function setMode($mode)
     {
@@ -195,7 +195,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
     /**
      * @param int $portalid
      *
-     * @return self
+     * @return $this
      */
     public function setPortalid($portalid)
     {
@@ -215,7 +215,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
     /**
      * @param string $request
      *
-     * @return self
+     * @return $this
      */
     public function setRequest($request)
     {
@@ -237,7 +237,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
      *
      * @param string $integrator_name
      *
-     * @return self
+     * @return $this
      */
     public function setIntegratorName($integrator_name)
     {
@@ -259,7 +259,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
      *
      * @param string $integrator_version
      *
-     * @return self
+     * @return $this
      */
     public function setIntegratorVersion($integrator_version)
     {
@@ -281,7 +281,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
      *
      * @param string $solution_name
      *
-     * @return self
+     * @return $this
      */
     public function setSolutionName($solution_name)
     {
@@ -303,7 +303,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
      *
      * @param string $solution_version
      *
-     * @return self
+     * @return $this
      */
     public function setSolutionVersion($solution_version)
     {
@@ -331,7 +331,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
     /**
      * @param int $aid
      *
-     * @return self
+     * @return $this
      */
     public function setAid($aid)
     {
@@ -351,7 +351,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
     /**
      * @param string $language
      *
-     * @return self
+     * @return $this
      */
     public function setLanguage($language)
     {
@@ -363,7 +363,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
     /**
      * @param string $hash
      *
-     * @return self
+     * @return $this
      */
     public function setHash($hash)
     {
@@ -391,7 +391,7 @@ abstract class AbstractRequestContainer extends AbstractContainer
     /**
      * @param string $responsetype
      *
-     * @return self
+     * @return $this
      */
     public function setResponsetype($responsetype)
     {

@@ -53,7 +53,7 @@ class Service implements ServiceInterface
     /**
      * @param array $config
      *
-     * @return self
+     * @return $this
      */
     public function setConfig(array $config)
     {
@@ -65,7 +65,7 @@ class Service implements ServiceInterface
     /**
      * @param bool $debug
      *
-     * @return self
+     * @return $this
      */
     public function setDebug($debug)
     {

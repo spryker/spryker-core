@@ -29,7 +29,7 @@ class ClassInfo
     /**
      * @param object|string $callerClass
      *
-     * @return self
+     * @return $this
      */
     public function setClass($callerClass)
     {

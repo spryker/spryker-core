@@ -68,7 +68,7 @@ class Autoloader
     }
 
     /**
-     * @return self
+     * @return $this
      */
     public static function unregister()
     {

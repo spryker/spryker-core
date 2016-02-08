@@ -12,7 +12,7 @@ interface DependencyFilterCompositeInterface extends DependencyFilterInterface
     /**
      * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\DependencyFilterInterface $dependencyFilter
      *
-     * @return self
+     * @return $this
      */
     public function addFilter(DependencyFilterInterface $dependencyFilter);
 

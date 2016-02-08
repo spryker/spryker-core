@@ -115,9 +115,11 @@ class TaxReader implements TaxReaderInterface
             throw new ResourceNotFoundException();
         }
 
-        $taxSetTransfer = (new TaxSetTransfer())->fromArray($taxSetEntity->toArray());
+        $taxSetTransfer = new TaxSetTransfer();
+        $taxSetTransfer->fromArray($taxSetEntity->toArray());
         foreach ($taxSetEntity->getSpyTaxRates() as $taxRateEntity) {
-            $taxRateTransfer = (new TaxRateTransfer())->fromArray($taxRateEntity->toArray());
+            $taxRateTransfer = new TaxRateTransfer();
+            $taxRateTransfer->fromArray($taxRateEntity->toArray());
             $taxSetTransfer->addTaxRate($taxRateTransfer);
         }
 

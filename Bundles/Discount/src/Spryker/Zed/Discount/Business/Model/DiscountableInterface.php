@@ -22,7 +22,7 @@ interface DiscountableInterface
     /**
      * @param \ArrayObject $discountCollection
      *
-     * @return self
+     * @return $this
      */
     public function setDiscounts(\ArrayObject $discountCollection);
 

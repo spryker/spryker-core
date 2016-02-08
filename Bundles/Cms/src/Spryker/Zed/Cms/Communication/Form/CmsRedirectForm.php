@@ -90,7 +90,7 @@ class CmsRedirectForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIdRedirectField(FormBuilderInterface $builder)
     {
@@ -102,7 +102,7 @@ class CmsRedirectForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addFromUrlField(FormBuilderInterface $builder)
     {
@@ -117,7 +117,7 @@ class CmsRedirectForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addToUrlField(FormBuilderInterface $builder)
     {
@@ -132,7 +132,7 @@ class CmsRedirectForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addStatusField(FormBuilderInterface $builder)
     {

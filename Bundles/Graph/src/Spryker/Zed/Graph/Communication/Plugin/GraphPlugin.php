@@ -28,7 +28,7 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
      * @param bool $directed
      * @param bool $strict
      *
-     * @return self
+     * @return $this
      */
     public function init($name, array $attributes = [], $directed = true, $strict = true)
     {
@@ -55,7 +55,7 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
      * @param array $attributes
      * @param string $group
      *
-     * @return self
+     * @return $this
      */
     public function addNode($name, $attributes = [], $group = self::DEFAULT_GROUP)
     {
@@ -69,7 +69,7 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
      * @param string $toNode
      * @param array $attributes
      *
-     * @return self
+     * @return $this
      */
     public function addEdge($fromNode, $toNode, $attributes = [])
     {
@@ -82,7 +82,7 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
      * @param string $name
      * @param array $attributes
      *
-     * @return self
+     * @return $this
      */
     public function addCluster($name, $attributes = [])
     {

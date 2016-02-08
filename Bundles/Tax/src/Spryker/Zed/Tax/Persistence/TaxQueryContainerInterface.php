@@ -38,7 +38,7 @@ interface TaxQueryContainerInterface
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      *
-     * @return self
+     * @return $this
      */
     public function joinTaxRates(ModelCriteria $expandableQuery);
 

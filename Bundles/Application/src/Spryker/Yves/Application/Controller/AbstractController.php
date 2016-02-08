@@ -52,7 +52,7 @@ abstract class AbstractController
     /**
      * @param \Spryker\Yves\Application\Application $application
      *
-     * @return self
+     * @return $this
      */
     public function setApplication(Application $application)
     {
@@ -148,7 +148,7 @@ abstract class AbstractController
      *
      * @throws \ErrorException
      *
-     * @return self
+     * @return $this
      */
     protected function addSuccessMessage($message)
     {
@@ -162,7 +162,7 @@ abstract class AbstractController
      *
      * @throws \ErrorException
      *
-     * @return self
+     * @return $this
      */
     protected function addInfoMessage($message)
     {
@@ -176,7 +176,7 @@ abstract class AbstractController
      *
      * @throws \ErrorException
      *
-     * @return self
+     * @return $this
      */
     protected function addErrorMessage($message)
     {
@@ -189,7 +189,7 @@ abstract class AbstractController
      * @param string $key
      * @param string $value
      *
-     * @return self
+     * @return $this
      */
     protected function addToFlashBag($key, $value)
     {

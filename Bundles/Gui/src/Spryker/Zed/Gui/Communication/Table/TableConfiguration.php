@@ -93,7 +93,7 @@ class TableConfiguration
     }
 
     /**
-     * @return self
+     * @return $this
      */
     public function setFooterFromHeader()
     {

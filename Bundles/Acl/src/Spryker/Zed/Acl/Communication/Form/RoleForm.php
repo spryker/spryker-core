@@ -39,7 +39,7 @@ class RoleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
@@ -56,7 +56,7 @@ class RoleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addRoleField(FormBuilderInterface $builder)
     {

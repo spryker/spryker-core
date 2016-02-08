@@ -62,7 +62,7 @@ class RuleValidator implements RuleValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\RulesTransfer $rules
      *
-     * @return self
+     * @return $this
      */
     public function setRules(RulesTransfer $rules)
     {

@@ -72,7 +72,7 @@ class Response extends AbstractObject implements
     /**
      * @param array $errorMessages
      *
-     * @return self
+     * @return $this
      */
     public function addErrorMessages(array $errorMessages)
     {
@@ -86,7 +86,7 @@ class Response extends AbstractObject implements
     /**
      * @param \Spryker\Shared\Library\Communication\Message $errorMessage
      *
-     * @return self
+     * @return $this
      */
     public function addErrorMessage(Message $errorMessage)
     {
@@ -123,7 +123,7 @@ class Response extends AbstractObject implements
     /**
      * @param \Spryker\Shared\Library\Communication\Message $message
      *
-     * @return self
+     * @return $this
      */
     public function addMessage(Message $message)
     {
@@ -135,7 +135,7 @@ class Response extends AbstractObject implements
     /**
      * @param array $messages
      *
-     * @return self
+     * @return $this
      */
     public function addMessages(array $messages)
     {
@@ -157,7 +157,7 @@ class Response extends AbstractObject implements
     /**
      * @param bool $success
      *
-     * @return self
+     * @return $this
      */
     public function setSuccess($success)
     {
@@ -184,7 +184,7 @@ class Response extends AbstractObject implements
     /**
      * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
-     * @return self
+     * @return $this
      */
     public function setTransfer(TransferInterface $transferObject)
     {

@@ -60,7 +60,7 @@ class RuleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addBundleField(FormBuilderInterface $builder)
     {
@@ -77,7 +77,7 @@ class RuleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addControllerField(FormBuilderInterface $builder)
     {
@@ -94,7 +94,7 @@ class RuleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addActionField(FormBuilderInterface $builder)
     {
@@ -112,7 +112,7 @@ class RuleForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return self
+     * @return $this
      */
     protected function addPermissionField(FormBuilderInterface $builder, array $choices)
     {
@@ -127,7 +127,7 @@ class RuleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addRoleFkField(FormBuilderInterface $builder)
     {

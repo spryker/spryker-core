@@ -19,7 +19,7 @@ interface PriceItemInterface extends TransferInterface
     /**
      * @param int $grossPrice
      *
-     * @return self
+     * @return $this
      */
     public function setGrossPrice($grossPrice);
 
@@ -31,7 +31,7 @@ interface PriceItemInterface extends TransferInterface
     /**
      * @param int $priceToPay
      *
-     * @return self
+     * @return $this
      */
     public function setPriceToPay($priceToPay);
 

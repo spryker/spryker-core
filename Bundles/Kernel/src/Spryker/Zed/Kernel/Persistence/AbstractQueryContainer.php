@@ -39,7 +39,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     /**
      * @param \Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory $factory
      *
-     * @return self
+     * @return $this
      */
     public function setFactory(AbstractPersistenceFactory $factory)
     {

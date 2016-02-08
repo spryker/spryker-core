@@ -141,7 +141,7 @@ class RedirectController extends AbstractController
      * @param \Generated\Shared\Transfer\UrlTransfer $url
      * @param array $data
      *
-     * @return self
+     * @return $this
      */
     private function createUrlTransfer($url, $data)
     {

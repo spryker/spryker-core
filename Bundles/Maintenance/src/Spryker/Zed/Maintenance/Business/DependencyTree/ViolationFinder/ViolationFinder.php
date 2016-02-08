@@ -17,7 +17,7 @@ class ViolationFinder implements ViolationFinderInterface
     /**
      * @param \Spryker\Zed\Maintenance\Business\DependencyTree\ViolationFinder\ViolationFinderInterface $violationFinder
      *
-     * @return self
+     * @return $this
      */
     public function addViolationFinder(ViolationFinderInterface $violationFinder)
     {

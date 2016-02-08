@@ -100,7 +100,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @return self|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryPagesWithTemplates()
     {
