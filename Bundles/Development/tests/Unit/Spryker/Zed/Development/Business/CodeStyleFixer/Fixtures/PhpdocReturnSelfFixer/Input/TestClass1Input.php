@@ -6,35 +6,35 @@ class TestClass1Input
 {
 
     /**
-     * @return $this|null Text
+     * @return self|null Text
      */
     public function replaceFunction()
     {
     }
 
     /**
-     * @return $this
+     * @return self
      */
     public function replaceFunctionB()
     {
     }
 
     /**
-     * @return int|$this
+     * @return int|self
      */
     public function replaceFunctionC()
     {
     }
 
     /**
-     * @return int|$this|bool
+     * @return int|self|bool
      */
     public function replaceFunctionD()
     {
     }
 
     /**
-     * @return self Foo $this
+     * @return $this Foo self
      */
     public function doNotReplaceFunction()
     {
