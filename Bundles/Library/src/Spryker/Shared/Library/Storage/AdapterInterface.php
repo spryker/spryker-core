@@ -16,7 +16,7 @@ interface AdapterInterface
     /**
      * @param array $config
      *
-     * @return self
+     * @return $this
      */
     public function setConfig(array $config);
 
@@ -33,7 +33,7 @@ interface AdapterInterface
     /**
      * @param bool $debug
      *
-     * @return self
+     * @return $this
      */
     public function setDebug($debug);
 

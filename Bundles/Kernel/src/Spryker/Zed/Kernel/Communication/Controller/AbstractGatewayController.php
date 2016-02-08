@@ -51,7 +51,7 @@ abstract class AbstractGatewayController extends AbstractController
     /**
      * @param bool $success
      *
-     * @return self
+     * @return $this
      */
     protected function setSuccess($success)
     {
@@ -64,7 +64,7 @@ abstract class AbstractGatewayController extends AbstractController
      * @param string $message
      * @param array $data
      *
-     * @return self
+     * @return $this
      */
     protected function addInfoMessage($message, array $data = [])
     {
@@ -81,7 +81,7 @@ abstract class AbstractGatewayController extends AbstractController
      * @param string $message
      * @param array $data
      *
-     * @return self
+     * @return $this
      */
     protected function addErrorMessage($message, array $data = [])
     {
@@ -98,7 +98,7 @@ abstract class AbstractGatewayController extends AbstractController
      * @param string $message
      * @param array $data
      *
-     * @return self
+     * @return $this
      */
     protected function addSuccessMessage($message, array $data = [])
     {

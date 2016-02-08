@@ -33,7 +33,7 @@ class Transfer extends AbstractTransfer
     /**
      * @param string $key
      *
-     * @return self
+     * @return $this
      */
     public function setKey($key)
     {
@@ -54,7 +54,7 @@ class Transfer extends AbstractTransfer
     /**
      * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
-     * @return self
+     * @return $this
      */
     public function requireKey()
     {

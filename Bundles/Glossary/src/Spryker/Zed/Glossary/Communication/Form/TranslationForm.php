@@ -45,7 +45,7 @@ class TranslationForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addGlossaryKeyField(FormBuilderInterface $builder)
     {
@@ -62,7 +62,7 @@ class TranslationForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $locales
      *
-     * @return self
+     * @return $this
      */
     protected function addLocaleCollection(FormBuilderInterface $builder, array $locales)
     {

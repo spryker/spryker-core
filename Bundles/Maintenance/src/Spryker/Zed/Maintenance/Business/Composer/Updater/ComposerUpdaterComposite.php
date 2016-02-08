@@ -17,7 +17,7 @@ class ComposerUpdaterComposite implements UpdaterInterface
     /**
      * @param \Spryker\Zed\Maintenance\Business\Composer\Updater\UpdaterInterface $updater
      *
-     * @return self
+     * @return $this
      */
     public function addUpdater(UpdaterInterface $updater)
     {

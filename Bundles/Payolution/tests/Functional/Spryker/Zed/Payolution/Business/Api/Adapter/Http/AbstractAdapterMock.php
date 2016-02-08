@@ -22,7 +22,7 @@ abstract class AbstractAdapterMock implements AdapterInterface
     protected $requestData = [];
 
     /**
-     * @return self
+     * @return $this
      */
     public function expectSuccess()
     {
@@ -32,7 +32,7 @@ abstract class AbstractAdapterMock implements AdapterInterface
     }
 
     /**
-     * @return self
+     * @return $this
      */
     public function expectFailure()
     {

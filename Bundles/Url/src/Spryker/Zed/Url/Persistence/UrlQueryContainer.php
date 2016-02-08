@@ -8,8 +8,6 @@ namespace Spryker\Zed\Url\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
-use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -102,7 +100,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
-     * @return self|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinLocales()
     {

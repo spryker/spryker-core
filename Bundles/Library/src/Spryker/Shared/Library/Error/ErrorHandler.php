@@ -32,7 +32,7 @@ class ErrorHandler
     }
 
     /**
-     * @return self
+     * @return $this
      */
     public static function initialize()
     {

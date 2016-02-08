@@ -19,7 +19,7 @@ trait BundleConfigResolverAwareTrait
     /**
      * @param \Spryker\Zed\Kernel\AbstractBundleConfig $config
      *
-     * @return self
+     * @return $this
      */
     public function setConfig(AbstractBundleConfig $config)
     {

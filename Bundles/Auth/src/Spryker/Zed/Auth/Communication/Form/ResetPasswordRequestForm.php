@@ -36,7 +36,7 @@ class ResetPasswordRequestForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
@@ -58,7 +58,7 @@ class ResetPasswordRequestForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addSubmitField(FormBuilderInterface $builder)
     {
@@ -76,7 +76,7 @@ class ResetPasswordRequestForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addLoginField(FormBuilderInterface $builder)
     {

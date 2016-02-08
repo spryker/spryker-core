@@ -33,7 +33,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      * @param bool $directed
      * @param bool $strict
      *
-     * @return self
+     * @return $this
      */
     public function create($name, array $attributes = [], $directed = true, $strict = true)
     {
@@ -64,7 +64,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      * @param array $attributes
      * @param string $group
      *
-     * @return self
+     * @return $this
      */
     public function addNode($name, $attributes = [], $group = self::DEFAULT_GROUP)
     {
@@ -86,7 +86,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      * @param string $toNode
      * @param array $attributes
      *
-     * @return self
+     * @return $this
      */
     public function addEdge($fromNode, $toNode, $attributes = [])
     {
@@ -102,7 +102,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      * @param string $name
      * @param array $attributes
      *
-     * @return self
+     * @return $this
      */
     public function addCluster($name, $attributes = [])
     {

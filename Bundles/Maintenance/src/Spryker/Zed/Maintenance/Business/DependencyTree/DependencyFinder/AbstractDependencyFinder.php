@@ -32,7 +32,7 @@ abstract class AbstractDependencyFinder
     /**
      * @param \Spryker\Zed\Maintenance\Business\DependencyTree\AbstractDependencyTree $dependencyTree
      *
-     * @return self
+     * @return $this
      */
     public function setDependencyTree(AbstractDependencyTree $dependencyTree)
     {
@@ -52,7 +52,7 @@ abstract class AbstractDependencyFinder
     /**
      * @param \Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor $fileInfoExtractor
      *
-     * @return self
+     * @return $this
      */
     public function setFileInfoExtractor(FileInfoExtractor $fileInfoExtractor)
     {

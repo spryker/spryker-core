@@ -49,7 +49,7 @@ class FilterChain implements FilterInterface
     /**
      * @param \Spryker\Shared\Library\Filter\FilterInterface|callable $filter
      *
-     * @return self
+     * @return $this
      */
     public function addFilter($filter)
     {

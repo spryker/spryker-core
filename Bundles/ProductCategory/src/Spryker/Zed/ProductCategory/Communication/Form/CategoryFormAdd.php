@@ -61,7 +61,7 @@ class CategoryFormAdd extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
@@ -78,7 +78,7 @@ class CategoryFormAdd extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCategoryKeyField(FormBuilderInterface $builder)
     {
@@ -96,7 +96,7 @@ class CategoryFormAdd extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return self
+     * @return $this
      */
     protected function addCategoryNodeField(FormBuilderInterface $builder, array $choices)
     {
@@ -115,7 +115,7 @@ class CategoryFormAdd extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addPkCategoryNodeField(FormBuilderInterface $builder)
     {

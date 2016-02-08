@@ -46,7 +46,7 @@ class DependencyTreeBuilder
     /**
      * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\AbstractDependencyFinder|array $dependencyChecker
      *
-     * @return self
+     * @return $this
      */
     public function addDependencyChecker($dependencyChecker)
     {

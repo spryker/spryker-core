@@ -74,7 +74,6 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::CATEGORY_QUERY_CONTAINER);
     }
 
-
     /**
      * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */

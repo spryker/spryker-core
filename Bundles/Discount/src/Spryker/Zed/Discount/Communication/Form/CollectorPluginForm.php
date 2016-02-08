@@ -39,7 +39,7 @@ class CollectorPluginForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIdDiscountCollectorField(FormBuilderInterface $builder)
     {
@@ -51,7 +51,7 @@ class CollectorPluginForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCollectorPluginField(FormBuilderInterface $builder)
     {
@@ -70,7 +70,7 @@ class CollectorPluginForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addValueField(FormBuilderInterface $builder)
     {
@@ -84,7 +84,7 @@ class CollectorPluginForm extends AbstractRuleForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addRemoveButton(FormBuilderInterface $builder)
     {

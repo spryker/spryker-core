@@ -33,7 +33,7 @@ class TestTransfer extends AbstractTransfer
     /**
      * @param string $foo
      *
-     * @return self
+     * @return $this
      */
     public function setFoo($foo)
     {
@@ -54,7 +54,7 @@ class TestTransfer extends AbstractTransfer
     /**
      * @throws \Spryker\Shared\Transfer\Exception\RequiredTransferPropertyException
      *
-     * @return self
+     * @return $this
      */
     public function requireFoo()
     {

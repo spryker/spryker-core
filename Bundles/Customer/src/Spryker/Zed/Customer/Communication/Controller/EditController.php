@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Spryker\Zed\Customer\Communication\CustomerCommunicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

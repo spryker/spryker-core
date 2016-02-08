@@ -56,7 +56,7 @@ class TransferServer
     /**
      * @param \Spryker\Zed\Application\Communication\Plugin\TransferObject\Repeater $repeater
      *
-     * @return self
+     * @return $this
      */
     public static function getInstance(Repeater $repeater = null)
     {
@@ -116,7 +116,7 @@ class TransferServer
     /**
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
-     * @return self
+     * @return $this
      */
     public function setRequest(HttpRequest $httpRequest)
     {
@@ -128,7 +128,7 @@ class TransferServer
     /**
      * @param \Spryker\Shared\ZedRequest\Client\ResponseInterface $response
      *
-     * @return self
+     * @return $this
      */
     public function setResponse(ResponseInterface $response)
     {

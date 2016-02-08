@@ -85,7 +85,7 @@ class VoucherForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
@@ -104,7 +104,7 @@ class VoucherForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return self
+     * @return $this
      */
     protected function addFkDiscountVoucherPoolField(FormBuilderInterface $builder, array $choices)
     {
@@ -123,7 +123,7 @@ class VoucherForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addMaxNumberOfUsesField(FormBuilderInterface $builder)
     {
@@ -137,7 +137,7 @@ class VoucherForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCustomCodeField(FormBuilderInterface $builder)
     {
@@ -157,7 +157,7 @@ class VoucherForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCodeLengthField(FormBuilderInterface $builder, array $choices)
     {

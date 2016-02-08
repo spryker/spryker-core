@@ -39,7 +39,7 @@ abstract class AbstractPlugin
     /**
      * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
      *
-     * @return self
+     * @return $this
      */
     public function setFacade(AbstractFacade $facade)
     {
@@ -111,7 +111,7 @@ abstract class AbstractPlugin
     /**
      * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer
      *
-     * @return self
+     * @return $this
      */
     public function setQueryContainer(AbstractQueryContainer $queryContainer)
     {

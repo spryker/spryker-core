@@ -32,7 +32,7 @@ class CurrencyManager
     }
 
     /**
-     * @return self
+     * @return $this
      */
     public static function getInstance()
     {

@@ -20,7 +20,7 @@ trait BundleDependencyProviderResolverAwareTrait
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return self
+     * @return $this
      */
     public function setContainer(Container $container)
     {

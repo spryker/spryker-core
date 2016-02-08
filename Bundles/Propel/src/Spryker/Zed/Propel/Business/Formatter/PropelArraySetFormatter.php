@@ -21,7 +21,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
      * @param \Propel\Runtime\ActiveQuery\BaseModelCriteria $criteria
      * @param \Propel\Runtime\DataFetcher\DataFetcherInterface $dataFetcher
      *
-     * @return self|\Propel\Runtime\Formatter\AbstractFormatter The current formatter object
+     * @return $this|\Propel\Runtime\Formatter\AbstractFormatter The current formatter object
      */
     public function init(BaseModelCriteria $criteria, DataFetcherInterface $dataFetcher = null)
     {

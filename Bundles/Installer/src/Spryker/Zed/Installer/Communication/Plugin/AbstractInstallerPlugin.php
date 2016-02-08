@@ -25,7 +25,7 @@ abstract class AbstractInstallerPlugin extends AbstractPlugin implements Messeng
     /**
      * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
      *
-     * @return self
+     * @return $this
      */
     public function setMessenger(MessengerInterface $messenger)
     {
@@ -132,7 +132,7 @@ abstract class AbstractInstallerPlugin extends AbstractPlugin implements Messeng
      * @param string $message
      * @param array $context
      *
-     * @return self
+     * @return $this
      */
     public function log($level, $message, array $context = [])
     {

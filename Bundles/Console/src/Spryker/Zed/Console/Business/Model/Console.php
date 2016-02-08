@@ -72,7 +72,7 @@ class Console extends SymfonyCommand
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return self
+     * @return $this
      */
     public function setExternalDependencies(Container $container)
     {
@@ -92,7 +92,7 @@ class Console extends SymfonyCommand
     /**
      * @param \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $factory
      *
-     * @return self
+     * @return $this
      */
     public function setFactory(AbstractCommunicationFactory $factory)
     {
@@ -178,7 +178,7 @@ class Console extends SymfonyCommand
     /**
      * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer
      *
-     * @return self
+     * @return $this
      */
     public function setQueryContainer(AbstractQueryContainer $queryContainer)
     {
@@ -236,7 +236,7 @@ class Console extends SymfonyCommand
     /**
      * @param int $exitCode
      *
-     * @return self
+     * @return $this
      */
     private function setExitCode($exitCode)
     {

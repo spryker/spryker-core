@@ -49,7 +49,7 @@ class OrderItemSplitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
@@ -72,7 +72,7 @@ class OrderItemSplitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIdOrderItemField(FormBuilderInterface $builder)
     {
@@ -84,7 +84,7 @@ class OrderItemSplitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIdOrderField(FormBuilderInterface $builder)
     {
@@ -96,7 +96,7 @@ class OrderItemSplitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addSubmitButton(FormBuilderInterface $builder)
     {

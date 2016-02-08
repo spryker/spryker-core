@@ -31,7 +31,7 @@ class BundleProxy
     /**
      * @param string $bundle
      *
-     * @return self
+     * @return $this
      */
     public function setBundle($bundle)
     {
@@ -43,7 +43,7 @@ class BundleProxy
     /**
      * @param array $locator
      *
-     * @return self
+     * @return $this
      */
     public function setLocator(array $locator = [])
     {
@@ -57,7 +57,7 @@ class BundleProxy
     /**
      * @param \Spryker\Shared\Kernel\Locator\LocatorInterface $locator
      *
-     * @return self
+     * @return $this
      */
     public function addLocator(LocatorInterface $locator)
     {

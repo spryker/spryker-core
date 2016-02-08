@@ -68,7 +68,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     /**
      * @param $status
      *
-     * @return self
+     * @return $this
      */
     public function setSsl($status)
     {

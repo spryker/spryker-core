@@ -16,7 +16,7 @@ interface GraphInterface
      * @param array $attributes
      * @param string $group
      *
-     * @return self
+     * @return $this
      */
     public function addNode($name, $attributes = [], $group = self::DEFAULT_GROUP);
 
@@ -25,7 +25,7 @@ interface GraphInterface
      * @param string $toNode
      * @param array $attributes
      *
-     * @return self
+     * @return $this
      */
     public function addEdge($fromNode, $toNode, $attributes = []);
 
@@ -33,7 +33,7 @@ interface GraphInterface
      * @param string $name
      * @param array $attributes
      *
-     * @return self
+     * @return $this
      */
     public function addCluster($name, $attributes = []);
 

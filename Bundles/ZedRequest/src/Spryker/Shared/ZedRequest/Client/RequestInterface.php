@@ -19,7 +19,7 @@ interface RequestInterface
     /**
      * @param string $host
      *
-     * @return self
+     * @return $this
      */
     public function setHost($host);
 
@@ -34,7 +34,7 @@ interface RequestInterface
      * @param string $name
      * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
-     * @return self
+     * @return $this
      */
     public function addMetaTransfer($name, TransferInterface $transferObject);
 
@@ -46,7 +46,7 @@ interface RequestInterface
     /**
      * @param string $password
      *
-     * @return self
+     * @return $this
      */
     public function setPassword($password);
 
@@ -58,7 +58,7 @@ interface RequestInterface
     /**
      * @param string $sessionId
      *
-     * @return self
+     * @return $this
      */
     public function setSessionId($sessionId);
 
@@ -70,7 +70,7 @@ interface RequestInterface
     /**
      * @param string $time
      *
-     * @return self
+     * @return $this
      */
     public function setTime($time);
 
@@ -82,7 +82,7 @@ interface RequestInterface
     /**
      * @param \Spryker\Shared\Transfer\TransferInterface $transferObject
      *
-     * @return self
+     * @return $this
      */
     public function setTransfer(TransferInterface $transferObject);
 
@@ -94,7 +94,7 @@ interface RequestInterface
     /**
      * @param string $username
      *
-     * @return self
+     * @return $this
      */
     public function setUsername($username);
 

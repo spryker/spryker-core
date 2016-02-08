@@ -125,7 +125,7 @@ class VoucherController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\VoucherCreateInfoTransfer $voucherCreateInfoInterface
      *
-     * @return self
+     * @return $this
      */
     protected function addVoucherCreateMessage(VoucherCreateInfoTransfer $voucherCreateInfoInterface)
     {

@@ -15,7 +15,7 @@ class UpdateTranslationForm extends TranslationForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addGlossaryKeyField(FormBuilderInterface $builder)
     {

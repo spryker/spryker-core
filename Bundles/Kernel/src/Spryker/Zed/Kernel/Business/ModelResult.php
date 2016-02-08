@@ -90,7 +90,7 @@ class ModelResult
      *
      * @param \Spryker\Shared\Transfer\TransferInterface $transfer
      *
-     * @return self
+     * @return $this
      */
     public function setTransfer(TransferInterface $transfer)
     {
@@ -134,7 +134,7 @@ class ModelResult
      *
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      *
-     * @return self
+     * @return $this
      */
     public function setEntity(ActiveRecordInterface $entity)
     {
@@ -170,7 +170,7 @@ class ModelResult
      *
      * @param string $error
      *
-     * @return self
+     * @return $this
      */
     public function addError($error)
     {
@@ -197,7 +197,7 @@ class ModelResult
     /**
      * @param bool $success
      *
-     * @return self
+     * @return $this
      */
     public function setSuccess($success)
     {

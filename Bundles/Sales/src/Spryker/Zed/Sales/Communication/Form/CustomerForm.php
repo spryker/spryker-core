@@ -56,7 +56,7 @@ class CustomerForm extends AbstractType
      * @param array $choices
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     public function addSalutationField(FormBuilderInterface $builder, array $choices)
     {
@@ -73,7 +73,7 @@ class CustomerForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     public function addFirstNameField(FormBuilderInterface $builder)
     {
@@ -89,7 +89,7 @@ class CustomerForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     public function addLastNameField(FormBuilderInterface $builder)
     {
@@ -105,7 +105,7 @@ class CustomerForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     public function addEmailField(FormBuilderInterface $builder)
     {

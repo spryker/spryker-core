@@ -10,8 +10,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTaxTableMap;
-use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
@@ -60,7 +58,7 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      *
-     * @return self
+     * @return $this
      */
     public function joinTaxRates(ModelCriteria $expandableQuery)
     {

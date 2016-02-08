@@ -57,7 +57,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addMetaTitleField(FormBuilderInterface $builder)
     {
@@ -72,7 +72,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addMetaDescriptionField(FormBuilderInterface $builder)
     {
@@ -87,7 +87,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addMetaKeywordsField(FormBuilderInterface $builder)
     {
@@ -102,7 +102,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCategoryIsActiveField(FormBuilderInterface $builder)
     {
@@ -117,7 +117,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCategoryIsInMenuField(FormBuilderInterface $builder)
     {
@@ -132,7 +132,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addCategoryIsClickableField(FormBuilderInterface $builder)
     {
@@ -148,7 +148,7 @@ class CategoryFormEdit extends CategoryFormAdd
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return self
+     * @return $this
      */
     protected function addExtraParentsField(FormBuilderInterface $builder, array $choices)
     {
@@ -165,7 +165,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addFkNodeCategoryField(FormBuilderInterface $builder)
     {
@@ -177,7 +177,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addProductsToBeAssignedField(FormBuilderInterface $builder)
     {
@@ -194,7 +194,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addProductsToBeDeassignedField(FormBuilderInterface $builder)
     {
@@ -211,7 +211,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addProductsOrderField(FormBuilderInterface $builder)
     {
@@ -228,7 +228,7 @@ class CategoryFormEdit extends CategoryFormAdd
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addProductCategoryPreconfigField(FormBuilderInterface $builder)
     {
