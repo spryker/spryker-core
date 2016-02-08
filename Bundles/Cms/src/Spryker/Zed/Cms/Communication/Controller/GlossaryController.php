@@ -113,7 +113,7 @@ class GlossaryController extends AbstractController
      *
      * @return array
      */
-    private function findTemplatePlaceholders($tempFile)
+    protected function findTemplatePlaceholders($tempFile)
     {
         $placeholderMap = [];
 
@@ -158,7 +158,7 @@ class GlossaryController extends AbstractController
      *
      * @return array
      */
-    private function searchGlossaryKeysAndTranslations($value, $key)
+    protected function searchGlossaryKeysAndTranslations($value, $key)
     {
         $searchedItems = [];
         if ($value !== null) {
@@ -183,7 +183,7 @@ class GlossaryController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    private function createKeyMappingTransfer(array $data)
+    protected function createKeyMappingTransfer(array $data)
     {
         $pageKeyMappingTransfer = (new PageKeyMappingTransfer())->fromArray($data, true);
         $hasPageMapping = $this->getFacade()->hasPagePlaceholderMapping($data['fkPage'], $data['placeholder']);
@@ -203,7 +203,7 @@ class GlossaryController extends AbstractController
     /**
      * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
      */
-    private function getLocaleFacade()
+    protected function getLocaleFacade()
     {
         return $this->getFactory()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
@@ -212,7 +212,7 @@ class GlossaryController extends AbstractController
     /**
      * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
      */
-    private function getGlossaryFacade()
+    protected function getGlossaryFacade()
     {
         return $this->getFactory()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
@@ -224,7 +224,7 @@ class GlossaryController extends AbstractController
      *
      * @return void
      */
-    private function saveGlossaryKeyPageMapping(array $data, LocaleTransfer $localeTransfer)
+    protected function saveGlossaryKeyPageMapping(array $data, LocaleTransfer $localeTransfer)
     {
         $keyTranslationTransfer = $this->createKeyTranslationTransfer($data, $localeTransfer);
         $this->getGlossaryFacade()
@@ -239,7 +239,7 @@ class GlossaryController extends AbstractController
      *
      * @return array
      */
-    private function findPagePlaceholders(SpyCmsPage $pageUrl)
+    protected function findPagePlaceholders(SpyCmsPage $pageUrl)
     {
         $pageUrlArray = $pageUrl->toArray();
         $tempFile = $this->getFactory()
@@ -255,7 +255,7 @@ class GlossaryController extends AbstractController
      *
      * @return array
      */
-    private function extractGlossaryMapping($idPage, LocaleTransfer $localeTransfer)
+    protected function extractGlossaryMapping($idPage, LocaleTransfer $localeTransfer)
     {
         $glossaryQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $localeTransfer->getIdLocale());
@@ -275,7 +275,7 @@ class GlossaryController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    private function handleAjaxRequest(array $forms, $idForm, LocaleTransfer $localeTransfer)
+    protected function handleAjaxRequest(array $forms, $idForm, LocaleTransfer $localeTransfer)
     {
         if ($forms[$idForm]->isValid()) {
             $data = $forms[$idForm]->getData();
@@ -303,7 +303,7 @@ class GlossaryController extends AbstractController
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    private function createPlaceholderForm(Request $request, array $glossaryMappingArray, $placeholder, $idPage)
+    protected function createPlaceholderForm(Request $request, array $glossaryMappingArray, $placeholder, $idPage)
     {
         $idMapping = null;
         if (isset($glossaryMappingArray[$placeholder])) {
@@ -327,7 +327,7 @@ class GlossaryController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
-    private function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer)
+    protected function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer)
     {
         $this->glossaryKeyName = $data[CmsGlossaryForm::FIELD_GLOSSARY_KEY];
 
@@ -353,7 +353,7 @@ class GlossaryController extends AbstractController
      *
      * @return \Orm\Zed\Cms\Persistence\Base\SpyCmsPage
      */
-    private function findCmsPageById($idPage)
+    protected function findCmsPageById($idPage)
     {
         $cmsPage = $this->getQueryContainer()
             ->queryPageWithTemplatesAndUrlByIdPage($idPage)
