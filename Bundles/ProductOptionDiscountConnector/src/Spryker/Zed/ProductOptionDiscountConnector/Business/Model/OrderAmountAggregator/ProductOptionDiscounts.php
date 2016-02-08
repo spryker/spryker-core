@@ -79,7 +79,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
                 continue;
             }
 
-            $calculatedDiscountTransfer = $this->hydrateCalculatedDiscountTransferFromEntity(
+            $calculatedDiscountTransfer = $this->getHydratedCalculatedDiscountTransferFromEntity(
                 $salesOrderDiscountEntity,
                 $productOptionTransfer->getQuantity()
             );
@@ -94,7 +94,7 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
      *
      * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer
      */
-    protected function hydrateCalculatedDiscountTransferFromEntity(SpySalesDiscount $salesOrderDiscountEntity, $quantity)
+    protected function getHydratedCalculatedDiscountTransferFromEntity(SpySalesDiscount $salesOrderDiscountEntity, $quantity)
     {
         $quantity = !empty($quantity) ? $quantity : 1;
 
@@ -219,17 +219,38 @@ class ProductOptionDiscounts implements OrderAmountAggregatorInterface
         return $productOptionSumAmount;
     }
 
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return array|int[]
+     */
+    protected function getSaleOrderItemIds(OrderTransfer $orderTransfer)
+    {
+        $saleOrderItemIds = [];
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $saleOrderItemIds[] = $itemTransfer->getIdSalesOrderItem();
+        }
+
+        return $saleOrderItemIds;
+    }
+
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount[]|\Propel\Runtime\Collection\ObjectCollection|array
      */
     protected function getSalesOrderDiscounts(OrderTransfer $orderTransfer)
     {
+        $saleOrderItemIds = $this->getSaleOrderItemIds($orderTransfer);
+
+        if (empty($saleOrderItemIds)) {
+            return [];
+        }
+
         return $this->discountQueryContainer
             ->querySalesDisount()
-            ->filterByFkSalesOrder($orderTransfer->getIdSalesOrder())
+            ->filterByFkSalesOrderItem($saleOrderItemIds)
             ->where(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM_OPTION . ' IS NOT NULL')
             ->find();
     }

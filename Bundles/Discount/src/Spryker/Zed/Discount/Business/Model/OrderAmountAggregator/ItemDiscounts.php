@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Discount\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
@@ -35,17 +34,33 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $this->assertItemDiscountsRequirements($orderTransfer);
-
-        $salesOrderDiscounts = $this->getSalesOrderDiscounts($orderTransfer);
+        $salesOrderDiscounts = $this->getSalesOrderItemDiscounts($orderTransfer);
 
         if (count($salesOrderDiscounts) === 0) {
-            $this->setExpenseGrossPriceWithDiscountsToDefaults($orderTransfer);
             $this->setItemGrossPriceWithDiscountsToDefaults($orderTransfer);
             return;
         }
 
         $this->addDiscountsFromSalesOrderDiscountEntity($orderTransfer, $salesOrderDiscounts);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount[]|\Propel\Runtime\Collection\ObjectCollection|array
+     */
+    protected function getSalesOrderItemDiscounts(OrderTransfer $orderTransfer)
+    {
+        $saleOrderItemIds = $this->getSaleOrderItemIds($orderTransfer);
+
+        if (empty($saleOrderItemIds)) {
+            return [];
+        }
+
+        return $this->discountQueryContainer
+            ->querySalesDisount()
+            ->filterByFkSalesOrderItem($saleOrderItemIds)
+            ->find();
     }
 
     /**
@@ -63,7 +78,6 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
                 $this->assertItemRequirements($itemTransfer);
                 $this->addItemCalculatedDiscounts($itemTransfer, $salesOrderDiscountEntity);
             }
-            $this->addOrderExpenseCalculatedDiscounts($orderTransfer, $salesOrderDiscountEntity);
         }
     }
 
@@ -83,7 +97,7 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
             return;
         }
 
-        $calculatedDiscountTransfer = $this->hydrateCalculatedDiscountTransferFromEntity(
+        $calculatedDiscountTransfer = $this->getHydratedCalculatedDiscountTransferFromEntity(
             $salesOrderDiscountEntity,
             $itemTransfer->getQuantity()
         );
@@ -94,43 +108,12 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
-     *
-     * @return void
-     */
-    protected function addOrderExpenseCalculatedDiscounts(
-        OrderTransfer $orderTransfer,
-        SpySalesDiscount $salesOrderDiscountEntity
-    ) {
-
-        if ($salesOrderDiscountEntity->getFkSalesExpense() === null) {
-            return;
-        }
-
-        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getIdSalesExpense() !== $salesOrderDiscountEntity->getFkSalesExpense()) {
-                continue;
-            }
-
-            $calculatedDiscountTransfer = $this->hydrateCalculatedDiscountTransferFromEntity(
-                $salesOrderDiscountEntity,
-                $expenseTransfer->getQuantity()
-            );
-            $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-            $this->updateExpenseGrossPriceWithDiscounts($expenseTransfer, $calculatedDiscountTransfer);
-            $this->setExpenseRefundableAmount($expenseTransfer, $calculatedDiscountTransfer);
-        }
-    }
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer
      */
-    protected function hydrateCalculatedDiscountTransferFromEntity(SpySalesDiscount $salesOrderDiscountEntity, $quantity)
+    protected function getHydratedCalculatedDiscountTransferFromEntity(SpySalesDiscount $salesOrderDiscountEntity, $quantity)
     {
         $quantity = !empty($quantity) ? $quantity : 1;
 
@@ -147,48 +130,6 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
         return $calculatedDiscountTransfer;
     }
 
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
-     *
-     * @return void
-     */
-    protected function updateExpenseGrossPriceWithDiscounts(
-        ExpenseTransfer $expenseTransfer,
-        CalculatedDiscountTransfer $calculatedDiscountTransfer
-    ) {
-        $expenseTransfer->setUnitGrossPriceWithDiscounts(
-            $expenseTransfer->getUnitGrossPrice() - $calculatedDiscountTransfer->getUnitGrossAmount()
-        );
-
-        $expenseTransfer->setSumGrossPriceWithDiscounts(
-            $expenseTransfer->getSumGrossPrice() - $calculatedDiscountTransfer->getSumGrossAmount()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function getSalesOrderDiscounts(OrderTransfer $orderTransfer)
-    {
-        return $this->discountQueryContainer
-            ->querySalesDisount()
-            ->findByFkSalesOrder($orderTransfer->getIdSalesOrder());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    protected function assertItemDiscountsRequirements(OrderTransfer $orderTransfer)
-    {
-        $orderTransfer->requireIdSalesOrder();
-    }
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -197,45 +138,6 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
     protected function assertItemRequirements(ItemTransfer $itemTransfer)
     {
         $itemTransfer->requireQuantity()->requireIdSalesOrderItem();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     *
-     * @return void
-     */
-    protected function addExpenseDiscountAmountDefaults(ExpenseTransfer $expenseTransfer)
-    {
-        $expenseTransfer->setUnitGrossPriceWithDiscounts($expenseTransfer->getUnitGrossPrice());
-        $expenseTransfer->setSumGrossPriceWithDiscounts($expenseTransfer->getSumGrossPrice());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    protected function setExpenseGrossPriceWithDiscountsToDefaults($orderTransfer)
-    {
-        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            $expenseTransfer->setSumGrossPriceWithDiscounts($expenseTransfer->getSumGrossPrice());
-            $expenseTransfer->setUnitGrossPriceWithDiscounts($expenseTransfer->getUnitGrossPrice());
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
-     *
-     * @return void
-     */
-    protected function setExpenseRefundableAmount(
-        ExpenseTransfer $expenseTransfer,
-        CalculatedDiscountTransfer $calculatedDiscountTransfer
-    ) {
-        $expenseTransfer->setRefundableAmount(
-            $expenseTransfer->getRefundableAmount() - $calculatedDiscountTransfer->getSumGrossAmount()
-        );
     }
 
     /**
@@ -268,5 +170,20 @@ class ItemDiscounts implements OrderAmountAggregatorInterface
         $itemTransfer->setSumGrossPriceWithDiscounts(
             $itemTransfer->getSumGrossPrice() - $calculatedDiscountTransfer->getSumGrossAmount()
         );
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return array|int[]
+     */
+    protected function getSaleOrderItemIds(OrderTransfer $orderTransfer)
+    {
+        $saleOrderItemIds = [];
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $saleOrderItemIds[] = $itemTransfer->getIdSalesOrderItem();
+        }
+
+        return $saleOrderItemIds;
     }
 }

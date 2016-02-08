@@ -210,25 +210,4 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     {
         return $this->getFactory()->createPriceCalculationHelper()->getTaxValueFromPrice($grossPrice, $taxRate);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderItemTaxAmount(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createOrderItemTaxAmountAggregator()->aggregate($orderTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer)
-    {
-        $this->getFactory()->createOrderTaxAmountAggregator()->aggregate($orderTransfer);
-    }
-
 }

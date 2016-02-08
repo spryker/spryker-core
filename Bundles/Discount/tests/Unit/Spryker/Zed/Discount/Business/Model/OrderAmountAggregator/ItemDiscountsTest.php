@@ -31,20 +31,6 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(100, $itemCalculatedDiscounts[0]->getSumGrossAmount());
 
     }
-
-    /**
-     * @return void
-     */
-    public function testExpenseDiscountShouldBeHydratedFromEntities()
-    {
-        $itemsDiscountsAggregator = $this->createItemDiscountsAggregator();
-        $orderTransfer = $this->createOrderTransfer();
-
-        $itemsDiscountsAggregator->aggregate($orderTransfer);
-
-        $expenseCalculatedDiscounts = $orderTransfer->getExpenses()[0]->getCalculatedDiscounts();
-        $this->assertEquals(200, $expenseCalculatedDiscounts[0]->getSumGrossAmount());
-    }
     
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -76,24 +62,29 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
         $discountQueryContainer = $this->createDiscountQueryContainer();
         $discountQueryMock  = $this->createDiscountQueryMock();
 
-        $objectColletion = new ObjectCollection();
+        $objectCollection = new ObjectCollection();
 
         $salesDiscountEntity = new SpySalesDiscount();
         $salesDiscountEntity->setDisplayName('test');
         $salesDiscountEntity->setFkSalesOrderItem(1);
         $salesDiscountEntity->setAmount(100);
-        $objectColletion->append($salesDiscountEntity);
+        $objectCollection->append($salesDiscountEntity);
 
         $salesDiscountEntity = new SpySalesDiscount();
         $salesDiscountEntity->setDisplayName('test');
         $salesDiscountEntity->setFkSalesExpense(1);
         $salesDiscountEntity->setAmount(200);
-        $objectColletion->append($salesDiscountEntity);
+        $objectCollection->append($salesDiscountEntity);
+
+        $discountQueryMock
+            ->expects($this->once())
+            ->method('find')
+            ->willReturn($objectCollection);
 
         $discountQueryMock->expects($this->once())
-            ->method('findByFkSalesOrder')
-            ->with($this->isType('integer'))
-            ->willReturn($objectColletion);
+            ->method('filterByFkSalesOrderItem')
+            ->with($this->isType('array'))
+            ->willReturn($discountQueryMock);
 
         $discountQueryContainer->expects($this->once())
             ->method('querySalesDisount')
@@ -108,7 +99,7 @@ class ItemDiscountsTest extends \PHPUnit_Framework_TestCase
     protected function createDiscountQueryMock()
     {
         return $this->getMockBuilder(SpySalesDiscountQuery::class)
-            ->setMethods(['findByFkSalesOrder'])
+            ->setMethods(['filterByFkSalesOrderItem','find'])
             ->disableArgumentCloning()
             ->getMock();
     }

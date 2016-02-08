@@ -8,8 +8,8 @@ namespace Unit\Spryker\Zed\Tax\Business\Model\OrderAmountAggregator;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Tax\Business\Model\OrderAmountAggregator\ItemTax;
-use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
+use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ItemTax;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
 
 class ItemTaxTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,30 +37,6 @@ class ItemTaxTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(round(20 / 19), $orderTransfer->getItems()[0]->getSumTaxAmount());
     }
-
-    /**
-     * @return void
-     */
-    public function testItemTaxIsAppliedToSumTaxForExpense()
-    {
-        $itemTaxAggregator = $this->createItemTaxAggregator();
-        $orderTransfer = $this->createOrderTransfer();
-        $itemTaxAggregator->aggregate($orderTransfer);
-
-        $this->assertEquals(round(20 / 19), $orderTransfer->getExpenses()[0]->getSumTaxAmount());
-    }
-
-    /**
-     * @return void
-     */
-    public function testItemTaxIsAppliedToUnitTaxForExpense()
-    {
-        $itemTaxAggregator = $this->createItemTaxAggregator();
-        $orderTransfer = $this->createOrderTransfer();
-        $itemTaxAggregator->aggregate($orderTransfer);
-
-        $this->assertEquals(round(20 / 19), $orderTransfer->getExpenses()[0]->getUnitTaxAmount());
-    }
     
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -85,26 +61,26 @@ class ItemTaxTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Business\Model\OrderAmountAggregator\ItemTax
+     * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ItemTax
      */
     protected function createItemTaxAggregator()
     {
-        $priceHelperMock = $this->createPriceHelperMock();
+        $taxFacadeMock = $this->createTaxFacadeMock();
 
-        $priceHelperMock->expects($this->exactly(4))->method('getTaxValueFromPrice')->willReturnCallback(
+        $taxFacadeMock->expects($this->exactly(2))->method('getTaxAmountFromGrossPrice')->willReturnCallback(
             function ($grosPrice, $taxRate) {
                 return round($grosPrice / $taxRate); //not testing calculation. just make sure it was applied.
             }
         );
 
-        return new ItemTax($priceHelperMock);
+        return new ItemTax($taxFacadeMock);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface
      */
-    protected function createPriceHelperMock()
+    protected function createTaxFacadeMock()
     {
-        return $this->getMockBuilder(PriceCalculationHelperInterface::class)->disableOriginalConstructor()->getMock();
+        return $this->getMockBuilder(SalesToTaxInterface::class)->disableOriginalConstructor()->getMock();
     }
 }

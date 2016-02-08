@@ -6,20 +6,20 @@
 
 namespace Spryker\Zed\Sales;
 
-use Spryker\Zed\Discount\Communication\Plugin\OrderAmountAggregator\OrderDiscountsAggregatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\ExpenseTotalAggregatorPlugin;
 use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\GrandTotalAggregatorPlugin;
 use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\ItemGrossPriceAggregatorPlugin;
 use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\SubtotalOrderAggregatorPlugin;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxBridge;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
-use Spryker\Zed\Tax\Communication\Plugin\OrderAmountAggregator\ItemTaxAmountAggregatorPlugin;
-use Spryker\Zed\Tax\Communication\Plugin\OrderAmountAggregator\OrderTaxAmountAggregatorPlugin;
+use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\ItemTaxAmountAggregatorPlugin;
+use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\OrderTaxAmountAggregatorPlugin;
 
 class SalesDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -29,9 +29,11 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_REFUND = 'FACADE_REFUND';
     const FACADE_LOCALE = 'LOCALE_FACADE';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+    const FACADE_TAX = 'FACADE_TAX';
 
     const PLUGINS_PAYMENT_LOGS = 'PLUGINS_PAYMENT_LOGS';
     const PLUGINS_ORDER_AMOUNT_AGGREGATION =  'PLUGINS_ORDER_AMOUNT_AGGREGATION';
+    const PLUGINS_ITEM_AMOUNT_AGGREGATION =  'PLUGINS_ITEM_AMOUNT_AGGREGATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -56,12 +58,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
             return new SalesToRefundBridge($container->getLocator()->refund()->facade());
         };
 
+        $container[self::FACADE_TAX] = function (Container $container) {
+            return new SalesToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
         $container[self::PLUGINS_PAYMENT_LOGS] = function (Container $container) {
             return $this->getPaymentLogPlugins($container);
         };
 
         $container[self::PLUGINS_ORDER_AMOUNT_AGGREGATION] = function (Container $container) {
             return $this->getOrderAmountAggregationPlugins($container);
+        };
+
+        $container[self::PLUGINS_ITEM_AMOUNT_AGGREGATION] = function (Container $container) {
+            return $this->getItemAmountAggregationPlugins($container);
         };
 
         return $container;
@@ -92,9 +102,26 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param Container $container
      *
-     * @return array|\Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
+     * @return array|OrderTotalsAggregatePluginInterface[]
+     */
+    protected function getItemAmountAggregationPlugins(Container $container)
+    {
+        return [
+            //aggregate sum* fields, so that amount with quantity is available.
+            new ItemGrossPriceAggregatorPlugin(),
+
+            //Add tax amount for each item
+            new ItemTaxAmountAggregatorPlugin(),
+        ];
+
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return array|OrderTotalsAggregatePluginInterface[]
      */
     protected function getOrderAmountAggregationPlugins(Container $container)
     {
@@ -102,22 +129,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
             //order level expense total amount
             new ExpenseTotalAggregatorPlugin(),
 
-            //aggregate sum* fields, so that amount with quantity is available.
-            new ItemGrossPriceAggregatorPlugin(),
-
-            //SubTotal sum of all items before discounts and expenses
+            //SubTotal sum of all items.
             new SubtotalOrderAggregatorPlugin(),
 
-            //Aggregate order level discounts, same discounts grouped, store in CalculatedDiscountTransfer[]
-            new OrderDiscountsAggregatorPlugin(), //Item and expense discounts
-
-            //Aggregate Grand total amount, subtotal + expenses - discounts
+            //Aggregate Grand total amount, subtotal + expenses
             new GrandTotalAggregatorPlugin(),
 
-            ##Add tax for grand total, expenses and items.
-            new ItemTaxAmountAggregatorPlugin(),
+            //add tax amount for order level
             new OrderTaxAmountAggregatorPlugin(),
         ];
     }
-
 }

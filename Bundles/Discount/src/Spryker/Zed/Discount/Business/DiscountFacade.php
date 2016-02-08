@@ -453,8 +453,16 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return void
      */
-    public function aggregateItemTaxWithDiscounts(OrderTransfer $orderTransfer)
+    public function aggregateOrderExpenseTaxWithDiscounts(OrderTransfer $orderTransfer)
     {
-        $this->getFactory()->createItemTaxWithDiscountsAggregator()->aggregate($orderTransfer);
+        $this->getFactory()->createOrderExpenseTaxWithDiscountsAggregator()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     */
+    public function aggregateOrderExpensesWithDiscounts(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createOrderExpenseWithDiscountsAggregator()->aggregate($orderTransfer);
     }
 }

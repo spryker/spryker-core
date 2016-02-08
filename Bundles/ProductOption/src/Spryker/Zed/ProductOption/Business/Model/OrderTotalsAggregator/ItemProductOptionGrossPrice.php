@@ -147,12 +147,33 @@ class ItemProductOptionGrossPrice implements OrderAmountAggregatorInterface
     /**
      * @param OrderTransfer $orderTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return array|int[]
+     */
+    protected function getSaleOrderItemIds(OrderTransfer $orderTransfer)
+    {
+        $saleOrderItemIds = [];
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $saleOrderItemIds[] = $itemTransfer->getIdSalesOrderItem();
+        }
+
+        return $saleOrderItemIds;
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection|array
      */
     protected function getSalesOrderItems(OrderTransfer $orderTransfer)
     {
+        $saleOrderItemIds = $this->getSaleOrderItemIds($orderTransfer);
+
+        if (empty($saleOrderItemIds)) {
+            return [];
+        }
         return $this->salesQueryContainer
             ->querySalesOrderItem()
-            ->findByFkSalesOrder($orderTransfer->getIdSalesOrder());
+            ->filterByIdSalesOrderItem($saleOrderItemIds)
+            ->find();
     }
 }

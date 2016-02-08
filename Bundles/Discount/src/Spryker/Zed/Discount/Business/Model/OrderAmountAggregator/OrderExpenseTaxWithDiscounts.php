@@ -8,7 +8,7 @@ namespace Spryker\Zed\Discount\Business\Model\OrderAmountAggregator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridgeInterface;
 
-class ItemTaxWithDiscounts implements OrderAmountAggregatorInterface
+class OrderExpenseTaxWithDiscounts implements OrderAmountAggregatorInterface
 {
     /**
      * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToTaxBridgeInterface

@@ -9,8 +9,8 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Tax\Business\Model\OrderAmountAggregator\OrderTaxAmount;
-use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
+use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\OrderTaxAmount;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
 
 class OrderTaxAmountTest  extends \PHPUnit_Framework_TestCase
 {
@@ -40,27 +40,27 @@ class OrderTaxAmountTest  extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Business\Model\OrderAmountAggregator\OrderTaxAmount
+     * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\OrderTaxAmount
      */
     protected function createOrderTaxAmountAggregator()
     {
-        $priceHelperMock = $this->createPriceHelperMock();
+        $taxFacadeMock = $this->createTaxFacadeMock();
 
-        $priceHelperMock->expects($this->exactly(1))->method('getTaxValueFromPrice')->willReturnCallback(
+        $taxFacadeMock->expects($this->exactly(1))->method('getTaxAmountFromGrossPrice')->willReturnCallback(
             function ($grosPrice, $taxRate) {
                 return round($grosPrice / $taxRate); //not testing calculation. just make sure it was applied.
             }
         );
 
-        return new OrderTaxAmount($priceHelperMock);
+        return new OrderTaxAmount($taxFacadeMock);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface
      */
-    protected function createPriceHelperMock()
+    protected function createTaxFacadeMock()
     {
-        return $this->getMockBuilder(PriceCalculationHelperInterface::class)->disableOriginalConstructor()->getMock();
+        return $this->getMockBuilder(SalesToTaxInterface::class)->disableOriginalConstructor()->getMock();
     }
 
     /**

@@ -24,8 +24,9 @@ use Spryker\Zed\Discount\Business\Model\DiscountSaverInterface;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\DiscountTotalAmount;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\GrandTotalWithDiscounts;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemDiscounts;
-use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemTaxWithDiscounts;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpenseTaxWithDiscounts;
 use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderDiscounts;
+use Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpensesWithDiscounts;
 use Spryker\Zed\Discount\Business\Model\VoucherCode;
 use Spryker\Zed\Discount\Business\Model\VoucherCodeInterface;
 use Spryker\Zed\Discount\Business\Model\VoucherPoolCategory;
@@ -391,11 +392,19 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\ItemTaxWithDiscounts
+     * @return \Spryker\Zed\Discount\Business\Model\OrderAmountAggregator\OrderExpenseTaxWithDiscounts
      */
-    public function createItemTaxWithDiscountsAggregator()
+    public function createOrderExpenseTaxWithDiscountsAggregator()
     {
-        return new ItemTaxWithDiscounts($this->getProvidedDependency(DiscountDependencyProvider::FACADE_TAX));
+        return new OrderExpenseTaxWithDiscounts($this->getProvidedDependency(DiscountDependencyProvider::FACADE_TAX));
+    }
+
+    /**
+     * @return OrderExpensesWithDiscounts
+     */
+    public function createOrderExpenseWithDiscountsAggregator()
+    {
+        return new OrderExpensesWithDiscounts($this->getQueryContainer());
     }
 
 }

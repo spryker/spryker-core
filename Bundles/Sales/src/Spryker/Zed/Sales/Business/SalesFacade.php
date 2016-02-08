@@ -232,6 +232,36 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderItemTaxAmount(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createOrderItemTaxAmountAggregator()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderTaxAmountAggregator(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createOrderTaxAmountAggregator()->aggregate($orderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function aggregateOrderExpenseTaxAmountAggregator(OrderTransfer $orderTransfer)
+    {
+        $this->getFactory()->createOrderExpenseTaxAmountAggregator()->aggregate($orderTransfer);
+    }
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -239,6 +269,16 @@ class SalesFacade extends AbstractFacade
     public function getOrderTotalsByIdSalesOrder($idSalesOrder)
     {
         return $this->getFactory()->createOrderTotalsAggregator()->aggregateByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem)
+    {
+        return $this->getFactory()->createOrderTotalsAggregator()->aggregateByIdSalesOrderItem($idSalesOrderItem);
     }
 
     /**
@@ -250,5 +290,4 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getFactory()->createOrderTotalsAggregator()->aggregateByOrderTransfer($orderTransfer);
     }
-
 }

@@ -3,24 +3,24 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Tax\Business\Model\OrderAmountAggregator;
+namespace Spryker\Zed\Sales\Business\Model\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
 
 class ItemTax implements OrderAmountAggregatorInterface
 {
     /**
-     * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface
      */
-    protected $priceCalculationHelper;
+    protected $taxFacade;
 
     /**
-     * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface $taxFacade
      */
-    public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
+    public function __construct(SalesToTaxInterface $taxFacade)
     {
-        $this->priceCalculationHelper = $priceCalculationHelper;
+        $this->taxFacade = $taxFacade;
     }
 
     /**
@@ -31,13 +31,12 @@ class ItemTax implements OrderAmountAggregatorInterface
     public function aggregate(OrderTransfer $orderTransfer)
     {
         $this->assertItemTaxRequirements($orderTransfer);
-
         $this->addTaxAmountToTaxableItems($orderTransfer->getItems());
-        $this->addTaxAmountToTaxableItems($orderTransfer->getExpenses());
+
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]|\Generated\Shared\Transfer\ItemTransfer[] $taxableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $taxableItems
      *
      * @return void
      */
@@ -50,14 +49,14 @@ class ItemTax implements OrderAmountAggregatorInterface
             $item->requireUnitGrossPrice()->requireSumGrossPrice();
 
             $item->setUnitTaxAmount(
-                $this->priceCalculationHelper->getTaxValueFromPrice(
+                $this->taxFacade->getTaxAmountFromGrossPrice(
                     $item->getUnitGrossPrice(),
                     $item->getTaxRate()
                 )
             );
 
             $item->setSumTaxAmount(
-                $this->priceCalculationHelper->getTaxValueFromPrice(
+                $this->taxFacade->getTaxAmountFromGrossPrice(
                     $item->getSumGrossPrice(),
                     $item->getTaxRate()
                 )

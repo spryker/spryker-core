@@ -6,9 +6,12 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ExpenseTax;
 use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ExpenseTotal;
 use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\GrandTotal;
 use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\Item;
+use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ItemTax;
+use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\OrderTaxAmount;
 use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ProductOption;
 use Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\Subtotal;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
@@ -25,6 +28,7 @@ use Spryker\Zed\Sales\Business\Model\OrderReferenceGeneratorInterface;
 use Spryker\Zed\Sales\Business\Model\Split\ItemInterface;
 use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\GrandTotalAggregatorPlugin;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundInterface;
@@ -120,21 +124,11 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Business\TaxFacade
-     */
-    protected function getTaxFacade()
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_TAX);
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Business\Model\Split\Calculator
      */
     protected function createCalculator()
     {
-        $calculator = new Calculator();
-
-        return $calculator;
+       return new Calculator();
     }
 
     /**
@@ -142,7 +136,11 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderTotalsAggregator()
     {
-        return new OrderTotalsAggregator($this->getOrderTotalAggregatorPlugins(), $this->getQueryContainer());
+        return new OrderTotalsAggregator(
+            $this->getOrderTotalAggregatorPlugins(),
+            $this->getItemTotalAggregatorPlugins(),
+            $this->getQueryContainer()
+        );
     }
 
     /**
@@ -151,6 +149,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     protected function getOrderTotalAggregatorPlugins()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_AMOUNT_AGGREGATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface[]
+     */
+    protected function getItemTotalAggregatorPlugins()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ITEM_AMOUNT_AGGREGATION);
     }
 
     /**
@@ -203,6 +209,38 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getFacadeRefund()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_REFUND);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface
+     */
+    public function getTaxFacade()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\ItemTax
+     */
+    public function createOrderItemTaxAmountAggregator()
+    {
+        return new ItemTax($this->getTaxFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\OrderTaxAmount
+     */
+    public function createOrderTaxAmountAggregator()
+    {
+        return new OrderTaxAmount($this->getTaxFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderAmountAggregator\OrderTaxAmount
+     */
+    public function createOrderExpenseTaxAmountAggregator()
+    {
+        return new ExpenseTax($this->getTaxFacade());
     }
 
 }

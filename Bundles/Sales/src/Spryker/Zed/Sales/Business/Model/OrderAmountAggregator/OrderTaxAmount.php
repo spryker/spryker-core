@@ -3,27 +3,25 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Tax\Business\Model\OrderAmountAggregator;
+namespace Spryker\Zed\Sales\Business\Model\OrderAmountAggregator;
 
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
-use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
 
 class OrderTaxAmount implements OrderAmountAggregatorInterface
 {
     /**
-     * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface
      */
-    protected $priceCalculationHelper;
+    protected $taxFacade;
 
     /**
-     * @param \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface $priceCalculationHelper
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface $taxFacade
      */
-    public function __construct(PriceCalculationHelperInterface $priceCalculationHelper)
+    public function __construct(SalesToTaxInterface $taxFacade)
     {
-        $this->priceCalculationHelper = $priceCalculationHelper;
+        $this->taxFacade = $taxFacade;
     }
 
     /**
@@ -92,7 +90,7 @@ class OrderTaxAmount implements OrderAmountAggregatorInterface
      */
     protected function getTotalTaxAmount(OrderTransfer $orderTransfer, $orderEffectiveTaxRate)
     {
-        return $this->priceCalculationHelper->getTaxValueFromPrice(
+        return $this->taxFacade->getTaxAmountFromGrossPrice(
             $orderTransfer->getTotals()->getGrandTotal(),
             $orderEffectiveTaxRate
         );
