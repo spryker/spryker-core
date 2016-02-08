@@ -44,7 +44,24 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
     protected function createAdapter()
     {
         $adapterName = $this->getConfig()->getGraphAdapterName();
+        $this->validateAdapterName($adapterName);
 
+        $adapter = new $adapterName();
+        $this->validateAdapterClass($adapter);
+
+        return $adapter;
+    }
+
+    /**
+     * @param string $adapterName
+     *
+     * @throws \Spryker\Zed\Graph\Communication\Exception\GraphAdapterNameIsAnObjectException
+     * @throws \Spryker\Zed\Graph\Communication\Exception\InvalidGraphAdapterNameException
+     *
+     * @return void
+     */
+    protected function validateAdapterName($adapterName)
+    {
         if (is_object($adapterName)) {
             throw new GraphAdapterNameIsAnObjectException(
                 'Your config returned an object instance, this is not allowed.'
@@ -56,9 +73,17 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
                 sprintf('Invalid GraphAdapterName provided. "%s" can not be instanced.', $adapterName)
             );
         }
+    }
 
-        $adapter = new $adapterName();
-
+    /**
+     * @param string $adapter
+     *
+     * @throws \Spryker\Zed\Graph\Communication\Exception\InvalidGraphAdapterException
+     *
+     * @return void
+     */
+    protected function validateAdapterClass($adapter)
+    {
         if (!($adapter instanceof GraphAdapterInterface)) {
             $message = sprintf(
                 'Provided "%s" must be an instanceof "%s"',
@@ -67,8 +92,6 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
             );
             throw new InvalidGraphAdapterException($message);
         }
-
-        return $adapter;
     }
 
 }
