@@ -17,8 +17,7 @@
     "spryker/kernel": "^1.0.0",
     "spryker/library": "^1.0.0",
     "spryker/sales": "^1.0.0",
-    "spryker/graph": "^1.0.0",
-    "spryker/graph-php-documentor": "^1.0.0"
+    "spryker/graph": "^1.0.0"
   },
   "require-dev": {},
   "description": "oms bundle",

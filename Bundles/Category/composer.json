@@ -19,8 +19,7 @@
     "spryker/propel": "^1.0.0",
     "spryker/touch": "^1.0.0",
     "spryker/url": "^1.0.0",
-    "spryker/graph": "^1.0.0",
-    "spryker/graph-php-documentor": "^1.0.0"
+    "spryker/graph": "^1.0.0"
   },
   "require-dev": {},
   "description": "category bundle",

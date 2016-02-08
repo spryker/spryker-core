@@ -7,10 +7,10 @@
 namespace Spryker\Zed\Category\Business\Renderer;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Tool\Graph\GraphInterface;
 
 class CategoryTreeRenderer
 {
@@ -33,14 +33,14 @@ class CategoryTreeRenderer
     protected $locale;
 
     /**
-     * @var \Spryker\Tool\Graph\GraphInterface
+     * @var \Spryker\Shared\Graph\GraphInterface
      */
     protected $graph;
 
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainer $queryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Spryker\Tool\Graph\GraphInterface $graph
+     * @param \Spryker\Shared\Graph\GraphInterface $graph
      */
     public function __construct(CategoryQueryContainer $queryContainer, LocaleTransfer $locale, GraphInterface $graph)
     {

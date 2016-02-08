@@ -16,9 +16,8 @@ use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeWriter;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Spryker\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter;
-use Spryker\Tool\Graph\Graph;
 
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
@@ -38,7 +37,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryTreeReader(),
             $this->createNodeUrlManager(),
             $this->getTouchFacade(),
-            $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_PROPEL_CONNECTION)
+            $this->getQueryContainer()->getConnection()
         );
     }
 
@@ -73,18 +72,16 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryTreeRenderer(
             $this->getQueryContainer(),
             $locale,
-            $this->createGraphViz()
+            $this->createGraphViz()->init('Category Tree')
         );
     }
 
     /**
-     * @return \Spryker\Tool\Graph\Graph
+     * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
     protected function createGraphViz()
     {
-        $adapter = $this->createGraphAdapter();
-
-        return new Graph($adapter, 'Category Tree');
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_GRAPH);
     }
 
     /**
@@ -175,14 +172,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryTransferGenerator()
     {
         return new TransferGenerator();
-    }
-
-    /**
-     * @return \Spryker\Tool\GraphPhpDocumentor\Adapter\PhpDocumentorGraphAdapter
-     */
-    protected function createGraphAdapter()
-    {
-        return new PhpDocumentorGraphAdapter();
     }
 
 }
