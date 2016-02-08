@@ -16,9 +16,7 @@ class GraphAdapterNameIsAnObjectException extends AbstractGraphAdapterException
      */
     public function __construct($message = "", $code = 0, \Exception $previous = null)
     {
-        $message = 'Your config returned an object instance, this is not allowed.'
-            . PHP_EOL
-            . self::MESSAGE;
+        $message .= PHP_EOL . self::MESSAGE;
 
         parent::__construct($message, $code, $previous);
     }

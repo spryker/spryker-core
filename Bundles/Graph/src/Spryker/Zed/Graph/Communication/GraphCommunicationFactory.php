@@ -46,17 +46,26 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
         $adapterName = $this->getConfig()->getGraphAdapterName();
 
         if (is_object($adapterName)) {
-            throw new GraphAdapterNameIsAnObjectException($adapterName);
+            throw new GraphAdapterNameIsAnObjectException(
+                'Your config returned an object instance, this is not allowed.'
+            );
         }
 
         if (!class_exists($adapterName)) {
-            throw new InvalidGraphAdapterNameException($adapterName);
+            throw new InvalidGraphAdapterNameException(
+                sprintf('Invalid GraphAdapterName provided. "%s" can not be instanced.', $adapterName)
+            );
         }
 
         $adapter = new $adapterName();
 
         if (!($adapter instanceof GraphAdapterInterface)) {
-            throw new InvalidGraphAdapterException(get_class($adapter));
+            $message = sprintf(
+                'Provided "%s" must be an instanceof "%s"',
+                get_class($adapter),
+                GraphAdapterInterface::class
+            );
+            throw new InvalidGraphAdapterException($message);
         }
 
         return $adapter;

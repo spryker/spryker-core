@@ -44,12 +44,6 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
             return new CategoryToUrlBridge($container->getLocator()->url()->facade());
         };
 
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            $connection = new Connection();
-
-            return $connection->get();
-        };
-
         $container[self::PLUGIN_GRAPH] = function (Container $container) {
             return $this->getGraphPlugin();
         };

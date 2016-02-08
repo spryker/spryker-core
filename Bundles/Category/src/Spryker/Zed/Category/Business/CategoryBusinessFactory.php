@@ -37,7 +37,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryTreeReader(),
             $this->createNodeUrlManager(),
             $this->getTouchFacade(),
-            $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_PROPEL_CONNECTION)
+            $this->getQueryContainer()->getConnection()
         );
     }
 

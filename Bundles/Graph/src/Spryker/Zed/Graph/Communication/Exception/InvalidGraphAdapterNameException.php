@@ -16,9 +16,7 @@ class InvalidGraphAdapterNameException extends AbstractGraphAdapterException
      */
     public function __construct($message = "", $code = 0, \Exception $previous = null)
     {
-        $message = sprintf('Invalid GraphAdapterName provided. "%s" can not be instanced.', $message)
-            . PHP_EOL
-            . self::MESSAGE;
+        $message .= PHP_EOL . self::MESSAGE;
 
         parent::__construct($message, $code, $previous);
     }
