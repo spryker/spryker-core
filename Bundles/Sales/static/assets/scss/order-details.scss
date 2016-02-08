@@ -30,3 +30,11 @@ $chat-box-background-color: #f0f0f0;
   max-height: 250px;
   overflow: scroll;
 }
+
+.chat-form {
+  padding-top: 10px;
+
+  .col-xs-12 {
+    margin-bottom: 5px;
+  }
+}

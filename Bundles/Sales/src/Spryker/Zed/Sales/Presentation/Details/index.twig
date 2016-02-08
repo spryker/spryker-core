@@ -8,23 +8,24 @@
 
     {% include '@Sales/Details/boxes/order-navigation.twig' %}
     {% include '@Sales/Details/boxes/order-overview.twig' %}
-    {#items#}
+    {% include '@Sales/Details/boxes/items.twig' %}
     {% include '@Sales/Details/boxes/totals.twig' %}
-    {#payment#}
-    {#shipment#}
+    {% include '@Sales/Details/boxes/payments.twig' %}
+    {% include '@Sales/Details/boxes/shipment.twig' %}
     {#discount#}
     {% include '@Sales/Details/boxes/addresses.twig' %}
+    {% include '@Sales/Details/boxes/refunds.twig' %}
 
-    <div class="alert alert-info">old integration below</div>
+    {#<div class="alert alert-info">old integration below</div>#}
 
     {#{% include '@Sales/Details/section/customer-details.twig' %}#}
 
     {#<div class="spy-layout">#}
-        {% include '@Sales/Details/section/calculation.twig' %}
-        {% include '@Sales/Details/section/order-items.twig' %}
-        {% include '@Sales/Details/section/payment-logs.twig' %}
-        {% include '@Sales/Details/section/expenses.twig' %}
-        {% include '@Sales/Details/section/refunds.twig' %}
+        {#{% include '@Sales/Details/section/calculation.twig' %}#}
+        {#{% include '@Sales/Details/section/order-items.twig' %}#}
+        {#{% include '@Sales/Details/section/payment-logs.twig' %}#}
+        {#{% include '@Sales/Details/section/expenses.twig' %}#}
+        {#{% include '@Sales/Details/section/refunds.twig' %}#}
     {#</div>#}
 
 {% endblock %}

@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
 
         {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Totals' } %}
 
@@ -28,16 +28,19 @@
                     <tr>
                         <th>{{ 'Sub total' | trans }}</th>
                         <td class="text-right">-</td>
+                        <td></td>
                     </tr>
                     {% for expense in order.expenses %}
                     <tr>
                         <th>{{ expense.name }}</th>
                         <td class="text-right">{{ expense.unitGrossPriceWithDiscounts | currency  }}</td>
+                        <td></td>
                     </tr>
                     {% endfor %}
                     <tr>
                         <th>{{ 'Grand total' | trans }}</th>
                         <td class="text-right">{{ order.totals.grandTotal|currency }}</td>
+                        <td></td>
                     </tr>
                     </tbody>
                 </table>

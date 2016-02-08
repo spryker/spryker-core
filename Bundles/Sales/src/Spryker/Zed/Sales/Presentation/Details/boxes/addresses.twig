@@ -1,18 +1,22 @@
-{% macro address(addr) %}
+{% macro address(order, addr, messageIfEmpty) %}
 
+    {% if addr is empty %}
+        {{ messageIfEmpty | trans }}
+    {% else %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Billing Address</h3>
         </div>
         <div class="panel-body">
-            <a href="" class="btn btn-sm btn-warning">Edit</a>
-            <p>asdasdfadsf</p>
-            <p>asdasdfadsf</p>
-            <p>asdasdfadsf</p>
-            <p>asdasdfadsf</p>
-            <p>asdasdfadsf</p>
+            <a href="/sales/edit/address?id-sales-order={{ order.idSalesOrder }}&id-address={{ addr.idSalesOrderAddress }}" class="btn btn-sm btn-warning">Edit</a>
+            <p>{{ addr.firstName }} {{ addr.middleName }} {{ addr.lastName }}</p>
+            {% if addr.address1 is not empty %}<p>{{ addr.address1 }}</p>{% endif %}
+            {% if addr.address2 is not empty %}<p>{{ addr.address2 }}</p>{% endif %}
+            {% if addr.address3 is not empty %}<p>{{ addr.address3 }}</p>{% endif %}
+            <p>{{ addr.zipCode }} {{ addr.city }}</p>
         </div>
     </div>
+    {% endif %}
 
 {% endmacro %}
 
@@ -24,10 +28,10 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                {{ show.address() }}
+                {{ show.address(order, billingAddress, 'Billing address not provided') }}
             </div>
             <div class="col-xs-12 col-sm-6">
-                {{ show.address() }}
+                {{ show.address(order, shippingAddress, 'Shipping address not provided') }}
             </div>
         </div>
 
