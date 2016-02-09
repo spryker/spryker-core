@@ -9,7 +9,6 @@ namespace Spryker\Zed\Installer\Business;
 use Spryker\Zed\Installer\Business\Model\GlossaryInstaller;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Installer\InstallerDependencyProvider;
-use Spryker\Zed\Installer\Business\Model\IcecatInstaller;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -43,16 +42,6 @@ class InstallerBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(InstallerDependencyProvider::FACADE_GLOSSARY),
             $this->getConfig()->getGlossaryFilePaths()
         );
-    }
-
-    /**
-     * @param OutputInterface $output
-     *
-     * @return \Spryker\Zed\Installer\Business\Model\IcecatInstaller
-     */
-    public function getIcecatDataInstaller(OutputInterface $output)
-    {
-        return new IcecatInstaller($output);
     }
 
 }

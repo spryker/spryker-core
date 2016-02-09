@@ -39,14 +39,4 @@ class InstallerFacade extends AbstractFacade
         return $this->getFactory()->createGlossaryInstaller();
     }
 
-    /**
-     * @param OutputInterface $output
-     *
-     * @return \Spryker\Zed\Installer\Business\Model\IcecatInstaller
-     */
-    public function getIcecatDataInstaller(OutputInterface $output)
-    {
-        return $this->getFactory()->getIcecatDataInstaller($output);
-    }
-
 }
