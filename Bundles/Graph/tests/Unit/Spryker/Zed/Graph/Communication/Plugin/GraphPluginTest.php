@@ -48,7 +48,7 @@ class GraphPluginTest extends \PHPUnit_Framework_TestCase
         $graphMock->method('render')->willReturn('');
 
         $factoryMock = $this->getMock(GraphCommunicationFactory::class);
-        $factoryMock->method('getGraph')->willReturn($graphMock);
+        $factoryMock->method('createGraph')->willReturn($graphMock);
 
         $pluginMock = $this->getMock(GraphPlugin::class, ['getFactory'], ['name'], '', false);
         $pluginMock->method('getFactory')->willReturn($factoryMock);
@@ -129,7 +129,7 @@ class GraphPluginTest extends \PHPUnit_Framework_TestCase
         $graphMock->method('render')->willReturn('');
 
         $factoryMock = $this->getMock(GraphCommunicationFactory::class);
-        $factoryMock->method('getGraph')->willReturn($graphMock);
+        $factoryMock->method('createGraph')->willReturn($graphMock);
 
         $pluginMock = $this->getMock(GraphPlugin::class, ['getFactory'], ['name'], '', false);
         $pluginMock->method('getFactory')->willReturn($factoryMock);
