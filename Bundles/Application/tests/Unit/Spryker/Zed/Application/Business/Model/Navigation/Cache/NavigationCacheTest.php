@@ -6,6 +6,8 @@
 
 namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
+use Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistException;
+use Spryker\Zed\Application\Business\Exception\NavigationCacheFileEmptyException;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
 
 /**
@@ -36,7 +38,13 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
      */
     private function getCacheFile()
     {
-        return __DIR__ . 'navigation.cache';
+        $pathToFile = __DIR__ . DIRECTORY_SEPARATOR . 'navigation.cache';
+
+        if (!file_exists($pathToFile)) {
+            touch($pathToFile);
+        }
+
+        return $pathToFile;
     }
 
     /**
@@ -53,29 +61,7 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testIsNavigationCacheEnabledMustReturnFalseIfItIsEnabledButCacheFileDoesNotExist()
-    {
-        $isEnabled = true;
-        $navigationCache = new NavigationCache('', $isEnabled);
-
-        $this->assertFalse($navigationCache->isEnabled());
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsNavigationCacheEnabledMustReturnFalseIfItNotEnabledButCacheFileExist()
-    {
-        $isEnabled = false;
-        $navigationCache = new NavigationCache(__FILE__, $isEnabled);
-
-        $this->assertFalse($navigationCache->isEnabled());
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsNavigationCacheEnabledMustReturnTrueIfEnabledAndCacheFileExist()
+    public function testIsNavigationCacheEnabledMustReturnTrueIfEnabled()
     {
         $isEnabled = true;
         $navigationCache = new NavigationCache(__FILE__, $isEnabled);
@@ -92,7 +78,6 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
         $isEnabled = true;
 
         $navigationCache = new NavigationCache($cacheFile, $isEnabled);
-        $this->assertFalse($navigationCache->isEnabled());
 
         $navigationData = ['foo' => 'bar'];
         $navigationCache->setNavigation($navigationData);
@@ -114,6 +99,31 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
 
         $cachedNavigationData = $navigationCache->getNavigation();
         $this->assertSame($navigationData, $cachedNavigationData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMustThrowExceptionIfCacheEnabledButCacheFileDoesNotExists()
+    {
+        $this->setExpectedException(NavigationCacheFileDoesNotExistException::class);
+
+        $isEnabled = true;
+        $navigationCache = new NavigationCache('', $isEnabled);
+        $navigationCache->getNavigation();
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMustThrowExceptionIfCacheEnabledCacheFileGivenButEmpty()
+    {
+        $this->setExpectedException(NavigationCacheFileEmptyException::class);
+
+        $cacheFile = $this->getCacheFile();
+        $isEnabled = true;
+        $navigationCache = new NavigationCache($cacheFile, $isEnabled);
+        $navigationCache->getNavigation();
     }
 
 }

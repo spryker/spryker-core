@@ -6,7 +6,8 @@
 
 namespace Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
-use Spryker\Zed\Application\Business\Exception\NavigationCacheException;
+use Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistException;
+use Spryker\Zed\Application\Business\Exception\NavigationCacheFileEmptyException;
 
 class NavigationCache implements NavigationCacheInterface
 {
@@ -50,16 +51,26 @@ class NavigationCache implements NavigationCacheInterface
     }
 
     /**
-     * @throws \Spryker\Zed\Application\Business\Exception\NavigationCacheException
+     * @throws \Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistException
+     * @throws \Spryker\Zed\Application\Business\Exception\NavigationCacheFileEmptyException
      *
      * @return array
      */
     public function getNavigation()
     {
         if (!file_exists($this->cacheFile)) {
-            throw new NavigationCacheException('Navigation cache is enabled, but there is no cache file.');
+            throw new NavigationCacheFileDoesNotExistException('Navigation cache is enabled, but there is no cache file.');
         }
-        return unserialize(file_get_contents($this->cacheFile));
+
+        $content = file_get_contents($this->cacheFile);
+
+        if (empty($content)) {
+            throw new NavigationCacheFileEmptyException('Navigation cache is enabled, but cache is empty.');
+        }
+
+        $cachedNavigation = unserialize($content);
+
+        return $cachedNavigation;
     }
 
 }

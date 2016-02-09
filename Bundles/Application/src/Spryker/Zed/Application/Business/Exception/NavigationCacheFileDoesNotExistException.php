@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Application\Business\Exception;
 
-class NavigationCacheException extends \Exception
+class NavigationCacheFileDoesNotExistException extends AbstractNavigationCacheException
 {
 
     /**
@@ -16,8 +16,10 @@ class NavigationCacheException extends \Exception
      */
     public function __construct($message = '', $code = 0, \Exception $previous = null)
     {
-        $message .= PHP_EOL . ''
+        $message .= PHP_EOL . self::MESSAGE;
+
         parent::__construct($message, $code, $previous);
     }
+
 
 }
