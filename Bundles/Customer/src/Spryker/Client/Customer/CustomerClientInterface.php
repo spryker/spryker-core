@@ -43,15 +43,6 @@ interface CustomerClientInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     *
-     * @deprecated Use sendPasswordRestoreMail() instead
-     */
-    public function forgotPassword(CustomerTransfer $customerTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer);
