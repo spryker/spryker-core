@@ -68,6 +68,11 @@ class CodeStyleSniffer
             throw new \ErrorException($message);
         }
 
+        $defaults = [
+            'ignore' => $bundle ? '' : 'vendor/'
+        ];
+        $options += $defaults;
+
         $this->runSnifferCommand($path, $options);
     }
 
@@ -130,6 +135,10 @@ class CodeStyleSniffer
 
         if ($options[self::OPTION_SNIFFS]) {
             $config .= ' --sniffs=' . $options[self::OPTION_SNIFFS];
+        }
+
+        if ($options['ignore']) {
+            $config .= ' --ignore=' . $options['ignore'];
         }
 
         $command = $options[self::OPTION_FIX] ? 'phpcbf' : 'phpcs';
