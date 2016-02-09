@@ -107,7 +107,6 @@ class Address
         }
 
         $addressTransfer = $this->entityToAddressTransfer($addressEntity);
-        $addressTransfer->setIso2Code($addressEntity->getCountry()->getIso2Code());
 
         return $addressTransfer;
     }
@@ -149,7 +148,9 @@ class Address
      */
     public function getAddresses(CustomerTransfer $customerTransfer)
     {
-        $entities = $this->queryContainer->queryAddresses()
+        $entities = $this->queryContainer
+            ->queryAddresses()
+            ->joinCountry()
             ->filterByFkCustomer($customerTransfer->getIdCustomer())
             ->find();
 
@@ -274,8 +275,10 @@ class Address
     protected function entityToAddressTransfer(SpyCustomerAddress $entity)
     {
         $addressTransfer = new AddressTransfer();
+        $addressTransfer->fromArray($entity->toArray(), true);
+        $addressTransfer->setIso2Code($entity->getCountry()->getIso2Code());
 
-        return $addressTransfer->fromArray($entity->toArray(), true);
+        return $addressTransfer;
     }
 
     /**

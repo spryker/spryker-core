@@ -73,6 +73,7 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address"/>
+        <property name="billingSameAsShipping" type="bool"/>
         <property name="customer" type="Customer" />
         <property name="orderReference" type="string" />
     </transfer>

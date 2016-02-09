@@ -58,35 +58,38 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
             $this->customer->update($customerTransfer);
         }
 
-        $this->persistAddresses($customerTransfer);
+        $this->persistAddresses($quoteTransfer, $customerTransfer);
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customer
      *
      * @return void
      */
-    protected function persistAddresses(CustomerTransfer $customer)
+    protected function persistAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customer)
     {
-        $this->processCustomerAddressList($customer->getBillingAddress(), $customer);
-        $this->processCustomerAddressList($customer->getShippingAddress(), $customer);
+        $this->processCustomerAddress($quoteTransfer->getShippingAddress(), $customer);
+
+        if ($quoteTransfer->getBillingSameAsShipping() !== true) {
+            $this->processCustomerAddress($quoteTransfer->getBillingAddress(), $customer);
+        }
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $addresses
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
-    protected function processCustomerAddressList(\ArrayObject $addresses, CustomerTransfer $customerTransfer)
+    protected function processCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer)
     {
-        foreach ($addresses as $addressTransfer) {
-            $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
-            if ($addressTransfer->getIdCustomerAddress() === null) {
-                $newAddressTransfer = $this->address->createAddress($addressTransfer);
-                $addressTransfer->setIdCustomerAddress($newAddressTransfer->getIdCustomerAddress());
-            } else {
-                $this->address->updateAddress($addressTransfer);
-            }
+        $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
+        if ($addressTransfer->getIdCustomerAddress() === null) {
+            $newAddressTransfer = $this->address->createAddress($addressTransfer);
+            $addressTransfer->setIdCustomerAddress($newAddressTransfer->getIdCustomerAddress());
+        } else {
+            $this->address->updateAddress($addressTransfer);
         }
     }
 

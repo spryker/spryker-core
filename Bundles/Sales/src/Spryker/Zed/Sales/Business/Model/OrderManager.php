@@ -332,16 +332,16 @@ class OrderManager
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addresTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
      *
      * @return void
      */
-    protected function hydrateSalesOrderAddress(AddressTransfer $addresTransfer, SpySalesOrderAddress $salesOrderAddressEntity)
+    protected function hydrateSalesOrderAddress(AddressTransfer $addressTransfer, SpySalesOrderAddress $salesOrderAddressEntity)
     {
-        $salesOrderAddressEntity->fromArray($addresTransfer->toArray());
+        $salesOrderAddressEntity->fromArray($addressTransfer->toArray());
         $salesOrderAddressEntity->setFkCountry(
-            $this->countryFacade->getIdCountryByIso2Code($addresTransfer->getIso2Code())
+            $this->countryFacade->getIdCountryByIso2Code($addressTransfer->getIso2Code())
         );
     }
 
@@ -352,9 +352,9 @@ class OrderManager
      */
     protected function isTestOrder(QuoteTransfer $quoteTransfer)
     {
-        $shipingAddressTransfer = $quoteTransfer->getShippingAddress();
+        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
 
-        if ($shipingAddressTransfer === null || $shipingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
+        if ($shippingAddressTransfer === null || $shippingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
             return false;
         }
 
