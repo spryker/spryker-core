@@ -38,6 +38,7 @@ class CodeStyleSniffer
     /**
      * @param string $applicationRoot
      * @param string $pathToBundles
+     * @param string $codingStandard
      */
     public function __construct($applicationRoot, $pathToBundles, $codingStandard)
     {

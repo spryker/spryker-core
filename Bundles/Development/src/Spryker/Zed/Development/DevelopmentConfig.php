@@ -45,7 +45,8 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getCodingStandard()
     {
-        return 'vendor/spryker/code-sniffer/Spryker/ruleset.xml';
+        $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
+        return $vendorDir . 'spryker/code-sniffer/Spryker/ruleset.xml';
     }
 
 }
