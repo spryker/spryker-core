@@ -21,5 +21,4 @@ class NavigationCacheFileEmptyException extends AbstractNavigationCacheException
         parent::__construct($message, $code, $previous);
     }
 
-
 }

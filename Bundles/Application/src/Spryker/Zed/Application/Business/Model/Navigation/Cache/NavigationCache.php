@@ -68,9 +68,7 @@ class NavigationCache implements NavigationCacheInterface
             throw new NavigationCacheFileEmptyException('Navigation cache is enabled, but cache is empty.');
         }
 
-        $cachedNavigation = unserialize($content);
-
-        return $cachedNavigation;
+        return unserialize($content);
     }
 
 }
