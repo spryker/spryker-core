@@ -31,6 +31,7 @@ include:
  - Bundles/Maintenance
  - Bundles/Newsletter
  - Bundles/Oms
+ - Bundles/Payment
  - Bundles/Payone
  - Bundles/Price
  - Bundles/PriceCartConnector
