@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
+use Spryker\Zed\Application\Business\Exception\NavigationCacheException;
+
 class NavigationCache implements NavigationCacheInterface
 {
 
@@ -34,7 +36,7 @@ class NavigationCache implements NavigationCacheInterface
      */
     public function isEnabled()
     {
-        return $this->isEnabled && file_exists($this->cacheFile);
+        return $this->isEnabled;
     }
 
     /**
@@ -48,10 +50,15 @@ class NavigationCache implements NavigationCacheInterface
     }
 
     /**
+     * @throws \Spryker\Zed\Application\Business\Exception\NavigationCacheException
+     *
      * @return array
      */
     public function getNavigation()
     {
+        if (!file_exists($this->cacheFile)) {
+            throw new NavigationCacheException('Navigation cache is enabled, but there is no cache file.');
+        }
         return unserialize(file_get_contents($this->cacheFile));
     }
 
