@@ -211,7 +211,7 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param $roleId
+     * @param int $roleId
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */

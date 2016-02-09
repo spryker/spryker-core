@@ -120,8 +120,8 @@ class OrderManager
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param $orderEntity
-     * @param $orderProcess
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $orderProcess
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

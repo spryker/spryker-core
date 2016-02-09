@@ -15,9 +15,9 @@ class MaximCalculatedRangeValidatorTest extends Test
     /**
      * @dataProvider getPairs
      *
-     * @param $codeLength
-     * @param $charactersAllowedNumber
-     * @param $numberOfPossibilities
+     * @param int $codeLength
+     * @param int $charactersAllowedNumber
+     * @param int $numberOfPossibilities
      *
      * @return void
      */

@@ -37,7 +37,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CodeStyleSniffer(
             $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getBundleDirectory()
+            $this->getConfig()->getBundleDirectory(),
+            $this->getConfig()->getCodingStandard()
         );
     }
 

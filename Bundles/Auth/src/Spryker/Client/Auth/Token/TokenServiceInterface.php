@@ -10,15 +10,15 @@ interface TokenServiceInterface
 {
 
     /**
-     * @param $rawToken
+     * @param string $rawToken
      *
      * @return string
      */
     public function generate($rawToken);
 
     /**
-     * @param $rawToken
-     * @param $token
+     * @param string $rawToken
+     * @param string $token
      *
      * @return bool
      */

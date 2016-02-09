@@ -59,7 +59,7 @@ class Manager
     }
 
     /**
-     * @param $bundleName
+     * @param string $bundleName
      *
      * @return array
      */

@@ -20,8 +20,8 @@ class Bar
     private $bar;
 
     /**
-     * @param $foo
-     * @param $bar
+     * @param mixed $foo
+     * @param mixed $bar
      */
     public function __construct($foo, $bar)
     {

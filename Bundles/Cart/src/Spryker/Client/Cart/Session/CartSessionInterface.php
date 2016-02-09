@@ -29,7 +29,7 @@ interface CartSessionInterface
     public function getItemCount();
 
     /**
-     * @param $itemCount
+     * @param int $itemCount
      *
      * @return $this
      */

@@ -23,7 +23,7 @@ abstract class Mysql extends AbstractKeyValue
     const FIELD_STATS_VALUE = 'Value';
 
     /**
-     * @return mixed|void
+     * @return void
      */
     public function connect()
     {
@@ -65,20 +65,6 @@ abstract class Mysql extends AbstractKeyValue
 
         return $statement->execute();
     }
-
-//    /**
-//     * @param $query
-//     * @return bool|\mysqli_result
-//     * @throws \Exception
-//     */
-//    protected function runQuery($query)
-//    {
-//        $statement = $this->getResource()->query($query);
-//        if (!$result) {
-//            throw new \Exception($this->getResource()->error);
-//        }
-//        return $result;
-//    }
 
     /**
      * @return string

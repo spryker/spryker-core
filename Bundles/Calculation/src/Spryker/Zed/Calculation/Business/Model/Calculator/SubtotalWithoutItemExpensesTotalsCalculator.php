@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
+use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
@@ -18,7 +19,7 @@ class SubtotalWithoutItemExpensesTotalsCalculator implements
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param $calculableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -32,7 +33,7 @@ class SubtotalWithoutItemExpensesTotalsCalculator implements
     }
 
     /**
-     * @param $calculableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return int
      */

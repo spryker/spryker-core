@@ -192,7 +192,10 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $salesOrderItems
+     * @param array $salesOrderItems
+     * @param array $notCopiedFields
+     *
+     * @return array
      */
     protected function filterOutNotCopiedFields($salesOrderItems, $notCopiedFields)
     {

@@ -133,9 +133,9 @@ class Filesystem extends \Twig_Loader_Filesystem
     }
 
     /**
-     * @param $name
-     * @param $bundle
-     * @param $templateName
+     * @param string $name
+     * @param string $bundle
+     * @param string $templateName
      *
      * @throws \Twig_Error_Loader
      *

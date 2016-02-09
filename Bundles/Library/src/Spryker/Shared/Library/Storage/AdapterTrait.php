@@ -49,7 +49,7 @@ trait AdapterTrait
     }
 
     /**
-     * @param $resource
+     * @param resource $resource
      *
      * @return $this
      */
@@ -83,7 +83,7 @@ trait AdapterTrait
     }
 
     /**
-     * @param $debug
+     * @param bool $debug
      *
      * @return $this
      */

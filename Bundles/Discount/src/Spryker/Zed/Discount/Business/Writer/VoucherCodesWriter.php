@@ -182,7 +182,7 @@ class VoucherCodesWriter extends AbstractWriter
 
     /**
      * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
-     * @param $voucherPoolCategory
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory $voucherPoolCategory
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
@@ -197,7 +197,7 @@ class VoucherCodesWriter extends AbstractWriter
 
     /**
      * @param \Generated\Shared\Transfer\VoucherCodesTransfer $voucherCodesTransfer
-     * @param $voucherPool
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $voucherPool
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer
      */

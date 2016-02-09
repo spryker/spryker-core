@@ -135,7 +135,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param $transferResponse
+     * @param mixed $transferResponse
      *
      * @return void
      */
@@ -144,7 +144,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param $message
+     * @param string $message
      *
      * @throws \ErrorException
      *

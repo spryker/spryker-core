@@ -12,7 +12,7 @@ class MissingPropertyLocator extends AbstractLocator
 {
 
     /**
-     * @param $bundle
+     * @param string $bundle
      *
      * @return object
      */

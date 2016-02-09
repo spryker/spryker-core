@@ -501,7 +501,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param $property
+     * @param string $property
      *
      * @return void
      */
@@ -525,7 +525,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param $property
+     * @param string $property
      *
      * @return void
      */

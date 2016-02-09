@@ -22,7 +22,7 @@ class ExpenseTotalsCalculator implements
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param $calculableItems
+     * @param \ArrayObject|OrderItemsTransfer|ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class ExpenseTotalsCalculator implements
 
     /**
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param $calculableItems
+     * @param \ArrayObject|OrderItemsTransfer|ItemTransfer[] $calculableItems
      *
      * @return array
      */
@@ -133,7 +133,7 @@ class ExpenseTotalsCalculator implements
 
     /**
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param $calculableItems
+     * @param \ArrayObject|OrderItemsTransfer|ItemTransfer[] $calculableItems
      *
      * @return \Generated\Shared\Transfer\ExpenseTotalsTransfer
      */

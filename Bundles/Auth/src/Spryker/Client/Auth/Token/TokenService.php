@@ -10,7 +10,7 @@ class TokenService implements TokenServiceInterface
 {
 
     /**
-     * @param $rawToken
+     * @param string $rawToken
      *
      * @return string
      */
@@ -20,8 +20,8 @@ class TokenService implements TokenServiceInterface
     }
 
     /**
-     * @param $rawToken
-     * @param $hash
+     * @param string $rawToken
+     * @param string $hash
      *
      * @return bool
      */

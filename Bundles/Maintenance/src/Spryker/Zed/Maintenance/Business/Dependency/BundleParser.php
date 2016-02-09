@@ -39,7 +39,7 @@ class BundleParser
     }
 
     /**
-     * @param $bundleName
+     * @param string $bundleName
      *
      * @return array
      */
@@ -55,7 +55,7 @@ class BundleParser
     /**
      * We only detect dependencies which are declared in the class' use statement
      *
-     * @param $bundle
+     * @param string $bundle
      *
      * @return array
      */
@@ -77,7 +77,7 @@ class BundleParser
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      *
      * @return \Symfony\Component\Finder\SplFileInfo[]
      */
@@ -117,7 +117,7 @@ class BundleParser
 
     /**
      * @param array $allFileDependencies
-     * @param $bundle
+     * @param string $bundle
      *
      * @return array
      */

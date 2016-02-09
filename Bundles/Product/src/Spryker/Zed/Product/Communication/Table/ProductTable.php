@@ -42,7 +42,7 @@ class ProductTable extends AbstractTable
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productQuery
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param $yvesUrl
+     * @param string $yvesUrl
      */
     public function __construct(
         SpyProductAbstractQuery $productQuery,

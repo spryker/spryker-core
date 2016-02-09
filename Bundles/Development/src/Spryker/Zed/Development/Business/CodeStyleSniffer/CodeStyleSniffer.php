@@ -31,13 +31,20 @@ class CodeStyleSniffer
     protected $pathToBundles;
 
     /**
+     * @var string
+     */
+    protected $codingStandard;
+
+    /**
      * @param string $applicationRoot
      * @param string $pathToBundles
+     * @param string $codingStandard
      */
-    public function __construct($applicationRoot, $pathToBundles)
+    public function __construct($applicationRoot, $pathToBundles, $codingStandard)
     {
         $this->applicationRoot = $applicationRoot;
         $this->pathToBundles = $pathToBundles;
+        $this->codingStandard = $codingStandard;
     }
 
     /**
@@ -60,6 +67,11 @@ class CodeStyleSniffer
 
             throw new \ErrorException($message);
         }
+
+        $defaults = [
+            'ignore' => $bundle ? '' : 'vendor/'
+        ];
+        $options += $defaults;
 
         $this->runSnifferCommand($path, $options);
     }
@@ -116,13 +128,17 @@ class CodeStyleSniffer
     {
         $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
 
-        $config = ' --standard=' . __DIR__ . '/Spryker/ruleset.xml';
+        $config = ' --standard=' . $this->codingStandard;
         if ($options[self::OPTION_VERBOSE]) {
             $config .= ' -v';
         }
 
         if ($options[self::OPTION_SNIFFS]) {
             $config .= ' --sniffs=' . $options[self::OPTION_SNIFFS];
+        }
+
+        if ($options['ignore']) {
+            $config .= ' --ignore=' . $options['ignore'];
         }
 
         $command = $options[self::OPTION_FIX] ? 'phpcbf' : 'phpcs';

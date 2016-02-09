@@ -17,7 +17,7 @@ class TransferCleaner
     private $directory;
 
     /**
-     * @param $directory
+     * @param string $directory
      */
     public function __construct($directory)
     {

@@ -25,10 +25,10 @@ class CurrencyManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $given
-     * @param $expected
-     * @param $includeSymbol
-     * @param $currencyIsoCode
+     * @param float $given
+     * @param string $expected
+     * @param bool $includeSymbol
+     * @param string $currencyIsoCode
      *
      * @dataProvider dataProvider
      *

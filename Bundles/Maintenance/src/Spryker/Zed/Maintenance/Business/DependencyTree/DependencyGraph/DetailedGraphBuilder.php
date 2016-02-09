@@ -94,8 +94,8 @@ class DetailedGraphBuilder implements GraphBuilderInterface
     }
 
     /**
-     * @param $bundle
-     * @param $foreignBundle
+     * @param string $bundle
+     * @param string $foreignBundle
      *
      * @return string
      */
@@ -141,7 +141,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
 
     /**
      * @param array $dependencyInformation
-     * @param $group
+     * @param string $group
      *
      * @return void
      */
@@ -164,7 +164,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
 
     /**
      * @param array $dependencyInformation
-     * @param $group
+     * @param string $group
      *
      * @return void
      */
