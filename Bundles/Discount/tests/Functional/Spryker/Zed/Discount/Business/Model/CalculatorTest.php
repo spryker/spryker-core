@@ -255,11 +255,11 @@ class CalculatorTest extends Test
     }
 
     /**
-     * @param $displayName
-     * @param $calculatorPlugin
-     * @param $amount
-     * @param $isActive
-     * @param $collectorPlugin
+     * @param string $displayName
+     * @param string $calculatorPlugin
+     * @param int $amount
+     * @param bool $isActive
+     * @param string $collectorPlugin
      * @param bool $isPrivileged
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer

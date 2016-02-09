@@ -136,7 +136,7 @@ abstract class AbstractGitFlowConsole extends Console
     }
 
     /**
-     * @param $command
+     * @param string $command
      *
      * @return int
      */

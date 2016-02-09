@@ -141,7 +141,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
         $bundleParser = $this->createDependencyBundleParser();
         $manager = $this->createDependencyManager();
 
-        return new DependencyGraph($bundleParser, $manager, $this->createGraphViz()->init('Dependency Tree'));
+        return new DependencyGraph($bundleParser, $manager, $this->getGraph()->init('Dependency Tree'));
     }
 
     /**
@@ -149,7 +149,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
-    protected function createGraphViz()
+    protected function getGraph()
     {
         return $this->getProvidedDependency(MaintenanceDependencyProvider::PLUGIN_GRAPH);
     }
@@ -195,12 +195,12 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param $collection
-     * @param $finder
+     * @param \Generated\Shared\Transfer\InstalledPackagesTransfer $collection
+     * @param array $finder
      *
      * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector
      */
-    protected function createInstalledPackageCollector($collection, $finder)
+    protected function createInstalledPackageCollector($collection, array $finder)
     {
         $collector = new InstalledPackageCollector(
             $collection,
@@ -211,7 +211,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param $collector
+     * @param \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface $collector
      *
      * @return \Spryker\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter
      */
@@ -361,7 +361,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createDetailedGraphBuilder()
     {
-        return new DetailedGraphBuilder($this->createGraphViz()->init('Dependency Tree'));
+        return new DetailedGraphBuilder($this->getGraph()->init('Dependency Tree'));
     }
 
     /**
@@ -404,7 +404,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSimpleGraphBuilder()
     {
-        return new SimpleGraphBuilder($this->createGraphViz()->init('Dependency Tree'));
+        return new SimpleGraphBuilder($this->getGraph()->init('Dependency Tree'));
     }
 
     /**

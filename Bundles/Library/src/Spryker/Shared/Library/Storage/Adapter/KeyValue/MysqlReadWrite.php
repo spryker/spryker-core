@@ -10,8 +10,8 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
 {
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      *
      * @throws \Exception
      *
@@ -44,7 +44,7 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @throws \Exception
      *
@@ -87,8 +87,8 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
     }
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      *
      * @throws \Exception
      *
@@ -112,7 +112,7 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @throws \Exception
      *

@@ -618,7 +618,7 @@ class Customer
     }
 
     /**
-     * @param $currentPassword
+     * @param string $currentPassword
      *
      * @return string
      */

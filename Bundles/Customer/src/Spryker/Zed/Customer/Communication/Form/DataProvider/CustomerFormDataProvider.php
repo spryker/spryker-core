@@ -18,7 +18,7 @@ class CustomerFormDataProvider extends AbstractCustomerDataProvider
     protected $customerQueryContainer;
 
     /**
-     * @param $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
      */
     public function __construct($customerQueryContainer)
     {

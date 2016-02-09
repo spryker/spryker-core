@@ -55,8 +55,8 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $name
-     * @param $type
+     * @param string $name
+     * @param string $type
      * @param string|null $singular
      * @param string|null $return
      * @param array $bundles

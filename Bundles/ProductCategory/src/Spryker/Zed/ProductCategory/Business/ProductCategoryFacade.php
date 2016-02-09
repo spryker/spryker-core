@@ -115,7 +115,7 @@ class ProductCategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param $productPreConfig
+     * @param array $productPreConfig
      *
      * @return void
      */

@@ -116,7 +116,7 @@ class ErrorHandler
 
     /**
      * @param \Exception $exception
-     * @param $output
+     * @param bool $output
      *
      * @return void
      */

@@ -12,7 +12,7 @@ class MethodTagBuilder implements MethodTagBuilderInterface
 {
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param array $methodTags
      *
      * @return array

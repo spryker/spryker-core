@@ -18,7 +18,7 @@ interface ProductCategoryToTouchInterface
     public function touchActive($itemType, $itemId);
 
     /**
-     * @param $itemType
+     * @param string $itemType
      * @param int $itemId
      *
      * @return bool

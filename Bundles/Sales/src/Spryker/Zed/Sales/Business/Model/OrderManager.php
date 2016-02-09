@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Business\Model;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\AddressTransfer;
 use Propel\Runtime\Propel;
@@ -120,8 +121,8 @@ class OrderManager
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param $orderEntity
-     * @param $orderProcess
+     * @param SpySalesOrder $orderEntity
+     * @param SpyOmsOrderProcess $orderProcess
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *

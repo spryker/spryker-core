@@ -72,14 +72,14 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryTreeRenderer(
             $this->getQueryContainer(),
             $locale,
-            $this->createGraphViz()->init('Category Tree')
+            $this->getGraph()->init('Category Tree')
         );
     }
 
     /**
      * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
-    protected function createGraphViz()
+    protected function getGraph()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_GRAPH);
     }

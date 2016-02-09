@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Heartbeat\Business;
 
+use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -31,7 +32,7 @@ class HeartbeatFacade extends AbstractFacade
     }
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doPropelHealthCheck()
     {
@@ -39,7 +40,7 @@ class HeartbeatFacade extends AbstractFacade
     }
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doSearchHealthCheck()
     {
@@ -47,7 +48,7 @@ class HeartbeatFacade extends AbstractFacade
     }
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doSessionHealthCheck()
     {
@@ -55,7 +56,7 @@ class HeartbeatFacade extends AbstractFacade
     }
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doStorageHealthCheck()
     {

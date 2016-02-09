@@ -103,8 +103,8 @@ class Event implements EventInterface
     }
 
     /**
-     * @param $name
-     * @param $data
+     * @param string $name
+     * @param array|string $data
      *
      * @throws \Spryker\Shared\EventJournal\Model\DataInvalidException
      *

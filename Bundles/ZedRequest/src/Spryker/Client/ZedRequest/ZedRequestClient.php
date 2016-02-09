@@ -34,9 +34,9 @@ class ZedRequestClient extends AbstractClient
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @param \Spryker\Shared\Transfer\TransferInterface $object
-     * @param null $timeoutInSeconds
+     * @param int|null $timeoutInSeconds
      * @param bool|false $isBackgroundRequest
      *
      * @return \Spryker\Shared\Transfer\TransferInterface

@@ -24,7 +24,7 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
 
     /**
      * @param Finder $finder
-     * @param $pathToBundles
+     * @param string $pathToBundles
      */
     public function __construct(Finder $finder, $pathToBundles)
     {

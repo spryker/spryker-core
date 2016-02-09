@@ -166,7 +166,7 @@ class Copy
     /**
      * @param $transferCollection
      * @param \Propel\Runtime\Collection\Collection $entityCollection
-     * @param $enrich
+     * @param bool $enrich
      *
      * @return \Propel\Runtime\Collection\Collection
      */
@@ -184,7 +184,7 @@ class Copy
 
     /**
      * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
-     * @param $enrich
+     * @param bool $enrich
      *
      * @return array
      */
@@ -213,7 +213,7 @@ class Copy
 
     /**
      * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
-     * @param $enrich
+     * @param bool $enrich
      *
      * @return array
      */

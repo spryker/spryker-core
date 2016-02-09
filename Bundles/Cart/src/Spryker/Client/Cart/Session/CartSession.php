@@ -67,7 +67,7 @@ class CartSession implements CartSessionInterface
     }
 
     /**
-     * @param $itemCount
+     * @param int $itemCount
      *
      * @return $this
      */

@@ -37,7 +37,7 @@ class Finder
     private $name;
 
     /**
-     * @param $bundleDirectory
+     * @param string $bundleDirectory
      * @param string $application
      * @param string $bundle
      * @param string $layer

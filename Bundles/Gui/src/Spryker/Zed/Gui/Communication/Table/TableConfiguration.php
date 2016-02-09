@@ -152,7 +152,7 @@ class TableConfiguration
     }
 
     /**
-     * @param $length
+     * @param int $length
      *
      * @return void
      */

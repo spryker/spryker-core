@@ -125,7 +125,7 @@ class TransferGeneratorTest extends Test
     }
 
     /**
-     * @param $sourceDirectories
+     * @param array $sourceDirectories
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder
      */
