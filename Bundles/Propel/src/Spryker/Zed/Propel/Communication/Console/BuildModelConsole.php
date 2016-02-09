@@ -48,7 +48,7 @@ class BuildModelConsole extends Console
             . $config['paths']['phpConfDir']
             . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';
 
-        $process = new Process($command, APPLICATION_ROOT_DIR, ['APPLICATION_ENV' => APPLICATION_ENV]);
+        $process = new Process($command, APPLICATION_ROOT_DIR);
 
         return $process->run(function ($type, $buffer) {
             echo $buffer;
