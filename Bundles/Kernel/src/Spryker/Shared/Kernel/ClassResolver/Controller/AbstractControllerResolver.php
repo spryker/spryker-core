@@ -80,9 +80,9 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => $this->bundleControllerAction->getBundle(),
+            self::KEY_BUNDLE => ucfirst($this->bundleControllerAction->getBundle()),
             self::KEY_STORE => $store,
-            self::KEY_CONTROLLER => $this->bundleControllerAction->getController(),
+            self::KEY_CONTROLLER => ucfirst($this->bundleControllerAction->getController()),
         ];
 
         $className = str_replace(

@@ -33,8 +33,8 @@ class ControllerNotFoundException extends \Exception implements ExceptionInterfa
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
             'Can not resolve %2$sController for your bundle "%1$s"',
-            $bundleControllerAction->getBundle(),
-            $bundleControllerAction->getController()
+            ucfirst($bundleControllerAction->getBundle()),
+            ucfirst($bundleControllerAction->getController())
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing Controller to your bundle.' . PHP_EOL;
