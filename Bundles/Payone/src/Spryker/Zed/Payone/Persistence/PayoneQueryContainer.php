@@ -131,7 +131,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      * @param int $idOrder
      * @param string $request
      *
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */
     public function createApiLogsByOrderIdAndRequest($idOrder, $request)
     {
@@ -152,7 +152,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      * @param int $orderId
      * @param string $request
      *
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */
     public function getApiLogsByOrderIdAndRequest($orderId, $request)
     {

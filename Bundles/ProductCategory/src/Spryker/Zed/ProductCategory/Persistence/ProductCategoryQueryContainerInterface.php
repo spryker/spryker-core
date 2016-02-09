@@ -60,7 +60,7 @@ interface ProductCategoryQueryContainerInterface
     public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale);
 
     /**
-     * @param $term
+     * @param string $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param null $idExcludedCategory
      *

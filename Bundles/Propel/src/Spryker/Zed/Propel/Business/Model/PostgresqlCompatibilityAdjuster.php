@@ -86,7 +86,7 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
         $xpath = new DOMXPath($dom);
         $nodeList = $xpath->query('//index[@name]|//unique[@name]|//foreign-key[@name]');
         $domChanged = 0;
-        /** @var $node \DOMElement */
+        /** @var \DOMElement $node */
         foreach ($nodeList as $node) {
             $node->removeAttribute('name');
             $domChanged++;
@@ -106,7 +106,7 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
         $nodeList = $xpath->query("//column[@autoIncrement='true']");
         $domChanged = 0;
         foreach ($nodeList as $column) {
-            /** @var $column \DOMElement */
+            /** @var \DOMElement $column */
             if ($xpath->query('id-method-parameter', $column->parentNode)->length > 0) {
                 continue;
             }

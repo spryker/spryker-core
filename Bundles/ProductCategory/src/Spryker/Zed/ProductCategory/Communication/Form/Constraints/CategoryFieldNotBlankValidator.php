@@ -46,7 +46,7 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
     }
 
     /**
-     * @param $fieldName
+     * @param string $fieldName
      *
      * @return bool
      */
@@ -58,7 +58,7 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
     }
 
     /**
-     * @param $checkboxName
+     * @param string $checkboxName
      *
      * @return bool
      */

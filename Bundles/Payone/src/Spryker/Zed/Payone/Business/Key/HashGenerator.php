@@ -97,7 +97,7 @@ class HashGenerator implements HashGeneratorInterface
     }
 
     /**
-     * @param $string
+     * @param string $string
      *
      * @return string
      */

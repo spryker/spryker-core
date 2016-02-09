@@ -196,7 +196,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param $storeConfig
+     * @param \Spryker\Shared\Kernel\Store $storeConfig
      *
      * @return \Spryker\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo
      */
@@ -208,7 +208,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param $storeConfig
+     * @param \Spryker\Shared\Kernel\Store $storeConfig
      *
      * @return \Spryker\Zed\Payone\Business\Payment\MethodMapper\Invoice
      */
@@ -220,7 +220,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param $storeConfig
+     * @param \Spryker\Shared\Kernel\Store $storeConfig
      *
      * @return \Spryker\Zed\Payone\Business\Payment\MethodMapper\OnlineBankTransfer
      */
@@ -232,7 +232,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param $storeConfig
+     * @param \Spryker\Shared\Kernel\Store $storeConfig
      *
      * @return \Spryker\Zed\Payone\Business\Payment\MethodMapper\EWallet
      */
@@ -244,7 +244,7 @@ class PayoneBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param $storeConfig
+     * @param \Spryker\Shared\Kernel\Store $storeConfig
      *
      * @return \Spryker\Zed\Payone\Business\Payment\MethodMapper\Prepayment
      */

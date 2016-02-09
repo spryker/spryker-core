@@ -34,7 +34,7 @@ class ApiLogFinder
      *
      * @return bool
      */
-    public function isPreauthorizationApproved(OrderTransfer $orderTransfer)
+    public function isPreAuthorizationApproved(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -48,7 +48,7 @@ class ApiLogFinder
      *
      * @return bool
      */
-    public function isPreauthorizationRedirect(OrderTransfer $orderTransfer)
+    public function isPreAuthorizationRedirect(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -62,7 +62,7 @@ class ApiLogFinder
      *
      * @return bool
      */
-    public function isPreauthorizationError(OrderTransfer $orderTransfer)
+    public function isPreAuthorizationError(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -198,7 +198,7 @@ class ApiLogFinder
         $response = new PayoneAuthorizationCheckResponseTransfer();
 
         $paymentEntity = $this->findPaymentByTransactionId($payonePaymentTransfer->getTransactionId());
-        // no payment - no success - but: what if auth call was successfull but
+        // no payment - no success - but: what if auth call was successful but
         // exception occurred....?
         if (!$paymentEntity) {
             $response->setIsSuccess(false);
@@ -280,7 +280,7 @@ class ApiLogFinder
 
     /**
      * @param \Orm\Zed\Payone\Persistence\SpyPaymentPayone $payment
-     * @param $authorizationType
+     * @param string $authorizationType
      *
      * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog
      */

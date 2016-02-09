@@ -209,7 +209,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return OrderItemSpy
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function createOrderItem()
     {

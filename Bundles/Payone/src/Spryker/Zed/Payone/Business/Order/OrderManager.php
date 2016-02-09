@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Payone\Business\Order;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Propel\Runtime\Propel;
@@ -30,11 +31,11 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param PayoneOrderInterface $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function saveOrder(PayoneOrderInterface $orderTransfer)
+    public function saveOrder(OrderTransfer $orderTransfer)
     {
         Propel::getConnection()->beginTransaction();
 

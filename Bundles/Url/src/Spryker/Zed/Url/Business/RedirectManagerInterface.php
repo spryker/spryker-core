@@ -29,7 +29,7 @@ interface RedirectManagerInterface
      * @param string $toUrl
      * @param int $status
      *
-     * @return redirectTransfer
+     * @return \Generated\Shared\Transfer\RedirectTransfer
      */
     public function createRedirectAndTouch($toUrl, $status = 301);
 

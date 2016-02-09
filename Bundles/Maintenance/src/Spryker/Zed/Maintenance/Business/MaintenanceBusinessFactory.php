@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Maintenance\Business;
 
-use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Maintenance\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\BranchAliasUpdater;
@@ -53,7 +52,6 @@ use Spryker\Zed\Maintenance\Business\Dependency\Manager;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder as ComposerInstalledPackageFinder;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
 use Spryker\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder;
-use Spryker\Zed\Maintenance\Business\Model\PropelBaseFolderFinder;
 use Spryker\Zed\Maintenance\MaintenanceDependencyProvider;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Finder\Finder as SfFinder;
@@ -266,7 +264,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     protected function createDependencyTree()
     {
         $fileInfoExtractor = $this->createDependencyTreeFileInfoExtractor();
-        $engineBundleList = $this->createEngineBundleList();
+        $engineBundleList = $this->getEngineBundleList();
 
         return new DependencyTree($fileInfoExtractor, $engineBundleList);
     }
@@ -437,7 +435,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
             $this->createDependencyManager()->collectAllBundles(),
             $this->createDependencyTreeReader(),
             $this->createAdjacencyMatrixDependencyTreeFilter(),
-            $this->createEngineBundleList()
+            $this->getEngineBundleList()
         );
 
         return $adjacencyMatrixBuilder;
@@ -585,9 +583,18 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated 1.0.0 Will be removed in the next major version.
+     *
      * @return array
      */
-    public function createEngineBundleList()
+    public function createEngineBundleList() {
+        return $this->getEngineBundleList();
+    }
+
+    /**
+     * @return array
+     */
+    public function getEngineBundleList()
     {
         $bundleList = json_decode(file_get_contents($this->getConfig()->getPathToBundleConfig()), true);
 

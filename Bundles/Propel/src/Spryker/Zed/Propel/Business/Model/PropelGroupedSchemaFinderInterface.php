@@ -9,7 +9,7 @@ interface PropelGroupedSchemaFinderInterface
 {
 
     /**
-     * @return array[SplFileInfo[]]
+     * @return array|\SplFileInfo[]]
      */
     public function getGroupedSchemaFiles();
 

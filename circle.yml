@@ -11,4 +11,4 @@ dependencies:
 
 test:
   override:
-    - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v
+    - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml

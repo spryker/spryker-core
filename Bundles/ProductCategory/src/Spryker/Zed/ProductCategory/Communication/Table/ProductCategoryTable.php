@@ -107,7 +107,7 @@ class ProductCategoryTable extends AbstractTable
     }
 
     /**
-     * @param $productCategory
+     * @param array $productCategory
      *
      * @return string
      */

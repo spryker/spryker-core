@@ -15,6 +15,7 @@ use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -232,7 +233,7 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @return Session
+     * @return \Symfony\Component\HttpFoundation\Session\Session
      */
     private function getSession()
     {

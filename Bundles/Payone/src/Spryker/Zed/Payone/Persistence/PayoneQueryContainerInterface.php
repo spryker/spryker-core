@@ -42,7 +42,7 @@ interface PayoneQueryContainerInterface
      * @param int $orderId
      * @param string $request
      *
-     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog
+     * @return \Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery
      */
     public function getApiLogsByOrderIdAndRequest($orderId, $request);
 

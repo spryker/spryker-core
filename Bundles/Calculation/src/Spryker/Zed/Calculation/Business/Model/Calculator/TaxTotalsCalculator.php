@@ -64,7 +64,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
             $this->calculateTax($item);
         }
 
-        /** @var $order CartTransfer|OrderTransfer **/
+        /** @var \Generated\Shared\Transfer\CartTransfer|\Generated\Shared\Transfer\OrderTransfer $order **/
         $order = $calculableContainer->getCalculableObject();
         $this->calculateTaxForOrderExpenses($order->getExpenses());
     }
@@ -117,7 +117,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
      */
     public function calculateTaxTotals(TotalsTransfer $totalsTransfer)
     {
-        /** @var $groupedTotals TaxSetTransfer[] **/
+        /** @var \Generated\Shared\Transfer\TaxSetTransfer[] $groupedTotals **/
         $groupedTotals = [];
         foreach ($this->calculatedTaxSets as $taxSet) {
             if (!isset($groupedTotals[$taxSet->getIdTaxSet()])) {
