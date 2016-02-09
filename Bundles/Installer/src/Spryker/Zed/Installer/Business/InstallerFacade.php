@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Installer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Installer\Business\InstallerBusinessFactory getFactory()
@@ -36,6 +37,16 @@ class InstallerFacade extends AbstractFacade
     public function getGlossaryInstaller()
     {
         return $this->getFactory()->createGlossaryInstaller();
+    }
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return \Spryker\Zed\Installer\Business\Model\IcecatInstaller
+     */
+    public function getIcecatDataInstaller(OutputInterface $output)
+    {
+        return $this->getFactory()->getIcecatDataInstaller($output);
     }
 
 }

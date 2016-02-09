@@ -10,4 +10,5 @@ use Psr\Log\LoggerInterface;
 
 interface MessengerInterface extends LoggerInterface
 {
+
 }
