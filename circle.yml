@@ -7,8 +7,8 @@ machine:
 
 dependencies:
   override:
-    - exit 0
+    - composer install --no-interaction --no-autoloader
 
 test:
   override:
-    - exit 0
+    - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v
