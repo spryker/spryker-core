@@ -31,13 +31,19 @@ class CodeStyleSniffer
     protected $pathToBundles;
 
     /**
+     * @var string
+     */
+    protected $codingStandard;
+
+    /**
      * @param string $applicationRoot
      * @param string $pathToBundles
      */
-    public function __construct($applicationRoot, $pathToBundles)
+    public function __construct($applicationRoot, $pathToBundles, $codingStandard)
     {
         $this->applicationRoot = $applicationRoot;
         $this->pathToBundles = $pathToBundles;
+        $this->codingStandard = $codingStandard;
     }
 
     /**
@@ -116,7 +122,7 @@ class CodeStyleSniffer
     {
         $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
 
-        $config = ' --standard=' . __DIR__ . '/Spryker/ruleset.xml';
+        $config = ' --standard=' . $this->codingStandard;
         if ($options[self::OPTION_VERBOSE]) {
             $config .= ' -v';
         }
