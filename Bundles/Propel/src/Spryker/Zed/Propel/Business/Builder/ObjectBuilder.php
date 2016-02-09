@@ -18,9 +18,13 @@ use Spryker\Shared\Library\Application\Environment;
 class ObjectBuilder extends PropelObjectBuilder
 {
 
+    /**
+     * @param \Propel\Generator\Model\Table $table
+     */
     public function __construct(Table $table)
     {
         parent::__construct($table);
+
         Environment::initialize('Zed');
     }
 

@@ -48,8 +48,6 @@ class BuildModelConsole extends Console
             . $config['paths']['phpConfDir']
             . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';
 
-//        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($command) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-
         $process = new Process($command, APPLICATION_ROOT_DIR, ['APPLICATION_ENV' => APPLICATION_ENV]);
 
         return $process->run(function ($type, $buffer) {

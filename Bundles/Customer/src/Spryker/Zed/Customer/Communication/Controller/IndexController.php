@@ -21,9 +21,6 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $customer = new SpyCustomer();
-        $customer->save();
-
         $table = $this->getFactory()
             ->createCustomerTable();
 
