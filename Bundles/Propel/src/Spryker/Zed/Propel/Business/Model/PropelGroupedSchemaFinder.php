@@ -11,7 +11,7 @@ class PropelGroupedSchemaFinder implements PropelGroupedSchemaFinderInterface
 {
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
      */
     protected $schemaFinder;
 
@@ -24,7 +24,7 @@ class PropelGroupedSchemaFinder implements PropelGroupedSchemaFinderInterface
     }
 
     /**
-     * @return array
+     * @return array|\Symfony\Component\Finder\SplFileInfo
      */
     public function getGroupedSchemaFiles()
     {
