@@ -7,7 +7,7 @@
 namespace Unit\Spryker\Zed\Application\Business\Model\Navigation\Cache;
 
 use Spryker\Zed\Application\Business\Exception\NavigationCacheFileDoesNotExistException;
-use Spryker\Zed\Application\Business\Exception\NavigationCacheFileEmptyException;
+use Spryker\Zed\Application\Business\Exception\NavigationCacheEmptyException;
 use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
 
 /**
@@ -118,7 +118,7 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMustThrowExceptionIfCacheEnabledCacheFileGivenButEmpty()
     {
-        $this->setExpectedException(NavigationCacheFileEmptyException::class);
+        $this->setExpectedException(NavigationCacheEmptyException::class);
 
         $cacheFile = $this->getCacheFile();
         $isEnabled = true;
