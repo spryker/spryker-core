@@ -9,7 +9,7 @@ namespace Spryker\Client\ZedRequest\Client;
 use Spryker\Client\Auth\AuthClientInterface;
 use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
 
-class HttpClient extends AbstractHttpClient
+class HttpClient extends AbstractHttpClient implements HttpClientInterface
 {
 
     /**
