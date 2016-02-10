@@ -15,7 +15,6 @@ use Spryker\Zed\Url\Business\UrlManagerInterface;
 use Spryker\Zed\Url\Dependency\UrlToTouchInterface;
 use Spryker\Zed\Url\Persistence\UrlPersistenceFactory;
 use Spryker\Zed\Url\Persistence\UrlQueryContainer;
-use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 /**
  * @group Spryker
@@ -60,4 +59,5 @@ class RedirectManagerTest extends \PHPUnit_Framework_TestCase
 
         $redirectedManager->deleteUrlRedirect(new RedirectTransfer());
     }
+
 }

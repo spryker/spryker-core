@@ -22,7 +22,7 @@ class RedirectController extends AbstractController
 
     const REDIRECT_ADDRESS = '/cms/redirect/';
     const REQUEST_ID_URL = 'id-url';
-    const REQUEST_ID_REDIRECT_URL = 'id-redirect-url';
+    const REQUEST_ID_URL_REDIRECT = 'id-url-redirect';
 
     /**
      * @return array
@@ -178,7 +178,7 @@ class RedirectController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idUrlRedirect = $request->query->getInt(self::REQUEST_ID_REDIRECT_URL);
+        $idUrlRedirect = $request->query->getInt(self::REQUEST_ID_URL_REDIRECT);
         if ($idUrlRedirect === 0) {
             $this->addErrorMessage('Id redirect url not set');
 

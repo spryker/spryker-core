@@ -18,6 +18,7 @@ class CmsRedirectTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
+    const REQUEST_ID_URL = 'id-url';
 
     /**
      * @var \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -68,10 +69,10 @@ class CmsRedirectTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $urlRedirectCollection = $this->getUrlRedirectCollection($config);
+        $urlCollection = $this->getUrlCollection($config);
         $results = [];
 
-        foreach ($urlRedirectCollection as $urlEntity) {
+        foreach ($urlCollection as $urlEntity) {
             $results[] = [
                 SpyUrlTableMap::COL_ID_URL => $urlEntity->getIdUrl(),
                 SpyUrlTableMap::COL_URL => $urlEntity->getUrl(),
@@ -80,7 +81,6 @@ class CmsRedirectTable extends AbstractTable
                 self::ACTIONS => $this->buildLinks($urlEntity),
             ];
         }
-        unset($queryResults);
 
         return $results;
     }
@@ -90,7 +90,7 @@ class CmsRedirectTable extends AbstractTable
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl[]
      */
-    private function getUrlRedirectCollection(TableConfiguration $config)
+    private function getUrlCollection(TableConfiguration $config)
     {
         return $this->runQuery($this->urlQuery, $config, true);
     }
@@ -103,7 +103,7 @@ class CmsRedirectTable extends AbstractTable
     private function buildLinks(SpyUrl $urlEntity)
     {
         $buttons[] = $this->generateEditButton(sprintf('/cms/redirect/edit?%s=%s', RedirectController::REQUEST_ID_URL, $urlEntity->getIdUrl()), 'Edit');
-        $buttons[] = $this->generateRemoveButton(sprintf('/cms/redirect/delete?%s=%s', RedirectController::REQUEST_ID_REDIRECT_URL, $urlEntity->getSpyUrlRedirect()->getIdUrlRedirect()), 'Delete');
+        $buttons[] = $this->generateRemoveButton(sprintf('/cms/redirect/delete?%s=%s', RedirectController::REQUEST_ID_URL_REDIRECT, $urlEntity->getSpyUrlRedirect()->getIdUrlRedirect()), 'Delete');
 
         return implode(' ', $buttons);
     }

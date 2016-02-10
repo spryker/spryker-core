@@ -96,7 +96,6 @@ class RedirectManager implements RedirectManagerInterface
         $redirectEntity->delete();
     }
 
-
     /**
      * @param string $toUrl
      * @param int $status
