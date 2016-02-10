@@ -67,6 +67,10 @@
         <property name="updatedAt" type="string" />
     </transfer>
 
+    <transfer name="OrderDetailsComments">
+        <property name="comments" type="Comment[]" singular="comment" />
+    </transfer>
+
     <transfer name="Document">
         <property name="header" type="string" />
         <property name="fileName" type="string" />

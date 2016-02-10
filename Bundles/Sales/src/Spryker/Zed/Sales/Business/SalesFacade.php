@@ -58,6 +58,18 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderDetailsCommentsTransfer
+     */
+    public function getOrderCommentsByOrderId($idSalesOrder)
+    {
+        $commentManager = $this->getFactory()->createCommentsManager();
+
+        return $commentManager->getCommentsByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
      * @deprecated
      *
      * @param int $idOrderItem

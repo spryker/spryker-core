@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\CommentTransfer;
+use Generated\Shared\Transfer\OrderDetailsCommentsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderComment;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
@@ -41,6 +42,24 @@ class CommentManager
         $commentTransfer->fromArray($commentEntity->toArray(), true);
 
         return $commentTransfer;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderDetailsCommentsTransfer
+     */
+    public function getCommentsByIdSalesOrder($idSalesOrder)
+    {
+        $commentsCollection = $this->queryContainer->queryComments()->filterByFkSalesOrder($idSalesOrder)->find();
+
+        $comments = new OrderDetailsCommentsTransfer();
+        foreach ($commentsCollection as $spySalesOrderComment) {
+            $comment = (new CommentTransfer())->fromArray($spySalesOrderComment->toArray(), true);
+            $comments->addComment($comment);
+        }
+
+        return $comments;
     }
 
 }

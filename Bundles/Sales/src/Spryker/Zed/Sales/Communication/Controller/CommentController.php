@@ -45,9 +45,20 @@ class CommentController extends AbstractController
         ];
     }
 
+    /**
+     * @param Request $request
+     * 
+     * @return array
+     */
     public function listAction(Request $request)
     {
-        dump($request->query->all());
+        $idSalesOrder = $request->query->get(SalesConfig::PARAM_IS_SALES_ORDER);
+
+        $comments = $this->getFacade()->getOrderCommentsByOrderId($idSalesOrder);
+
+        return [
+            'comments' => $comments->getComments(),
+        ];
     }
 
     /**

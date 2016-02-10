@@ -50,7 +50,7 @@ class CommentForm extends AbstractType
      */
     protected function addFkSalesOrderField(FormBuilderInterface $builder)
     {
-        $builder->add(CommentTransfer::FK_SALES_ORDER, 'text');
+        $builder->add(CommentTransfer::FK_SALES_ORDER, 'hidden');
 
         return $this;
     }
