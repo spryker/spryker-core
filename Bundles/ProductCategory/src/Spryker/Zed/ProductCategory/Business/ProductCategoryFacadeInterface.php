@@ -15,14 +15,6 @@ interface ProductCategoryFacadeInterface
 {
 
     /**
-     * @property ProductCategoryBusinessFactory $factory
-     *
-     * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryBusinessFactory getFactory()
-     * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryManager createProductManager()
-     */
-    public function createProductManager();
-
-    /**
      * @param string $sku
      * @param string $categoryName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale

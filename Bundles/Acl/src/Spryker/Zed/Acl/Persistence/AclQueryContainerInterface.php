@@ -14,11 +14,6 @@ interface AclQueryContainerInterface
 {
 
     /**
-     * @method \Spryker\Zed\Acl\Persistence\AclPersistenceFactory getFactory()
-     */
-    public function getFactory();
-
-    /**
      * @param string $name
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
