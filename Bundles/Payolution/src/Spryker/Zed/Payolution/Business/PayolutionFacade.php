@@ -18,11 +18,12 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function saveOrderPayment(OrderTransfer $orderTransfer)
     {
-        return $this
-            ->getFactory()
+        $this->getFactory()
             ->createOrderSaver()
             ->saveOrderPayment($orderTransfer);
     }
