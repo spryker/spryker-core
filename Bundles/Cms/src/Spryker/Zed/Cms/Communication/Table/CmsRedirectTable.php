@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Cms\Communication\Table;
 
+use Spryker\Zed\Cms\Communication\Controller\RedirectController;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -17,7 +18,6 @@ class CmsRedirectTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
-    const REQUEST_ID_URL = 'id-url';
 
     /**
      * @var \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -91,12 +91,12 @@ class CmsRedirectTable extends AbstractTable
      *
      * @return string
      */
-    private function buildLinks($item)
+    private function buildLinks(array $item)
     {
-        $result = '<a href="/cms/redirect/edit/?' . self::REQUEST_ID_URL . '=' . $item[SpyUrlTableMap::COL_ID_URL] . '" class="btn btn-xs btn-white">Edit</a>&nbsp;
-                   <a class="btn btn-xs btn-white">Delete</a>';
+        $buttons[] = $this->generateEditButton(sprintf('/cms/redirect/edit?%s=%s', RedirectController::REQUEST_ID_REDIRECT_URL, $item[SpyUrlTableMap::COL_ID_URL]), 'Edit');
+        $buttons[] = $this->generateRemoveButton(sprintf('/cms/redirect/delete?%s=%s', RedirectController::REQUEST_ID_REDIRECT_URL, $item[SpyUrlTableMap::COL_ID_URL]), 'Delete');
 
-        return $result;
+        return implode(' ', $buttons);
     }
 
 }

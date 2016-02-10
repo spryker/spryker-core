@@ -22,6 +22,7 @@ class RedirectController extends AbstractController
 {
 
     const REDIRECT_ADDRESS = '/cms/redirect/';
+    const REQUEST_ID_REDIRECT_URL = 'id-redirect-url';
 
     /**
      * @return array
@@ -86,7 +87,7 @@ class RedirectController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idUrl = $request->query->getInt(CmsRedirectTable::REQUEST_ID_URL);
+        $idUrl = $request->query->getInt(CmsRedirectTable::REQUEST_ID_REDIRECT_URL);
 
         $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
@@ -145,7 +146,8 @@ class RedirectController extends AbstractController
      */
     private function createUrlTransfer($url, $data)
     {
-        $urlTransfer = (new UrlTransfer())->fromArray($url->toArray(), true);
+        $urlTransfer = new UrlTransfer();
+        $urlTransfer->fromArray($url->toArray(), true);
         $urlTransfer->setUrl($data[CmsRedirectForm::FIELD_FROM_URL]);
         $urlTransfer->setFkRedirect($url->getFkResourceRedirect());
         $urlTransfer->setResourceId($url->getResourceId());
@@ -167,6 +169,25 @@ class RedirectController extends AbstractController
         $redirectTransfer->setStatus($data[CmsRedirectForm::FIELD_STATUS]);
 
         return $redirectTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction(Request $request)
+    {
+        $idUrlRedirect = $request->query->getInt(self::REQUEST_ID_REDIRECT_URL);
+        if ($idUrlRedirect === 0) {
+            $this->addErrorMessage('Id redirect url not set');
+
+            return $this->redirectResponse('/cms/redirect');
+        }
+
+        $deleteRedirectResponse = $this->getUrlFacade()->deleteRedirectUrl();
+
+        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($idUrlRedirect) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
     }
 
 }

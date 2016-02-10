@@ -207,6 +207,11 @@ class UrlFacade extends AbstractFacade
         return $redirectManager->createRedirectUrl($url, $locale, $idUrlRedirect);
     }
 
+    public function deleteRedirectUrl()
+    {
+        
+    }
+
     /**
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale

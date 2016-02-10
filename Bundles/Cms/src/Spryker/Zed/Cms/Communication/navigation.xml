@@ -26,7 +26,7 @@
                 <label>Redirects</label>
                 <title>Redirects</title>
                 <bundle>cms</bundle>
-                <controller>Redirect</controller>
+                <controller>redirect</controller>
                 <action>index</action>
                 <icon>fa-link</icon>
             </redirects>

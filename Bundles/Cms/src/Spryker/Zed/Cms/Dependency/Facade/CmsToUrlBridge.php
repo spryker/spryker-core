@@ -6,7 +6,6 @@
 namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\RedirectTransfer;
-use Spryker\Zed\Url\Business\UrlFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
