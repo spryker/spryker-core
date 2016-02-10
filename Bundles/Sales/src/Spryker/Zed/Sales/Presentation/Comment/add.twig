@@ -1,0 +1,5 @@
+{{ form_start(form, {'action': '/sales/comment/add'}) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" class="btn btn-xs btn-primary" value="{{ 'Send Message' | trans }}" />
+{{ form_end(form) }}

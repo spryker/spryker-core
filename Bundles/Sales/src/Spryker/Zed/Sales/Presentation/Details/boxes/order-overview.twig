@@ -16,26 +16,7 @@
                 <p><b>{{ 'Other order' | trans }}:</b> (123)</p>
             </div>
             <div class="col-sm-4">
-                <h3>Comments {#<div class="pull-right"><a href="" class="btn btn-xs btn-primary">{{ 'Add Message' | trans }}</a></div>#}</h3>
-                <div class="order-details-chat">
-                    {% for i in 1..4 %}
-                        <div class="chat">
-                            <div class="chat-author"><span>Username</span></div>
-                            <div class="chat-body">This is my message</div>
-                        </div>
-                    {% endfor %}
-                </div>
-                <form action="" class="form-horizontal chat-form">
-                    <input type="hidden" name="id-sales-order" value="{{ order.idSalesOrder }}" />
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <textarea name="" class="form-control" cols="60" rows="2"></textarea>
-                        </div>
-                        <div class="col-xs-12">
-                            <button class="btn btn-xs btn-primary">Send Message</button>
-                        </div>
-                    </div>
-                </form>
+                {{ render(controller('/sales/comment/list', {'request': app.request})) }}
             </div>
         </div>
     {% endblock %}

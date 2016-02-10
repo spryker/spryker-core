@@ -7,39 +7,90 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\CommentTransfer;
+use Spryker\Zed\Application\Business\Url\Url;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Spryker\Zed\Sales\SalesConfig;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
  */
 class CommentController extends AbstractController
 {
 
     /**
-     * @TODO check if we can remove this method
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function addAction(Request $request)
     {
-        $form = $this->getFactory()->getCommentForm();
+        $idSalesOrder = $request->query->get(SalesConfig::PARAM_IS_SALES_ORDER);
+
+        $formDataProvider = $this->getFactory()->createCommentFormDataProvider();
+        $form = $this->getFactory()->createCommentForm(
+            $formDataProvider->getData($idSalesOrder)
+        );
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $facade = $this->getFacade();
-
-            $formData = $form->getRequestData();
-            $comment = new CommentTransfer();
-            $comment->setMessage($formData['message']);
-
-            $facade->saveComment($comment);
+        if ($form->isSubmitted()) {
+            return $this->submitCommentForm($form);
         }
 
-        return $this->jsonResponse($form->renderData());
+        return [
+            'form' => $form->createView(),
+        ];
+    }
+
+    public function listAction(Request $request)
+    {
+        dump($request->query->all());
+    }
+
+    /**
+     * @param Form $form
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function submitCommentForm(Form $form)
+    {
+        $formData = $form->getData();
+        $idSalesOrder = $formData[CommentTransfer::FK_SALES_ORDER];
+
+        if ($form->isValid()) {
+            $comment = new CommentTransfer();
+            $comment->setMessage($formData[CommentTransfer::MESSAGE]);
+            $comment->setFkSalesOrder($idSalesOrder);
+
+            $this->getFacade()->saveComment($comment);
+
+            $this->addSuccessMessage('Comment successfully added');
+
+        } else {
+            /** @var FormError $error */
+            foreach ($form->getErrors() as $error) {
+                $this->addErrorMessage($error->getMessage());
+            }
+        }
+
+        return $this->redirectUserToOrderDetails($idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function redirectUserToOrderDetails($idSalesOrder)
+    {
+        $url = Url::generate('/sales/details', [
+            SalesConfig::PARAM_IS_SALES_ORDER => $idSalesOrder,
+        ]);
+
+        return $this->redirectResponse($url->build());
     }
 
 }

@@ -7,6 +7,8 @@
 namespace Spryker\Zed\Sales\Communication;
 
 use Spryker\Zed\Sales\Business\SalesFacade;
+use Spryker\Zed\Sales\Communication\Form\CommentForm;
+use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -56,6 +58,14 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider
+     */
+    public function createCommentFormDataProvider()
+    {
+        return new CommentFormDataProvider();
+    }
+
+    /**
      * @param array $formData
      * @param array $formOptions
      *
@@ -65,6 +75,17 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     {
         $addressFormType = new AddressForm();
         return $this->getFormFactory()->create($addressFormType, $formData, $formOptions);
+    }
+
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCommentForm(array $formData = [], array $formOptions = [])
+    {
+        return $this->getFormFactory()->create(new CommentForm(), $formData, $formOptions);
     }
 
     /**

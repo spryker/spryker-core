@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SalesConfig extends AbstractBundleConfig
 {
 
+    const PARAM_IS_SALES_ORDER = 'id-sales-order';
+
     /**
      * @var array|string[]
      */
