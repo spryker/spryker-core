@@ -267,7 +267,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @param string $categoryKey
-     * @param $idLocale
+     * @param int $idLocale
      *
      * @return SpyCategoryQuery
      */

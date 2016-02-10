@@ -857,7 +857,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @param string $categoryKey
-     * @param $idLocale
+     * @param int $idLocale
      *
      * @return SpyCategoryQuery
      */
