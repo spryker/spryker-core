@@ -14,7 +14,7 @@ use Spryker\Zed\Refund\RefundDependencyProvider;
 /**
  * @method \Spryker\Zed\Refund\Business\RefundBusinessFactory getFactory()
  */
-class RefundFacade extends AbstractFacade
+class RefundFacade extends AbstractFacade implements RefundFacadeInterface
 {
 
     /**

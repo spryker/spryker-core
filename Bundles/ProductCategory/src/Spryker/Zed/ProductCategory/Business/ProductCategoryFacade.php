@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryManager createProductManager()
  */
-class ProductCategoryFacade extends AbstractFacade
+class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFacadeInterface
 {
 
     /**

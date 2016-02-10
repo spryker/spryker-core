@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\ProductOptionCheckoutConnector\Business\ProductOptionCheckoutConnectorBusinessFactory getFactory()
  */
-class ProductOptionCheckoutConnectorFacade extends AbstractFacade
+class ProductOptionCheckoutConnectorFacade extends AbstractFacade implements ProductOptionCheckoutConnectorFacadeInterface
 {
 
     /**

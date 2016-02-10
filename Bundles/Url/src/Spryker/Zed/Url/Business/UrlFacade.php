@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Url\Business\UrlBusinessFactory getFactory()
  */
-class UrlFacade extends AbstractFacade
+class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 {
 
     /**

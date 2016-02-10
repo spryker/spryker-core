@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\UserTransfer;
 /**
  * @method \Spryker\Zed\Acl\Business\AclBusinessFactory getFactory()
  */
-class AclFacade extends AbstractFacade
+class AclFacade extends AbstractFacade implements AclFacadeInterface
 {
 
     /**

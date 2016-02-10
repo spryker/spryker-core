@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Availability\Business\AvailabilityBusinessFactory getFactory()
  */
-class AvailabilityFacade extends AbstractFacade
+class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInterface
 {
 
     /**

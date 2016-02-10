@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\GroupableContainerTransfer;
 /**
  * @method \Spryker\Zed\ItemGrouper\Business\ItemGrouperBusinessFactory getFactory()
  */
-class ItemGrouperFacade extends AbstractFacade
+class ItemGrouperFacade extends AbstractFacade implements ItemGrouperFacadeInterface
 {
 
     /**

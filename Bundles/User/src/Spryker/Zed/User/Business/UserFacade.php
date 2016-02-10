@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\UserTransfer;
 /**
  * @method \Spryker\Zed\User\Business\UserBusinessFactory getFactory()
  */
-class UserFacade extends AbstractFacade
+class UserFacade extends AbstractFacade implements UserFacadeInterface
 {
 
     /**

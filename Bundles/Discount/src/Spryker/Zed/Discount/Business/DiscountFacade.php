@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
  */
-class DiscountFacade extends AbstractFacade
+class DiscountFacade extends AbstractFacade implements DiscountFacadeINterface
 {
 
     /**

@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Locale\Business\LocaleBusinessFactory getFactory()
  */
-class LocaleFacade extends AbstractFacade
+class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
 {
 
     /**

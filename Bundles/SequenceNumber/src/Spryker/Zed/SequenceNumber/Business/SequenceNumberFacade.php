@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\SequenceNumber\Business\SequenceNumberBusinessFactory getFactory()
  */
-class SequenceNumberFacade extends AbstractFacade
+class SequenceNumberFacade extends AbstractFacade implements SequenceNumberFacadeInterface
 {
 
     /**

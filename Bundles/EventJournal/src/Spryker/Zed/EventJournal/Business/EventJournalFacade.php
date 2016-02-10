@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\EventJournal\Business\EventJournalFactory getFactory()
  */
-class EventJournalFacade extends AbstractFacade
+class EventJournalFacade extends AbstractFacade implements EventJournalFacadeInterface
 {
 
     /**

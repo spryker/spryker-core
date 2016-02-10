@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
 /**
  * @method \Spryker\Zed\Transfer\Business\TransferBusinessFactory getFactory()
  */
-class TransferFacade extends AbstractFacade
+class TransferFacade extends AbstractFacade implements TransferFacadeInterface
 {
 
     /**

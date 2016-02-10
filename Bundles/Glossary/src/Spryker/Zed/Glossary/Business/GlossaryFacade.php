@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Glossary\Business\GlossaryBusinessFactory getFactory()
  */
-class GlossaryFacade extends AbstractFacade
+class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
 {
 
     /**

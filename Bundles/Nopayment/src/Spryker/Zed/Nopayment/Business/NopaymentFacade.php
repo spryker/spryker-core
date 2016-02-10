@@ -12,7 +12,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 /**
  * @method \Spryker\Zed\Nopayment\Business\NopaymentBusinessFactory getFactory()
  */
-class NopaymentFacade extends AbstractFacade
+class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
 {
 
     /**

@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Messenger\Business\MessengerBusinessFactory getFactory()
  */
-class MessengerFacade extends AbstractFacade
+class MessengerFacade extends AbstractFacade implements MessengerFacadeInterface
 {
 
     /**
