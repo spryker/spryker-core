@@ -24,7 +24,7 @@ interface CatalogInterface
      *
      * @throws \Spryker\Client\Catalog\Model\Exception\ProductNotFoundException
      *
-     * @return array[]
+     * @return array
      */
     public function getProductDataByIds(array $ids, $indexByKey = null);
 
