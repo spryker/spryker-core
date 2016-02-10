@@ -129,7 +129,7 @@ class MaintenanceFacade extends AbstractFacade
      */
     public function getEngineBundleList()
     {
-        return $this->getFactory()->createEngineBundleList();
+        return $this->getFactory()->getEngineBundleList();
     }
 
     /**

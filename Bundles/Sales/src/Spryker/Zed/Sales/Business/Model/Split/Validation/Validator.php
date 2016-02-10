@@ -90,7 +90,7 @@ class Validator implements ValidatorInterface
     }
 
     /**
-     * @param SpySalesOrderItem$salesOrderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      *
      * @return bool
      */

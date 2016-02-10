@@ -7,6 +7,7 @@
 namespace Spryker\Shared\Sales\Code;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Shared\Cart\Transfer\ItemCollectionInterface;
 
 /**
  * @TODO Validate cross-bundle Dependencies
@@ -18,11 +19,11 @@ abstract class AbstractItemGrouper
     const GROUP_KEY_UNIQUE_IDENTIFIER = 'UniqueIdentifier';
 
     /**
-     * @param OrderItemCollection $items
+     * @param \Spryker\Shared\Cart\Transfer\ItemCollectionInterface $items
      *
-     * @return OrderItemCollection
+     * @return \Spryker\Shared\Cart\Transfer\ItemCollectionInterface
      */
-    public function groupItemsByUniqueId(OrderItemCollection $items)
+    public function groupItemsByUniqueId(ItemCollectionInterface $items)
     {
         return $this->groupItemsByKey($items, self::GROUP_KEY_UNIQUE_IDENTIFIER);
     }
@@ -30,27 +31,28 @@ abstract class AbstractItemGrouper
     /**
      * This Method is not Options aware. Use with caution
      *
-     * @param OrderItemCollection $items
+     * @param \Spryker\Shared\Cart\Transfer\ItemCollectionInterface $items
      *
-     * @return OrderItemCollection
+     * @return \Spryker\Shared\Cart\Transfer\ItemCollectionInterface
      */
-    public function groupItemsBySku(OrderItemCollection $items)
+    public function groupItemsBySku(ItemCollectionInterface $items)
     {
         return $this->groupItemsByKey($items, self::GROUP_KEY_SKU);
     }
 
     /**
-     * @param OrderItemCollection $items
+     * @param \Spryker\Shared\Cart\Transfer\ItemCollectionInterface $items
      * @param string $key
      *
-     * @return OrderItemCollection
+     * @return \Spryker\Shared\Cart\Transfer\ItemCollectionInterface
      */
-    protected function groupItemsByKey(OrderItemCollection $items, $key)
+    protected function groupItemsByKey(ItemCollectionInterface $items, $key)
     {
+        /** @var \Generated\Shared\Transfer\ItemTransfer[] $index */
         $index = [];
         $methodName = 'get' . ucfirst($key);
 
-        /** @var \Spryker\Shared\Sales\Transfer\OrderItem $item */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $item */
         foreach ($items as $item) {
             $groupKey = $item->$methodName();
             if (isset($index[$groupKey])) {

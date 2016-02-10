@@ -17,7 +17,7 @@ interface CustomerToCountryInterface
     public function getIdCountryByIso2Code($iso2Code);
 
     /**
-     * @param string$countryName
+     * @param string $countryName
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */

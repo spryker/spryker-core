@@ -180,7 +180,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param \Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer $paymentMethod
      *
-     * @return $this;
+     * @return $this
      */
     public function setPaymentMethod(BankAccountContainer $paymentMethod)
     {

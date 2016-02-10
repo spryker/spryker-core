@@ -93,7 +93,7 @@ class DetailsController extends AbstractController
     }
 
     /**
-     * @param $events
+     * @param array $events
      *
      * @return array
      */

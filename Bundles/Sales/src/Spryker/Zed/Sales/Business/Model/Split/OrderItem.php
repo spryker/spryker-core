@@ -120,7 +120,7 @@ class OrderItem implements ItemInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      * @param int $quantity
      *
-     * @return SpySalesOrderItem;
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function copy(SpySalesOrderItem $salesOrderItem, $quantity)
     {

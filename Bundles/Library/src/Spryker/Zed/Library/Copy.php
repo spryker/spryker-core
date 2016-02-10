@@ -122,7 +122,7 @@ class Copy
      * Copies all values from a transfer object to the entity object
      * where the transfer value is NOT NULL!
      *
-     *  WARNING: Be carefull using this method and think if this is
+     *  WARNING: Be careful using this method and think if this is
      *  what you need!
      *
      * @param \Spryker\Shared\Transfer\AbstractTransfer $transfer
@@ -146,9 +146,9 @@ class Copy
     }
 
     /**
-     * @param $transferCollection
+     * @param \Spryker\Shared\Transfer\AbstractTransfer[] $transferCollection
      * @param \Propel\Runtime\Collection\Collection $entityCollection
-     * @param $enrich
+     * @param bool $enrich
      *
      * @return mixed
      */
@@ -164,7 +164,7 @@ class Copy
     }
 
     /**
-     * @param $transferCollection
+     * @param \Spryker\Shared\Transfer\AbstractTransfer[] $transferCollection
      * @param \Propel\Runtime\Collection\Collection $entityCollection
      * @param bool $enrich
      *

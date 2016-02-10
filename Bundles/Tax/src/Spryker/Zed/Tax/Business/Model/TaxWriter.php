@@ -255,7 +255,7 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxRate
      */
