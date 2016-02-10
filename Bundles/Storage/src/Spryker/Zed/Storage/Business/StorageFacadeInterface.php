@@ -10,7 +10,7 @@ interface StorageFacadeInterface
 {
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return mixed
      */
