@@ -13,6 +13,7 @@ use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\GrandTotalAggre
 use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\ItemGrossPriceAggregatorPlugin;
 use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\SubtotalOrderAggregatorPlugin;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
@@ -30,6 +31,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'LOCALE_FACADE';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
     const FACADE_TAX = 'FACADE_TAX';
+    const FACADE_USER = 'FACADE_USER';
 
     const PLUGINS_PAYMENT_LOGS = 'PLUGINS_PAYMENT_LOGS';
     const PLUGINS_ORDER_AMOUNT_AGGREGATION =  'PLUGINS_ORDER_AMOUNT_AGGREGATION';
@@ -72,6 +74,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::PLUGINS_ITEM_AMOUNT_AGGREGATION] = function (Container $container) {
             return $this->getItemAmountAggregationPlugins($container);
+        };
+
+        $container[self::FACADE_USER] = function (Container $container) {
+            return new SalesToUserBridge($container->getLocator()->user()->facade());
         };
 
         return $container;

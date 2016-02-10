@@ -29,6 +29,7 @@ use Spryker\Zed\Sales\Business\Model\Split\ItemInterface;
 use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use Spryker\Zed\Sales\Communication\Plugin\OrderAmountAggregator\GrandTotalAggregatorPlugin;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToTaxInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToRefundInterface;
@@ -63,8 +64,11 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createCommentsManager()
     {
+        $userFacade = $this->getProvidedDependency(SalesDependencyProvider::FACADE_USER);
+
         return new CommentManager(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $userFacade->getCurrentUser()
         );
     }
 

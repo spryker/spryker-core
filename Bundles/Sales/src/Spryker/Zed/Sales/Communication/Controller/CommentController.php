@@ -47,7 +47,7 @@ class CommentController extends AbstractController
 
     /**
      * @param Request $request
-     * 
+     *
      * @return array
      */
     public function listAction(Request $request)

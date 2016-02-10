@@ -8,6 +8,7 @@ namespace Spryker\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderDetailsCommentsTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderComment;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
@@ -20,11 +21,18 @@ class CommentManager
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
+     * @var \Generated\Shared\Transfer\UserTransfer
      */
-    public function __construct(SalesQueryContainerInterface $salesQueryContainer)
+    protected $userTransfer;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainer|SalesQueryContainerInterface $queryContainer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     */
+    public function __construct(\Spryker\Zed\Sales\Persistence\SalesQueryContainer $queryContainer, UserTransfer $userTransfer)
     {
-        $this->queryContainer = $salesQueryContainer;
+        $this->queryContainer = $queryContainer;
+        $this->userTransfer = $userTransfer;
     }
 
     /**
@@ -36,6 +44,11 @@ class CommentManager
     {
         $commentEntity = new SpySalesOrderComment();
         $commentEntity->fromArray($commentTransfer->toArray());
+        $commentEntity->setUsername(sprintf(
+            '%s %s',
+            $this->userTransfer->getFirstName(),
+            $this->userTransfer->getLastName())
+        );
 
         $commentEntity->save();
 
