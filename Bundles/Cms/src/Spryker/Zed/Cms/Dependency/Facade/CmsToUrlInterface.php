@@ -83,4 +83,11 @@ interface CmsToUrlInterface
      */
     public function saveRedirectAndTouch(RedirectTransfer $redirect);
 
+    /**
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
+     *
+     * @return void
+     */
+    public function deleteUrlRedirect(RedirectTransfer $redirectTransfer);
+
 }

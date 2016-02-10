@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
-use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,6 +21,7 @@ class RedirectController extends AbstractController
 {
 
     const REDIRECT_ADDRESS = '/cms/redirect/';
+    const REQUEST_ID_URL = 'id-url';
     const REQUEST_ID_REDIRECT_URL = 'id-redirect-url';
 
     /**
@@ -87,7 +87,7 @@ class RedirectController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idUrl = $request->query->getInt(CmsRedirectTable::REQUEST_ID_REDIRECT_URL);
+        $idUrl = $request->query->getInt(self::REQUEST_ID_URL);
 
         $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
@@ -185,9 +185,12 @@ class RedirectController extends AbstractController
             return $this->redirectResponse('/cms/redirect');
         }
 
-        $deleteRedirectResponse = $this->getUrlFacade()->deleteRedirectUrl();
+        $redirectTransfer = new RedirectTransfer();
+        $redirectTransfer->setIdUrlRedirect($idUrlRedirect);
 
-        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($idUrlRedirect) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+        $this->getUrlFacade()->deleteUrlRedirect($redirectTransfer);
+
+        return $this->redirectResponse('/cms/redirect');
     }
 
 }

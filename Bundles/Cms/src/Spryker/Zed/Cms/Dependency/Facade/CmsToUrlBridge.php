@@ -119,4 +119,15 @@ class CmsToUrlBridge implements CmsToUrlInterface
         return $this->urlFacade->saveRedirectAndTouch($redirect);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
+     *
+     * @return void
+     */
+    public function deleteUrlRedirect(RedirectTransfer $redirectTransfer)
+    {
+        $this->urlFacade->deleteUrlRedirect($redirectTransfer);
+    }
+
+
 }

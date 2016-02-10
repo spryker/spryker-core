@@ -51,8 +51,8 @@ class RedirectManager implements RedirectManagerInterface
         UrlToTouchInterface $touchFacade,
         ConnectionInterface $connection
     ) {
-        $this->urlManager = $urlManager;
         $this->urlQueryContainer = $urlQueryContainer;
+        $this->urlManager = $urlManager;
         $this->touchFacade = $touchFacade;
         $this->connection = $connection;
     }
@@ -82,6 +82,20 @@ class RedirectManager implements RedirectManagerInterface
 
         return $redirect;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
+     *
+     * @return void
+     */
+    public function deleteUrlRedirect(RedirectTransfer $redirectTransfer)
+    {
+        $redirectEntity = $this->getRedirectById($redirectTransfer->getIdUrlRedirect());
+        $this->touchDeleted($redirectTransfer);
+
+        $redirectEntity->delete();
+    }
+
 
     /**
      * @param string $toUrl
@@ -219,6 +233,16 @@ class RedirectManager implements RedirectManagerInterface
     public function touchRedirectActive(RedirectTransfer $redirect)
     {
         $this->touchFacade->touchActive(self::ITEM_TYPE_REDIRECT, $redirect->getIdUrlRedirect());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
+     *
+     * @return void
+     */
+    protected function touchDeleted(RedirectTransfer $redirectTransfer)
+    {
+        $this->touchFacade->touchDeleted(self::ITEM_TYPE_REDIRECT, $redirectTransfer->getIdUrlRedirect());
     }
 
     /**

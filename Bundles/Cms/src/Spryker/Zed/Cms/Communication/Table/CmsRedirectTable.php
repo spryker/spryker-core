@@ -6,8 +6,8 @@
 
 namespace Spryker\Zed\Cms\Communication\Table;
 
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Cms\Communication\Controller\RedirectController;
-use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -68,17 +68,16 @@ class CmsRedirectTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->urlQuery;
-        $queryResults = $this->runQuery($query, $config);
+        $urlRedirectCollection = $this->getUrlRedirectCollection($config);
         $results = [];
 
-        foreach ($queryResults as $item) {
+        foreach ($urlRedirectCollection as $urlEntity) {
             $results[] = [
-                SpyUrlTableMap::COL_ID_URL => $item[SpyUrlTableMap::COL_ID_URL],
-                SpyUrlTableMap::COL_URL => $item[SpyUrlTableMap::COL_URL],
-                CmsQueryContainer::TO_URL => $item[CmsQueryContainer::TO_URL],
-                SpyUrlRedirectTableMap::COL_STATUS => $item[CmsRedirectForm::FIELD_STATUS],
-                self::ACTIONS => $this->buildLinks($item),
+                SpyUrlTableMap::COL_ID_URL => $urlEntity->getIdUrl(),
+                SpyUrlTableMap::COL_URL => $urlEntity->getUrl(),
+                CmsQueryContainer::TO_URL => $urlEntity->getSpyUrlRedirect()->getToUrl(),
+                SpyUrlRedirectTableMap::COL_STATUS => $urlEntity->getSpyUrlRedirect()->getStatus(),
+                self::ACTIONS => $this->buildLinks($urlEntity),
             ];
         }
         unset($queryResults);
@@ -87,14 +86,24 @@ class CmsRedirectTable extends AbstractTable
     }
 
     /**
-     * @param array $item
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrl[]
+     */
+    private function getUrlRedirectCollection(TableConfiguration $config)
+    {
+        return $this->runQuery($this->urlQuery, $config, true);
+    }
+
+    /**
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
      *
      * @return string
      */
-    private function buildLinks(array $item)
+    private function buildLinks(SpyUrl $urlEntity)
     {
-        $buttons[] = $this->generateEditButton(sprintf('/cms/redirect/edit?%s=%s', RedirectController::REQUEST_ID_REDIRECT_URL, $item[SpyUrlTableMap::COL_ID_URL]), 'Edit');
-        $buttons[] = $this->generateRemoveButton(sprintf('/cms/redirect/delete?%s=%s', RedirectController::REQUEST_ID_REDIRECT_URL, $item[SpyUrlTableMap::COL_ID_URL]), 'Delete');
+        $buttons[] = $this->generateEditButton(sprintf('/cms/redirect/edit?%s=%s', RedirectController::REQUEST_ID_URL, $urlEntity->getIdUrl()), 'Edit');
+        $buttons[] = $this->generateRemoveButton(sprintf('/cms/redirect/delete?%s=%s', RedirectController::REQUEST_ID_REDIRECT_URL, $urlEntity->getSpyUrlRedirect()->getIdUrlRedirect()), 'Delete');
 
         return implode(' ', $buttons);
     }
