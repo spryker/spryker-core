@@ -12,6 +12,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated 1.0.0 Will be removed in the next major version. Use CodeStyleSnifferConsole instead.
+ *
  * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
  */
 class CodeStyleFixerConsole extends Console
