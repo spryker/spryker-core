@@ -3,17 +3,17 @@
     {% block widget_content %}
         <div class="row">
             <div class="col-sm-4">
-                <p><b>{{ 'Order ID' | trans }}:</b> 12334</p>
-                <p><b>{{ 'Order date' | trans }}:</b> 12334</p>
-                <p><b>{{ 'Grand total' | trans }}:</b> 12334</p>
-                <p><b>{{ 'Discount' | trans }}:</b> 12334</p>
-                <p><b>{{ 'Item Quantity' | trans }}:</b> 12334</p>
+                <p><b>{{ 'Order ID' | trans }}:</b> {{ order.idSalesOrder }}</p>
+                <p><b>{{ 'Order date' | trans }}:</b> {{ order.createdAt | date('Y-m-d G:i:s') }}</p>
+                <p><b>{{ 'Grand total' | trans }}:</b> {{ order.totals.grandTotal | currency }}</p>
+                <p><b>{{ 'Discount' | trans }}:</b> {{ '--todo--' }}</p>
+                <p><b>{{ 'Item Quantity' | trans }}:</b> {{ '--todo--' }}</p>
             </div>
             <div class="col-sm-4">
-                <p><b>{{ 'Customer name' | trans }}:</b> First Name</p>
-                <p><b>{{ 'Email' | trans }}:</b> a@spryker.com</p>
-                <p><b>{{ 'Status' | trans }}:</b> <span class="label label-info">Status</span></p>
-                <p><b>{{ 'Other order' | trans }}:</b> (123)</p>
+                <p><b>{{ 'Customer name' | trans }}:</b> {{ order.firstName }} {{ order.lastName }}</p>
+                <p><b>{{ 'Email' | trans }}:</b> {{ order.email }}</p>
+                <p><b>{{ 'Status' | trans }}:</b> <span class="label label-info">{{ '--todo--' }}</span></p>
+                <p><b>{{ 'Other order' | trans }}:</b> ({{ '--todo--' }})</p>
             </div>
             <div class="col-sm-4">
                 {{ render(controller('/sales/comment/list', {'request': app.request})) }}
