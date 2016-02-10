@@ -12,7 +12,7 @@ use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 /**
  * @method \Spryker\Zed\User\Persistence\UserPersistenceFactory getFactory()
  */
-class UserQueryContainer extends AbstractQueryContainer
+class UserQueryContainer extends AbstractQueryContainer implements UserQueryContainerInterface
 {
 
     /**
