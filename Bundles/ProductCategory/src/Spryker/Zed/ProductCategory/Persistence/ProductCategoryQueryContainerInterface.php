@@ -61,11 +61,11 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale);
 
     /**
-     * @param $term
+     * @param string $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale);
+    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $locale);
 
 }

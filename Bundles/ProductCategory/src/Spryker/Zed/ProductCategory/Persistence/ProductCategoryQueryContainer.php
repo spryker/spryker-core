@@ -183,7 +183,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale)
+    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $locale)
     {
         $query = $this->getFactory()->createProductAbstractQuery();
 

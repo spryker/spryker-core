@@ -9,14 +9,21 @@ namespace Spryker\Zed\Collector\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Collector\Business\Model\BatchResult;
+use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Collector\Business\CollectorBusinessFactory getFactory()
+ * @method CollectorBusinessFactory getFactory()
  */
 class CollectorFacade extends AbstractFacade
 {
 
+    /**
+     * @param OutputInterface $output
+     *
+     * @return array
+     */
     public function exportKeyValueByStorage(OutputInterface $output = null)
     {
         $exporter = $this->getFactory()->createYvesKeyValueExporter();
@@ -25,10 +32,10 @@ class CollectorFacade extends AbstractFacade
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     * @param LocaleTransfer $locale
+     * @param OutputInterface $output
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     * @return BatchResultInterface[]
      */
     public function exportKeyValueForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
@@ -38,9 +45,10 @@ class CollectorFacade extends AbstractFacade
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param LocaleTransfer $locale
+     * @param OutputInterface $output
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
+     * @return BatchResult[]
      */
     public function exportSearchForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
@@ -50,9 +58,10 @@ class CollectorFacade extends AbstractFacade
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param LocaleTransfer $locale
+     * @param OutputInterface $output
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
+     * @return BatchResult[]
      */
     public function updateSearchForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
@@ -62,7 +71,7 @@ class CollectorFacade extends AbstractFacade
     }
 
     /**
-     * @param \Spryker\Zed\Messenger\Business\Model\MessengerInterface $messenger
+     * @param MessengerInterface $messenger
      *
      * @return void
      */

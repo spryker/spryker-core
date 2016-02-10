@@ -185,7 +185,7 @@ class Reader implements ReaderInterface
         }
         $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         if (!$this->hasProductAbstract($sku)
-            || !$this->hasPriceForProductAbstract($abstractSku, $priceType)  //TODO how can it have price for product abstract if the abstract product does not exist?
+            || !$this->hasPriceForProductAbstract($abstractSku, $priceType)
         ) {
             throw new \Exception(self::NO_RESULT);
         }
