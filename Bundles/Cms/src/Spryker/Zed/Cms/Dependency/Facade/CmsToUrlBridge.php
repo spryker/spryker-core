@@ -129,5 +129,4 @@ class CmsToUrlBridge implements CmsToUrlInterface
         $this->urlFacade->deleteUrlRedirect($redirectTransfer);
     }
 
-
 }
