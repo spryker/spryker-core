@@ -48,6 +48,10 @@ class GlossaryStorage implements GlossaryStorageInterface
      */
     public function translate($keyName, array $parameters = [])
     {
+        if ((string) $keyName === '') {
+            return $keyName;
+        }
+
         if (!isset($this->translations[$keyName])) {
             $this->loadTranslation($keyName);
         }
