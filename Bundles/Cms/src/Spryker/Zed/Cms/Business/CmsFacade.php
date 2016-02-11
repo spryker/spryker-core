@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Cms\Business\CmsBusinessFactory getFactory()
  */
-class CmsFacade extends AbstractFacade
+class CmsFacade extends AbstractFacade implements CmsFacadeInterface
 {
 
     /**

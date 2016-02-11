@@ -12,7 +12,7 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 /**
  * @method \Spryker\Zed\Nopayment\Persistence\NopaymentPersistenceFactory getFactory()
  */
-class NopaymentQueryContainer extends AbstractQueryContainer
+class NopaymentQueryContainer extends AbstractQueryContainer implements NopaymentQueryContainerInterface
 {
 
     /**

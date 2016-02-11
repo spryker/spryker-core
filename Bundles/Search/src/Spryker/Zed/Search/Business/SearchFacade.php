@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Search\Business\SearchBusinessFactory getFactory()
  */
-class SearchFacade extends AbstractFacade
+class SearchFacade extends AbstractFacade implements SearchFacadeInterface
 {
 
     /**

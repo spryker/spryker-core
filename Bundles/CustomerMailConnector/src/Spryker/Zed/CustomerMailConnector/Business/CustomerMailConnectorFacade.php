@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\CustomerMailConnector\Business\CustomerMailConnectorBusinessFactory getFactory()
  */
-class CustomerMailConnectorFacade extends AbstractFacade
+class CustomerMailConnectorFacade extends AbstractFacade implements CustomerMailConnectorFacadeInterface
 {
 
     /**

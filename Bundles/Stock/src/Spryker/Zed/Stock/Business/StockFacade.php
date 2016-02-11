@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Stock\Business\StockBusinessFactory getFactory()
  */
-class StockFacade extends AbstractFacade
+class StockFacade extends AbstractFacade implements StockFacadeInterface
 {
 
     /**

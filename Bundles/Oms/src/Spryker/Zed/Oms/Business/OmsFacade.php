@@ -15,7 +15,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 /**
  * @method \Spryker\Zed\Oms\Business\OmsBusinessFactory getFactory()
  */
-class OmsFacade extends AbstractFacade
+class OmsFacade extends AbstractFacade implements OmsFacadeInterface
 {
 
     /**
