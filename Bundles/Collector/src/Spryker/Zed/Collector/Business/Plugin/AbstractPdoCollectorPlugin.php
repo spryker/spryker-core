@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Collector\Persistence\Exporter\AbstractPdoCollectorQuery;
 use Spryker\Zed\Collector\Persistence\PdoBatchIterator;
 
 abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin

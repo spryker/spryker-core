@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
+use Spryker\Zed\Collector\Business\Exporter\Exception\UndefinedCollectorTypesException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
@@ -35,15 +36,22 @@ class Collector
     protected $localeFacade;
 
     /**
+     * @var array
+     */
+    protected $availableCollectorTypes;
+
+    /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $touchQueryContainer
      * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
+     * @param array $availableCollectorTypes
      */
-    public function __construct(TouchQueryContainer $touchQueryContainer, CollectorToLocaleInterface $localeFacade, ExporterInterface $exporter)
+    public function __construct(TouchQueryContainer $touchQueryContainer, CollectorToLocaleInterface $localeFacade, ExporterInterface $exporter, array $availableCollectorTypes)
     {
         $this->touchQueryContainer = $touchQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->exporter = $exporter;
+        $this->availableCollectorTypes = $availableCollectorTypes;
     }
 
     /**
@@ -55,7 +63,10 @@ class Collector
     {
         $results = [];
         $types = array_keys($this->exporter->getCollectorPlugins());
-        $availableTypes = $this->touchQueryContainer->queryExportTypes()->find();
+
+        if (empty($this->availableCollectorTypes)) {
+            throw new UndefinedCollectorTypesException();
+        }
 
         if (isset($output)) {
             $output->writeln('');
@@ -67,7 +78,7 @@ class Collector
             $output->writeln('<fg=yellow>-------------</fg=yellow>');
         }
 
-        foreach ($availableTypes as $type) {
+        foreach ($this->availableCollectorTypes as $type) {
             if (!in_array($type, $types)) {
                 if (isset($output)) {
                     $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green> ');
@@ -104,11 +115,10 @@ class Collector
         $results = [];
 
         $types = array_keys($this->exporter->getCollectorPlugins());
-        $availableTypes = $this->touchQueryContainer->queryExportTypes()->find();
 
         sprintf('<fg=yellow>%d out of %d collectors available:</fg=yellow>',
             count($types),
-            count($availableTypes)
+            count($this->availableCollectorTypes)
         );
 
         foreach ($locales as $locale) {
