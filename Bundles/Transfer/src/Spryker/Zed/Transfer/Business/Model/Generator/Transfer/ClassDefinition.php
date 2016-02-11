@@ -422,6 +422,10 @@ class ClassDefinition implements ClassDefinitionInterface
             return 'array';
         }
 
+        if ($this->isCollection($property)) {
+            return '\\ArrayObject|' . $property['type'];
+        }
+
         return $property['type'];
     }
 
@@ -494,7 +498,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'return' => '\ArrayObject|' . $this->getReturnType($property),
+            'return' => $this->getReturnType($property),
             'bundles' => $property['bundles'],
         ];
         $this->methods[$methodName] = $method;
