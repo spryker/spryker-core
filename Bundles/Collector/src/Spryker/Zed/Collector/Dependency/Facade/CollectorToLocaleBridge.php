@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Collector\Dependency\Facade;
 
-
 class CollectorToLocaleBridge implements CollectorToLocaleInterface
 {
 

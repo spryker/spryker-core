@@ -57,7 +57,7 @@ class Collector
     /**
      * @param \Spryker\Zed\Locale\Business\LocaleFacade $locale
      *
-     * @return BatchResultInterface[]
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
      */
     public function exportForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {

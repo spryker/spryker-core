@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
-use Spryker\Zed\Category\Business\CategoryFacade;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -19,8 +18,6 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     protected $categoryFacade;
 
     /**
-     * ProductCategoryToCategoryBridge constructor.
-     *
      * @param \Spryker\Zed\Category\Business\CategoryFacade $categoryFacade
      */
     public function __construct($categoryFacade)
@@ -43,7 +40,7 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
      * @param string $categoryKey
      * @param int $idLocale
      *
-     * @return CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function getCategoryByKey($categoryKey, $idLocale)
     {

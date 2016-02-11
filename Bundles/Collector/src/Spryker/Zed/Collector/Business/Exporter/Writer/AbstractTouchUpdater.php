@@ -96,7 +96,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
             }
         }
 
-        if (trim($updateSql) !== '' &&  $connection !== null) {
+        if (trim($updateSql) !== '' && $connection !== null) {
             $connection->exec($updateSql);
         }
     }
@@ -119,7 +119,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
             }
         }
 
-        if (!empty($idsToDelete) &&  $connection !== null) {
+        if (!empty($idsToDelete) && $connection !== null) {
             $sql = $this->getDeleteSql($idsToDelete);
             $connection->exec($sql);
         }

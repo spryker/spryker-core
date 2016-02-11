@@ -6,13 +6,11 @@
 
 namespace Spryker\Zed\Kernel\Persistence\QueryContainer;
 
-use Propel\Runtime\Connection\ConnectionInterface;
-
 interface QueryContainerInterface
 {
 
     /**
-     * @return ConnectionInterface
+     * @return \Propel\Runtime\Connection\ConnectionInterface
      */
     public function getConnection();
 

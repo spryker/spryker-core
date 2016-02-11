@@ -111,7 +111,7 @@ interface ProductCategoryToCategoryInterface
      * @param string $categoryKey
      * @param int $idLocale
      *
-     * @return CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function getCategoryByKey($categoryKey, $idLocale);
 

@@ -13,13 +13,11 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
-use Spryker\Zed\Collector\Business\CollectorFacade;
-use Spryker\Zed\Collector\Communication\CollectorCommunicationFactory;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method CollectorFacade getFacade()
- * @method CollectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Collector\Business\CollectorFacade getFacade()
+ * @method \Spryker\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
  */
 abstract class AbstractCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
@@ -40,7 +38,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     protected $touchUpdater;
 
     /**
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */

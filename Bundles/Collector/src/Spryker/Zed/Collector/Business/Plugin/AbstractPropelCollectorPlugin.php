@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Business\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
-use Spryker\Zed\Collector\Business\Model\CountableIteratorInterface;
 use Spryker\Zed\Collector\Persistence\Exporter\AbstractPropelCollectorQuery;
 use Spryker\Zed\Collector\Persistence\PropelBatchIterator;
 
@@ -17,7 +16,7 @@ abstract class AbstractPropelCollectorPlugin extends AbstractCollectorPlugin
 {
 
     /**
-     * @var AbstractPropelCollectorQuery
+     * @var \Spryker\Zed\Collector\Persistence\Exporter\AbstractPropelCollectorQuery
      */
     protected $queryBuilder;
 
@@ -33,7 +32,7 @@ abstract class AbstractPropelCollectorPlugin extends AbstractCollectorPlugin
     }
 
     /**
-     * @return CountableIteratorInterface
+     * @return \Spryker\Zed\Collector\Business\Model\CountableIteratorInterface
      */
     protected function generateBatchIterator()
     {
@@ -41,8 +40,8 @@ abstract class AbstractPropelCollectorPlugin extends AbstractCollectorPlugin
     }
 
     /**
-     * @param SpyTouchQuery $touchQuery
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */

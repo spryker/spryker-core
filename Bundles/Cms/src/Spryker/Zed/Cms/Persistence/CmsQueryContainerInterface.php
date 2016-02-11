@@ -5,6 +5,7 @@
  */
 
 namespace Spryker\Zed\Cms\Persistence;
+
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsQueryContainerInterface extends QueryContainerInterface

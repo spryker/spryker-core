@@ -14,7 +14,7 @@ interface ExporterInterface
 
     /**
      * @param string $type
-     * @param LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface

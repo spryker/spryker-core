@@ -269,7 +269,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @param string $categoryKey
      * @param int $idLocale
      *
-     * @return SpyCategoryQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     public function queryByCategoryKey($categoryKey, $idLocale);
 

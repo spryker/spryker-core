@@ -17,10 +17,8 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
-use Spryker\Zed\Collector\Business\Model\CountableIteratorInterface;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractCollectorPlugin
@@ -34,17 +32,17 @@ abstract class AbstractCollectorPlugin
     protected $chunkSize = 1000;
 
     /**
-     * @var TouchQueryContainerInterface
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected $touchQueryContainer;
 
     /**
-     * @var AbstractCollectorQuery
+     * @var \Spryker\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery
      */
     protected $queryBuilder;
 
     /**
-     * @var LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
 
@@ -62,20 +60,20 @@ abstract class AbstractCollectorPlugin
     abstract protected function collectResourceType();
 
     /**
-     * @return CountableIteratorInterface
+     * @return \Spryker\Zed\Collector\Business\Model\CountableIteratorInterface
      */
     abstract protected function generateBatchIterator();
 
     /**
-     * @param SpyTouchQuery $touchQuery
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */
     abstract protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale);
 
     /**
-     * @param TouchQueryContainerInterface $touchQueryContainer
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
      *
      * @return void
      */
@@ -85,7 +83,7 @@ abstract class AbstractCollectorPlugin
     }
 
     /**
-     * @param AbstractCollectorQuery $queryBuilder
+     * @param \Spryker\Zed\Collector\Persistence\Exporter\AbstractCollectorQuery $queryBuilder
      *
      * @return void
      */
@@ -114,8 +112,8 @@ abstract class AbstractCollectorPlugin
 
     /**
      * @param array $collectedSet
-     * @param LocaleTransfer $locale
-     * @param TouchUpdaterSet $touchUpdaterSet
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
      *
      * @return array
      */
@@ -146,7 +144,7 @@ abstract class AbstractCollectorPlugin
     /**
      * @param string $touchKey
      * @param array $collectItemData
-     * @param TouchUpdaterSet $touchUpdaterSet
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
      *
      * @return array
      */
@@ -189,11 +187,12 @@ abstract class AbstractCollectorPlugin
     }
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $result
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -209,11 +208,12 @@ abstract class AbstractCollectorPlugin
     }
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $batchResult
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -271,7 +271,7 @@ abstract class AbstractCollectorPlugin
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      * @param string $itemType
-     * @param \Symfony\Component\Console\Output\OutputInterface $output;
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -459,7 +459,7 @@ abstract class AbstractCollectorPlugin
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param int $count
      *
-     * @return ProgressBar
+     * @return \Symfony\Component\Console\Helper\ProgressBar
      */
     protected function generateProgressBar(OutputInterface $output, $count)
     {

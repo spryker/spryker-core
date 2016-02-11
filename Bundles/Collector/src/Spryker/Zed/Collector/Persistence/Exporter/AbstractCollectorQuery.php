@@ -38,7 +38,7 @@ abstract class AbstractCollectorQuery
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return self
+     * @return $this
      */
     public function setLocale(LocaleTransfer $locale)
     {
@@ -58,7 +58,7 @@ abstract class AbstractCollectorQuery
     /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
      *
-     * @return self
+     * @return $this
      */
     public function setTouchQueryContainer(TouchQueryContainerInterface $touchQueryContainer)
     {
@@ -68,7 +68,7 @@ abstract class AbstractCollectorQuery
     }
 
     /**
-     * @return self
+     * @return $this
      */
     public function prepare()
     {
