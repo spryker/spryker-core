@@ -73,7 +73,7 @@ class GroupUsersTable extends AbstractTable
     {
         $query = $this->aclQueryContainer->queryGroupUsers($this->idGroup);
 
-        /** @var SpyUser[] $userCollection */
+        /** @var \Orm\Zed\User\Persistence\SpyUser[] $userCollection */
         $userCollection = $this->runQuery($query, $config, true);
 
         $users = [];
