@@ -16,12 +16,14 @@
     "spryker/event-journal": "^1.0.0",
     "spryker/kernel": "^1.0.0",
     "spryker/library": "^1.0.0",
-    "spryker/transfer": "^1.0.0"
+    "spryker/transfer": "^1.0.0",
+    "spryker/external": "^1.0.0"
   },
   "require-dev": {},
   "description": "zed request bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

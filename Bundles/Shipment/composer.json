@@ -17,12 +17,14 @@
     "spryker/library": "^1.0.0",
     "spryker/session": "^1.0.0",
     "spryker/tax": "^1.0.0",
-    "spryker/zed-request": "^1.0.0"
+    "spryker/zed-request": "^1.0.0",
+    "spryker/external": "^1.0.0"
   },
   "require-dev": {},
   "description": "shipment bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

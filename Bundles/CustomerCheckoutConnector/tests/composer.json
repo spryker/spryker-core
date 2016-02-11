@@ -21,7 +21,8 @@
     "spryker/propel": "^1.0.0",
     "spryker/refund": "^1.0.0",
     "spryker/sequence-number": "^1.0.0",
-    "spryker/zed-request": "^1.0.0"
+    "spryker/zed-request": "^1.0.0",
+    "spryker/external": "^1.0.0"
   },
   "require-dev": {},
   "description": "sales bundle",
@@ -31,5 +32,6 @@
     "branch-alias": {
       "dev-master": "1.0.x-dev"
     }
-  }
+  },
+  "prefer-stable": true
 }

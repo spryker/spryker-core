@@ -13,12 +13,14 @@
     "twig/twig": "~1.0",
     "spryker/console": "^1.0.0",
     "spryker/kernel": "^1.0.0",
-    "spryker/messenger": "^1.0.0"
+    "spryker/messenger": "^1.0.0",
+    "spryker/external": "^1.0.0"
   },
   "require-dev": {},
   "description": "transfer bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

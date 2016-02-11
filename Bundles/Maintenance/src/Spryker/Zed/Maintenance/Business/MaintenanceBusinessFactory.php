@@ -12,7 +12,7 @@ use Spryker\Zed\Maintenance\Business\Composer\Updater\BranchAliasUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\ComposerUpdaterComposite;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\DescriptionUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\LicenseUpdater;
-use Spryker\Zed\Maintenance\Business\Composer\Updater\MinimumStabilityUpdater;
+use Spryker\Zed\Maintenance\Business\Composer\Updater\StabilityUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Maintenance\Business\DependencyTree\AdjacencyMatrixBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
@@ -635,7 +635,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
             ->addUpdater($this->createComposerJsonDescriptionUpdater())
             ->addUpdater($this->createComposerJsonLicenseUpdater())
             ->addUpdater($this->createComposerJsonRequireUpdater())
-            ->addUpdater($this->createComposerJsonMinimumStabilityUpdater())
+            ->addUpdater($this->createComposerJsonStabilityUpdater())
             ->addUpdater($this->createComposerJsonBranchAliasUpdater());
 
         return $updaterComposite;
@@ -677,11 +677,11 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Maintenance\Business\Composer\Updater\MinimumStabilityUpdater
+     * @return \Spryker\Zed\Maintenance\Business\Composer\Updater\StabilityUpdater
      */
-    protected function createComposerJsonMinimumStabilityUpdater()
+    protected function createComposerJsonStabilityUpdater()
     {
-        return new MinimumStabilityUpdater('dev');
+        return new StabilityUpdater('dev');
     }
 
     /**

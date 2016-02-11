@@ -16,12 +16,14 @@
     "spryker/library": "^1.0.0",
     "spryker/product": "^1.0.0",
     "spryker/search": "^1.0.0",
-    "spryker/storage": "^1.0.0"
+    "spryker/storage": "^1.0.0",
+    "spryker/external": "^1.0.0"
   },
   "require-dev": {},
   "description": "catalog bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

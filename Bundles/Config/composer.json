@@ -10,11 +10,14 @@
       "YvesUnit": "tests/"
     }
   },
-  "require": {},
+  "require": {
+    "spryker/external": "^1.0.0"
+  },
   "require-dev": {},
   "description": "config bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

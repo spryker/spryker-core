@@ -14,12 +14,14 @@
     "spryker/application": "^1.0.0",
     "spryker/kernel": "^1.0.0",
     "spryker/library": "^1.0.0",
-    "mandrill/mandrill": "~1.0.55"
+    "mandrill/mandrill": "~1.0.55",
+    "spryker/external": "^1.0.0"
   },
   "require-dev": {},
   "description": "mail bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

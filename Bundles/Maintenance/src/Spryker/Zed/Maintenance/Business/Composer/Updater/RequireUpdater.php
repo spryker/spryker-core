@@ -17,6 +17,7 @@ class RequireUpdater implements UpdaterInterface
 
     const KEY_REQUIRE = 'require';
     const RELEASE_OPERATOR = '^';
+    const EXTERNAL_DEPENDENCIES_BUNDLE_NAME = 'External';
 
     /**
      * @var \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
@@ -55,6 +56,8 @@ class RequireUpdater implements UpdaterInterface
             $composerJson[self::KEY_REQUIRE]['spryker/' . $dependentBundle] = self::RELEASE_OPERATOR . '1.0.0';
         }
 
+        $composerJson = $this->addExternalDependencies($composerJson, $bundleName);
+
         return $composerJson;
     }
 
@@ -90,6 +93,21 @@ class RequireUpdater implements UpdaterInterface
         sort($dependentBundles);
 
         return $dependentBundles;
+    }
+
+    /**
+     * @param array $composerJson
+     * @param $bundleName
+     *
+     * @return array
+     */
+    private function addExternalDependencies(array $composerJson, $bundleName)
+    {
+        if ($bundleName !== self::EXTERNAL_DEPENDENCIES_BUNDLE_NAME) {
+            $composerJson[self::KEY_REQUIRE]['spryker/external'] = self::RELEASE_OPERATOR . '1.0.0';
+        }
+
+        return $composerJson;
     }
 
 }
