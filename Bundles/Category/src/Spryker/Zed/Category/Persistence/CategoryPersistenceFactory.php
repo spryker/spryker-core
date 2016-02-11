@@ -11,6 +11,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -21,43 +22,58 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
+     * @param null $modelAlias
+     * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function createCategoryNodeQuery()
+    public function createCategoryNodeQuery($modelAlias = null, Criteria $criteria = null)
     {
-        return SpyCategoryNodeQuery::create();
+        return SpyCategoryNodeQuery::create($modelAlias, $criteria);
     }
 
     /**
+     * @param null $modelAlias
+     * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function createUrlQuery()
+    public function createUrlQuery($modelAlias = null, Criteria $criteria = null)
     {
-        return SpyUrlQuery::create();
+        return SpyUrlQuery::create($modelAlias, $criteria);
     }
 
     /**
+     * @param null $modelAlias
+     * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
-    public function createCategoryAttributeQuery()
+    public function createCategoryAttributeQuery($modelAlias = null, Criteria $criteria = null)
     {
-        return SpyCategoryAttributeQuery::create();
+        return SpyCategoryAttributeQuery::create($modelAlias, $criteria);
     }
 
     /**
+     * @param null $modelAlias
+     * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function createCategoryQuery()
+    public function createCategoryQuery($modelAlias = null, Criteria $criteria = null)
     {
-        return SpyCategoryQuery::create();
+        return SpyCategoryQuery::create($modelAlias, $criteria);
     }
 
     /**
+     * @param null $modelAlias
+     * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
-    public function createCategoryClosureTableQuery()
+    public function createCategoryClosureTableQuery($modelAlias = null, Criteria $criteria = null)
     {
-        return SpyCategoryClosureTableQuery::create();
+        return SpyCategoryClosureTableQuery::create($modelAlias, $criteria);
     }
 
 }
