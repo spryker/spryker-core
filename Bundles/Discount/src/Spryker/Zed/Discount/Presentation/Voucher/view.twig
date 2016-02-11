@@ -15,15 +15,19 @@
 
             <table class="table table-striped table-bordered table-hover">
                 <tr>
-                    <td>Valid until</td>
+                    <td>{{ 'Valid from' | trans }}</td>
+                    <td>{{ discount.validFrom | date }}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'Valid until' | trans }}</td>
                     <td>{{ discount.validTo | date }}</td>
                 </tr>
                 <tr>
-                    <td>Value</td>
-                    <td>{% if discount.type == 'percent' %}{{ discount.amount }} %{% else %}{{ discount.amount }}{% endif %}</td>
+                    <td>{{ 'Value' | trans }}</td>
+                    <td>{% if discount.calculatorPlugin == 'PLUGIN_CALCULATOR_PERCENTAGE' %}{{ discount.amount }} %{% else %}{{ discount.amount | currency }} {% endif %}</td>
                 </tr>
                 <tr>
-                    <td>Generated Vouchers</td>
+                    <td>{{ 'Generated Vouchers' | trans }}</td>
                     <td>{{ countVouchers }}</td>
                 </tr>
             </table>

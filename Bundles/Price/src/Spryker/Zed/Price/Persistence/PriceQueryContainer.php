@@ -9,17 +9,14 @@ namespace Spryker\Zed\Price\Persistence;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Price\Persistence\Map\SpyPriceTypeTableMap;
-use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceType;
-use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Price\Persistence\PricePersistenceFactory getFactory()
  */
-class PriceQueryContainer extends AbstractQueryContainer
+class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryContainerInterface
 {
 
     const DATE_NOW = 'now';

@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  * @method \Spryker\Zed\Cache\Business\CacheBusinessFactory getFactory()
  * @method \Spryker\Zed\Cache\CacheConfig getConfig()
  */
-class CacheFacade extends AbstractFacade
+class CacheFacade extends AbstractFacade implements CacheFacadeInterface
 {
 
     /**

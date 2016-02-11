@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorBusinessFactory getFactory()
  */
-class CustomerCheckoutConnectorFacade extends AbstractFacade
+class CustomerCheckoutConnectorFacade extends AbstractFacade implements CustomerCheckoutConnectorFacadeInterface
 {
 
     /**

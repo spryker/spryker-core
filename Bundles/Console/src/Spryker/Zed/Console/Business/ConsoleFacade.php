@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Console\Business\ConsoleBusinessFactory getFactory()
  */
-class ConsoleFacade extends AbstractFacade
+class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
 {
 
     /**

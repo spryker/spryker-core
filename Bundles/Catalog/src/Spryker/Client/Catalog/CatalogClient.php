@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
  */
-class CatalogClient extends AbstractClient
+class CatalogClient extends AbstractClient implements CatalogClientInterface
 {
 
     /**

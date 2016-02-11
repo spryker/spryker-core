@@ -13,7 +13,7 @@ use Spryker\Zed\Messenger\Business\Model\MessengerInterface;
 /**
  * @method \Spryker\Zed\Price\Business\PriceBusinessFactory getFactory()
  */
-class PriceFacade extends AbstractFacade
+class PriceFacade extends AbstractFacade implements PriceFacadeInterface
 {
 
     /**

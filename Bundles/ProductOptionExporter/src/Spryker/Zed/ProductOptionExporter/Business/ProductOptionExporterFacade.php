@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 /**
  * @method \Spryker\Zed\ProductOptionExporter\Business\ProductOptionExporterBusinessFactory getFactory()
  */
-class ProductOptionExporterFacade extends AbstractFacade
+class ProductOptionExporterFacade extends AbstractFacade implements ProductOptionExporterFacadeInterface
 {
 
     /**

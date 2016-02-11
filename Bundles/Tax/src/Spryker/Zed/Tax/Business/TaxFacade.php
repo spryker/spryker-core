@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 /**
  * @method \Spryker\Zed\Tax\Business\TaxBusinessFactory getFactory()
  */
-class TaxFacade extends AbstractFacade
+class TaxFacade extends AbstractFacade implements TaxFacadeInterface
 {
 
     /**

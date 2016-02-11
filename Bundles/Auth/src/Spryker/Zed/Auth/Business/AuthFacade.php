@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Auth\Business\AuthBusinessFactory getFactory()
  */
-class AuthFacade extends AbstractFacade
+class AuthFacade extends AbstractFacade implements AuthFacadeInterface
 {
 
     /**

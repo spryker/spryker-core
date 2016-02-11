@@ -8,12 +8,11 @@ namespace Spryker\Client\ZedRequest;
 
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Transfer\TransferInterface;
-use Spryker\Client\ZedRequest\Client\ZedClient;
 
 /**
  * @method \Spryker\Client\ZedRequest\ZedRequestFactory getFactory()
  */
-class ZedRequestClient extends AbstractClient
+class ZedRequestClient extends AbstractClient implements ZedRequestClientInterface
 {
 
     /**

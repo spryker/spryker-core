@@ -6,13 +6,12 @@
 
 namespace Spryker\Zed\Heartbeat\Business;
 
-use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Heartbeat\Business\HeartbeatBusinessFactory getFactory()
  */
-class HeartbeatFacade extends AbstractFacade
+class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
 {
 
     /**

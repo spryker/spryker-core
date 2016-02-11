@@ -249,9 +249,9 @@ class CategoryTreeWriter
      */
     protected function removeNodeUrl($idCategoryNode, LocaleTransfer $locale)
     {
-        $node = $this->categoryTreeReader->getNodeById($idCategoryNode);
+        $nodeEntity = $this->categoryTreeReader->getNodeById($idCategoryNode);
         $nodeTransfer = (new NodeTransfer())
-            ->fromArray($node->toArray());
+            ->fromArray($nodeEntity->toArray());
 
         $this->nodeUrlManager->removeUrl($nodeTransfer, $locale);
     }

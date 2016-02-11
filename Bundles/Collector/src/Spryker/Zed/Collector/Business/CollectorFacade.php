@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Collector\Business\CollectorBusinessFactory getFactory()
  */
-class CollectorFacade extends AbstractFacade
+class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
 {
 
     /**

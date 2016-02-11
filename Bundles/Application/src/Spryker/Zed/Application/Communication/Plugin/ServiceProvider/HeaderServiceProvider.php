@@ -42,6 +42,14 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
             $response->headers->set('X-Store', $store->getStoreName());
             $response->headers->set('X-Env', APPLICATION_ENV);
             $response->headers->set('X-Locale', $store->getCurrentLocale());
+
+            $response->setPrivate();
+            $response->setMaxAge(0);
+
+            $response->headers->addCacheControlDirective('no-cache', true);
+            $response->headers->addCacheControlDirective('no-store', true);
+            $response->headers->addCacheControlDirective('must-revalidate', true);
+
         });
     }
 

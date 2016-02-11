@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
 /**
  * @method \Spryker\Zed\Country\Business\CountryBusinessFactory getFactory()
  */
-class CountryFacade extends AbstractFacade
+class CountryFacade extends AbstractFacade implements CountryFacadeInterface
 {
 
     /**
