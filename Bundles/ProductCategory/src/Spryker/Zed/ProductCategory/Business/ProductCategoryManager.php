@@ -308,7 +308,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNodeTransfer, NodeTransfer $destinationNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        trigger_error('Deprecated, Use moveCategoryChildren() and CategoryFacade::deleteNode() instead');
+        trigger_error('Deprecated, Use moveCategoryChildren() and CategoryFacade::deleteNode() instead', E_USER_DEPRECATED);
 
         $this->moveCategoryChildren($sourceNodeTransfer, $destinationNodeTransfer, $localeTransfer);
         $this->categoryFacade->deleteNode($sourceNodeTransfer->getIdCategoryNode(), $localeTransfer, false);
