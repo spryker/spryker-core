@@ -25,6 +25,9 @@ class StorageFactory extends AbstractFactory
         );
     }
 
+    /**
+     * @return \Predis\ClientInterface
+     */
     protected function createClient()
     {
         return new Client($this->getConfig());

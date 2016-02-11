@@ -15,11 +15,20 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 {
 
     /**
+     * @var \Spryker\Client\Storage\StorageClientInterface
+     */
+    protected $storageService;
+
+    /**
      * @return \Spryker\Client\Storage\StorageClientInterface $service
      */
     public function getService()
     {
-        return $this->getFactory()->createService();
+        if ($this->storageService === null) {
+            $this->storageService = $this->getFactory()->createService();
+        }
+
+        return $this->storageService;
     }
 
     /**
