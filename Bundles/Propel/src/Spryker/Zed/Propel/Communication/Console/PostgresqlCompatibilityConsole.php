@@ -39,7 +39,7 @@ class PostgresqlCompatibilityConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (Config::get(PropelConstants::ZED_DB_ENGINE) === PropelConstants::ZED_DB_ENGINE_PGSQL) {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_PGSQL)) {
             $this->info('Adjust propel config for PostgreSQL and missing functions (group_concat)');
             $this->getFacade()->adjustPropelSchemaFilesForPostgresql();
             $this->getFacade()->adjustPostgresqlFunctions();

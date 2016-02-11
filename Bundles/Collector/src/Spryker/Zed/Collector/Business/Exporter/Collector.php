@@ -63,10 +63,7 @@ class Collector
     {
         $results = [];
         $types = array_keys($this->exporter->getCollectorPlugins());
-
-        if (empty($this->availableCollectorTypes)) {
-            throw new UndefinedCollectorTypesException();
-        }
+        $availableTypes = $this->getAvailableCollectorTypes();
 
         if (isset($output)) {
             $output->writeln('');
@@ -78,7 +75,7 @@ class Collector
             $output->writeln('<fg=yellow>-------------</fg=yellow>');
         }
 
-        foreach ($this->availableCollectorTypes as $type) {
+        foreach ($availableTypes as $type) {
             if (!in_array($type, $types)) {
                 if (isset($output)) {
                     $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green> ');
@@ -115,10 +112,11 @@ class Collector
         $results = [];
 
         $types = array_keys($this->exporter->getCollectorPlugins());
+        $availableTypes = $this->getAvailableCollectorTypes();
 
         sprintf('<fg=yellow>%d out of %d collectors available:</fg=yellow>',
             count($types),
-            count($this->availableCollectorTypes)
+            count($availableTypes)
         );
 
         foreach ($locales as $locale) {
@@ -178,6 +176,23 @@ class Collector
     public function getEnabledCollectorTypes()
     {
         return array_keys($this->exporter->getCollectorPlugins());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAvailableCollectorTypes()
+    {
+        if (empty($this->availableCollectorTypes)) {
+            throw new UndefinedCollectorTypesException();
+        }
+
+        $availableTypes = $this->touchQueryContainer->queryExportTypes()->find();
+        if (empty($availableTypes)) {
+            $availableTypes = $this->availableCollectorTypes;
+        }
+
+        return $availableTypes;
     }
 
 }

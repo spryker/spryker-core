@@ -39,7 +39,7 @@ class CreateDatabaseConsole extends Console
     {
         $this->info('Creating Database');
 
-        if (Config::get(PropelConstants::ZED_DB_ENGINE) === PropelConstants::ZED_DB_ENGINE_PGSQL) {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_PGSQL)) {
             $this->createPostgresDatabaseIfNotExists();
         } else {
             $this->createMysqlDatabaseIfNotExists();
