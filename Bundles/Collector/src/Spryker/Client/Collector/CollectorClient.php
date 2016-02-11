@@ -20,6 +20,7 @@ class CollectorClient extends AbstractClient implements UrlMatcherInterface, Col
     /**
      * @param string $url
      * @param string $localeName
+     *
      * @return array|bool
      */
     public function matchUrl($url, $localeName)
