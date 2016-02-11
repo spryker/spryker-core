@@ -112,4 +112,14 @@ class AuthToUserBridge implements AuthToUserInterface
         return $this->userFacade->getUserById($idUser);
     }
 
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getActiveUserById($idUser)
+    {
+        return $this->userFacade->getUserById($idUser);
+    }
+
 }

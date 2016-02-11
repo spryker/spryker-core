@@ -237,6 +237,26 @@ class User implements UserInterface
     {
         $entity = $this->queryContainer
             ->queryUserById($id)
+            ->findOne();
+
+        if ($entity === null) {
+            throw new UserNotFoundException();
+        }
+
+        return $this->entityToTransfer($entity);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getActiveUserById($id)
+    {
+        $entity = $this->queryContainer
+            ->queryUserById($id)
             ->filterByStatus(SpyUserTableMap::COL_STATUS_ACTIVE)
             ->findOne();
 

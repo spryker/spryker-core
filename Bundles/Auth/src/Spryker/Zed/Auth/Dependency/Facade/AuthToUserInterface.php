@@ -73,4 +73,11 @@ interface AuthToUserInterface
      */
     public function getUserById($idUser);
 
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getActiveUserById($idUser);
+
 }

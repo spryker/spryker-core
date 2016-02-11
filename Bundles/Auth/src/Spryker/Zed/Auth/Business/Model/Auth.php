@@ -170,7 +170,7 @@ class Auth implements AuthInterface
         $currentUser = $this->getCurrentUser($token);
 
         try {
-            $realUser = $this->userFacade->getUserById($currentUser->getIdUser());
+            $realUser = $this->userFacade->getActiveUserById($currentUser->getIdUser());
         } catch (UserNotFoundException $e) {
             return false;
         }

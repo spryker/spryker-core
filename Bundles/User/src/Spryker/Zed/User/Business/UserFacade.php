@@ -62,6 +62,18 @@ class UserFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getActiveUserById($idUser)
+    {
+        return $this->getFactory()
+            ->createUserModel()
+            ->getActiveUserById($idUser);
+    }
+
+    /**
      * @param string $firstName
      * @param string $lastName
      * @param string $username

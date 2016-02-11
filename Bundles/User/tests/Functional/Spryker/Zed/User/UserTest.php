@@ -103,7 +103,7 @@ class UserTest extends Test
         $this->userFacade->removeUser($user->getIdUser());
 
         $this->setExpectedException('\Spryker\Zed\User\Business\Exception\UserNotFoundException');
-        $this->userFacade->getUserById($user->getIdUser());
+        $this->userFacade->getActiveUserById($user->getIdUser());
     }
 
     /**
