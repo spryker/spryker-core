@@ -26,6 +26,13 @@ interface RedirectManagerInterface
     public function createRedirect($toUrl, $status = 301);
 
     /**
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
+     *
+     * @return void
+     */
+    public function deleteUrlRedirect(RedirectTransfer $redirectTransfer);
+
+    /**
      * @param string $toUrl
      * @param int $status
      *
