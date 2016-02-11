@@ -298,6 +298,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @deprecated Use moveCategoryChildren() and CategoryFacade::deleteNode() instead
+     *
      * @param \Generated\Shared\Transfer\NodeTransfer $sourceNodeTransfer
      * @param \Generated\Shared\Transfer\NodeTransfer $destinationNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -306,23 +308,49 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNodeTransfer, NodeTransfer $destinationNodeTransfer, LocaleTransfer $localeTransfer)
     {
+        trigger_error('Deprecated, Use moveCategoryChildren() and CategoryFacade::deleteNode() instead');
+
+        $this->moveCategoryChildren($sourceNodeTransfer, $destinationNodeTransfer, $localeTransfer);
+        $this->categoryFacade->deleteNode($sourceNodeTransfer->getIdCategoryNode(), $localeTransfer, false);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $sourceNodeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $destinationNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    public function moveCategoryChildren(NodeTransfer $sourceNodeTransfer, NodeTransfer $destinationNodeTransfer, LocaleTransfer $localeTransfer)
+    {
         $this->connection->beginTransaction();
 
-        $children = $this->categoryQueryContainer
+        $this->moveCategoryNodes($sourceNodeTransfer, $destinationNodeTransfer, $localeTransfer);
+        $this->removeExtraParents($sourceNodeTransfer->getFkCategory(), $localeTransfer);
+
+        $this->connection->commit();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $sourceNodeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $destinationNodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    protected function moveCategoryNodes(NodeTransfer $sourceNodeTransfer, NodeTransfer $destinationNodeTransfer, LocaleTransfer $localeTransfer)
+    {
+        $categoryNodeCollection = $this->categoryQueryContainer
             ->queryFirstLevelChildren($sourceNodeTransfer->getIdCategoryNode())
             ->find();
 
-        foreach ($children as $child) {
-            $childTransfer = (new NodeTransfer())->fromArray($child->toArray());
-            $childTransfer->setFkParentCategoryNode($destinationNodeTransfer->getIdCategoryNode());
-            $this->categoryFacade->updateCategoryNode($childTransfer, $localeTransfer);
+        foreach ($categoryNodeCollection as $categoryNode) {
+            $nodeTransfer = new NodeTransfer();
+            $nodeTransfer->fromArray($categoryNode->toArray());
+            $nodeTransfer->setFkParentCategoryNode($destinationNodeTransfer->getIdCategoryNode());
+
+            $this->categoryFacade->updateCategoryNode($nodeTransfer, $localeTransfer);
         }
-
-        $this->removeExtraParents($sourceNodeTransfer->getFkCategory(), $localeTransfer);
-
-        $this->categoryFacade->deleteNode($sourceNodeTransfer->getIdCategoryNode(), $localeTransfer, false);
-
-        $this->connection->commit();
     }
 
     /**
@@ -384,17 +412,17 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         if ($deleteChildren) {
             $this->deleteCategoryRecursive($idCategoryNode, $localeTransfer);
         } else {
-            $sourceTransfer = $this->categoryFacade->getNodeById($idCategoryNode);
+            $sourceEntity = $this->categoryFacade->getNodeById($idCategoryNode);
 
             $destinationEntity = $this->categoryFacade->getNodeById($fkParentCategoryNode);
 
             $sourceNodeTransfer = (new NodeTransfer())
-                ->fromArray($sourceTransfer->toArray());
+                ->fromArray($sourceEntity->toArray());
 
             $destinationNodeTransfer = (new NodeTransfer())
                 ->fromArray($destinationEntity->toArray());
 
-            $this->moveCategoryChildrenAndDeleteNode($sourceNodeTransfer, $destinationNodeTransfer, $localeTransfer);
+            $this->moveCategoryChildren($sourceNodeTransfer, $destinationNodeTransfer, $localeTransfer);
             $this->deleteCategoryRecursive($idCategoryNode, $localeTransfer);
         }
 
