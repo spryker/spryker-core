@@ -1,4 +1,4 @@
-ds<?php
+<?php
 
 /**
  * (c) Spryker Systems GmbH copyright protected
@@ -251,11 +251,11 @@ abstract class AbstractCollectorPlugin
     }
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $result
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      *
      * @return void
      */
@@ -266,11 +266,12 @@ abstract class AbstractCollectorPlugin
     }
 
     /**
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $batchResult
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      * @param string $itemType
+     * @param \Symfony\Component\Console\Output\OutputInterface $output;
      *
      * @return void
      */
@@ -284,9 +285,9 @@ abstract class AbstractCollectorPlugin
 
     /**
      * @param string $itemType
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
-     * @param LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Exception
      *
@@ -415,7 +416,7 @@ abstract class AbstractCollectorPlugin
     }
 
     /**
-     * @param SpyTouchQuery $baseQuery
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      *
      * @return array
      */
@@ -455,7 +456,7 @@ abstract class AbstractCollectorPlugin
     }
 
     /**
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param int $count
      *
      * @return ProgressBar
@@ -470,7 +471,7 @@ abstract class AbstractCollectorPlugin
     /**
      * Display progress while counting data for real progress bar
      *
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */

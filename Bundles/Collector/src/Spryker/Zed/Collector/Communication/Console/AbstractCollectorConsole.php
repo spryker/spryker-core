@@ -7,13 +7,12 @@
 namespace Spryker\Zed\Collector\Communication\Console;
 
 use Spryker\Zed\Console\Business\Model\Console;
-use Spryker\Zed\Collector\Business\Model\BatchResult;
 
 abstract class AbstractCollectorConsole extends Console
 {
 
     /**
-     * @param array|BatchResult[] $resultData
+     * @param array|\Spryker\Zed\Collector\Business\Model\BatchResultInterface[] $resultData
      *
      * @return string
      *
@@ -51,7 +50,7 @@ abstract class AbstractCollectorConsole extends Console
     }
 
     /**
-     * @param array|BatchResult[] $results
+     * @param array|\Spryker\Zed\Collector\Business\Model\BatchResultInterface[] $results
      *
      * @return string
      */

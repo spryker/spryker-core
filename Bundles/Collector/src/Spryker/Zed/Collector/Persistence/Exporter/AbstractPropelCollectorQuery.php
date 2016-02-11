@@ -12,12 +12,12 @@ abstract class AbstractPropelCollectorQuery extends AbstractCollectorQuery
 {
 
     /**
-     * @var SpyTouchQuery
+     * @var \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     protected $touchQuery;
 
     /**
-     * @return SpyTouchQuery
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function getTouchQuery()
     {
@@ -25,7 +25,7 @@ abstract class AbstractPropelCollectorQuery extends AbstractCollectorQuery
     }
 
     /**
-     * @param SpyTouchQuery $touchQuery
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
      *
      * @return void
      */

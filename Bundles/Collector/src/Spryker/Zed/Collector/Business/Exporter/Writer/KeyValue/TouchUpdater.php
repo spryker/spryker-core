@@ -30,7 +30,7 @@ class TouchUpdater extends AbstractTouchUpdater
     protected $touchKeyColumnName = CollectorConfig::COLLECTOR_STORAGE_KEY;
 
     /**
-     * @return SpyTouchStorage
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchStorage
      */
     protected function createTouchKeyEntity()
     {

@@ -18,8 +18,8 @@ abstract class AbstractSearchPropelCollector extends AbstractPropelCollectorPlug
 {
 
     /**
-     * @param SpyTouchQuery $touchQuery
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */

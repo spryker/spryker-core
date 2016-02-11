@@ -12,12 +12,12 @@ abstract class AbstractPdoCollectorQuery extends AbstractCollectorQuery
 {
 
     /**
-     * @var CriteriaBuilderInterface
+     * @var \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
     protected $criteriaBuilder;
 
     /**
-     * @return CriteriaBuilderInterface
+     * @return \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
     public function getCriteriaBuilder()
     {
@@ -25,9 +25,9 @@ abstract class AbstractPdoCollectorQuery extends AbstractCollectorQuery
     }
 
     /**
-     * @param CriteriaBuilderInterface $criteriaBuilder
+     * @param \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
      *
-     * @return self
+     * @return $this
      */
     public function setCriteriaBuilder(CriteriaBuilderInterface $criteriaBuilder)
     {

@@ -10,26 +10,24 @@ use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
-use Spryker\Zed\Collector\Business\Model\CountableIteratorInterface;
 use Spryker\Zed\Collector\CollectorConfig;
-use Spryker\Zed\Collector\Persistence\Exporter\AbstractPdoCollectorQuery;
 use Spryker\Zed\Collector\Persistence\PdoBatchIterator;
 
 abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
 {
 
     /**
-     * @var AbstractPdoCollectorQuery
+     * @var \Spryker\Zed\Collector\Persistence\Exporter\AbstractPdoCollectorQuery
      */
     protected $queryBuilder;
 
     /**
-     * @var CriteriaBuilderInterface
+     * @var \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
     protected $criteriaBuilder;
 
     /**
-     * @param CriteriaBuilderInterface $criteriaBuilder
+     * @param \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
      *
      * @return void
      */
@@ -54,7 +52,7 @@ abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
     }
 
     /**
-     * @return CountableIteratorInterface
+     * @return \Spryker\Zed\Collector\Business\Model\CountableIteratorInterface
      */
     protected function generateBatchIterator()
     {
@@ -62,8 +60,8 @@ abstract class AbstractPdoCollectorPlugin extends AbstractCollectorPlugin
     }
 
     /**
-     * @param SpyTouchQuery $touchQuery
-     * @param LocaleTransfer $locale
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return void
      */

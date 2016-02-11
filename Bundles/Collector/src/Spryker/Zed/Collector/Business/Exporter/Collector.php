@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
-use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Intl\Locale;
@@ -21,24 +20,24 @@ class Collector
 {
 
     /**
-     * @var TouchQueryContainer
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected $touchQueryContainer;
 
     /**
-     * @var ExporterInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\ExporterInterface
      */
     protected $exporter;
 
     /**
-     * @var CollectorToLocaleInterface
+     * @var \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface
      */
     protected $localeFacade;
 
     /**
-     * @param TouchQueryContainer $touchQueryContainer
-     * @param CollectorToLocaleInterface $localeFacade
-     * @param ExporterInterface $exporter
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $touchQueryContainer
+     * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
      */
     public function __construct(TouchQueryContainer $touchQueryContainer, CollectorToLocaleInterface $localeFacade, ExporterInterface $exporter)
     {
@@ -48,7 +47,7 @@ class Collector
     }
 
     /**
-     * @param LocaleTransfer $locale
+     * @param \Spryker\Zed\Locale\Business\LocaleFacade $locale
      *
      * @return BatchResultInterface[]
      */
@@ -94,7 +93,7 @@ class Collector
     }
 
     /**
-     * @param OutputInterface|null $output
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
      *
      * @return array
      */
@@ -121,7 +120,7 @@ class Collector
     }
 
     /**
-     * @param BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      *
      * @return bool
      */
@@ -131,7 +130,7 @@ class Collector
     }
 
     /**
-     * @param BatchResultInterface $result
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      *
      * @return void
      */

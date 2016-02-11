@@ -25,17 +25,17 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
 {
 
     /**
-     * @var OutputInterface
+     * @var \Symfony\Component\Console\Output\OutputInterface
      */
     protected $output;
 
     /**
-     * @var WriterInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
      */
     protected $dataWriter;
 
     /**
-     * @var TouchUpdaterInterface
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
      */
     protected $touchUpdater;
 
@@ -50,7 +50,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     }
 
     /**
-     * @return WriterInterface
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
      */
     public function getDataWriter()
     {
@@ -58,7 +58,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     }
 
     /**
-     * @param WriterInterface $dataWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
      *
      * @return void
      */
@@ -68,7 +68,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     }
 
     /**
-     * @return TouchUpdaterInterface
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
      */
     public function getTouchUpdater()
     {
@@ -76,7 +76,7 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     }
 
     /**
-     * @param TouchUpdaterInterface $touchUpdater
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      *
      * @return void
      */
@@ -86,9 +86,9 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     }
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $result
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      *
      * @return void
      */
@@ -99,9 +99,9 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
     );
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $result
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      *
      * @return void
      */

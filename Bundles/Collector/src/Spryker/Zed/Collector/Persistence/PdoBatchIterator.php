@@ -29,12 +29,12 @@ class PdoBatchIterator implements CountableIteratorInterface
     protected $touchType;
 
     /**
-     * @var CriteriaBuilderInterface
+     * @var \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
     protected $criteriaBuilder;
 
     /**
-     * @var TouchQueryContainerInterface
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
     protected $touchQueryContainer;
 
@@ -53,8 +53,16 @@ class PdoBatchIterator implements CountableIteratorInterface
      */
     protected $currentDataSet = [];
 
+    /**
+     * @param \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
+     * @param int $touchType
+     * @param int $chunkSize
+     */
     public function __construct(
-        CriteriaBuilderInterface $criteriaBuilder, TouchQueryContainerInterface $touchQueryContainer, $touchType,
+        CriteriaBuilderInterface $criteriaBuilder,
+        TouchQueryContainerInterface $touchQueryContainer,
+        $touchType,
         $chunkSize = 1000
     ) {
         $this->criteriaBuilder = $criteriaBuilder;

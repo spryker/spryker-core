@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Country\Persistence;
 
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CountryQueryContainerInterface extends QueryContainerInterface
 {

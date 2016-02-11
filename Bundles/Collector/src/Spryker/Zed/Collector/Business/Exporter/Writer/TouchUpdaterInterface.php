@@ -16,18 +16,18 @@ interface TouchUpdaterInterface
     const COLLECTOR_TOUCH_ID = CollectorConfig::COLLECTOR_TOUCH_ID;
 
     /**
-     * @param TouchUpdaterSet $touchUpdaterSet
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
-     * @param ConnectionInterface $connection
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
      * @return
      */
     public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
 
     /**
-     * @param TouchUpdaterSet $touchUpdaterSet
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
-     * @param ConnectionInterface|null $connection
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
      * @return void
      */

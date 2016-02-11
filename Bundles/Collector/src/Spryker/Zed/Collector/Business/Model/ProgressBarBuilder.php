@@ -13,7 +13,7 @@ class ProgressBarBuilder
 {
 
     /**
-     * @var OutputInterface
+     * @var \Symfony\Component\Console\Output\OutputInterface
      */
     protected $output;
 
@@ -28,7 +28,7 @@ class ProgressBarBuilder
     protected $resourceType;
 
     /**
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param int $count
      * @param string $resourceType
      */
@@ -58,7 +58,7 @@ class ProgressBarBuilder
     }
 
     /**
-     * @return ProgressBar
+     * @return \Symfony\Component\Console\Helper\ProgressBar
      */
     public function build()
     {
