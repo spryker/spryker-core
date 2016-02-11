@@ -10,10 +10,6 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
-use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
-use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
-use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
-use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -21,7 +17,6 @@ use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryPersistenceFactory getFactory()
