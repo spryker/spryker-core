@@ -46,7 +46,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -62,7 +62,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @param Form $form
+     * @param \Symfony\Component\Form\Form $form
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -81,7 +81,6 @@ class CommentController extends AbstractController
             $this->addSuccessMessage('Comment successfully added');
 
         } else {
-            /** @var FormError $error */
             foreach ($form->getErrors() as $error) {
                 $this->addErrorMessage($error->getMessage());
             }
