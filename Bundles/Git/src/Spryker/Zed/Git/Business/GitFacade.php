@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Git\Business\GitBusinessFactory getFactory()
  */
-class GitFacade extends AbstractFacade
+class GitFacade extends AbstractFacade implements GitFacadeInterface
 {
 
     /**

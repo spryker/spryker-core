@@ -244,7 +244,7 @@ class Url
     }
 
     /**
-     * @param $scheme
+     * @param string $scheme
      *
      * @return $this
      */
@@ -256,7 +256,7 @@ class Url
     }
 
     /**
-     * @param $port
+     * @param int $port
      *
      * @return $this
      */
@@ -268,7 +268,7 @@ class Url
     }
 
     /**
-     * @param $host
+     * @param string $host
      *
      * @return $this
      */
@@ -300,8 +300,8 @@ class Url
     }
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param string $value
      *
      * @return $this
      */

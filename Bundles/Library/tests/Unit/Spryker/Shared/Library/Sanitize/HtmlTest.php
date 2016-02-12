@@ -33,8 +33,8 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataProvider
      *
-     * @param $string
-     * @param $expected
+     * @param string $string
+     * @param string $expected
      *
      * @return void
      */

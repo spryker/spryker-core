@@ -10,7 +10,7 @@ class MysqlRead extends Mysql implements ReadInterface
 {
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return mixed
      */
@@ -75,7 +75,7 @@ class MysqlRead extends Mysql implements ReadInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @throws \Exception
      *

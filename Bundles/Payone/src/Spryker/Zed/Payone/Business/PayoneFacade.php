@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Payone\Business\PayoneBusinessFactory getFactory()
  */
-class PayoneFacade extends AbstractFacade
+class PayoneFacade extends AbstractFacade implements PayoneFacadeInterface
 {
 
     /**
@@ -132,7 +132,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPreauthorizationApproved(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createApiLogFinder()->isPreauthorizationApproved($orderTransfer);
+        return $this->getFactory()->createApiLogFinder()->isPreAuthorizationApproved($orderTransfer);
     }
 
     /**
@@ -142,7 +142,7 @@ class PayoneFacade extends AbstractFacade
      */
     public function isPreauthorizationRedirect(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createApiLogFinder()->isPreauthorizationRedirect($orderTransfer);
+        return $this->getFactory()->createApiLogFinder()->isPreAuthorizationRedirect($orderTransfer);
     }
 
     /**

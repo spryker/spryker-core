@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Wishlist\Business\WishlistBusinessFactory getFactory()
  */
-class WishlistFacade extends AbstractFacade
+class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {
 
     /**

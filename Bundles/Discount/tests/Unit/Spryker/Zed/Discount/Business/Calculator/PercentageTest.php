@@ -8,6 +8,7 @@ namespace Unit\Spryker\Zed\Discount\Business\Calculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Percentage;
+use Spryker\Zed\Sales\Business\Model\Split\OrderItem;
 
 /**
  * Class PercentageTest
@@ -101,7 +102,7 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array $grossPrices
      *
-     * @return OrderItem[]
+     * @return \Spryker\Zed\Sales\Business\Model\Split\OrderItem[]
      */
     protected function getItems(array $grossPrices)
     {

@@ -395,7 +395,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
-     * @param $fkGlossaryKey
+     * @param int $fkGlossaryKey
      * @param array $locales
      *
      * @throws \Propel\Runtime\Exception\PropelException

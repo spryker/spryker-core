@@ -72,10 +72,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createGroupUsersTable($idAclGroup)
     {
-        return new GroupUsersTable(
-            $this->getQueryContainer()->queryGroup(),
-            $idAclGroup
-        );
+        return new GroupUsersTable($this->getQueryContainer(), $idAclGroup);
     }
 
     /**

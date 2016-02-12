@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Installer\Business\InstallerBusinessFactory getFactory()
  */
-class InstallerFacade extends AbstractFacade
+class InstallerFacade extends AbstractFacade implements InstallerFacadeInterface
 {
 
     /**

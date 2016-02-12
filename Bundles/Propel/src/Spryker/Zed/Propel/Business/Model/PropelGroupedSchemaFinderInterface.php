@@ -9,7 +9,7 @@ interface PropelGroupedSchemaFinderInterface
 {
 
     /**
-     * @return array[SplFileInfo[]]
+     * @return array|\Symfony\Component\Finder\SplFileInfo[]
      */
     public function getGroupedSchemaFiles();
 

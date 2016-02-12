@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\GroupableContainerTransfer;
 /**
  * @method \Spryker\Zed\ItemGrouperWishlistConnector\Business\ItemGrouperWishlistConnectorBusinessFactory getFactory()
  */
-class ItemGrouperWishlistConnectorFacade extends AbstractFacade
+class ItemGrouperWishlistConnectorFacade extends AbstractFacade implements ItemGrouperWishlistConnectorFacadeInterface
 {
 
     /**

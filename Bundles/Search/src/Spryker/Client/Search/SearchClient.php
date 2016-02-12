@@ -11,7 +11,7 @@ use Spryker\Client\Kernel\AbstractClient;
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
-class SearchClient extends AbstractClient
+class SearchClient extends AbstractClient implements SearchClientInterface
 {
 
     /**

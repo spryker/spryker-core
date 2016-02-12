@@ -103,7 +103,7 @@ class VoucherTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $discountVoucherEntity
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucher $discountVoucherEntity
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\Voucher
      */

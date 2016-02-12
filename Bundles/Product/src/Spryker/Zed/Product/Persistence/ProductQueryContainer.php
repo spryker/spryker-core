@@ -148,7 +148,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryConcreteSkuForm()
     {
-        return $query = $this->getFactory()->createProductQuery()
+        return $this->getFactory()->createProductQuery()
             ->select([
                 SpyProductTableMap::COL_SKU => 'value',
                 SpyProductTableMap::COL_SKU => 'label',

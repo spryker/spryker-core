@@ -13,7 +13,7 @@ use Spryker\Zed\Application\Business\Model\Navigation\Cache\NavigationCacheBuild
  * @group Zed
  * @group Application
  * @group Business
- * @group NavigationCacheBuilder
+ * @group NavigationCache
  */
 class NavigationCacheBuilderTest extends \PHPUnit_Framework_TestCase
 {

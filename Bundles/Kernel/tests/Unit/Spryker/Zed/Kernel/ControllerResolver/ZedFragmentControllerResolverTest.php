@@ -52,7 +52,7 @@ class ZedFragmentControllerResolverTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param array $arguments
      *
      * @return void

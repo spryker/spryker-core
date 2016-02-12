@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 /**
  * @method \Spryker\Zed\Newsletter\Persistence\NewsletterPersistenceFactory getFactory()
  */
-class NewsletterQueryContainer extends AbstractQueryContainer
+class NewsletterQueryContainer extends AbstractQueryContainer implements NewsletterQueryContainerInterface
 {
 
     /**

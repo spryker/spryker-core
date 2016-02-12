@@ -3,6 +3,9 @@
   "require":{
     "phpdocumentor/graphviz": "dev-master#a906a90"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "dev-master"
+  },
   "minimum-stability": "stable",
   "prefer-stable": true,
   "config": {

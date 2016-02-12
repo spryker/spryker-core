@@ -285,7 +285,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $factoryMock
+     * @param \PHPUnit_Framework_MockObject_MockObject $factoryMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\CartClient
      */

@@ -132,7 +132,7 @@ class FileImporter implements FileImporterInterface
     }
 
     /**
-     * @param $product
+     * @param \Spryker\Shared\Product\Model\ProductAbstractInterface $product
      *
      * @return bool
      */

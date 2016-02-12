@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Url\Business\UrlBusinessFactory getFactory()
  */
-class UrlFacade extends AbstractFacade
+class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 {
 
     /**
@@ -205,6 +205,16 @@ class UrlFacade extends AbstractFacade
         $redirectManager = $this->getFactory()->createRedirectManager();
 
         return $redirectManager->createRedirectUrl($url, $locale, $idUrlRedirect);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
+     *
+     * @return void
+     */
+    public function deleteUrlRedirect(RedirectTransfer $redirectTransfer)
+    {
+        $this->getFactory()->createRedirectManager()->deleteUrlRedirect($redirectTransfer);
     }
 
     /**

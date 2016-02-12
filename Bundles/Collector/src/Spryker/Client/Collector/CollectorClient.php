@@ -14,12 +14,13 @@ use Spryker\Client\Collector\Matcher\UrlMatcherInterface;
  *
  * @method \Spryker\Client\Collector\CollectorFactory getFactory()
  */
-class CollectorClient extends AbstractClient implements UrlMatcherInterface
+class CollectorClient extends AbstractClient implements UrlMatcherInterface, CollectorClientInterface
 {
 
     /**
      * @param string $url
      * @param string $localeName
+     *
      * @return array|bool
      */
     public function matchUrl($url, $localeName)

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\UserTransfer;
 /**
  * @method \Spryker\Zed\User\Business\UserBusinessFactory getFactory()
  */
-class UserFacade extends AbstractFacade
+class UserFacade extends AbstractFacade implements UserFacadeInterface
 {
 
     /**
@@ -59,6 +59,18 @@ class UserFacade extends AbstractFacade
         return $this->getFactory()
             ->createUserModel()
             ->getUserById($idUser);
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getActiveUserById($idUser)
+    {
+        return $this->getFactory()
+            ->createUserModel()
+            ->getActiveUserById($idUser);
     }
 
     /**

@@ -253,11 +253,11 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
-     * @throws PropelException
+     * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return SpyTaxRate
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxRate
      */
     private function createTaxRateEntity(TaxRateTransfer $taxRateTransfer)
     {
@@ -269,9 +269,9 @@ class TaxWriter implements TaxWriterInterface
     }
 
     /**
-     * @param TaxRateTransfer $taxRateTransfer
+     * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
-     * @return SpyTaxRate
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxRate
      */
     private function findOrCreateTaxRateEntity(TaxRateTransfer $taxRateTransfer)
     {

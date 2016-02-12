@@ -12,7 +12,7 @@ use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 /**
  * @method \Spryker\Zed\Auth\Persistence\AuthPersistenceFactory getFactory()
  */
-class AuthQueryContainer extends AbstractQueryContainer
+class AuthQueryContainer extends AbstractQueryContainer implements AuthQueryContainerInterface
 {
 
     /**

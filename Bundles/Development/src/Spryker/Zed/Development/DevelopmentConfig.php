@@ -37,4 +37,16 @@ class DevelopmentConfig extends AbstractBundleConfig
         return $this->getBundleDirectory();
     }
 
+    /**
+     * Either a relative or full path to the ruleset.xml or a name of an installed
+     * standard (see `phpcs -i` for a list of available ones).
+     *
+     * @return string
+     */
+    public function getCodingStandard()
+    {
+        $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
+        return $vendorDir . 'spryker/code-sniffer/Spryker/ruleset.xml';
+    }
+
 }

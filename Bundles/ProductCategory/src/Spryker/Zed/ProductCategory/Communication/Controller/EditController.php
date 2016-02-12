@@ -109,7 +109,7 @@ class EditController extends AddController
     }
 
     /**
-     * @param $existingCategoryNode
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $existingCategoryNode
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
@@ -196,7 +196,7 @@ class EditController extends AddController
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param $productOrder
+     * @param array $productOrder
      *
      * @return void
      */
@@ -208,7 +208,7 @@ class EditController extends AddController
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param $productPreConfig
+     * @param array $productPreConfig
      *
      * @return void
      */

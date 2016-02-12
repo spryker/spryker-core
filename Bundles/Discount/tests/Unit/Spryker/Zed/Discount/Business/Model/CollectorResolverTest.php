@@ -222,7 +222,7 @@ class CollectorResolverTest extends Test
     }
 
     /**
-     * @param $collectorConfig
+     * @param \Spryker\Zed\Discount\DiscountConfigInterface $collectorConfig
      *
      * @return \Spryker\Zed\Discount\Business\Model\CollectorResolver
      */

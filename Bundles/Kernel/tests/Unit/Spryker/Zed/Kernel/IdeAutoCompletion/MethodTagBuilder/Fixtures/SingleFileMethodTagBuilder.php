@@ -31,7 +31,7 @@ class SingleFileMethodTagBuilder extends AbstractSingleFileMethodTagBuilder
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param array $methodTags
      *
      * @return array

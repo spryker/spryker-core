@@ -8,7 +8,7 @@ namespace Spryker\Shared\ZedRequest\Client;
 
 use Spryker\Shared\Transfer\TransferInterface;
 
-abstract class AbstractZedClient
+abstract class AbstractZedClient implements AbstractZedClientInterface
 {
 
     /**

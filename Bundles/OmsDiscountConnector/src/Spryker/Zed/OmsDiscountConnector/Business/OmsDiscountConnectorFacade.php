@@ -11,6 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\OmsDiscountConnector\Business\OmsDiscountConnectorBusinessFactory getFactory()
  */
-class OmsDiscountConnectorFacade extends AbstractFacade
+class OmsDiscountConnectorFacade extends AbstractFacade implements OmsDiscountConnectorFacadeInterface
 {
 }

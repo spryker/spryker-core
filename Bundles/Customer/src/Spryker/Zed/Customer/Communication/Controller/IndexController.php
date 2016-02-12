@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Customer\Communication\Controller;
 
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 
 /**

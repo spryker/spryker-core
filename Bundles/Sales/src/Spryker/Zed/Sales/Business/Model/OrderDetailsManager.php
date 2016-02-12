@@ -163,7 +163,7 @@ class OrderDetailsManager
     }
 
     /**
-     * @param $orderEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */

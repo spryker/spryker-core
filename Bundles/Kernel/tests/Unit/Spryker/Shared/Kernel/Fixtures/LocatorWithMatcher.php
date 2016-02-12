@@ -27,7 +27,7 @@ class LocatorWithMatcher extends AbstractLocator
     protected $application = 'baz';
 
     /**
-     * @param $bundle
+     * @param string $bundle
      *
      * @return object
      */

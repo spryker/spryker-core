@@ -30,18 +30,18 @@ interface LocalInterface
     public function execute(QueryInterface $query);
 
     /**
-     * @param $coreName
+     * @param string $coreName
      */
     public function reloadCore($coreName);
 
     /**
-     * @param $coreName
-     * @param $coreDir
+     * @param string $coreName
+     * @param string $coreDir
      */
     public function createCore($coreName, $coreDir);
 
     /**
-     * @param $coreName
+     * @param string $coreName
      */
     public function unloadCore($coreName);
 

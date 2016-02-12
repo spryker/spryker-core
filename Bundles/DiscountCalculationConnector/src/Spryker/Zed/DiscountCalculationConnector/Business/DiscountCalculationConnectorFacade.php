@@ -12,7 +12,7 @@ use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 /**
  * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorBusinessFactory getFactory()
  */
-class DiscountCalculationConnectorFacade extends AbstractFacade
+class DiscountCalculationConnectorFacade extends AbstractFacade implements DiscountCalculationConnectorFacadeInterface
 {
 
     /**

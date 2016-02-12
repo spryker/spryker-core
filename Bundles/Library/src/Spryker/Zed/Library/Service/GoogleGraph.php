@@ -61,6 +61,13 @@ class GoogleGraph
 
     protected $chbh;
 
+    /**
+     * @param bool $sendHeader
+     * @param string $contentType
+     *
+     * @throws \Exception
+     * @return string
+     */
     public function request($sendHeader = true, $contentType = 'gif')
     {
         if (!in_array($contentType, ['gif', 'png', 'json'])) {
@@ -82,6 +89,9 @@ class GoogleGraph
         return $response->getBody();
     }
 
+    /**
+     * @return string
+     */
     public function renderAsForm()
     {
         $vars = get_object_vars($this);
@@ -106,7 +116,7 @@ class GoogleGraph
     /**
      * The chart title.
      *
-     * @param $chl
+     * @param string $chl
      *
      * @return void
      */
@@ -118,7 +128,7 @@ class GoogleGraph
     /**
      * The slice labels.
      *
-     * @param $chl
+     * @param string $chl
      *
      * @return void
      */
@@ -138,7 +148,7 @@ class GoogleGraph
     /**
      * Chart type
      *
-     * @param $cht
+     * @param string $cht
      *
      * @return void
      */
@@ -150,7 +160,7 @@ class GoogleGraph
     /**
      * The chart data.
      *
-     * @param $chd
+     * @param string $chd
      *
      * @return void
      */
@@ -170,7 +180,7 @@ class GoogleGraph
     /**
      * Chart Label Data (various types)
      *
-     * @param $chld
+     * @param string $chld
      *
      * @return void
      */
@@ -184,7 +194,7 @@ class GoogleGraph
      *
      * @link https://developers.google.com/chart/image/docs/chart_params#gcharts_legend
      *
-     * @param $chdl
+     * @param string $chdl
      *
      * @return void
      */
@@ -198,7 +208,7 @@ class GoogleGraph
      *
      * @link https://developers.google.com/chart/image/docs/chart_params#gcharts_legend
      *
-     * @param $chdlp
+     * @param string $chdlp
      *
      * @return void
      */
@@ -212,7 +222,7 @@ class GoogleGraph
      *
      * @link https://developers.google.com/chart/image/docs/chart_params#gcharts_legend
      *
-     * @param $chdls
+     * @param string $chdls
      *
      * @return void
      */
@@ -224,7 +234,7 @@ class GoogleGraph
     /**
      * Custom Axis Labels
      *
-     * @param $chxl
+     * @param string $chxl
      *
      * @return void
      */

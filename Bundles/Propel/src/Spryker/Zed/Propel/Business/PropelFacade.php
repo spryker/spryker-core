@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Propel\Business\PropelBusinessFactory getFactory()
  */
-class PropelFacade extends AbstractFacade
+class PropelFacade extends AbstractFacade implements PropelFacadeInterface
 {
 
     /**

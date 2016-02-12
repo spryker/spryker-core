@@ -41,7 +41,7 @@ class Request extends \Spryker\Shared\Library\Communication\Request
     }
 
     /**
-     * @param $transfer
+     * @param \Spryker\Shared\Transfer\TransferInterface $transfer
      *
      * @return void
      */

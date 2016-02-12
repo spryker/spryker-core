@@ -43,8 +43,8 @@ class SystemUnderTestBootstrap
         self::APPLICATION_CLIENT,
     ];
 
-    /**s
-     * @return self
+    /**
+     * @return $this
      */
     public static function getInstance()
     {
@@ -89,7 +89,7 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @param $application
+     * @param string $application
      *
      * @throws \Exception
      *
@@ -132,7 +132,7 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @param $locator
+     * @param \Spryker\Shared\Kernel\LocatorLocatorInterface $locator
      *
      * @return void
      */

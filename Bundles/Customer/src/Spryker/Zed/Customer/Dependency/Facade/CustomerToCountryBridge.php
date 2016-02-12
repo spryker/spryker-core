@@ -26,7 +26,7 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
     }
 
     /**
-     * @param string$countryName
+     * @param string $countryName
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */

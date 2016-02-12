@@ -10,7 +10,9 @@ interface ProductWriterInterface
 {
 
     /**
-     * @param $product
+     * @param \Spryker\Shared\Product\Model\ProductAbstractInterface $product
+     *
+     * @return bool
      */
     public function writeProduct($product);
 

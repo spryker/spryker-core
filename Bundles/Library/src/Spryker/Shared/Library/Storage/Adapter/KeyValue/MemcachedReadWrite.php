@@ -10,8 +10,8 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
 {
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      *
      * @throws \Exception
      *
@@ -51,7 +51,7 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return bool
      */

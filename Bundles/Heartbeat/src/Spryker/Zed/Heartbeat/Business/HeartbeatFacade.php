@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Heartbeat\Business\HeartbeatBusinessFactory getFactory()
  */
-class HeartbeatFacade extends AbstractFacade
+class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
 {
 
     /**
@@ -31,7 +31,7 @@ class HeartbeatFacade extends AbstractFacade
     }
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doPropelHealthCheck()
     {
@@ -39,7 +39,7 @@ class HeartbeatFacade extends AbstractFacade
     }
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doSearchHealthCheck()
     {
@@ -47,7 +47,7 @@ class HeartbeatFacade extends AbstractFacade
     }
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doSessionHealthCheck()
     {
@@ -55,7 +55,7 @@ class HeartbeatFacade extends AbstractFacade
     }
 
     /**
-     * @return HealthIndicatorReportTransfer
+     * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doStorageHealthCheck()
     {

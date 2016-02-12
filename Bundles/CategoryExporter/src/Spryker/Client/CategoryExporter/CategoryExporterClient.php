@@ -11,7 +11,7 @@ use Spryker\Client\Kernel\AbstractClient;
 /**
  * @method \Spryker\Client\CategoryExporter\CategoryExporterFactory getFactory()
  */
-class CategoryExporterClient extends AbstractClient
+class CategoryExporterClient extends AbstractClient implements CategoryExporterClientInterface
 {
 
     /**

@@ -13,16 +13,17 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Payolution\Business\PayolutionBusinessFactory getFactory()
  */
-class PayolutionFacade extends AbstractFacade
+class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function saveOrderPayment(OrderTransfer $orderTransfer)
     {
-        return $this
-            ->getFactory()
+        $this->getFactory()
             ->createOrderSaver()
             ->saveOrderPayment($orderTransfer);
     }

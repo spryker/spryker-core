@@ -28,7 +28,7 @@ interface ReadWriteInterface extends ReadInterface
     public function setMulti(array $items, $prefix = RedisRead::KV_PREFIX);
 
     /**
-     * @param $key
+     * @param string $key
      * @param string $prefix
      *
      * @return bool|mixed

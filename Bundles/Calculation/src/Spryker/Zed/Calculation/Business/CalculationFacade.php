@@ -14,7 +14,7 @@ use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
  * @method \Spryker\Zed\Calculation\Business\CalculationBusinessFactory getFactory()
  * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
-class CalculationFacade extends AbstractFacade
+class CalculationFacade extends AbstractFacade implements CalculationFacadeInterface
 {
 
     /**
@@ -63,7 +63,7 @@ class CalculationFacade extends AbstractFacade
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param $calculableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -79,7 +79,7 @@ class CalculationFacade extends AbstractFacade
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param $calculableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -150,7 +150,7 @@ class CalculationFacade extends AbstractFacade
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param $calculableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -166,7 +166,7 @@ class CalculationFacade extends AbstractFacade
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param $calculableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */
@@ -182,7 +182,7 @@ class CalculationFacade extends AbstractFacade
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
      * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param $calculableItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
      *
      * @return void
      */

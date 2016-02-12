@@ -14,7 +14,7 @@ use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 /**
  * @method \Spryker\Zed\Stock\Persistence\StockPersistenceFactory getFactory()
  */
-class StockQueryContainer extends AbstractQueryContainer
+class StockQueryContainer extends AbstractQueryContainer implements StockQueryContainerInterface
 {
 
     /**

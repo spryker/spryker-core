@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Setup\Business\SetupBusinessFactory getFactory()
  */
-class SetupFacade extends AbstractFacade
+class SetupFacade extends AbstractFacade implements SetupFacadeInterface
 {
 
     /**

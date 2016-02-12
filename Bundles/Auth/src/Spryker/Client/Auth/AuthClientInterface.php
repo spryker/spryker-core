@@ -10,15 +10,15 @@ interface AuthClientInterface
 {
 
     /**
-     * @param $rawToken
+     * @param string $rawToken
      *
      * @return string
      */
     public function generateToken($rawToken);
 
     /**
-     * @param $rawToken
-     * @param $token
+     * @param string $rawToken
+     * @param string $token
      *
      * @return bool
      */

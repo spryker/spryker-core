@@ -80,6 +80,15 @@ interface UserInterface
     public function getUserById($id);
 
     /**
+     * @param int $id
+     *
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getActiveUserById($id);
+
+    /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return \Generated\Shared\Transfer\UserTransfer

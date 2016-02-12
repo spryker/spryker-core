@@ -22,7 +22,7 @@ use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 /**
  * @method \Spryker\Zed\Acl\Persistence\AclPersistenceFactory getFactory()
  */
-class AclQueryContainer extends AbstractQueryContainer
+class AclQueryContainer extends AbstractQueryContainer implements AclQueryContainerInterface
 {
 
     const ROLE_NAME = 'role_name';
@@ -211,7 +211,7 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param $roleId
+     * @param int $roleId
      *
      * @return \Orm\Zed\Acl\Persistence\SpyAclRuleQuery
      */

@@ -85,7 +85,7 @@ class Api implements ApiInterface
      * significant about the code itself to name the transaction, such as /Product/view. The limit for the total number
      * of transactions should be less than 1000 unique transaction names -- exceeding that is not recommended.
      *
-     * @param $name
+     * @param string $name
      *
      * @return $this
      */

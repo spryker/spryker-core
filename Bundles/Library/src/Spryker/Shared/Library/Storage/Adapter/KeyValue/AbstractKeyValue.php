@@ -63,7 +63,7 @@ abstract class AbstractKeyValue implements AdapterInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return void
      */
@@ -89,7 +89,7 @@ abstract class AbstractKeyValue implements AdapterInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return void
      */
@@ -115,7 +115,7 @@ abstract class AbstractKeyValue implements AdapterInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return void
      */

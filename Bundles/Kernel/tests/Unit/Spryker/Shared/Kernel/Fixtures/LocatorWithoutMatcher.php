@@ -12,7 +12,7 @@ class LocatorWithoutMatcher implements LocatorInterface
 {
 
     /**
-     * @param $bundle
+     * @param string $bundle
      *
      * @return object
      */

@@ -13,12 +13,9 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @property ProductCategoryBusinessFactory $factory
- *
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryBusinessFactory getFactory()
- * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryManager createProductManager()
  */
-class ProductCategoryFacade extends AbstractFacade
+class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFacadeInterface
 {
 
     /**
@@ -115,7 +112,7 @@ class ProductCategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param $productPreConfig
+     * @param array $productPreConfig
      *
      * @return void
      */

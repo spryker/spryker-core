@@ -23,7 +23,7 @@ abstract class AbstractErrorRendererException extends \Exception
     }
 
     /**
-     * @param $extra
+     * @param string $extra
      *
      * @return void
      */

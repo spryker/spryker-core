@@ -96,9 +96,9 @@ class BridgeBuilder
     }
 
     /**
-     * @param $bundle
-     * @param $toBundle
-     * @param $templateContent
+     * @param string $bundle
+     * @param string $toBundle
+     * @param string $templateContent
      *
      * @return mixed
      */
@@ -114,9 +114,9 @@ class BridgeBuilder
     }
 
     /**
-     * @param $bundle
-     * @param $templateContent
-     * @param $fileName
+     * @param string $bundle
+     * @param string $templateContent
+     * @param string $fileName
      *
      * @return void
      */

@@ -11,9 +11,14 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Storage\Business\StorageBusinessFactory getFactory()
  */
-class StorageFacade extends AbstractFacade
+class StorageFacade extends AbstractFacade implements StorageFacadeInterface
 {
 
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
     public function get($key)
     {
         return $this->getFactory()->createStorage()->get($key);

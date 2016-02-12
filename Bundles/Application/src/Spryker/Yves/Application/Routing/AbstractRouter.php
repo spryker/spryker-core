@@ -66,7 +66,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @param $status
+     * @param bool $status
      *
      * @return $this
      */

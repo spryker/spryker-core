@@ -12,7 +12,7 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 /**
  * @method \Spryker\Zed\Touch\Business\TouchBusinessFactory getFactory()
  */
-class TouchFacade extends AbstractFacade
+class TouchFacade extends AbstractFacade implements TouchFacadeInterface
 {
 
     /**

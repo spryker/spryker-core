@@ -37,7 +37,7 @@ class SolrLocal extends Solr implements LocalInterface
     }
 
     /**
-     * @param $coreName
+     * @param string $coreName
      *
      * @return void
      */
@@ -50,8 +50,8 @@ class SolrLocal extends Solr implements LocalInterface
     }
 
     /**
-     * @param $coreName
-     * @param $coreDir
+     * @param string $coreName
+     * @param string $coreDir
      *
      * @return void
      */
@@ -65,7 +65,7 @@ class SolrLocal extends Solr implements LocalInterface
     }
 
     /**
-     * @param $coreName
+     * @param string $coreName
      *
      * @return void
      */

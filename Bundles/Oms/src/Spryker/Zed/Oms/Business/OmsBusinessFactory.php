@@ -172,14 +172,14 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new Drawer(
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
-            $this->createGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false)
+            $this->getGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false)
         );
     }
 
     /**
      * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
-    protected function createGraph()
+    protected function getGraph()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGIN_GRAPH);
     }
