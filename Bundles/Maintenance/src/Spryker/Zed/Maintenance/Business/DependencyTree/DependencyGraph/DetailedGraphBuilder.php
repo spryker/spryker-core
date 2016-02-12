@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph;
 
 use Spryker\Shared\Graph\GraphInterface;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\ExternalDependency;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFacade;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
@@ -214,6 +215,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
             LocatorFacade::class => 'Facade',
             LocatorQueryContainer::class => 'QueryContainer',
             UseStatement::class => 'Use',
+            ExternalDependency::class => 'External',
         ];
 
         return $mapped[$finderName];
