@@ -52,7 +52,6 @@ class RequireUpdater implements UpdaterInterface
         foreach ($dependentBundles as $dependentBundle) {
             $filter = new CamelCaseToDash();
             $dependentBundle = strtolower($filter->filter($dependentBundle));
-
             $composerJson[self::KEY_REQUIRE]['spryker/' . $dependentBundle] = self::RELEASE_OPERATOR . '1.0.0';
         }
 
@@ -83,6 +82,9 @@ class RequireUpdater implements UpdaterInterface
         $dependencyTree = $this->treeFilter->filter($this->dependencyTreeReader->read());
         $dependentBundles = [];
         foreach ($dependencyTree as $dependency) {
+            if ($dependency[DependencyTree::META_FOREIGN_BUNDLE] === 'external') {
+                continue;
+            }
             if ($dependency[DependencyTree::META_BUNDLE] === $bundleName) {
                 $dependentBundles[] = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
             }
