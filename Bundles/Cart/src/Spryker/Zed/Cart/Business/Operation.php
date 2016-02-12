@@ -8,12 +8,10 @@ namespace Spryker\Zed\Cart\Business;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
+use Spryker\Zed\Calculation\Business\CalculationFacadeInterface;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
-use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
-use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
-use Spryker\Zed\ItemGrouper\Business\ItemGrouperFacade;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface;
 
@@ -31,7 +29,7 @@ class Operation
     protected $cartStorageProvider;
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\CalculationFacade
+     * @var \Spryker\Zed\Calculation\Business\CalculationFacadeInterface
      */
     protected $calculationFacade;
 

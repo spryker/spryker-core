@@ -7,18 +7,19 @@
 namespace Spryker\Zed\CalculationCheckoutConnector\Dependency\Facade;
 
 use Spryker\Zed\Calculation\Business\CalculationFacade;
+use Spryker\Zed\Calculation\Business\CalculationFacadeInterface;
 use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
 
 class CalculationCheckoutConnectorToCalculationBridge implements CalculationCheckoutConnectorToCalculationInterface
 {
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\CalculationFacade
+     * @var \Spryker\Zed\Calculation\Business\CalculationFacadeInterface
      */
     protected $calculationFacade;
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\CalculationFacade $calculationFacade
+     * @param \Spryker\Zed\Calculation\Business\CalculationFacadeInterface $calculationFacade
      */
     public function __construct($calculationFacade)
     {

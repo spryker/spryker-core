@@ -23,8 +23,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
     {
         return new Operation(
              $this->createStorageProvider(),
-             $this->getCalculator(),
-             $this->getItemGrouper(),
+             $this->getCalculatorFacade(),
+             $this->getItemGrouperFacade(),
              $this->getMessengerFacade(),
              $this->getItemExpanderPlugins()
         );
@@ -41,7 +41,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cart\Dependency\Facade\CartToItemGrouperInterface
      */
-    protected function getItemGrouper()
+    protected function getItemGrouperFacade()
     {
         return $this->getProvidedDependency(CartDependencyProvider::FACADE_ITEM_GROUPER);
     }
@@ -50,7 +50,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
      * @return \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface
      *
      */
-    protected function getCalculator()
+    protected function getCalculatorFacade()
     {
         return $this->getProvidedDependency(CartDependencyProvider::FACADE_CALCULATION);
     }

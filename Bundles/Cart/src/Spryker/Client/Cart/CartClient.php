@@ -10,8 +10,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Cart\Session\QuoteSessionInterface;
-use Spryker\Client\Cart\Zed\CartStubInterface;
 use Spryker\Client\Cart\Exception\CartItemNotFoundException;
 
 /**

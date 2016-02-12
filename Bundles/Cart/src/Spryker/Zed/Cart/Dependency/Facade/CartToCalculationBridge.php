@@ -8,17 +8,18 @@ namespace Spryker\Zed\Cart\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
+use Spryker\Zed\Calculation\Business\CalculationFacadeInterface;
 
 class CartToCalculationBridge implements CartToCalculationInterface
 {
 
     /**
-     * @var \Spryker\Zed\Calculation\Business\CalculationFacade
+     * @var CalculationFacadeInterface
      */
     protected $calculationFacade;
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\CalculationFacade $calculationFacade
+     * @param CalculationFacadeInterface $calculationFacade
      */
     public function __construct($calculationFacade)
     {

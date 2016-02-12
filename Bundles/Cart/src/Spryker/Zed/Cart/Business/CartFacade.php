@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Cart\Business;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 

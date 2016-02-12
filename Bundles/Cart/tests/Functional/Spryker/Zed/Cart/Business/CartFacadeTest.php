@@ -3,6 +3,7 @@
 namespace Functional\Spryker\Zed\Cart\Business;
 
 use Codeception\TestCase\Test;
+use Spryker\Zed\Cart\Business\CartFacadeInterface;
 use Spryker\Zed\Kernel\Container;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -35,7 +36,7 @@ class CartFacadeTest extends Test
     const DUMMY_2_PRICE = 100;
 
     /**
-     * @var \Spryker\Zed\Cart\Business\CartFacade
+     * @var \Spryker\Zed\Cart\Business\CartFacadeInterface
      */
     private $cartFacade;
 

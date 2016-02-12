@@ -26,7 +26,7 @@ class CommentManager
     protected $userTransfer;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainer|SalesQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainer|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      */
     public function __construct(\Spryker\Zed\Sales\Persistence\SalesQueryContainer $queryContainer, UserTransfer $userTransfer)

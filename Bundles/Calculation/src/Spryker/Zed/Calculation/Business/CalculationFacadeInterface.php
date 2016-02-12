@@ -1,118 +1,84 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 namespace Spryker\Zed\Calculation\Business;
 
-use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Zed\Calculation\Business\Model\CalculableInterface;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
+
+/**
+ * @method \Spryker\Zed\Calculation\Business\CalculationBusinessFactory getFactory()
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
+ */
 interface CalculationFacadeInterface
 {
-
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * Executes all calculators in plugin stack.
      *
-     * @return \Spryker\Zed\Calculation\Business\Model\CalculableInterface
-     */
-    public function recalculate(CalculableInterface $calculableContainer);
-
-    /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param null $calculableItems
+     * @see CalculationConfig::getCalculatorStack
      *
-     * @return \Generated\Shared\Transfer\TotalsTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateTotals(CalculableInterface $calculableContainer, $calculableItems = null);
+    public function recalculate(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateExpensePriceToPay(CalculableInterface $calculableContainer);
+    public function calculateExpenseGrossSumAmount(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateExpenseTotals(TotalsTransfer $totalsTransfer, CalculableInterface $calculableContainer, $calculableItems);
+    public function calculateExpenseTotals(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateGrandTotalTotals(TotalsTransfer $totalsTransfer, CalculableInterface $calculableContainer, $calculableItems);
+    public function calculateGrandTotalTotals(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateItemPriceToPay(CalculableInterface $calculableContainer);
+    public function calculateItemGrossAmounts(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateOptionPriceToPay(CalculableInterface $calculableContainer);
+    public function calculateOptionGrossSum(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateRemoveAllExpenses(CalculableInterface $calculableContainer);
+    public function removeTotals(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function recalculateRemoveTotals(CalculableInterface $calculableContainer);
+    public function calculateSubtotalTotals(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function calculateItemTotalPrice(CalculableInterface $calculableContainer);
-
-    /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
-     *
-     * @return void
-     */
-    public function recalculateSubtotalTotals(TotalsTransfer $totalsTransfer, CalculableInterface $calculableContainer, $calculableItems);
-
-    /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
-     *
-     * @return void
-     */
-    public function recalculateSubtotalWithoutItemExpensesTotals(TotalsTransfer $totalsTransfer, CalculableInterface $calculableContainer, $calculableItems);
-
-    /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Spryker\Zed\Calculation\Business\Model\CalculableInterface $calculableContainer
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderItemsTransfer|\Generated\Shared\Transfer\ItemTransfer[] $calculableItems
-     *
-     * @return void
-     */
-    public function recalculateTaxTotals(TotalsTransfer $totalsTransfer, CalculableInterface $calculableContainer, $calculableItems);
-
+    public function validateCheckoutGrandTotal(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 }

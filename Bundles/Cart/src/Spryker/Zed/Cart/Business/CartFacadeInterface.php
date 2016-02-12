@@ -1,73 +1,41 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-
 namespace Spryker\Zed\Cart\Business;
+use Generated\Shared\Transfer\CartChangeTransfer;
 
-use Generated\Shared\Transfer\CartTransfer;
-use Generated\Shared\Transfer\ChangeTransfer;
 
+/**
+ * @method \Spryker\Zed\Cart\Business\CartBusinessFactory getFactory()
+ */
 interface CartFacadeInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addToCart(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addToCart(ChangeTransfer $cartChange);
+    public function increaseQuantity(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseQuantity(ChangeTransfer $cartChange);
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeFromCart(ChangeTransfer $cartChange);
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function decreaseQuantity(ChangeTransfer $cartChange);
-
-    /**
-     * @todo call calculator client from cart client.
-     *
-     * @param \Generated\Shared\Transfer\CartTransfer $cart
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function recalculate(CartTransfer $cart);
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function addCouponCode(ChangeTransfer $cartChange);
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function removeCouponCode(ChangeTransfer $cartChange);
-
-    /**
-     * @param \Generated\Shared\Transfer\ChangeTransfer $cartChange
-     *
-     * @return \Generated\Shared\Transfer\CartTransfer
-     */
-    public function clearCouponCodes(ChangeTransfer $cartChange);
-
+    public function decreaseQuantity(CartChangeTransfer $cartChangeTransfer);
 }
