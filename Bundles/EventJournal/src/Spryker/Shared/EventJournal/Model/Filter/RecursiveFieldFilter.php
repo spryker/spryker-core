@@ -3,9 +3,9 @@
 /**
  * (c) Copyright Spryker Systems GmbH 2015
  */
+
 namespace Spryker\Shared\EventJournal\Model\Filter;
 
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Shared\EventJournal\Model\EventInterface;
 
 class RecursiveFieldFilter extends AbstractFilter

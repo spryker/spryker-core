@@ -37,13 +37,7 @@ class RecursiveFieldFilterTest extends \PHPUnit_Framework_TestCase
         ];
         $event->setField(self::FIELD_KEY, $data);
 
-        $options = [
-            RecursiveFieldFilter::OPTION_FILTER_PATTERN => [
-                [self::FIELD_KEY, self::KEY_DO_FILTER],
-            ],
-            RecursiveFieldFilter::OPTION_FILTERED_STR => self::VALUE_FILTERED,
-        ];
-        $filter = new RecursiveFieldFilter($options);
+        $filter = $this->getRecursiveFieldFilter();
         $filter->filter($event);
 
         $filteredData = $event->getFields()[self::FIELD_KEY];
@@ -69,13 +63,7 @@ class RecursiveFieldFilterTest extends \PHPUnit_Framework_TestCase
         ];
         $event->setField(self::FIELD_KEY, $data);
 
-        $options = [
-            RecursiveFieldFilter::OPTION_FILTER_PATTERN => [
-                [self::FIELD_KEY, 'do filter'],
-            ],
-            RecursiveFieldFilter::OPTION_FILTERED_STR => self::VALUE_FILTERED,
-        ];
-        $filter = new RecursiveFieldFilter($options);
+        $filter = $this->getRecursiveFieldFilter();
         $filter->filter($event);
 
         $filteredData = $event->getFields()[self::FIELD_KEY];
@@ -101,13 +89,7 @@ class RecursiveFieldFilterTest extends \PHPUnit_Framework_TestCase
         ];
         $event->setField(self::FIELD_KEY, $data);
 
-        $options = [
-            RecursiveFieldFilter::OPTION_FILTER_PATTERN => [
-                [self::FIELD_KEY, self::KEY_DO_FILTER],
-            ],
-            RecursiveFieldFilter::OPTION_FILTERED_STR => self::VALUE_FILTERED,
-        ];
-        $filter = new RecursiveFieldFilter($options);
+        $filter = $this->getRecursiveFieldFilter();
         $filter->filter($event);
 
         $filteredData = $event->getFields()[self::FIELD_KEY];
@@ -140,6 +122,21 @@ class RecursiveFieldFilterTest extends \PHPUnit_Framework_TestCase
         $expectedData = self::VALUE_FILTERED;
 
         $this->assertSame($expectedData, $filteredData);
+    }
+
+    /**
+     * @return \Spryker\Shared\EventJournal\Model\Filter\RecursiveFieldFilter
+     */
+    private function getRecursiveFieldFilter()
+    {
+        $options = [
+            RecursiveFieldFilter::OPTION_FILTER_PATTERN => [
+                [self::FIELD_KEY, self::KEY_DO_FILTER],
+            ],
+            RecursiveFieldFilter::OPTION_FILTERED_STR => self::VALUE_FILTERED,
+        ];
+        $filter = new RecursiveFieldFilter($options);
+        return $filter;
     }
 
 }
