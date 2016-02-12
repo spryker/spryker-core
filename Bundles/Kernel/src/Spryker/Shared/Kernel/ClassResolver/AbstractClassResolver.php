@@ -60,11 +60,7 @@ abstract class AbstractClassResolver
      */
     protected function getResolvedClassInstance()
     {
-        if (array_key_exists($this->resolvedClassName, self::$classCache) === false) {
-            self::$classCache[$this->resolvedClassName] = new $this->resolvedClassName();
-        }
-
-        return self::$classCache[$this->resolvedClassName];
+        return new $this->resolvedClassName();
     }
 
     /**
