@@ -114,9 +114,9 @@ class SandboxController extends AbstractController
         $process = $this->saveTestProcess();
 
         $skus = [
-            'QA123' => rand(10, 300),
-            'QA456' => rand(100, 100),
-            'QA789' => rand(200, 200),
+            'QA123' => rand(100, 300),
+            'QA456' => rand(100, 1000),
+            'QA789' => rand(200, 2500),
         ];
 
         $total = 0;
@@ -224,8 +224,8 @@ class SandboxController extends AbstractController
         $order->setShippingAddress($address);
         $order->setBillingAddress($address);
         $order->setOrderReference(uniqid());
-        $order->setSubtotal(0);
-        $order->setGrandTotal(0);
+//        $order->setSubtotal(0);
+//        $order->setGrandTotal(0);
         $order->save();
 
         return $order;
