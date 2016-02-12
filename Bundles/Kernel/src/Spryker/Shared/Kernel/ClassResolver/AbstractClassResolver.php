@@ -28,11 +28,6 @@ abstract class AbstractClassResolver
     private $classNames = [];
 
     /**
-     * @var array
-     */
-    private static $classCache = [];
-
-    /**
      * @return string
      */
     abstract protected function getClassPattern();
