@@ -17,3 +17,60 @@
     {% include '@Sales/Details/boxes/refunds.twig' %}
 
 {% endblock %}
+
+{% block footer_js %}
+{{ parent() }}
+<script>
+    $(function(){
+
+        function getSelectedItems() {
+            var selectedItems = [];
+            $('.item-check').each(function(){
+                if ($(this).prop('checked') === true) {
+                    selectedItems.push($(this).val());
+                }
+            });
+
+            return selectedItems;
+        }
+
+        function createTriggerUrl(idOrder, eventName) {
+            var url = '/oms/trigger/trigger-event-for-order';
+            var parameters = {
+                event: eventName,
+                'id-sales-order': idOrder,
+                redirect: '/sales/details?id-sales-order=' + idOrder
+            };
+
+            parameters.items = getSelectedItems();
+
+            var finalUrl = url + '?' + $.param(parameters);
+
+            return decodeURIComponent(finalUrl);
+        }
+
+        $('.trigger-order-event').click(function(e){
+            e.preventDefault();
+
+            var idOrder = $(this).data('id-sales-order');
+            var eventName = $(this).data('event');
+
+            //window.location = createTriggerUrl(idOrder, eventName);
+            alert(createTriggerUrl(idOrder, eventName));
+        });
+
+        $('#check-all-orders').click(function(){
+            if ($(this).prop('checked') === true) {
+                var checked = true;
+            } else {
+                var checked = false;
+            }
+
+            $('.item-check').each(function(){
+                $(this).prop('checked', checked);
+            });
+        });
+
+    });
+</script>
+{% endblock %}

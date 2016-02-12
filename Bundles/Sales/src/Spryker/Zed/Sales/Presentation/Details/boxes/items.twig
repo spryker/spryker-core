@@ -7,10 +7,8 @@
 
                 <div>
                     {% for event in allEvents %}
-                        <a class="btn btn-primary"
-                           href="/oms/trigger/trigger-event-for-order?id-sales-order={{ idOrder }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
-                            {{ event }}
-                        </a>
+                           {#href="/oms/trigger/trigger-event-for-order?id-sales-order={{ idOrder }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}"#}
+                        <a class="btn btn-primary trigger-order-event" data-id-sales-order="{{ idOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
                     {% endfor %}
                 </div>
 
@@ -28,7 +26,7 @@
         <table class="footable table table-striped toggle-arrow-tiny">
             <thead>
             <tr class="text-left">
-                <th><input type="checkbox" /></th>
+                <th><input type="checkbox" id="check-all-orders" /></th>
                 <th>{{ 'Image' | trans }}</th>
                 <th>{{ 'Product' | trans }}</th>
                 <th>{{ 'SKU' | trans }}</th>
@@ -45,11 +43,11 @@
             <tbody>
             {% for orderItem in orderItems %}
                 <tr>
-                    <td><input type="checkbox" name="" class=""></td>
+                    <td><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check"></td>
                     <td>-image-</td>
                     <td>
-                        <a href="">{{ 'Yves view' }}</a><br>
-                        <a href="">{{ 'Zed View' }}</a>
+                        <a href="#" target="_blank">{{ 'Yves view' }}</a><br>
+                        <a href="#" target="_blank">{{ 'Zed View' }}</a>
                     </td>
                     <td>{{ orderItem.Sku }}</td>
                     <td>{{ orderItem.GrossPrice | currency }}</td>
