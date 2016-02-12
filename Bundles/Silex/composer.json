@@ -1,0 +1,15 @@
+{
+  "name": "spryker/silex",
+  "require": {
+    "silex/silex": "~1.3.5"
+  },
+  "description": "silex bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}

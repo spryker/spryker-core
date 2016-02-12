@@ -1,0 +1,15 @@
+{
+  "name": "spryker/redis",
+  "require": {
+    "predis/predis": "~1.0.3"
+  },
+  "description": "redis bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}

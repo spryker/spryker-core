@@ -12,7 +12,8 @@
   "require": {
     "spryker/application": "^1.0.0",
     "spryker/console": "^1.0.0",
-    "spryker/kernel": "^1.0.0"
+    "spryker/kernel": "^1.0.0",
+    "propel/propel": "~2.0@dev"
   },
   "require-dev": {},
   "description": "propel bundle",

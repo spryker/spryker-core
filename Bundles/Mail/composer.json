@@ -13,8 +13,7 @@
   "require": {
     "spryker/application": "^1.0.0",
     "spryker/kernel": "^1.0.0",
-    "spryker/library": "^1.0.0",
-    "mandrill/mandrill": "~1.0.55"
+    "spryker/library": "^1.0.0"
   },
   "require-dev": {},
   "description": "mail bundle",

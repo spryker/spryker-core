@@ -9,6 +9,7 @@
     }
   },
   "require": {
+    "php": "~5.6.0",
     "spryker/application": "^1.0.0",
     "spryker/library": "^1.0.0",
     "spryker/messenger": "^1.0.0",

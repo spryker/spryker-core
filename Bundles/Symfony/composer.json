@@ -1,13 +1,5 @@
 {
   "name": "spryker/symfony",
-  "autoload": {
-    "psr-0": {
-      "": "src",
-      "Unit": "tests",
-      "YvesUnit": "tests",
-      "Functional": "tests"
-    }
-  },
   "require": {
     "symfony/console": "~2.6.13",
     "symfony/debug": "~2.6.13",

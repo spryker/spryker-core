@@ -1,0 +1,15 @@
+{
+  "name": "spryker/guzzle",
+  "require": {
+    "guzzle/http": "~3.8.0"
+  },
+  "description": "guzzle bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}

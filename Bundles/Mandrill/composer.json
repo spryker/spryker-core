@@ -1,0 +1,15 @@
+{
+  "name": "spryker/mandrill",
+  "require": {
+    "mandrill/mandrill": "~1.0.55"
+  },
+  "description": "mandrill bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}

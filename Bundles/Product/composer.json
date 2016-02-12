@@ -23,8 +23,7 @@
     "spryker/product-option": "^1.0.0",
     "spryker/storage": "^1.0.0",
     "spryker/touch": "^1.0.0",
-    "spryker/url": "^1.0.0",
-    "league/csv": "~8.0.0"
+    "spryker/url": "^1.0.0"
   },
   "require-dev": {},
   "description": "product bundle",

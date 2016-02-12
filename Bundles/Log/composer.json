@@ -6,7 +6,9 @@
       "Unit": "tests/"
     }
   },
-  "require": {},
+  "require": {
+    "psr/log": "~1.0.0"
+  },
   "require-dev": {},
   "description": "log bundle",
   "license": "proprietary",
