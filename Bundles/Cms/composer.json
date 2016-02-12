@@ -21,8 +21,7 @@
     "spryker/propel": "^1.0.0",
     "spryker/storage": "^1.0.0",
     "spryker/touch": "^1.0.0",
-    "spryker/url": "^1.0.0",
-    "spryker/external": "^1.0.0"
+    "spryker/url": "^1.0.0"
   },
   "require-dev": {},
   "description": "cms bundle",

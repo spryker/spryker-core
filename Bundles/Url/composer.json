@@ -14,8 +14,7 @@
     "spryker/kernel": "^1.0.0",
     "spryker/locale": "^1.0.0",
     "spryker/propel": "^1.0.0",
-    "spryker/touch": "^1.0.0",
-    "spryker/external": "^1.0.0"
+    "spryker/touch": "^1.0.0"
   },
   "require-dev": {},
   "description": "url bundle",

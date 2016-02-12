@@ -6,9 +6,7 @@
       "Unit": "tests/"
     }
   },
-  "require": {
-    "spryker/external": "^1.0.0"
-  },
+  "require": {},
   "require-dev": {},
   "description": "log bundle",
   "license": "proprietary",

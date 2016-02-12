@@ -12,8 +12,7 @@
   },
   "require": {
     "spryker/availability": "^1.0.0",
-    "spryker/kernel": "^1.0.0",
-    "spryker/external": "^1.0.0"
+    "spryker/kernel": "^1.0.0"
   },
   "require-dev": {},
   "description": "availability cart connector bundle",

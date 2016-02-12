@@ -15,8 +15,7 @@
     "spryker/library": "^1.0.0",
     "spryker/messenger": "^1.0.0",
     "spryker/new-relic": "^1.0.0",
-    "spryker/propel": "^1.0.0",
-    "spryker/external": "^1.0.0"
+    "spryker/propel": "^1.0.0"
   },
   "require-dev": {},
   "bin": {

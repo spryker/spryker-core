@@ -10,9 +10,7 @@
       "YvesUnit": "tests/"
     }
   },
-  "require": {
-    "spryker/external": "^1.0.0"
-  },
+  "require": {},
   "require-dev": {},
   "description": "config bundle",
   "license": "proprietary",

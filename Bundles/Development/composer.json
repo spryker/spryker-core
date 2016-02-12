@@ -18,8 +18,7 @@
     "spryker/two-four": "^1.0.0",
     "spryker/two-three": "^1.0.0",
     "spryker/two-two": "^1.0.0",
-    "spryker/x": "^1.0.0",
-    "spryker/external": "^1.0.0"
+    "spryker/x": "^1.0.0"
   },
   "require-dev": {},
   "description": "development bundle",

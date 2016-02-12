@@ -14,8 +14,7 @@
     "spryker/console": "^1.0.0",
     "spryker/glossary": "^1.0.0",
     "spryker/kernel": "^1.0.0",
-    "spryker/messenger": "^1.0.0",
-    "spryker/external": "^1.0.0"
+    "spryker/messenger": "^1.0.0"
   },
   "require-dev": {},
   "description": "installer bundle",

@@ -56,7 +56,7 @@ class RequireUpdater implements UpdaterInterface
             $composerJson[self::KEY_REQUIRE]['spryker/' . $dependentBundle] = self::RELEASE_OPERATOR . '1.0.0';
         }
 
-        $composerJson = $this->addExternalDependencies($composerJson, $bundleName);
+//        $composerJson = $this->addExternalDependencies($composerJson, $bundleName);
 
         return $composerJson;
     }
@@ -104,7 +104,8 @@ class RequireUpdater implements UpdaterInterface
     private function addExternalDependencies(array $composerJson, $bundleName)
     {
         if ($bundleName !== self::EXTERNAL_DEPENDENCIES_BUNDLE_NAME) {
-            $composerJson[self::KEY_REQUIRE]['spryker/external'] = self::RELEASE_OPERATOR . '1.0.0';
+            unset($composerJson[self::KEY_REQUIRE]['spryker/external']);
+//            $composerJson[self::KEY_REQUIRE]['spryker/external'] = self::RELEASE_OPERATOR . '1.0.0';
         }
 
         return $composerJson;
