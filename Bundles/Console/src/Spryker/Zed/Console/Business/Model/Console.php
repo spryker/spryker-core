@@ -29,6 +29,9 @@ class Console extends SymfonyCommand
 
     use Helper;
 
+    const CODE_SUCCESS = 0;
+    const CODE_ERROR = 1;
+
     /**
      * @var \Symfony\Component\Console\Input\InputInterface
      */
@@ -67,7 +70,7 @@ class Console extends SymfonyCommand
     /**
      * @var int
      */
-    private $exitCode = 0;
+    private $exitCode = self::CODE_SUCCESS;
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -250,7 +253,7 @@ class Console extends SymfonyCommand
      */
     protected function hasError()
     {
-        return $this->exitCode !== 0;
+        return $this->exitCode !== self::CODE_SUCCESS;
     }
 
     /**
