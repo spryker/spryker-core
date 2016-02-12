@@ -73,4 +73,46 @@ class MaintenanceConfig extends AbstractBundleConfig
         return APPLICATION_SPRYKER_ROOT . '/../bundle_config.json';
     }
 
+    /**
+     * @return array
+     */
+    public function getExternalToInternalMap()
+    {
+        return [
+            'psr/log' => 'spryker/log',
+            'propel/propel' => 'spryker/propel',
+            'silex/silex' => 'spryker/silex',
+            'pimple/pimple' => 'spryker/pimple',
+            'mandrill/mandrill' => 'spryker/mandrill',
+            'predis/predis' => 'spryker/redis',
+            'guzzle/http' => 'spryker/guzzle',
+            'league/csv' => 'spryker/csv',
+            'monolog/monolog' => 'spryker/monolog',
+            'ruflin/elastica' => 'spryker/elastica',
+            '/symfony/' => 'spryker/symfony',
+            'twig/twig' => 'spryker/twig',
+            '/zendframework/' => 'spryker/zend',
+            'phpdocumentor/graphviz' => 'spryker/graphviz',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getIgnorableDependencies()
+    {
+        return [
+            'codeception/codeception',
+            'spryker/code-sniffer',
+            'pdepend/pdepend',
+            'phploc/phploc',
+            'phpmd/phpmd',
+            'sebastian/phpcpd',
+            'codeception/codeception',
+            'fabpot/php-cs-fixer',
+            'sensiolabs/security-checker',
+            'sllh/composer-versions-check',
+        ];
+    }
+
 }

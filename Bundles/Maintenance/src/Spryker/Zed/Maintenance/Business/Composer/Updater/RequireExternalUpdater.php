@@ -96,7 +96,7 @@ class RequireExternalUpdater implements UpdaterInterface
             if ($dependency[DependencyTree::META_BUNDLE] === $bundleName
                 && !in_array($dependency[DependencyTree::META_COMPOSER_NAME], $this->ignorableDependencies)
             ) {
-                $dependentBundles[] = $this->mapExternalBundleNameToInternal($dependency[DependencyTree::META_COMPOSER_NAME]);
+                $dependentBundles[] = $this->mapExternalToInternal($dependency[DependencyTree::META_COMPOSER_NAME]);
             }
         }
         $dependentBundles = array_unique($dependentBundles);
@@ -110,7 +110,7 @@ class RequireExternalUpdater implements UpdaterInterface
      *
      * @return string
      */
-    private function mapExternalBundleNameToInternal($composerName)
+    private function mapExternalToInternal($composerName)
     {
         foreach ($this->externalToInternalMap as $external => $internal) {
             if ($external[0] === '/') {

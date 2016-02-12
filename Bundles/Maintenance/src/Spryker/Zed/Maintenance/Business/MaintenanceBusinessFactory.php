@@ -458,8 +458,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         $treeFilter = $this->createDependencyTreeFilter();
         $treeFilter
-            ->addFilter($this->createDependencyTreeInternalDependencyFilter())
-        ;
+            ->addFilter($this->createDependencyTreeInternalDependencyFilter());
 
         if (is_string($bundleToView)) {
             $treeFilter->addFilter($this->createDependencyTreeBundleToViewFilter($bundleToView));
@@ -776,51 +775,9 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         return new RequireExternalUpdater(
             $this->createExternalDependencyTree(),
-            $this->getExternalToInternalMap(),
-            $this->getIgnorableDependencies()
+            $this->getConfig()->getExternalToInternalMap(),
+            $this->getConfig()->getIgnorableDependencies()
         );
-    }
-
-    /**
-     * @return array
-     */
-    protected function getExternalToInternalMap()
-    {
-        return [
-            'psr/log' => 'spryker/log',
-            'propel/propel' => 'spryker/propel',
-            'silex/silex' => 'spryker/silex',
-            'pimple/pimple' => 'spryker/pimple',
-            'mandrill/mandrill' => 'spryker/mandrill',
-            'predis/predis' => 'spryker/redis',
-            'guzzle/http' => 'spryker/guzzle',
-            'league/csv' => 'spryker/csv',
-            'monolog/monolog' => 'spryker/monolog',
-            'ruflin/elastica' => 'spryker/elastica',
-            '/symfony/' => 'spryker/symfony',
-            'twig/twig' => 'spryker/twig',
-            '/zendframework/' => 'spryker/zend',
-            'phpdocumentor/graphviz' => 'spryker/graphviz',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getIgnorableDependencies()
-    {
-        return [
-            'codeception/codeception',
-            'spryker/code-sniffer',
-            'pdepend/pdepend',
-            'phploc/phploc',
-            'phpmd/phpmd',
-            'sebastian/phpcpd',
-            'codeception/codeception',
-            'fabpot/php-cs-fixer',
-            'sensiolabs/security-checker',
-            'sllh/composer-versions-check',
-        ];
     }
 
     /**
