@@ -1,0 +1,145 @@
+<?php
+
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace Unit\Spryker\Shared\EventJournal\Model\Filter;
+
+use Spryker\Shared\EventJournal\Model\Event;
+use Spryker\Shared\EventJournal\Model\Filter\RecursiveFieldFilter;
+
+/**
+ * @group Spryker
+ * @group Shared
+ * @group EventJournal
+ * @group Filter
+ */
+class RecursiveFieldFilterTest extends \PHPUnit_Framework_TestCase
+{
+
+    const FIELD_KEY = 'key';
+
+    const KEY_DO_NOT_FILTER = 'do not filter';
+    const KEY_DO_FILTER = 'do filter';
+
+    const VALUE_NOT_FILTERED = 'not filtered';
+    const VALUE_FILTERED = '***';
+
+    /**
+     * @return void
+     */
+    public function testFilterShouldFilterArray()
+    {
+        $event = new Event();
+        $data = [
+            self::KEY_DO_FILTER => self::VALUE_NOT_FILTERED,
+        ];
+        $event->setField(self::FIELD_KEY, $data);
+
+        $options = [
+            RecursiveFieldFilter::OPTION_FILTER_PATTERN => [
+                [self::FIELD_KEY, self::KEY_DO_FILTER],
+            ],
+            RecursiveFieldFilter::OPTION_FILTERED_STR => self::VALUE_FILTERED,
+        ];
+        $filter = new RecursiveFieldFilter($options);
+        $filter->filter($event);
+
+        $filteredData = $event->getFields()[self::FIELD_KEY];
+        $expectedData = [
+            self::KEY_DO_FILTER => self::VALUE_FILTERED,
+        ];
+
+        $this->assertSame($expectedData, $filteredData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterShouldFilterArrayRecursive()
+    {
+        $event = new Event();
+        $data = [
+            self::KEY_DO_FILTER => self::VALUE_NOT_FILTERED,
+            [
+                self::KEY_DO_FILTER => self::VALUE_NOT_FILTERED,
+            ],
+            self::KEY_DO_NOT_FILTER => self::VALUE_NOT_FILTERED,
+        ];
+        $event->setField(self::FIELD_KEY, $data);
+
+        $options = [
+            RecursiveFieldFilter::OPTION_FILTER_PATTERN => [
+                [self::FIELD_KEY, 'do filter'],
+            ],
+            RecursiveFieldFilter::OPTION_FILTERED_STR => self::VALUE_FILTERED,
+        ];
+        $filter = new RecursiveFieldFilter($options);
+        $filter->filter($event);
+
+        $filteredData = $event->getFields()[self::FIELD_KEY];
+        $expectedData = [
+            self::KEY_DO_FILTER => self::VALUE_FILTERED,
+            [
+                self::KEY_DO_FILTER => self::VALUE_FILTERED,
+            ],
+            self::KEY_DO_NOT_FILTER => self::VALUE_NOT_FILTERED,
+        ];
+
+        $this->assertSame($expectedData, $filteredData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterShouldNotFilterArray()
+    {
+        $event = new Event();
+        $data = [
+            self::KEY_DO_NOT_FILTER => self::VALUE_NOT_FILTERED,
+        ];
+        $event->setField(self::FIELD_KEY, $data);
+
+        $options = [
+            RecursiveFieldFilter::OPTION_FILTER_PATTERN => [
+                [self::FIELD_KEY, self::KEY_DO_FILTER],
+            ],
+            RecursiveFieldFilter::OPTION_FILTERED_STR => self::VALUE_FILTERED,
+        ];
+        $filter = new RecursiveFieldFilter($options);
+        $filter->filter($event);
+
+        $filteredData = $event->getFields()[self::FIELD_KEY];
+        $expectedData = [
+            self::KEY_DO_NOT_FILTER => self::VALUE_NOT_FILTERED,
+        ];
+
+        $this->assertSame($expectedData, $filteredData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterShouldFilterString()
+    {
+        $event = new Event();
+
+        $event->setField(self::FIELD_KEY, self::VALUE_NOT_FILTERED);
+
+        $options = [
+            RecursiveFieldFilter::OPTION_FILTER_PATTERN => [
+                [self::FIELD_KEY, self::FIELD_KEY, self::KEY_DO_FILTER],
+            ],
+            RecursiveFieldFilter::OPTION_FILTERED_STR => self::VALUE_FILTERED,
+        ];
+        $filter = new RecursiveFieldFilter($options);
+        $filter->filter($event);
+
+        $filteredData = $event->getFields()[self::FIELD_KEY];
+        $expectedData = self::VALUE_FILTERED;
+
+        $this->assertSame($expectedData, $filteredData);
+    }
+
+}

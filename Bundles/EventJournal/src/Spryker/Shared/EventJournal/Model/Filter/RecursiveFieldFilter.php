@@ -5,13 +5,13 @@
  */
 namespace Spryker\Shared\EventJournal\Model\Filter;
 
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Shared\EventJournal\Model\EventInterface;
 
 class RecursiveFieldFilter extends AbstractFilter
 {
 
     const OPTION_FILTER_PATTERN = 'filter_pattern';
-
     const OPTION_FILTERED_STR = 'filtered_string';
 
     const TYPE = 'recursive';
@@ -34,60 +34,49 @@ class RecursiveFieldFilter extends AbstractFilter
     protected function getFilteredFields(array $fields)
     {
         foreach ($this->options[static::OPTION_FILTER_PATTERN] as $pattern) {
-            $this->applyPattern($fields, $pattern);
+            $fieldKey = array_shift($pattern);
+            if (isset($fields[$fieldKey])) {
+                $fields[$fieldKey] = $this->applyPattern($fieldKey, $fields[$fieldKey], $pattern);
+            }
         }
 
         return $fields;
     }
 
     /**
-     * @param array $fields
+     * @param string|int $key
+     * @param mixed $value
      * @param array $pattern
      *
-     * @return void
+     * @return array|string
      */
-    protected function applyPattern(array &$fields, array $pattern)
+    protected function applyPattern($key, $value, array $pattern)
     {
-        if ($this->currentPatternPartMatches($fields, $pattern)
-            && $this->valueIsArray($fields, $pattern)
-            && $this->nextPatternPartExists($pattern)
-        ) {
-            $this->applyPattern($fields[$pattern[0]], array_slice($pattern, 1));
-        } elseif ($this->currentPatternPartMatches($fields, $pattern)) {
-            $fields[$pattern[0]] = $this->options[static::OPTION_FILTERED_STR];
+        if (is_array($value)) {
+            foreach ($value as $valueKey => $valueValue) {
+                $value[$valueKey] = $this->applyPattern($valueKey, $valueValue, $pattern);
+            }
+
+            return $value;
         }
+
+        return $this->filterValue($key, $value, $pattern);
     }
 
     /**
-     * @param array $fields
+     * @param string|int $key
+     * @param mixed $value
      * @param array $pattern
      *
-     * @return bool
+     * @return string
      */
-    protected function currentPatternPartMatches(array &$fields, array $pattern)
+    private function filterValue($key, $value, array $pattern)
     {
-        return isset($fields[$pattern[0]]);
-    }
+        if (in_array($key, $pattern)) {
+            return $this->options[static::OPTION_FILTERED_STR];
+        }
 
-    /**
-     * @param array $fields
-     * @param array $pattern
-     *
-     * @return bool
-     */
-    protected function valueIsArray(array &$fields, array $pattern)
-    {
-        return is_array($fields[$pattern[0]]);
-    }
-
-    /**
-     * @param array $pattern
-     *
-     * @return bool
-     */
-    protected function nextPatternPartExists(array $pattern)
-    {
-        return isset($pattern[1]);
+        return $value;
     }
 
 }
