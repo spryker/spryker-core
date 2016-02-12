@@ -33,7 +33,6 @@ class ProductTouchConsole extends Console
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
 
-
         $this->addArgument(
             self::ARGUMENT_ID_ABSTRACT_PRODUCT,
             InputArgument::REQUIRED,
