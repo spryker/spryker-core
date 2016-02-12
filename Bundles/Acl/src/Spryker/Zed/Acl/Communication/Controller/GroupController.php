@@ -198,32 +198,4 @@ class GroupController extends AbstractController
         return $this->jsonResponse($roles);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function listAction(Request $request)
-    {
-        $grid = $this->getFactory()->createGroupsGrid($request);
-        $data = $grid->renderData();
-
-        return $this->jsonResponse($data);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function rulesAction(Request $request)
-    {
-        $idGroup = $request->get('id');
-        $grid = $this->getFactory()->createRulesetGrid($request, $idGroup);
-
-        $data = $grid->renderData();
-
-        return $this->jsonResponse($data);
-    }
-
 }

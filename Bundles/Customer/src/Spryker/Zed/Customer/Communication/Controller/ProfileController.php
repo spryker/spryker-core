@@ -134,19 +134,6 @@ class ProfileController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function addressesAction(Request $request)
-    {
-        $grid = $this->getFactory()
-            ->createAddressGrid($request);
-
-        return $this->jsonResponse($grid->renderData());
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function addressAction(Request $request)
     {
         $form = $this->getFactory()
