@@ -49,8 +49,7 @@ class ProductTouchConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $arguments = $input->getArguments();
-        $idProductAbstract = $arguments[self::ARGUMENT_ID_ABSTRACT_PRODUCT];
+        $idProductAbstract = $input->getArgument(self::ARGUMENT_ID_ABSTRACT_PRODUCT);
 
         $product = $this->getFacade();
         $product->touchProductActive($idProductAbstract);
