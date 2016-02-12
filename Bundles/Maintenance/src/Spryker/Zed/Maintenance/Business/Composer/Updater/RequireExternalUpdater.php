@@ -55,10 +55,11 @@ class RequireExternalUpdater implements UpdaterInterface
     public function update(array $composerJson)
     {
         $bundleName = $this->getBundleName($composerJson);
+
         $dependentBundles = $this->getExternalBundles($bundleName);
 
         foreach ($dependentBundles as $dependentBundle) {
-            if (empty($dependentBundle)) {
+            if (empty($dependentBundle) || $dependentBundle === $composerJson[self::KEY_NAME]) {
                 continue;
             }
             $filter = new CamelCaseToDash();
