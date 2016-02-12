@@ -13,17 +13,36 @@ class GlossaryFactory extends AbstractFactory
 {
 
     /**
-     * @param string $locale
+     * @var \Spryker\Client\Glossary\Storage\GlossaryStorageInterface[]
+     */
+    protected $translator = [];
+
+    /**
+     * @param string $localeName
      *
      * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
      */
-    public function createTranslator($locale)
+    public function createTranslator($localeName)
     {
         return new GlossaryStorage(
             $this->getStorage(),
             $this->createKeyBuilder(),
-            $locale
+            $localeName
         );
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
+     */
+    public function createCachedTranslator($localeName)
+    {
+        if (array_key_exists($localeName, $this->translator) === false) {
+            $this->translator[$localeName] = $this->createTranslator($localeName);
+        }
+
+        return $this->translator[$localeName];
     }
 
     /**

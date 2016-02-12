@@ -14,11 +14,6 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
 {
 
     /**
-     * @var \Spryker\Client\Glossary\Storage\GlossaryStorageInterface[]
-     */
-    protected $translator = [];
-
-    /**
      * @param string $id
      * @param string $localeName
      * @param array $parameters
@@ -37,11 +32,7 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
      */
     protected function createTranslator($localeName)
     {
-        if (array_key_exists($localeName, $this->translator) === false) {
-            $this->translator[$localeName] = $this->getFactory()->createTranslator($localeName);
-        }
-
-        return $this->translator[$localeName];
+        return $this->getFactory()->createCachedTranslator($localeName);
     }
 
 }
