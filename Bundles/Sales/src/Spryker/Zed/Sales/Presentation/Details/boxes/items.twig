@@ -28,24 +28,36 @@
         <table class="footable table table-striped toggle-arrow-tiny">
             <thead>
             <tr class="text-left">
-                <th>{{ "Item name" | trans }}</th>
-                <th>{{ "SKU" | trans }}</th>
-                <th>{{ 'qty' | trans }}</th>
-                <th>{{ "Gross price" | trans }}</th>
-                <th>{{ "Current state" | trans }}</th>
-                <th>{{ "History" | trans }}</th>
-                <th>{{ "Trigger event" | trans }}</th>
-                <th>{{ "Process" | trans }}</th>
+                <th><input type="checkbox" /></th>
+                <th>{{ 'Image' | trans }}</th>
+                <th>{{ 'Product' | trans }}</th>
+                <th>{{ 'SKU' | trans }}</th>
+                <th>{{ 'Unit Price' | trans }}</th>
+                <th>{{ 'QTY' | trans }}</th>
+                <th>{{ 'Unit price * Qty' | trans }}</th>
+                <th>{{ 'Tax amount' | trans }}</th>
+                <th>{{ 'Tax %' | trans }}</th>
+                <th>{{ 'Discount amount' | trans }}</th>
+                <th>{{ 'Status' | trans }}</th>
+                <th>{{ 'Trigger event' | trans }}</th>
             </tr>
             </thead>
             <tbody>
             {% for orderItem in orderItems %}
                 <tr>
-                    <td>{{ orderItem.Name }}</td>
+                    <td><input type="checkbox" name="" class=""></td>
+                    <td>-image-</td>
+                    <td>
+                        <a href="">{{ 'Yves view' }}</a><br>
+                        <a href="">{{ 'Zed View' }}</a>
+                    </td>
                     <td>{{ orderItem.Sku }}</td>
-                    <td><a href="javascript:void(0);" onclick="$('#split_form_row_{{ orderItem.IdSalesOrderItem }}').toggle();">{{ orderItem.quantity }}</a></td>
                     <td>{{ orderItem.GrossPrice | currency }}</td>
-                    <td>{{ orderItem.State.Name }}</td>
+                    <td><a href="javascript:void(0);" onclick="{{ "$('#split_form_row_" ~ orderItem.IdSalesOrderItem ~ "').toggle();" }}">{{ orderItem.quantity }}</a></td>
+                    <td>{{ (orderItem.GrossPrice * orderItem.quantity) | currency }}</td>
+                    <td>--tax amount--</td>
+                    <td>--tax %--</td>
+                    <td>--discount amount--</td>
                     <td>
                         {% for stateHistory in orderItem.StateHistories | slice(0, 3) %}
                             <div>{{ stateHistory.State.Name }} ({{ stateHistory.CreatedAt | date('Y-m-d G:i:s', false) }})</div>
@@ -58,7 +70,7 @@
                                 {% endfor %}
                             </div>
 
-                            <a class="btn btn-sm" onclick="$('#history_details_{{ orderItem.IdSalesOrderItem }}').toggle();">{{ "Show more" | trans }}</a>
+                            <a class="btn btn-sm" onclick="{{ "$('#history_details_" ~ orderItem.IdSalesOrderItem ~ "').toggle();" }}">{{ "Show more" | trans }}</a>
                         {% endif %}
                     </td>
                     <td>
@@ -72,19 +84,14 @@
                             -
                         {%- endif %}
                     </td>
-                    <td>
-                        <a href="{{ url('/oms/index/draw-item', {id: orderItem.IdSalesOrderItem}) }}" target="_blank">
-                            {{ orderItem.process.name }}
-                        </a>
-                    </td>
                 </tr>
                 {% if orderItemSplitFormCollection is defined %}
-                    <tr style="display: none;" id="split_form_row_{{ orderItem.IdSalesOrderItem }}">
-                        <td colspan="9">
-                            <h4>Split order item</h4>
-                            {{ form(orderItemSplitFormCollection[orderItem.IdSalesOrderItem]) }}
-                        </td>
-                    </tr>
+                <tr style="display: none;" id="split_form_row_{{ orderItem.IdSalesOrderItem }}">
+                    <td colspan="12">
+                        <h4>{{ 'Split order items' | trans }}</h4>
+                        {{ form(orderItemSplitFormCollection[orderItem.IdSalesOrderItem]) }}
+                    </td>
+                </tr>
                 {% endif %}
             {% endfor %}
             </tbody>
