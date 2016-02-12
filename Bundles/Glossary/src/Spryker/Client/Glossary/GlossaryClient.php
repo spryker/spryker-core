@@ -30,9 +30,9 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
      *
      * @return \Spryker\Client\Glossary\Storage\GlossaryStorageInterface
      */
-    private function createTranslator($localeName)
+    protected function createTranslator($localeName)
     {
-        return $this->getFactory()->createTranslator($localeName);
+        return $this->getFactory()->createCachedTranslator($localeName);
     }
 
 }
