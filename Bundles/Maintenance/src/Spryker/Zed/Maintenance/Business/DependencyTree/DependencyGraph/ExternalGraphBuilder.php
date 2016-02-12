@@ -34,10 +34,16 @@ class ExternalGraphBuilder implements GraphBuilderInterface
     {
         foreach ($dependencyTree as $dependency) {
             $this->graph->addNode($dependency[DependencyTree::META_BUNDLE], $this->getFromAttributes($dependency));
-            $this->graph->addNode($dependency[DependencyTree::META_COMPOSER_NAME], $this->getToAttributes($dependency));
+
+            if (!empty($dependency[DependencyTree::META_COMPOSER_NAME])) {
+                $this->graph->addNode($dependency[DependencyTree::META_COMPOSER_NAME], $this->getToAttributes($dependency));
+            }
         }
 
         foreach ($dependencyTree as $dependency) {
+            if (empty($dependency[DependencyTree::META_COMPOSER_NAME])) {
+                continue;
+            }
             $this->graph->addEdge($dependency[DependencyTree::META_BUNDLE], $dependency[DependencyTree::META_COMPOSER_NAME], $this->getEdgeAttributes($dependency));
         }
 

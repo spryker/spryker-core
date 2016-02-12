@@ -91,8 +91,7 @@ class MaintenanceConfig extends AbstractBundleConfig
             'ruflin/elastica' => 'spryker/elastica',
             '/symfony/' => 'spryker/symfony',
             'twig/twig' => 'spryker/twig',
-            '/zendframework/' => 'spryker/zend',
-            'phpdocumentor/graphviz' => 'spryker/graphviz',
+            '/zendframework/' => 'spryker/zend'
         ];
     }
 
