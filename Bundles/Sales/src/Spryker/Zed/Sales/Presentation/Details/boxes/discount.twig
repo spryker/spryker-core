@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-sm-12">
+
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Discount' } %}
+
+            {% block widget_content %}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table">
+                            <caption>Voucher</caption>
+                            <tr>
+                                <th>Name</th>
+                                <td class="text-right">--</td>
+                            </tr>
+                            <tr>
+                                <th>Amount</th>
+                                <td class="text-right">--</td>
+                            </tr>
+                            <tr>
+                                <th>Voucher code</th>
+                                <td class="text-right">--</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td class="text-right">--</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table">
+                            <caption>Cart Rules</caption>
+                            <tr>
+                                <th>Name</th>
+                                <td class="text-right">---</td>
+                            </tr>
+                            <tr>
+                                <th>Value</th>
+                                <td class="text-right">---</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td class="text-right">---</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            {% endblock %}
+
+        {% endembed %}
+
+    </div>
+</div>
