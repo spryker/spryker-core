@@ -23,6 +23,8 @@ class DependencyTree extends AbstractDependencyTree
     const META_BUNDLE = 'bundle';
     const META_BUNDLE_IS_ENGINE = 'is engine';
     const META_LAYER = 'layer';
+    const META_COMPOSER_NAME = 'composer name';
+    const META_COMPOSER_VERSION = 'composer version';
 
     /**
      * @var \Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor

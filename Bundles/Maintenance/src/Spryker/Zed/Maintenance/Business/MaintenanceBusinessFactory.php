@@ -12,6 +12,7 @@ use Spryker\Zed\Maintenance\Business\Composer\Updater\BranchAliasUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\ComposerUpdaterComposite;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\DescriptionUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\LicenseUpdater;
+use Spryker\Zed\Maintenance\Business\Composer\Updater\RequireExternalUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\StabilityUpdater;
 use Spryker\Zed\Maintenance\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Maintenance\Business\DependencyTree\AdjacencyMatrixBuilder;
@@ -24,6 +25,7 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ExternalDep
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\ForeignEngineBundleFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\InternalDependencyFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\InvalidForeignBundleFilter;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\InvalidForeignClassNameFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFilter\TreeFilter;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\ExternalDependency;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorClient;
@@ -31,6 +33,7 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorFaca
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\UseStatement;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder;
+use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\ExternalGraphBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraph\SimpleGraphBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraphBuilder;
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyHydrator\DependencyHydrator;
@@ -360,10 +363,12 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     public function createDetailedDependencyGraphBuilder($bundleToView)
     {
+        $dependencyTreeFilter = $this->createDetailedDependencyTreeFilter($bundleToView);
+        $dependencyTreeReader = $this->createDependencyTreeReader();
+
         $dependencyGraphBuilder = new DependencyGraphBuilder(
             $this->createDetailedGraphBuilder(),
-            $this->createDependencyTreeReader(),
-            $this->createDetailedDependencyTreeFilter($bundleToView)
+            $dependencyTreeFilter->filter($dependencyTreeReader->read())
         );
 
         return $dependencyGraphBuilder;
@@ -403,10 +408,12 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     public function createSimpleDependencyGraphBuilder($bundleToView)
     {
+        $dependencyTreeFilter = $this->createSimpleGraphDependencyTreeFilter($bundleToView);
+        $dependencyTreeReader = $this->createDependencyTreeReader();
+
         $dependencyGraphBuilder = new DependencyGraphBuilder(
             $this->createSimpleGraphBuilder(),
-            $this->createDependencyTreeReader(),
-            $this->createSimpleGraphDependencyTreeFilter($bundleToView)
+            $dependencyTreeFilter->filter($dependencyTreeReader->read())
         );
 
         return $dependencyGraphBuilder;
@@ -443,14 +450,20 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param string|null $bundleToView
+     *
      * @return array
      */
-    public function createExternalDependencyTree()
+    public function createExternalDependencyTree($bundleToView = null)
     {
         $treeFilter = $this->createDependencyTreeFilter();
         $treeFilter
             ->addFilter($this->createDependencyTreeInternalDependencyFilter())
         ;
+
+        if (is_string($bundleToView)) {
+            $treeFilter->addFilter($this->createDependencyTreeBundleToViewFilter($bundleToView));
+        }
 
         $composerLock = json_decode(file_get_contents(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'composer.lock'), true);
         $packageVersionHydrator = new PackageVersionHydrator(array_merge($composerLock['packages'], $composerLock['packages-dev']));
@@ -467,7 +480,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string|bool $bundleToView
+     * @param $bundleToView
      *
      * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraphBuilder
      */
@@ -475,8 +488,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     {
         $dependencyGraphBuilder = new DependencyGraphBuilder(
             $this->createExternalGraphBuilder(),
-            $this->createDependencyTreeReader(),
-            $this->createSimpleGraphDependencyTreeFilter($bundleToView)
+            $this->createExternalDependencyTree($bundleToView)
         );
 
         return $dependencyGraphBuilder;
@@ -715,6 +727,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
             ->addUpdater($this->createComposerJsonDescriptionUpdater())
             ->addUpdater($this->createComposerJsonLicenseUpdater())
             ->addUpdater($this->createComposerJsonRequireUpdater())
+            ->addUpdater($this->createComposerJsonRequireExternalUpdater())
             ->addUpdater($this->createComposerJsonStabilityUpdater())
             ->addUpdater($this->createComposerJsonBranchAliasUpdater());
 
@@ -754,6 +767,60 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
             $this->createDependencyTreeReader(),
             $this->createComposerJsonRequireUpdaterTreeFilter()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Maintenance\Business\Composer\Updater\RequireUpdater
+     */
+    protected function createComposerJsonRequireExternalUpdater()
+    {
+        return new RequireExternalUpdater(
+            $this->createExternalDependencyTree(),
+            $this->getExternalToInternalMap(),
+            $this->getIgnorableDependencies()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getExternalToInternalMap()
+    {
+        return [
+            'psr/log' => 'spryker/log',
+            'propel/propel' => 'spryker/propel',
+            'silex/silex' => 'spryker/silex',
+            'pimple/pimple' => 'spryker/pimple',
+            'mandrill/mandrill' => 'spryker/mandrill',
+            'predis/predis' => 'spryker/redis',
+            'guzzle/http' => 'spryker/guzzle',
+            'league/csv' => 'spryker/csv',
+            'monolog/monolog' => 'spryker/monolog',
+            'ruflin/elastica' => 'spryker/elastica',
+            '/symfony/' => 'spryker/symfony',
+            'twig/twig' => 'spryker/twig',
+            '/zendframework/' => 'spryker/zend',
+            'phpdocumentor/graphviz' => 'spryker/graphviz',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getIgnorableDependencies()
+    {
+        return [
+            'codeception/codeception',
+            'spryker/code-sniffer',
+            'pdepend/pdepend',
+            'phploc/phploc',
+            'phpmd/phpmd',
+            'sebastian/phpcpd',
+            'codeception/codeception',
+            'fabpot/php-cs-fixer',
+            'sensiolabs/security-checker',
+            'sllh/composer-versions-check',
+        ];
     }
 
     /**

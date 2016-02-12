@@ -11,6 +11,9 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 class PackageVersionHydrator implements DependencyHydratorInterface
 {
 
+    const NAME = 'name';
+    const VERSION = 'version';
+
     /**
      * @var array
      */
@@ -31,7 +34,7 @@ class PackageVersionHydrator implements DependencyHydratorInterface
      */
     public function hydrate(array &$dependency)
     {
-        $dependency['composer version'] = $this->getComposerVersion($dependency);
+        $dependency[DependencyTree::META_COMPOSER_VERSION] = $this->getComposerVersion($dependency);
     }
 
     /**
@@ -41,16 +44,15 @@ class PackageVersionHydrator implements DependencyHydratorInterface
      */
     private function getComposerVersion(array $dependency)
     {
-        if ($dependency['composer name'] === null || $dependency['composer name'] === false) {
+        if ($dependency[DependencyTree::META_COMPOSER_NAME] === null || $dependency[DependencyTree::META_COMPOSER_NAME] === false) {
             return false;
         }
 
         foreach ($this->installedPackages as $installedPackage) {
-            if ($installedPackage['name'] === $dependency['composer name']) {
-                return $installedPackage['version'];
+            if ($installedPackage[self::NAME] === $dependency[DependencyTree::META_COMPOSER_NAME]) {
+                return $installedPackage[self::VERSION];
             }
         }
-
-        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($dependency) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
     }
+
 }

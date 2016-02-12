@@ -49,6 +49,8 @@ class ExternalDependencyTest extends \PHPUnit_Framework_TestCase
         $dependencyFinder->setDependencyTree($dependencyTree);
         $dependencyFinder->addDependencies($testFile);
 
-        $this->assertCount(5, $dependencyFinder->getDependencyTree()->getDependencyTree());
+        $dependencyTree = $dependencyFinder->getDependencyTree()->getDependencyTree();
+
+        $this->assertCount(6, $dependencyTree);
     }
 }

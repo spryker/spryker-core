@@ -1,3 +1,5 @@
+<?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -22,6 +24,6 @@ class ExternalDependency
         new \DateTime())->format(\DateTime::ATOM);
     }
 
-    public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
+    public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM);
 
 }
