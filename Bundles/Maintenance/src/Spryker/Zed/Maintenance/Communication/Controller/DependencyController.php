@@ -129,12 +129,18 @@ class DependencyController extends AbstractController
     }
 
     /**
-     * @return void
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function externalDependencyTreeAction()
+    public function externalDependencyTreeAction(Request $request)
     {
-        $externalDependencyTree = $this->getFacade()->getExternalDependencyTree();
-        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($externalDependencyTree) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+        $callback = function () use ($request) {
+            $bundleToView = $request->query->get('bundle', false);
+            echo $this->getFacade()->drawExternalDependencyTreeGraph($bundleToView);
+        };
+
+        return $this->streamedResponse($callback);
     }
 
 }

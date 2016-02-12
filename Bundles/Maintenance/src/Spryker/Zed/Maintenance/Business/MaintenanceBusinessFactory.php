@@ -499,7 +499,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
      */
     protected function createExternalGraphBuilder()
     {
-        return new ExternalGraphBuilder($this->createGraphViz()->init('Dependency Tree'));
+        return new ExternalGraphBuilder($this->getGraph()->init('Dependency Tree'));
     }
 
     /**
