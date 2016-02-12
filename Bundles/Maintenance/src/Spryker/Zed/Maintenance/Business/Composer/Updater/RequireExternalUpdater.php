@@ -113,7 +113,7 @@ class RequireExternalUpdater implements UpdaterInterface
     private function mapExternalBundleNameToInternal($composerName)
     {
         foreach ($this->externalToInternalMap as $external => $internal) {
-            if (substr($external, 1) === '/') {
+            if ($external[0] === '/') {
                 if (preg_match($external, $composerName)) {
                     return $internal;
                 }
