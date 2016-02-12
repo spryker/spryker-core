@@ -19,7 +19,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function getService()
     {
-        return $this->getFactory()->createService();
+        return $this->getFactory()->createCachedService();
     }
 
     /**

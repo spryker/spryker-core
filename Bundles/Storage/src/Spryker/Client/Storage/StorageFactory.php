@@ -16,6 +16,11 @@ class StorageFactory extends AbstractFactory
 {
 
     /**
+     * @var \Spryker\Client\Storage\StorageClientInterface
+     */
+    protected $storageService;
+
+    /**
      * @return \Spryker\Client\Storage\StorageClientInterface
      */
     public function createService()
@@ -25,6 +30,21 @@ class StorageFactory extends AbstractFactory
         );
     }
 
+    /**
+     * @return \Spryker\Client\Storage\StorageClientInterface
+     */
+    public function createCachedService()
+    {
+        if ($this->storageService === null) {
+            $this->storageService = $this->createService();
+        }
+
+        return $this->storageService;
+    }
+
+    /**
+     * @return \Predis\ClientInterface
+     */
     protected function createClient()
     {
         return new Client($this->getConfig());
