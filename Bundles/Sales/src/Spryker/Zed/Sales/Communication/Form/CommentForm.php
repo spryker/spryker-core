@@ -5,6 +5,7 @@ namespace Spryker\Zed\Sales\Communication\Form;
 use Generated\Shared\Transfer\CommentTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CommentForm extends AbstractType
 {
@@ -38,7 +39,11 @@ class CommentForm extends AbstractType
      */
     protected function addCommentField(FormBuilderInterface $builder)
     {
-        $builder->add(CommentTransfer::MESSAGE, 'textarea');
+        $builder->add(CommentTransfer::MESSAGE, 'textarea', [
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
 
         return $this;
     }
