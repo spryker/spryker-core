@@ -1,6 +1,9 @@
 {
-  "name": "spryker/graph",
-  "description": "graph bundle",
+  "name": "spryker/graphviz",
+  "require": {
+    "phpdocumentor/graphviz": "dev-master#a906a90"
+  },
+  "description": "graphviz bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
