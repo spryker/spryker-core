@@ -1,45 +1,23 @@
+{% macro item(urlTarget, label, fontAwesomeIcon, fontAwesomeText='') %}
+    <div class="nav-item pull-left">
+        <div>
+            <a href="{{ urlTarget }}" title="{{ label | trans | escape }}">
+                <span class="icon fa fa-{{ fontAwesomeIcon }}">{{ fontAwesomeText | default('') | raw }}</span>
+                <span class="text">{{ label | trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endmacro %}
+
+{% import _self as navigation %}
+
 <div class="overview-nav">
-    <div class="nav-item pull-left">
-        <div>
-            <span class="fa fa-eye"></span>
-            <div class="text">Overview</div>
-        </div>
-    </div>
-    <div class="nav-item pull-left">
-        <div>
-            <span class="fa fa-shopping-cart"></span>
-            <div class="text">Items</div>
-        </div>
-    </div>
-    <div class="nav-item pull-left">
-        <div>
-            <span class="fa fa-euro"></span>
-            <div class="text">Totals</div>
-        </div>
-    </div>
-    <div class="nav-item pull-left">
-        <div>
-            <span class="fa fa-credit-card"></span>
-            <div class="text">Payment</div>
-        </div>
-    </div>
-    <div class="nav-item pull-left">
-        <div>
-            <span class="fa fa-truck"></span>
-            <div class="text">Shippment</div>
-        </div>
-    </div>
-    <div class="nav-item pull-left">
-        <div>
-            <span>&percnt;</span>
-            <div class="text">Discount</div>
-        </div>
-    </div>
-    <div class="nav-item pull-left">
-        <div>
-            <span class="fa fa-map-marker"></span>
-            <div class="text">Address</div>
-        </div>
-    </div>
+    {{ navigation.item('#order-overview', 'Overview', 'eye') }}
+    {{ navigation.item('#items', 'Items', 'shopping-cart') }}
+    {{ navigation.item('#totals', 'Totals', 'euro') }}
+    {{ navigation.item('#payments', 'Payment', 'credit-card') }}
+    {{ navigation.item('#shipment', 'Shipment', 'truck') }}
+    {{ navigation.item('#discount', 'Discount', 'percent', '&percnt;') }}
+    {{ navigation.item('#address', 'Address', 'map-marker') }}
     <div class="clearfix"></div>
 </div>

@@ -1,3 +1,6 @@
+$colorUrl: #676a6c;
+$colorUrlHover: #1cbb9e;
+
 .overview-nav {
   max-width: 1000px;
   margin: 0 auto 30px;
@@ -15,27 +18,41 @@
   border-style: solid;
 }
 
-.overview-nav .nav-item > div > span {
-  display: block;
-  font-size: 50px;
-  line-height: 80px;
+.overview-nav .nav-item > div > a {
+  &:hover {
+    color: $colorUrlHover;
 
-  @media (max-width: 550px) {
-    font-size: 25px;
-    line-height: 50px;
+    span.icon,
+    span.text {
+      color: $colorUrlHover;
+    }
+  }
+
+  span.text {
+    color: $colorUrl;
+  }
+
+  span.icon {
+    display: block;
+    font-size: 50px;
+    line-height: 80px;
+    color: $colorUrl;
+
+    @media (max-width: 550px) {
+      font-size: 25px;
+      line-height: 50px;
+    }
   }
 }
 
 .overview-nav .nav-item .text {
   font-size: 18px;
 
+  @media (max-width: 900px) {
+    font-size: 12px !important;
+  }
+
   @media (max-width: 550px) {
     display: none;
   }
-}
-
-.overview-nav .nav-item > div > span:hover {
-  color: red;
-  margin: 0;
-  padding: 0;
 }

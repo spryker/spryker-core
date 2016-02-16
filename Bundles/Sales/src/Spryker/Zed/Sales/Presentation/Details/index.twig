@@ -7,13 +7,14 @@
 {% block content %}
 
     {% include '@Sales/Details/boxes/order-navigation.twig' %}
-    {% include '@Sales/Details/boxes/order-overview.twig' %}
-    {% include '@Sales/Details/boxes/items.twig' %}
-    {% include '@Sales/Details/boxes/totals.twig' %}
-    {% include '@Sales/Details/boxes/payments.twig' %}
-    {% include '@Sales/Details/boxes/shipment.twig' %}
-    {% include '@Sales/Details/boxes/discount.twig' %}
-    {% include '@Sales/Details/boxes/addresses.twig' %}
-    {% include '@Sales/Details/boxes/refunds.twig' %}
+
+    <div id="order-overview">{% include '@Sales/Details/boxes/order-overview.twig' %}</div>
+    <div id="items">{% include '@Sales/Details/boxes/items.twig' %}</div>
+    <div id="totals">{% include '@Sales/Details/boxes/totals.twig' %}</div>
+    <div id="payments">{% include '@Sales/Details/boxes/payments.twig' %}</div>
+    <div id="shipment">{% include '@Sales/Details/boxes/shipment.twig' %}</div>
+    <div id="discount">{% include '@Sales/Details/boxes/discount.twig' %}</div>
+    <div id="address">{% include '@Sales/Details/boxes/addresses.twig' %}</div>
+    <div id="refunds">{% include '@Sales/Details/boxes/refunds.twig' %}</div>
 
 {% endblock %}
