@@ -17,7 +17,6 @@
     "spryker/kernel": "^1.0.0",
     "spryker/storage": "^1.0.0"
   },
-  "require-dev": {},
   "description": "category exporter bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

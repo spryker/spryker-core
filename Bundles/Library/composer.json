@@ -26,7 +26,6 @@
     "spryker/twig": "^1.0.0",
     "spryker/zend": "^1.0.0"
   },
-  "require-dev": {},
   "description": "library bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

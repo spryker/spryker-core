@@ -19,7 +19,6 @@
     "spryker/transfer": "^1.0.0",
     "spryker/guzzle": "^1.0.0"
   },
-  "require-dev": {},
   "description": "zed request bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

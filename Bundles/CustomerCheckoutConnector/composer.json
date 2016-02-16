@@ -15,7 +15,6 @@
     "spryker/customer": "^1.0.0",
     "spryker/kernel": "^1.0.0"
   },
-  "require-dev": {},
   "description": "customer checkout connector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

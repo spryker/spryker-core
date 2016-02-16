@@ -22,7 +22,6 @@
     "spryker/symfony": "^1.0.0",
     "spryker/zend": "^1.0.0"
   },
-  "require-dev": {},
   "description": "development bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

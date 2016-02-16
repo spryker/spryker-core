@@ -14,7 +14,6 @@
     "spryker/kernel": "^1.0.0",
     "spryker/mail": "^1.0.0"
   },
-  "require-dev": {},
   "description": "auth mail connector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

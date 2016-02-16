@@ -15,7 +15,6 @@
     "spryker/oms": "^1.0.0",
     "spryker/stock": "^1.0.0"
   },
-  "require-dev": {},
   "description": "availability bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

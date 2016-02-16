@@ -16,7 +16,6 @@
     "spryker/shipment": "^1.0.0",
     "spryker/propel": "^1.0.0"
   },
-  "require-dev": {},
   "description": "shipment checkout connector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

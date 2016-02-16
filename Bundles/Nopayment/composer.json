@@ -14,7 +14,6 @@
     "spryker/kernel": "^1.0.0",
     "spryker/oms": "^1.0.0"
   },
-  "require-dev": {},
   "description": "nopayment bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

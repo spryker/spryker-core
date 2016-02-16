@@ -15,7 +15,6 @@
     "spryker/locale": "^1.0.0",
     "spryker/product": "^1.0.0"
   },
-  "require-dev": {},
   "description": "product cart connector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

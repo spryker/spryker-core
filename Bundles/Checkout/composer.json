@@ -18,7 +18,6 @@
     "spryker/zed-request": "^1.0.0",
     "spryker/propel": "^1.0.0"
   },
-  "require-dev": {},
   "description": "checkout bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

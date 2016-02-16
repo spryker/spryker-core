@@ -16,7 +16,6 @@
     "spryker/kernel": "^1.0.0",
     "spryker/sales": "^1.0.0"
   },
-  "require-dev": {},
   "description": "discount calculation connector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

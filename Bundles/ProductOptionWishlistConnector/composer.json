@@ -13,7 +13,6 @@
   "require": {
     "spryker/kernel": "^1.0.0"
   },
-  "require-dev": {},
   "description": "product option wishlist connector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

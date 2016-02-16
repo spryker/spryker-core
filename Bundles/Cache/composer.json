@@ -15,7 +15,6 @@
     "spryker/kernel": "^1.0.0",
     "spryker/symfony": "^1.0.0"
   },
-  "require-dev": {},
   "description": "cache bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

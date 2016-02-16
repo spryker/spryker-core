@@ -16,7 +16,6 @@
     "spryker/price": "^1.0.0",
     "spryker/transfer": "^1.0.0"
   },
-  "require-dev": {},
   "description": "price cart connector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

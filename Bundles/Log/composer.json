@@ -10,7 +10,6 @@
     "psr/log": "~1.0.0",
     "spryker/monolog": "^1.0.0"
   },
-  "require-dev": {},
   "description": "log bundle",
   "license": "proprietary",
   "minimum-stability": "dev",

@@ -14,7 +14,6 @@
     "spryker/kernel": "^1.0.0",
     "spryker/graphviz": "^1.0.0"
   },
-  "require-dev": {},
   "description": "graph bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
