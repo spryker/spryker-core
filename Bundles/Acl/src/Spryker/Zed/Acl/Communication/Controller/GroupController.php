@@ -164,8 +164,8 @@ class GroupController extends AbstractController
      */
     public function removeUserFromGroupAction(Request $request)
     {
-        $idGroup = (int) $request->request->get(self::PARAMETER_ID_GROUP);
-        $idUser = (int) $request->request->get(self::PARAMETER_ID_USER);
+        $idGroup = (int)$request->request->get(self::PARAMETER_ID_GROUP);
+        $idUser = (int)$request->request->get(self::PARAMETER_ID_USER);
 
         try {
             $this->getFacade()->removeUserFromGroup($idUser, $idGroup);

@@ -38,7 +38,7 @@ class GroupKeyExpander
             return $currentGroupKey;
         }
 
-        $sortedProductOptions = $this->sortOptions((array) $cartItem->getProductOptions());
+        $sortedProductOptions = $this->sortOptions((array)$cartItem->getProductOptions());
         $optionGroupKey = $this->combineOptionParts($sortedProductOptions);
 
         if (empty($optionGroupKey)) {

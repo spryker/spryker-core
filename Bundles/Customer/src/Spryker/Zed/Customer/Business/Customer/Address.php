@@ -139,7 +139,7 @@ class Address
      */
     protected function isDefaultAddress($idCustomerAddress, $idDefaultAddress)
     {
-        return ((int) $idCustomerAddress === (int) $idDefaultAddress);
+        return ((int)$idCustomerAddress === (int)$idDefaultAddress);
     }
 
     /**

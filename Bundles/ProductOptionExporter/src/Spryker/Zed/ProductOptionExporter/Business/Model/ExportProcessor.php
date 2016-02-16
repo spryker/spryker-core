@@ -102,7 +102,7 @@ class ExportProcessor implements ExportProcessorInterface
     {
         $values = $this->productOptionFacade->getValueUsagesForConfigPreset($idConfigPreset);
         foreach ($values as $index => $value) {
-            $values[$index] = (int) $value;
+            $values[$index] = (int)$value;
         }
 
         return $values;
@@ -122,9 +122,9 @@ class ExportProcessor implements ExportProcessorInterface
         $options = [];
         foreach ($typeUsages as $typeUsage) {
             $optionData = [
-                'id' => (int) $typeUsage['idTypeUsage'],
+                'id' => (int)$typeUsage['idTypeUsage'],
                 'label' => $typeUsage['label'],
-                'isOptional' => (bool) $typeUsage['isOptional'],
+                'isOptional' => (bool)$typeUsage['isOptional'],
                 'taxRate' => $this->processOptionTaxRate($sku, $typeUsage['idTypeUsage']),
                 'excludes' => $this->processTypeExclusions($typeUsage['idTypeUsage']),
                 'values' => $this->processValuesForTypeUsage($typeUsage['idTypeUsage'], $idLocale),
@@ -144,7 +144,7 @@ class ExportProcessor implements ExportProcessorInterface
     {
         $excludes = $this->productOptionFacade->getTypeExclusionsForTypeUsage($idProductAttributeTypeUsage);
         foreach ($excludes as $index => $exclude) {
-            $excludes[$index] = (int) $exclude;
+            $excludes[$index] = (int)$exclude;
         }
 
         return $excludes;
@@ -165,7 +165,7 @@ class ExportProcessor implements ExportProcessorInterface
                ->getEffectiveTaxRateForProductConcrete($sku);
         }
 
-        return (float) $typeUsageTaxRate;
+        return (float)$typeUsageTaxRate;
     }
 
     /**
@@ -181,7 +181,7 @@ class ExportProcessor implements ExportProcessorInterface
         $valueData = [];
         foreach ($valueUsages as $valueUsage) {
             $valueData[] = [
-                'id' => (int) $valueUsage['idValueUsage'],
+                'id' => (int)$valueUsage['idValueUsage'],
                 'label' => $valueUsage['label'],
                 'price' => $valueUsage['price'],
                 'constraints' => $this->processValueConstraints($valueUsage['idValueUsage']),
@@ -229,7 +229,7 @@ class ExportProcessor implements ExportProcessorInterface
         }
 
         foreach ($valueIds as $index => $valueId) {
-            $valueIds[$index] = (int) $valueId;
+            $valueIds[$index] = (int)$valueId;
         }
 
         $constraints[$operator] = $valueIds;

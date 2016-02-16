@@ -145,7 +145,7 @@ class BlockController extends AbstractController
      */
     protected function updatePageAndBlock(array $data, PageTransfer $pageTransfer)
     {
-        if ((int) $data[CmsPageForm::FIELD_CURRENT_TEMPLATE] !== (int) $data[CmsPageForm::FIELD_FK_TEMPLATE]) {
+        if ((int)$data[CmsPageForm::FIELD_CURRENT_TEMPLATE] !== (int)$data[CmsPageForm::FIELD_FK_TEMPLATE]) {
             $this->getFacade()->deleteGlossaryKeysByIdPage($data[CmsBlockForm::FIELD_FK_PAGE]);
         }
         $blockTransfer = $this->createBlockTransfer($data);

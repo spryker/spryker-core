@@ -185,7 +185,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      */
     public function queryProductAbstractCollectionBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null)
     {
-        $idExcludedCategory = (int) $idExcludedCategory;
+        $idExcludedCategory = (int)$idExcludedCategory;
         $query = $this->getFactory()->createProductAbstractQuery();
 
         $query->addJoin(

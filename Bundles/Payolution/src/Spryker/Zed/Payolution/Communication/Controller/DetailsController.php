@@ -25,7 +25,7 @@ class DetailsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idPayment = (int) $request->get('id-payment');
+        $idPayment = (int)$request->get('id-payment');
         $paymentEntity = $this->getPaymentEntity($idPayment);
         $requestLogTable = $this->getFactory()->createRequestLogTable($idPayment);
         $statusLogTable = $this->getFactory()->createStatusLogTable($idPayment);
@@ -61,7 +61,7 @@ class DetailsController extends AbstractController
      */
     public function requestLogTableAction(Request $request)
     {
-        $idPayment = (int) $request->get('id-payment');
+        $idPayment = (int)$request->get('id-payment');
         $requestLogTable = $this->getFactory()->createRequestLogTable($idPayment);
 
         return $this->jsonResponse($requestLogTable->fetchData());
@@ -74,7 +74,7 @@ class DetailsController extends AbstractController
      */
     public function statusLogTableAction(Request $request)
     {
-        $idPayment = (int) $request->get('id-payment');
+        $idPayment = (int)$request->get('id-payment');
         $statusLogTable = $this->getFactory()->createStatusLogTable($idPayment);
 
         return $this->jsonResponse($statusLogTable->fetchData());

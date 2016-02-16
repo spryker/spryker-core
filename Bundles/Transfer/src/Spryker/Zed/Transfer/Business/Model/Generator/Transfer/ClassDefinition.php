@@ -436,7 +436,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function isCollection(array $property)
     {
-        return (bool) preg_match('/((.*?)\[\]|\[\])/', $property['type']);
+        return (bool)preg_match('/((.*?)\[\]|\[\])/', $property['type']);
     }
 
     /**

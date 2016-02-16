@@ -48,7 +48,7 @@ class GlossaryStorage implements GlossaryStorageInterface
      */
     public function translate($keyName, array $parameters = [])
     {
-        if ((string) $keyName === '') {
+        if ((string)$keyName === '') {
             return $keyName;
         }
 

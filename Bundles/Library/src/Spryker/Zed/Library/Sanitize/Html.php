@@ -34,7 +34,7 @@ class Html
             return $texts;
         } elseif (is_object($text)) {
             if (method_exists($text, '__toString')) {
-                $text = (string) $text;
+                $text = (string)$text;
             } else {
                 $text = '(object)' . get_class($text);
             }

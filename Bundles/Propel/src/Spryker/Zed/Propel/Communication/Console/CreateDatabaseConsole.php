@@ -84,7 +84,7 @@ class CreateDatabaseConsole extends Console
             throw new \RuntimeException($process->getErrorOutput());
         }
 
-        return (bool) $process->getOutput();
+        return (bool)$process->getOutput();
     }
 
     /**

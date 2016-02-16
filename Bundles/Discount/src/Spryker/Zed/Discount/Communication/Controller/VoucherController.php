@@ -67,7 +67,7 @@ class VoucherController extends AbstractController
                 sprintf(
                     '/discount/voucher/view/?%s=%d&%s=%d',
                     self::ID_POOL_PARAMETER,
-                    (int) $formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL],
+                    (int)$formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL],
                     self::BATCH_PARAMETER,
                     $voucherTransfer->getVoucherBatch()
                 )
@@ -111,7 +111,7 @@ class VoucherController extends AbstractController
                 sprintf(
                     '/discount/voucher/view/?%s=%d&%s=%d',
                     self::ID_POOL_PARAMETER,
-                    (int) $formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL],
+                    (int)$formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL],
                     self::BATCH_PARAMETER,
                     $voucherTransfer->getVoucherBatch()
                 )

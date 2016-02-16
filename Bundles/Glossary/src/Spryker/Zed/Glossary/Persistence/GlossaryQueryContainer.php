@@ -406,7 +406,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $query = $this->queryTranslations()
             ->useLocaleQuery(null, Criteria::LEFT_JOIN)
             ->leftJoinSpyGlossaryTranslation(SpyGlossaryTranslationTableMap::TABLE_NAME)
-            ->addJoinCondition(SpyGlossaryTranslationTableMap::TABLE_NAME, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY . ' = ?', (int) $fkGlossaryKey)
+            ->addJoinCondition(SpyGlossaryTranslationTableMap::TABLE_NAME, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY . ' = ?', (int)$fkGlossaryKey)
             ->where(SpyLocaleTableMap::COL_LOCALE_NAME . ' IN ?', $locales)
             ->groupBy(SpyLocaleTableMap::COL_ID_LOCALE)
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, self::LOCALE)

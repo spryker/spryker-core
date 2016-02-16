@@ -200,7 +200,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
         DiscountTotalItemTransfer $discountTotalItemTransfer,
         DiscountTransfer $discountTransfer
     ) {
-        $storedCodes = (array) $discountTotalItemTransfer->getCodes();
+        $storedCodes = (array)$discountTotalItemTransfer->getCodes();
         foreach ($discountTransfer->getUsedCodes() as $code) {
             if (!in_array($code, $storedCodes)) {
                 $discountTotalItemTransfer->addCode($code);

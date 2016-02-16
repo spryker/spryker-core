@@ -50,7 +50,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
             if (!array_key_exists('license', $package)) {
                 $package['license'] = 'n/a';
             }
-            $installedPackage->setLicense((array) $package['license']);
+            $installedPackage->setLicense((array)$package['license']);
 
             if (!array_key_exists('homepage', $package)) {
                 $package['homepage'] = 'n/a';

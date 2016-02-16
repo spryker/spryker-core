@@ -52,7 +52,7 @@ class ProductConcreteWriter implements ProductConcreteWriterInterface
         $this->productStatement->execute(
             [
                 ':sku' => $productConcreteTransfer->getSku(),
-                ':isActive' => (int) $productConcreteTransfer->getIsActive(),
+                ':isActive' => (int)$productConcreteTransfer->getIsActive(),
                 ':attributes' => json_encode($productConcreteTransfer->getAttributes()),
                 ':productAbstractSku' => $productConcreteTransfer->getProductAbstractSku(),
             ]

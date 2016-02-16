@@ -22,7 +22,7 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getMock('Spryker\Zed\Product\Business\Model\Filesystem', ['getConfig']);
 
-        $config = (object) [
+        $config = (object)[
             'originalProductImageDirectory' => self::PATH_ORIGINAL,
             'processedProductImageDirectory' => self::PATH_PROCESSED,
         ];

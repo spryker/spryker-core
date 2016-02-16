@@ -43,7 +43,7 @@ class ProductTable extends AbstractTable
     {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->locale = $locale;
-        $this->idCategory = (int) $idCategory;
+        $this->idCategory = (int)$idCategory;
         $this->defaultUrl = sprintf('product-table?%s=%d', ProductCategoryConstants::PARAM_ID_CATEGORY, $this->idCategory);
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
