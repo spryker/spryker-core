@@ -59,6 +59,7 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $saverOrderTransfer = new SaveOrderTransfer();
         $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
+        $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
         $checkoutResponseTransfer->setSaveOrder($saverOrderTransfer);
 
         $discountSaver->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
@@ -87,6 +88,7 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $saverOrderTransfer = new SaveOrderTransfer();
         $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
+        $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
         $checkoutResponseTransfer->setSaveOrder($saverOrderTransfer);
 
         $discountSaver->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
@@ -118,6 +120,7 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $saverOrderTransfer = new SaveOrderTransfer();
         $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
+        $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
         $checkoutResponseTransfer->setSaveOrder($saverOrderTransfer);
 
         $discountSaver->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
@@ -149,6 +152,7 @@ class DiscountOrderSaverTest extends \PHPUnit_Framework_TestCase
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $saverOrderTransfer = new SaveOrderTransfer();
         $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
+        $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
         $checkoutResponseTransfer->setSaveOrder($saverOrderTransfer);
 
         $discountSaver->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
