@@ -8,6 +8,7 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
+use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -25,7 +26,7 @@ class DetailsController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idSalesOrder = $request->get('id-sales-order');
+        $idSalesOrder = $request->get(SalesConfig::PARAM_IS_SALES_ORDER);
 
         $orderTransfer = new OrderTransfer();
         $orderTransfer->setIdSalesOrder($idSalesOrder);
