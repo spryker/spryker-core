@@ -87,7 +87,7 @@ class CmsBlockForm extends AbstractType
                 if (
                     $defaultData[self::FIELD_NAME] !== $formData[self::FIELD_NAME] ||
                     $defaultData[self::FIELD_TYPE] !== $formData[self::FIELD_TYPE] ||
-                    (int) $defaultData[self::FIELD_VALUE] !== (int) $formData[self::FIELD_VALUE]
+                    (int)$defaultData[self::FIELD_VALUE] !== (int)$formData[self::FIELD_VALUE]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_BLOCK_CHECK];
                 }

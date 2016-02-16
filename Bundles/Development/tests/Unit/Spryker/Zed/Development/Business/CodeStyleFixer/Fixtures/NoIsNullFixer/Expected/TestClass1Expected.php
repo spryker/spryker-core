@@ -19,7 +19,7 @@ class TestClass1Input
 
         $foo = $foo || $foo !== null;
 
-        $foo = (int) ($foo === null);
+        $foo = (int)($foo === null);
 
         if ($foo === null) {
         }

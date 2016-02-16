@@ -44,7 +44,7 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
             return $currentGroupKey;
         }
 
-        $sortedProductOptions = $this->sortOptions((array) $item->getProductOptions());
+        $sortedProductOptions = $this->sortOptions((array)$item->getProductOptions());
         $optionGroupKey = $this->combineOptionParts($sortedProductOptions);
 
         if (empty($optionGroupKey)) {

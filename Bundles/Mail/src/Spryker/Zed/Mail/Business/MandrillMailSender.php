@@ -55,7 +55,7 @@ class MandrillMailSender implements MailSenderInterface
             $sendAt = (new \DateTime($sendAt))->format('Y-m-d H:i:s');
         }
 
-        $responses = (array) $this->mandrill->messages->sendTemplate($templateName, $templateContent, $message, $async, $ipPool, $sendAt);
+        $responses = (array)$this->mandrill->messages->sendTemplate($templateName, $templateContent, $message, $async, $ipPool, $sendAt);
 
         return $this->convertResponsesToTransfer($responses);
     }

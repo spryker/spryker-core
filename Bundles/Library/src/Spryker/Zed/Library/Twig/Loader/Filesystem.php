@@ -86,7 +86,7 @@ class Filesystem extends \Twig_Loader_Filesystem
      */
     protected function findTemplate($name)
     {
-        $name = (string) $name;
+        $name = (string)$name;
 
         // normalize name
         $name = str_replace(['///', '//', '\\'], '/', $name);

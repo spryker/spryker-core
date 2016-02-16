@@ -70,7 +70,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      */
     protected function isYvesRequest(Request $request)
     {
-        return (bool) $request->headers->get('X-Yves-Host');
+        return (bool)$request->headers->get('X-Yves-Host');
     }
 
     /**

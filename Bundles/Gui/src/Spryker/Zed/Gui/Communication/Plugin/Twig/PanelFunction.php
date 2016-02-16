@@ -33,7 +33,7 @@ class PanelFunction extends TwigFunction
                 'collapsed' => false,
             ];
 
-            $options = array_merge($defaultOptions, (array) $options);
+            $options = array_merge($defaultOptions, (array)$options);
 
             $collapsable = '';
             $id = '';

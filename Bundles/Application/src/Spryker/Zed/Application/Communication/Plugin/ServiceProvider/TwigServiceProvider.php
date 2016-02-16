@@ -105,7 +105,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $response = $event->getControllerResult();
 
         if (empty($response) || is_array($response)) {
-            $response = $this->render((array) $response);
+            $response = $this->render((array)$response);
             if ($response instanceof Response) {
                 $event->setResponse($response);
             }
@@ -139,7 +139,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         }
 
         if (isset($parameters['alternativeRoute'])) {
-            $route = (string) $parameters['alternativeRoute'];
+            $route = (string)$parameters['alternativeRoute'];
         } else {
             $route = (new RouteResolver())
                 ->buildRouteFromControllerServiceName($controller);

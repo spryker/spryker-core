@@ -148,7 +148,7 @@ class MysqlRead extends Mysql implements ReadInterface
         $statement->execute();
         $result = $statement->fetch();
 
-        return (int) $result['items'];
+        return (int)$result['items'];
     }
 
 }

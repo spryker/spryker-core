@@ -34,7 +34,7 @@ class ServerDataCollector extends AbstractDataCollector
     {
         return [
             self::FIELD_URL => $this->getUrl(),
-            self::FIELD_IS_HTTPS => (int) $this->isSecureConnection(),
+            self::FIELD_IS_HTTPS => (int)$this->isSecureConnection(),
             self::FIELD_HOST_NAME => $this->getHost(),
             self::FIELD_USER_AGENT => $this->getUserAgent(),
             self::FIELD_USER_IP => $this->getRemoteAddress(),

@@ -53,7 +53,7 @@ class RefundManager
             $sum += $expense->getPriceToPay();
         }
 
-        $orderGrandTotal = (int) $orderTransfer->getGrandTotal();
+        $orderGrandTotal = (int)$orderTransfer->getGrandTotal();
 
         $refunds = $this->getRefunds($orderTransfer->getIdSalesOrder());
         foreach ($refunds as $refund) {

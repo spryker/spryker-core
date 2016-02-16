@@ -92,7 +92,7 @@ class VoucherCodesFormDataProvider
         $voucherCodesTransfer->setDecisionRules($decisionRuleEntities->toArray());
         $voucherCodesTransfer->setCalculatorPlugin($discountEntity->getCalculatorPlugin());
 
-        $voucherCodesTransfer->setIsPrivileged((bool) $discountEntity->getIsPrivileged());
+        $voucherCodesTransfer->setIsPrivileged((bool)$discountEntity->getIsPrivileged());
         $voucherCodesTransfer->setValidFrom($discountEntity->getValidFrom());
         $voucherCodesTransfer->setValidTo($discountEntity->getValidTo());
 

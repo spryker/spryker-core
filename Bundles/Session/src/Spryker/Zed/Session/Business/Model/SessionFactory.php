@@ -18,7 +18,7 @@ class SessionFactory extends SharedSessionFactory
      */
     public function getSessionLifetime()
     {
-        $lifetime = (int) Config::get(ApplicationConstants::ZED_STORAGE_SESSION_TIME_TO_LIVE);
+        $lifetime = (int)Config::get(ApplicationConstants::ZED_STORAGE_SESSION_TIME_TO_LIVE);
 
         return $lifetime;
     }

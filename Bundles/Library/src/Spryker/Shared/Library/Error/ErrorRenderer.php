@@ -45,7 +45,7 @@ class ErrorRenderer
         $errorString = '<pre>' . $errorString . '</pre>';
 
         if ($e instanceof AbstractErrorRendererException) {
-            $errorString .= '<br/><hr/><br/>' . (string) $e->getExtra();
+            $errorString .= '<br/><hr/><br/>' . (string)$e->getExtra();
         }
 
         return $errorString;
@@ -80,7 +80,7 @@ class ErrorRenderer
         }
 
         if ($e instanceof AbstractErrorRendererException) {
-            $errorString .= PHP_EOL . PHP_EOL . (string) $e->getExtra();
+            $errorString .= PHP_EOL . PHP_EOL . (string)$e->getExtra();
         }
 
         return $errorString;

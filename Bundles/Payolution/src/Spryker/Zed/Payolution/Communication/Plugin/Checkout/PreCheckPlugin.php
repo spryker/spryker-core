@@ -56,7 +56,7 @@ class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionI
             || PayolutionConstants::STATUS_CODE_SUCCESS !== $payolutionTransactionResponseTransfer->getProcessingStatusCode()
             || PayolutionConstants::PAYMENT_CODE_PRE_CHECK !== $payolutionTransactionResponseTransfer->getPaymentCode()
         ) {
-            $errorCode = (int) preg_replace('/[^\d]+/', '', $payolutionTransactionResponseTransfer->getProcessingCode());
+            $errorCode = (int)preg_replace('/[^\d]+/', '', $payolutionTransactionResponseTransfer->getProcessingCode());
             $error = new CheckoutErrorTransfer();
             $error
                 ->setErrorCode($errorCode)

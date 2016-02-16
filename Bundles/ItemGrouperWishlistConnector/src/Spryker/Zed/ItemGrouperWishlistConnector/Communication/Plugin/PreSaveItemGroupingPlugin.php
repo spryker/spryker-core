@@ -29,7 +29,7 @@ class PreSaveItemGroupingPlugin extends AbstractPlugin implements PreSavePluginI
         $groupAbleContainerTransfer = $this->getFacade()->groupOrderItems($groupAbleContainerTransfer);
 
         if (count($groupAbleContainerTransfer->getItems()) > 0) {
-            $itemsCollection->exchangeArray((array) $groupAbleContainerTransfer->getItems());
+            $itemsCollection->exchangeArray((array)$groupAbleContainerTransfer->getItems());
         }
     }
 

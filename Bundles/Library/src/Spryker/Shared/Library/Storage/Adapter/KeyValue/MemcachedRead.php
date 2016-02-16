@@ -65,7 +65,7 @@ class MemcachedRead extends Memcached implements ReadInterface
         $stats = $this->getStats();
         $currentStats = array_pop($stats);
 
-        return (int) $currentStats['curr_items'];
+        return (int)$currentStats['curr_items'];
     }
 
 }

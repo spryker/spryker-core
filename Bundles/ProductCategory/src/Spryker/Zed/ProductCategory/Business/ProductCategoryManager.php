@@ -279,7 +279,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     public function updateProductMappingsPreConfig($idCategory, array $productPreConfigList)
     {
         foreach ($productPreConfigList as $idProduct => $idPreconfigProduct) {
-            $idPreconfigProduct = (int) $idPreconfigProduct;
+            $idPreconfigProduct = (int)$idPreconfigProduct;
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 

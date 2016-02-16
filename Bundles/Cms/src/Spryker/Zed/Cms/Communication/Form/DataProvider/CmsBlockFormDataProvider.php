@@ -48,7 +48,7 @@ class CmsBlockFormDataProvider
                 CmsBlockForm::FIELD_SELECT_VALUE => $pageUrlTemplate->getCategoryName(),
                 CmsBlockForm::FIELD_VALUE => $pageUrlTemplate->getValue(),
                 CmsBlockForm::FIELD_CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                CmsBlockForm::FIELD_IS_ACTIVE => (bool) $pageUrlTemplate->getIsActive(),
+                CmsBlockForm::FIELD_IS_ACTIVE => (bool)$pageUrlTemplate->getIsActive(),
             ];
         }
 

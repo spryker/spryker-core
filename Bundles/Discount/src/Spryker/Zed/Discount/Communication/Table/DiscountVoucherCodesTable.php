@@ -100,7 +100,7 @@ class DiscountVoucherCodesTable extends AbstractTable
         foreach ($collectionObject as $code) {
             $result[] = [
                 SpyDiscountVoucherTableMap::COL_CODE => $code->getCode(),
-                SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => (int) $code->getNumberOfUses(),
+                SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => (int)$code->getNumberOfUses(),
                 SpyDiscountVoucherTableMap::COL_CREATED_AT => $code->getCreatedAt('Y-m-d'),
                 SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => $code->getVoucherBatch(),
             ];

@@ -45,7 +45,7 @@ class MarkDownWriter implements MarkDownWriterInterface
         foreach ($this->installedPackages->getPackages() as $package) {
             $markDownLines[] = $package->getName() . self::SEPARATOR
                 . $package->getVersion() . self::SEPARATOR
-                . implode(', ', (array) $package->getLicense()) . self::SEPARATOR
+                . implode(', ', (array)$package->getLicense()) . self::SEPARATOR
                 . $package->getUrl() . self::SEPARATOR
                 . $package->getType() . self::SEPARATOR;
         }

@@ -71,7 +71,7 @@ class BatchResult implements BatchResultInterface
      */
     public function setFetchedCount($fetchedCount)
     {
-        $this->fetchedCount = (int) $fetchedCount;
+        $this->fetchedCount = (int)$fetchedCount;
     }
 
     /**

@@ -17,7 +17,7 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      */
     public function getTaxValueFromPrice($price, $taxPercentage, $round = true)
     {
-        $price = (int) $price;
+        $price = (int)$price;
         $amount = ($price * $taxPercentage) / ($taxPercentage + 100);
         if (!$round) {
             return $amount;
@@ -37,7 +37,7 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      */
     public function getNetValueFromPrice($price, $taxPercentage)
     {
-        $price = (int) $price;
+        $price = (int)$price;
         $amount = ($price * 100) / ($taxPercentage + 100);
 
         return round($amount);
@@ -53,8 +53,8 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
      */
     public function getTaxRateFromPrice($price, $taxAmount)
     {
-        $price = (int) $price;
-        $taxAmount = (int) $taxAmount;
+        $price = (int)$price;
+        $taxAmount = (int)$taxAmount;
 
         if ($taxAmount === 0) {
             return 0;
