@@ -479,7 +479,7 @@ class MaintenanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param $bundleToView
+     * @param string $bundleToView
      *
      * @return \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyGraphBuilder
      */

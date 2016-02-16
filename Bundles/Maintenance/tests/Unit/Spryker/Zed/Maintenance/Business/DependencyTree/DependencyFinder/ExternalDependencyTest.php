@@ -11,7 +11,6 @@ use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyFinder\ExternalDep
 use Spryker\Zed\Maintenance\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Maintenance\Business\DependencyTree\FileInfoExtractor;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @group Spryker
@@ -24,7 +23,7 @@ class ExternalDependencyTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @return SplFileInfo
+     * @return \Symfony\Component\Finder\SplFileInfo
      */
     public function getTestFile()
     {

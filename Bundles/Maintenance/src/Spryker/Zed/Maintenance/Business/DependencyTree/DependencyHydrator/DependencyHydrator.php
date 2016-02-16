@@ -17,7 +17,7 @@ class DependencyHydrator implements DependencyHydratorCompositeInterface
     /**
      * @param \Spryker\Zed\Maintenance\Business\DependencyTree\DependencyHydrator\DependencyHydratorInterface $hydrator
      *
-     * @return self
+     * @return $this
      */
     public function addHydrator(DependencyHydratorInterface $hydrator)
     {
