@@ -1,0 +1,15 @@
+{
+  "name": "spryker/pimple",
+  "require": {
+    "pimple/pimple": "~1.1.1"
+  },
+  "description": "pimple bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}

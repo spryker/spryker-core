@@ -13,10 +13,10 @@
   "require": {
     "spryker/kernel": "^1.0.0"
   },
-  "require-dev": {},
   "description": "product option checkout connector bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

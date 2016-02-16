@@ -109,6 +109,16 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * @param string|bool $bundleToView
+     *
+     * @return bool
+     */
+    public function drawExternalDependencyTreeGraph($bundleToView)
+    {
+        return $this->getFactory()->createExternalDependencyGraphBuilder($bundleToView)->build();
+    }
+
+    /**
      * @return bool
      */
     public function getAdjacencyMatrixData()
@@ -138,6 +148,14 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     public function updateComposerJsonInBundles()
     {
         $this->getFactory()->createComposerJsonUpdater()->update();
+    }
+
+    /**
+     * @return array
+     */
+    public function getExternalDependencyTree()
+    {
+        return $this->getFactory()->createExternalDependencyTree();
     }
 
 }

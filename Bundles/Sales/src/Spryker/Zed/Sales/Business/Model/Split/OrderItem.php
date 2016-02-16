@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Business\Model\Split;
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
+use Spryker\Zed\Sales\Business\Model\Split\Validation\Messages;
 use Spryker\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
@@ -86,7 +87,7 @@ class OrderItem implements ItemInterface
                 ->setSuccess(true)
                 ->setIdOrderItem($newSalesOrderItem->getIdSalesOrderItem())
                 ->setSuccessMessage(
-                    sprintf(Validation\Messages::SPLIT_SUCCESS_MESSAGE, $salesOrderItem->getIdSalesOrderItem())
+                    sprintf(Messages::SPLIT_SUCCESS_MESSAGE, $salesOrderItem->getIdSalesOrderItem())
                 );
         } catch (\Exception $e) {
             $this->getConnection()->rollBack();

@@ -1,0 +1,15 @@
+{
+  "name": "spryker/elastica",
+  "require": {
+    "ruflin/elastica": "~1.3.4.0"
+  },
+  "description": "elastica bundle",
+  "license": "proprietary",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}
