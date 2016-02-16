@@ -196,6 +196,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     public function queryClosureTableParentEntries($idNode)
     {
         $query = $this->getFactory()->createCategoryClosureTableQuery();
+        $query->setModelAlias('node');
 
         $joinCategoryNodeDescendant = new Join(
             'node.fk_category_node_descendant',
